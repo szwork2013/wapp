@@ -1,0 +1,99 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 20,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/voteRecord/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/voteRecord/update",
+                                type: "post"
+                            },
+                             create: {
+                                url: DataHost + "/manger/voteRecord/create",
+                                type: "post"
+                            },
+                            destroy: {
+                                url:DataHost + "/manger/voteRecord/destroy",
+                                type: "post"
+                            }
+                        },
+                        batch: true,
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "clientId": { editable: true},
+                                    "voteId": { editable: true },
+                                    "voteGroupId":{editable: true },
+                                    "userId": {editable: true},
+                                    "writeTime": {editable: true, type:"date" },
+                                    "voteIp": {editable: true},
+                                }
+                            }
+                        }
+                    });
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    navigatable: true,
+                    pageable: true,
+                    height: 1000,
+                    toolbar: ["create"],
+                    columns: [
+                        { 
+                            field: "_id",
+                            title: "投票id", 
+                        },
+                        { 
+                            field: "clientId",
+                            title: "所属商业用户id", 
+                        },
+                        { 
+                            field: "voteId",
+                            title: "投票ID", 
+                        },
+                        { 
+                            field: "voteGroupId",
+                            title: "投票租ID" 
+                        },
+                        { 
+                            field: "userId",
+                            title: "用户ID"
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "投票时间"
+                        },
+                        {
+                            field: "voteIp",
+                            title: "投票IP"
+                        },
+                        { command: ["edit", "destroy"], title: "&nbsp;", width: "160px" }],
+                    editable: "popup",
+                    filterable:true         
+                });
+                                    
+});
+
+</script>
+<% include inc/foot %>

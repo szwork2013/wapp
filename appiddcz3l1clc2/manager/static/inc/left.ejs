@@ -1,0 +1,43 @@
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <% if (session.isWidgetAdmin) { %>
+                  <li class="nav-header">应用管理</li>
+                  <li><a href="/manger/client/list">接入应用</a></li>
+                <% } %>
+
+                  <li class="nav-header">用户管理</li>
+                  <li><a href="/manger/platuser/list">平台用户列表</a></li>
+				          <li><a href="/manger/user/list">应用用户列表</a></li>
+
+                  <li class="nav-header">投票组件</li>
+                  <li><a href="/manger/vote/list">投票管理</a></li>
+                  <li><a href="/manger/voteRecord/list">投票记录</a></li>
+
+                  <li class="nav-header">疯狂猜图</li>
+                  <li><a href="/manger/puzzle/list">猜图活动</a></li>
+                  <li><a href="/manger/puzzlePrize/list">猜图奖品</a></li>
+                  <li><a href="/manger/puzzlePrizePool/list">猜图动态奖池</a></li>
+                  <li><a href="/manger/puzzlePrizeRecord/list">猜图领奖记录</a></li>
+                  <li><a href="/manger/puzzleQuesstion/list">猜图问题库</a></li>
+                  <li><a href="/manger/puzzleRecord/list">猜图答题记录</a></li>
+
+                  <li class="nav-header">抽奖活动</li>
+                  <li><a href="/manger/lottery/list">抽奖活动</a></li>
+                  <li><a href="/manger/lotteryPrize/list">抽奖奖品</a></li>
+                  <!--
+                  <li><a href="/manger/lotteryPrizePool/list">抽奖动态奖池</a></li>
+                  -->
+                  <li><a href="/manger/lotteryRecord/list">抽奖记录</a></li>
+
+                  <li class="nav-header">用户表单</li>
+                  <li><a href="/manger/form/page">金数据表单</a></li>
+
+                  <li class="nav-header">组件url地址</li>
+                  <li><a href="/manger/url/list">组件url地址列表</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span--> 
+        <div class="span10">

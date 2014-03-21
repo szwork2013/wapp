@@ -1,0 +1,112 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+ $(function () {
+	 
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                    	type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 20,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/puzzlePrizePool/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/puzzlePrizePool/update",
+                                type: "post"
+                            },
+                             create: {
+                                url: DataHost + "/manger/puzzlePrizePool/create",
+                                type: "post"
+                            },
+                            destroy: {
+                                url:DataHost + "/manger/puzzlePrizePool/destroy",
+                                type: "post"
+                            }
+                        },
+                        schema: {
+                        	total: "Total",
+                           	data: "Data",
+                            parse:function(d){
+                                if(d && Array.isArray(d.Data)){
+                                    d.Data = d.Data.map(function(v){
+                                        v.detail = JSON.stringify(v.detail)
+                                        return v;
+                                    })
+                                }
+                                else if(d){
+                                    d.detail = JSON.stringify(d.detail)
+                                }   
+                                return d;
+                            },
+                            model: {
+                        	    id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "clientId": { editable: true, validation: { required: true}},
+                                    "puzzleId": { editable: true,validation: { required: true} },
+                                    "detail": { editable: true},
+									"writeTime":{editable: true,type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    navigatable: true,
+                    pageable: true,
+                    height: 2000,
+                    toolbar: ["create"],
+                    columns: [
+                        { 
+							field: "_id",
+							title: "奖池id", 
+						},
+						{ 
+							field: "clientId",
+							title: "商业用户", 
+						},
+						{ 
+							field: "puzzleId",
+							title: "猜图活动", 
+						},
+						{ 
+							field: "detail",
+							title: "奖池详细" 
+						},
+						{ 
+							field: "writeTime",
+							title: "写入时间"
+						},
+						{ command: ["edit", "destroy"], title: "&nbsp;", width: "160px" }],
+                    editable: "popup",
+                    filterable:true,
+                    edit:function(e){
+                    	$.post(DataHost + '/manger/client/read', {skip:0, pageSize:1000}, function(d){
+                    		var d = d.Data;
+                    		d.unshift({"_id":"","desc":"选择商业用户"})
+	                    	$('input[name="clientId"]').kendoDropDownList({
+		                        dataTextField: "desc",
+		                        dataValueField: "_id",
+		                        dataSource: d
+	                    	});
+	                    }, 'json');
+	                    	
+  	                }		
+                });
+									
+});
+
+</script>
+<% include inc/foot %>

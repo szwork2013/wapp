@@ -1,0 +1,9 @@
+{
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/widget",
+	"monoosePool":10,
+	"currentHost":"http://127.0.0.1",
+	"currentVersion":"v1",
+	"listenPort":8080,
+	"mangerListenPort":9080,
+	"widgets":["user", "platuser", "vote", "puzzle", "lottery","form"]
+}

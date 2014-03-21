@@ -1,0 +1,139 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+ $(function () {
+	 
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                    	type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 20,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/lotteryRecord/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/lotteryRecord/update",
+                                type: "post"
+                            },
+                             create: {
+                                url: DataHost + "/manger/lotteryRecord/create",
+                                type: "post"
+                            },
+                            destroy: {
+                                url:DataHost + "/manger/lotteryRecord/destroy",
+                                type: "post"
+                            }
+                        },
+                        schema: {
+                        	total: "Total",
+                           	data: "Data",
+                           	parse:function(d){
+                           		if(d && Array.isArray(d.Data)){
+                           			d.Data = d.Data.map(function(v){
+                           				v.detail = JSON.stringify(v.detail)
+                           				return v;
+                           			})
+                           		}
+                           		else if(d){
+                           			d.detail = JSON.stringify(d.detail)
+                           		}	
+                           		return d;
+                           	},
+                            model: {
+                        	    id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "clientId": { editable: true, validation: { required: true}},
+                                    "lotteryId": { editable: true,validation: { required: true} },
+                                    "prizeId":{ editable: true,type:"string",validation: { required: true}  },
+                                    "userId": { editable: true,validation: { required: true} },
+									                  "recordIp":{editable: true,validation: { required: true} },
+                                    "giftId":{editable: true,type: "number" ,validation: { required: true} },
+									                  "writeTime":{ editable: true,type: "date" , validation: { required: true}},
+                                }
+                            }
+                        }
+                    });
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    navigatable: true,
+                    pageable: true,
+                    height: 2000,
+                    toolbar: ["create"],
+                    columns: [
+                        { 
+							field: "_id",
+							title: "抽奖记录id", 
+						},
+						{ 
+							field: "clientId",
+							title: "商业用户", 
+						},
+						{ 
+							field: "lotteryId",
+							title: "抽奖活动", 
+						},
+						{ 
+							field: "userId",
+							title: "用户id" 
+						},
+						{ 
+							field: "recordIp",
+							title: "抽奖ip" 
+						},
+						{ 
+							field: "prizeId",
+							title: "奖品id" 
+						},
+            { 
+              field: "giftId",
+              title: "获奖id" 
+            },
+						{ 
+							field: "writeTime",
+							title: "抽奖时间"
+						},
+						{ command: ["edit", "destroy"], title: "&nbsp;", width: "160px" }],
+                    editable: "popup",
+                    filterable:true,
+                    edit:function(e){
+
+                      
+                    	$.post(DataHost + '/manger/client/read', {skip:0, pageSize:1000}, function(d){
+                    		var d = d.Data;
+                    		d.unshift({"_id":"","desc":"选择商业用户"})
+	                    	$('input[name="clientId"]').kendoDropDownList({
+		                        dataTextField: "desc",
+		                        dataValueField: "_id",
+		                        dataSource: d
+	                    	});
+	                    }, 'json');
+
+                       $.post(DataHost + '/manger/lottery/getLotteryList', {skip:0, pageSize:1000}, function(d2){
+                            var d2 = d2;
+                            d2.unshift({"_id":"","title":"选择抽奖活动"})
+                            $('input[name="lotteryId"]').kendoDropDownList({
+                                dataTextField: "title",
+                                dataValueField: "_id",
+                                dataSource: d2
+                            });
+                        }, 'json');
+	                    	
+  	                }		
+                });
+									
+});
+
+</script>
+<% include inc/foot %>

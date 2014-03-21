@@ -1,0 +1,130 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+ $(function () {
+	 
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                    	type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 20,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/user/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/user/update",
+                                type: "post"
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/user/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/user/create",
+                                type: "post"
+                            }
+                        },
+                        schema: {
+                        	total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "clientId": { editable: true, validation: { required: true}  },
+                                    "mobile": { editable: true, type:"number" },
+									"name":{editable: true },
+                                    "regTime": {editable: false,type: "date"},
+                                    "regIp": {editable: true },
+                                    "loginTimes":{editable: true,type: "number" },
+									"agent":{ editable: true },
+									"lastLoginTime":{editable: false,type: "date"},
+									"appUserId": {editable: true },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+                <% if (session.isWidgetAdmin) { %>
+                    var toolbarAry = ["create"];
+                    var commandAry = ["edit", "destroy"];
+                <% } %>
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 2000,
+                    toolbar: toolbarAry,
+                    columns: [
+                        { 
+							field: "_id",
+							title: "用户id", 
+						},
+						{ 
+							field: "clientId",
+							title: "所属商业用户id", 
+						},
+						{ 
+							field: "mobile",
+							title: "手机", 
+						},
+						{ 
+							field: "name",
+							title: "用户名" 
+						},
+						{ 
+							field: "regTime",
+							title: "注册日期"
+						},
+						{ 
+							field: "regIp",
+							title: "注册ip"
+						},
+						{ 
+							field: "loginTimes",
+							title: "登录次数"
+						},
+						{ 
+							field: "agent",
+							title: "用户设备",
+						},
+						{ 
+							field: "lastLoginTime",
+							title: "上次登录时间",
+						},
+						{
+							field:"appUserId",
+							title: "用户应用ID",
+						},
+						{ command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: "popup",
+                    edit:function(e){
+	                    $.post(DataHost + '/manger/client/read', {skip:0, pageSize:100}, function(d){
+	                    	var d = d.Data;
+                    		d.unshift({"_id":"","desc":"选择商业用户"})
+	                    	$('input[name="clientId"]').kendoDropDownList({
+		                        dataTextField: "desc",
+		                        dataValueField: "_id",
+		                        dataSource: d
+	                    	});
+	                    }, 'json');
+                    },
+                    filterable:true			
+                });
+									
+});
+
+</script>
+<% include inc/foot %>

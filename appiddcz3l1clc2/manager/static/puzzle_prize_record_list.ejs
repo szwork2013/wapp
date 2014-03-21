@@ -1,0 +1,120 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+ $(function () {
+	 
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                    	type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 20,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/puzzlePrizeRecord/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/puzzlePrizeRecord/update",
+                                type: "post"
+                            },
+                             create: {
+                                url: DataHost + "/manger/puzzlePrizeRecord/create",
+                                type: "post"
+                            },
+                            destroy: {
+                                url:DataHost + "/manger/puzzlePrizeRecord/destroy",
+                                type: "post"
+                            }
+                        },
+                        schema: {
+                        	total: "Total",
+                           	data: "Data",
+                            model: {
+                        	    id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "recordId": { editable: true, validation: { required: true}},
+                                    "clientId": { editable: true, validation: { required: true}},
+                                    "puzzleId": { editable: true,validation: { required: true} },
+                                    "prizeId": { editable: true,validation: { required: true} },
+                                    "userId": { editable: true,validation: { required: true} },
+                                    "recordIp": { editable: true},
+                                    "giftId":{editable: true,type: "number" ,validation: { required: true} },
+									"writeTime":{editable: true,type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    navigatable: true,
+                    pageable: true,
+                    height: 2000,
+                    toolbar: ["create"],
+                    columns: [
+                        { 
+							field: "_id",
+							title: "领奖记录id", 
+						},
+                        { 
+                            field: "recordId",
+                            title: "游戏记录id", 
+                        },
+						{ 
+							field: "clientId",
+							title: "商业用户", 
+						},
+						{ 
+							field: "puzzleId",
+							title: "猜图活动", 
+						},
+						{ 
+							field: "prizeId",
+							title: "奖品id" 
+						},
+						{ 
+							field: "userId",
+							title: "用户id" 
+						},
+						{ 
+							field: "recordIp",
+							title: "记录ip" 
+						},
+                        { 
+                          field: "giftId",
+                          title: "获奖id" 
+                        },
+						{ 
+							field: "writeTime",
+							title: "写入时间"
+						},
+						{ command: ["edit", "destroy"], title: "&nbsp;", width: "160px" }],
+                    editable: "popup",
+                    filterable:true,
+                    edit:function(e){
+                    	$.post(DataHost + '/manger/client/read', {skip:0, pageSize:1000}, function(d){
+                    		var d = d.Data;
+                    		d.unshift({"_id":"","desc":"选择商业用户"})
+	                    	$('input[name="clientId"]').kendoDropDownList({
+		                        dataTextField: "desc",
+		                        dataValueField: "_id",
+		                        dataSource: d
+	                    	});
+	                    }, 'json');
+	                    	
+  	                }		
+                });
+									
+});
+
+</script>
+<% include inc/foot %>

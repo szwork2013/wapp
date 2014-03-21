@@ -1,0 +1,171 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+ $(function () {
+	 
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                    	type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 20,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/vote/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/vote/update",
+                                type: "post"
+                            },
+                             create: {
+                                url: DataHost + "/manger/vote/create",
+                                type: "post"
+                            },
+                            destroy: {
+                                url:DataHost + "/manger/vote/destroy",
+                                type: "post"
+                            }
+                        },
+                        schema: {
+                        	total: "Total",
+                           	data: "Data",
+                            model: {
+                        	    id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "clientId": { editable: true, validation: { required: true}},
+                                    "title": { editable: true },
+									"imgUrl":{editable: true },
+									"thumbnailUrl":{editable: true },
+                                    "desc": {editable: true},
+                                    "count": {editable: true, type:"number" },
+                                    "startTime":{editable: true,type: "date" },
+									"endTime":{ editable: true,type: "date" },
+									"sort":{editable: true, type:"number"},
+									"multi":{ editable: true,type:"number" },
+									"interval":{ editable: true,type:"number" },
+									"voteId":{editable: true,type:"string"},
+                                }
+                            }
+                        }
+                    });
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    navigatable: true,
+                    pageable: true,
+                    height: 2000,
+                    toolbar: ["create"],
+                    columns: [
+                        { 
+							field: "_id",
+							title: "投票id", 
+						},
+						{ 
+							field: "clientId",
+							title: "所属商业用户id", 
+						},
+						{ 
+							field: "title",
+							title: "标题", 
+						},
+						{ 
+							field: "imgUrl",
+							title: "图片路径" 
+						},
+						{ 
+							field: "thumbnailUrl",
+							title: "缩略图路径" 
+						},					
+						{ 
+							field: "desc",
+							title: "描述"
+						},
+						{ 
+							field: "count",
+							title: "投票量"
+						},
+						{ 
+							field: "startTime",
+							title: "开始时间"
+						},
+						{ 
+							field: "endTime",
+							title: "结束时间",
+						},
+						{ 
+							field: "multi",
+							title: "允许投几票",
+						},
+						{ 
+							field: "voteId",
+							title: "所属投票id",
+						},
+						{ 
+							field: "interval",
+							title: "投票间隔",
+						},
+						{ 
+							field: "sort",
+							title: "排序",
+						},
+						{ command: ["edit", "destroy"], title: "&nbsp;", width: "160px" }],
+                    editable: "popup",
+                    filterable:true,
+                    edit:function(e){
+                    	$.post(DataHost + '/manger/client/read', {skip:0, pageSize:1000}, function(d){
+                    		var d = d.Data;
+                    		d.unshift({"_id":"","desc":"选择商业用户"})
+	                    	$('input[name="clientId"]').kendoDropDownList({
+		                        dataTextField: "desc",
+		                        dataValueField: "_id",
+		                        dataSource: d
+	                    	});
+	                    }, 'json');
+	                    	$.post(DataHost + '/manger/vote/getGroup', {}, function(d2){
+	                    			var d2 = d2||[];
+		                    		d2.unshift({"_id":null, "title":"一级投票group"});
+
+		                    		$('input[name="voteId"]').kendoDropDownList({
+				                        dataTextField: "title",
+				                        dataValueField: "_id",
+				                        dataSource: d2
+			                        });
+
+		                    		var intervalData = [
+					                	{ text: "不设置间隔", day: 0 },
+				                        { text: "1天", day: 86400000 },
+				                        { text: "2天", day: 86400000*2 },
+				                        { text: "3天", day: 86400000*3 },
+				                        { text: "4天", day: 86400000*4 },
+				                        { text: "5天", day: 86400000*5 },
+				                        { text: "6天", day: 86400000*6 },
+				                        { text: "7天", day: 86400000*7 }
+				                    ];
+
+				                    // create DropDownList from input HTML element
+				                    $('input[name="interval"]').kendoDropDownList({
+				                        dataTextField: "text",
+				                        dataValueField: "day",
+				                        dataSource: intervalData
+				                    });
+
+	                    	}, 'json');
+
+			                
+
+	                    }		
+                });
+									
+});
+
+</script>
+<% include inc/foot %>
