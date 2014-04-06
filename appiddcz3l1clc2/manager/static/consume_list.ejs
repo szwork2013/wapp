@@ -1,0 +1,291 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">商品id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appId" >开发商</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="name" >商品名称</label>
+            </div>
+            <div data-container-for="name" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="name" data-bind="value:name" required="required" data-required-msg="请填写商品名称" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="price" >商品价格</label>
+            </div>
+            <div data-container-for="price" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="price" data-bind="value:price" required="required" data-required-msg="请填写商品价格" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="totalNumber">剩余数量</label>
+            </div>
+            <div data-container-for="totalNumber" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="totalNumber" data-bind="value:totalNumber" required="required" data-required-msg="请填写剩余数量" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="imgUrl">商品图片</label>
+            </div>
+            <div data-container-for="imgUrl" class="k-edit-field w-800-r">
+                <input type="file" name="upload_file" id="upload_file">
+                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="imgUrl" data-bind="value:imgUrl">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="imgUrl"></label>
+            </div>
+            <div data-container-for="imgUrl" class="k-edit-field w-800-r">
+            <a href="" id="thumba" target="_blank">
+               <img  id="thumb" class="thumb"/>
+            </a>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="desc" >开发商介绍</label>
+            </div>
+            <div data-container-for="desc" class="k-edit-field w-800-r">
+               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="desc" data-bind="value:desc"></textarea>
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="isShow">是否启用</label>
+            </div>
+            <div data-container-for="isShow" class="k-edit-field w-800-r">
+               <input type="number" id="isShow_inp" class="k-input k-textbox w-50-inp" name="isShow" data-bind="value:isShow" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/shop/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/shop/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/shop/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/shop/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "appId": { editable: true },
+                                    "name": { editable: true },
+                                    "desc": { editable: true},
+                                    "imgUrl": { editable: true},
+                                    "price": { editable: true},
+                                    "isShow": { editable: true },
+                                    "totalNumber":{editable: true},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加商品" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+            $.post('/manger/app/getList',{},function(data_ary){
+                var d = [{
+                    text:'请选择',
+                    value:''
+                }]
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'商品id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商", 
+                            values:d
+                        },
+                         { 
+                            field: "name",
+                            title: "商品名称", 
+                        },
+                         { 
+                            field: "desc",
+                            title: "商品描述",
+                            hidden:true
+                        },
+                         { 
+                            field: "imgUrl",
+                            title: "商品图片",
+                            template: "<img src='#=imgUrl#' width=50 height=50/>"
+                        },
+                         { 
+                            field: "price",
+                            title: "商品价格",
+                        },
+                        { 
+                            field: "isShow",
+                            title: "是否启用", 
+                            values:[
+                              { text: "启用", value: 1 },
+                              { text: "不启用", value: 0 }
+                            ]
+                        },
+                        { 
+                            field: "totalNumber",
+                            title: "商品剩余", 
+                        },                      
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+
+                         $("#intro").kendoEditor({
+                                tools: window.editor_tools,
+                                messages: window.editor_messages
+                         });              
+
+                         var maxFiles = 1;
+                         $("#upload_file").kendoUpload({
+                                async: {
+                                    saveUrl: "/manger/upload/save",
+                                    removeUrl: "/manger/upload/remove",
+                                    autoUpload: true
+                                },
+                                success:function(e){
+                                    var path = e.response.result;
+                                    
+                                    $('#thumb').prop('src',path);
+                                    $('#thumba').prop('href', path)
+                                    $('#appPicture_inp').val(path).change()
+                                },
+                                localization:{
+                                    select: '请选择图片',
+                                    remove: '',
+                                    cancel: '',
+                                    done:'完成'
+                                },
+                                select: function(e) {
+                                    var len = $('span.k-filename').length;
+                                    if(len >= maxFiles) {
+                                      e.preventDefault();
+                                      alert("最多上传: " + maxFiles+ ' 张图片');
+                                    }
+                                  }
+                            });
+
+                        $('#writeTime').kendoDateTimePicker();
+                        var filepath = $('#appPicture_inp').val();
+                         $('#thumb').prop('src',filepath);
+                         $('#thumba').prop('href', filepath)
+
+
+
+                         window.dropdown_init()
+
+                         window.dropdown_init($("#appId_inp"), d)
+
+                    },
+                    filterable:window.filter_obj         
+                });
+
+            })
+                
+                                    
+});
+
+</script>
+<% include inc/foot %>

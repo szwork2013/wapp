@@ -1,0 +1,133 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script id="popup_editor" type="text/x-kendo-template">
+
+<div class="k-edit-label"><label for="admin">管理员</label></div>
+<div data-container-for="admin" class="k-edit-field"><input type="text" class="k-input k-textbox" name="admin" required="required" data-bind="value:admin"></div>
+
+
+
+</script>
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/admin/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/admin/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/admin/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/admin/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "admin": { editable: true, type:'string',validation: { required: {message: "请填写管理员"}}  },
+                                    "password": { editable: true, type:'string', validation: { required: {message: "请填写密码"}}},
+                                    "isShow":{editable: true, type:"number"},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加管理员" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'管理员id',
+                            hidden:true
+                        },
+                        { 
+                            field: "admin",
+                            title: "管理员", 
+                        },
+                        { 
+                            field: "password",
+                            title: "密码", 
+                        },
+                        { 
+                            field: "isShow",
+                            title: "是否启用",
+                            values:[
+                              { text: "启用", value: 1 },
+                              { text: "不启用", value: 0 }
+                            ]
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "写入日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        window : {
+                                title: "添加/修改",
+                            }
+                        },
+                    edit:function(e){
+                           
+
+                            window.dropdown_init($("input[name="isShow"]"), window.is_show_array)  
+         
+                    },
+                    //filterable:true         
+                });
+                                    
+});
+
+</script>
+<% include inc/foot %>

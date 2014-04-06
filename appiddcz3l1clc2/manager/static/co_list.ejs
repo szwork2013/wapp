@@ -1,0 +1,392 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">小区id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appId" >开发商名称</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" id="appId_inp" name="appId" data-bind="value:appId" required="required" data-required-msg="请填写开发商名称" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coName" >小区名</label>
+            </div>
+            <div data-container-for="coName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="coName" data-bind="value:coName" required="required" data-required-msg="请填写开小区名" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coCity" >城市</label>
+            </div>
+            <div data-container-for="coCity" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="coCity" data-bind="value:coCity" required="required" data-required-msg="请填写城市" aria-invalid="true">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coLoc">经纬度</label>
+            </div>
+            <div data-container-for="coLoc" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="coLoc" data-bind="value:coLoc" required="required" data-required-msg="请填写经纬度" aria-invalid="true" placeholder="经度,维度，以逗号,分割">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coAddr" >地址</label>
+            </div>
+            <div data-container-for="coAddr" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="coAddr" data-bind="value:coAddr" required="required" data-required-msg="请填写地址" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coUrl" >官网地址</label>
+            </div>
+            <div data-container-for="coUrl" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="coUrl" data-bind="value:coUrl" required="required" data-required-msg="请填写官网地址" aria-invalid="true">
+            </div>
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coPictrue">小区图片</label>
+            </div>
+            <div data-container-for="coPictrue" class="k-edit-field w-800-r" id="coPictrue_box">
+                <input type="file" name="upload_file" id="upload_file">
+                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="coPictrue" data-bind="value:coPictrue">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coPictrue"></label>
+            </div>
+            <div data-container-for="coPictrue" class="k-edit-field w-800-r">
+            <a href="" id="thumba" target="_blank">
+               <img  id="thumb" class="thumb"/>
+            </a>
+            </div>
+
+
+
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coLogo">小区LOGO</label>
+            </div>
+            <div data-container-for="coLogo" class="k-edit-field w-800-r" id="coLogo_box">
+                <input type="file" name="upload_file" id="upload_file2">
+                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp2" name="coLogo" data-bind="value:coLogo">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coLogo"></label>
+            </div>
+            <div data-container-for="coLogo" class="k-edit-field w-800-r">
+            <a href="" id="thumba2" target="_blank">
+               <img  id="thumb2" class="thumb"/>
+            </a>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="coDesc" >开发商介绍</label>
+            </div>
+            <div data-container-for="coDesc" class="k-edit-field w-800-r">
+               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="coDesc" data-bind="value:coDesc"></textarea>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="isShow">是否启用</label>
+            </div>
+            <div data-container-for="isShow" class="k-edit-field w-800-r">
+               <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/co/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/co/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/co/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/co/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "appId": { editable: true, type:'string',},
+                                    "coName": { editable: true, type:'string',},
+                                    "coCity": { editable: true, type:'string',},
+                                    "coLoc": { editable: true, type:'string', },
+                                    "coAddr": { editable: true, type:'string',},
+                                    "coDesc":{editable: true, type:"string", },
+                                    "coPictrue":{editable: true, type:"string", },
+                                    "coLogo":{editable: true, type:"string", },
+                                    "coUrl":{editable: true, type:"string", },
+                                    "isShow": { editable: true,type:"number" },
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加小区" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+
+
+
+
+ $.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+                window.appd = d;
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'小区id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商", 
+                            values:window.appd,
+                        },
+                         { 
+                            field: "coName",
+                            title: "小区名", 
+                        },
+                         { 
+                            field: "coCity",
+                            title: "城市", 
+                        },
+                         { 
+                            field: "coLoc",
+                            title: "经纬度", 
+                            hidden:true
+                        },
+                         { 
+                            field: "coAddr",
+                            title: "地址", 
+                        },
+                        { 
+                            field: "coDesc",
+                            title: "描述", 
+                            hidden:true
+                        },
+                         { 
+                            field: "coPictrue",
+                            title: "图片", 
+                            hidden:true
+                        },
+                         { 
+                            field: "coLogo",
+                            title: "LOGO", 
+                            template: "<img src='#=coLogo#' width=50 height=50/>"
+                        },
+                         { 
+                            field: "coUrl",
+                            title: "楼盘官网", 
+                            hidden:true
+                        },
+                        { 
+                            field: "isShow",
+                            title: "是否启用", 
+                            values:window.is_show_array
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}",
+                            hidden:true
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+
+                         $("#intro").kendoEditor({
+                                tools: window.editor_tools,
+                                messages: window.editor_messages
+                         });
+
+   
+
+                         var maxFiles = 1;
+                         $("#upload_file").kendoUpload({
+                                async: {
+                                    saveUrl: "/manger/upload/save",
+                                    removeUrl: "/manger/upload/remove",
+                                    autoUpload: true
+                                },
+                                success:function(e){
+                                    var path = e.response.result;
+                                    
+                                    $('#thumb').prop('src',path);
+                                    $('#thumba').prop('href', path)
+                                    $('#appPicture_inp').val(path).change()
+                                },
+                                localization:{
+                                    select: '请选择图片',
+                                    remove: '',
+                                    cancel: '',
+                                    done:'完成'
+                                },
+                                select: function(e) {
+                                    var len = $('#coPictrue_box').find('span.k-filename').length;
+                                    if(len >= maxFiles) {
+                                      e.preventDefault();
+                                      alert("最多上传: " + maxFiles+ ' 张图片');
+                                    }
+                                  }
+                            });
+
+
+                        var maxFiles = 1;
+
+                         $("#upload_file2").kendoUpload({
+                                async: {
+                                    saveUrl: "/manger/upload/save",
+                                    removeUrl: "/manger/upload/remove",
+                                    autoUpload: true
+                                },
+                                success:function(e){
+                                    var path = e.response.result;
+                                    
+                                    $('#thumb2').prop('src',path);
+                                    $('#thumba2').prop('href', path)
+                                    $('#appPicture_inp2').val(path).change()
+                                },
+                                localization:{
+                                    select: '请选择图片',
+                                    remove: '',
+                                    cancel: '',
+                                    done:'完成'
+                                },
+                                select: function(e) {
+                                    var len = $('#coLogo_box').find('span.k-filename').length;
+                                    if(len >= maxFiles) {
+                                      e.preventDefault();
+                                      alert("最多上传: " + maxFiles+ ' 张图片');
+                                    }
+                                  }
+                            });
+
+
+                        $('#writeTime').kendoDateTimePicker();
+
+                        var filepath = $('#appPicture_inp').val();
+                         $('#thumb').prop('src',filepath);
+                         $('#thumba').prop('href', filepath)
+
+                         var filepath2 = $('#appPicture_inp2').val();
+                         $('#thumb2').prop('src',filepath2);
+                         $('#thumba2').prop('href', filepath2)
+
+
+
+                        window.dropdown_init($("#appId_inp"), d)
+                        window.dropdown_init()
+
+                   },
+                   filterable:window.filter_obj        
+                });
+
+
+    })                                  
+});
+
+</script>
+<% include inc/foot %>

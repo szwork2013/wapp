@@ -1,0 +1,204 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        filter: [
+                            { field: "scoreType", operator: "eq", value: 1 },
+                        ],
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/score/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/score/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/score/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/score/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                     userId:{ editable: false},//此用户在数据库中的_id
+                                     userMobile:{ editable: false},
+                                     userSex:{ editable: false },
+                                     openId:{ editable: false,},
+                                     appId:{ editable: false },
+                                     scoreGuid:{ editable: false},
+                                     scoreDetail:{ editable: false, type:"number" },
+                                     scoreType:{ editable: false ,type:"number"},
+                                     scoreWay:{ editable: false },
+                                     scoreCode1:{ editable: false },
+                                     scoreCode2:{ editable: false },
+                                     scoreCode3:{ editable: false },
+                                     scoreCode4:{ editable: false },
+                                     scoreCode5:{ editable: false },
+                                     "writeTime": {editable: false, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ /*
+                    var toolbarAry = [
+                                { name: "create", text: "添加积分流水" }
+                              ]
+*/
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "详细", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+
+
+ $.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+                window.appd = d;
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'获取积分id',
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreGuid",
+                            title: "流水号", 
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商", 
+                            values:window.appd,
+                        },
+                         { 
+                            field: "openId",
+                            title: "微信id", 
+                        },
+                        { 
+                            field: "userId",
+                            title: "真实姓名", 
+                        },                
+                        { 
+                            field: "userMobile",
+                            title: "手机号码", 
+                        }, 
+                               
+                         { 
+                            field: "scoreDetail",
+                            title: "获取积分数", 
+                        },
+                        { 
+                            field: "scoreType",
+                            title: "积分增减",
+                            values:[
+                              { text: "获取", value: 1 },
+                              { text: "消费", value: 0 }
+                            ],
+                            filterable:false,
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreWay",
+                            title: "获取方式",
+                        },
+                        { 
+                            field: "scoreCode1",
+                            title: "积分码1",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode2",
+                            title: "积分码2",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode3",
+                            title: "积分码3",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode4",
+                            title: "积分码4",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode5",
+                            title: "积分码5",
+                            hidden:true
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        
+                        window : {
+                                title: "详细",
+                            }
+                        },
+                    edit:function(e){
+
+
+                    },
+                    //filterable:true         
+                });
+
+    })
+                                    
+});
+
+</script>
+<% include inc/foot %>

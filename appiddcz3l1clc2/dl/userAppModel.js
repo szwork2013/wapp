@@ -1,0 +1,57 @@
+var mongoose =require('./db_conn.js');
+var Schema = mongoose.Schema;
+
+
+var obj = { //定义结构
+      userId:{ type:String,required:true}, 				   //此用户在数据库中的_id
+      openId:{type:String,required:true},				  //微信id
+      appId:{type:String,required:true},                  //表示用户是从哪个微信项目绑定的
+      appUserCity:{type:String},            //用户物业所在城市
+      appUserCommunity:{type:String},            //用户物业所在小区
+      appUserBuilding:{type:String},            //用户物业所在楼层，单元号，房号
+      appCardNumber:{type:String,required:true,default:''},            //用户会员卡
+      appUserType:{type:Number,required:true,default:0},               //0表示用户未认证，1表示认证会员（没有填写小区），2表示vip认证会员（填写小区）
+	    isNewSubmit:{type:Number,required:true,default:0},               //新的验证，1表示用户提交了信息请求验证，0表示默认或已审核，2表示用户请求了验证被驳回不通过
+      writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
+}
+
+var objSchema = new Schema(obj);
+
+objSchema.statics.findByObj = function(obj,cb){
+	var obj = obj || {};
+	return this.find(obj, function(err,doc){
+    if(err) logger.error('DB error', err);
+    cb(err,doc)
+  });
+}
+
+objSchema.statics.insertOneByObj = function (obj,cb) {
+	var obj = obj || {};
+ 	return this.create(obj, function(err,doc){
+    if(err) logger.error('DB error', err);
+    cb(err,doc)
+  })
+}
+
+objSchema.statics.findAll = function (obj,skip,pagesize,cb) { 
+       return this.find(obj)
+             .limit(pagesize)
+             .skip(skip)
+             .sort({"_id":-1})
+             .exec(cb);
+}
+
+objSchema.statics.countAll = function (obj,cb) { 
+       return this.count(obj, cb);
+}
+
+objSchema.statics.createOneOrUpdate = function (query, update, cb) { 
+    return this.findOneAndUpdate(query, update, {"upsert":true}, cb); 
+}
+
+objSchema.statics.destroy = function (query, cb) { 
+    return this.remove(query, cb); 
+}
+
+
+module.exports = mongoose.model('wxUserApp', objSchema);

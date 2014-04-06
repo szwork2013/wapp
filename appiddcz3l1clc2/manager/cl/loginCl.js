@@ -1,7 +1,5 @@
-
 var UserLogin = {};
-var loginDl = require('../dl/loginDl.js');
-var clientDl = require('../dl/clientDl.js');
+var Dl = require('../../dl/adminModel.js');
 var utils = require('../../lib/utils.js');
 var salt = global.app.get('salt');
 
@@ -12,31 +10,21 @@ UserLogin.Login = function(req,res){
 UserLogin.UserLogin = function(req,res){
 
 	if(!req.body.admin || !req.body.password){
-		return	res.render('login', {error:'用户名或密码错误'})
+		return	res.render('login', {error:'用户名或密码未填写'})
 	}
-
-	loginDl.findByusername(req.body.admin, function(err,doc){
+	Dl.findAll({
+		admin:req.body.admin
+	}, 0,100,function(err,doc){
 		if(err) return res.send(500);
 
-		if(doc && doc.password === req.body.password){
+		if(doc &&  doc.length>0 && doc[0].password === utils.md5(req.body.password+salt)){
 			req.session.admin = req.body.admin;
-			req.session.clientId = 0;
-			req.session.isWidgetAdmin = 1;
 			res.redirect('/manger/main/')
 			return;
 		}
-		clientDl.findClientByName(req.body.admin,function(err,doc){
-			if(err) return res.send(500);
-			if(!doc || doc.password !== utils.md5(req.body.password+salt)){
-				return	res.render('login', {error:'用户名或密码错误'})
-			}
-			req.session.admin = req.body.admin;
-			req.session.clientId = doc._id;
-			req.session.isWidgetAdmin = 0;
-			res.redirect('/manger/main/');
-			return;
-		});
-		
+		else{
+			return	res.render('login', {error:'用户名或密码错误'})
+		}		
 	})
 	
 }

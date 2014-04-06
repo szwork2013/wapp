@@ -1,16 +1,20 @@
 var widget = {};
+var logger = require('./log.js')
 var init = require('./init.js').init;
 var path = require('path');
 var express = require('express');
 var app = express();
 var config = require('../config/config.js');
-global._widget = widget;//将global设置为全剧变量
-global._widget.app = app;
+var addRoute = require('./route.js')
 
 app.use(express.bodyParser(
 	{ keepExtensions: true, uploadDir: path.join(__dirname,'..','/upload/')}
 ));
 
-init(widget,app).listen(config.listenPort);
+addRoute(app);//增加路由配置
 
-widget.logger.info('server start on ' + config.listenPort)
+app.listen(config.listenPort);
+
+
+
+logger.info('server start on ' + config.listenPort)

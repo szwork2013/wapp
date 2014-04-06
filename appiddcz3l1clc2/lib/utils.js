@@ -246,51 +246,92 @@ filter[filters][2][value]:2
 */
 exports.kendoToMongoose = function(filter,clientId){
   var mObj = {};
-  var checkClientId = function(obj){
-    var obj = obj || {};
-    if(clientId){
-       obj["clientId"] = clientId;
-    }
-    return obj;
-  }
+
   if(!filter || !filter.filters || filter.filters.length == 0){
-    return checkClientId(mObj);
+    return mObj;
   }
   
-  var filterArray = filter.filters;
-  filterArray.forEach(function(v,i){
-      if(!v) return;
-      if(v.operator == 'eq'){
-          mObj[v.field] = v.value;
-      }
-      else if(v.operator == 'neq'){
-          mObj[v.field] = {"$ne":v.value};
-      }
-      else if(v.operator == 'startswith'){
-          mObj[v.field] = new RegExp('^' + v.value);
-      }
-      else if(v.operator == 'contains'){
-          mObj[v.field] = new RegExp(v.value);
-      }
-      else if(v.operator == 'doesnotcontain'){
-          mObj[v.field] = new RegExp('^(?!.*'+v.value+').*$');
-      }
-      else if(v.operator == 'endswith'){
-          mObj[v.field] = new RegExp(v.value+'$');
-      }
-      else if(v.operator == 'gte'){
-          mObj[v.field] =  { "$gte": v.value }
-      }
-      else if(v.operator == 'gt'){
-          mObj[v.field] =  { "$gt": v.value }
-      }
-      else if(v.operator == 'lte'){
-          mObj[v.field] =  { "$lte": v.value }
-      }
-      else if(v.operator == 'lt'){
-          mObj[v.field] =  { "$lt": v.value }
-      }
-      
-  })
-  return checkClientId(mObj);
+      var filterArray = filter.filters;
+
+  if(filter.logic == 'and'){
+      filterArray.forEach(function(v,i){
+          if(!v) return;
+          if(v.operator == 'eq'){
+              mObj[v.field] = v.value;
+          }
+          else if(v.operator == 'neq'){
+              mObj[v.field] = {"$ne":v.value};
+          }
+          else if(v.operator == 'startswith'){
+              mObj[v.field] = new RegExp('^' + v.value);
+          }
+          else if(v.operator == 'contains'){
+              mObj[v.field] = new RegExp(v.value);
+          }
+          else if(v.operator == 'doesnotcontain'){
+              mObj[v.field] = new RegExp('^(?!.*'+v.value+').*$');
+          }
+          else if(v.operator == 'endswith'){
+              mObj[v.field] = new RegExp(v.value+'$');
+          }
+          else if(v.operator == 'gte'){
+              mObj[v.field] =  { "$gte": v.value }
+          }
+          else if(v.operator == 'gt'){
+              mObj[v.field] =  { "$gt": v.value }
+          }
+          else if(v.operator == 'lte'){
+              mObj[v.field] =  { "$lte": v.value }
+          }
+          else if(v.operator == 'lt'){
+              mObj[v.field] =  { "$lt": v.value }
+          }
+          
+      })
+      //console.log(mObj)
+      return mObj;
+  }
+  else if(filter.logic == 'or'){
+      var orobj = {
+          "$or":[]
+      };
+      filterArray.forEach(function(v,i){
+          if(!v) return;
+          var mObj = {}
+          if(v.operator == 'eq'){
+              mObj[v.field] = v.value;
+          }
+          else if(v.operator == 'neq'){
+              mObj[v.field] = {"$ne":v.value};
+          }
+          else if(v.operator == 'startswith'){
+              mObj[v.field] = new RegExp('^' + v.value);
+          }
+          else if(v.operator == 'contains'){
+              mObj[v.field] = new RegExp(v.value);
+          }
+          else if(v.operator == 'doesnotcontain'){
+              mObj[v.field] = new RegExp('^(?!.*'+v.value+').*$');
+          }
+          else if(v.operator == 'endswith'){
+              mObj[v.field] = new RegExp(v.value+'$');
+          }
+          else if(v.operator == 'gte'){
+              mObj[v.field] =  { "$gte": v.value }
+          }
+          else if(v.operator == 'gt'){
+              mObj[v.field] =  { "$gt": v.value }
+          }
+          else if(v.operator == 'lte'){
+              mObj[v.field] =  { "$lte": v.value }
+          }
+          else if(v.operator == 'lt'){
+              mObj[v.field] =  { "$lt": v.value }
+          }
+          orobj["$or"].push(mObj)
+      })
+      //console.log(orobj)
+      return orobj;
+  }
+  return mObj;
 }
