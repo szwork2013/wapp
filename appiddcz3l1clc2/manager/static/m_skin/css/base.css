@@ -121,3 +121,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444',end
 	font-weight: bolder !important;
 
 }
+
+.app_sel_boc{
+	padding: 20px 0
+}
+.sync_button{
+	margin: 0 20px;
+}

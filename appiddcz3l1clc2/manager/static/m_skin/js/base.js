@@ -181,10 +181,26 @@ window.rec_status = [
               { text: "推荐不成功", value: 3 },
             ]
 
+window.reply_kind=[
+              { text: "文字回复", value: 1 },
+              { text: "图文回复", value: 2 }
+            ]
 
-window.dropdown_init = function($obj, $array){
+window.reply_type=[
+              { text: "关键字回复", value: 1 },
+              { text: "菜单回复", value: 2 }
+            ]
+
+window.menu_type=[
+              { text: "一级菜单", value: 1 },
+              { text: "二级菜单", value: 2 }
+            ]
+
+
+window.dropdown_init = function($obj, $array,onchange){
       var $obj = $obj || $("#isShow_inp")
       var $array = $array || window.is_show_array
+      var onchange = onchange || $.noop;
 
       var appid = $obj.val()
              var isFound = 0;
@@ -200,5 +216,7 @@ window.dropdown_init = function($obj, $array){
                     dataTextField: "text",
                     dataValueField: "value",
                     dataSource: $array,
-                });
+                    select:onchange,
+                })
+    
 }

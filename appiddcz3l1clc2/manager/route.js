@@ -13,6 +13,10 @@ var nearCl = require('./cl/nearCl.js')
 var serviceCl = require('./cl/serviceCl.js')
 var newsCl = require('./cl/newsCl.js')
 var suggestCl = require('./cl/suggestCl.js')
+var replyCl = require('./cl/replyCl.js')
+var menuCl = require('./cl/menuCl.js')
+
+
 var utils = require('../lib/utils.js')
 
 
@@ -150,6 +154,21 @@ var addroute = function(app){
 	app.post('/manger/suggest/create', checkLogin, suggestCl.create)
 	
 
+	//co
+	app.get('/manger/reply/list', checkLogin, replyCl.list)
+	app.post('/manger/reply/read', checkLogin, replyCl.read)
+	app.post('/manger/reply/update', checkLogin, replyCl.update)
+	app.post('/manger/reply/destroy', checkLogin, replyCl.destroy)
+	app.post('/manger/reply/create', checkLogin, replyCl.create)
+	app.post('/manger/reply/getList', checkLogin, replyCl.getList)
+
+
+	//menu
+	app.get('/manger/menu/list', checkLogin, menuCl.list)
+	app.post('/manger/menu/read', checkLogin, menuCl.read)
+	app.post('/manger/menu/update', checkLogin, menuCl.update)
+	app.post('/manger/menu/destroy', checkLogin, menuCl.destroy)
+	app.post('/manger/menu/create', checkLogin, menuCl.create)
 
 }
 

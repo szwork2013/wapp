@@ -5,11 +5,19 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构,奖品doc
   appId:{ type: String, required:true},        //此所属应用id
   replyTitle:{ type: String, required:true},   //回复标题
-  replyPicture:{type: String, required:true},  //回复图片地址
-  replyDesc:{ type: String, required:true},    //回复描述
-  replayBinder:{type:String, required:true},   //绑定的菜单名称
-  replayUrl:{type:String, required:true},      //跳转地址
-  writeTime:{ type: Date, default: function(){return Date.now()}}, //奖品录入时间
+  replyUrl:{type:String, required:true},      //跳转地址
+  replyDesc:{ type: String, required:true,default:''},    //回复描述
+
+  replyType:{type:Number,required:true,default:1}, //回复类型，1表示关键字回复，2表示菜单回复
+  replyKey:{ type: String, required:true,default:''},    //关键字
+  
+  replyKind:{type:Number,required:true,default:1}, //回复类型，1文字回复，2图文回复
+
+  replyPicture:{type: String, required:true,default:''},  //回复图片地址
+   
+  
+  isShow:{type:Number,required:true,default:1},                        //1表示启用，0表示不启用
+  writeTime:{ type: Date, default: function(){return Date.now()}}, //录入时间
 }
 
 var objSchema = new Schema(obj);
