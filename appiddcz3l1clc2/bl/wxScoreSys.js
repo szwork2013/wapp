@@ -11,19 +11,20 @@ var obj = {}
 obj.registRule = function(qobj,cb){ //注册
 	qobj.scoreWay = 'registRule'
 	qobj.scoreDetail = 10
-	obj.addScoreHistory(qobj)
+	obj.addScoreHistory(qobj,cb)
 }
 
 obj.dayRule = function(qobj,cb){ //每日签到
 	qobj.scoreWay = 'dayRule';
 	qobj.scoreDetail = 10;
 	var now = Date.now();
-	var s = new Date(now - now % 1000*60*60*24);//今天0点的时间戳
-	var e = new Date(s+1000*60*60*24);//明天0点的时间戳
+	var s = moment().hour(0).minute(0).second(0).format('YYYY/MM/DD HH:mm:ss');
+	var e = moment().hour(23).minute(59).second(59).format('YYYY/MM/DD HH:mm:ss');
 
 	obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, s, e, function(err,doc){
 		if(err) return cb(err);
-		if(doc){//如果找到文档，则表示此用户已经签过到了
+		//console.log(doc)
+		if(doc && doc.length>0){//如果找到文档，则表示此用户已经签过到了
 			return cb('您已经签过到了')
 		}
 
@@ -33,29 +34,31 @@ obj.dayRule = function(qobj,cb){ //每日签到
 }
 
 obj.getHistoryByUserId = function(userId, cb){//根据用户id查询记录
-	scoreGetModel.findAll({userId:userId},0,100,function(err,doc){
+	scoreGetModel.findByObj({userId:userId},function(err,doc){
 		return cb(err,doc)
 	})
 }
 
 obj.getHistoryByUserIdAndRule = function(userId, rule, cb){//根据用户id和规则查询记录
-	scoreGetModel.findAll({
+	scoreGetModel.findByObj({
 		userId:userId,
-		scoreDetail:rule,
-		},0,100,function(err,doc){
+		scoreWay:rule,
+		},function(err,doc){
 			return cb(err,doc)
 	})
 }
 
 obj.getHistoryByStartAndEnd = function(userId, rule, s, e, cb){//根据用户id和规则查询记录
-	scoreGetModel.findAll({
+	//console.log(userId,rule,s,e)
+
+	scoreGetModel.findByObj({
 		userId:userId,
-		scoreDetail:rule,
+		scoreWay:rule,
 		writeTime:{
-			$gt:s,
-			$lt:e
+			"$gt":new Date(s)
 		}
-		},0,100,function(err,doc){
+		},function(err,doc){
+			//console.log(doc)
 			return cb(err,doc)
 	})
 }
@@ -67,10 +70,9 @@ obj.addScoreHistory = function(qobj,cb){ //插入获取积分流水表
 		if(err) return cb(err);
 		qobj.scoreGuid = guid;
 		
-		scoreGetModel.createOneOrUpdate{//插入获取积分流水
-			{
-				scoreType:-1
-			},qobj,function(err,doc){
+		scoreGetModel.insertOneByObj(//插入获取积分流水
+			qobj,
+			function(err,doc){
 				if(err) return cb(err);
 				userBl.addScore(qobj.userId, qobj.scoreDetail, function(err,doc){//用户获取积分，对用户表做加分的操作
 					if(err){
@@ -78,22 +80,23 @@ obj.addScoreHistory = function(qobj,cb){ //插入获取积分流水表
 					}
 					cb(err,doc)
 				})
-			}
-		}
-	})
+			})
+		})
+
 }
 
 
-obj.scoreRule = function(appId, userId, rule, cb){ //根据rule调用规则
-	if(!appid || !userid || !rule){
+obj.scoreRule = function(appId, userId, openId, rule, cb){ //根据rule调用规则
+	if(!appId || !userId || !rule){
 		return cb('appid userid rule can not be null');
 	}
-	if(!obj[rule] || 'function' typeof != obj[rule]){ //如果此次rule没有规则送积分
+	if(!obj[rule] || 'function' != typeof obj[rule]){ //如果此次rule没有规则送积分
 		return cb(null,null)
 	}
 	var qobj = {};
 	qobj.appId = appId;
 	qobj.userId = userId;
+	qobj.openId = openId;
 	qobj.scoreType = 1;
 	try{
 		obj[rule](qobj,cb);

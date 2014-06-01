@@ -1,0 +1,22 @@
+<% include inc/head %>
+<%
+  var title = '详细信息'
+%>
+<% include inc/top %>
+
+
+
+
+  <div id="NewsContent" class="NewsContent">
+      <h2><%= doc.appNewsTitle %> </h2>
+      <h4><%= doc.writeTime %></h4>
+      <p>
+          <%- doc.appNewsContent %>
+      </p>
+      <% doc.appNewsPicture.forEach(function(path){ %>
+      	<img src="<%= path %>" />
+      <% }) %>
+  </div>
+ <% include inc/footPowerBy %>  
+
+<% include inc/foot %>

@@ -1,0 +1,416 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>会员认证_闽南万客会_万科厦门网上销售中心</title>
+﻿<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'/>
+<link rel="stylesheet" type="text/css" href="./skin/jquery.mobile.structure-1.3.1.css">
+<link rel="stylesheet" type="text/css" href="./skin/jqm_theme.css">
+<link rel="stylesheet" href="./skin/custom.css" />
+<link rel="stylesheet" href="./skin/inside.css" />
+<script src="./skin/jquery-1.8.2.min.js"></script>
+<script>
+    $(document).bind("mobileinit", function () {
+        //$.mobile.defaultPageTransition = "flow"; //全局过渡动画效果
+        //$.mobile.defaultDialogTransition = "pop"; //全局弹框动画效果
+        $.mobile.ajaxEnabled = false;
+    });
+</script>
+<script type="text/javascript" src="./skin/WeChatJs.js"></script>
+<script type="text/javascript" src="./skin/jquery.mobile-1.3.1.min.js"></script>
+<script type="text/javascript" src="./skin/jquery.easing-1.3.js"></script>
+<script type="text/javascript" src="./skin/jquery.iosslider.js"></script><!--轮播-->
+<script type="text/javascript" src="./skin/iscroll.js"></script><!--滚动加载-->
+<!--<script type="text/javascript" src="/mobile/WebServices/Scripts/AjaxMethods.js"></script>-->
+<script type="text/javascript" src="./skin/Common.js"></script>
+<script type="text/javascript" src="./skin/PersonalCenter.js"></script>
+<script type="text/javascript">
+    var dateNow;
+    function setCalender(obj) {
+        var nTime = new Date(obj.replace(/-/g, "/"));
+        var nYear = nTime.getFullYear();
+        var nMonth = parseInt(nTime.getMonth(), 10) + 1;
+        var nDate = nTime.getDate();
+
+        //获取当月最后一天（下月第0天）
+        //var strLastDate = nTime.getFullYear() + "/" + nMonth + "/0";
+        //var lastDate = new Date(strLastDate);
+        //var allDate = parseInt(lastDate.getDate(), 10);
+        var allDate = getDaysByMonth(nYear, nMonth);
+        //alert(nTime + ":" + nYear + "|" + nMonth + "|" + nDate + "，" + allDate + "|" + dateNow);
+        //日期排版
+        var dateHtml = "";
+        var ldiv = "";
+        var rdiv = "";
+        for (var i = 1; i <= allDate; i++) {
+            if (nYear == dateNow.split('-')[0] && nMonth == dateNow.split('-')[1] && i == dateNow.split('-')[2]) {
+                dateHtml += "<li><a class=\"date_today\">" + i + "</a></li>";
+            }
+            else {
+                dateHtml += "<li><a>" + i + "</a></li>";
+            }
+        }
+        $("#ShowMonth").attr("ShowDate", nYear + "/" + nMonth + "/" + allDate);
+        $("#ShowMonth").html(nYear + "年" + nMonth + "月");
+        //计算1号前面有多少个空位
+        var strTimeBlank = nYear + "/" + nMonth + "/1";
+        var timeBlank = new Date(strTimeBlank);
+        var dayBlank = timeBlank.getDay();
+        for (var i = 0; i < dayBlank; i++) {
+            dateHtml = "<li></li>" + dateHtml;
+        }
+
+        $('.prevButton').unbind('click');
+        $(".prevButton").click(function () {
+            if (nMonth == 1) {
+                setCalender(nYear - 1 + "/" + 12 + "/" + getDaysByMonth(nYear - 1, 12));
+            }
+            else {
+                setCalender(nYear + "/" + (nMonth - 1) + "/" + getDaysByMonth(nYear, nMonth - 1));
+            }
+        });
+        $('.nextButton').unbind('click');
+        $(".nextButton").click(function () {
+            if (nYear == dateNow.split('-')[0] && nMonth == dateNow.split('-')[1]) {
+                return;
+            }
+            else {
+                if (nMonth == 12) {
+                    setCalender(nYear + 1 + "/" + 1 + "/" + getDaysByMonth(nYear + 1, 1));
+                }
+                else {
+                    setCalender(nYear + "/" + (nMonth + 1) + "/" + getDaysByMonth(nYear, nMonth + 1));
+                }
+            }
+        });
+        $(".slider_date").html(dateHtml);
+        getSignInRecord();
+    }
+
+    $(function () {
+        getNowDate();
+
+    });
+
+    /*获取当前时间*/
+    function getNowDate() {
+        dateNow = $.ajax({
+            url: "/mobile/WebServices/AjaxMethods.aspx",
+            type: "Post",
+            data: { "Type": "getservertime" },
+            async: false,
+            cache: false
+        }).responseText;
+        setCalender(dateNow);
+    }
+
+    /*获取当月天数*/
+    function getDaysByMonth(nYear, nMonth) {
+        if (nYear != 0 && nMonth != 0) {
+            daysCount = 30;
+            switch (nMonth) {
+                case 1:
+                    {
+                        daysCount = 31;
+                    }
+                    break;
+                case 3:
+                    {
+                        daysCount = 31;
+                    }
+                    break;
+                case 5:
+                    {
+                        daysCount = 31;
+                    }
+                    break;
+                case 7:
+                    {
+                        daysCount = 31;
+                    }
+                    break;
+                case 8:
+                    {
+                        daysCount = 31;
+                    }
+                    break;
+                case 10:
+                    {
+                        daysCount = 31;
+                    }
+                    break;
+                case 12:
+                    {
+                        daysCount = 31;
+                    }
+                    break;
+                case 2:
+                    {
+                        if (nYear % 400 == 0 || nYear % 4 == 0 && nYear % 100 != 0) {
+                            daysCount = 29;
+                        }
+                        else {
+                            daysCount = 28;
+                        }
+                    }
+                    break;
+            }
+            return daysCount;
+        }
+    }
+</script>
+</head>
+
+<body>
+<div data-role="page" id="shop">
+  <div id="header" data-role="header" data-id="header" class="header" data-position="fixed">
+    <div class="header_box_bj"></div>
+    <div class="header_box"> 
+      <!--<p class="home_titbtn"><a href="/mobile/index.shtml"><span>返回首页</span></a></p>-->
+      <h1 class="inside_tit fw white">会员中心</h1>
+      <!--<p class="menu"><a href="#" class="menu_btn"><span>导航</span></a></p>
+--> 
+    </div>
+    <script>
+$(function() {
+	$('.home_menu_bj').hide();
+	$('.home_menu_top').hide();
+            $('.menu_btn').click(
+                function () {
+                    $('.home_menu_bj').fadeIn(500);
+                    $('.home_menu_top').fadeIn(500);
+                    $('.home_menu').delay(500).animate({ 'top':'48px'}, 500);
+
+                }
+            );
+            $('.home_menu_bj').click(
+                function () {
+                    $('.home_menu_bj').fadeOut(500);
+                    $('.home_menu_top').fadeOut(500);
+                    $('.home_menu').animate({ 'top':'-233px'}, 500);
+                }
+            );
+        });
+</script>
+
+<div class="home_menu_top"></div>
+<div class="home_menu_bj clearfix">
+  <div id="home_menu" class="home_menu">
+    <div class="home_menu_box">
+      <ul class="f12 fw">
+        <li class="home_menu02"><a href="/mobile/member.shtml">会员中心</a></li>
+        <li class="home_menu03"><a href="/mobile/news.shtml">新闻中心</a></li>
+        <li class="home_menu04"><a href="/mobile/activities.shtml">会员活动</a></li>
+        <li class="home_menu05 mr0"><a href="/mobile/discount.shtml">最新优惠</a></li>
+        <li class="home_menu06"><a href="/mobile/registration.shtml">诚意登记</a></li>
+        <li class="home_menu07"><a href="/mobile/engineering.shtml">工程进度</a></li>
+        <li class="home_menu08"><a href="/mobile/repair.shtml">在线报修</a></li>
+        <li class="home_menu09 mr0"><a href="/mobile/phone.shtml">服务电话</a></li>
+        <li class="home_menu10"><a href="/mobile/property.shtml">热销楼盘</a></li>
+        <li class="home_menu11"><a href="/mobile/game.shtml">互动游戏</a></li>
+        <li class="home_menu12"><a href="/mobile/layout.shtml">推荐户型</a></li>
+        <li class="home_menu13 mr0"><a href="/mobile/shop.shtml">联盟商家</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+ 
+  </div>
+  <div data-role="content" class="inside_box fw" style="background:#fff;">
+  <li id="ShowMemberType" class="card_box card01 clearfix">
+            <div class="card_pic">
+              <p class="login_pic01"><img id="MemberPic" src=""></p>
+              <span class="login_txt01 white f12" id="MemberName"></span>
+              <span class="login_txt01 white f12" id="ActiveLevel"></span>
+            </div>
+            <div class="card_sn">
+              <p class="clear"></p>
+              <p class="white f12">证件号码：<span class="f14" id="IDNumber"></span></p>
+            </div>
+          </li>
+    <div class="weather_box clearfix">
+
+      <p class="weather_txt02 f14 l">您已累计获得<span class="red f20" id="SumScore"></span>积分</p>
+      <a class="check white l" href="javascript:signIn()" id="ShowSignIn">签到</a>
+      <a class="success white l" id="HasSignIn" style="display:none;"><span>√</span>已签到</a>
+    </div>
+    <ul class="integralList clearfix">
+    	<li class="cur"><a class="i1 cur" href="">查看积分</a></li>
+        <li><a class="i2" href="">签到积分说明</a></li>
+        <li><a class="i3" href="">签到记录</a></li>
+        <li><a class="i4" href="integral.shtml">兑付积分</a></li>
+    </ul>
+    <!--查看积分-->
+    <div>
+        <div class="changebox clearfix">
+        <table width="312" border="0" cellspacing="0" cellpadding="0" style=" margin-top:22px; font-size:14px;">
+          <tr style=" background:#ececec;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;"><b>积分类别</b></td>
+            <td height="28" align="center" valign="middle"><b>积分值</b></td>
+          </tr>
+          <tr style=" background:#fff;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">激活积分</td>
+            <td height="28" align="center" valign="middle" id="ActiveScore"></td>
+          </tr>
+          <tr style=" background:#ececec;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">参与活动积分</td>
+            <td height="28" align="center" valign="middle" id="JoinScore"></td>
+          </tr>
+          <tr style=" background:#fff;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">微信签到积分</td>
+            <td height="28" align="center" valign="middle" id="WechatScore"></td>
+          </tr>
+          <tr style=" background:#ececec;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">杂志投稿积分</td>
+            <td height="28" align="center" valign="middle" id="MagazineScore"></td>
+          </tr>
+          <tr style=" background:#fff;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">生日积分</td>
+            <td height="28" align="center" valign="middle" id="BirthdayScore"></td>
+          </tr>
+          <tr style=" background:#ececec;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">网上积分</td>
+            <td height="28" align="center" valign="middle" id="OnlineScore"></td>
+          </tr>
+          <tr style=" background:#fff;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">游戏积分</td>
+            <td height="28" align="center" valign="middle" id="GameScore"></td>
+          </tr>
+          <tr style=" background:#ececec;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;">其他积分</td>
+            <td height="28" align="center" valign="middle" id="OtherScore"></td>
+          </tr>
+          <tr style=" background:#fff;">
+            <td height="28" align="center" valign="middle" style=" border-right:#c5c5c5 1px solid;"><b>累计积分</b></td>
+            <td height="28" align="center" valign="middle"><b id="TotalScore"></b></td>
+          </tr>
+        </table>
+        </div>    
+        <!--签到积分说明-->
+        <div class="changebox clearfix" style="display:none;">
+    	    <div class="integralMsg">
+        	    <p><b>签到积分说明：</b>每月累计签到15次，可获得5分；
+			    <p>连续签到7天获得积分2分，连续签到15天获得积分3分，连续签到21天获得积分5分，连续签到30天获得积分10分。</p>
+			    <p style="color:#ff0015;">注：每月签到积分10分封顶</p>
+            </div>
+         </div>
+        <!--签到记录-->
+        <div class="changebox clearfix" style="display:none;">
+            <!--<div class = "date_iosSlider">敬请期待！</div>-->
+            <div class = "date_iosSlider">
+                <div class = "slider">
+                <div class = "item">
+                    <div class="month_top white">
+                    <p class="f12">我的签到记录</p>
+                    <p class="f30" id="ShowMonth" ShowDate=""></p>
+                    <p class="f12">本月签到<span class="f20" id="ShowSignCount"></span>次，获取<span class="f20" id="ShowSignScore"></span>分签到积分</p>
+                    </div>
+                    <ul class="slider_week">
+                    <li>Sun</li>
+                    <li>Mon</li>
+                    <li>Tue</li>
+                    <li>Wed</li>
+                    <li>Thu</li>
+                    <li>Fri</li>
+                    <li>Sat</li>
+                    </ul>
+                    <ul class="slider_date">
+                
+                    </ul>
+                </div>
+                </div>
+                <div class = "prevButton"></div>
+                <div class = "nextButton"></div>
+            </div>
+        </div>
+    </div>
+    <a id="ShowBlueRight" class="memberBtn1 lanka" href="javascript:;">缤纷蓝卡会员专享权益</a>
+    <a id="ShowGoldenRight" class="memberBtn1 jinka" href="javascript:;" style="display:none;">尊贵金卡会员专享权益</a>
+    
+    <div class="integralMsg slide1" style="display:none;">
+   		<p>若您为尚未购买或租赁万科开发物业的人士，您可于各售楼处、万客会活动现场索取书面入会申请表格，按要求填写后直接交给现场工作人员，或邮寄、传真至万客会，或登录万客会网站直接在网上填写并提交申请表格，即可成为蓝卡会员。</p>
+        <p>1.享受闽南万客会精选商家优惠；</p>
+		<p>2.获取厦门万科最新推出楼盘信息；</p>
+        <p>3.参与闽南万客会积分计划获得积分奖励；</p>
+		<p>4.享受闽南万客会精选商家优惠；</p>
+		<p>5.网上会员自助服务；</p> 
+		<p>6.参与闽南万客会蓝卡会员活动。</p>
+   	</div>
+    <div class="integralMsg slide2" style="display:none;">
+   		<p>若您是直接通过一手房市场或二手房市场购买过至少一套万科地产开发住宅或商业物业的业主，您可自动获得万客会金卡会员资格。</p>
+        <p>1.享受1%的购房优惠；</p>
+		<p>2.获取厦门万科最新推出楼盘信息；</p>
+        <p>3.参与闽南万客会积分计划获得积分奖励；</p>
+		<p>4.享受闽南万客会精选商家优惠；</p>
+		<p>5.获赠厦门万科刊物《万科家书》；</p> 
+		<p>6.网上会员自助服务；</p>
+        <p>7.参与闽南万客会金卡会员专享活动；</p>
+        <p>8.获邀参与闽南万客会年终答谢活动。</p>
+   	</div>
+    <a class="memberBtn2 l" href="shop.shtml">精选联盟商家</a><a class="memberBtn2 r" href="personInfo.shtml">修改个人资料</a>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getMemberInfo();
+            getMemberScoreInfo();
+
+            $(".date_iosSlider").iosSlider({
+                scrollbar: true,
+                snapToChildren: true,
+                desktopClickDrag: true,
+                scrollbarBorderRadius: 0,
+                scrollbar: false,
+                navPrevSelector: $(".prevButton"),
+                navNextSelector: $(".nextButton")
+            });
+            //$(".slider_date li a").click(function () {
+            //    $(this).addClass("sign");
+            //});
+        });
+    </script> 
+    <script type="text/javascript">
+        $('.integralList li').click(function () {
+            var index = $(this).index();
+            $(this).children().css('background-image', 'url(/mobile/images/i' + (index + 1) + 'c.png)');
+            $(this).addClass('cur').siblings().removeClass('cur');
+            $(this).children().addClass('cur').parent().siblings().children().removeClass('cur');
+            $('.changebox').eq(index).show().siblings().hide();
+        });
+        $('.i1').click(function () {
+            $('.i2').css('background-image', 'url(/mobile/images/i2.png)');
+            $('.i3').css('background-image', 'url(/mobile/images/i3.png)');
+            $('.i4').css('background-image', 'url(/mobile/images/i4.png)');
+            //getMemberScoreInfo();
+        });
+        $('.i2').click(function () {
+            $('.i1').css('background-image', 'url(/mobile/images/i1.png)');
+            $('.i3').css('background-image', 'url(/mobile/images/i3.png)');
+            $('.i4').css('background-image', 'url(/mobile/images/i4.png)');
+        });
+        $('.i3').click(function () {
+            $('.i1').css('background-image', 'url(/mobile/images/i1.png)');
+            $('.i2').css('background-image', 'url(/mobile/images/i2.png)');
+            $('.i4').css('background-image', 'url(/mobile/images/i4.png)');
+        });
+        $('.i4').click(function () {
+            $('.i1').css('background-image', 'url(/mobile/images/i1.png)');
+            $('.i2').css('background-image', 'url(/mobile/images/i2.png)');
+            $('.i3').css('background-image', 'url(/mobile/images/i3.png)');
+        });
+		$('.jinka').click(function(){
+				$('.slide1').slideToggle();
+				})
+		$('.lanka').click(function(){
+				$('.slide2').slideToggle();
+				})
+    </script>   
+  </div>
+  ﻿<div data-role="footer" class="footer">
+  <p class="tc fw black2 f14">Powered By <a href="http://m.juzhen.com" target="_blank" class="red">Matrix</a></p>
+</div>
+
+</div>
+</body>
+</html>

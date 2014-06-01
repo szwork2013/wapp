@@ -18,7 +18,23 @@ obj.read = function(req, res){
 	dl.findAll(filter, skip, pageSize, function(err,doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json(resObj);
-		resObj["Data"] = doc;
+		resObj["Data"]  = []
+
+		doc.forEach(function(docObj){
+			resObj["Data"].push({
+				_id:docObj._id,
+				appId:docObj.appId,
+				replyTitle:docObj.replyTitle,
+				replyUrl:docObj.replyUrl,
+				replyDesc:docObj.replyDesc,
+				replyType:docObj.replyType,
+				replyKey:docObj.replyKey.join(','),
+				replyKind:docObj.replyKind,
+				replyPicture:docObj.replyPicture,
+				isShow:docObj.isShow,
+				writeTime:docObj.writeTime
+			})
+		})
 
 		dl.countAll(filter,function(err,count){
 			if(err) return res.send(500,err);
@@ -37,10 +53,19 @@ obj.update = obj.create = function(req, res){
 	else{
 		query = {'writeTime':new Date('1970/1/1')}
 	}
-	if(req.models[0]["replyKind"] && req.models[0]["replyKind"] == 1){ //如果是使用文字回复
-		req.models[0]["replyPicture"] = ''
-	}
+
 	
+	if(req.models[0]["replyKey"] && req.models[0]["replyKey"].indexOf(',')){ //split replyKey
+		//console.log(req.models[0]["replyKey"])
+		req.models[0]["replyKey"] = req.models[0]["replyKey"].split(',');
+		req.models[0]["replyKey"] = req.models[0]["replyKey"].filter(function(v){
+				return !!v.toString().trim();
+		})
+	}
+	else if(req.models[0]["replyKey"]){//如果只传了单个replykey，则放入数组
+		req.models[0]["replyKey"] = [req.models[0]["replyKey"].trim()];
+	}
+
 	delete req.models[0]["_id"];
 
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){

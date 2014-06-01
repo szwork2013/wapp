@@ -43,6 +43,19 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
+                <label for="accountBuyNumber">帐号限购</label>
+            </div>
+            <div data-container-for="accountBuyNumber" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="accountBuyNumber" data-bind="value:accountBuyNumber" required="required" data-required-msg="请填写帐号限购" aria-invalid="true">
+               <br/>
+               <span>
+                    表示此商品每个帐号能够兑换的次数，如果设置-1表示不限购
+               </span>
+            </div>
+
+            
+
+            <div class="k-edit-label  w-800-l">
                 <label for="imgUrl">商品图片</label>
             </div>
             <div data-container-for="imgUrl" class="k-edit-field w-800-r">
@@ -50,14 +63,7 @@
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="imgUrl" data-bind="value:imgUrl">
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="imgUrl"></label>
-            </div>
-            <div data-container-for="imgUrl" class="k-edit-field w-800-r">
-            <a href="" id="thumba" target="_blank">
-               <img  id="thumb" class="thumb"/>
-            </a>
-            </div>
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="desc" >开发商介绍</label>
@@ -89,7 +95,7 @@
 <script>
  $(function () {
                 var toolbarAry = [
-                                { name: "create", text: "添加积分流水" }
+                                { name: "create", text: "添加商品" }
                               ]
                 var commandAry = [
                                 { name: "edit", text: {edit: "详细", update: "确定",  cancel: "取消"} },
@@ -140,6 +146,7 @@
                                     "desc": { editable: true},
                                     "imgUrl": { editable: true},
                                     "price": { editable: true},
+                                    "accountBuyNumber":{ editable: true},
                                     "isShow": { editable: true },
                                     "totalNumber":{editable: true},
                                     "writeTime": {editable: true, type: "date" },
@@ -206,7 +213,11 @@
                         { 
                             field: "totalNumber",
                             title: "商品剩余", 
-                        },                      
+                        }, 
+                        { 
+                            field: "accountBuyNumber",
+                            title: "账号限购", 
+                        },                               
                         { 
                             field: "writeTime",
                             title: "创建日期",
@@ -231,44 +242,15 @@
                                 messages: window.editor_messages
                          });              
 
-                         var maxFiles = 1;
-                         $("#upload_file").kendoUpload({
-                                async: {
-                                    saveUrl: "/manger/upload/save",
-                                    removeUrl: "/manger/upload/remove",
-                                    autoUpload: true
-                                },
-                                success:function(e){
-                                    var path = e.response.result;
-                                    
-                                    $('#thumb').prop('src',path);
-                                    $('#thumba').prop('href', path)
-                                    $('#appPicture_inp').val(path).change()
-                                },
-                                localization:{
-                                    select: '请选择图片',
-                                    remove: '',
-                                    cancel: '',
-                                    done:'完成'
-                                },
-                                select: function(e) {
-                                    var len = $('span.k-filename').length;
-                                    if(len >= maxFiles) {
-                                      e.preventDefault();
-                                      alert("最多上传: " + maxFiles+ ' 张图片');
-                                    }
-                                  }
-                            });
+                         
 
                         $('#writeTime').kendoDateTimePicker();
-                        var filepath = $('#appPicture_inp').val();
-                         $('#thumb').prop('src',filepath);
-                         $('#thumba').prop('href', filepath)
+
 
                         window.dropdown_init()
                         window.dropdown_init($("#appId_inp"), d)
 
-                       
+                       multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
 
                     },
                     filterable:window.filter_obj         

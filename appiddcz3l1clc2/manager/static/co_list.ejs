@@ -58,27 +58,20 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="coUrl" data-bind="value:coUrl" required="required" data-required-msg="请填写官网地址" aria-invalid="true">
             </div>
 
-
+            <div class="k-edit-label  w-800-l">
+                <label for="coTelphone" >售楼电话</label>
+            </div>
+            <div data-container-for="coTelphone" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="coTelphone" data-bind="value:coTelphone" required="required" data-required-msg="请填写售楼电话" aria-invalid="true">
+            </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="coPictrue">小区图片</label>
             </div>
             <div data-container-for="coPictrue" class="k-edit-field w-800-r" id="coPictrue_box">
                 <input type="file" name="upload_file" id="upload_file">
-                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="coPictrue" data-bind="value:coPictrue">
+                <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="coPictrue" data-bind="value:coPictrue">
             </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="coPictrue"></label>
-            </div>
-            <div data-container-for="coPictrue" class="k-edit-field w-800-r">
-            <a href="" id="thumba" target="_blank">
-               <img  id="thumb" class="thumb"/>
-            </a>
-            </div>
-
-
-
 
 
 
@@ -89,22 +82,6 @@
                 <input type="file" name="upload_file" id="upload_file2">
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp2" name="coLogo" data-bind="value:coLogo">
             </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="coLogo"></label>
-            </div>
-            <div data-container-for="coLogo" class="k-edit-field w-800-r">
-            <a href="" id="thumba2" target="_blank">
-               <img  id="thumb2" class="thumb"/>
-            </a>
-            </div>
-
-
-
-
-
-
-
 
             <div class="k-edit-label  w-800-l">
                 <label for="coDesc" >开发商介绍</label>
@@ -183,6 +160,7 @@
                                     "coPictrue":{editable: true, type:"string", },
                                     "coLogo":{editable: true, type:"string", },
                                     "coUrl":{editable: true, type:"string", },
+                                    "coTelphone":{editable: true, type:"string", },           
                                     "isShow": { editable: true,type:"number" },
                                     "writeTime": {editable: true, type: "date" },
                                 }
@@ -273,6 +251,12 @@
                             hidden:true
                         },
                         { 
+                            field: "coTelphone",
+                            title: "售楼电话", 
+                            hidden:true
+                        },
+
+                        { 
                             field: "isShow",
                             title: "是否启用", 
                             values:window.is_show_array
@@ -303,80 +287,12 @@
                          });
 
    
-
-                         var maxFiles = 1;
-                         $("#upload_file").kendoUpload({
-                                async: {
-                                    saveUrl: "/manger/upload/save",
-                                    removeUrl: "/manger/upload/remove",
-                                    autoUpload: true
-                                },
-                                success:function(e){
-                                    var path = e.response.result;
-                                    
-                                    $('#thumb').prop('src',path);
-                                    $('#thumba').prop('href', path)
-                                    $('#appPicture_inp').val(path).change()
-                                },
-                                localization:{
-                                    select: '请选择图片',
-                                    remove: '',
-                                    cancel: '',
-                                    done:'完成'
-                                },
-                                select: function(e) {
-                                    var len = $('#coPictrue_box').find('span.k-filename').length;
-                                    if(len >= maxFiles) {
-                                      e.preventDefault();
-                                      alert("最多上传: " + maxFiles+ ' 张图片');
-                                    }
-                                  }
-                            });
-
-
-                        var maxFiles = 1;
-
-                         $("#upload_file2").kendoUpload({
-                                async: {
-                                    saveUrl: "/manger/upload/save",
-                                    removeUrl: "/manger/upload/remove",
-                                    autoUpload: true
-                                },
-                                success:function(e){
-                                    var path = e.response.result;
-                                    
-                                    $('#thumb2').prop('src',path);
-                                    $('#thumba2').prop('href', path)
-                                    $('#appPicture_inp2').val(path).change()
-                                },
-                                localization:{
-                                    select: '请选择图片',
-                                    remove: '',
-                                    cancel: '',
-                                    done:'完成'
-                                },
-                                select: function(e) {
-                                    var len = $('#coLogo_box').find('span.k-filename').length;
-                                    if(len >= maxFiles) {
-                                      e.preventDefault();
-                                      alert("最多上传: " + maxFiles+ ' 张图片');
-                                    }
-                                  }
-                            });
-
-
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
+                        multiUpload($("#upload_file2"), $('#appPicture_inp2'), 1)
+                       
                         $('#writeTime').kendoDateTimePicker();
 
-                        var filepath = $('#appPicture_inp').val();
-                         $('#thumb').prop('src',filepath);
-                         $('#thumba').prop('href', filepath)
-
-                         var filepath2 = $('#appPicture_inp2').val();
-                         $('#thumb2').prop('src',filepath2);
-                         $('#thumba2').prop('href', filepath2)
-
-
-
+             
                         window.dropdown_init($("#appId_inp"), d)
                         window.dropdown_init()
 

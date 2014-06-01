@@ -4,19 +4,19 @@ var Schema = mongoose.Schema;
 
 //用户积分获取和消费流水表
 var obj = { //定义结构
-      appId:{type:String,required:true},    		    //应用id
+      appId:{type:String,required:true,index:true},    		    //应用id
       openId:{type:String,required:true},                 //微信id
-      userId:{type:String,required:true},                 //用户id
+      userId:{type:String,required:true, index:true},                 //用户id
       scoreGuid:{type:String,required:true},              //交易流水号
-      scoreDetail:{type:Number,required:true,default:0},  //积分获取流水，获取或者扣除的积分数目
-      scoreType:{type:Number,required:true,default:1},    //积分是获取还是消费，1表示获取，2表示消费
+      scoreDetail:{type:Number,default:0},  //积分获取流水，获取或者扣除的积分数目
+      scoreType:{type:Number,default:1},    //积分是获取还是消费，1表示获取，2表示消费
       scoreWay:{type:String,required:true},  		    //积分获取方式，枚举，比如login等
-      scoreCode1:{type:String,required:true,default:''},  //积分获取流水，备用字段1，比如存储用户兑换的奖品Id等
-      scoreCode2:{type:String,required:true,default:''},  //积分获取流水，备用字段2
-      scoreCode3:{type:String,required:true,default:''},  //积分获取流水，备用字段3
-      scoreCode4:{type:String,required:true,default:''},  //积分获取流水，备用字段4
-      scoreCode5:{type:String,required:true,default:''},  //积分获取流水，备用字段5
-	writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
+      scoreCode1:{type:String,default:''},  //积分获取流水，备用字段1，比如存储用户兑换的奖品Id等
+      scoreCode2:{type:String,default:''},  //积分获取流水，备用字段2
+      scoreCode3:{type:String,default:''},  //积分获取流水，备用字段3
+      scoreCode4:{type:String,default:''},  //积分获取流水，备用字段4
+      scoreCode5:{type:String,default:''},  //积分获取流水，备用字段5
+	writeTime:{ type: Date, default: function(){return Date.now()} },    //写入时间
 }
 
 var objSchema = new Schema(obj);

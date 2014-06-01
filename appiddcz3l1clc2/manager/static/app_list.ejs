@@ -28,6 +28,24 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="appEname" data-bind="value:appEname" required="required" data-required-msg="请填写开发商英文" aria-invalid="true">
             </div>
 
+
+             <div class="k-edit-label  w-800-l">
+                <label for="wxAppId" >appid</label>
+            </div>
+            <div data-container-for="wxAppId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppId" data-bind="value:wxAppId" required="required" data-required-msg="请填写微信appid" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="wxAppSecret" >appsecret</label>
+            </div>
+            <div data-container-for="wxAppSecret" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppSecret" data-bind="value:wxAppSecret" required="required" data-required-msg="请填写微信appsecret" aria-invalid="true">
+            </div>
+
+
+
+
             <div class="k-edit-label  w-800-l">
                 <label for="appTelphone" >联系电话</label>
             </div>
@@ -50,14 +68,7 @@
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="appPicture" data-bind="value:appPicture">
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="appPicture"></label>
-            </div>
-            <div data-container-for="appPicture" class="k-edit-field w-800-r">
-            <a href="" id="thumba" target="_blank">
-               <img  id="thumb" class="thumb"/>
-            </a>
-            </div>
+          
 
             <div class="k-edit-label  w-800-l">
                 <label for="appIntro" >开发商介绍</label>
@@ -122,6 +133,8 @@
                                     "_id": { editable: false },
                                     "appName": { editable: true, type:'string',validation: { required: {message: "请填写开发商名称"}}  },
                                     "appEname": { editable: true, type:'string', validation: { required: {message: "请填写开发商英文名"}}},
+                                    "wxAppId": { editable: true, type:'string',},
+                                    "wxAppSecret": { editable: true, type:'string',},
                                     "appTelphone": { editable: true, type:'string', validation: { required: {message: "请填写联系电话"}}},
                                     "appCustomTel": { editable: true, type:'string', validation: { required: {message: "请填写客服电话"}}},
                                     "appPicture": { editable: true, type:'string', validation: { required: {message: "请上传介绍图片"}}},
@@ -159,6 +172,14 @@
                         { 
                             field: "appName",
                             title: "开发商", 
+                        },
+                        { 
+                            field: "wxAppId",
+                            title: "微信appid", 
+                        },
+                        { 
+                            field: "wxAppSecret",
+                            title: "微信appsecret", 
                         },
                          { 
                             field: "appEname",
@@ -206,40 +227,11 @@
                                 messages: window.editor_messages
                          });             
 
-                         var maxFiles = 1;
-
-                         $("#upload_file").kendoUpload({
-                                async: {
-                                    saveUrl: "/manger/upload/save",
-                                    removeUrl: "/manger/upload/remove",
-                                    autoUpload: true
-                                },
-                                success:function(e){
-                                    var path = e.response.result;
-                                    
-                                    $('#thumb').prop('src',path);
-                                    $('#thumba').prop('href', path)
-                                    $('#appPicture_inp').val(path).change()
-                                },
-                                localization:{
-                                    select: '请选择图片',
-                                    remove: '',
-                                    cancel: '',
-                                    done:'完成'
-                                },
-                                select: function(e) {
-                                    var len = $('span.k-filename').length;
-                                    if(len >= maxFiles) {
-                                      e.preventDefault();
-                                      alert("最多上传: " + maxFiles+ ' 张图片');
-                                    }
-                                  }
-                            });
+                        
 
                         $('#writeTime').kendoDateTimePicker();
-                        var filepath = $('#appPicture_inp').val();
-                         $('#thumb').prop('src',filepath);
-                         $('#thumba').prop('href', filepath)
+
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
 
                     },
                     //filterable:true         

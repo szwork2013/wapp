@@ -59,6 +59,7 @@
                                     "appUserCity": { editable: true},
                                     "appUserCommunity": { editable: true},
                                     "appUserBuilding":{editable: true},
+                                    "appUserRoom":{editable: true},                        
                                     "appCardNumber":{editable: false},
                                     "appUserType":{editable: true, type:"number"},
                                     "isNewSubmit":{editable: true, type:"number"},
@@ -89,6 +90,16 @@
 
                 window.appd = d;
 
+            $.post('/manger/co/getList',{},function(data_ary2){
+                var d2 = []
+                data_ary2.forEach(function(v){
+                    d2.push({
+                        text: v.coName, 
+                        value:v._id
+                    })
+                })
+
+
                 window.grid = $("#grid").kendoGrid({
                     dataSource: dataSource,
                     pageable: true,
@@ -114,7 +125,7 @@
                          { 
                             field: "openId",
                             title: "微信id",
-                            hidden:true
+                            //hidden:true
                         },
                          { 
                             field: "appUserCity",
@@ -122,12 +133,17 @@
                         },
                          { 
                             field: "appUserCommunity",
-                            title: "所在小区",
+                            title: "小区",
+                            values:d2
                         },
                         { 
                             field: "appUserBuilding",
-                            title: "所在楼号",                            
+                            title: "楼号",                            
                         },
+                        { 
+                            field: "appUserRoom",
+                            title: "房号",                            
+                        },                      
                         { 
                             field: "appCardNumber",
                             title: "会员卡号",
@@ -183,7 +199,7 @@
                 });
 
             })
-                
+        })   
                                     
 });
 

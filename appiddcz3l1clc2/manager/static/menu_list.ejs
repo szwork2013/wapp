@@ -2,6 +2,8 @@
 <% include inc/top %>
 <% include inc/left %>
 
+
+
 <div class="app_sel_boc">
     <span>选择开发商：  </span>
     <input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
@@ -37,6 +39,18 @@
             </div>
             <div data-container-for="menuTitle" class="k-edit-field">
                <input type="text" class="k-input k-textbox " name="menuTitle" data-bind="value:menuTitle" required="required" data-required-msg="请填写菜单标题" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label">
+                <label for="replyKey" >key / url</label>
+            </div>
+            <div data-container-for="replyKey" class="k-edit-field">
+               <input type="text" class="k-input k-textbox " name="replyKey" data-bind="value:replyKey" required="required" data-required-msg="请填写关键字key" aria-invalid="true">
+               <br/>
+               <span>
+                    表示菜单的唯一标识，不修改它表示图文回复<br/>
+                    这里如果填入网址，则表示直接跳转的菜单
+               </span>
             </div>
 
             <div class="k-edit-label oneLevelHide secLevelHide">
@@ -84,7 +98,16 @@
  $(function () {
 
     $('#sync').click(function(){
-        alert(window.appIdv)
+        $('#kendo_mask').show()
+        $.post('/manger/menu/sync',{appid:window.appIdv},function(d){
+            $('#kendo_mask').hide();
+            if(d.result == 1){
+                alert('同步成功')
+            }
+            else{
+                alert('同步失败，'+JSON.stringify(d.msg))
+            }
+        },'json')
         return false;
     })
 
@@ -180,6 +203,7 @@
                         "_id": { editable: false },
                         "appId": { editable: true },
                         "menuTitle": { editable: true },
+                        "replyKey":{ editable: true,type:"string" },
                         "menuType": { editable: true,type:"number"},
                         "parentId": { editable: true},
                         "replyId": { editable: true,},
@@ -215,7 +239,7 @@
                     field: "menuTitle",
                     title: "菜单标题", 
                 },
-                 { 
+                { 
                     field: "menuType",
                     title: "菜单类型",
                     values:window.menu_type
@@ -232,7 +256,7 @@
                 },
                 { 
                     field: "replyKey",
-                    title: "回复关键字",
+                    title: "菜单关键字",
                      hidden:true
                 }, 
                 { 
@@ -259,6 +283,9 @@
                 $('#menuType_inp').val(1).change();
                 $('#parentId_inp').val(0).change();
                 $('#replyId_inp').val(0).change();
+                (function(){
+                    $('input[name="replyKey"]').val('menu_'+Date.now()).change();
+                })()
 
                 window.dropdown_init()
                 window.dropdown_init($("#appId_inp"), d)
@@ -362,6 +389,7 @@ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
                                     "_id": { editable: false },
                                     "appId": { editable: true },
                                     "menuTitle": { editable: true },
+                                    "replyKey":{ editable: true,type:"string" },
                                     "menuType": { editable: true,type:"number"},
                                     "parentId": { editable: true},
                                     "replyId": { editable: true,},
@@ -412,7 +440,7 @@ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
                             },
                             { 
                                 field: "replyKey",
-                                title: "回复关键字",
+                                title: "菜单关键字",
                                 hidden:true
                             },
                             { 
@@ -442,7 +470,13 @@ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
     
                             $('#parentId_inp').val(window.lastData._id).change();
 
-                            window.dropdown_init($('#replyId_inp'), d3)
+                            window.dropdown_init($('#replyId_inp'), d3);
+
+                            (function(){
+                                if( !$('input[name="replyKey"]').val().trim()){
+                                  $('input[name="replyKey"]').val('menu_'+Date.now()).change();
+                                }
+                            })()
                     
                     }  
             });//end gird

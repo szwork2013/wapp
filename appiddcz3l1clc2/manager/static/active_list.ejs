@@ -52,14 +52,7 @@
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="appNewsPicture" data-bind="value:appNewsPicture">
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="appNewsPicture"></label>
-            </div>
-            <div data-container-for="appNewsPicture" class="k-edit-field w-800-r">
-            <a href="" id="thumba" target="_blank">
-               <img  id="thumb" class="thumb"/>
-            </a>
-            </div>
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="appNewsContent" >内容</label>
@@ -258,46 +251,17 @@ $.post('/manger/app/getList',{},function(data_ary){
                                 messages: window.editor_messages
                          });              
 
-                         var maxFiles = 1;
-                         $("#upload_file").kendoUpload({
-                                async: {
-                                    saveUrl: "/manger/upload/save",
-                                    removeUrl: "/manger/upload/remove",
-                                    autoUpload: true
-                                },
-                                success:function(e){
-                                    var path = e.response.result;
-                                    
-                                    $('#thumb').prop('src',path);
-                                    $('#thumba').prop('href', path)
-                                    $('#appPicture_inp').val(path).change()
-                                },
-                                localization:{
-                                    select: '请选择图片',
-                                    remove: '',
-                                    cancel: '',
-                                    done:'完成'
-                                },
-                                select: function(e) {
-                                    var len = $('span.k-filename').length;
-                                    if(len >= maxFiles) {
-                                      e.preventDefault();
-                                      alert("最多上传: " + maxFiles+ ' 张图片');
-                                    }
-                                  }
-                            });
+                        
 
                         $('#writeTime').kendoDateTimePicker();
-                        var filepath = $('#appPicture_inp').val();
-                         $('#thumb').prop('src',filepath);
-                         $('#thumba').prop('href', filepath)
+
 
                         window.dropdown_init()
                         window.dropdown_init($("#appId_inp"), d)
                         window.dropdown_init($("#coId_inp"), d2)
                         window.dropdown_init($("#appNewsType_inp"), window.news_type)
 
-                       
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)                       
 
                     },
                     filterable:window.filter_obj         

@@ -2,15 +2,18 @@ var mongoose =require('./db_conn.js');
 var Schema = mongoose.Schema;
 
 var obj = { //定义结构
-	  appId:{type:String, required:true},                 //appId表示用户第一次绑定的app应用id
-	  openId: { type:String, required:true, unique:true}, //微信用户绑定的openid,	 
-	  wxName:{type:String, default:''},                   //微信用户昵称
-	  wxAvatar:{type:String, default:''},                //微信用户头像
-	  wxLoc: { type: [Number], index: { type: '2dsphere', sparse: true } },    //用户最近一次经纬度保存
+	  appId:{type:String, required:true,index:true},                 //appId表示用户第一次绑定的app应用id 
+	  wxName:{type:String, default:'0'},                   //微信用户昵称
+	  wxAvatar:{type:String, default:'0'},                //微信用户头像
+	  wxLoc: { type: [Number], index: { type: '2dsphere', sparse: true }, default:[121.48, 31.22] },    //用户最近一次经纬度保存
 	  wxGroup:{type:String, default:'cf'},                 //用户分组，默认是cf常发
-	  appUserName:{type:String, required:true,default:'未认证会员'},         //会员姓名
-	  appUserMobile:{type:Number, required:true,default:''},       //会员手机号
-	  appUserSex:{type:Number, required:true,default:1}, //0表示女性，1表示男性
+
+	  appLoginName:{type:String,index:true,unique:true},   //登录名
+	  appLoginPassword:{type:String, default:''},      		//登录密码
+
+	  appUserName:{type:String, default:'未认证会员'},         //会员姓名
+	  appUserMobile:{type:Number,  default:0},       //会员手机号
+	  appUserSex:{type:Number, default:1}, //0表示女性，1表示男性
 	  appUserBirth:{type: Date, default: function(){return new Date('1970/1/1')} }, //会员生日
 	  appUserScore:{type:Number,default:0},
 	  isShow:{ type:Number, default:1}, //是否启用这个用户,1表示启用，0表示未启用

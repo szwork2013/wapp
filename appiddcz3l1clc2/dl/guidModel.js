@@ -13,7 +13,7 @@ objSchema.statics.getGuid = function (cb) {
     	$inc:{guid:1}
     }, {"upsert":true}, function(err,doc){
     	if(err || !doc) return cb(err);
-    	cb(doc.guid);
+    	cb(null, doc.guid);
     }); 
 }
 

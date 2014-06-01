@@ -5,13 +5,14 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构,奖品doc
   appId:{ type: String, required:true},        //此所属应用id
   replyTitle:{ type: String, required:true},   //回复标题
-  replyUrl:{type:String, required:true},      //跳转地址
+  replyUrl:{type:String, required:true,default:''},      //跳转地址
   replyDesc:{ type: String, required:true,default:''},    //回复描述
 
-  replyType:{type:Number,required:true,default:1}, //回复类型，1表示关键字回复，2表示菜单回复
-  replyKey:{ type: String, required:true,default:''},    //关键字
+  //回复类型，1.表示关键字回复,且精准匹配，多个关键字用逗号分隔，2.表示菜单图文回复，3.表示用户关注回复，4.表示默认回复
+  replyType:{type:Number,required:true,default:1}, 
+  replyKey:{ type: Array, default:[]},    //关键字 逗号分隔
   
-  replyKind:{type:Number,required:true,default:1}, //回复类型，1文字回复，2图文回复
+  replyKind:{type:Number,required:true,default:2}, //回复类型，1文字回复，2图文回复
 
   replyPicture:{type: String, required:true,default:''},  //回复图片地址
    
@@ -22,6 +23,11 @@ var obj = { //定义结构,奖品doc
 
 var objSchema = new Schema(obj);
 
+
+objSchema.statics.findByObj = function(obj,cb){
+  var obj = obj || {};
+  return this.find(obj, cb);
+}
 
 objSchema.statics.findOneByObj = function(obj,cb){
 	var obj = obj || {};

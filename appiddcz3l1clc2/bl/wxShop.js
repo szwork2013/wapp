@@ -11,7 +11,7 @@ obj.getPrizeList = function(appId,cb){ //获取奖品列表
 		appId:appId,
 		isShow:1,
 	},function(err,doc){
-		return cb(err,cb)
+		return cb(err,doc)
 	})
 }
 
@@ -39,34 +39,48 @@ obj.userGetThisPrize = function(userId,prizeId,cb){ //用户是否获得过这�
 
 
 obj.getPrize = function(prizeId,cb){ //获取奖品详情
-	prizeModel.findByObj({
+	prizeModel.findOneByObj({
 		_id:prizeId,
 		isShow:1,
 	},function(err,doc){
-		return cb(err,cb)
+		return cb(err,doc)
 	})
 }
 
-obj.obtainPrize = function(qobj){
+obj.obtainPrize = function(qobj,cb){
 	
-	obj.getPrize(qobj.prizeId, function(err,doc){//获取此奖品，查看此奖品是否有效
+	obj.getPrize(qobj.prizeId, function(err,prizeDoc){//获取此奖品，查看此奖品是否有效
 		if(err) return cb(err);
-		if(!doc) return cb('没有找到此商品');
-		if(doc.totalNumber<1) return cb('商品已经兑换完毕');
+		if(!prizeDoc) return cb('没有找到此商品');
+		if(prizeDoc.totalNumber<1) return cb('商品已经兑换完毕');
 
 			guidModel.getGuid(function(err,guid){ //生成guid
+				if(err) return cb(err);
 
-					userBl.removeScore(qobj.userId, function(err,doc){//查找用户状态
+				scoreGetModel.findByObj({
+					userId:qobj.userId,
+					scoreCode1:prizeDoc._id
+				},function(err,recrodAry){
+
+					if(err) return cb(err);
+					var len = recrodAry.length;
+
+					if(len > 0 && len >= prizeDoc.accountBuyNumber){
+						return cb('超过限额');
+					}
+
+					userBl.removeScore(qobj.userId, prizeDoc.price, function(err,doc){//查找用户状态
 							if(err) return cb(err);
 							
 							scoreGetModel.insertOneByObj({ //发货记录
 								appId:qobj.appId,
+								openId:qobj.openId,
 								userId:qobj.userId,
 								scoreGuid:guid,
-								scoreDetail:qobj.price,
+								scoreDetail:prizeDoc.price,
 								scoreType:2,
 								scoreWay:'prize',
-								scoreCode1:qobj.prizeId,
+								scoreCode1:prizeDoc._id,
 							},function(err,doc){
 								if(err){
 									logger.error('send prize error, userid: %s get prizeid: %s error, score has reduce %s.', qobj.userId, qobj.prizeId, qobj.price);//用户积分已扣，发货失败
@@ -74,9 +88,9 @@ obj.obtainPrize = function(qobj){
 								}
 								
 								prizeModel.createOneOrUpdate({//减去库存
-									_id:qobj.prizeId,
+									_id:prizeDoc._id,
 								},{
-									totalNumber:{$inc:-1}
+									$inc:{totalNumber:-1}
 								},function(err,doc){//完成兑换礼品
 									if(err){
 										logger.error('reduce prize totalnumber error, userid: %s get prizeid: %s error, score has reduce %s.', qobj.userId, qobj.prizeId, qobj.price);//用户积分已扣，发货失败
@@ -86,6 +100,7 @@ obj.obtainPrize = function(qobj){
 
 							})
 					})
+				})
 			})
 	})
 }

@@ -1,0 +1,27 @@
+<% include inc/head %>
+<%
+  var title = '楼盘信息'
+%>
+<% include inc/top %>
+
+
+  <div id="NewsContent" class="detail">
+      <div data-role="content" class="news_txt_box fw black2 clearfix f14">
+      <h2 class="f16"><%= doc.coName %></h2>
+      <img src="<%= doc.coLogo %>" />
+      <h4></h4>
+      <h4>城市：<%= doc.coCity %></h4>
+      <h4>地址：<%= doc.coAddr %></h4>
+      <h4>联系电话：<a href="tel:<%= doc.coTelphone %>"><%= doc.coTelphone %></a></h4>
+      <h4>官网地址：<a href="<%= doc.coUrl %>" target="_blank">点击进入官网</a></h4>
+      <p>
+        <%- doc.coDesc %>
+      </p>
+      <% doc.coPictrue.forEach(function(path){ %>
+          <img src="<%= path %>" />
+      <% }) %>
+      </div>
+
+  </div>
+<% include inc/footPowerBy %> 
+ <% include inc/foot %>

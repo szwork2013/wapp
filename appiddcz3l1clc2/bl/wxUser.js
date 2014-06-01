@@ -8,12 +8,23 @@ var obj = {}
 obj.getUserByOpenid = function(openId,cb){ //根据openid查找用户信息
 	var cb = cb || function(){}
 	if(!openId) return cb('no openid');
-	obj.getUser({openId:openId},cb);
+	//obj.getUser({openId:openId},cb);
+	userAppModel.findOneByObj({
+		openId:openId
+	},function(err,appUDoc){
+		if(err) return cb(err); //如果出错
+		if(!appUDoc){
+			return cb(null, null)
+		}
+		var userId = appUDoc.userId;
+		obj.getUserByUserId(userId,cb)
+	})
+
 }
 
 obj.getUserByUserId = function(userId,cb){ //根据用户id查找用户信息
 	var cb = cb || function(){}
-	if(!userId) return cb('no openid');
+	if(!userId) return cb('no userId');
 	obj.getUser({_id:userId},cb);
 }
 
@@ -24,20 +35,22 @@ obj.getUser = function(qobj,cb){
 		if(udoc.isShow == 0) return cb('用户已被锁定',null); //如果用户已经被屏蔽
 		var userId = udoc._id;
 
-		userAppModel.findOneByObj({
-			"_id":userId
+		userAppModel.findByObj({
+			"userId":userId
 		},function(err,bindDoc){
 			if(err) return cb(err);
-			udoc.bind = bindDoc||[];
-			cb(null, bindDoc);
+			//udoc.bind = bindDoc||[];
+			cb(null, {
+				uobj:udoc,
+				bind:bindDoc || []
+			});
 		})
 
 	})
 }
 
 obj.getUserType = function(udoc,appId){
-	if(!udoc.bind) return 0;
-	if(udoc.bind.length == 0) return 0;
+	if(!udoc.bind || udoc.bind.length == 0) return 0;
 
 	for(var i=0; i<udoc.bind.length; i++){
 		if(udoc.bind[i].appId == appId){
@@ -49,79 +62,138 @@ obj.getUserType = function(udoc,appId){
 
 
 obj.binder = function(qobj,appId,cb){ //用户认证绑定
-	var openid = qobj.openId;
+	var openId = qobj.openId;
 	if(!openId) return cb('no openId');
-	obj.getUserByOpenid(openId,function(err,udoc){ //根据openId获取用户信息
 
-		if(err) return cb(err);
-		if(!udoc) return cb('未找到该用户',null);
-		if(udoc.isShow == 0) return cb('用户已被锁定',null); //如果用户已经被屏蔽
-		var uType = obj.getUserType(udoc, appId);
-		if(uType == 2){ //如果已经是认证vip会员了
-			return cb('您已经是vip认证用户',null);
-		}
-		if(uType == 1){//如果是认证会员，但不是vip，只需要完善小区信息即可
+		obj.getUserByOpenid(openId,function(err,udoc){ //根据openId获取用户信息
+			//console.log('**********')
+			//console.log(err)
+			//console.log(udoc);
 
-			userAppModel.createOneOrUpdate({
-				userId:udoc._id,
-				openId:udoc.openId,
-				appId:appId
-			},{
-				appUserCity:qobj.appUserCity,
-				appUserCommunity:qobj.appUserCommunity,
-				appUserBuilding:qobj.appUserBuilding,
-				isNewSubmit:1      //完善资料后成为vip用户
-			},function(err,doc){
-				if(err) return cb(err);
-				cb(doc)
-			})
+			if(err) return cb(err);
+			if(!udoc || !udoc.uobj) return cb('未找到该用户',null);
+			if(udoc.uobj.isShow == 0) return cb('用户已被锁定',null); //如果用户已经被屏蔽
 
-		}
-		else{  //如果是0或者没有绑定
 
-			guidModel.getGuid(function(err,guid){
-				if(err) return cb(err); //如果出错
-				userModel.createOneOrUpdate({
-					_id:udoc._id,				
+			var uType = obj.getUserType(udoc, appId);
+
+			//console.log(uType);
+
+			if(uType == 2){ //如果已经是认证vip会员了
+				return cb('您已经是vip认证用户',null);
+			}
+			if(uType == 1){//如果是认证会员，但不是vip，只需要完善小区信息即可
+
+				
+				if(!qobj.appUserCommunity){
+					return cb('请填写小区')
+				}
+				if(!qobj.appUserBuilding){
+					return cb('请填写楼号')
+				}
+				if(!qobj.appUserRoom){
+					return cb('请填写房号')
+				}
+
+				userAppModel.createOneOrUpdate({
+					userId:udoc.uobj._id,
+					openId:openId,
+					appId:appId
 				},{
-					wxName:qobj.wxName,
-					wxAvatar:qobj.wxAvatar,
-					wxGroup:qobj.wxGroup,
-					appUserName:qobj.appUserName,
-					appUserMobile:qobj.appUserMobile,
-					appUserSex:qobj.appUserSex,
-					appUserBirth:qobj.appUserBirth	
+					appUserCommunity:qobj.appUserCommunity,
+					appUserBuilding:qobj.appUserBuilding,
+					appUserRoom:qobj.appUserRoom,
+					isNewSubmit:1      //完善资料后成为vip用户
 				},function(err,doc){
 					if(err) return cb(err);
-					var type = 1;
-					var isNewSubmit = 0;
-					if(qobj.appUserCity && qobj.appUserCommunity && qobj.appUserBuilding){ 
-					//如果传递了城市，小区和楼号则表示，这个人是请求验证vip认证会员，需要手工
-						type = 1;
-						isNewSubmit = 1
-					}
+					cb(null, doc)
+				})
 
-					userAppModel.createOneOrUpdate({
-						userId:udoc._id,
-						openId:udoc.openId,
-						appId:appId
-					},{
-						appUserCity:qobj.appUserCity || '',
-						appUserCommunity:qobj.appUserCommunity || '',
-						appUserBuilding:qobj.appUserBuilding || '',
-						appUserType:type,
-						appCardNumber:guid,
-						isNewSubmit:isNewSubmit
-					},function(err,doc2){
-						if(err) return cb(err);
-						cb(doc2)
-					})
-				})//userModel.createOneOrUpdate
-			})//guidModel.getGuid
-		}
-	})
+			}
+			else{  //如果是0或者没有绑定
+			if(!qobj.appLoginName){
+				return cb('请填写登录名')
+			}
+			userModel.findOneByObj({
+					appLoginName:qobj.appLoginName
+				},function(err,udoc2){
+					if(err) return cb(err)
+					if(udoc2) return cb('登录名已经被使用')
+					guidModel.getGuid(function(err,guid){
+						if(err) return cb(err); //如果出错
+
+						if(!qobj.appUserName){
+							return cb('请填写姓名')
+						}
+						if(!qobj.appUserMobile){
+							return cb('请填写电话')
+						}
+
+						var isNewSubmit = 0
+						if(qobj.appUserRoom && qobj.appUserCommunity && qobj.appUserBuilding){
+							isNewSubmit = 1
+						}
+
+						userModel.createOneOrUpdate({
+							_id:udoc.uobj._id,				
+						},{
+							wxName:qobj.wxName || '',
+							wxAvatar:qobj.wxAvatar||'',
+							wxGroup:qobj.wxGroup||'',
+							appLoginName:qobj.appLoginName,
+							appLoginPassword:qobj.appLoginPassword || '',
+							appUserName:qobj.appUserName,
+							appUserMobile:qobj.appUserMobile,
+							appUserSex:qobj.appUserSex || 1,
+							appUserBirth:qobj.appUserBirth || '1970/1/1'	
+						},function(err,doc){
+							if(err) return cb(err);
+							var type = 1;
+							var isNewSubmit = 0;
 
 
+							if(qobj.appUserRoom && qobj.appUserCommunity && qobj.appUserBuilding){ 
+							//如果传递了房号，小区和楼号则表示，这个人是请求验证vip认证会员，需要手工
+								type = 1;
+								isNewSubmit = 1
+							}
+
+							userAppModel.findByObj({
+								userId:udoc.uobj._id,
+								openId:openId,
+								appId:appId
+							},function(err, appDoc){
+
+								if(err) return cb(err);
+								if(appDoc && appDoc.length>0 && appDoc[0].appCardNumber){
+									guid = appDoc[0].appCardNumber
+								}
+
+								userAppModel.createOneOrUpdate({
+									userId:udoc.uobj._id,
+									openId:openId,
+									appId:appId
+								},{
+									appUserCommunity:qobj.appUserCommunity || '',
+									appUserBuilding:qobj.appUserBuilding || '',
+									appUserRoom:qobj.appUserRoom || '',
+									appUserCity:qobj.appUserCity || '',
+									appUserType:type,
+									appCardNumber:guid,					
+									isNewSubmit:isNewSubmit
+								},function(err,doc2){
+
+									if(err) return cb(err);
+									cb(null,doc2)
+								})//end userAppModel.createOneOrUpdate
+
+							})//end userAppModel.findByObj
+
+						})//userModel.createOneOrUpdate
+					})//guidModel.getGuid
+				})
+			}
+		})
 }
 
 obj.enter = function(openId,appId,cb){ //用户进入
@@ -129,29 +201,43 @@ obj.enter = function(openId,appId,cb){ //用户进入
 	if(!openId) return cb('no openId');
 	obj.getUserByOpenid(openId,function(err,udoc){
 		if(err) return cb(err);
+		if(udoc && udoc.isShow == 0) return cb('用户已被锁定',null); //如果用户已经被屏蔽
 		if(udoc) return cb(null,udoc);
-		if(udoc.isShow == 0) return cb('用户已被锁定',null); //如果用户已经被屏蔽
-		userModel.insertOneByObj({
-			openId:openId,
-			appId:appId
-		},function(err,udoc2){
-			if(err) return cb(err);
-			cb(null, udoc2);
+		
+		guidModel.getGuid(function(err,guid){
+			userModel.insertOneByObj({
+				appId:appId,
+				appLoginName:'__'+guid
+			},function(err,udoc2){
+				if(err) return cb(err);
+
+				userAppModel.insertOneByObj({
+					userId:udoc2._id,
+					openId:openId,
+					appId:appId,
+				},function(err,appUDoc){
+					if(err) return cb(err);
+					cb(null, {
+						uobj:udoc2
+					});
+				})			
+			})
 		})
 	})
 }
 
 obj.removeScore = function(userId,score,cb){ //减去积分
-	obj.getUserByUserId(userId,function(err,doc){
+	obj.getUserByUserId(userId,function(err,uobj){
 		if(err) return(err);
+		var doc = uobj.uobj
+
 		if(doc.appUserScore < score){
 			return cb('没有足够的积分');
 		}
-
 		userModel.createOneOrUpdate({
 			_id:userId
 		},{
-			appUserScore:{$inc:score*-1}
+			$inc :{appUserScore:score*-1}
 		},function(err,doc){
 			cb(err, doc)
 		})
@@ -160,13 +246,66 @@ obj.removeScore = function(userId,score,cb){ //减去积分
 
 
 obj.addScore = function(userId,score,cb){//增加积分
+
 		userModel.createOneOrUpdate({
 			_id:userId
 		},{
-			appUserScore:{$inc:score}
+			$inc:{appUserScore:score}
 		},function(err,doc){
+			//console.log(err)
 			cb(err, doc)
 		})
+}
+
+obj.modify = function(userId, openId, qobj,cb){//修改用户资料
+	if(!userId){
+		return cb('缺少 userid')
+	}
+	if(!openId){
+		return cb('缺少 openId')
+	}
+
+	var appMObj = {}
+	if(qobj.appUserCommunity){
+		appMObj.appUserCommunity = qobj.appUserCommunity
+	}
+	if(qobj.appUserBuilding){
+		appMObj.appUserBuilding = qobj.appUserBuilding
+	}
+	if(qobj.appUserRoom){
+		appMObj.appUserRoom = qobj.appUserRoom
+	}
+
+	var userMObj = {}
+	if(qobj.appUserName){
+		userMObj.appUserName = qobj.appUserName
+	}
+	if(qobj.appUserSex){
+		userMObj.appUserSex = qobj.appUserSex
+	}
+	if(qobj.appUserBirth){
+		userMObj.appUserBirth = qobj.appUserBirth
+	}
+	if(qobj.appUserMobile){
+		userMObj.appUserMobile = qobj.appUserMobile
+	}
+
+	userAppModel.createOneOrUpdate({
+			userId:userId,
+			openId:openId,
+		},appMObj,function(err,doc2){
+			if(err) return cb(err);
+
+			userModel.createOneOrUpdate({
+				_id:userId
+			},userMObj, function(err,doc){
+				if(err) return cb(err);
+				cb(null,{
+					'userObj':doc,
+					'binderObj':doc2
+				})//end cb		
+			})//end userModel.createOneOrUpdate
+		})// end userAppModel.createOneOrUpdate 
 }
 
 

@@ -65,6 +65,7 @@ obj.read = function(req, res){
 						      appUserCity:v.appUserCity,
 						      appUserCommunity:v.appUserCommunity,
 						      appUserBuilding:v.appUserBuilding,
+						      appUserRoom:v.appUserRoom,
 						      appCardNumber:v.appCardNumber,
 						      appUserType:v.appUserType,
 						      isNewSubmit:v.isNewSubmit,

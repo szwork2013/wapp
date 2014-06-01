@@ -150,9 +150,9 @@ window.filter_obj = {
 
 
 window.is_show_array = [
-                                      { text: "启用", value: 1 },
-                                      { text: "不启用", value: 0 }
-                                    ]
+                  { text: "启用", value: 1 },
+                  { text: "不启用", value: 0 }
+                ]
 window.sex_ary=[
               { text: "男", value: 1 },
               { text: "女", value: 0 }
@@ -167,6 +167,7 @@ window.suggest_type = [
               { text: "维修服务", value: 1 },
               { text: "意见投诉", value: 2 },
               { text: "用户留言", value: 3 },
+              { text: "推荐新客户", value: 4 },
             ]
 window.process_type = [
               { text: "待受理", value: 1 },
@@ -182,18 +183,25 @@ window.rec_status = [
             ]
 
 window.reply_kind=[
-              { text: "文字回复", value: 1 },
-              { text: "图文回复", value: 2 }
+              { text: "文字回复", value: 2 },
+              { text: "图文回复", value: 1 }
             ]
 
 window.reply_type=[
               { text: "关键字回复", value: 1 },
-              { text: "菜单回复", value: 2 }
+              { text: "菜单图文回复", value: 2 },
+              { text: "关注回复", value: 3 },
+              { text: "默认回复", value: 4 }
             ]
 
 window.menu_type=[
               { text: "一级菜单", value: 1 },
               { text: "二级菜单", value: 2 }
+            ]
+
+window.prize_type=[
+              { text: "概率抽取", value: 1 },
+              { text: "次数抽取", value: 2 }
             ]
 
 
@@ -220,3 +228,94 @@ window.dropdown_init = function($obj, $array,onchange){
                 })
     
 }
+
+var thumbBoxIdCount = 0;
+window.multiUpload = function($uploadInp, $dataInp, maxFiles){
+    var maxFiles = maxFiles || 1;
+    if(!$uploadInp) throw('no $uploadInp')
+    if(!$dataInp) throw('no $dataInp')
+    thumbBoxIdCount++
+
+    var domId = Date.now() + '' +thumbBoxIdCount
+    var thumbTemplate = '<div class="k-edit-label w-800-l">'+
+                        '<label for="pictrue"></label></div>'+          
+                        '<div data-container-for="pictrue" class="k-edit-field w-800-r" id="thumbBox_'+domId+'"></div>'
+    var imgTemplate = '<div class="thumbDivBox"><a href="{src}" target="_blank"><img src="{src}" class="thumb"/></a>'+
+                      '<a href="javascript:;" class="deletethumb">删除</a></div>'
+    
+
+    var filesPathArray = [];
+
+    $uploadInp.parent().after(thumbTemplate); //插入缩略图html文件
+    var thumbBox = $('#thumbBox_'+domId);
+
+    var getDateToArrayAndPutThumb = function(){
+        var v = $.trim($dataInp.val())
+        if(!v){
+            filesPathArray = [];
+            return;
+        }
+
+        v = v.split(',');
+
+        var str = ''
+        v.forEach(function(path){
+            str += imgTemplate.replace(/\{src\}/g, path);
+        })
+        filesPathArray = v;
+        thumbBox.html(str);
+    }
+
+    var addNewPath = function(newPath){
+        filesPathArray.push(newPath);
+        $dataInp.val(filesPathArray.join(',')).change()
+        getDateToArrayAndPutThumb()
+    }
+
+    var removePath = function(rmPath){
+        filesPathArray = filesPathArray.filter(function(p){
+            return p != rmPath
+        })
+        $dataInp.val(filesPathArray.join(',')).change()
+        getDateToArrayAndPutThumb()
+    }
+    
+    thumbBox.delegate('.deletethumb','click',function(){
+        if(confirm('确定删除吗?')){
+            var that = $(this);
+            var rmpath = that.parent().find('img').attr('src');
+            removePath(rmpath);
+            that.parent().remove();
+          }
+    })
+
+
+    $uploadInp.kendoUpload({
+            async: {
+                saveUrl: "/manger/upload/save",
+                removeUrl: "/manger/upload/remove",
+                autoUpload: true
+            },
+            success:function(e){
+                var path = e.response.result;
+                addNewPath(path)               
+            },
+            localization:{
+                select: '请选择图片',
+                remove: '',
+                cancel: '',
+                done:'完成'
+            },
+            select: function(e) {
+                var len = filesPathArray.length;
+                if(len >= maxFiles) {
+                  e.preventDefault();
+                  alert("最多上传: " + maxFiles+ ' 张图片');
+                }
+              }
+        });
+
+    getDateToArrayAndPutThumb();//初始化老数据
+
+}
+

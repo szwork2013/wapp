@@ -19,17 +19,20 @@ obj.read = function(req, res){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json(resObj);
 		var d2 = []
+	
 
 		doc.forEach(function(v){
 			var wxLoc2 = '经度:'+v.wxLoc[0]+' | 纬度:'+ v.wxLoc[1]
 			d2.push({
-				  _id:v._id.toString(),
+				  _id:v._id+'',
 				  appId:v.appId,
 				  openId: v.openId,
 				  wxName:v.wxName,
 				  wxAvatar:v.wxAvatar,
 				  wxLoc: wxLoc2,
 				  wxGroup:v.wxGroup,
+				  appLoginName:v.appLoginName,
+				  appLoginPassword:v.appLoginPassword,
 				  appUserName:v.appUserName,
 				  appUserMobile:v.appUserMobile,
 				  appUserSex:v.appUserSex,

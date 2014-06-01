@@ -8,6 +8,8 @@ var obj = { //定义结构
       appCustomTel:{type:String,required:true},
       appPicture:{ type:String,required:true,default:''},
       appIntro:{ type:String,required:true,default:''},
+      wxAppId:{type:String,required:true,default:''},  //微信的appid
+      wxAppSecret:{type:String,required:true,default:''},  //微信的appsecret
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 

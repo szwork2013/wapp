@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>会员认证_闽南万客会_万科厦门网上销售中心</title>
+﻿<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'/>
+<link rel="stylesheet" type="text/css" href="./skin/jquery.mobile.structure-1.3.1.css">
+<link rel="stylesheet" type="text/css" href="./skin/jqm_theme.css">
+<link rel="stylesheet" href="./skin/custom.css" />
+<link rel="stylesheet" href="./skin/inside.css" />
+<script src="./skin/jquery-1.8.2.min.js"></script>
+<script>
+    $(document).bind("mobileinit", function () {
+        //$.mobile.defaultPageTransition = "flow"; //全局过渡动画效果
+        //$.mobile.defaultDialogTransition = "pop"; //全局弹框动画效果
+        $.mobile.ajaxEnabled = false;
+    });
+</script>
+<script type="text/javascript" src="./skin/WeChatJs.js"></script>
+<script type="text/javascript" src="./skin/jquery.mobile-1.3.1.min.js"></script>
+<script type="text/javascript" src="./skin/jquery.easing-1.3.js"></script>
+<script type="text/javascript" src="./skin/jquery.iosslider.js"></script><!--轮播-->
+<script type="text/javascript" src="./skin/iscroll.js"></script><!--滚动加载-->
+<!--<script type="text/javascript" src="/mobile/WebServices/Scripts/AjaxMethods.js"></script>-->
+<script type="text/javascript" src="./skin/Common.js"></script>
+<script type="text/javascript" src="./skin/Repair.js"></script>
+</head>
+
+<body>
+<div data-role="page" id="repair">
+  <div id="header" data-role="header" data-id="header" class="header" data-position="fixed">
+    <div class="header_box_bj"></div>
+    <div class="header_box"> 
+      <!--<p class="home_titbtn"><a href="/mobile/index.shtml"><span>返回首页</span></a></p>-->
+      <h1 class="inside_tit fw white">在线报修</h1>
+      <!--<p class="menu"><a href="#" class="menu_btn"><span>导航</span></a></p>
+--> 
+    </div>
+    <script>
+$(function() {
+  $('.home_menu_bj').hide();
+  $('.home_menu_top').hide();
+            $('.menu_btn').click(
+                function () {
+                    $('.home_menu_bj').fadeIn(500);
+                    $('.home_menu_top').fadeIn(500);
+                    $('.home_menu').delay(500).animate({ 'top':'48px'}, 500);
+
+                }
+            );
+            $('.home_menu_bj').click(
+                function () {
+                    $('.home_menu_bj').fadeOut(500);
+                    $('.home_menu_top').fadeOut(500);
+                    $('.home_menu').animate({ 'top':'-233px'}, 500);
+                }
+            );
+        });
+</script>
+
+<div class="home_menu_top"></div>
+<div class="home_menu_bj clearfix">
+  <div id="home_menu" class="home_menu">
+    <div class="home_menu_box">
+      <ul class="f12 fw">
+        <li class="home_menu02"><a href="/mobile/member.shtml">会员中心</a></li>
+        <li class="home_menu03"><a href="/mobile/news.shtml">新闻中心</a></li>
+        <li class="home_menu04"><a href="/mobile/activities.shtml">会员活动</a></li>
+        <li class="home_menu05 mr0"><a href="/mobile/discount.shtml">最新优惠</a></li>
+        <li class="home_menu06"><a href="/mobile/registration.shtml">诚意登记</a></li>
+        <li class="home_menu07"><a href="/mobile/engineering.shtml">工程进度</a></li>
+        <li class="home_menu08"><a href="/mobile/repair.shtml">在线报修</a></li>
+        <li class="home_menu09 mr0"><a href="/mobile/phone.shtml">服务电话</a></li>
+        <li class="home_menu10"><a href="/mobile/property.shtml">热销楼盘</a></li>
+        <li class="home_menu11"><a href="/mobile/game.shtml">互动游戏</a></li>
+        <li class="home_menu12"><a href="/mobile/layout.shtml">推荐户型</a></li>
+        <li class="home_menu13 mr0"><a href="/mobile/shop.shtml">联盟商家</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+ 
+  </div>
+  <div data-role="content" class="property_box fw black2 clearfix">
+    <div id="divName" class="input_text02_box">
+      <p class="f16">联系人：</p>
+      <input name="textfield" type="text" id="repair_input_text01" onfocus="if(this.value=='请输入您的真实姓名') {this.value=''}" onblur="checkName()" value="请输入您的真实姓名">
+      <span id="wName" class="wrong">必填</span></div>
+    <div id="wNames" class="input_text02_box_err_t" style="display:none;">请输入2-6位中文<span></span></div>
+    <div id="divTel" class="input_text02_box">
+      <p class="f16">联系电话：</p>
+      <input name="textfield" type="tel" id="repair_input_text02" onfocus="if(this.value=='请输入11位手机号码') {this.value=''}" onblur="checkTel()" value="请输入11位手机号码">
+      <span id="wTel" class="wrong">必填</span></div>
+    <div id="wTels" class="input_text02_box_err_t" style="display:none;">请输入11位手机号码，如13987654321<span></span></div>
+    <div class="repair_tit01 f16">报修地址</div>
+    <div class="layout_box01">
+      <div id="divProject" class="repair_select01"> 　
+        <select id="selProject" onchange="checkPro()" name="项目">
+          <option value="" selected="selected">请选择所属楼盘</option>
+          <option value="VC00002">万科金域蓝湾</option>
+          <option value="VC00003">万科湖心岛</option>
+          <option value="VC00004">万科金色悦城</option>
+          <option value="VC00005">万科金域华府</option>
+          <option value="VC00006">万科海沧万科城</option>
+          <option value="VC00007">万科广场</option>
+          <option value="VC00008">万科泉州万科城</option>
+        </select>
+      </div>
+    </div>
+    <div id="divBuildingArea" class="input_text02_box">
+      <p class="f16">楼栋：</p>
+      <input name="textfield" type="text" id="repair_input_text03" onfocus="if(this.value=='请输入楼栋') {this.value=''}" onblur="checkBuildingArea()" value="请输入楼栋">
+      <span id="wBuildingArea" class="wrong">必填</span></div>
+    <!--<div id="divApartment" class="input_text02_box">
+      <p class="f16">单元：</p>
+      <input name="textfield" type="text" id="repair_input_text04" onfocus="if(this.value=='请输入单元') {this.value=''}" onblur="checkApartment()" value="请输入单元">
+      <span id="wApartment" class="wrong">必填</span></div>-->
+    <div id="divRoomNum" class="input_text02_box">
+      <p class="f16">房号：</p>
+      <input name="textfield" type="text" id="repair_input_text05" onfocus="if(this.value=='请输入房号') {this.value=''}" onblur="checkRoomNum()" value="请输入房号">
+      <span id="wRoomNum" class="wrong">必填</span></div>
+    <div id="wAddress" class="input_text02_box_err_t" style="display:none;"><span></span></div>
+    <!--<div class="input_textarea01_box">
+      <textarea name="textarea" id="textarea1" class="repair_textarea black3 fw" onfocus="if(this.value=='备注') {this.value='';}" onblur="if(this.value=='') {this.value='备注';}" maxlength="20">备注</textarea>
+    </div>-->
+    <div class="repair_tit01 f16">报修内容</div>
+    <div class="input_textarea01_box">
+      <textarea name="textarea" id="textarea2" class="repair_textarea black3 fw" onfocus="if(this.value=='请输入报修内容') {this.value='';}" onblur="checkContent()" maxlength="200">请输入报修内容</textarea>
+    </div>
+    <div id="wContent" class="input_text02_box_err_t" style="display:none;">请输入报修内容，200字以内<span></span></div>
+    <div class="login_btn01 f20"><a href="javascript:void(0);" onclick="addRepairInfo()">提　　交</a></div>
+  </div>
+  ﻿<div data-role="footer" class="footer">
+  <p class="tc fw black2 f14">Powered By <a href="http://m.juzhen.com" target="_blank" class="red">Matrix</a></p>
+</div>
+ 
+</div>
+</body>
+</html>

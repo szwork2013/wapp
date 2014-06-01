@@ -128,3 +128,6 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444',end
 .sync_button{
 	margin: 0 20px;
 }
+.thumbDivBox{
+	padding-bottom: 5px;
+}

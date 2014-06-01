@@ -1,0 +1,219 @@
+<% include inc/head %>
+<%
+  var title = '业主会员卡'
+%>
+
+<script type="text/javascript" src="/static/Repair.js"></script>
+<script type="text/javascript" src="/static/jquery-ui.js" ></script>
+
+  <% include inc/top %>
+
+<div data-role="content" class="property_box fw black2 clearfix">
+
+<% 
+  if(binderObj.appUserType == 2){
+%>
+
+<% 
+  var cardNum =  binderObj.appCardNumber + '';
+  var n = cardNum.length
+  if(cardNum.length < 6){
+      while(6-n >0){
+        cardNum = '0'+cardNum
+        n++;
+      }
+  }
+
+%>
+
+<li id="ShowMemberType" class="card_box card01 clearfix">
+  <div class="card_pic">
+    <p class="login_pic01">
+      <img id="MemberPic" src="/static/default_face.jpg">
+    </p>
+  </div>
+  <div class="card_sn">
+    <p class="clear"></p>
+    <p class="f12">
+      证件号码：<span class="f14"><%= cardNum %></span>
+      会员姓名：<span class="f14"><%= userObj.appUserName %></span>
+    </p>
+  </div>
+</li>
+
+
+
+
+
+
+
+<%
+  var uname = userObj.appUserName
+  var birth = userObj.appUserBirth
+  var mobile = userObj.appUserMobile
+  var loginName = userObj.appLoginName
+
+  var sel1 = 'selected="selected"';
+  var sel2 = '';
+  if(userObj.appUserSex == 0){
+      sel1 = ''
+      sel2 = 'selected="selected"';
+  }
+
+  build = binderObj.appUserBuilding
+  room = binderObj.appUserRoom
+
+%>
+
+
+
+
+
+<form id="form1" action="" method="post">
+  <div class="personInfotxt">
+    登录名：<span id="RealName"> <%= loginName %></span>
+  </div>
+
+  <div class="input_text02_box" id="divName">
+      <p class="f16">真实姓名：</p>
+      <input name="appUserName" type="text" id="repair_input_text01" onFocus="if(this.value=='请输入您的真实姓名') {this.value=''}" onBlur="checkName()" value="<%= uname %>" />
+      <span id="wName" class="wrong">必填</span>
+    </div>
+  <div class="input_text02_box_err_t wrongs" id="wNames" style="display:none;">请输入您的真实姓名<span></span></div>
+
+  <div class="repair_tit01 f16">性别</div>
+    <div class="layout_box01">
+      <div class="layout_select05"> 　
+        <select name="appUserSex">
+
+          <option value="1" <%= sel1 %>>男</option>
+          <option value="0" <%= sel2 %>>女</option>
+        </select>
+      </div>
+    </div>
+    <div class="clear"></div>
+
+
+    <div class="input_text02_box" id="divAge">
+      <p class="f16" id="birthday_p">生日：</p>
+      
+      <span id="wAge" class="wrong">必填</span>
+    </div>
+    <div class="input_text02_box_err_t wrongs" id="wAges" style="display:none;">请输入您的生日<span></span></div>
+
+
+    <div class="input_text02_box" id="divMobile">
+      <p class="f16">联系电话：</p>
+      <input name="appUserMobile" type="tel" id="repair_input_text02" onFocus="if(this.value=='请输入11位手机号码') {this.value=''}" onBlur="checkTel()" value="<%= mobile %>" />
+      <span id="wMobile" class="wrong">必填</span>
+    </div>
+    <div class="clear"></div>
+    <div class="input_text02_box_err_t wrongs" id="wTels" style="display:none;">请输入11位手机号码<span></span></div>
+
+
+    <div class="repair_tit01 f16">选择楼盘，vip业主认证需填写</div>
+    <div class="layout_box01">
+      <div id="divProject" class="repair_select01"> 　
+        <select id="selProject" onchange="checkPro()" name="appUserCommunity">
+
+          <option value="" selected="selected">请选择所属楼盘</option>
+          <% list.forEach(function(obj,i){ 
+            var issle = ''
+            if(obj._id == binderObj.appUserCommunity){
+               issle = 'selected="selected"';
+            }
+            %>
+            <option value="<%= obj._id %>" <%= issle %> ><%= obj.coName %></option>
+          <% }) %>
+
+        </select>
+      </div>
+    </div>
+    <div id="divBuildingArea" class="input_text02_box">
+      <p class="f16">楼栋：</p>
+      <input name="appUserBuilding" type="text" id="repair_input_text03" onfocus="if(this.value=='请输入楼栋') {this.value=''}" onblur="checkBuildingArea()" value="<%= build %>">
+      <span id="wBuildingArea" class="wrong">必填</span></div>
+   
+    <div id="divRoomNum" class="input_text02_box">
+      <p class="f16">房号：</p>
+      <input name="appUserRoom" type="text" id="repair_input_text05" onfocus="if(this.value=='请输入房号') {this.value=''}" onblur="checkRoomNum()" value="<%= room %>">
+      <span id="wRoomNum" class="wrong">必填</span></div>
+    <div id="wAddress" class="input_text02_box_err_t" style="display:none;"><span></span></div>
+
+
+    <div class="clear"></div>
+    <div class="login_btn01 f20"><a href="#" id="submit">修改资料</a></div>
+<input name="wxuserid" type="hidden" value="<%= userObj._id %>" />
+</form>
+<% } else { %>
+
+<div id="divName" class="input_text02_box binderTitle">
+      对不起您还不是 <b>vip认证业主</b><br/>
+      请至<a data-ajax="false" href="/view/user/binder?wxuserid=<%= userObj._id %>" > vip认证会员 </a>申请认证
+   </div>
+<% } %>
+
+
+
+
+
+
+
+
+
+</div>
+
+<script type="text/javascript">
+$(function(){
+  if(browser.versions.ios){
+          d_input = '<input name="appUserBirth" type="date" onchange="checkBirthday()" id="reg_birth_text02" placeholder="请输入您的生日" value="yyyy-MM-dd" class="dateInput" value="<%= birth %>"  />';
+
+          $('#birthday_p').after(d_input);
+
+          }
+   else{
+          d_input = '<input name="appUserBirth" type="text" onchange="checkBirthday()" id="reg_birth_text02"  placeholder="请输入您的生日" data-role="datebox" class="dateInput" value="<%= birth %>" />';
+          $('#birthday_p').after(d_input);
+
+          $("#reg_birth_text02").focus(function(){
+              $(this).blur();
+              }).datepicker({ 
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                changeYear: true
+          });
+   }
+
+
+   $('#submit').click(function(){
+
+      var r2 = checkName();
+      var r3 = checkBirthday();
+      var r4 = checkTel();
+      var r5 = checkPro();
+      var r6 = checkBuildingArea();
+      var r7 = checkRoomNum();
+     
+      if(!r2 || !r3 || !r4 || !r5 || !r6 || !r7) return false;
+
+      $.post('/api/user/modify', $('#form1').serialize() ,function(d){
+          if(d.error){
+            return alert(d.data)
+          }
+          alert('资料修改成功');
+          setTimeout(function(){
+              location.href = location.href;
+          },2000)
+      },'json')
+
+
+
+   })
+
+
+})
+
+</script>
+<% include inc/footPowerBy %>
+
+<% include inc/foot %>

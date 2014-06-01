@@ -33,6 +33,11 @@
             </div>
             <div data-container-for="replyUrl" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="replyUrl" data-bind="value:replyUrl" required="required" data-required-msg="请填写跳转地址" aria-invalid="true">
+               <br/>
+               <span>
+                    注意：如果是回复，则表示此条文字或图片消息的跳转地址<br/>
+                    如果是图文菜单，填入地址表示返回的图文菜单跳转地址<br/>
+               </span>
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -40,6 +45,13 @@
             </div>
             <div data-container-for="replyType" class="k-edit-field w-800-r">
                <input type="number" id="replyType_inp" class="k-input k-textbox w-50-inp" name="replyType" data-bind="value:replyType" >
+                <br/>
+               <span>
+                    1、关键字回复，表示对用户直接输入文字进行自动回复<br/>
+                    2、菜单图文回复，表示用户点击菜单，返回图文的信息<br/>
+                    3、用户关注回复，表示用户第一次关注此公众号，推送的消息，建议一个公众号设置一个<br/>
+                    4、默认回复，表示用户输入了一段话，未匹配所有消息的默认回复，建议一个公众号设置一个
+               </span>
             </div>
 
               <div name="replyKey_div" class="k-edit-label  w-800-l">
@@ -47,6 +59,10 @@
             </div>
             <div name="replyKey_div" data-container-for="replyKey" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="replyKey" data-bind="value:replyKey" >
+               <br/>
+               <span>
+                多个关键字请以逗号（逗号为英文半角）分隔，比如：新楼盘，新盘，楼盘，在用户输入以上3个关键字则会进行自动回复
+               </span>
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -73,14 +89,7 @@
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="replyPicture" data-bind="value:replyPicture">
             </div>
 
-            <div name="img_div" class="k-edit-label  w-800-l">
-                <label for="replyPicture"></label>
-            </div>
-            <div name="img_div" data-container-for="replyPicture" class="k-edit-field w-800-r">
-            <a href="" id="thumba" target="_blank">
-               <img  id="thumb" class="thumb"/>
-            </a>
-            </div>
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
@@ -258,48 +267,20 @@
                         var img_div = $('div[name="img_div"]');
                         var key_div = $('div[name="replyKey_div"]');
 
-                         var maxFiles = 1;
-                         $("#upload_file").kendoUpload({
-                                async: {
-                                    saveUrl: "/manger/upload/save",
-                                    removeUrl: "/manger/upload/remove",
-                                    autoUpload: true
-                                },
-                                success:function(e){
-                                    var path = e.response.result;
-                                    
-                                    $('#thumb').prop('src',path);
-                                    $('#thumba').prop('href', path)
-                                    $('#appPicture_inp').val(path).change()
-                                },
-                                localization:{
-                                    select: '请选择图片',
-                                    remove: '',
-                                    cancel: '',
-                                    done:'完成'
-                                },
-                                select: function(e) {
-                                    var len = $('span.k-filename').length;
-                                    if(len >= maxFiles) {
-                                      e.preventDefault();
-                                      alert("最多上传: " + maxFiles+ ' 张图片');
-                                    }
-                                  }
-                            });
-
+                       
                         $('#writeTime').kendoDateTimePicker();
-                        var filepath = $('#appPicture_inp').val();
-                         $('#thumb').prop('src',filepath);
-                         $('#thumba').prop('href', filepath)
+
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 1)
+
 
                         window.dropdown_init()
                         window.dropdown_init($("#appId_inp"), d)
 
                         var switch_kind = function(v){
-                            if(v==1){
+                            if(v==2){
                                 img_div.hide()
                             }
-                            else if(v==2){
+                            else if(v==1){
                                 img_div.show();
                             }
                         }
@@ -310,21 +291,24 @@
                             else if(v==1){
                                 key_div.show();
                             }
+                            else{
+                                key_div.hide();
+                            }
                         }
 
                         window.dropdown_init($("#replyKind_inp"), window.reply_kind,function(e){
                              var dataItem = this.dataItem(e.item.index());
-                             switch_kind(dataItem.value)                            
+                             switch_kind(dataItem.value);                         
                         })
                         window.dropdown_init($("#replyType_inp"), window.reply_type,function(e){
                             var dataItem = this.dataItem(e.item.index());
-                            switch_type(dataItem.value)
+                            switch_type(dataItem.value);
                         })
 
                         var vkind = $("#replyKind_inp").data("kendoDropDownList").value()
                         var vtype = $("#replyType_inp").data("kendoDropDownList").value()
-                        switch_kind(vkind)
-                        switch_type(vtype)
+                        switch_kind(vkind);
+                        switch_type(vtype);
 
                     },
                     filterable:window.filter_obj         

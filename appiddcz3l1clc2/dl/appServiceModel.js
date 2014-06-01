@@ -1,7 +1,7 @@
 var mongoose =require('./db_conn.js');
 var Schema = mongoose.Schema;
 
-var obj = { //定义结构
+var obj = { //定义结构,小区物业
       coId:{type:String,required:true},    				  					//小区id
       coServiceName:{type:String,required:true},                		    //小区服务条目
       coServicePrice:{type:Number,required:true,default:0},      			//小区服务价格

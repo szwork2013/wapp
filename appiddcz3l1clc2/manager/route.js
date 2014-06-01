@@ -16,6 +16,10 @@ var suggestCl = require('./cl/suggestCl.js')
 var replyCl = require('./cl/replyCl.js')
 var menuCl = require('./cl/menuCl.js')
 
+var lotteryCl = require('./cl/lotteryCl.js');
+var lotteryPrizeCl = require('./cl/lotteryPrizeCl.js');
+var lotteryRecCl = require('./cl/lotteryRecCl.js');
+
 
 var utils = require('../lib/utils.js')
 
@@ -169,6 +173,33 @@ var addroute = function(app){
 	app.post('/manger/menu/update', checkLogin, menuCl.update)
 	app.post('/manger/menu/destroy', checkLogin, menuCl.destroy)
 	app.post('/manger/menu/create', checkLogin, menuCl.create)
+    app.post('/manger/menu/sync', checkLogin, menuCl.sync)
+
+
+    //lottery
+	app.get('/manger/lottery/list', checkLogin, lotteryCl.list)
+	app.post('/manger/lottery/read', checkLogin, lotteryCl.read)
+	app.post('/manger/lottery/update', checkLogin, lotteryCl.update)
+	app.post('/manger/lottery/destroy', checkLogin, lotteryCl.destroy)
+	app.post('/manger/lottery/create', checkLogin, lotteryCl.create)
+	app.post('/manger/lottery/getList', checkLogin, lotteryCl.getList)
+
+	//lottery prize
+	app.get('/manger/lotteryPrize/list', checkLogin, lotteryPrizeCl.list)
+	app.post('/manger/lotteryPrize/read', checkLogin, lotteryPrizeCl.read)
+	app.post('/manger/lotteryPrize/update', checkLogin, lotteryPrizeCl.update)
+	app.post('/manger/lotteryPrize/destroy', checkLogin, lotteryPrizeCl.destroy)
+	app.post('/manger/lotteryPrize/create', checkLogin, lotteryPrizeCl.create)
+	app.post('/manger/lotteryPrize/getList', checkLogin, lotteryPrizeCl.getList)
+
+
+
+	//lottery rec
+	app.get('/manger/lotteryRec/list', checkLogin, lotteryRecCl.list)
+	app.post('/manger/lotteryRec/read', checkLogin, lotteryRecCl.read)
+	app.post('/manger/lotteryRec/update', checkLogin, lotteryRecCl.update)
+	app.post('/manger/lotteryRec/destroy', checkLogin, lotteryRecCl.destroy)
+	app.post('/manger/lotteryRec/create', checkLogin, lotteryRecCl.create)
 
 }
 

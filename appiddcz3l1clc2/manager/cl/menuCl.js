@@ -1,4 +1,8 @@
 var dl = require('../../dl/menuModel.js');
+var dlapp = require('../../dl/appModel.js');
+var dlreply = require('../../dl/wxReplyModel.js');
+var wechat = require('wechat')
+
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
@@ -56,6 +60,105 @@ obj.destroy = function(req, res){
 		if(!doc) return res.json([])
 		res.json(doc);
 	})
+}
+
+
+
+
+obj.sync = function(req, res){
+	var appid = req.body.appid;
+	dlapp.findOneByObj({
+		_id:appid
+	},function(err,appobj){
+		if(err) return res.json({result:0,msg:err});
+
+			dl.findAll({
+				appId:appid,
+			},0,100,function(err,menudoc){
+				if(err) return res.json({result:0,msg:err});
+
+				var wxMenu={
+					button:[]
+				}
+
+				menudoc.forEach(function(v){
+					if(v.menuType != 1) return;
+					var childnum = 0;
+					var child = [];
+
+					menudoc.forEach(function(v2){
+						if(v2.menuType != 2) return;
+						if(v2.parentId == v._id.toString()){
+							if(v2.replyKey.indexOf('http') == 0){
+								child.push({
+								       "type":"view",
+								       "name":v2.menuTitle,
+								       "url":v2.replyKey.trim()
+									});
+							}
+							else{
+								child.push({
+								       "type":"click",
+								       "name":v2.menuTitle,
+								       "key":v2.replyKey.trim()
+									});
+							}
+							childnum++;
+						}
+					})
+					if(childnum > 0){
+						wxMenu.button.push({
+							name:v.menuTitle,
+							sub_button:child
+						})
+					}
+					else{
+
+						wxMenu.button.push({ //如果是图文回复菜单
+							type:'click',
+							name:v.menuTitle,
+							key:v.replyKey.trim()
+						})
+						
+					}
+				})
+
+				if(wxMenu.button > 3){
+					return res.json({result:0,msg:'一级菜单必须为1-3个或'});
+				}
+				
+
+				var appid = appobj.wxAppId
+				var secret = appobj.wxAppSecret
+				var API = wechat.API;
+				var api = new API(appid, secret);
+				console.log(JSON.stringify(wxMenu))
+				if(!api.isAccessTokenValid()){
+					api.getAccessToken(function(err,result){
+						//console.log(err)
+						//console.log(result)
+						api.createMenu(wxMenu, function(err,result){
+							if(err) return res.json({result:0,msg:err});
+							res.send({result:1})
+						});
+					})
+				}
+				else{
+					api.createMenu(wxMenu, function(err,result){
+						if(err) return res.json({result:0,msg:err});
+						res.send({result:1})
+					});
+				}
+
+			})
+
+
+
+
+
+
+	})
+
 }
 
 

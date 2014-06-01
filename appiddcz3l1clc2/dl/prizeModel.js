@@ -5,15 +5,21 @@ var obj = { //定义结构,奖品doc
   appId:{ type: String, required:true},     //此奖品所属应用id
   name:{ type: String, required:true},      //猜图奖品的名称
   desc:{ type: String, default: ''},        //奖品描述
-  imgUrl:{ type: String, default: ''},      //猜图奖品的图片名称
-  price:{type:Number,default: 0},           //猜图奖品的价格
+  imgUrl:{ type: String, default: ''},      //奖品的图片名称
+  price:{type:Number,default: 0},           //奖品的价格
+  accountBuyNumber:{type:Number,default: -1},//每个账号可以兑换的次数 
   isShow:{ type: Number, default:1}, 			  //0表示此奖品下架不能被查询和使用，1表示此奖品正常使用
   totalNumber:{type: Number, default:0},    //奖品总数量
-  //奖品数量，本次活动总共设定此类奖品数量，抽完为止
+  //奖品数量，买完为止
   writeTime:{ type: Date, default: function(){return Date.now()}}, //奖品录入时间
 }
 
 var objSchema = new Schema(obj);
+
+objSchema.statics.findOneByObj = function(obj,cb){
+      var obj = obj || {};
+      return this.findOne(obj, cb);
+}
 
 objSchema.statics.findByObj = function(obj,cb){
       var obj = obj || {};

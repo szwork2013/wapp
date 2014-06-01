@@ -20,6 +20,10 @@ objSchema.statics.findByObj = function(obj,cb){
       var obj = obj || {};
       return this.find(obj, cb);
 }
+objSchema.statics.findOneByObj = function(obj,cb){
+      var obj = obj || {};
+      return this.findOne(obj, cb);
+}
 
 
 objSchema.statics.findAll = function (obj,skip,pagesize,cb) { 
