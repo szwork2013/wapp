@@ -1,12 +1,12 @@
 {
-	"currentSite":"http://127.0.0.1:3000",
+	"currentSite":"http://127.0.0.1:7000",
 	"appEname":"changfa",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/wapp",
 	"monoosePool":10,
 	"currentHost":"127.0.0.1",
 	"currentVersion":"v1",
-	"listenPort":8080,
-	"mangerListenPort":9080,
+	"listenPort":7000,
+	"mangerListenPort":7000,
 	"wxAppId":"123",
 	"wxAppSecret":"123",
 	"wxAppToken":"weixin"
