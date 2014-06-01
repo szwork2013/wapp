@@ -6,7 +6,7 @@
 	"currentHost":"127.0.0.1",
 	"currentVersion":"v1",
 	"listenPort":7000,
-	"mangerListenPort":7000,
+	"mangerListenPort":7001,
 	"wxAppId":"123",
 	"wxAppSecret":"123",
 	"wxAppToken":"weixin"
