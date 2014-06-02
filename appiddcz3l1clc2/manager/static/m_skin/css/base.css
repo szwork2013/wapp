@@ -18,6 +18,9 @@ padding: 9px 0;
 }
 }
 
+.hide{
+	display: none;
+}
 
 .k-window {
 	-webkit-transform:scale(1.00) !important;
