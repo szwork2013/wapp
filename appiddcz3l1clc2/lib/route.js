@@ -196,6 +196,27 @@ var addroute = function(app){
 	//app.get('/view/suggest/myreply',getUserMid, viewSuggest.myReply);
 	//app.get('/view/suggest/ordersearch',getUserMid, viewSuggest.orderSearch);
 
+
+	app.get('/', function(req,res){ //验证token有效性
+		if(!req.query.nonce || !req.query.signature || !req.query.timestamp || !req.query.echostr){
+			res.send('param wrong')
+		}
+
+		var signature = (req.query.signature || '').toLowerCase();
+		var echostr = req.query.nonce;
+
+		var sha1Array = [req.query.nonce,req.query.timestamp,config.wxAppToken].sort();
+		var mySign = utils.sha1(sha1Array.join('')).toLowerCase();
+
+		if(signature == mySign){
+			res.send(echostr)
+		}
+		else{
+			res.send('signature:'+signature+' != mySign:' +mySign)
+		}
+
+	})
+
 }
 
 

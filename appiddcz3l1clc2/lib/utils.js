@@ -32,6 +32,15 @@ var md5 = function (str, encoding){
     .digest(encoding || 'hex');
 };
 exports.md5 = md5
+
+
+var sha1 = function (str, encoding){
+  return crypto
+    .createHash('sha1')
+    .update(str)
+    .digest(encoding || 'hex');
+};
+exports.sha1 = sha1
 /**
  * Merge object b with object a.
  *
