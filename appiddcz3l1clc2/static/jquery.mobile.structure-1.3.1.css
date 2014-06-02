@@ -2338,3 +2338,7 @@ background-image: linear-gradient( #ddd,#ccc );
 .mobipick-groups{
 	margin: 10px 0;
 }
+
+.ui-popup-screen{
+	display: none !important;
+}
