@@ -175,13 +175,9 @@ $(function(){
           d_input = '<input name="appUserBirth" type="text" onchange="checkBirthday()" id="reg_birth_text02"  placeholder="请输入您的生日" data-role="datebox" class="dateInput" value="<%= birth %>" />';
           $('#birthday_p').after(d_input);
 
-          $("#reg_birth_text02").focus(function(){
-              $(this).blur();
-              }).datepicker({
-                defaultDate:'1980-01-01',
-                dateFormat: "yy-mm-dd",
-                changeMonth: true,
-                changeYear: true
+          var picker = $("#reg_birth_text02")
+          picker.mobipick({
+            locale: "cn"
           });
    }
 
