@@ -97,7 +97,7 @@ else if(binderObj.isNewSubmit == 2){
 
 
     <div class="input_text02_box" id="divName">
-      <p class="f16">真实姓名：</p>
+      <p class="f16">姓名：</p>
       <input name="appUserName" type="text" id="repair_input_text01" onFocus="if(this.value=='请输入您的真实姓名') {this.value=''}" onBlur="checkName()" value="<%= uname %>" />
       <span id="wName" class="wrong">必填</span>
     </div>
@@ -118,20 +118,20 @@ else if(binderObj.isNewSubmit == 2){
 
     <div class="input_text02_box" id="divAge">
       <p class="f16" id="birthday_p">生日：</p>
-      
       <span id="wAge" class="wrong">必填</span>
     </div>
     <div class="input_text02_box_err_t wrongs" id="wAges" style="display:none;">请输入您的生日<span></span></div>
 
 
     <div class="input_text02_box" id="divMobile">
-      <p class="f16">联系电话：</p>
+      <p class="f16">电话：</p>
       <input name="appUserMobile" type="tel" id="repair_input_text02" onFocus="if(this.value=='请输入11位手机号码') {this.value=''}" onBlur="checkTel()" value="<%= mobile %>" />
       <span id="wMobile" class="wrong">必填</span>
     </div>
     <div class="clear"></div>
     <div class="input_text02_box_err_t wrongs" id="wTels" style="display:none;">请输入11位手机号码<span></span></div>
-
+    <div class="clear"></div>
+    
     <div class="repair_tit01 f16">选择楼盘，vip业主认证需填写</div>
     <div class="layout_box01">
       <div id="divProject" class="repair_select01"> 　

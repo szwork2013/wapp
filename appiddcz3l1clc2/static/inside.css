@@ -233,7 +233,12 @@ overflow: hidden;}
 .input_text02_box {background:#fff; height:46px; line-height:46px; border-radius:6px; width:288px; border:2px solid #e5e5e5; padding:0 10px; position:relative; margin-top:10px;}
 .input_text02_box p { float:left; padding-right:5px; color:#999; width:85px;}
 .input_text02_box #login_input_text02 {height:44px; width:160px; float:left; color:#999;}
-.input_text02_box span { float:right; font-size:11px; color:#ff9c00; text-align:right;}
+.input_text02_box span {
+	width: 35px;
+	position: absolute;
+	top:0px;
+	right: 5px;
+	font-size:11px; color:#ff9c00; text-align:right;}
 .input_text02_box_ok {background:#fff; height:46px; line-height:46px; border-radius:6px; width:288px; border:2px solid #8cc152; padding:0 10px; position:relative; margin-top:10px;}
 .input_text02_box_ok p { float:left; padding-right:5px; color:#8cc152; width:85px;}
 .input_text02_box_ok #login_input_text02 {height:44px; width:160px; float:left; color:#8cc152;}
@@ -282,22 +287,23 @@ overflow: hidden;}
 .login_btn04{background:#fff; height:41px; color:#767676; border-radius:6px; width:100%;  display:block; text-align:center; padding-top:9px;}
 .login_btn05{background:#767676; height:50px; line-height:50px; color:#fff; border-radius:6px; width:100%;  display:block; text-align:center;}
 /*在线报修*/
-.input_text02_box #repair_input_text00 {height:44px; width:160px; float:left; color:#999;}
-.input_text02_box #repair_input_text01 {height:44px; width:160px; float:left; color:#999;}
-.input_text02_box_ok #repair_input_text01 {height:44px; width:160px; float:left; color:#8cc152;}
-.input_text02_box_err #repair_input_text01 {height:44px; width:160px; float:left; color:#0f7030;}
-.input_text02_box #repair_input_text02 {height:44px; width:160px; float:left; color:#999;}
-.input_text02_box_ok #repair_input_text02 {height:44px; width:160px; float:left; color:#8cc152;}
-.input_text02_box_err #repair_input_text02 {height:44px; width:160px; float:left; color:#0f7030;}
-.input_text02_box #repair_input_text03 {height:44px; width:160px; float:left; color:#999;}
-.input_text02_box_ok #repair_input_text03 {height:44px; width:160px; float:left; color:#8cc152;}
-.input_text02_box_err #repair_input_text03 {height:44px; width:160px; float:left; color:#0f7030;}
-.input_text02_box #repair_input_text04 {height:44px; width:160px; float:left; color:#999;}
-.input_text02_box_ok #repair_input_text04 {height:44px; width:160px; float:left; color:#8cc152;}
-.input_text02_box_err #repair_input_text04 {height:44px; width:160px; float:left; color:#0f7030;}
-.input_text02_box #repair_input_text05 {height:44px; width:160px; float:left; color:#999;}
-.input_text02_box_ok #repair_input_text05 {height:44px; width:160px; float:left; color:#8cc152;}
-.input_text02_box_err #repair_input_text05 {height:44px; width:160px; float:left; color:#0f7030;}
+.input_text02_box{position: relative;}
+.input_text02_box #repair_input_text00 {height:44px; width:150px; float:left; color:#999;}
+.input_text02_box #repair_input_text01 {height:44px; width:150px; float:left; color:#999;}
+.input_text02_box_ok #repair_input_text01 {height:44px; width:150px; float:left; color:#8cc152;}
+.input_text02_box_err #repair_input_text01 {height:44px; width:150px; float:left; color:#0f7030;}
+.input_text02_box input {height:44px; width:150px; float:left; color:#999;}
+.input_text02_box_ok #repair_input_text02 {height:44px; width:150px; float:left; color:#8cc152;}
+.input_text02_box_err input {height:44px; width:150px; float:left; color:#0f7030;}
+.input_text02_box #repair_input_text03 {height:44px; width:150px; float:left; color:#999;}
+.input_text02_box_ok #repair_input_text03 {height:44px; width:150px; float:left; color:#8cc152;}
+.input_text02_box_err #repair_input_text03 {height:44px; width:150px; float:left; color:#0f7030;}
+.input_text02_box #repair_input_text04 {height:44px; width:150px; float:left; color:#999;}
+.input_text02_box_ok #repair_input_text04 {height:44px; width:150px; float:left; color:#8cc152;}
+.input_text02_box_err #repair_input_text04 {height:44px; width:150px; float:left; color:#0f7030;}
+.input_text02_box #repair_input_text05 {height:44px; width:150px; float:left; color:#999;}
+.input_text02_box_ok #repair_input_text05 {height:44px; width:150px; float:left; color:#8cc152;}
+.input_text02_box_err #repair_input_text05 {height:44px; width:150px; float:left; color:#0f7030;}
 .repair_tit01{ height:35px; line-height:35px; width:100%; margin:10px 0 4px 0;  text-align:center;background:#aaafb5; border-radius:6px; color:#fff;}
 .repair_select_err{ width:150px; border-radius:5px; height:36px; border:2px solid #ff0015; color:#0f7030;}
 .repair_select_err .ui-select{bottom:8px; line-height:20px;}
