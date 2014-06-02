@@ -292,9 +292,9 @@ overflow: hidden;}
 .input_text02_box #repair_input_text01 {height:44px; width:150px; float:left; color:#999;}
 .input_text02_box_ok #repair_input_text01 {height:44px; width:150px; float:left; color:#8cc152;}
 .input_text02_box_err #repair_input_text01 {height:44px; width:150px; float:left; color:#0f7030;}
-.input_text02_box input {height:44px; width:150px; float:left; color:#999;}
+.input_text02_box input {height:44px; width:150px !important; float:left; color:#999;}
 .input_text02_box_ok #repair_input_text02 {height:44px; width:150px; float:left; color:#8cc152;}
-.input_text02_box_err input {height:44px; width:150px; float:left; color:#0f7030;}
+.input_text02_box_err input {height:44px; width:150px !important; float:left; color:#0f7030;}
 .input_text02_box #repair_input_text03 {height:44px; width:150px; float:left; color:#999;}
 .input_text02_box_ok #repair_input_text03 {height:44px; width:150px; float:left; color:#8cc152;}
 .input_text02_box_err #repair_input_text03 {height:44px; width:150px; float:left; color:#0f7030;}
