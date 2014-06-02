@@ -201,9 +201,9 @@ var addroute = function(app){
 		if(!req.query.nonce || !req.query.signature || !req.query.timestamp || !req.query.echostr){
 			return res.send('param wrong')
 		}
-
+		//console.log(req.query)
 		var signature = (req.query.signature || '').toLowerCase();
-		var echostr = req.query.nonce;
+		var echostr = req.query.echostr;
 
 		var sha1Array = [req.query.nonce,req.query.timestamp,config.wxAppToken].sort();
 		var mySign = utils.sha1(sha1Array.join('')).toLowerCase();
