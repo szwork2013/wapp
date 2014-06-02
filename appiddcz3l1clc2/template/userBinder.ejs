@@ -3,8 +3,13 @@
   var title = '业主认证'
 %>
 
-<script type="text/javascript" src="/static/Repair.js"></script>
-<script type="text/javascript" src="/static/jquery-ui.js" ></script>
+<script type="text/javascript" src="/static/repair.js"></script>
+
+
+<script type="text/javascript" src="/static/dateplugin/xdate.js"></script>
+<script type="text/javascript" src="/static/dateplugin/xdate.i18n.js"></script>
+<script type="text/javascript" src="/static/dateplugin/mobipick.js"></script>
+
 
 <% include inc/top %>
 <div data-role="content" class="property_box fw black2 clearfix">
@@ -38,7 +43,7 @@ else if(binderObj.isNewSubmit == 2){
 
 <%
   var uname = '请输入您的真实姓名'
-  var birth = ''
+  var birth = '1980-01-01'
   var mobile = '请输入11位手机号码'
   var loginName = '请输入登录名,6-20位字母数字'
   var isReadyOnly = ''
@@ -131,7 +136,7 @@ else if(binderObj.isNewSubmit == 2){
     <div class="clear"></div>
     <div class="input_text02_box_err_t wrongs" id="wTels" style="display:none;">请输入11位手机号码<span></span></div>
     <div class="clear"></div>
-    
+
     <div class="repair_tit01 f16">选择楼盘，vip业主认证需填写</div>
     <div class="layout_box01">
       <div id="divProject" class="repair_select01"> 　
@@ -182,13 +187,10 @@ $(function(){
           d_input = '<input name="appUserBirth" type="text" onchange="checkBirthday()" id="reg_birth_text02"  placeholder="请输入您的生日" data-role="datebox" class="dateInput" value="<%= birth %>" />';
           $('#birthday_p').after(d_input);
 
-          $("#reg_birth_text02").focus(function(){
-              $(this).blur();
-              }).datepicker({ 
-                dateFormat: "yy-mm-dd",
-                changeMonth: true,
-                changeYear: true
-              });
+          var picker = $("#reg_birth_text02")
+          picker.mobipick({
+            locale: "cn"
+          });
    }
 
 

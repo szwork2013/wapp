@@ -3,8 +3,8 @@
   var title = '业主会员卡'
 %>
 
-<script type="text/javascript" src="/static/Repair.js"></script>
-<script type="text/javascript" src="/static/jquery-ui.js" ></script>
+<script type="text/javascript" src="/static/repair.js"></script>
+
 
   <% include inc/top %>
 
@@ -177,7 +177,8 @@ $(function(){
 
           $("#reg_birth_text02").focus(function(){
               $(this).blur();
-              }).datepicker({ 
+              }).datepicker({
+                defaultDate:'1980-01-01',
                 dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true
