@@ -105,7 +105,7 @@ to { -webkit-transform: rotate(360deg) translateZ(0); }
 /*联盟商家*/
 .wrapper2 { width: 100%; position: absolute; z-index: 1; top: 44px; bottom: 0px; left: 0px; }
 .card_box{ width:312px; height:150px; position:relative; margin-top:4px;}
-.card01{ background:url(images/cardBg.jpg) no-repeat; background-size:contain;}
+.card01{ background:url(images/cardbg.jpg) no-repeat; background-size:contain;}
 .card02{ background:url(images/card_02.jpg) no-repeat; background-size:contain;}
 .card03{ background:url(images/card_03.png) no-repeat; background-size:contain;}
 .card_pic{ float:left; width:130px; margin-top:5px;}
