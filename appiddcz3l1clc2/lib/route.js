@@ -199,7 +199,7 @@ var addroute = function(app){
 
 	app.get('/', function(req,res){ //验证token有效性
 		if(!req.query.nonce || !req.query.signature || !req.query.timestamp || !req.query.echostr){
-			res.send('param wrong')
+			return res.send('param wrong')
 		}
 
 		var signature = (req.query.signature || '').toLowerCase();
