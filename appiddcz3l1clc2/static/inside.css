@@ -116,6 +116,7 @@ left: 10px;
 color: #000;
 overflow: hidden;}
 .card_sn p {
+	line-height: 22px;
 	color: #000;
 }
 .card_sn span{
