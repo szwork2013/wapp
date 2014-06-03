@@ -45,7 +45,7 @@ else if(binderObj.isNewSubmit == 2){
   var uname = '请输入您的真实姓名'
   var birth = '1980-01-01'
   var mobile = '请输入11位手机号码'
-  var loginName = '请输入登录名,6-20位字母数字'
+  var loginName = '6-20位字母数字'
   var isReadyOnly = ''
   if(binderObj.appUserType && binderObj.appUserType != 0){
     isReadyOnly = 'readonly="readonly"'
@@ -94,10 +94,10 @@ else if(binderObj.isNewSubmit == 2){
 
     <div class="input_text02_box" id="divLoginName">
       <p class="f16">登录名：</p>
-      <input name="appLoginName" type="text" id="repair_input_text00" onFocus="if(this.value=='请输入登录名,6-20位字母数字') {this.value=''}" onBlur="checkUserName()" value="<%= loginName %>" <%= isReadyOnly %> />
+      <input name="appLoginName" type="text" id="repair_input_text00" onFocus="if(this.value=='6-20位字母数字') {this.value=''}" onBlur="checkUserName()" value="<%= loginName %>" <%= isReadyOnly %> />
       <span id="wName" class="wrong">必填</span>
     </div>
-  <div class="input_text02_box_err_t wrongs" id="wLoginNames" style="display:none;">请输入登录名6-20位字母数字<span></span></div>
+  <div class="input_text02_box_err_t wrongs" id="wLoginNames" style="display:none;">输入登录名6-20位字母数字<span></span></div>
 
 
 
@@ -178,9 +178,10 @@ else if(binderObj.isNewSubmit == 2){
 <script type="text/javascript">
 $(function(){
   if(browser.versions.ios){
-          d_input = '<input name="appUserBirth" type="date" onchange="checkBirthday()" id="reg_birth_text02" placeholder="请输入您的生日" value="yyyy-MM-dd" class="dateInput" value="<%= birth %>"  />';
+          d_input = '<input name="appUserBirth" type="date" onchange="checkBirthday()" id="reg_birth_text02" placeholder="请输入您的生日" class="dateInput" value="<%= birth %>"  />';
 
           $('#birthday_p').after(d_input);
+          $('#reg_birth_text02').val('<%= birth %>')
 
           }
    else{
@@ -209,7 +210,7 @@ $(function(){
           alert('认证成功,请等待审核');
           setTimeout(function(){
               location.href = location.href;
-          },2000)
+          },500)
       },'json')
 
 
