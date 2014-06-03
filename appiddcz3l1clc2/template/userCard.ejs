@@ -169,10 +169,11 @@
 <script type="text/javascript">
 $(function(){
   if(browser.versions.ios){
-          d_input = '<input name="appUserBirth" type="date" onchange="checkBirthday()" id="reg_birth_text02" placeholder="请输入您的生日" value="yyyy-MM-dd" class="dateInput" value="<%= birth %>"  />';
+          d_input = '<input name="appUserBirth" type="date" onchange="checkBirthday()" id="reg_birth_text02" placeholder="请输入您的生日"  class="dateInput" value="<%= birth %>"  />';
 
           $('#birthday_p').after(d_input);
-
+          $('#birthday_p').after(d_input);
+          $('#reg_birth_text02').val('<%= birth %>')
           }
    else{
           d_input = '<input name="appUserBirth" type="text" onchange="checkBirthday()" id="reg_birth_text02"  placeholder="请输入您的生日" data-role="datebox" class="dateInput" value="<%= birth %>" />';
