@@ -129,7 +129,7 @@
                                     "coNearAddr": { editable: true},
                                     "coNearDesc": { editable: true},
                                     "coNearTel": { editable: true},
-                                    "isShow": { editable: true },
+                                    "isShow": { editable: true,type:"number" },
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -215,12 +215,10 @@
                                 messages: window.editor_messages
                          });                                       
 
-                        $('#writeTime').kendoDateTimePicker();
-    
+                        $('#writeTime').kendoDateTimePicker();                       
 
+                        window.dropdown_init($("#appId_inp"), d)
                         window.dropdown_init()
-
-                         window.dropdown_init($("#appId_inp"), d)
 
                     },
                     filterable:window.filter_obj         
