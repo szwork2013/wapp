@@ -31,6 +31,8 @@ obj.getCo = function(appId,cb){ //获取小区
 		      coLogo:coObj.coLogo,           //小区Logo
 		      coUrl:coObj.coUrl,              //楼盘的官网地址
 		      coTelphone:coObj.coTelphone,                  //楼盘售楼电话
+		      busTelphone:coObj.busTelphone,                  //商业电话
+		      serviceTelphone:coObj.serviceTelphone,                  //物业点话
 		      isShow:coObj.isShow,                        //1表示启用，0表示不启用
 			  writeTime:coObj.writeTime,    //写入时间
 			})
@@ -60,6 +62,8 @@ obj.getOneCoById = function(coId,cb){ //获取指定小区
 		      coLogo:coObj.coLogo,           //小区Logo
 		      coUrl:coObj.coUrl,              //楼盘的官网地址
 		      coTelphone:coObj.coTelphone,                  //楼盘售楼电话
+		      busTelphone:coObj.busTelphone,                  //商业电话
+		      serviceTelphone:coObj.serviceTelphone,                  //物业点话
 		      isShow:coObj.isShow,                        //1表示启用，0表示不启用
 			  writeTime:coObj.writeTime,    //写入时间
 			})

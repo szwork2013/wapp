@@ -641,3 +641,13 @@ overflow: hidden;}
 	font-size: 14px !important;
 	height: 40px !important;
 }
+.ui-input-text {border: none !important;}
+.ui-icon, .ui-icon-searchfield:after{
+	background-image: url(images/icons-18-white.png) !important;
+}
+.ui-icon-arrow-d {
+background-position: -216px -1px !important;
+}
+.NewsContent h4{
+	padding: 10px 0;
+}

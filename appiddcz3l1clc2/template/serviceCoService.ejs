@@ -10,31 +10,10 @@
       <div id="scroller" class="e-scroller">
 
         <ul id="thelist" class="thelist">
-           <li class="layout_box01">
-      <div class="layout_select01"> 　
-        <select id="selCo" class="selectDate" name="selYear" >
-          <% coList.forEach(function(obj,i){ 
 
-            if(qCoId && qCoId == obj._id){
-                var sel_attr = 'selected="selected"';
-            }
-            %>
-            <option value="<%= obj._id %>" <%= sel_attr %> ><%= obj.coName %></option>
-
-
-          <% }) %>
-        </select>
-      </div>
-      <div class="layout_select01"> 　
-        <select id="selService" class="selectDate" name="selMonth" >
-          <option value="2" selected="selected">免费服务</option>
-          <option value="1">收费服务</option>
-        </select>
-      </div>
-    </li>
       <% list.forEach(function(obj,i){ %>
 
-          <li class="serviceTpye_<%= obj.coServiceType %> service_li" style="display:none;">
+          <li class="serviceTpye_<%= obj.coServiceType %> service_li">
               <span><%= obj.coServiceName %></span>
               <% 
               var price = '￥'+obj.coServicePrice
@@ -55,32 +34,5 @@
     </div>
   </div>
  
- <script type="text/javascript">
-  $(function(){
-    var url = '/view/service/coservice?wxuserid='+window.userid
-    var freeObj = $('.serviceTpye_1')
-    var cashObj = $('.serviceTpye_2')
-
-    $('#selService').change(function(){
-        var v = $(this).val();
-        if(v == 1){
-          freeObj.show()
-          cashObj.hide()
-        }
-        else{
-          freeObj.hide()
-          cashObj.show()
-        }
-    }).trigger('change')
-
-    $('#selCo').change(function(){
-        var v = $(this).val();
-        location.href = url + '&coId='+v
-        return false;
-    })
-
-
-  })
- </script>
 
 <% include inc/foot %>

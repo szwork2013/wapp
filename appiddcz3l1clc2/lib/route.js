@@ -31,7 +31,20 @@ wxAppBl.getByEname(config.appEname,function(err,appObj){
       	logger.error('wxAppBl.getByEname not found appObj, appEname is %s', config.appEname);
         return
       }
-      global.wxAppObj = appObj;
+      appObj2 = {
+      	_id:appObj._id,
+		appName:appObj.appName,
+		appEname:appObj.appEname,
+		appTelphone:appObj.appTelphone,
+		appCustomTel:appObj.appCustomTel,
+		appPicture:appObj.appPicture.split(',') || [],
+		appIntro:appObj.appIntro,
+		wxAppId:appObj.wxAppId,
+		wxAppSecret:appObj.wxAppSecret,
+		writeTime:  moment(appObj.writeTime).format('YYYY-MM-DD hh:mm:ss'),  
+      }
+
+      global.wxAppObj = appObj2;
 })
 
 var uploadPath = path.join(__dirname,'..','upload');
@@ -156,7 +169,7 @@ var addroute = function(app){
 	//app.get('/view/user/day',getUserMid, viewUser.day);
 	//app.get('/view/user/shop',getUserMid, viewUser.shop);
 	//service center
-	//小区物业列表
+	//小区列表
 	app.get('/view/service/colist',getUserMid, viewService.coList);
 	app.get('/view/service/codetail',getUserMid, viewService.coDetail);
 	//新闻动态优惠
@@ -165,8 +178,11 @@ var addroute = function(app){
 	app.get('/view/service/newsall',getUserMid, viewService.newsAll);
 	app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);
 	//物业服务和周边配套
+	app.get('/view/service/coservicelist',getUserMid, viewService.coservicelist);
 	app.get('/view/service/coservice',getUserMid, viewService.coService);
 	app.get('/view/service/conear',getUserMid, viewService.coNear);
+
+	app.get('/view/service/appdetail',getUserMid, viewService.appDetail);
 
 	//一键呼叫
 	app.get('/view/service/call',getUserMid, viewService.coCall);

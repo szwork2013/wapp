@@ -7,24 +7,20 @@
 
   <div data-role="content" class="inside_box message fw black2 clearfix f16">
 
-      <div>
+
       <div class="change_box">
+
+<% list.forEach(function(obj,i){ %>
       <div class="msg clearfix">
-      	<div class="msg1 f16">万科广场</div>
-        <div class="msg2 f14">销售热线</div><a class="msg3 f14" href="tel:05927278888">0592-7278888</a>
-        <div class="msg2 f14">客服热线</div><a class="msg3 f14" href="tel:18859265521">18859265521 黄小姐</a>
+      	<div class="msg1 f16"><%= obj.coName %></div>
+        <div class="msg2 f14">楼盘热线</div><a class="msg3 f14" href="tel:<%= obj.coTelphone %>"><%= obj.coTelphone %></a>
+        <div class="msg2 f14">商业热线</div><a class="msg3 f14" href="tel:<%= obj.busTelphone %>"><%= obj.busTelphone %></a>
+        <div class="msg2 f14">物业热线</div><a class="msg3 f14" href="tel:<%= obj.serviceTelphone %>"><%= obj.serviceTelphone %></a>
       </div>
-      <div class="msg clearfix">
-        <div class="msg1 f16">万科广场</div>
-        <div class="msg2 f14">销售热线</div><a class="msg3 f14" href="tel:05927278888">0592-7278888</a>
-        <div class="msg2 f14">客服热线</div><a class="msg3 f14" href="tel:18859265521">18859265521 黄小姐</a>
-      </div>
-      <div class="msg clearfix">
-        <div class="msg1 f16">万科广场</div>
-        <div class="msg2 f14">销售热线</div><a class="msg3 f14" href="tel:05927278888">0592-7278888</a>
-        <div class="msg2 f14">客服热线</div><a class="msg3 f14" href="tel:18859265521">18859265521 黄小姐</a>
-      </div>
-    
+<% }) %>
+
+
+<!--
       <div class="msg clearfix msg_font">
       	<p>服务电话试用指南：</p>
         <p>1.销售热线：受理项目基本概况、银行按揭贷款办理及发放、签约办理流程、合同发放等相关问题的咨询。</p>
@@ -32,10 +28,8 @@
         <p>3.物业服务中心：受理房屋交付后，您在居住过程中物业管理服务方面的问题。</p>
         <p>4.客户关系中心：受理房屋交付后，您在房屋维修、客户活动等方面对于万科产品或服务的任何建议和意见。</p>
       </div>
-      </div>
-      <div class="change_box" style="display:none"><div class="msg clearfix">敬请期待！</div></div>
-      <div class="change_box" style="display:none"><div class="msg clearfix">敬请期待！</div></div>
-      <div class="change_box" style="display:none"><div class="msg clearfix">敬请期待！</div></div>
+-->
+    
   	</div>
   </div>
   

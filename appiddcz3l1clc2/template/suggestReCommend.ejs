@@ -49,12 +49,12 @@
     <div id="divBuildingArea" class="input_text02_box">
       <p class="f16">楼栋：</p>
       <input name="suggestHouse" type="text" id="repair_input_text03" onfocus="if(this.value=='请输入楼栋') {this.value=''}" onblur="checkBuildingArea()" value="请输入楼栋">
-      <span id="wBuildingArea" class="wrong">必填</span></div>
+      <span id="wBuildingArea" class="wrong">可选</span></div>
    
     <div id="divRoomNum" class="input_text02_box">
       <p class="f16">房号：</p>
       <input name="suggestRoom" type="text" id="repair_input_text05" onfocus="if(this.value=='请输入房号') {this.value=''}" onblur="checkRoomNum()" value="请输入房号">
-      <span id="wRoomNum" class="wrong">必填</span></div>
+      <span id="wRoomNum" class="wrong">可选</span></div>
     <div id="wAddress" class="input_text02_box_err_t" style="display:none;"><span></span></div>
 
     <div class="repair_tit01 f16">推荐描述</div>
@@ -77,10 +77,10 @@ $(function(){
     $('#submit').click(function(){
       var r1 = checkName()
       var r2 = checkTel()
-      var r3 = checkPro()
-      var r4 = checkBuildingArea()
-      var r5 = checkRoomNum()
-      var r6 = checkContent3()
+      var r3 = 1;//checkPro()
+      var r4 = 1;//checkBuildingArea()
+      var r5 = 1;//checkRoomNum()
+      var r6 = 1;//checkContent3()
 
       if(!r1 || !r2 || !r3 || !r4 || !r5 || !r6) return false;
 

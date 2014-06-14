@@ -286,3 +286,11 @@ padding: 20px 10px;
 .service_li2 .near_title{
 	color: #333 !important;
 }
+.service_li img {
+	max-width: 100%;
+	display: block;
+	margin: 10px 0 0;
+}
+.txt_c{
+	text-align: center;
+}

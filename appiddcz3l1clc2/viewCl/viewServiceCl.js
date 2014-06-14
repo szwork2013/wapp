@@ -8,18 +8,18 @@ var obj = {}
 
 
 obj.appDetail = function(req,res){ //开发商详细
-	/*
+	
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 
-	res.render('serviceAppDetail.ejs',{
+	res.render('appDetai.ejs',{
 		'userObj':req.wxuobj,
 		'binderObj':req.wxBinder,
 		'doc':global.wxAppObj
 	})
 	return;
-	*/
+	
 }
 
 obj.coList = function(req,res){ //小区列表查询
@@ -75,12 +75,34 @@ obj.coDetail = function(req,res){ //小区详细页面
 
 }
 
+obj.coservicelist = function(req,res){ //小区物业查询主页
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId;
+
+	infoBl.getCo(appId, function(err,coList){
+		if(err){
+			logger.error('obj.coservicelist infoBl.getCo error, coId %s, err %s', coId, err);
+			return res.send(500,'物业页面主页加载失败')
+		}
+
+		coId = coList[0]._id
+		res.render('serviceCoServiceList.ejs',{
+				'userObj':req.wxuobj,
+				'binderObj':req.wxBinder,
+				'coId':coId
+			})
+			return;
+	})
+}
+
 
 obj.coService = function(req,res){ //小区物业查询
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 	var coId = req.query.coId;
+	var type = req.query.type;
 
 	if(coId && coId.length !== 24){
 		return res.send(500,'错误参数coId')
@@ -100,6 +122,10 @@ obj.coService = function(req,res){ //小区物业查询
 				logger.error('obj.coService infoBl.getCoService error, coId %s, err %s', coId, err);
 				return res.send(500,'物业页面加载失败')
 			}
+
+			list = list.filter(function(v){
+				return v.coServiceType == type
+			})
 
 			res.render('serviceCoService.ejs',{
 				'userObj':req.wxuobj,
@@ -232,10 +258,21 @@ obj.coCall = function(req,res){ //获取小区新闻
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
-	res.render('serviceCall.ejs',{
+
+	infoBl.getCo(appId, function(err,list){
+		if(err){
+			logger.error('obj.coCall infoBl.getCo error, appId %s, err %s', appId, err);
+			return res.send(500,'获取小区新闻加载失败')
+		}
+
+		res.render('serviceCall.ejs',{
 			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder
+			'binderObj':req.wxBinder,
+			'list':list
 		})
+		return;
+	})
+
 }
 
 

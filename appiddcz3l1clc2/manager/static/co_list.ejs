@@ -66,6 +66,20 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
+                <label for="busTelphone" >商业电话</label>
+            </div>
+            <div data-container-for="busTelphone" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="busTelphone" data-bind="value:busTelphone" required="required" data-required-msg="请填写商业电话" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="serviceTelphone" >物业电话</label>
+            </div>
+            <div data-container-for="serviceTelphone" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="serviceTelphone" data-bind="value:serviceTelphone" required="required" data-required-msg="请填写物业电话" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
                 <label for="coPictrue">小区图片</label>
             </div>
             <div data-container-for="coPictrue" class="k-edit-field w-800-r" id="coPictrue_box">
@@ -160,7 +174,9 @@
                                     "coPictrue":{editable: true, type:"string", },
                                     "coLogo":{editable: true, type:"string", },
                                     "coUrl":{editable: true, type:"string", },
-                                    "coTelphone":{editable: true, type:"string", },           
+                                    "coTelphone":{editable: true, type:"string", },
+                                    "busTelphone":{editable: true, type:"string", },
+                                    "serviceTelphone":{editable: true, type:"string", },           
                                     "isShow": { editable: true,type:"number" },
                                     "writeTime": {editable: true, type: "date" },
                                 }
@@ -253,6 +269,16 @@
                         { 
                             field: "coTelphone",
                             title: "售楼电话", 
+                            hidden:true
+                        },
+                        { 
+                            field: "busTelphone",
+                            title: "商业电话", 
+                            hidden:true
+                        },
+                        { 
+                            field: "serviceTelphone",
+                            title: "物业电话", 
                             hidden:true
                         },
 

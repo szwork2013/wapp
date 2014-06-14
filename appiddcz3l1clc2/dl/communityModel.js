@@ -12,6 +12,8 @@ var obj = { //定义结构
       coLogo:{type:String,required:true,default:''},           //小区Logo
       coUrl: {type:String,required:true,default:''},              //楼盘的官网地址
       coTelphone: {type:String,default:''},                   //楼盘售楼电话
+      busTelphone: {type:String,default:''},                   //商业电话
+      serviceTelphone: {type:String,default:''},                   //物业电话
       isShow:{type:Number,required:true,default:1},                        //1表示启用，0表示不启用
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
