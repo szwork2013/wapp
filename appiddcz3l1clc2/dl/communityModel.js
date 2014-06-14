@@ -23,7 +23,7 @@ var objSchema = new Schema(obj);
 
 objSchema.statics.findByObj = function(obj,cb){
       var obj = obj || {};
-      return this.find(obj,  function(err,doc){
+      return this.find(obj).sort({"_id":1}).exec(function(err,doc){
         if(err) logger.error('DB error', err);
         cb(err,doc)
       });
