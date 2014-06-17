@@ -1,0 +1,38 @@
+<% include inc/head %>
+<%
+  var title = '物业服务'
+%>
+<% include inc/top %>
+
+
+  <div data-role="content" class="inside_box fw">
+    <div id="wrapper" class="wrapper2">
+      <div id="scroller" class="e-scroller">
+
+        <ul id="thelist" class="thelist">
+
+      <% list.forEach(function(obj,i){ %>
+
+          <li class="serviceTpye_<%= obj.coServiceType %> service_li">
+              <span><%= obj.coServiceName %></span>
+              <% 
+              var price = '￥'+obj.coServicePrice
+              if(obj.coServicePrice == 0){
+                  price = '免费'
+              }
+              %>
+              <span class="service_price"><%= price %></span>
+              <p><%- obj.coServiceDesc %></p>
+          </li>
+      <% }) %>
+        </ul>
+       
+        
+ <% include inc/footPowerBy %> 
+ 
+      </div>
+    </div>
+  </div>
+ 
+
+<% include inc/foot %>

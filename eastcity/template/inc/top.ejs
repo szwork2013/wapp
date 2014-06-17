@@ -1,0 +1,16 @@
+  <div id="header" data-role="header" data-id="header" class="header" data-position="fixed">
+    <div class="header_box_bj"></div>
+    <div class="header_box"> 
+      <%
+        var insideClass = 'inside_tit'
+      	if(typeof backUrl !== 'undefined'){
+         insideClass = 'inside_tit1'
+      %>		
+      	<p class="txt_titbtn"><a data-ajax="false" href="<%= backUrl %>"><span>返回</span></a></p>
+      <%
+      	}
+      %>
+      <h1 class="<%= insideClass%> fw white"><%= title %></h1>
+    </div>
+    <div class="home_menu_top"></div>
+  </div>

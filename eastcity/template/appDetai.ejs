@@ -1,0 +1,19 @@
+<% include inc/head %>
+<%
+  var title = '关于常发'
+%>
+<% include inc/top %>
+
+  <div id="NewsContent" class="NewsContent">
+      <h2><%= doc.appName %></h2>
+      <h4>服务热线：<a href="tel:<%= doc.appTelphone %>"><%= doc.appTelphone %></a></h4>
+      <p>
+          <%- doc.appIntro %>
+      </p>
+      <% doc.appPicture.forEach(function(path){ %>
+      	<img src="<%= path %>" />
+      <% }) %>
+  </div>
+ <% include inc/footPowerBy %>  
+
+<% include inc/foot %>

@@ -1,0 +1,243 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">开发商id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appName" >开发商名称</label>
+            </div>
+            <div data-container-for="appName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appName" data-bind="value:appName" required="required" data-required-msg="请填写开发商名称" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appEname" >开发商英文</label>
+            </div>
+            <div data-container-for="appEname" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appEname" data-bind="value:appEname" required="required" data-required-msg="请填写开发商英文" aria-invalid="true">
+            </div>
+
+
+             <div class="k-edit-label  w-800-l">
+                <label for="wxAppId" >appid</label>
+            </div>
+            <div data-container-for="wxAppId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppId" data-bind="value:wxAppId" required="required" data-required-msg="请填写微信appid" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="wxAppSecret" >appsecret</label>
+            </div>
+            <div data-container-for="wxAppSecret" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppSecret" data-bind="value:wxAppSecret" required="required" data-required-msg="请填写微信appsecret" aria-invalid="true">
+            </div>
+
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appTelphone" >联系电话</label>
+            </div>
+            <div data-container-for="appTelphone" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appTelphone" data-bind="value:appTelphone" required="required" data-required-msg="请填写联系电话" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appCustomTel">客服电话</label>
+            </div>
+            <div data-container-for="appCustomTel" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appCustomTel" data-bind="value:appCustomTel" required="required" data-required-msg="请填写客服电话" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appPicture">图片介绍</label>
+            </div>
+            <div data-container-for="appPicture" class="k-edit-field w-800-r">
+                <input type="file" name="upload_file" id="upload_file">
+                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="appPicture" data-bind="value:appPicture">
+            </div>
+
+          
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appIntro" >开发商介绍</label>
+            </div>
+            <div data-container-for="appIntro" class="k-edit-field w-800-r">
+               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="appIntro" data-bind="value:appIntro"></textarea>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/app/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/app/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/app/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/app/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "appName": { editable: true, type:'string',validation: { required: {message: "请填写开发商名称"}}  },
+                                    "appEname": { editable: true, type:'string', validation: { required: {message: "请填写开发商英文名"}}},
+                                    "wxAppId": { editable: true, type:'string',},
+                                    "wxAppSecret": { editable: true, type:'string',},
+                                    "appTelphone": { editable: true, type:'string', validation: { required: {message: "请填写联系电话"}}},
+                                    "appCustomTel": { editable: true, type:'string', validation: { required: {message: "请填写客服电话"}}},
+                                    "appPicture": { editable: true, type:'string', validation: { required: {message: "请上传介绍图片"}}},
+                                    "appIntro":{editable: true, type:"string", validation: { required: {message: "请填写介绍"}}},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加开发商" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'开发商id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appName",
+                            title: "开发商", 
+                        },
+                        { 
+                            field: "wxAppId",
+                            title: "微信appid", 
+                        },
+                        { 
+                            field: "wxAppSecret",
+                            title: "微信appsecret", 
+                        },
+                         { 
+                            field: "appEname",
+                            title: "英文名", 
+                        },
+                         { 
+                            field: "appTelphone",
+                            title: "联系电话", 
+                        },
+                         { 
+                            field: "appCustomTel",
+                            title: "客服电话", 
+                        },
+                         { 
+                            field: "appPicture",
+                            title: "介绍图片", 
+                            hidden:true
+                        },
+                        { 
+                            field: "appIntro",
+                            title: "介绍内容", 
+                            hidden:true
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+
+                         $("#intro").kendoEditor({
+                                tools: window.editor_tools,
+                                messages: window.editor_messages
+                         });             
+
+                        
+
+                        $('#writeTime').kendoDateTimePicker();
+
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
+
+                    },
+                    //filterable:true         
+                });
+                                    
+});
+
+</script>
+<% include inc/foot %>

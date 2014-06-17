@@ -1,0 +1,167 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>挑战“豪宅之梦”</title>
+<link href="main.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="mlylogo.png">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+<script>var share_score = 2000;
+var _host = "http://" + window.location.host;
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+function attention_wx()
+{
+	alert("想要豪宅，请关注搜房网");
+	location.href='http://m.soufun.com/gz.html'
+}
+function is_zero()
+{
+	if(share_score == 0)
+	{
+		share_score = 2000;
+	}
+}
+var dataForWeixin = {
+    appId: "",
+    MsgImg: "http://imgdn5.soufunimg.com/2014/04/07/gz/gebz/ab601d81e4724a4a8bd5ac01ee66ee62/mlylogo.jpg",
+    TLImg: "http://imgdn5.soufunimg.com/2014/04/07/gz/gebz/ab601d81e4724a4a8bd5ac01ee66ee62/mlylogo.jpg",
+    url:  "http://imgdn5.soufunimg.com/2014/04/07/gz/gebz/ab601d81e4724a4a8bd5ac01ee66ee62/",
+    title: "我挑战了“搜房豪宅之梦”快来一起挑战吧！",
+    desc: "我挑战了“搜房豪宅之梦”，获得了" + share_score + "分的好成绩！你也来试试吧!",
+    fakeid: "",
+    callback: function() {
+		setTimeout(function(){
+          attention_wx();
+		 },2000);		}
+}; (function() {
+    var onBridgeReady = function() {
+        WeixinJSBridge.on('menu:share:appmessage',
+        function(argv) {
+			is_zero();
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "appid": dataForWeixin.appId,
+                "img_url": dataForWeixin.MsgImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！",
+                "title": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧!"
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:timeline',
+        function(argv) { (dataForWeixin.callback)();
+		is_zero();
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！",
+                "title": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！"
+            },
+            function(res) {});
+        });
+        WeixinJSBridge.on('menu:share:weibo',
+        function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": dataForWeixin.title,
+                "url": dataForWeixin.url
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:facebook',
+        function(argv) { (dataForWeixin.callback)();
+            WeixinJSBridge.invoke('shareFB', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) {});
+        });
+    };
+    if (document.addEventListener) {
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    } else if (document.attachEvent) {
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+})();
+
+</script>
+<div id='wx_logo' style='margin:0 auto;display:none;'><img src='mlylogo.jpg' /></div>
+<div class="container">
+<div class="heading">
+<h1 class="title" style="width:200px;"> 挑战搜房<span class="zg_great">豪宅之梦</span></h1>
+<div class="scores-container">
+<div id="score" class="score-container">0</div>
+<div class="best-container">0</div></div></div>
+<div class="above-game"><p class="game-intro">滑动屏幕，合并相同“住宅” <strong>直到获得“独栋大墅”!</strong><span style="font-size:8px; padding-left:10px;">技术支持:even</span></p><a class="restart-button">重新开始</a></div><div class="game-container"><div class="game-message"><p></p><div class="lower"><a class="keep-playing-button">分享到朋友圈炫耀一下</a></div></div><div class="grid-container"><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div><div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div></div>
+<div class="grid-row"><div class="grid-cell"></div>
+<div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div><div class="grid-row"><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div></div></div><div class="tile-container"></div></div></div>
+
+<script src="bind_polyfill.min.js"></script>
+<script src="classlist_polyfill.min.js"></script>
+<script src="animframe_polyfill.min.js"></script>
+<script src="keyboard_input_manager.min.js"></script>
+<script src="html_actuator.min.js"></script>
+<script src="grid.min.js"></script>
+<script src="tile.min.js"></script>
+<script src="local_storage_manager.min.js"></script>
+<script src="game_manager.min.js"></script>
+<script src="application.min.js"></script>
+<style>.pageOverlayTip {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1987;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	filter: alpha(opacity = 85);
+	opacity: 0.85;
+	visibility: hidden;
+
+
+}
+.pageOverlayTipSlip {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1987;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	filter: alpha(opacity = 85);
+	opacity: 0.85;
+	padding-top:100px;
+}
+</style><div id="pageOverlayShare" class="pageOverlayTip"
+	onclick="this.style.visibility = 'hidden'"><img
+	src="tip.gif" width="100%"></div></div></body></html>

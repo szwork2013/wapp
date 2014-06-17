@@ -1,0 +1,29 @@
+<% include inc/head %>
+<%
+  var title = '热销楼盘'
+%>
+<% include inc/top %>
+
+
+
+  <div data-role="content" class="property_box fw black2 clearfix f14">
+
+    <div class="property_list">
+      <ul>
+        <% list.forEach(function(obj){ %>
+        <li><a href="/view/service/codetail?coId=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank">
+          <p class="property_logo2"><img src="<%= obj.coLogo %>" width="80" height="80"></p>
+          <p class="property_r"></p>
+          <p class="property_tit f16 black"><%= obj.coName %></p>
+          <p class="property_tit1 f12"><%= obj.coAddr %></p>
+          <p class="property_tit1 f12"><%= obj.coTelphone %></p>
+          </a>
+        </li>
+      <% }) %>
+      </ul>
+    </div>
+  </div>
+
+ <% include inc/footPowerBy %> 
+
+<% include inc/foot %>
