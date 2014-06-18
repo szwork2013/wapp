@@ -1,4 +1,4 @@
-var dl = require('../../dl/appServiceModel.js');
+var dl = require('../../dl/appBookModel.js');
 
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
@@ -7,7 +7,11 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('service_list', {session:req.session});
+	res.render('news_list', {session:req.session});
+}
+
+obj.actlist = function(req, res){
+	res.render('active_list', {session:req.session});
 }
 
 
@@ -50,12 +54,7 @@ obj.update = obj.create = function(req, res){
 	else{
 		query = {'writeTime':new Date('1970/1/1')}
 	}
-	if(req.models[0]['coLoc']){
-		req.models[0]['coLoc'] = req.models[0]['coLoc'].split(',');
-	}
-	else{
-		req.models[0]['coLoc'] = [119.95, 31.79]
-	}
+
 
 	
 	delete req.models[0]["_id"];

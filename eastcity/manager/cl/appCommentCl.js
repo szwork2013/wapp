@@ -1,4 +1,4 @@
-var dl = require('../../dl/lotteryModel.js');
+var dl = require('../../dl/appCommentModel.js');
 
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
@@ -7,7 +7,11 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('lottery_list', {session:req.session});
+	res.render('news_list', {session:req.session});
+}
+
+obj.actlist = function(req, res){
+	res.render('active_list', {session:req.session});
 }
 
 
@@ -50,8 +54,11 @@ obj.update = obj.create = function(req, res){
 	else{
 		query = {'writeTime':new Date('1970/1/1')}
 	}
+
 	
 	delete req.models[0]["_id"];
+
+	
 
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);
@@ -71,14 +78,7 @@ obj.destroy = function(req, res){
 }
 
 
-obj.getList = function(req, res){
 
-	dl.findAll({}, 0, 1000, function(err,doc){
-		if(err) return res.send(500,err);
-		if(!doc) return res.json([])
-		res.json(doc);
-	})
-}
 
 
 module.exports = obj;

@@ -1,6 +1,6 @@
 var dl = require('../../dl/scoreGetModel.js');
-
 var dl2 = require('../../dl/userModel.js');
+var guidModel = require('../../dl/guidModel.js');
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
@@ -55,9 +55,6 @@ obj.read = function(req, res){
 					  dary.push({
 					  		  _id:v._id.toString(),	 
 							  userId:uname, 				   //此用户在数据库中的_id
-							  userMobile:mobile,
-							  userSex:sex,
-						      openId:v.openId,
 						      appId:v.appId,
 						      scoreGuid:v.scoreGuid,
 						      scoreDetail:v.scoreDetail,
@@ -93,13 +90,25 @@ obj.update = obj.create = function(req, res){
 	
 	delete req.models[0]["_id"];
 
-	
+	if(!req.models[0]["scoreGuid"]){ //如果没有传guid
+		guidModel.getGuid(function(err,guid){
+			if(err) res.send(500,err);
+			req.models[0]["scoreGuid"] = guid;
+			dl.createOneOrUpdate(query, req.models[0], function(err, doc){
+				if(err) return res.send(500,err);
+				if(!doc) return res.json([])
+				res.json(doc);
+			})
 
-	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
-		if(err) return res.send(500,err);
-		if(!doc) return res.json([])
-		res.json(doc);
-	})
+		})
+	}
+	else{
+		dl.createOneOrUpdate(query, req.models[0], function(err, doc){
+			if(err) return res.send(500,err);
+			if(!doc) return res.json([])
+			res.json(doc);
+		})
+	}
 }
 
 
