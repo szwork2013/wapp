@@ -7,7 +7,7 @@ var path = require('path');
 var exec = require('child_process').exec
 
 var backup_path = 'D:\\db_backup\\'
-var dbname = 'admin'
+var dbname = 'wapp'
 
 if(!fs.existsSync(backup_path)){
 	fs.mkdirSync(backup_path);
@@ -24,38 +24,18 @@ var commond = function(){
 	    if (error !== null) {
 	      console.log('exec error: ' + error);
 	    }
-	    fs.chmodSync(backup_path+filename, 777)
+	    var r = fs.chmodSync(backup_path+filename, 777)
+	    console.log('backup success at '+moment().format("dddd, MMMM Do YYYY, h:mm:ss a"))
 	});
-
-
-
-	var files = fs.readdirSync(backup_path)
-
-	files.forEach(function(name){
-		try{
-			var filetime = moment(name).unix()*1000
-			var now = Date.now()-0
-			if(now - filetime >1000*3600*24*7){ //删除7天前的记录
-				console.log(name)
-				fs.unlinkSync(backup_path+name);
-			}
-		}
-		catch(e){
-			console.log(e)
-		}
-	})
-
 }
 
 
 var rule = new schedule.RecurrenceRule();
-	rule.dayOfWeek = [new schedule.Range(0, 6)];
-	rule.hour = 17;
+	rule.dayOfWeek = [1];
+	rule.hour = 1;
 	rule.minute = 0;
 
 var j = schedule.scheduleJob(rule, function(){
    commond()
 });
-
-
 commond()
