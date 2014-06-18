@@ -44,9 +44,12 @@
        "moment":"2.3.1",
        "request":"2.27.0",
        "webot":"0.1.7",
-       "ifile":"0.3.8",
+       "ifile":"0.3.9",
        "wechat":"0.6.7",
-       "webot":"0.1.8-1"
+       "webot":"0.1.8-1",
+       "node-schedule":"*",
+       "moment":"*",
+       "file":"*"
    },
   "engines": {
     "node": ">=0.10.0"
