@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 //用户积分获取和消费流水表
 var obj = { //定义结构
       appId:{type:String,required:true,index:true},    		    //应用id
-      openId:{type:String,required:true},                 //微信id
       userId:{type:String,required:true, index:true},                 //用户id
       scoreGuid:{type:String,required:true},              //交易流水号
       scoreDetail:{type:Number,default:0},  //积分获取流水，获取或者扣除的积分数目

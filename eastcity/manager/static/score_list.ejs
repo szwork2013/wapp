@@ -51,22 +51,19 @@
                             model: {
                                 id:"_id",
                                 fields: {
-                                    "_id": { editable: false },
-                                     userId:{ editable: false},//此用户在数据库中的_id
-                                     userMobile:{ editable: false},
-                                     userSex:{ editable: false },
-                                     openId:{ editable: false,},
-                                     appId:{ editable: false },
-                                     scoreGuid:{ editable: false},
-                                     scoreDetail:{ editable: false, type:"number" },
-                                     scoreType:{ editable: false ,type:"number"},
-                                     scoreWay:{ editable: false },
-                                     scoreCode1:{ editable: false },
-                                     scoreCode2:{ editable: false },
-                                     scoreCode3:{ editable: false },
-                                     scoreCode4:{ editable: false },
-                                     scoreCode5:{ editable: false },
-                                     "writeTime": {editable: false, type: "date" },
+                                     _id: { editable: false },
+                                     userId:{ editable: true},//此用户在数据库中的_id
+                                     appId:{ editable: true },
+                                     scoreGuid:{ editable: true},
+                                     scoreDetail:{ editable: true, type:"number" },
+                                     scoreType:{ editable: true ,type:"number"},
+                                     scoreWay:{ editable: true },
+                                     scoreCode1:{ editable: true },
+                                     scoreCode2:{ editable: true },
+                                     scoreCode3:{ editable: true },
+                                     scoreCode4:{ editable: true },
+                                     scoreCode5:{ editable: true },
+                                     writeTime: {editable: true, type: "date" },
                                 }
                             }
                         }
@@ -74,11 +71,11 @@
 
                 var toolbarAry = [];
                 var commandAry = [];
- /*
+ 
                     var toolbarAry = [
-                                { name: "create", text: "添加积分流水" }
+                                { name: "create", text: "添加" }
                               ]
-*/
+
         
                     var commandAry = [
                                 { name: "edit", text: {edit: "详细", update: "确定",  cancel: "取消"} },
@@ -111,42 +108,34 @@
                             hidden:true
                         },
                         { 
-                            field: "scoreGuid",
-                            title: "流水号", 
-                        },
-                        { 
                             field: "appId",
                             title: "开发商", 
                             values:window.appd,
-                        },
-                         { 
-                            field: "openId",
-                            title: "微信id", 
+                            hidden:true
                         },
                         { 
                             field: "userId",
-                            title: "真实姓名", 
-                        },                
-                        { 
-                            field: "userMobile",
-                            title: "手机号码", 
+                            title: "用户Id", 
                         }, 
-                               
-                         { 
+                        { 
+                            field: "scoreGuid",
+                            title: "流水号", 
+                        },                                      
+                        { 
                             field: "scoreDetail",
-                            title: "获取/消费", 
+                            title: "获取积分", 
                         },
                         { 
                             field: "scoreType",
-                            title: "积分增减",
+                            title: "积分增加",
                             values:window.scoreget_type,
                             filterable:false,
+                            hidden:true
                         },
                         { 
                             field: "scoreWay",
                             title: "获取方式",
                             values:window.scoreWay_type1
-
                         },
                         { 
                             field: "scoreCode1",

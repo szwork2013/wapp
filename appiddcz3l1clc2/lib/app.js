@@ -18,12 +18,16 @@ app.use(express.cookieParser());
 app.use(express.session({secret: 'wxapp', cookie: {maxAge: 60000}}));
 
 
+/*
 app.use(ifile.connect(
 	[
 		['/static',path.join(__dirname,'..')],
 		['/upload',path.join(__dirname,'..')]
 	]
 ));
+*/
+app.use('/static', express.static(path.join(__dirname,'..','static')));
+app.use('/upload', express.static(path.join(__dirname,'..','upload')));
 
 app.use(express.bodyParser(
 	{ keepExtensions: true, uploadDir: path.join(__dirname,'..','/upload/')}
