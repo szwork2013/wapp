@@ -10,7 +10,7 @@ var obj = { //定义结构
       scoreGuid:{type:String,required:true},              //交易流水号
       scoreDetail:{type:Number,default:0},  //积分获取流水，获取或者扣除的积分数目
       scoreType:{type:Number,default:1},    //积分是获取还是消费，1表示获取，2表示消费
-      scoreWay:{type:String,required:true,index:true},  		    //积分获取/消费方式，枚举，比如regist,daysign,active,forwarding,game
+      scoreWay:{type:String,required:true,index:true},  		    //积分获取/消费方式，枚举，比如 regist,daysign,active,forwarding,game
       scoreCode1:{type:String,default:''},  //积分获取流水，备用字段1，比如存储用户兑换的奖品Id等
       scoreCode2:{type:String,default:''},  //积分获取流水，备用字段2
       scoreCode3:{type:String,default:''},  //积分获取流水，备用字段3

@@ -1,5 +1,6 @@
-var userBl = require('../bl/wxUser.js')
+var userBl = require('../bl/wxUser.js');
 var utils = require('../lib/utils.js');
+var scoreBl = require('../bl/wxScoreSys.js')
 var obj = {}
 var pwdSalt = 'wappwapp'
 
@@ -17,9 +18,8 @@ obj.binder = function(req,res){ //用户认证绑定
 	var qobj = {
 		//必填项
 		openId:openId,
-		appLoginName:req.body.appLoginName,
+
 		appUserName:req.body.appUserName,
-		wxName:req.body.wxName,
 		appUserSex:req.body.appUserSex,
 		appUserBirth:req.body.appUserBirth,
 		appUserMobile:req.body.appUserMobile,
@@ -30,9 +30,6 @@ obj.binder = function(req,res){ //用户认证绑定
 		appUserRoom:req.body.appUserRoom || '',
 		//不填项
 		appUserCity:req.body.appUserCity || '',
-		appLoginPassword:pwd,
-		wxAvatar:req.body.wxAvatar || '',
-		wxGroup:req.body.wxGroup || '',
 
 	}
 
@@ -42,6 +39,18 @@ obj.binder = function(req,res){ //用户认证绑定
 		if(err){
 	        return res.send({error:1,data:err}) 
      	}
+     	var userId = req.wxuobj._id;
+		var openId = req.wxuobj.openId;
+		var appId = global.wxAppObj._id;
+     	var rule = 'gameRule'
+
+     	scoreBl.scoreRule(appId, userId, openId, {}, rule, function(err,doc){
+			if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	     	res.send({error:0,data:''});
+		})
+
      	res.send({error:0,data:doc});		
 	})
 }
@@ -54,8 +63,8 @@ obj.modify = function(req,res){ //用户认证绑定
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId;
 
-	if(req.wxBinder.appUserType != 2){
-		 return res.send({error:1,data:'未认证会员不能修改'})  
+	if(req.wxBinder.appUserType == 0){
+		 return res.send({error:1,data:'未注册会员不能修改'})  
 	}
 
 	//console.log(req.wxBinder)
@@ -77,11 +86,7 @@ obj.modify = function(req,res){ //用户认证绑定
 		appUserRoom:req.body.appUserRoom,
 
 		//不填项
-		wxName:req.body.wxName || '',
 		appUserCity:req.body.appUserCity || '',
-		appLoginPassword:pwd,
-		wxAvatar:req.body.wxAvatar || '',
-		wxGroup:req.body.wxGroup || '',
 
 	}
 
@@ -92,6 +97,37 @@ obj.modify = function(req,res){ //用户认证绑定
      	res.send({error:0,data:doc});		
 	})
 }
+
+
+
+
+obj.mycomment = function(req,res){ //用户认证绑定
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId;
+
+	//to do
+}
+
+
+obj.myfavor = function(req,res){ //用户认证绑定
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId;
+
+	//to do
+}
+
+
+obj.activeback = function(req,res){ //金数据返回接口
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId;
+
+	//to do
+}
+
+
 
 
 module.exports = obj;

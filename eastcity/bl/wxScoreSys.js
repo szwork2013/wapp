@@ -8,15 +8,21 @@ var utils = require('../lib/utils.js');
 var obj = {}
 
 
-obj.registRule = function(qobj,cb){ //注册
-	qobj.scoreWay = 'registRule'
+obj.registRule = function(qobj,data,cb){ //注册
+	qobj.scoreWay = 'regist'
 	qobj.scoreDetail = 10
 	obj.addScoreHistory(qobj,cb)
 }
 
-obj.dayRule = function(qobj,cb){ //每日签到
-	qobj.scoreWay = 'dayRule';
-	qobj.scoreDetail = 10;
+obj.gameRule = function(qobj,data,cb){ //游戏获得积分规则
+	qobj.scoreWay = 'game'
+	//qobj.scoreDetail = 10
+	//obj.addScoreHistory(qobj,cb)
+}
+
+obj.dayRule = function(qobj,data,cb){ //每日签到
+	qobj.scoreWay = 'daysign';
+	qobj.scoreDetail = 5;
 	var now = Date.now();
 	var s = moment().hour(0).minute(0).second(0).format('YYYY/MM/DD HH:mm:ss');
 	var e = moment().hour(23).minute(59).second(59).format('YYYY/MM/DD HH:mm:ss');
@@ -86,7 +92,7 @@ obj.addScoreHistory = function(qobj,cb){ //插入获取积分流水表
 }
 
 
-obj.scoreRule = function(appId, userId, openId, rule, cb){ //根据rule调用规则
+obj.scoreRule = function(appId, userId, openId, data, rule, cb){ //根据rule调用规则
 	if(!appId || !userId || !rule){
 		return cb('appid userid rule can not be null');
 	}
@@ -99,7 +105,7 @@ obj.scoreRule = function(appId, userId, openId, rule, cb){ //根据rule调用规
 	qobj.openId = openId;
 	qobj.scoreType = 1;
 	try{
-		obj[rule](qobj,cb);
+		obj[rule](qobj,data,cb);
 	}
 	catch(e){
 		logger.error('execute %s function error: %s',rule,e);
