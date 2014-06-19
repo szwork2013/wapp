@@ -10,7 +10,7 @@ var obj = { //定义结构
 	  //appLoginName:{type:String,index:true,unique:true},   //登录名
 	  //appLoginPassword:{type:String, default:''},      		//登录密码
 	  appUserName:{type:String, default:'未认证会员'},         //会员姓名
-	  appUserMobile:{type:Number,  default:0},       //会员手机号
+	  appUserMobile:{type:String, required:true, unique: true},       //会员手机号
 	  appUserSex:{type:Number, default:1}, //0表示女性，1表示男性
 	  appUserBirth:{type: Date, default: function(){return new Date('1970/1/1')} }, //会员生日
 	  appUserScore:{type:Number,default:0},

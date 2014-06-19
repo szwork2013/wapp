@@ -22,17 +22,9 @@ obj.read = function(req, res){
 	
 
 		doc.forEach(function(v){
-			var wxLoc2 = '经度:'+v.wxLoc[0]+' | 纬度:'+ v.wxLoc[1]
 			d2.push({
 				  _id:v._id+'',
 				  appId:v.appId,
-				  openId: v.openId,
-				  wxName:v.wxName,
-				  wxAvatar:v.wxAvatar,
-				  wxLoc: wxLoc2,
-				  wxGroup:v.wxGroup,
-				  appLoginName:v.appLoginName,
-				  appLoginPassword:v.appLoginPassword,
 				  appUserName:v.appUserName,
 				  appUserMobile:v.appUserMobile,
 				  appUserSex:v.appUserSex,
@@ -64,14 +56,7 @@ obj.update = obj.create = function(req, res){
 	}
 	
 	delete req.models[0]["_id"];
-	 
 
-	if(!req.models[0]["_id"]){
-		req.models[0]["wxLoc"] = [119.95, 31.79]
-	}
-	else{
-		delete req.models[0]["wxLoc"]
-	}
 
 	if(!req.models[0]["appUserSex"]){
 		delete req.models[0]["appUserSex"]

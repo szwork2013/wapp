@@ -1,5 +1,6 @@
 var express = require('express');
 var ifile = require('ifile');
+var fs = require('fs');
 var path = require('path');
 var app = express();
 var config = require('../config/config.js');
@@ -26,3 +27,10 @@ require('./route.js')(app);
 
 app.listen(config.mangerListenPort);
 console.log('server start on ' + config.mangerListenPort)
+
+//如果没有upload文件夹，则创建
+var uploadPath = path.join(__dirname,'..','upload')
+if(!fs.existsSync(uploadPath)){
+	 fs.mkdirSync(uploadPath)
+	 console.log('create folder '+uploadPath)
+}

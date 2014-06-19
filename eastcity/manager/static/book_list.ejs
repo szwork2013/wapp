@@ -25,22 +25,16 @@
                 <label for="name" >姓名</label>
             </div>
             <div data-container-for="name" class="k-edit-field w-800-r">
-               <input type="text" id="coId_inp" class="k-input k-textbox w-50-inp" name="name" data-bind="value:name" required="required">
+               <input type="text"  class="k-input k-textbox w-50-inp" name="name" data-bind="value:name" required="required">
             </div>
             
-            <div class="k-edit-label  w-800-l">
-                <label for="tel" >姓名</label>
-            </div>
-            <div data-container-for="tel" class="k-edit-field w-800-r">
-               <input type="text" id="coId_inp" class="k-input k-textbox w-50-inp" name="tel" data-bind="value:tel" required="required">
-            </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="pictrue">图片</label>
+                <label for="picture">图片</label>
             </div>
-            <div data-container-for="pictrue" class="k-edit-field w-800-r">
+            <div data-container-for="picture" class="k-edit-field w-800-r">
                 <input type="file" name="upload_file" id="upload_file">
-                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="pictrue" data-bind="value:pictrue">
+                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
             </div>
 
 
@@ -49,14 +43,14 @@
                     <label for="code1" >备用1</label>
                 </div>
                 <div data-container-for="code1" class="k-edit-field w-800-r">
-                   <input type="text" id="coId_inp" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" required="required">
+                   <input type="text" id="coId_inp" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
                 </div>
 
                 <div class="k-edit-label  w-800-l">
                     <label for="code2" >备用2</label>
                 </div>
                 <div data-container-for="code2" class="k-edit-field w-800-r">
-                   <input type="text" id="coId_inp" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" required="required">
+                   <input type="text" id="coId_inp" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
                 </div>
             </div>
 
@@ -101,9 +95,7 @@
                         batch: true,
                         pageSize: 15,
                         serverFiltering:true,
-                        filter: [
-                            { field: "appNewsType", operator: "eq", value: 1 }
-                        ],
+
                         transport: {
                             read:  {
                                 url: DataHost + "/manger/book/read",
@@ -137,7 +129,7 @@
                                     "_id": { editable: false },
                                     "appId": { editable: true },
                                     "name": { editable: true },
-                                    "pictrue": { editable: true },
+                                    "picture": { editable: true },
                                     "tel": { editable: true},
                                     "code1": { editable: true},
                                     "code2": { editable: true},
@@ -182,9 +174,9 @@ $.post('/manger/app/getList',{},function(data_ary){
                             title: "姓名",
                         },
                          { 
-                            field: "pictrue",
+                            field: "picture",
                             title: "头像", 
-                            template: "<img src='#=pictrue#' width=50 height=50/>",
+                            template: "<img src='#=picture#' width=50 height=50/>",
                         },
                          { 
                             field: "tel",
@@ -228,7 +220,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 1)
 
-                        window.dropdown_init()                       
+                        window.dropdown_init()
+                        window.dropdown_init($('#appId_inp'),d)                       
 
                     },
                     filterable:window.filter_obj         

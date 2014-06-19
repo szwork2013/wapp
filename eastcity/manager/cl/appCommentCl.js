@@ -7,13 +7,8 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('news_list', {session:req.session});
+	res.render('comment_list', {session:req.session});
 }
-
-obj.actlist = function(req, res){
-	res.render('active_list', {session:req.session});
-}
-
 
 
 

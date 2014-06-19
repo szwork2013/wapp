@@ -52,4 +52,4 @@ objSchema.statics.destroy = function (query, cb) {
     return this.remove(query, cb); 
 }
 
-module.exports = mongoose.model('wxCommunity', objSchema);
+module.exports = mongoose.model('wxComment', objSchema);

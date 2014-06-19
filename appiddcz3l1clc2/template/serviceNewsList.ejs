@@ -18,11 +18,11 @@
        <a href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>&backtype=<%= type %>" style="display:none;" class="newslist_<%= k %> newslist_a" target="_blank">
         <div class="e_txt_box fw black2 clearfix f14" >
           <p class="e_txt_box_tit">
-            <span class="l"><%= obj.writeTime %></span>
+            <span class="l"><%= obj.appNewsTitle %></span>
           </p>
           <p class="sl"></p>
           <div class="newsImg"><img src="<%= obj.appNewsPicture[0] %>" width="292"></div>
-          <p><%= obj.appNewsTitle %></p>
+          <p><%= obj.writeTime %></p>
         </div>
       </a>
       <% }) %>

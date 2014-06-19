@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构
       appId:{type:String,required:true,index:true},    		    //应用id
       userId:{type:String,required:true, index:true},                 //用户id
+      mobile:{type:String,required:true, index:true},                 //用户手机号码
       scoreGuid:{type:String,required:true},              //交易流水号
       scoreDetail:{type:Number,default:0},  //积分获取流水，获取或者扣除的积分数目
       scoreType:{type:Number,default:1},    //积分是获取还是消费，1表示获取，2表示消费

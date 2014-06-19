@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构
       appId:{type:String,required:true},    			     //应用id
       name:{type:String,required:true},               //预定姓名
-      pictrue:{type:String,required:true},            //预定人头像
+      picture:{type:String,required:true},            //预定人头像
       tel:{type:String,required:true},                //预定人电话
       code1:{type:String,default:''},                 //备用字段1
       code2:{type:String,default:''},                 //备用字段2
@@ -46,4 +46,4 @@ objSchema.statics.destroy = function (query, cb) {
     return this.remove(query, cb); 
 }
 
-module.exports = mongoose.model('wxNews', objSchema);
+module.exports = mongoose.model('wxBook', objSchema);

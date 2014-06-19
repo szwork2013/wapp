@@ -54,22 +54,15 @@
                     <label for="code1" >备用1</label>
                 </div>
                 <div data-container-for="code1" class="k-edit-field w-800-r">
-                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" required="required">
+                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
                 </div>
 
                 <div class="k-edit-label  w-800-l">
                     <label for="code2" >备用2</label>
                 </div>
                 <div data-container-for="code2" class="k-edit-field w-800-r">
-                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" required="required">
+                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2">
                 </div>
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="isShow">是否启用</label>
-            </div>
-            <div data-container-for="isShow" class="k-edit-field w-800-r">
-               <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -106,9 +99,6 @@
                         batch: true,
                         pageSize: 15,
                         serverFiltering:true,
-                        filter: [
-                            { field: "appNewsType", operator: "eq", value: 1 }
-                        ],
                         transport: {
                             read:  {
                                 url: DataHost + "/manger/comment/read",
@@ -147,7 +137,6 @@
                                     "type": { editable: true, type:'number'},                                   
                                     "code1": { editable: true},
                                     "code2": { editable: true},
-                                    "isShow": { editable: true, type:'number' },
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -184,8 +173,12 @@ $.post('/manger/app/getList',{},function(data_ary){
                             hidden:true
                         },
                         { 
-                            field: "title",
-                            title: "标题",
+                            field: "userId",
+                            title: "用户id",
+                        },
+                       { 
+                            field: "specialId",
+                            title: "专刊id",
                         },
                         { 
                             field: "content",
@@ -193,19 +186,9 @@ $.post('/manger/app/getList',{},function(data_ary){
                             hidden:true
                         },
                         { 
-                            field: "picture",
-                            title: "图片",
-                            hidden:true
-                        },
-                        { 
-                            field: "url",
-                            title: "跳转地址",
-                            hidden:true
-                        },
-                        { 
                             field: "type",
                             title: "类型",
-                            values:window.news_type2,
+                            values:window.comment_type,
                         },
                          { 
                             field: "code1",
@@ -216,12 +199,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "code2",
                             title: "备用2",                           
                              hidden:true
-                        },
-                        { 
-                            field: "isShow",
-                            title: "是否启用", 
-                            values:window.is_show_array
-                        },            
+                        },           
                         { 
                             field: "writeTime",
                             title: "创建日期",
@@ -247,7 +225,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                                 tools: window.editor_tools,
                                 messages: window.editor_messages
                          });  
-                        window.dropdown_init()  
+                        window.dropdown_init() 
+                        window.dropdown_init($('#appId_inp'),d)  
                         window.dropdown_init($('#newsType'),window.comment_type)                       
 
                     },

@@ -250,16 +250,19 @@ window.scoreWay_type2 = [
 
 window.scoreget_type = [
                               { text: "获取", value: 1 },
-                              { text: "消费", value: 0 }
+                              { text: "消费", value: 2 }
                             ]
 
 
 
-window.dropdown_init = function($obj, $array,onchange){
+window.dropdown_init = function($obj, $array,onchange,init){
       var $obj = $obj || $("#isShow_inp")
       var $array = $array || window.is_show_array
       var onchange = onchange || $.noop;
-
+      
+      if(init && (!$obj.val() || $obj.val()=='0')){
+        $obj.val(init).change()
+      }
       var appid = $obj.val()
              var isFound = 0;
              $array.forEach(function(v){

@@ -10,12 +10,6 @@ obj.list = function(req, res){
 	res.render('news_list', {session:req.session});
 }
 
-obj.actlist = function(req, res){
-	res.render('active_list', {session:req.session});
-}
-
-
-
 
 obj.read = function(req, res){
 	var filter =  utils.kendoToMongoose(req.body.filter,req.session.clientId);
@@ -29,6 +23,7 @@ obj.read = function(req, res){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json(resObj);
 		resObj["Data"] = doc;
+		
 		var ids = []
 		doc.forEach(function(v){
 			ids.push(v.userId)
@@ -53,12 +48,6 @@ obj.update = obj.create = function(req, res){
 	}
 	else{
 		query = {'writeTime':new Date('1970/1/1')}
-	}
-	if(req.models[0]['coLoc']){
-		req.models[0]['coLoc'] = req.models[0]['coLoc'].split(',');
-	}
-	else{
-		req.models[0]['coLoc'] = [119.95, 31.79]
 	}
 
 	

@@ -21,55 +21,6 @@
                <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
             </div>
 
-<!--
-            <div class="k-edit-label  w-800-l">
-                <label for="openId" >微信openid</label>
-            </div>
-            <div data-container-for="openId" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="openId" data-bind="value:openId" required="required" data-required-msg="请填写微信openid" aria-invalid="true">
-            </div>
--->
-            <div class="k-edit-label  w-800-l">
-                <label for="appLoginName" >登录名</label>
-            </div>
-            <div data-container-for="appLoginName" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="appLoginName" data-bind="value:appLoginName" required="required" data-required-msg="请填写登录名" aria-invalid="true">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="appLoginPassword" >登录密码</label>
-            </div>
-            <div data-container-for="appLoginPassword" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="appLoginPassword" data-bind="value:appLoginPassword" aria-invalid="true">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="wxName" >微信用户名</label>
-            </div>
-            <div data-container-for="wxName" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="wxName" data-bind="value:wxName" required="required" data-required-msg="请填写微信用户名" aria-invalid="true">
-            </div>
-            <div class="k-edit-label  w-800-l">
-                <label for="wxAvatar">微信头像</label>
-            </div>
-            <div data-container-for="wxAvatar" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="wxAvatar" data-bind="value:wxAvatar" >
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="wxLoc">上次登录位置</label>
-            </div>
-            <div data-container-for="wxLoc" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="wxLoc" data-bind="value:wxLoc" readonly="readonly">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="wxGroup">微信分组</label>
-            </div>
-            <div data-container-for="wxGroup" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="wxGroup" data-bind="value:wxGroup" required="required" data-required-msg="请填写微信分组" aria-invalid="true">
-            </div>
-
             <div class="k-edit-label  w-800-l">
                 <label for="appUserName">真实姓名</label>
             </div>
@@ -169,13 +120,6 @@
                                 fields: {
                                     "_id": { editable: false },
                                     "appId": { editable: true },
-                                    //"openId": { editable: true },
-                                    "wxName": { editable: true},
-                                    "wxAvatar": { editable: true},
-                                    "wxLoc": { editable: true},
-                                    "wxGroup":{editable: true},
-                                    appLoginName:{editable: true},
-                                    appLoginPassword:{editable: true},
                                     "appUserName":{editable: true},
                                     "appUserMobile":{editable: true},
                                     "appUserSex":{editable: true},
@@ -213,15 +157,7 @@
                 })
 
                 window.appd = d;
-         $.post('/manger/co/getList',{},function(data_ary2){
-                var d2 = []
-                data_ary2.forEach(function(v){
-                    d2.push({
-                        text: v.coName, 
-                        value:v._id
-                    })
-                })
-                window.d2 = d2;
+
 
                 $("#grid").kendoGrid({
                     dataSource: dataSource,
@@ -239,40 +175,6 @@
                             field: "appId",
                             title: "开发商", 
                             values:d
-                        },
-                        // { 
-                        //    field: "openId",
-                        //    title: "微信id", 
-                        //},
-                         { 
-                            field: "wxName",
-                            title: "微信用户名",
-                            hidden:true
-                        },
-                         { 
-                            field: "wxAvatar",
-                            title: "微信头像",
-                            hidden:true
-                        },
-                        { 
-                            field: "wxLoc",
-                            title: "上次登录位置",
-                            hidden:true
-                        },
-                        { 
-                            field: "wxGroup",
-                            title: "微信分组",
-                            hidden:true
-                        },
-                        {
-                            field: "appLoginName",
-                            title: "登录名",
-                            hidden:true
-                        },
-                        {
-                            field: "appLoginPassword",
-                            title: "密码",
-                            hidden:true
                         },
                         { 
                             field: "appUserName",
@@ -343,7 +245,6 @@
                     
                 });
 
-            })
     })      
                                     
 });
@@ -408,7 +309,7 @@ var dataSource2 = new kendo.data.DataSource({
                                 fields: {
                                     "_id": { editable: false },
                                     "userId": { editable: true },
-                                    "openId": { editable: false },
+                                    "openId": { editable: true },
                                     "appId": { editable: true},
                                     "appUserCity": { editable: true},
                                     "appUserCommunity": { editable: true},
@@ -511,7 +412,7 @@ var dataSource2 = new kendo.data.DataSource({
                             var d = window.appd;
 
                             $('input[name="userId"]').val(e.data._id).prop('readonly','readonly').change();
-                            $('input[name="openId"]').val(e.data.openId).prop('readonly','readonly').change();
+                            //$('input[name="openId"]').val(e.data.openId).prop('readonly','readonly').change();
                   
                            }  
                     });

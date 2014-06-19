@@ -4,6 +4,104 @@
 
 
  <div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">积分id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appId" >地产商</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userId" >用户Id</label>
+            </div>
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="mobile" >手机号</label>
+            </div>
+            <div data-container-for="mobile" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="mobile" data-bind="value:mobile" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreGuid" >流水号</label>
+            </div>
+            <div data-container-for="scoreGuid" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreGuid" data-bind="value:scoreGuid" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreType" >获取/消费</label>
+            </div>
+            <div data-container-for="scoreType" class="k-edit-field w-800-r">
+               <input type="number"  id="scoreType_inp"  class="k-input k-textbox w-50-inp" name="scoreType" data-bind="value:scoreType" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreDetail" >积分数量</label>
+            </div>
+            <div data-container-for="scoreDetail" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="scoreDetail" data-bind="value:scoreDetail" required="required">
+            </div>
+
+            
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreWay" >获取/消费方式</label>
+            </div>
+            <div data-container-for="scoreWay" class="k-edit-field w-800-r">
+               <input type="text" id="scoreWay_inp" class="k-input k-textbox w-50-inp" name="scoreWay" data-bind="value:scoreWay" required="required">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode1" >备用1</label>
+            </div>
+            <div data-container-for="scoreCode1" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode1" data-bind="value:scoreCode1" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode2" >备用2</label>
+            </div>
+            <div data-container-for="scoreCode2" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode2" data-bind="value:scoreCode2">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode3" >备用3</label>
+            </div>
+            <div data-container-for="scoreCode3" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode3" data-bind="value:scoreCode3">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode4" >备用4</label>
+            </div>
+            <div data-container-for="scoreCode4" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode4" data-bind="value:scoreCode4" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode5" >备用5</label>
+            </div>
+            <div data-container-for="scoreCode5" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode5" data-bind="value:scoreCode5" >
+            </div>
+
+        </script>
 
 
 
@@ -53,6 +151,7 @@
                                 fields: {
                                      _id: { editable: false },
                                      userId:{ editable: true},//此用户在数据库中的_id
+                                     mobile:{ editable: true},//此用户手机号
                                      appId:{ editable: true },
                                      scoreGuid:{ editable: true},
                                      scoreDetail:{ editable: true, type:"number" },
@@ -118,6 +217,10 @@
                             title: "用户Id", 
                         }, 
                         { 
+                            field: "mobile",
+                            title: "手机号", 
+                        }, 
+                        { 
                             field: "scoreGuid",
                             title: "流水号", 
                         },                                      
@@ -171,14 +274,24 @@
                     editable: {
                         confirmation:'确定删除吗？',
                         mode:"popup",
-                        
+                        template: kendo.template($("#popup_editor").html()),
                         window : {
-                                title: "详细",
+                                title: "添加/修改",
+                                width:800,
                             }
                         },
                     edit:function(e){
+                        setTimeout(function(){
+                            $('.k-window-content').addClass('w-800-content');
+                            $('.k-edit-form-container').addClass('w-800-content');
+           
+                            $('#writeTime').kendoDateTimePicker();
+                            window.dropdown_init($('#appId_inp'),d) 
+                            window.dropdown_init($('#scoreType_inp'),window.scoreget_type)
+                            window.dropdown_init($('#scoreWay_inp'),window.scoreWay_type1)               
 
-
+                        },100)
+                        
                     },
                     //filterable:true         
                 });
