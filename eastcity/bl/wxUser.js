@@ -79,54 +79,21 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 
 			//console.log(uType);
 
-			if(uType == 2){ //如果已经是认证vip会员了
-				return cb('您已经是vip认证用户',null);
-			}
-			if(uType == 1){//如果是认证会员，但不是vip，只需要完善小区信息即可
-
-				
-				if(!qobj.appUserCommunity){
-					return cb('请填写小区')
-				}
-				if(!qobj.appUserBuilding){
-					return cb('请填写楼号')
-				}
-				if(!qobj.appUserRoom){
-					return cb('请填写房号')
-				}
-
-				userAppModel.createOneOrUpdate({
-					userId:udoc.uobj._id,
-					openId:openId,
-					appId:appId
-				},{
-					appUserCommunity:qobj.appUserCommunity,
-					appUserBuilding:qobj.appUserBuilding,
-					appUserRoom:qobj.appUserRoom,
-					isNewSubmit:1      //完善资料后成为vip用户
-				},function(err,doc){
-					if(err) return cb(err);
-					cb(null, doc)
-				})
-
+			if(uType == 2 || uType == 1){ //如果已经是注册会员了
+				return cb('您已经是注册用户',null);
 			}
 			else{  //如果是0或者没有绑定
-			if(!qobj.appLoginName){
-				return cb('请填写登录名')
-			}
+
 			userModel.findOneByObj({
-					appLoginName:qobj.appLoginName
+					appUserMobile:qobj.appUserMobile
 				},function(err,udoc2){
 					if(err) return cb(err)
-					if(udoc2) return cb('登录名已经被使用')
+					if(udoc2) return cb('手机号已经被使用')
 					guidModel.getGuid(function(err,guid){
 						if(err) return cb(err); //如果出错
 
-						if(!qobj.appUserName){
-							return cb('请填写姓名')
-						}
 						if(!qobj.appUserMobile){
-							return cb('请填写电话')
+							return cb('请填写手机')
 						}
 
 						var isNewSubmit = 0
@@ -136,12 +103,7 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 
 						userModel.createOneOrUpdate({
 							_id:udoc.uobj._id,				
-						},{
-							wxName:qobj.wxName || '',
-							wxAvatar:qobj.wxAvatar||'',
-							wxGroup:qobj.wxGroup||'',
-							appLoginName:qobj.appLoginName,
-							appLoginPassword:qobj.appLoginPassword || '',
+						},{						
 							appUserName:qobj.appUserName,
 							appUserMobile:qobj.appUserMobile,
 							appUserSex:qobj.appUserSex || 1,
@@ -157,7 +119,6 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 								type = 1;
 								isNewSubmit = 1
 							}
-
 							userAppModel.findByObj({
 								userId:udoc.uobj._id,
 								openId:openId,
@@ -168,7 +129,6 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 								if(appDoc && appDoc.length>0 && appDoc[0].appCardNumber){
 									guid = appDoc[0].appCardNumber
 								}
-
 								userAppModel.createOneOrUpdate({
 									userId:udoc.uobj._id,
 									openId:openId,
@@ -207,7 +167,7 @@ obj.enter = function(openId,appId,cb){ //用户进入
 		guidModel.getGuid(function(err,guid){
 			userModel.insertOneByObj({
 				appId:appId,
-				appLoginName:'__'+guid
+				appUserMobile:'__'+guid
 			},function(err,udoc2){
 				if(err) return cb(err);
 
@@ -286,9 +246,9 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(qobj.appUserBirth){
 		userMObj.appUserBirth = qobj.appUserBirth
 	}
-	if(qobj.appUserMobile){
+	/*if(qobj.appUserMobile){
 		userMObj.appUserMobile = qobj.appUserMobile
-	}
+	}*/
 
 	userAppModel.createOneOrUpdate({
 			userId:userId,

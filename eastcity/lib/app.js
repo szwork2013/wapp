@@ -1,4 +1,5 @@
 var widget = {};
+
 var logger = require('./log.js');
 var path = require('path');
 var ifile = require('ifile');
@@ -6,6 +7,10 @@ var express = require('express');
 var app = express();
 var config = require('../config/config.js');
 var addRoute = require('./route.js');
+
+//使用客户端cookie
+var cs = require('client-session');
+var clientSession = cs('eastcitywujbnet');
 
 app.enable('trust proxy');
 app.set('x-powered-by', 'openresty');
@@ -29,6 +34,7 @@ app.use(express.bodyParser(
 	{ keepExtensions: true, uploadDir: path.join(__dirname,'..','/upload/')}
 ));
 
+app.use(clientSession.connect());
 app.use(express.query());
 
 

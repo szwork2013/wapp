@@ -8,17 +8,13 @@ var wxRoute = require('../weixCl/wCl.js');
 
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
-var apiInfo = require('../apiCl/apiInfo.js');
-var apiLottery = require('../apiCl/apiLottery.js');
+var apiSpecial = require('../apiCl/apiSpecial.js');
 var apiScoreSys = require('../apiCl/apiScoreSys.js');
-var apiShop = require('../apiCl/apiShop.js');
-var apiSuggest = require('../apiCl/apiSuggest.js');
 var apiUser = require('../apiCl/apiUser.js');
 
 var viewUser = require('../viewCl/viewUserCl.js');
 var viewService = require('../viewCl/viewServiceCl.js');
-var viewSuggest = require('../viewCl/viewSuggestCl.js');
-var viewInfo = require('../viewCl/viewInfo.js');
+var viewGame = require('../viewCl/viewGametCl.js');
 
 
 //console.log(global.config)
@@ -76,12 +72,6 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 		req.wxuobj = {
 			  _id:uobj.uobj._id,
 			  appId:uobj.uobj.appId,                 //appId表示用户第一次绑定的app应用id
-			  wxName:uobj.uobj.wxName,                   //微信用户昵称
-			  wxAvatar:uobj.uobj.wxAvatar,             //微信用户头像
-			  wxLoc: uobj.uobj.wxLoc,    //用户最近一次经纬度保存
-			  wxGroup:uobj.uobj.wxGroup,                //用户分组，默认是cf常发
-			  appLoginName:uobj.uobj.appLoginName,       //登录名
-			  appLoginPassword:uobj.uobj.appLoginPassword,       //密码
 			  appUserName:uobj.uobj.appUserName,       //会员姓名
 			  appUserMobile:uobj.uobj.appUserMobile,  //会员手机号
 			  appUserSex:uobj.uobj.appUserSex, //0表示女性，1表示男性
@@ -145,92 +135,69 @@ var addroute = function(app){
 		})
 	})
 
-	app.post('/api/info/sendrecommend',getUserMid, apiInfo.sendReCommend);
-	
-	app.post('/api/lottery/startlottery',getUserMid, apiLottery.startLottery);
-	app.post('/api/lottery/improveinfo',getUserMid, apiLottery.improveInfo);
-
+	//下面是ajax控制器
+	//每日签到
 	app.post('/api/score/daysign',getUserMid, apiScoreSys.daySign);
-
-	app.post('/api/shop/exchangeprize',getUserMid, apiShop.exchangePrize);
-
-	app.post('/api/suggest/sendSuggest',getUserMid, apiSuggest.sendSuggest);
-	app.post('/api/suggest/sendService',getUserMid, apiSuggest.sendService);
-	app.post('/api/suggest/sendMessage',getUserMid, apiSuggest.sendMessage);
-	app.post('/api/suggest/sendOrder',getUserMid, apiSuggest.sendOrder);
-
+	//游戏完成积分
+	app.post('/api/score/game',getUserMid, apiScoreSys.game);
+	//用户注册
 	app.post('/api/user/binder',getUserMid, apiUser.binder);
+	//用户修改资料
 	app.post('/api/user/modify',getUserMid, apiUser.modify);
-	//view router
-	//user center
-	//用户绑定和会员卡
-	app.get('/view/user/binder',getUserMid, viewUser.binder);
-	app.get('/view/user/card',getUserMid, viewUser.card);
-	//app.get('/view/user/day',getUserMid, viewUser.day);
-	//app.get('/view/user/shop',getUserMid, viewUser.shop);
-	//service center
-	//小区列表
-	app.get('/view/service/colist',getUserMid, viewService.coList);
-	app.get('/view/service/codetail',getUserMid, viewService.coDetail);
-	//新闻动态优惠
-	app.get('/view/service/copromotion',getUserMid, viewService.coPromotion);
-	app.get('/view/service/coact',getUserMid, viewService.coAct);
-	app.get('/view/service/newsall',getUserMid, viewService.newsAll);
+	//用户注册以及修改资料
+	app.post('/api/user/mycomment',getUserMid, apiUser.mycomment);
+	//用户注册以及修改资料
+	app.post('/api/user/myfavor',getUserMid, apiUser.myfavor);
+	//进数据数据推送接口
+	app.post('/api/user/activeback',getUserMid, apiUser.activeback);
+
+	//获取专刊中某一片文章的评论
+	app.post('/api/special/getcomment',getUserMid, apiSpecial.getcomment);
+	//向某一个专刊发送评论
+	app.post('/api/special/sendcomment',getUserMid, apiSpecial.sendcomment);
+		
+
+	//下面是页面控制器
+	 //活动页面，可能是金数据投票列表页
+	app.get('/view/service/activelist',getUserMid, viewService.activelist);
+	//乐活空间公告
+	app.get('/view/service/newsall',getUserMid, viewService.newsAll);   
+	//一键呼叫，预约服务
+	app.get('/view/service/call',getUserMid, viewService.call);
+	//物语空间公告
+	app.get('/view/service/announce',getUserMid, viewService.announce);   
+	//公告详细页
 	app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);
-	//物业服务和周边配套
-	app.get('/view/service/coservicelist',getUserMid, viewService.coservicelist);
-	app.get('/view/service/coservice',getUserMid, viewService.coService);
-	app.get('/view/service/conear',getUserMid, viewService.coNear);
 
-	app.get('/view/service/appdetail',getUserMid, viewService.appDetail);
+	//专刊列表,根据type显示不同的专刊内容
+	app.get('/view/service/speciallist',getUserMid, viewService.speciallist);
+	//专刊详细
+	app.get('/view/service/specialdetail',getUserMid, viewService.specialdetail);
 
-	//一键呼叫
-	app.get('/view/service/call',getUserMid, viewService.coCall);
+	//用户注册
+	app.get('/view/user/regist',getUserMid, viewUser.binder);
+	//修改资料
+	app.get('/view/user/modify',getUserMid, viewUser.modify);
+	//帖子空间，ajax动态获取我的评论和收藏
+	app.get('/view/user/myzone',getUserMid, viewUser.myzone);
+	//签到页面
+	app.get('/view/user/day',getUserMid, viewUser.day);
+	//积分查询
+	app.get('/view/user/myscore',getUserMid, viewUser.myscore);
 
-	//在线留言
-	app.get('/view/suggest/reqmessage',getUserMid, viewSuggest.reqMessage);
-	//推荐新客户
-	app.get('/view/suggest/recommend',getUserMid, viewSuggest.reCommend);
-	
-	//app.get('/view/service/appdetail',getUserMid, viewService.appDetail);
-	//app.get('/view/service/colist',getUserMid, viewService.coList);
-	//app.get('/view/service/coservice',getUserMid, viewService.coService);
-	//app.get('/view/service/codetail',getUserMid, viewService.coDetail);
-	//app.get('/view/service/conear',getUserMid, viewService.coNear);
-	//app.get('/view/service/newsall',getUserMid, viewService.newsAll);
-	//app.get('/view/service/colist',getUserMid, viewService.coList);
-	//app.get('/view/service/conews',getUserMid, viewService.coNews);
-	//app.get('/view/service/coact',getUserMid, viewService.coAct);
-	//
-	//app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);
-	//suggest center
-	//app.get('/view/suggest/recommend',getUserMid, viewSuggest.reCommend);
-	//app.get('/view/suggest/custom',getUserMid, viewSuggest.custom);
-	//app.get('/view/suggest/reqservice',getUserMid, viewSuggest.reqService);
-	//app.get('/view/suggest/reqcomplaints',getUserMid, viewSuggest.reqComplaints);
-	//app.get('/view/suggest/reqmessage',getUserMid, viewSuggest.reqMessage);
-	//app.get('/view/suggest/myreply',getUserMid, viewSuggest.myReply);
-	//app.get('/view/suggest/ordersearch',getUserMid, viewSuggest.orderSearch);
+	//游戏列表页
+	app.get('/view/game/gamelist',getUserMid, viewGame.gamelist);
+	//游戏详细页
+	app.get('/view/game/gamedetail',getUserMid, viewGame.gamedetail);
 
 
-	app.get('/', function(req,res){ //验证token有效性
-		if(!req.query.nonce || !req.query.signature || !req.query.timestamp || !req.query.echostr){
-			return res.send('param wrong')
-		}
-		//console.log(req.query)
-		var signature = (req.query.signature || '').toLowerCase();
-		var echostr = req.query.echostr;
-
-		var sha1Array = [req.query.nonce,req.query.timestamp,config.wxAppToken].sort();
-		var mySign = utils.sha1(sha1Array.join('')).toLowerCase();
-
-		if(signature == mySign){
-			res.send(echostr)
-		}
-		else{
-			res.send('signature:'+signature+' != mySign:' +mySign)
-		}
-
+	app.get('/', function(req,res){
+		var count = req.csession['count'];
+		if(!count) count = 1;
+		else count++;
+		req.csession['count'] = count;
+		req.csflush(); 
+		res.send('welcome count: '+count.toString());
 	})
 
 }
