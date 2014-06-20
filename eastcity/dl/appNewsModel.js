@@ -8,11 +8,11 @@ var obj = { //定义结构
       content:{type:String,required:true},           //内容
       picture:{type:String,required:true},           //缩略图
       url:{type:String,required:true},               //跳转地址，投票金数据用
-      type:{type:Number,default:1},    //1乐活空间公告，2表示物语空间公告，3表示乐活空间活动
+      type:{type:Number,default:1},    //1乐活空间公告，2表示物语空间公告，3表示物语空间活动
       code1:{type:String,default:''},                 //备用字段1
       code2:{type:String,default:''},                 //备用字段2
       isShow:{type:Number,default:1},             
-	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
+	writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 
 

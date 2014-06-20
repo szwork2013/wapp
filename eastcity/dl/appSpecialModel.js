@@ -12,7 +12,7 @@ var obj = { //定义结构
       code1:{type:String,default:''},                //备用字段1
       code2:{type:String,default:''},                //备用字段2
       isShow:{type:Number,default:1},             
-	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
+	writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 
 

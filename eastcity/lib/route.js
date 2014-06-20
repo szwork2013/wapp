@@ -11,6 +11,7 @@ var userBl = require('../bl/wxUser.js');
 var apiSpecial = require('../apiCl/apiSpecial.js');
 var apiScoreSys = require('../apiCl/apiScoreSys.js');
 var apiUser = require('../apiCl/apiUser.js');
+var apiInfo = require('../apiCl/apiInfo.js');
 
 var viewUser = require('../viewCl/viewUserCl.js');
 var viewService = require('../viewCl/viewServiceCl.js');
@@ -155,6 +156,9 @@ var addroute = function(app){
 	app.post('/api/special/getcomment',getUserMid, apiSpecial.getcomment);
 	//向某一个专刊发送评论
 	app.post('/api/special/sendcomment',getUserMid, apiSpecial.sendcomment);
+	//获取新闻公告和专刊列表页
+	app.get('/api/info/newslist',getUserMid, apiInfo.newslist);
+	app.get('/api/info/speciallist',getUserMid, apiInfo.speciallist);
 		
 
 	//下面是页面控制器
