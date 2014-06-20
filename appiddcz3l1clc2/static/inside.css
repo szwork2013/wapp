@@ -651,3 +651,8 @@ background-position: -216px -1px !important;
 .NewsContent h4{
 	padding: 10px 0;
 }
+
+.service_li img{
+	display: block;
+	max-width: 100%;
+}
