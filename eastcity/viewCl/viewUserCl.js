@@ -7,26 +7,30 @@ var utils = require('../lib/utils.js');
 var obj = {}
 
 
-obj.binder = function(req,res){ //用户认证绑定页面
+obj.regist = function(req,res){ //用户注册
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId
 
-
-	infoBl.getCo(appId, function(err,list){
-		if(err){
-			logger.error('obj.binder infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'用户认证绑定页面失败')
-		}
-
-		res.render('userBinder.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'list':list
-		})
+	res.render('user_regist.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
 	})
 
-	return;
+}
+
+
+//修改资料
+obj.modify = function(req,res){ 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId
+
+	res.render('user_modify.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+	})
+	
 }
 
 
@@ -36,43 +40,15 @@ obj.myzone = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
 
-	infoBl.getCo(appId, function(err,list){
-		if(err){
-			logger.error('obj.binder infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'用户会员卡页面失败')
-		}
-
-		res.render('userCard.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'list':list
-		})
+	res.render('user_zone.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
 	})
-	
 }
 
 
 
 
-obj.modify = function(req,res){ //用户会员卡功能
-	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
-	var openId = req.wxuobj.openId
-
-	infoBl.getCo(appId, function(err,list){
-		if(err){
-			logger.error('obj.binder infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'用户会员卡页面失败')
-		}
-
-		res.render('userCard.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'list':list
-		})
-	})
-	
-}
 
 
 
@@ -84,7 +60,7 @@ obj.day = function(req,res){ //会员每日打卡页面
 	scoreBl.getHistoryByUserIdAndRule(userId, 'dayRule', function(err, doclist){
 		
 		if(err){
-			logger.error('obj.day getHistoryByUserIdAndRule error, userid %s, err %s', userId, err);
+			logger.error('obj.day  error, userid %s, err %s', userId, err);
 			return res.send(500,'签到页面加载失败')
 		}
 
@@ -105,13 +81,13 @@ obj.myscore = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
 
-	infoBl.getCo(appId, function(err,list){
+	infoBl.getScoreList(appId, userId, function(err,list){
 		if(err){
-			logger.error('obj.binder infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'用户会员卡页面失败')
+			logger.error('obj.myscore error, appId %s, err %s', appId, err);
+			return res.send(500,'我的积分页面失败')
 		}
 
-		res.render('userCard.ejs',{
+		res.render('user_score.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list

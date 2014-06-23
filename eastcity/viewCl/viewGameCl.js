@@ -13,13 +13,13 @@ obj.gamelist = function(req,res){ //客户推荐页面
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 
-	infoBl.getCo(appId, function(err,list){
+	infoBl.getGameList(appId, function(err,list){
 		if(err){
-			logger.error('obj.reCommend infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'客户推荐页面加载失败')
+			logger.error('obj.gamelist error, appId %s, err %s', appId, err);
+			return res.send(500,'游戏列表页加载失败')
 		}
 
-		res.render('suggestReCommend.ejs',{
+		res.render('game_list.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
@@ -33,17 +33,23 @@ obj.gamedetail = function(req,res){ //客户推荐页面
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
+	var gameid = req.query.gameid;
 
-	infoBl.getCo(appId, function(err,list){
+	infoBl.getOneGameById(gameid, function(err,doc){
 		if(err){
-			logger.error('obj.reCommend infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'客户推荐页面加载失败')
+			logger.error('obj.gamedetail error, appId %s, err %s', appId, err);
+			return res.send(500,'游戏详细页加载失败')
+		}
+		
+		if(doc['url'].indexOf('http://') != -1){
+			res.redirect(doc['url']);
+			return;
 		}
 
-		res.render('suggestReCommend.ejs',{
+		res.render(doc['url'],{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
-			'list':list
+			'doc':doc
 		})
 		return;
 	})	

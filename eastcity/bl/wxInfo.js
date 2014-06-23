@@ -6,6 +6,8 @@ var newsModel = require('../dl/appNewsModel.js');
 var specialModel = require('../dl/appSpecialModel.js');
 //预约模型
 var bookModel = require('../dl/appBookModel.js'); 
+//评论模型
+var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
 
 var utils = require('../lib/utils.js');
 var obj = {}
@@ -45,10 +47,6 @@ obj.getSpecialByTypePage = function(appId,type,page,size,cb){ //某一类型专�
 	},skip, size,function(err,doc){
 		if(err) return cb(err)
 		if(!doc) return cb(null, doc);
-		var tempary = []
-		doc.forEach(function(v) {
-			if(v.)
-		})
 
 		return cb(err,doc)
 	})
@@ -56,8 +54,7 @@ obj.getSpecialByTypePage = function(appId,type,page,size,cb){ //某一类型专�
 
 
 obj.getSpecialById = function(id,cb){ //某一类型专刊的详细内容
-	var size = 10;
-	var skip = (page-1) * size
+
 	specialModel.findOneByObj({
 		_id:id,
 		isShow:1
@@ -78,22 +75,50 @@ obj.getNewsByTypePage = function(appId,type,page,size,cb){ //某一类型公告�
 		isShow:1
 	},skip, size,function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);		
+		if(!doc) return cb(null, doc);	
 		return cb(err,doc)
 	})
 }
 
 
-obj.getNewsById = function(id,cb){ //某一类型公告的详细内容
-	var size = 10;
-	var skip = (page-1) * size
+obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
+
 	newsModel.findOneByObj({
 		_id:id,
 		isShow:1
 	},function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);		
-		return cb(err,doc)
+		if(!doc) return cb(null, doc);
+
+		var tempary = []
+
+		doc.forEach(function(obj){
+			var tempurl = obj.url;
+			if(obj.type == 1 && obj.url != ''){
+				
+				if(obj.url.indexOf('?') == -1){
+					tempurl += '?'
+				}
+				else{
+					tempurl += '&'
+				}
+				var qs = 'x_field_1='+id+'_'+uid
+				tempurl += qs;
+			}
+			
+			tempary.push({
+				_id:obj._id,
+				title:obj.title,
+				content:obj.content,
+				picture:obj.picture.split(','),
+				url:tempurl,
+				type:obj.type,
+				code1:obj.code1,
+				code2:obj.code2,
+				writeTime:mement(obj.writeTime).format('YYYY-MM-DD')
+			})
+		})
+		return cb(err,tempary)
 	})
 }
 
@@ -114,6 +139,32 @@ obj.getBookList = function(appId,cb){ //获取预约列表
 }
 
 
+obj.getCommentByspecialid = function(spid,page,pagesize,cb){ //获取用户的评论或者收藏列表
+	var size = size || 10;
+	var skip = (page-1) * size
+	commentModel.findAll({
+		specialId:spid,
+		type:1,
+	},skip, size,function(err,doc){
+		if(err) return cb(err)
+		if(!doc) return cb(null, doc);
+		return cb(err,doc)
+	})
+}
+
+obj.createCommentBySpid = function((appId, userId, spid, content, type, cb){
+	commentModel.createOneOrUpdate({
+		writeTime:new Date('1970-1-1')
+	},{
+		  appId:appId,
+	      userId:userId,     //评论用户的Id
+	      specialId:spid,
+	      content:content,
+	      type:type,  
+	},function(err,doc){
+		return cb(err,doc)
+	})
+}
 
 
 

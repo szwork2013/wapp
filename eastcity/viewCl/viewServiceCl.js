@@ -13,91 +13,69 @@ obj.activelist = function(req,res){
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
-/*
-	infoBl.getCo(appId, function(err,list){
+
+	infoBl.getNewsByTypePage(appId, 1, 1, 100, function(err,list){
 		if(err){
-			logger.error('obj.coList infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'小区页面加载失败')
+			logger.error('obj.activelist error, appId %s, err %s', appId, err);
+			return res.send(500,'乐活空间公告加载失败')
 		}
 
-		res.render('serviceCoList.ejs',{
+		res.render('active_list.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
 		})
 		return;
 	})
-*/
+
 }
 
 
-//乐活空间公告
+//物语空间活动
 obj.newsall = function(req,res){ 
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
-/*
-	infoBl.getCo(appId, function(err,list){
+
+	infoBl.getNewsByTypePage(appId, 2, 1, 50, function(err,list){
 		if(err){
-			logger.error('obj.coList infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'小区页面加载失败')
+			logger.error('obj.newsall error, appId %s, err %s', appId, err);
+			return res.send(500,'物语空间活动加载失败')
 		}
 
-		res.render('serviceCoList.ejs',{
+		res.render('newsall_list.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
 		})
 		return;
 	})
-*/
 }
+
+
 
 //物语空间公告
 obj.announce = function(req,res){ 
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
-/*
-	infoBl.getCo(appId, function(err,list){
+
+	infoBl.getNewsByTypePage(appId, 3, 1, 50, function(err,list){
 		if(err){
-			logger.error('obj.coList infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'小区页面加载失败')
+			logger.error('obj.announce error, appId %s, err %s', appId, err);
+			return res.send(500,'物语空间公告加载失败')
 		}
 
-		res.render('serviceCoList.ejs',{
+		res.render('announce_list.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
 		})
 		return;
 	})
-*/
 }
 
 
-
-//一键呼叫，预约服务
-obj.call = function(req,res){ 
-	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
-	var openId = req.wxuobj.openId;
-/*
-	infoBl.getCo(appId, function(err,list){
-		if(err){
-			logger.error('obj.coCall infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'获取小区新闻加载失败')
-		}
-
-		res.render('serviceCall.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'list':list
-		})
-		return;
-	})
-*/
-}
 
 
 obj.newsDetail = function(req,res){ //共用新闻详细页
@@ -105,72 +83,66 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 	var newsId = req.query.newsId;
-	var type = req.query.backtype;
-	var backUrl = req.query.backUrl || '/';
 
-
-
-	if(newsId && newsId.length !== 24){
-		return res.send(500,'错误参数newsId')
-	}
-
-	if(type == 'prom'){
-		backUrl = '/view/service/copromotion?wxuserid='+userId
-	}
-	else if(type == 'act'){
-		backUrl = '/view/service/coact?wxuserid='+userId
-	}
-	else{
-		backUrl = '/view/service/newsall?wxuserid='+userId
-	}
-
-	infoBl.getNewsDetail(newsId, function(err,doc){
+	infoBl.getNewsById(newsId, userId, function(err,doc){
 		if(err){
-			logger.error('obj.newsDetail infoBl.getNewsDetail error, newsId %s, err %s', newsId, err);
-			return res.send(500,'新闻页面加载失败')
+			logger.error('obj.newsDetail error, newsId %s, err %s', newsId, err);
+			return res.send(500,'详细页面加载失败')
 		}
-
-		res.render('serviceNewsDetail.ejs',{
+		if(doc.type == 1 && doc.url != ''){
+			res.redirect(doc.url)
+			return;
+		}
+		res.render('news_detail.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
-			'doc':{
-			  _id:doc._id,
-			  appId:doc.appId,    			  //应用id
-		      coId:doc.coId,
-		      appNewsTitle:doc.appNewsTitle,
-		      appNewsContent:doc.appNewsContent,
-		      appNewsPicture:doc.appNewsPicture.split(','),
-		      appNewsType:doc.appNewsType,
-		      isShow:doc.isShow,
-			  writeTime: moment(doc.writeTime).format('YYYY年MM月DD日')
-			},
-			'backUrl':backUrl,
+			'doc':doc
 		})
 		return;
 	})
 
 }
 
-//专刊列表,根据type显示不同的专刊内容
-obj.speciallist = function(req,res){ 
+
+//一键呼叫，预约服务
+obj.call = function(req,res){ 
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
-/*
-	infoBl.getCo(appId, function(err,list){
+
+	infoBl.getBookList(appId, function(err,list){
 		if(err){
-			logger.error('obj.coList infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'小区页面加载失败')
+			logger.error('obj.call error, appId %s, err %s', appId, err);
+			return res.send(500,'一键呼叫加载失败');
 		}
 
-		res.render('serviceCoList.ejs',{
+		res.render('service_call.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
 		})
 		return;
 	})
-*/
+
+}
+
+
+
+
+//专刊列表,根据type显示不同的专刊内容
+obj.speciallist = function(req,res){ 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId;
+
+
+	res.render('special_list.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+		'list':list
+	})
+	return;
+
 }
 
 
@@ -180,21 +152,22 @@ obj.specialdetail = function(req,res){
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
-/*
-	infoBl.getCo(appId, function(err,list){
+	var spid = req.query.spid;
+
+	infoBl.getSpecialById(spid, function(err,list){
 		if(err){
-			logger.error('obj.coList infoBl.getCo error, appId %s, err %s', appId, err);
-			return res.send(500,'小区页面加载失败')
+			logger.error('obj.specialdetail error, appId %s, err %s', appId, err);
+			return res.send(500,'专刊详细页面加载失败')
 		}
 
-		res.render('serviceCoList.ejs',{
+		res.render('special_detail.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
 		})
 		return;
 	})
-*/
+
 }
 
 

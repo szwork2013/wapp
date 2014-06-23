@@ -7,7 +7,8 @@ var obj = { //定义结构
       title:{type:String,required:true},              //标题
       intro:{type:String,required:true},              //简介
       picture:{type:String,required:true},            //缩略图
-      url:{type:String,required:true},                //游戏跳转地址
+      url:{type:String,required:true},                //游戏模版地址
+      maxScore:{type:Number,default:1},               //此游戏最大获取分数，防止刷
       code1:{type:String,default:''},                 //备用字段1
       code2:{type:String,default:''},                 //备用字段2
       isShow:{type:Number,default:1},             

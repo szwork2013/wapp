@@ -150,28 +150,35 @@ var addroute = function(app){
 	//用户注册以及修改资料
 	app.post('/api/user/myfavor',getUserMid, apiUser.myfavor);
 	//进数据数据推送接口
-	app.post('/api/user/activeback',getUserMid, apiUser.activeback);
+	app.post('/api/user/activeback',getUserMid, apiUser.activeback);//to do coding
 
 	//获取专刊中某一片文章的评论
 	app.post('/api/special/getcomment',getUserMid, apiSpecial.getcomment);
 	//向某一个专刊发送评论
 	app.post('/api/special/sendcomment',getUserMid, apiSpecial.sendcomment);
+	//收藏某一篇文章
+	app.post('/api/special/sendfavor',getUserMid, apiSpecial.sendfavor);
 	//获取新闻公告和专刊列表页
 	app.get('/api/info/newslist',getUserMid, apiInfo.newslist);
 	app.get('/api/info/speciallist',getUserMid, apiInfo.speciallist);
 		
 
 	//下面是页面控制器
+
 	 //活动页面，可能是金数据投票列表页
 	app.get('/view/service/activelist',getUserMid, viewService.activelist);
-	//乐活空间公告
-	app.get('/view/service/newsall',getUserMid, viewService.newsAll);   
-	//一键呼叫，预约服务
-	app.get('/view/service/call',getUserMid, viewService.call);
 	//物语空间公告
 	app.get('/view/service/announce',getUserMid, viewService.announce);   
-	//公告详细页
+	//物语空间活动
+	app.get('/view/service/newsall',getUserMid, viewService.newsAll);   
+
+	//乐活空间公告、物语空间公告、物语空间活动详细页面
 	app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);
+
+	//一键呼叫，预约服务
+	app.get('/view/service/call',getUserMid, viewService.call);
+	
+	
 
 	//专刊列表,根据type显示不同的专刊内容
 	app.get('/view/service/speciallist',getUserMid, viewService.speciallist);
@@ -179,7 +186,7 @@ var addroute = function(app){
 	app.get('/view/service/specialdetail',getUserMid, viewService.specialdetail);
 
 	//用户注册
-	app.get('/view/user/regist',getUserMid, viewUser.binder);
+	app.get('/view/user/regist',getUserMid, viewUser.regist);
 	//修改资料
 	app.get('/view/user/modify',getUserMid, viewUser.modify);
 	//帖子空间，ajax动态获取我的评论和收藏

@@ -25,9 +25,17 @@
                 <label for="title" >游戏名</label>
             </div>
             <div data-container-for="title" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" required="required">
+            <input type="text" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" required="required">
             </div>
             
+            <div class="k-edit-label  w-800-l">
+                <label for="maxScore" >最大获得积分</label>
+            </div>
+            <div data-container-for="maxScore" class="k-edit-field w-800-r">
+            <input type="text" class="k-input k-textbox w-50-inp" name="maxScore" data-bind="value:maxScore" required="required">
+            </div>
+
+
             <div class="k-edit-label  w-800-l">
                 <label for="picture">图片</label>
             </div>
@@ -146,7 +154,8 @@
                                     "title": { editable: true },
                                     "intro": { editable: true},
                                     "picture": { editable: true },
-                                    "url": { editable: true},                 
+                                    "url": { editable: true},
+                                    "maxScore":{ editable: true, type:'number' },         
                                     "code1": { editable: true},
                                     "code2": { editable: true},
                                     "isShow": { editable: true, type:'number' },
@@ -189,6 +198,10 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "title",
                             title: "游戏名",
                         },
+                        { 
+                            field: "maxScore",
+                            title: "最大积分",
+                        },                       
                         { 
                             field: "intro",
                             title: "简介",

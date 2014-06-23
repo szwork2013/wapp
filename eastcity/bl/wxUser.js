@@ -1,4 +1,6 @@
 var userModel = require('../dl/userModel.js'); //加载用户模型
+var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
+var scoreModel = require('../dl/scoreGetModel.js');  //score模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
 var utils = require('../lib/utils.js');
@@ -73,7 +75,9 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 			if(err) return cb(err);
 			if(!udoc || !udoc.uobj) return cb('未找到该用户',null);
 			if(udoc.uobj.isShow == 0) return cb('用户已被锁定',null); //如果用户已经被屏蔽
-
+			if(!qobj.appUserMobile){
+				return cb('请填写手机')
+			}
 
 			var uType = obj.getUserType(udoc, appId);
 
@@ -92,9 +96,7 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 					guidModel.getGuid(function(err,guid){
 						if(err) return cb(err); //如果出错
 
-						if(!qobj.appUserMobile){
-							return cb('请填写手机')
-						}
+
 
 						var isNewSubmit = 0
 						if(qobj.appUserRoom && qobj.appUserCommunity && qobj.appUserBuilding){
@@ -266,6 +268,37 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 				})//end cb		
 			})//end userModel.createOneOrUpdate
 		})// end userAppModel.createOneOrUpdate 
+}
+
+
+obj.commentAndFavor = function(userid,type,page,pagesize,cb){ //获取用户的评论或者收藏列表
+	var size = size || 10;
+	var skip = (page-1) * size
+	commentModel.findAll({
+		userId:userid,
+		type:type,
+	},skip, size,function(err,doc){
+		if(err) return cb(err)
+		if(!doc) return cb(null, doc);
+		return cb(err,doc)
+	})
+}
+
+
+
+
+
+
+obj.getScoreList = function(appid,userid, cb){
+
+	scoreModel.findAll({
+		appId:appid
+		userId:userid
+	},0,50,function(err){
+		return cb(err,doc)
+	})
+
+
 }
 
 

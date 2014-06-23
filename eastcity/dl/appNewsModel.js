@@ -7,7 +7,7 @@ var obj = { //定义结构
       title:{type:String,required:true},           //标题
       content:{type:String,required:true},           //内容
       picture:{type:String,required:true},           //缩略图
-      url:{type:String,required:true},               //跳转地址，投票金数据用
+      url:{type:String,default:''},               //跳转地址，投票金数据用
       type:{type:Number,default:1},    //1乐活空间公告，2表示物语空间公告，3表示物语空间活动
       code1:{type:String,default:''},                 //备用字段1
       code2:{type:String,default:''},                 //备用字段2
