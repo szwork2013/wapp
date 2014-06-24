@@ -145,9 +145,10 @@ var addroute = function(app){
 	app.post('/api/user/binder',getUserMid, apiUser.binder);
 	//用户修改资料
 	app.post('/api/user/modify',getUserMid, apiUser.modify);
-	//用户注册以及修改资料
+
+	//我的评论
 	app.post('/api/user/mycomment',getUserMid, apiUser.mycomment);
-	//用户注册以及修改资料
+	//我的收藏
 	app.post('/api/user/myfavor',getUserMid, apiUser.myfavor);
 	//进数据数据推送接口
 	app.post('/api/user/activeback',getUserMid, apiUser.activeback);//to do coding
@@ -162,6 +163,10 @@ var addroute = function(app){
 	app.get('/api/info/newslist',getUserMid, apiInfo.newslist);
 	app.get('/api/info/speciallist',getUserMid, apiInfo.speciallist);
 		
+	//增加api接口
+	//1、兑换商品接口
+	//2、推荐用户接口，增加相应积分
+	//3、排行榜接口
 
 	//下面是页面控制器
 
@@ -201,6 +206,10 @@ var addroute = function(app){
 	//游戏详细页
 	app.get('/view/game/gamedetail',getUserMid, viewGame.gamedetail);
 
+	//增加页面接口
+	//1、兑换商品页面
+	//2、推荐用户页面
+	//3、排行榜页面
 
 	app.get('/', function(req,res){
 		var count = req.csession['count'];

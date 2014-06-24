@@ -33,7 +33,19 @@ obj.binder = function(req,res){ //用户认证绑定
 		appUserCity:req.body.appUserCity || '',
 
 	}
+	if(!qobj.appUserName || qobj.appUserName.length>20){
+		return res.send({error:1,data:'真实姓名格式有误'}) 
+	}
 
+	if(!/^1[0-9][0-9]\d{4,8}$/.test(qobj.appUserMobile)){
+		return res.send({error:1,data:'手机号格式有误'}) 
+	}
+	if(qobj.appUserSex != 1 && qobj.appUserSex != 0){
+		return res.send({error:1,data:'性别格式有误'}) 
+	}
+	if(!qobj.appUserBirth){
+		return res.send({error:1,data:'生日格式有误'}) 
+	}
 
 
 	userBl.binder(qobj, appId, function(err,doc){
@@ -45,7 +57,7 @@ obj.binder = function(req,res){ //用户认证绑定
 		var appId = global.wxAppObj._id;
      	var rule = 'registRule'
 
-     	scoreBl.scoreRule(appId, userId, openId, {}, rule, function(err,doc){
+     	scoreBl.scoreRule(appId, userId, openId, {'mobile':req.wxuobj.appUserMobile}, rule, function(err,doc){
 			if(err){
 		        return res.send({error:1,data:err}) 
 	     	}
@@ -69,10 +81,11 @@ obj.modify = function(req,res){ //用户认证绑定
 	}
 
 	//console.log(req.wxBinder)
-	var pwd = ''
-	if(req.body.appLoginPassword){ //如果有密码，则md5加密后保存
-		pwd = utils.md5(req.body.appLoginPassword+pwdSalt);
-	}
+	//var pwd = ''
+	//if(req.body.appLoginPassword){ //如果有密码，则md5加密后保存
+	//	pwd = utils.md5(req.body.appLoginPassword+pwdSalt);
+	//}
+
 
 
 	var qobj = {
@@ -80,7 +93,6 @@ obj.modify = function(req,res){ //用户认证绑定
 		appUserName:req.body.appUserName,
 		appUserSex:req.body.appUserSex,
 		appUserBirth:req.body.appUserBirth,
-		appUserMobile:req.body.appUserMobile,
 		
 		appUserCommunity:req.body.appUserCommunity,
 		appUserBuilding:req.body.appUserBuilding,
@@ -89,6 +101,15 @@ obj.modify = function(req,res){ //用户认证绑定
 		//不填项
 		appUserCity:req.body.appUserCity || '',
 
+	}
+
+
+	if(qobj.appUserName && qobj.appUserName.length>20){
+		return res.send({error:1,data:'真实姓名格式有误'}) 
+	}
+
+	if(qobj.appUserSex && qobj.appUserSex != 1 && qobj.appUserSex != 0){
+		return res.send({error:1,data:'性别格式有误'}) 
 	}
 
 	userBl.modify(userId, openId, qobj, function(err,doc){ //修改用户资料
@@ -106,7 +127,7 @@ obj.mycomment = function(req,res){ //用户认证绑定
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId;
-	var page = req.body.appUserName || 1;
+	var page = req.body.page || 1;
 	
 	userBl.commentAndFavor(userId, 1, page, null, function(err,doc){
 		if(err){
@@ -122,7 +143,7 @@ obj.myfavor = function(req,res){ //用户认证绑定
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId;
-	var page = req.body.appUserName || 1;
+	var page = req.body.page || 1;
 	
 	userBl.commentAndFavor(userId, 2, page, null, function(err,doc){
 		if(err){

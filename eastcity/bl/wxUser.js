@@ -251,23 +251,25 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	/*if(qobj.appUserMobile){
 		userMObj.appUserMobile = qobj.appUserMobile
 	}*/
+	//console.log(appMObj)
 
+	/*
 	userAppModel.createOneOrUpdate({
 			userId:userId,
 			openId:openId,
-		},appMObj,function(err,doc2){
+		},qobj,function(err,doc2){
 			if(err) return cb(err);
-
+	*/
 			userModel.createOneOrUpdate({
 				_id:userId
 			},userMObj, function(err,doc){
 				if(err) return cb(err);
 				cb(null,{
-					'userObj':doc,
-					'binderObj':doc2
+					'userObj':doc
+					//'binderObj':doc2
 				})//end cb		
 			})//end userModel.createOneOrUpdate
-		})// end userAppModel.createOneOrUpdate 
+	//	})// end userAppModel.createOneOrUpdate 
 }
 
 
@@ -284,7 +286,18 @@ obj.commentAndFavor = function(userid,type,page,pagesize,cb){ //获取用户的�
 	})
 }
 
+obj.getFavorOrCommentById = function(spid,userid, type,cb){
 
+	commentModel.findOneByObj({
+		specialId:spid,
+		userId:userid,
+		type:type
+	},function(err,doc){
+		return cb(err,doc)
+	})
+
+
+}
 
 
 

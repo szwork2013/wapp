@@ -160,7 +160,8 @@ obj.createCommentBySpid = function(appId, userId, spid, content, type, cb){
 	      userId:userId,     //评论用户的Id
 	      specialId:spid,
 	      content:content,
-	      type:type,  
+	      type:type, 
+	      writeTime:new Date()
 	},function(err,doc){
 		return cb(err,doc)
 	})

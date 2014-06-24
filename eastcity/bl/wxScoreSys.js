@@ -11,6 +11,7 @@ var obj = {}
 obj.registRule = function(qobj,data,cb){ //注册
 	qobj.scoreWay = 'regist'
 	qobj.scoreDetail = 10;
+	qobj.mobile = data.mobile;
 
 	obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, null, null, function(err,doc){
 		if(err) return cb(err);
@@ -38,7 +39,8 @@ obj.gameRule = function(qobj,data,cb){ //游戏获得积分规则
 		//判断成功，写入数据库
 		qobj.scoreCode1 = gameid
 		qobj.scoreDetail = gamescore
-
+		qobj.mobile = data.mobile;
+		
 		var s = moment().hour(0).minute(0).second(0).format('YYYY/MM/DD HH:mm:ss');
 		var e = moment().hour(23).minute(59).second(59).format('YYYY/MM/DD HH:mm:ss');
 
@@ -62,6 +64,7 @@ obj.gameRule = function(qobj,data,cb){ //游戏获得积分规则
 obj.dayRule = function(qobj,data,cb){ //每日签到
 	qobj.scoreWay = 'daysign';
 	qobj.scoreDetail = 5;
+	qobj.mobile = data.mobile;
 	var now = Date.now();
 	var s = moment().hour(0).minute(0).second(0).format('YYYY/MM/DD HH:mm:ss');
 	var e = moment().hour(23).minute(59).second(59).format('YYYY/MM/DD HH:mm:ss');

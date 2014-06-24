@@ -1,5 +1,6 @@
 var infoBl = require('../bl/wxInfo.js')
 var utils = require('../lib/utils.js');
+var userBl = require('../bl/wxUser.js');
 var obj = {}
 
 
@@ -11,6 +12,10 @@ obj.getcomment = function(req,res){
 	var appId = global.wxAppObj._id;
 	var spid = req.body.spid;
 	var page = req.body.page || 1;
+
+	if(!spid || spid.length!=24){
+		return res.send({error:1,data:'专刊id有误'}) 
+	}
 
 	infoBl.getCommentByspecialid(spid, page, null, function(err,doc){
 		if(err){
@@ -30,11 +35,27 @@ obj.sendcomment = function(req,res){
 	var spid = req.body.spid;
 	var content = req.body.content;
 
-	infoBl.createCommentBySpid(appId, userId, spid, content, 1, function(err,doc){
-		if(err){
+	if(!spid || spid.length!=24){
+		return res.send({error:1,data:'专刊id有误'}) 
+	}
+	if(!content || content.length>100){
+		return res.send({error:1,data:'评论内容有误'}) 
+	}
+	infoBl.getSpecialById(spid,function(err,spdoc){
+	if(err){
 	        return res.send({error:1,data:err}) 
      	}
-     	res.send({error:0,data:doc});	
+    if(!spdoc){
+    	return res.send({error:1,data:'未找到专刊内容'})
+    }
+
+		infoBl.createCommentBySpid(appId, userId, spid, content, 1, function(err,doc){
+			if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	     	res.send({error:0,data:doc});	
+		})
+
 	})
 
 }
@@ -47,12 +68,34 @@ obj.sendfavor = function(req,res){
 	var openId = req.wxuobj.openId;
 	var appId = global.wxAppObj._id;
 	var spid = req.body.spid;
+	if(!spid || spid.length!=24){
+		return res.send({error:1,data:'专刊id有误'}) 
+	}
 
-	infoBl.createCommentBySpid(appId, userId, spid, '', 2, function(err,doc){
+	infoBl.getSpecialById(spid,function(err,spdoc){
 		if(err){
-	        return res.send({error:1,data:err}) 
-     	}
-     	res.send({error:0,data:doc});	
+		        return res.send({error:1,data:err}) 
+	     	}
+	    if(!spdoc){
+	    	return res.send({error:1,data:'未找到专刊内容'})
+	    }
+
+	    userBl.getFavorOrCommentById(spid,userId,2,function(err,doc){
+			if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	     	if(doc){
+	     		return res.send({error:0,data:'已收藏'});
+	     	}
+	     	
+
+			infoBl.createCommentBySpid(appId, userId, spid, '', 2, function(err,doc){
+				if(err){
+			        return res.send({error:1,data:err}) 
+		     	}
+		     	res.send({error:0,data:doc});	
+			})
+		})	
 	})
 
 }
