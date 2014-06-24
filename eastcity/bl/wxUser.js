@@ -292,7 +292,7 @@ obj.commentAndFavor = function(userid,type,page,pagesize,cb){ //获取用户的�
 obj.getScoreList = function(appid,userid, cb){
 
 	scoreModel.findAll({
-		appId:appid
+		appId:appid,
 		userId:userid
 	},0,50,function(err){
 		return cb(err,doc)

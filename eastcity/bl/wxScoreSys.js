@@ -1,5 +1,4 @@
 var moment = require('moment');
-var prizeModel = require('../dl/prizeModel.js'); //加载小区模型
 var guidModel = require('../dl/guidModel.js');
 var gameModel = require('../dl/appGameModel.js');
 var scoreGetModel = require('../dl/scoreGetModel.js');

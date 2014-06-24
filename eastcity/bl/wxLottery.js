@@ -2,9 +2,9 @@ var moment = require('moment');
 var userBl = require('./wxUser.js'); //加载用户Bl
 var guidModel = require('../dl/guidModel.js'); //guid 模型
 var utils = require('../lib/utils.js');
-var lotteryModel = require('../dl/lotteryModel.js'); //加载抽奖模型
-var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js'); //加载奖品
-var lotteryRecModel = require('../dl/lotteryRecordModel.js'); //加载抽奖记录模型
+//var lotteryModel = require('../dl/lotteryModel.js'); //加载抽奖模型
+//var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js'); //加载奖品
+//var lotteryRecModel = require('../dl/lotteryRecordModel.js'); //加载抽奖记录模型
 
 var obj = {}
 

@@ -1,4 +1,4 @@
-var prizeModel = require('../dl/prizeModel.js'); //加载小区模型
+//var prizeModel = require('../dl/prizeModel.js'); //加载小区模型
 var guidModel = require('../dl/guidModel.js');
 var scoreGetModel = require('../dl/scoreGetModel.js');
 var userBl = require('./wxUser.js'); //加载用户模型

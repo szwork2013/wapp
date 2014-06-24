@@ -152,7 +152,7 @@ obj.getCommentByspecialid = function(spid,page,pagesize,cb){ //获取用户的�
 	})
 }
 
-obj.createCommentBySpid = function((appId, userId, spid, content, type, cb){
+obj.createCommentBySpid = function(appId, userId, spid, content, type, cb){
 	commentModel.createOneOrUpdate({
 		writeTime:new Date('1970-1-1')
 	},{

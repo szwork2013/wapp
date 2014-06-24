@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.cookieParser());
 app.use(express.session({secret: 'wxapp', cookie: {maxAge: 60000}}));
-
+app.use(clientSession.connect());
 
 app.use(ifile.connect(
 	[
@@ -34,7 +34,7 @@ app.use(express.bodyParser(
 	{ keepExtensions: true, uploadDir: path.join(__dirname,'..','/upload/')}
 ));
 
-app.use(clientSession.connect());
+
 app.use(express.query());
 
 

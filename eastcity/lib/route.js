@@ -15,7 +15,7 @@ var apiInfo = require('../apiCl/apiInfo.js');
 
 var viewUser = require('../viewCl/viewUserCl.js');
 var viewService = require('../viewCl/viewServiceCl.js');
-var viewGame = require('../viewCl/viewGametCl.js');
+var viewGame = require('../viewCl/viewGameCl.js');
 
 
 //console.log(global.config)
@@ -170,7 +170,7 @@ var addroute = function(app){
 	//物语空间公告
 	app.get('/view/service/announce',getUserMid, viewService.announce);   
 	//物语空间活动
-	app.get('/view/service/newsall',getUserMid, viewService.newsAll);   
+	app.get('/view/service/newsall',getUserMid, viewService.newsall);   
 
 	//乐活空间公告、物语空间公告、物语空间活动详细页面
 	app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);
