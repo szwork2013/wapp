@@ -6,7 +6,7 @@ var obj = { //定义结构
       coNearName:{type:String,required:true},                		        //配套名称
       coNearAddr:{type:String,required:true},      						//配套地址
       coNearDesc:{type:String,required:true},            		     	//配套描述
-      coNearTel:{type:Number,required:true},            			    //配套电话
+      coNearTel:{type:String,required:true},            			    //配套电话
       isShow:{type:Number,default:1},                        //1表示启用，0表示不启用
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
