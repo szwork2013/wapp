@@ -53,7 +53,8 @@ scoreCode1 记录购买商品名称或Id
 8、消费开发商的服务 service 消费
 scoreCode1 记录购买服务名称或Id
 
-9、
+9、拍卖竞拍品消费 sale
+scoreCode1 记录竞拍品的id
 
 */
 

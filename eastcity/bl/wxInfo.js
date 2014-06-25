@@ -83,12 +83,12 @@ obj.getNewsByTypePage = function(appId,type,page,size,cb){ //某一类型公告�
 
 obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 
-	newsModel.findOneByObj({
+	newsModel.find({
 		_id:id,
 		isShow:1
 	},function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);
+		if(doc.length == 0) return cb(null, doc);
 
 		var tempary = []
 
@@ -115,10 +115,10 @@ obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 				type:obj.type,
 				code1:obj.code1,
 				code2:obj.code2,
-				writeTime:mement(obj.writeTime).format('YYYY-MM-DD')
+				writeTime:moment(obj.writeTime).format('YYYY-MM-DD')
 			})
 		})
-		return cb(err,tempary)
+		return cb(err,tempary[0])
 	})
 }
 

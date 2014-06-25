@@ -133,7 +133,6 @@ obj.addScoreHistory = function(qobj,cb){ //插入获取积分流水表
 				})
 			})
 		})
-
 }
 
 

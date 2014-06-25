@@ -240,12 +240,14 @@ window.scoreWay_type1 = [
               { text: "活动获取", value: 'active' },
               { text: "转发获取", value: 'forwarding' },
               { text: "游戏获取", value: 'game' },
+              { text: "推荐获取", value: 'recommend' },
 ]
 
 window.scoreWay_type2 = [
               { text: "购房抵用", value: 'buyhouse' },
               { text: "实物兑换", value: 'exchange' },
               { text: "服务消费", value: 'service' },
+              { text: "竞拍消费", value: 'sale' },
 ]
 
 window.scoreget_type = [
@@ -265,7 +267,10 @@ window.sale_status = [
                         { text: "已发货", value: 3 }
                       ]
 
-
+window.exchange_status = [
+                        { text: "待发货", value: '' },
+                        { text: '已发货', value: '1' }
+                      ]
 
 window.dropdown_init = function($obj, $array,onchange,init){
       var $obj = $obj || $("#isShow_inp")

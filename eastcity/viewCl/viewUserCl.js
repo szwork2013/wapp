@@ -47,6 +47,32 @@ obj.myzone = function(req,res){
 }
 
 
+//推荐用户录入页面
+obj.recommend = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId
+
+	res.render('user_recommend.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+	})
+}
+
+
+//推荐用户录入页面
+obj.scorelist = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId
+
+	res.render('user_scorelist.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+	})
+}
+
+
 
 
 
@@ -57,17 +83,19 @@ obj.day = function(req,res){ //会员每日打卡页面
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 
-	scoreBl.getHistoryByUserIdAndRule(userId, 'dayRule', function(err, doclist){
+	scoreBl.getHistoryByUserIdAndRule(userId, 'dayRule', function(err, list){
 		
 		if(err){
 			logger.error('obj.day  error, userid %s, err %s', userId, err);
 			return res.send(500,'签到页面加载失败')
 		}
 
-		res.render('userDayRule.ejs',{
+		return res.json(list)
+
+		res.render('user_day.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
-			'dayRule':doclist
+			'list':list
 		})
 		return;
 	})
@@ -81,11 +109,13 @@ obj.myscore = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
 
-	infoBl.getScoreList(appId, userId, function(err,list){
+	userBl.getScoreList(appId, userId, function(err,list){
 		if(err){
 			logger.error('obj.myscore error, appId %s, err %s', appId, err);
 			return res.send(500,'我的积分页面失败')
 		}
+
+		return res.json(list)
 
 		res.render('user_score.ejs',{
 			'userObj':req.wxuobj,

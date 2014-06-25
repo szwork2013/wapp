@@ -10,7 +10,7 @@
                 <label for="_id">拍品id</label>
             </div>
             <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
-                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+                <input type="text" id="sale_id" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
             </div>
 
 
@@ -120,6 +120,13 @@
                <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
             </div>
 
+
+            <div class="k-edit-label  w-800-l">
+                <label for=""></label>
+            </div>
+            <div data-container-for="" class="k-edit-field w-800-r">
+                <a onclick="javascript:sale_complete();" class="k-button k-button-icontext k-grid-ViewDetails" href="javascript:;"><span class=" "></span>确定拍出</a>
+            </div>
            
 
         </script>
@@ -319,6 +326,18 @@ $.post('/manger/app/getList',{},function(data_ary){
                 });
       })                              
 });
+
+function sale_complete(){
+    var saleid = $('#sale_id').val();
+
+    $.post('/manger/sale/complete',{'saleid':saleid},function(d){
+        if(d.error == 1) return alert(d.data);
+        $('.k-i-close').click()
+        alert(d.data)
+        $("#grid").data("kendoGrid").dataSource.read();
+    },'json')
+
+}
 
 </script>
 <% include inc/foot %>

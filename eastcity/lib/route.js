@@ -17,6 +17,7 @@ var apiInfo = require('../apiCl/apiInfo.js');
 var viewUser = require('../viewCl/viewUserCl.js');
 var viewService = require('../viewCl/viewServiceCl.js');
 var viewGame = require('../viewCl/viewGameCl.js');
+var viewShop = require('../viewCl/viewShopCl.js');
 
 
 //console.log(global.config)
@@ -161,7 +162,7 @@ var addroute = function(app){
 	app.get('/api/info/speciallist',getUserMid, apiInfo.speciallist);
 	
 	//排行榜接口
-	app.get('/api/user/scorerank',getUserMid, apiUser.scorerank);
+	app.get('/api/user/scorerank',getUserMid, apiUser.scoreRank);
 	//推荐用户接口
 	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
 	//兑换商品
@@ -208,9 +209,9 @@ var addroute = function(app){
 	//积分查询
 	app.get('/view/user/myscore',getUserMid, viewUser.myscore);
 	//推荐用户页面
-	app.get('/view/user/recommend',getUserMid, viewGame.recommend);
+	app.get('/view/user/recommend',getUserMid, viewUser.recommend);
 	//排行榜页面
-	app.get('/view/user/scorelist',getUserMid, viewGame.scorelist);
+	app.get('/view/user/scorelist',getUserMid, viewUser.scorelist);
 
 	//游戏列表页
 	app.get('/view/game/gamelist',getUserMid, viewGame.gamelist);
@@ -221,7 +222,7 @@ var addroute = function(app){
 	//兑换商品页面
 	app.get('/view/shop/shoplist',getUserMid, viewShop.shoplist);
 	//拍卖页面
-	app.get('/view/shop/salelist',getUserMid, viewGame.salelist);
+	app.get('/view/shop/salelist',getUserMid, viewShop.salelist);
 
 	//增加页面接口
 	//1、兑换商品页面

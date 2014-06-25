@@ -81,6 +81,7 @@ var addroute = function(app){
 	app.post('/manger/user/destroy', checkLogin, userCl.destroy)
 	app.post('/manger/user/create', checkLogin, userCl.create)
 	app.post('/manger/user/getList', checkLogin, userCl.getList)
+	app.post('/manger/user/getOne', checkLogin, userCl.getOne)
 
 	//userbind
 	app.get('/manger/userapp/list', checkLogin, userappCl.list)
@@ -156,6 +157,7 @@ var addroute = function(app){
 	app.post('/manger/prize/update', checkLogin, prizeCl.update)
 	app.post('/manger/prize/destroy', checkLogin, prizeCl.destroy)
 	app.post('/manger/prize/create', checkLogin, prizeCl.create)
+	app.post('/manger/prize/getOne', checkLogin, prizeCl.getOne)
 
 	//recommend
 	app.get('/manger/recommend/list', checkLogin, recommendCl.list)
@@ -171,6 +173,8 @@ var addroute = function(app){
 	app.post('/manger/sale/update', checkLogin, saleCl.update)
 	app.post('/manger/sale/destroy', checkLogin, saleCl.destroy)
 	app.post('/manger/sale/create', checkLogin, saleCl.create)
+	app.post('/manger/sale/complete', checkLogin, saleCl.complete)
+	app.post('/manger/sale/getOne', checkLogin, saleCl.getOne)
 
 
 }

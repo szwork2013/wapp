@@ -19,6 +19,8 @@ obj.gamelist = function(req,res){ //客户推荐页面
 			return res.send(500,'游戏列表页加载失败')
 		}
 
+		return res.json(list)
+
 		res.render('game_list.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
@@ -35,16 +37,25 @@ obj.gamedetail = function(req,res){ //客户推荐页面
 	var openId = req.wxuobj.openId;
 	var gameid = req.query.gameid;
 
+	if(!gameid || gameid.length != 24){
+		return res.send(500,'gameid有误')
+	}
+
 	infoBl.getOneGameById(gameid, function(err,doc){
 		if(err){
 			logger.error('obj.gamedetail error, appId %s, err %s', appId, err);
 			return res.send(500,'游戏详细页加载失败')
+		}
+		if(!doc){
+			return res.send(500,'未找到游戏')
 		}
 		
 		if(doc['url'].indexOf('http://') != -1){
 			res.redirect(doc['url']);
 			return;
 		}
+
+		return res.json(doc)
 
 		res.render(doc['url'],{
 			'userObj':req.wxuobj,

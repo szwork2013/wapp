@@ -19,6 +19,8 @@ obj.activelist = function(req,res){
 			logger.error('obj.activelist error, appId %s, err %s', appId, err);
 			return res.send(500,'乐活空间公告加载失败')
 		}
+		return res.json(list)
+
 
 		res.render('active_list.ejs',{
 			'userObj':req.wxuobj,
@@ -31,7 +33,7 @@ obj.activelist = function(req,res){
 }
 
 
-//物语空间活动
+//物语空间公告
 obj.newsall = function(req,res){ 
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
@@ -42,6 +44,7 @@ obj.newsall = function(req,res){
 			logger.error('obj.newsall error, appId %s, err %s', appId, err);
 			return res.send(500,'物语空间活动加载失败')
 		}
+		return res.json(list)
 
 		res.render('newsall_list.ejs',{
 			'userObj':req.wxuobj,
@@ -54,7 +57,7 @@ obj.newsall = function(req,res){
 
 
 
-//物语空间公告
+//物语空间活动
 obj.announce = function(req,res){ 
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
@@ -65,6 +68,7 @@ obj.announce = function(req,res){
 			logger.error('obj.announce error, appId %s, err %s', appId, err);
 			return res.send(500,'物语空间公告加载失败')
 		}
+		return res.json(list)
 
 		res.render('announce_list.ejs',{
 			'userObj':req.wxuobj,
@@ -84,6 +88,10 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 	var openId = req.wxuobj.openId;
 	var newsId = req.query.newsId;
 
+	if(!newsId || newsId.length != 24){
+		return res.send(500,'新闻id有误')
+	}
+
 	infoBl.getNewsById(newsId, userId, function(err,doc){
 		if(err){
 			logger.error('obj.newsDetail error, newsId %s, err %s', newsId, err);
@@ -93,6 +101,9 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 			res.redirect(doc.url)
 			return;
 		}
+
+		return res.json(doc)
+
 		res.render('news_detail.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
@@ -116,6 +127,8 @@ obj.call = function(req,res){
 			return res.send(500,'一键呼叫加载失败');
 		}
 
+		return res.json(list)
+
 		res.render('service_call.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
@@ -138,8 +151,7 @@ obj.speciallist = function(req,res){
 
 	res.render('special_list.ejs',{
 		'userObj':req.wxuobj,
-		'binderObj':req.wxBinder,
-		'list':list
+		'binderObj':req.wxBinder
 	})
 	return;
 
@@ -154,16 +166,22 @@ obj.specialdetail = function(req,res){
 	var openId = req.wxuobj.openId;
 	var spid = req.query.spid;
 
-	infoBl.getSpecialById(spid, function(err,list){
+	if(!spid || spid.length != 24){
+		return res.send(500,'spid有误')
+	}
+	
+	infoBl.getSpecialById(spid, function(err,doc){
 		if(err){
 			logger.error('obj.specialdetail error, appId %s, err %s', appId, err);
 			return res.send(500,'专刊详细页面加载失败')
 		}
 
+		return res.json(doc)
+
 		res.render('special_detail.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
-			'list':list
+			'doc':doc
 		})
 		return;
 	})

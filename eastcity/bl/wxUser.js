@@ -307,7 +307,7 @@ obj.getScoreList = function(appid,userid, cb){
 	scoreModel.findAll({
 		appId:appid,
 		userId:userid
-	},0,50,function(err){
+	},0,50,function(err,doc){
 		return cb(err,doc)
 	})
 }

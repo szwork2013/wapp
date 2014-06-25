@@ -25,7 +25,8 @@
                 <label for="userId" >用户Id</label>
             </div>
             <div data-container-for="userId" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+               <input type="text" id="user_name_inp" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+               <div id="user_name"></div>
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -70,35 +71,40 @@
                 <label for="scoreCode1" >备用1</label>
             </div>
             <div data-container-for="scoreCode1" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode1" data-bind="value:scoreCode1" >
+               <input type="text" id="code1_inp" class="k-input k-textbox w-50-inp" name="scoreCode1" data-bind="value:scoreCode1" >
+               <div id="code1"></div>
             </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="scoreCode2" >备用2</label>
             </div>
             <div data-container-for="scoreCode2" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode2" data-bind="value:scoreCode2">
+               <input type="text" id="code2_inp" class="k-input k-textbox w-50-inp" name="scoreCode2" data-bind="value:scoreCode2">
+               <div id="code2"></div>
             </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="scoreCode3" >备用3</label>
             </div>
             <div data-container-for="scoreCode3" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode3" data-bind="value:scoreCode3">
+               <input type="text" id="code3_inp" class="k-input k-textbox w-50-inp" name="scoreCode3" data-bind="value:scoreCode3">
+                <div id="code3"></div>
             </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="scoreCode4" >备用4</label>
             </div>
             <div data-container-for="scoreCode4" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode4" data-bind="value:scoreCode4" >
+               <input type="text" id="code4_inp" class="k-input k-textbox w-50-inp" name="scoreCode4" data-bind="value:scoreCode4" >
+               <div id="code4"></div>
             </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="scoreCode5" >备用5</label>
             </div>
             <div data-container-for="scoreCode5" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode5" data-bind="value:scoreCode5" >
+               <input type="text" id="code5_inp" class="k-input k-textbox w-50-inp" name="scoreCode5" data-bind="value:scoreCode5" >
+               <div id="code5"></div>
             </div>
 
         </script>
@@ -226,7 +232,7 @@
                         },                                      
                         { 
                             field: "scoreDetail",
-                            title: "获取积分", 
+                            title: "消费积分", 
                         },
                         { 
                             field: "scoreType",
@@ -288,9 +294,54 @@
                             $('#writeTime').kendoDateTimePicker();
                             window.dropdown_init($('#appId_inp'),d) 
                             window.dropdown_init($('#scoreType_inp'),window.scoreget_type,$.noop,2)
-                            window.dropdown_init($('#scoreWay_inp'),window.scoreWay_type2)               
+                            window.dropdown_init($('#scoreWay_inp'),window.scoreWay_type2)
 
-                        },100)
+                            var init = function(){
+                                $('#user_name').html('');
+
+                                $('#code1').html('');
+                                $('#code2').html('');
+                                $('#code3').html('');
+                                $('#code4').html('');
+                                $('#code5').html('');
+                            }()     
+
+                            var uid = $('#user_name_inp').val()
+                            $.post('/manger/user/getOne',{
+                                id:uid
+                            },function(d){
+                                $('#user_name').html('用户名：'+d.data);
+                            },'json')
+
+                            var typestr = $('#scoreWay_inp').val();
+                            //alert(typestr)
+                            if(typestr=='buyhouse'){
+                                $('#code1').html('购买楼盘号');
+                                $('#code2').html('购买房号');
+                            }
+                            else if(typestr=='exchange'){
+                                $.post('/manger/prize/getOne',{
+                                    id:$('#code1_inp').val()
+                                },function(d){
+                                    $('#code1_inp').attr('readonly','readonly')
+                                    $('#code1').html('商品名：'+d.data);
+                                    window.dropdown_init($('#code2_inp'),window.exchange_status)
+                                },'json')
+                            }
+                            else if(typestr=='service'){
+
+                            }
+                            else if(typestr=='sale'){
+                                $.post('/manger/sale/getOne',{
+                                    id:$('#code1_inp').val()
+                                },function(d){
+                                    $('code1_inp').attr('readonly','readonly')
+                                    $('#code1').html('商品名：'+d.data);
+                                    window.dropdown_init($('#code2_inp'),window.exchange_status)
+                                },'json')
+                            }
+
+                      },100)
                         
                     },
                     filterable:window.filter_obj         
@@ -299,6 +350,8 @@
     })
                                     
 });
+
+
 
 </script>
 <% include inc/foot %>

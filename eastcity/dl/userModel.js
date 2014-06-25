@@ -49,7 +49,7 @@ objSchema.statics.findAll = function (obj,skip,pagesize,cb) {
 
 objSchema.statics.scoreRank = function (obj,limit,cb) {
        return this.find(obj)
-             .limit(pagesize)
+             .limit(limit)
              .sort({"appUserScore":-1})
              .exec(cb);
 }

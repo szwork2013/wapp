@@ -164,8 +164,8 @@ obj.activeback = function(req,res){ //金数据返回接口
 }
 
 
-obj.scorerank = function(req,res){ //积分排行
-	userBl.scorerank(function(err,doclist){
+obj.scoreRank = function(req,res){ //积分排行
+	userBl.scoreRank(function(err,doclist){
 		if(err) return res.json({'error':1,'data':err})
 		res.json({'error':0,'data':doclist})
 	})
@@ -184,7 +184,7 @@ obj.recommend = function(req,res){ //推荐人
 
 	userBl.recommend(appId, userId, mobile, function(err,doc){
 		if(err) return res.json({'error':1,'data':err})
-		res.json({'error':0,'data':doclist})
+		res.json({'error':0,'data':doc})
 	})
 }
 

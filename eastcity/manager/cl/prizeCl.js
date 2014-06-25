@@ -71,7 +71,17 @@ obj.destroy = function(req, res){
 }
 
 
+obj.getOne = function(req, res){
+	var id = req.body.id;
 
+	dl.findOneByObj({
+		_id:id
+	}, function(err, doc){
+		if(err) return res.json({'error':1,data:err})
+		if(!doc) return res.json({'error':1,data:'未找到信息'})
+		res.json({'error':0,data:doc.name});
+	})
+}
 
 
 module.exports = obj;
