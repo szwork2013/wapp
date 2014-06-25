@@ -22,22 +22,26 @@ var obj = { //定义结构
 
 //说明:
 /*
-1、当type为 regist 时
+1、当type为 regist 时，表示用户注册获得积分
 pass
 
-2、当type为 daysign 时
+2、当type为 daysign 时，签到获得积分
 scoreCode1 签到当天的0点时间戳
 
-3、当type为 active 时
+3、当type为 active 时，表示金数据投票或者其他活动返回积分
 scoreCode1 活动的id
-scoreCode2 金数据返回的id
-scoreCode3 金数据返回结果字符串
+scoreCode2 如果是金数据返回，这里记录金数据的id
+scoreCode3 如果是金数据返回，结果字符串
 
-4、当type为 forwarding 时
+4、当type为 forwarding 时，表示转发获得积分
 scoreCode1 为转发的条目id
 
-5、当type为 game 时
+5、当type为 game 时，表示玩游戏成功获得积分
 scoreCode1 为游戏的id
+
+5.1、当type为 recommend 时，表示推荐注册用户成功获得积分
+scoreCode1 为推荐记录的id
+
 
 6、购房抵房款 buyhouse 消费
 scoreCode1 记录购买楼盘号
@@ -48,6 +52,8 @@ scoreCode1 记录购买商品名称或Id
 
 8、消费开发商的服务 service 消费
 scoreCode1 记录购买服务名称或Id
+
+9、
 
 */
 

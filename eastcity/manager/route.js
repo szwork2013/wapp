@@ -16,6 +16,10 @@ var scoreCl = require('./cl/scoreCl.js')
 var replyCl = require('./cl/replyCl.js')
 var menuCl = require('./cl/menuCl.js')
 
+var prizeCl = require('./cl/prizeCl.js')
+var recommendCl = require('./cl/recommendCl.js')
+var saleCl = require('./cl/saleCl.js')
+
 var utils = require('../lib/utils.js')
 
 var checkLogin = function(req, res, next){ //中间件
@@ -120,7 +124,7 @@ var addroute = function(app){
 	app.post('/manger/special/create', checkLogin, specialCl.create)
 
 
-		//news
+	//news
 	app.get('/manger/news/list', checkLogin, newsCl.list)
 	app.post('/manger/news/read', checkLogin, newsCl.read)
 	app.post('/manger/news/update', checkLogin, newsCl.update)
@@ -145,6 +149,28 @@ var addroute = function(app){
 	app.post('/manger/menu/destroy', checkLogin, menuCl.destroy)
 	app.post('/manger/menu/create', checkLogin, menuCl.create)
     app.post('/manger/menu/sync', checkLogin, menuCl.sync)
+
+    //prize
+	app.get('/manger/prize/list', checkLogin, prizeCl.list)
+	app.post('/manger/prize/read', checkLogin, prizeCl.read)
+	app.post('/manger/prize/update', checkLogin, prizeCl.update)
+	app.post('/manger/prize/destroy', checkLogin, prizeCl.destroy)
+	app.post('/manger/prize/create', checkLogin, prizeCl.create)
+
+	//recommend
+	app.get('/manger/recommend/list', checkLogin, recommendCl.list)
+	app.post('/manger/recommend/read', checkLogin, recommendCl.read)
+	app.post('/manger/recommend/update', checkLogin, recommendCl.update)
+	app.post('/manger/recommend/destroy', checkLogin, recommendCl.destroy)
+	app.post('/manger/recommend/create', checkLogin, recommendCl.create)
+	app.post('/manger/recommend/check', checkLogin, recommendCl.check)
+
+	//sale
+	app.get('/manger/sale/list', checkLogin, saleCl.list)
+	app.post('/manger/sale/read', checkLogin, saleCl.read)
+	app.post('/manger/sale/update', checkLogin, saleCl.update)
+	app.post('/manger/sale/destroy', checkLogin, saleCl.destroy)
+	app.post('/manger/sale/create', checkLogin, saleCl.create)
 
 
 }

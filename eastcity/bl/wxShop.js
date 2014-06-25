@@ -1,4 +1,5 @@
-//var prizeModel = require('../dl/prizeModel.js'); //加载小区模型
+var prizeModel = require('../dl/prizeModel.js'); //加载商品模型
+var saleModel = require('../dl/saleModel.js'); //加载拍品模型
 var guidModel = require('../dl/guidModel.js');
 var scoreGetModel = require('../dl/scoreGetModel.js');
 var userBl = require('./wxUser.js'); //加载用户模型
@@ -65,7 +66,7 @@ obj.obtainPrize = function(qobj,cb){
 					if(err) return cb(err);
 					var len = recrodAry.length;
 
-					if(len > 0 && len >= prizeDoc.accountBuyNumber){
+					if(prizeDoc.accountBuyNumber >0 && len > 0 && len >= prizeDoc.accountBuyNumber){
 						return cb('超过限额');
 					}
 
@@ -79,7 +80,7 @@ obj.obtainPrize = function(qobj,cb){
 								scoreGuid:guid,
 								scoreDetail:prizeDoc.price,
 								scoreType:2,
-								scoreWay:'prize',
+								scoreWay:'exchange',
 								scoreCode1:prizeDoc._id,
 							},function(err,doc){
 								if(err){
@@ -106,5 +107,23 @@ obj.obtainPrize = function(qobj,cb){
 }
 
 
+obj.saleprize = function(saleid, userId, score, cb){
+
+	saleModel.findOneByObj({
+		_id:saleid
+	},function(err,saledoc){
+		if(err) return cb(er)
+		if(!saledoc) return cb('未找到拍品')
+		var now = Date.now()
+		var s = 
+
+
+	})
+
+
+
+
+}
+	
 
 module.exports = obj;

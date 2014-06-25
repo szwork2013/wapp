@@ -1,5 +1,6 @@
 var userModel = require('../dl/userModel.js'); //加载用户模型
 var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
+var recommendModel = require('../dl/recommendModel.js'); //加载评论模型
 var scoreModel = require('../dl/scoreGetModel.js');  //score模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
@@ -303,12 +304,47 @@ obj.getFavorOrCommentById = function(spid,userid, type,cb){
 
 
 obj.getScoreList = function(appid,userid, cb){
-
 	scoreModel.findAll({
 		appId:appid,
 		userId:userid
 	},0,50,function(err){
 		return cb(err,doc)
+	})
+}
+
+
+obj.scoreRank = function(cb){
+	userModel.scoreRank({},20,function(err,doclist){
+		return cb(err,doclist)
+	})
+}
+
+obj.recommend = function(appId, userId, mobile, cb){
+
+	recommendModel.findOneByObj({
+		recommendMobile:mobile,
+		status:2
+	},function(err,doc){
+		if(err) return cb(err)
+		if(doc) return cb('此人已经被推荐过了')
+
+		recommendModel.findOneByObj({
+			recommendMobile:mobile,
+			userId:userId,
+			status:1
+		},function(err,doc){
+			if(err) return cb(err)
+			if(doc) return cb('你已经推荐过了')
+
+			recommendModel.insertOneByObj({//插入数据
+				appId:appId,
+				userId:userId,
+				recommendMobile:mobile,
+				status:1
+			},function(err,doc){
+				return cb(err,doc)
+			})
+		})
 	})
 
 

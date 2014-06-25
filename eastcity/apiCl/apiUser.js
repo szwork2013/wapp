@@ -164,6 +164,29 @@ obj.activeback = function(req,res){ //金数据返回接口
 }
 
 
+obj.scorerank = function(req,res){ //积分排行
+	userBl.scorerank(function(err,doclist){
+		if(err) return res.json({'error':1,'data':err})
+		res.json({'error':0,'data':doclist})
+	})
+}
+
+
+obj.recommend = function(req,res){ //推荐人
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId;
+	var mobile = req.body.mobile; //获得被推荐人手机号
+
+	if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+		return res.send({error:1,data:'手机号格式有误'}) 
+	}
+
+	userBl.recommend(appId, userId, mobile, function(err,doc){
+		if(err) return res.json({'error':1,'data':err})
+		res.json({'error':0,'data':doclist})
+	})
+}
 
 
 module.exports = obj;

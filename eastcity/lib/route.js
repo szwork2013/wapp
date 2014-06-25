@@ -10,6 +10,7 @@ var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
 var apiSpecial = require('../apiCl/apiSpecial.js');
 var apiScoreSys = require('../apiCl/apiScoreSys.js');
+var apiShop = require('../apiCl/apiShop.js');
 var apiUser = require('../apiCl/apiUser.js');
 var apiInfo = require('../apiCl/apiInfo.js');
 
@@ -115,11 +116,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 	else{
 		res.send(403, { error: 1,data:'no openid or userid' });
 	}
-	
 }
-
-
-
 
 var addroute = function(app){
 	wxRoute(app); //定义微信的路由
@@ -162,11 +159,21 @@ var addroute = function(app){
 	//获取新闻公告和专刊列表页
 	app.get('/api/info/newslist',getUserMid, apiInfo.newslist);
 	app.get('/api/info/speciallist',getUserMid, apiInfo.speciallist);
-		
+	
+	//排行榜接口
+	app.get('/api/user/scorerank',getUserMid, apiUser.scorerank);
+	//推荐用户接口
+	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
+	//兑换商品
+	app.post('/api/shop/exchangeprize',getUserMid, apiShop.exchangePrize);
+	//兑换商品
+	app.post('/api/shop/saleprize',getUserMid, apiShop.saleprize);
+
 	//增加api接口
 	//1、兑换商品接口
 	//2、推荐用户接口，增加相应积分
 	//3、排行榜接口
+	//4、对某个拍品出价拍卖
 
 	//下面是页面控制器
 
@@ -200,16 +207,27 @@ var addroute = function(app){
 	app.get('/view/user/day',getUserMid, viewUser.day);
 	//积分查询
 	app.get('/view/user/myscore',getUserMid, viewUser.myscore);
+	//推荐用户页面
+	app.get('/view/user/recommend',getUserMid, viewGame.recommend);
+	//排行榜页面
+	app.get('/view/user/scorelist',getUserMid, viewGame.scorelist);
 
 	//游戏列表页
 	app.get('/view/game/gamelist',getUserMid, viewGame.gamelist);
 	//游戏详细页
 	app.get('/view/game/gamedetail',getUserMid, viewGame.gamedetail);
 
+
+	//兑换商品页面
+	app.get('/view/shop/shoplist',getUserMid, viewShop.shoplist);
+	//拍卖页面
+	app.get('/view/shop/salelist',getUserMid, viewGame.salelist);
+
 	//增加页面接口
 	//1、兑换商品页面
 	//2、推荐用户页面
 	//3、排行榜页面
+	//4、拍卖页面
 
 	app.get('/', function(req,res){
 		var count = req.csession['count'];

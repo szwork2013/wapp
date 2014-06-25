@@ -253,6 +253,18 @@ window.scoreget_type = [
                               { text: "消费", value: 2 }
                             ]
 
+window.recommend_status = [
+                        { text: "待审核", value: 1 },
+                        { text: "审核通过", value: 2 },
+                        { text: "审核不通过", value: 3 }
+                      ]
+
+window.sale_status = [
+                        { text: "未拍出", value: 1 },
+                        { text: "已拍出", value: 2 },
+                        { text: "已发货", value: 3 }
+                      ]
+
 
 
 window.dropdown_init = function($obj, $array,onchange,init){

@@ -13,7 +13,7 @@ var obj = { //定义结构
 	  appUserMobile:{type:String, required:true, unique: true},       //会员手机号
 	  appUserSex:{type:Number, default:1}, //0表示女性，1表示男性
 	  appUserBirth:{type: Date, default: function(){return new Date('1970/1/1')} }, //会员生日
-	  appUserScore:{type:Number,default:0},
+	  appUserScore:{type:Number,default:0,index:true},
 	  isShow:{ type:Number, default:1}, //是否启用这个用户,1表示启用，0表示未启用
 	  writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
@@ -44,6 +44,13 @@ objSchema.statics.findAll = function (obj,skip,pagesize,cb) {
              .limit(pagesize)
              .skip(skip)
              .sort({"_id":-1})
+             .exec(cb);
+}
+
+objSchema.statics.scoreRank = function (obj,limit,cb) {
+       return this.find(obj)
+             .limit(pagesize)
+             .sort({"appUserScore":-1})
              .exec(cb);
 }
 

@@ -1,0 +1,236 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">推荐id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" id="recommend_id" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appId" >地产商</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userId" >用户Id</label>
+            </div>
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recommendMobile" >推荐人手机</label>
+            </div>
+            <div data-container-for="recommendMobile" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recommendMobile" data-bind="value:recommendMobile" required="required">
+            </div>
+ 
+            <div class="k-edit-label  w-800-l">
+                <label for="status" >类型</label>
+            </div>
+            <div data-container-for="status" class="k-edit-field w-800-r">
+               <input type="number" id="newsType" class="k-input k-textbox w-50-inp" name="status" data-bind="value:status" required="required">
+            </div>
+
+            <div style="display:none;">
+                <div class="k-edit-label  w-800-l">
+                    <label for="code1" >备用1</label>
+                </div>
+                <div data-container-for="code1" class="k-edit-field w-800-r">
+                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
+                </div>
+
+                <div class="k-edit-label  w-800-l">
+                    <label for="code2" >备用2</label>
+                </div>
+                <div data-container-for="code2" class="k-edit-field w-800-r">
+                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+                </div>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+            <div class="k-edit-label  w-800-l"><label for="writeTime"></label></div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+                <a onclick="javascript:check_recommend();" class="k-button k-button-icontext k-grid-ViewDetails" href="javascript:;"><span class=" "></span>自动审核</a>
+            </div>
+        </script>
+
+
+<script>
+
+    window.news_type = [window.news_type[0]];
+
+
+ $(function () {
+                var toolbarAry = [
+                                { name: "create", text: "添加" }
+                              ]
+                var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+                                           
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                       
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/recommend/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/recommend/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/recommend/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/recommend/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "appId": { editable: true },
+                                    "userId": { editable: true },
+                                    "recommendMobile": { editable: true},
+                                    "status": { editable: true, type:'number'},                                   
+                                    "code1": { editable: true},
+                                    "code2": { editable: true},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                
+
+$.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'预约id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appId",
+                            title: "地产商", 
+                            values:d,
+                            hidden:true
+                        },
+                        { 
+                            field: "userId",
+                            title: "推荐人Id",
+                        },
+                        { 
+                            field: "recommendMobile",
+                            title: "被推荐人手机",
+                        },
+                        { 
+                            field: "status",
+                            title: "类型",
+                            values:window.recommend_status,
+                        },
+                         { 
+                            field: "code1",
+                            title: "备用1",                           
+                             hidden:true
+                        },
+                         { 
+                            field: "code2",
+                            title: "备用2",                           
+                             hidden:true
+                        },            
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+       
+                        $('#writeTime').kendoDateTimePicker();
+                        
+                        window.dropdown_init($('#appId_inp'),d)
+                        window.dropdown_init($('#newsType'),window.recommend_status)
+
+
+
+                    },
+                    filterable:window.filter_obj         
+                });
+      })                              
+});
+
+function check_recommend(){
+    var recommend_id = $('#recommend_id').val();
+    $.post('/manger/recommend/check',{'recommendid':recommend_id},function(d){
+        if(d.error == 1) return alert(d.data);
+        $('.k-i-close').click()
+        alert(d.data)
+        $("#grid").data("kendoGrid").dataSource.read();
+    },'json')
+}
+
+</script>
+<% include inc/foot %>
