@@ -1,0 +1,485 @@
+﻿body {
+    background:#3ABEFF
+}
+
+.ng-scope {
+    height:100%;
+    width:100%;
+}
+
+.login_tab {
+   text-align: center;
+   display:none;
+}
+ .login_tab label {
+        color:white;
+        width:100%;
+        height:100%;
+    }
+.loadings {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+ .loadings label {
+        color:white;
+        width:100%;
+    }
+   
+.title_image {
+    width: 50%;
+    padding-top:15px;
+}
+
+.support {
+    position: absolute;
+    bottom: 10px;
+    left: 30%;
+    font-size:14px;
+}
+
+.title_imageF {
+    width:80%;
+    padding-top:20px;
+}
+.titleF {
+    text-align:center;
+}
+.title_imageL {
+     width:80%;
+     text-align:center;
+     padding-top:5px;
+}
+.percentage {
+    width:90%;
+    text-align:right;
+     color:white;
+}
+.paly_tab {
+      display:none;
+      z-index: -100;
+      bottom: 0;
+     right: 0;
+     left: 0;
+     background:url(../images/background.jpg) no-repeat;
+     background-size:100% 100%;
+     position: absolute;
+     height: 100%;
+}
+
+.paly_tab .paly_football{
+    width: 12%;
+    bottom:14%;
+    left:46%;
+    position: absolute;
+}
+
+.help_tab {
+display:none;
+z-index: -100;
+}
+
+
+
+.strategy {
+    display:none;
+    text-align:center;
+    padding:15px;
+}
+
+.strategy label{
+    color:white;
+}
+.winning-strategy {
+    width:60%;
+    position:absolute;
+    left:20%;
+}
+
+.backBtn {
+     width: 16%;
+     top:2%;
+     right:0%;
+    position: absolute;
+}
+
+.panil-select {
+   right: 10%;
+   left: 10%;
+   border:2px dotted white;
+   padding:10px;
+   margin-bottom:15px;
+   border-radius:15px;
+   position: absolute;
+   font-size:14px;
+}
+.panil-select_wenzi {
+    width:65%;
+    padding-bottom:15px;
+}
+.panil-last {
+   right: 10%;
+   left: 10%;
+   position: absolute;
+}
+
+
+.play_button {
+    width: 50%;
+    padding:10px;
+    padding-top:15px;
+}
+
+.raiders_button {
+     width: 46%;
+     padding-top:5px;
+     padding-bottom:5px;
+}
+
+.star_One {
+    width:25%;
+    display:inline-block;
+    padding-left:5%;
+    padding-right:5%;
+}
+
+ .star_One img {
+     width:100%;
+    }
+.star_Two {
+    padding-left:15%;
+    display:inline-block;
+    width:25%;
+}
+.star_Two img {
+     width:100%;
+    }
+.star_stand {
+     width: 20%;
+     bottom:14%;
+     left:38%;
+    position: absolute;
+}
+.starHead {
+    width: 22%;
+    top:20px;
+    left:20px;
+    position: absolute;
+}
+.voiceSetting {
+     width: 20%;
+     top:4%;
+     right:5%;
+     position: absolute;
+}
+
+.audio_btn { 
+	position: fixed;
+	z-index: 12; 
+    width: 13%;
+	height: 10%;
+    top:4%;
+     right:5%;
+	background: url(../images/voiceopen.png) no-repeat; 
+	background-size: 100% auto; 
+    display:none;
+}
+.audio_btn.pause { background-image: url(../images/voiceclose.png); }
+
+.start_img {
+     width: 65%;
+     top:40%;
+     left:20%;
+    position: absolute;
+}
+.wordShow {
+     width: 90%;
+     top:20%;
+     left:5%;
+    position: absolute;
+    display:none;
+}
+.pennantShow {
+    width: 100%;
+    top:25%;
+    left:0;
+    position: absolute;
+    display:none;
+}
+
+.kickCount {
+    width: 98%;
+    top:30%;
+    left:1%;
+    position: absolute;
+   text-align: center;
+   display:none;
+   font-size:16px;
+}
+
+.kickCount1 {
+    width: 98%;
+    height:42%;
+    top:30%;
+    left:1%;
+    position: absolute;
+   text-align: center;
+   display:none;
+   font-size:14px;
+}
+
+  .kickCount1 label {
+         color:#551C11;
+         height:12px;
+         line-height:11px;
+    }
+  .kickCount1 .lab {
+         color:#551C11;
+         height:12px;
+         line-height:12px;
+         padding-left:6%;
+    }
+    .kickCount label {
+         color:#551C11;
+         line-height:20px;
+    }
+
+.pageBtn {
+    width:60%;
+    top:10%;
+}
+
+.submitBtn {
+     width: 46%;
+     top:49%;
+     left:27%;
+    position: absolute;
+   display:none;
+}
+.submitUserInfo {
+   width: 30%;
+}
+.playAgain {
+    width: 37%;
+     top:76%;
+     left:10%;
+    position: absolute;
+     display:none;
+}
+
+#btnPalay .playAgain {
+    width: 37%;
+     top:82%;
+     left:10%;
+    position: absolute;
+}
+
+#btnPalay .playAgain1 {
+    width: 37%;
+     top:86%;
+     left:10%;
+    position: absolute;
+}
+
+.invitation {
+    width: 80%;
+     top:86%;
+     left:10%;
+    position: absolute;
+     display:none;
+}
+
+.rankingList {
+     width: 37%;
+     top:76%;
+     right:10%;
+    position: absolute;
+     display:none;
+}
+
+#btnPalay {
+     display:none;
+}
+#btnPalay .rankingList1 {
+     width: 37%;
+     top:86%;
+     right:10%;
+    position: absolute;
+}
+
+.totalDiv {
+     width: 37%;
+     top:30%;
+     left:40%;
+    position: absolute;
+}
+    .totalDiv label {
+        color:white;
+        font-size:20px;
+    }
+.kickCountInfo {
+   text-align: center;
+    font-size:12px;
+    color:#551C11;
+    line-height:20px;
+    padding-top: 20px;
+}
+.InfoDiv {
+     width: 310px;
+    left: 1%;
+    height: 180px;
+    position: absolute;
+    text-align: center;
+    background: url(../images/pennant.png);
+    background-size: 310px 180px;
+    display:none;
+}
+.InfoWord {
+    width:290px;
+    margin-left:6%;
+    margin-top:85px;
+    display:none;
+}
+.getInfo {
+    width:170px;
+    padding-left:20%;
+}
+.getInfo .inputName{
+        margin-bottom:10px;
+        height:15px;
+        width:120px;
+        line-height:20px;
+    }
+
+.getInfo .inputPhone{
+        margin-bottom:10px;
+        height:15px;
+        width:120px;
+        line-height:20px;
+    }
+#labName {
+     
+        font-size:12px;
+        margin-bottom:10px;
+        line-height:20px;
+        color:#551C11;
+}
+
+#labPhone {
+
+         font-size:12px;
+        margin-bottom:10px;
+        line-height:20px;
+         color:#551C11;
+
+}
+.CloudMove {
+    width: 100%;
+    top:0;
+     left:0;
+     position: absolute;
+     -webkit-animation-name: rotateA;  -webkit-animation-duration: 20s;  
+-webkit-animation-iteration-count: infinite;  -webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes rotateA { 0%{ -webkit-transform: translate(0,0);} 100%{ -webkit-transform: translate(-100%,0);} }
+
+.LeftButtonDiv {
+     float: left;
+    padding-left:15%;
+    padding-top:20%;
+    width:30%;
+}
+.RightButtonDiv {
+    padding-right:15%;
+    float:right;
+    padding-top:20%;
+    width:30%;
+} 
+
+.LeftButtonDiv1 {
+    width:40%;
+    text-align:right;
+    padding-right:10px;
+    display:inline-block;
+}
+.RightButtonDiv1 {
+    width:40%;
+    text-align:left;
+    padding-left:10px;
+    display:inline-block;
+}
+.line {
+    width:76%;
+}
+.tableShow {
+    width:100%;
+}
+    .tableShow td {
+        color:#551C11;
+         text-align:center;
+    }
+.strategyShow {
+    width: 89%;
+    border: 3px solid #581b00;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding-top: 30px;
+    margin-top: 17%;
+    margin-left: 5%;
+    padding-bottom: 10px;
+    font-size:14px;
+}
+
+.strategyShow span{
+   padding-top:10px;
+   color:#551C11;
+}
+
+.tableShow1 {
+    width:80%;
+    margin-left:10%;
+    padding-top:10px;
+}
+.strategy .play_button {
+    display:inline-block;
+    width:35%;
+    padding-left:5%;
+
+}
+.tableShow1 td {
+        color:#F2934F;
+        font-size:14px;
+        line-height:20px;
+    }
+.fade {
+    z-index: 13;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background-color:black;
+    opacity: 0.8;
+    width:100%;
+    height:100%;
+}
+
+.jiantou{
+    padding-right:30px;
+}
+
+.close {
+    width:12%;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+}
+.kickCountDiv {
+    width: 78%;
+    height:100%;
+    margin-left: 12%;
+    margin-bottom:2px;
+}
