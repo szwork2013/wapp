@@ -40,7 +40,9 @@ obj.gamedetail = function(req,res){ //客户推荐页面
 	if(!gameid || gameid.length != 24){
 		return res.send(500,'gameid有误')
 	}
-
+	req.csession['userId'] = userId;
+	req.csflush(); 
+	
 	infoBl.getOneGameById(gameid, function(err,doc){
 		if(err){
 			logger.error('obj.gamedetail error, appId %s, err %s', appId, err);
@@ -55,9 +57,9 @@ obj.gamedetail = function(req,res){ //客户推荐页面
 			return;
 		}
 
-		return res.json(doc)
+		//return res.json(doc)
 
-		res.render(doc['url'],{
+		res.render('game/'+doc['url'],{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'doc':doc

@@ -263,8 +263,9 @@ z-index: -100;
 }
 .playAgain {
     width: 37%;
-     top:76%;
-     left:10%;
+    top: 65%;
+    left: 50%;
+margin-left: -110px;
     position: absolute;
      display:none;
 }
@@ -482,4 +483,25 @@ z-index: -100;
     height:100%;
     margin-left: 12%;
     margin-bottom:2px;
+}
+#sendscore{
+    display: block;
+width: 280px;
+height: 40px;
+border: #551c11 3px solid;
+line-height: 40px;
+background-color: #f18b35;
+color: #551c11;
+text-decoration: none;
+margin: 0 auto;
+font-size: 20px;
+}
+.result_p_tip{
+padding: 20px;
+font-size: 20px;
+width: 400px;
+margin: 0 auto;
+}
+#kickCount{
+    font-size: 20px !important;
 }

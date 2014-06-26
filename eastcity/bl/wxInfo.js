@@ -31,7 +31,6 @@ obj.getOneGameById = function(id,cb){ //获取指定游戏内容
 		isShow:1
 	},function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);		
 		return cb(err,doc)
 	})
 }

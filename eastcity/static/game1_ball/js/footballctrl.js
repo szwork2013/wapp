@@ -44,13 +44,13 @@
         selectStar: function (type) {
             if (type == "0" && that.starType != "0") {
                 that.starType = type;
-                $("#starOneSelect").attr("src", "picture/starSelect1.png");
-                $("#starTwoSelect").attr("src", "picture/starUnSelect2.png");
+                $("#starOneSelect").attr("src", "/static/game1_ball/picture/starSelect1.png");
+                $("#starTwoSelect").attr("src", "/static/game1_ball/picture/starUnSelect2.png");
                 
             } else if (type == "1" && that.starType != "1") {
                 that.starType = type;
-                $("#starOneSelect").attr("src", "picture/starUnSelect1.png");
-                $("#starTwoSelect").attr("src", "picture/starSelect2.png");
+                $("#starOneSelect").attr("src", "/static/game1_ball/picture/starUnSelect1.png");
+                $("#starTwoSelect").attr("src", "/static/game1_ball/picture/starSelect2.png");
             }
         },
         startGame: function () {
@@ -79,25 +79,25 @@
             $("#totalDiv").show();
             //人物选择
             if (that.starType == "0") {
-                $("#star_stand").attr("src", "picture/starStand.png");
-                $("#starHead").attr("src", "picture/starHead.png");
+                $("#star_stand").attr("src", "/static/game1_ball/picture/starStand.png");
+                $("#starHead").attr("src", "/static/game1_ball/picture/starHead.png");
             } else {
-                $("#star_stand").attr("src", "picture/starStand1.png");
-                $("#starHead").attr("src", "picture/starHead1.png");
+                $("#star_stand").attr("src", "/static/game1_ball/picture/starStand1.png");
+                $("#starHead").attr("src", "/static/game1_ball/picture/starHead1.png");
             }
             $(".login_tab").hide();
             $(".paly_tab").fadeIn();
 
             $("#startCount").show();
             
-            $("#startCount").attr("src", "picture/3.png");
+            $("#startCount").attr("src", "/static/game1_ball/picture/3.png");
             var countData = 2;
             var last = setInterval(function () {
                 if (countData > 0) {
-                    $("#startCount").attr("src", "picture/" + countData + ".png");
+                    $("#startCount").attr("src", "/static/game1_ball/picture/" + countData + ".png");
                     countData--;
                 } else if (countData == 0) {
-                    $("#startCount").attr("src", "picture/go.png");
+                    $("#startCount").attr("src", "/static/game1_ball/picture/go.png");
                     countData--;
                 } else {
                     clearInterval(last);
@@ -142,17 +142,17 @@
         },
         legLift: function () {
             if (that.starType == "0") {
-                $("#star_stand").attr("src", "picture/starClick.png");
+                $("#star_stand").attr("src", "/static/game1_ball/picture/starClick.png");
             } else {
-                $("#star_stand").attr("src", "picture/starClick1.png");
+                $("#star_stand").attr("src", "/static/game1_ball/picture/starClick1.png");
             }
             //man.style.backgroundPosition = "100% 0";
             setTimeout(function () {
                 //人物选择
                 if (that.starType == "0") {
-                    $("#star_stand").attr("src", "picture/starStand.png");
+                    $("#star_stand").attr("src", "/static/game1_ball/picture/starStand.png");
                 } else {
-                    $("#star_stand").attr("src", "picture/starStand1.png");
+                    $("#star_stand").attr("src", "/static/game1_ball/picture/starStand1.png");
                 }
                 that.isKicking = false;
             }, 500);
@@ -221,7 +221,7 @@
             },500);
         },
         submitChange: function (btn,imgs) {
-            $(btn).attr("src", "picture/"+imgs+".png");
+            $(btn).attr("src", "/static/game1_ball/picture/"+imgs+".png");
         },
         submitGrade: function () {
             $("#submitBtn").hide();
@@ -359,7 +359,7 @@
         },
         toRankingList: function () {
             //未记录用户信息，显示填写用户信息层
-            $("#overWord").attr("src", "picture/rankingWord.png");
+            $("#overWord").attr("src", "/static/game1_ball/picture/rankingWord.png");
             document.getElementById("pennant").style.height = "62%";
 
             $("#kickDiv").hide();
@@ -415,7 +415,7 @@
         }, backToOver: function () {
             that.gameOverShow();
             document.getElementById("pennant").style.height = "35%";
-            $("#overWord").attr("src", "picture/overWord.png");
+            $("#overWord").attr("src", "/static/game1_ball/picture/overWord.png");
             $("#overWord").show();
             $("#InfoWord").hide();
             $("#kickDiv").show();
