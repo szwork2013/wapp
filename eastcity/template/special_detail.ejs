@@ -1,27 +1,54 @@
 <% include inc/head %>
 <%
-  var title = '楼盘信息'
+  var title = '专刊内容'
 %>
 <% include inc/top %>
 
+<article style="display: block;" class="articleList">
+    <div class="head clearfix">
+        <h1 class="title"><%= doc.appNewsTitle %></h1>
+        <h2><span class="source"><span><%= title %></span> <span class="time"><%= doc.writeTime %></span></h2>
+        <% if(favorCount>0){ %>
+            <a href="javascript:;" class="redBtn" spid="<%= doc._id %>">已收藏</a>
+        <% }else{ %>
+            <a href="javascript:;" class="redBtn" id="sendFavor" spid="<%= doc._id %>">收藏</a>
+        <% } %>
 
-  <div id="NewsContent" class="detail">
-      <div data-role="content" class="news_txt_box fw black2 clearfix f14">
-      <h2 class="f16"><%= doc.coName %></h2>
-      <img src="<%= doc.coLogo %>" />
-      <h4></h4>
-      <h4>城市：<%= doc.coCity %></h4>
-      <h4>地址：<%= doc.coAddr %></h4>
-      <h4>联系电话：<a href="tel:<%= doc.coTelphone %>"><%= doc.coTelphone %></a></h4>
-      <h4>官网地址：<a href="<%= doc.coUrl %>" target="_blank">点击进入官网</a></h4>
-      <p>
-        <%- doc.coDesc %>
-      </p>
-      <% doc.coPictrue.forEach(function(path){ %>
-          <img src="<%= path %>" />
-      <% }) %>
-      </div>
+    </div>
+    <div class="text clearfix">
+        <div class="text1"><p>
+        <% doc.appNewsPicture.forEach(function(path){ %>
+          <img src="<%= path %>" /><br>
+        <% }) %>
+        <%- doc.appNewsContent %>
+        </div>
+    </div>
 
-  </div>
-<% include inc/footPowerBy %> 
- <% include inc/foot %>
+</article>
+
+
+<article style="display: block;" class="articleList">
+    <div class="comment_title sTitle">
+        全部跟贴(<span class="replyCount"><%= commentCount %></span>条)
+    </div>
+ <div class="commentList" id="commentList">
+
+
+
+</div>
+<div id="listMore" class="pageBtn" spid="<%= doc._id %>">点击查看更多</div>
+
+
+
+<div>
+<textarea width="90%" rows="5" cols="38" id="sendCommentText"></textarea>
+<br><button id="sendComment">发布</button>
+</div>
+
+
+
+
+
+</article>
+
+<% include inc/foot %>

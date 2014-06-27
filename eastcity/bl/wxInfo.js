@@ -146,9 +146,66 @@ obj.getCommentByspecialid = function(spid,page,pagesize,cb){ //获取用户的�
 		type:1,
 	},skip, size,function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);
-		return cb(err,doc)
+		if(doc.length == 0) return cb(null, doc);
+		var temparray = []
+		var uids = []
+		doc.forEach(function(o){
+			temparray.push({
+				_id:o._id,
+				userId:o.userId,
+				specialId:o.specialId,
+				content:o.content,
+				writeTime:moment(o.writeTime).format('YYYY-MM-DD HH:mm:ss')
+			})
+			uids.push(o._id)
+		})
+
+		newsModel.getUserByIds(uids,function(err,list){
+			if(err) return cb(err)
+			temparray.forEach(function(o){
+
+				var len = list.length;
+				for(var i=0;i<len;i++){
+					if(list[i]._id == o.userId){
+						o.appUserName = list[i].appUserName;
+						break;
+					}
+				}
+				o.appUserName = '未知用户'
+
+			})
+
+			return cb(null, temparray);
+
+		})
+
+
+		//return cb(err,doc)
 	})
+}
+
+obj.countCommentByspecialid = function(spid,cb){ //获取评论总数
+	var size = size || 10;
+	var skip = (page-1) * size
+	commentModel.countAll({
+		specialId:spid,
+		type:1,
+	},function(err,count){
+		if(err) return cb(null,0)
+		return cb(null,count)
+	})
+}
+
+obj.getIsFavorBySpid = function(spid,uid,cb){//记录判断我是否已经收藏了这篇专刊
+
+	commentModel.countAll({
+		specialId:spid,
+		userId:uid,
+		type:2,
+	},function(err,count){
+		return cb(err,count)
+	})
+
 }
 
 obj.createCommentBySpid = function(appId, userId, spid, content, type, cb){
@@ -162,7 +219,15 @@ obj.createCommentBySpid = function(appId, userId, spid, content, type, cb){
 	      type:type, 
 	      writeTime:new Date()
 	},function(err,doc){
-		return cb(err,doc)
+
+		return cb(err,{
+		  appId:appId,
+	      userId:userId,
+	      specialId:spid,
+	      content:content,
+	      type:type, 
+	      writeTime:moment().format('YYYY-MM-DD HH:mm:ss')
+		})
 	})
 }
 

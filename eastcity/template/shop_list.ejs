@@ -1,0 +1,74 @@
+<% include inc/head %>
+<%
+  var title = '积分兑换'
+%>
+<% include inc/top %>
+<% include inc/score_top %>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="rank_table">
+  <tbody>
+      <% 
+        list.forEach(function(obj,i){ 
+          var couont = 0;
+          list2.forEach(function(obj2){
+              if(obj._id == obj2.){
+                  couont++
+              }
+          })
+
+      %>
+        <tr>
+        <td><img src="<%= obj.imgUrl %>" width="70" height="52"/></td>
+        <td>
+          <span>名称：<%= obj.name %></span>
+          <span>价格：<%= obj.price %></span>
+          <span>库存：<%= obj.totalNumber %></span>
+          <% if(accountBuyNumber == -1){ %>
+              <a href="javasciprt:;" prizeid="<%= obj._id %>" id="submit_confirm">立即兑换</a>
+          <%} else if(accountBuyNumber>0 && accountBuyNumber>count){ %>
+              <a href="javasciprt:;" prizeid="<%= obj._id %>" id="submit_confirm">立即兑换</a>
+          <% } else{ %>
+              <a href="javasciprt:;">超过兑换限额</a>
+          <%}%>
+        </td>
+        </tr>
+      <% })   %> 
+
+   
+
+
+  </tbody>
+</table>
+
+
+
+
+
+<script type="text/javascript">
+var userMobile = '<%= <%= userObj.appUserMobile %> $>'
+
+$(function(){
+
+  $('#submit_confirm').click(function(){//确认兑换
+
+
+  })
+
+  $('#submit_exchange').click(function(){//立即兑换
+      var prizeid = $(this).attr('prizeid');
+      $.post('/api/shop/exchangeprize',{'prizeId':prizeid, 'mobile':window.mobile, 'wxuserid':window.userid},function(d){
+          if(d.error) return alert(d.data);
+          alert('兑换成功');
+          setTimeout(function(){
+              location.href = location.href;
+          },300)         
+      },'json')
+  })
+
+
+})
+
+</script>
+
+
+<% include inc/foot %>

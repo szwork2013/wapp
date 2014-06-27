@@ -59,6 +59,18 @@ obj.recommend = function(req,res){
 	})
 }
 
+//积分规则
+obj.scorerule = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId
+
+	res.render('score_rule.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+	})
+}
+
 
 //推荐用户录入页面
 obj.scorelist = function(req,res){

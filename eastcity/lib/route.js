@@ -212,6 +212,8 @@ var addroute = function(app){
 	app.get('/view/user/recommend',getUserMid, viewUser.recommend);
 	//排行榜页面
 	app.get('/view/user/scorelist',getUserMid, viewUser.scorelist);
+	//积分规则
+	app.get('/view/user/scorerule',getUserMid, viewUser.scorerule);
 
 	//游戏列表页
 	app.get('/view/game/gamelist',getUserMid, viewGame.gamelist);

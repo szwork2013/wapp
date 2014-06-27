@@ -19,10 +19,9 @@ obj.activelist = function(req,res){
 			logger.error('obj.activelist error, appId %s, err %s', appId, err);
 			return res.send(500,'乐活空间公告加载失败')
 		}
-		return res.json(list)
-
-
+		//return res.json(list)
 		res.render('active_list.ejs',{
+			'title':'乐活空间公告',
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
@@ -39,14 +38,15 @@ obj.newsall = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 
-	infoBl.getNewsByTypePage(appId, 2, 1, 50, function(err,list){
+	infoBl.getNewsByTypePage(appId, 2, 1, 100, function(err,list){
 		if(err){
 			logger.error('obj.newsall error, appId %s, err %s', appId, err);
 			return res.send(500,'物语空间活动加载失败')
 		}
-		return res.json(list)
+		//return res.json(list)
 
-		res.render('newsall_list.ejs',{
+		res.render('active_list.ejs',{
+			'title':'物语空间公告',
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
@@ -63,14 +63,15 @@ obj.announce = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 
-	infoBl.getNewsByTypePage(appId, 3, 1, 50, function(err,list){
+	infoBl.getNewsByTypePage(appId, 3, 1, 100, function(err,list){
 		if(err){
 			logger.error('obj.announce error, appId %s, err %s', appId, err);
 			return res.send(500,'物语空间公告加载失败')
 		}
-		return res.json(list)
+		//return res.json(list)
 
-		res.render('announce_list.ejs',{
+		res.render('active_list.ejs',{
+			'title':'物语空间公告',
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
@@ -102,7 +103,7 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 			return;
 		}
 
-		return res.json(doc)
+		//return res.json(doc)
 
 		res.render('news_detail.ejs',{
 			'userObj':req.wxuobj,
@@ -127,7 +128,7 @@ obj.call = function(req,res){
 			return res.send(500,'一键呼叫加载失败');
 		}
 
-		return res.json(list)
+		//return res.json(list)
 
 		res.render('service_call.ejs',{
 			'userObj':req.wxuobj,
@@ -175,15 +176,23 @@ obj.specialdetail = function(req,res){
 			logger.error('obj.specialdetail error, appId %s, err %s', appId, err);
 			return res.send(500,'专刊详细页面加载失败')
 		}
+		infoBl.getIsFavorBySpid(spid,userId,function(err,favorCount){
+			logger.error('obj.specialdetail infoBl.getIsFavorBySpid, appId %s, err %s', appId, err);
+			if(err) return res.send(500,'专刊详细页面加载失败')
 
-		return res.json(doc)
+			infoBl.countCommentByspecialid(spid,function(err,count){
 
-		res.render('special_detail.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'doc':doc
+				res.render('special_detail.ejs',{
+					'userObj':req.wxuobj,
+					'binderObj':req.wxBinder,
+					'doc':doc,
+					'commentCount':count,
+					'favorCount':favorCount
+				})
+				return;
+			})
 		})
-		return;
+		
 	})
 
 }

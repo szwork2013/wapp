@@ -123,7 +123,7 @@ obj.modify = function(req,res){ //用户认证绑定
 
 
 
-obj.mycomment = function(req,res){ //用户认证绑定
+obj.mycomment = function(req,res){ //我的评论
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId;
@@ -138,7 +138,7 @@ obj.mycomment = function(req,res){ //用户认证绑定
 }
 
 
-obj.myfavor = function(req,res){ //用户认证绑定
+obj.myfavor = function(req,res){ //我的收藏
 
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;

@@ -1,76 +1,28 @@
 <% include inc/head %>
-
 <% include inc/top %>
-
-
-  <div data-role="content" class="inside_box fw">
-    <div id="wrapper" class="wrapper2">
-      <div id="ShowList">
-        <%
-          var k = 0;
-        %>
-       <% list.forEach(function(obj,i){ %>
-        <%
-          if(i%5 == 0){
-              k++;
-          }
-        %>
-       <a href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>&backtype=<%= type %>" style="display:none;" class="newslist_<%= k %> newslist_a" target="_blank">
-        <div class="e_txt_box fw black2 clearfix f14" >
-          <p class="e_txt_box_tit">
-            <span class="l"><%= obj.writeTime %></span>
-          </p>
-          <p class="sl"></p>
-          <div class="newsImg"><img src="<%= obj.appNewsPicture[0] %>" width="292"></div>
-          <p><%= obj.appNewsTitle %></p>
-        </div>
-      </a>
-      <% }) %>
-      <div id="scroller" class="e-scroller">
-
-
-    <div id="divLoadMore" class="login_btn03 f20" style=" width:312px; margin:0 auto; display:none;"><a id="GetMoreInfo" href="javascript:;">点击加载更多...</a></div>
-    <div id="divLoading" class="login_btn04 f20" style=" width:312px; margin:0 auto; display:none;"><img src="/mobile/images/loading.gif" /></div>
-    <div id="divAtLast" class="login_btn05 f20" style=" width:312px; margin:0 auto; display:none;">已到最后一页</div>
-
- <% include inc/footPowerBy %> 
-      </div>
-    </div>
-  </div>
-
-
-  <script type="text/javascript">
-      $(function(){
-          var maxLen = <%= list.length %>
-          var curPage = 1;
-          var perPage = 5;
-          var maxPage = Math.ceil(maxLen/perPage)
-          if(maxPage>1){
-              $('#divLoadMore').show();
-          }
-
-          var newslist_a = $('.newslist_a')
-
-          var showCurrentPage = function(){
-              //newslist_a.hide()
-              $('.newslist_'+curPage).show();
-     
-              if(curPage >= maxPage){
-                  $('#divLoadMore').hide();
-                  //$('#divAtLast').show();
-              }
-          }
-
-          $('#divLoadMore').click(function(){
-              curPage++;
-              showCurrentPage();
-          })
-          showCurrentPage();
-      })
-
-  </script>
-
-
-
-
+<article class="topNews">
+<section class="newsList">
+<ul page="0" class="newsPage"  id="newsListContent">
+        <% 
+            var j = 0;
+         %>
+        <% 
+            list.forEach(function(obj,i){ 
+            if(i%10==0){
+                j++;
+            }
+          %>
+            <li name="newsBlock_<%= j %>" class="newsHead" style="display:none;">
+                <a href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>"><img src="<%= obj.appNewsPicture[0] %>" width="70" height="52"/></a>
+                <a href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>">
+                <div>
+                    <p class="newsTitle"><%= obj.appNewsTitle %></p>
+                </div>
+                </a>
+            </li>
+        <% })   %>                                     
+</ul>
+<div id="listMore" class="pageBtn">点击查看更多</div>
+</section>
+</article>
 <% include inc/foot %>
