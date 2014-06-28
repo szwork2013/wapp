@@ -16,7 +16,7 @@ var obj = {}
 
 obj.registRule = function(qobj,data,cb){ //注册
 	qobj.scoreWay = 'regist'
-	qobj.scoreDetail = 10;
+	qobj.scoreDetail = 100;
 	qobj.mobile = data.mobile;
 
 	obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, null, null, function(err,doc){

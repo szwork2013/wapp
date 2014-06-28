@@ -226,7 +226,7 @@ var addroute = function(app){
 	//签到页面
 	app.get('/view/user/day',getUserMid, viewUser.day);
 
-
+	//---未完成
 	//修改资料
 	app.get('/view/user/modify',getUserMid, viewUser.modify);
 	//用户注册
