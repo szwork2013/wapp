@@ -21,6 +21,7 @@ obj.shoplist = function(req,res){ //商品列表页
 			if(err){
 				return res.send(500,'商品列表页加载失败')
 			}
+			//console.log(list2)
 			res.render('shop_list.ejs',{
 				'userObj':req.wxuobj,
 				'binderObj':req.wxBinder,

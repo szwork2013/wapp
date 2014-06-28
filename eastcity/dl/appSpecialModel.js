@@ -1,5 +1,6 @@
 //新闻优惠活动
 var mongoose =require('./db_conn.js');
+var moment = require('moment')
 var Schema = mongoose.Schema;
 
 var obj = { //定义结构
@@ -47,5 +48,30 @@ objSchema.statics.createOneOrUpdate = function (query, update, cb) {
 objSchema.statics.destroy = function (query, cb) { 
     return this.remove(query, cb); 
 }
+
+objSchema.statics.getByIds = function (ids, cb) {
+      var ids = ids || [];
+      this.find({
+            "_id":{
+                  "$in":ids
+            }
+      }).limit(1000).exec(function(err,docs){
+            if(err) return cb(err);
+            if(!docs || docs.length == 0) return cb(null,[]);
+            var idsary=[]
+            docs.forEach(function(v){
+                  idsary.push({
+                        _id:v._id.toString(),
+                        title:v.title,
+                        picture:v.picture.split(','),
+                        type:v.type,
+                        writeTime:moment(v.writeTime).format('YYYY-MM-DD hh:mm:ss'),
+                  })
+            });
+
+            cb(null,idsary)
+      })
+}
+
 
 module.exports = mongoose.model('wxSpecial', objSchema);

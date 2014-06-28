@@ -19,7 +19,8 @@ obj.activelist = function(req,res){
 			logger.error('obj.activelist error, appId %s, err %s', appId, err);
 			return res.send(500,'乐活空间公告加载失败')
 		}
-		//return res.json(list)
+		
+		
 		res.render('active_list.ejs',{
 			'title':'乐活空间公告',
 			'userObj':req.wxuobj,
@@ -177,8 +178,11 @@ obj.specialdetail = function(req,res){
 			return res.send(500,'专刊详细页面加载失败')
 		}
 		infoBl.getIsFavorBySpid(spid,userId,function(err,favorCount){
-			logger.error('obj.specialdetail infoBl.getIsFavorBySpid, appId %s, err %s', appId, err);
-			if(err) return res.send(500,'专刊详细页面加载失败')
+			
+			if(err){
+				logger.error('obj.specialdetail infoBl.getIsFavorBySpid, appId %s, err %s', appId, err);
+				return res.send(500,'专刊详细页面加载失败')
+			} 
 
 			infoBl.countCommentByspecialid(spid,function(err,count){
 

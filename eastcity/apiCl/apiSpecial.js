@@ -102,4 +102,36 @@ obj.sendfavor = function(req,res){
 
 
 
+//取消收藏某一篇专刊文章
+obj.cancelfavor = function(req,res){ 
+
+	var userId = req.wxuobj._id;
+	var openId = req.wxuobj.openId;
+	var appId = global.wxAppObj._id;
+	var spid = req.body.spid;
+	if(!spid || spid.length!=24){
+		return res.send({error:1,data:'专刊id有误'}) 
+	}
+
+	infoBl.getSpecialById(spid,function(err,spdoc){
+		if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	    if(!spdoc){
+	    	return res.send({error:1,data:'未找到专刊内容'})
+	    }
+
+	    infoBl.removeCommentBySpid(appId, userId, spid, '', 2, function(err,doc){
+			if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	     	res.send({error:0,data:doc});	
+		})
+
+	})
+
+
+}
+
+
 module.exports = obj;

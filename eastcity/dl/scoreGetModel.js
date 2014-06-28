@@ -43,6 +43,9 @@ scoreCode1 为游戏的id
 scoreCode1 为推荐记录的id
 
 
+
+
+
 6、购房抵房款 buyhouse 消费
 scoreCode1 记录购买楼盘号
 scoreCode2 记录购买房号

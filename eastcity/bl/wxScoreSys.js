@@ -2,6 +2,12 @@ var moment = require('moment');
 var guidModel = require('../dl/guidModel.js');
 var gameModel = require('../dl/appGameModel.js');
 var scoreGetModel = require('../dl/scoreGetModel.js');
+
+ //新闻模型
+var newsModel = require('../dl/appNewsModel.js');
+//专刊模型
+var specialModel = require('../dl/appSpecialModel.js');
+
 var userBl = require('./wxUser.js'); //加载用户模型
 
 var utils = require('../lib/utils.js');
@@ -15,11 +21,34 @@ obj.registRule = function(qobj,data,cb){ //注册
 
 	obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, null, null, function(err,doc){
 		if(err) return cb(err);
-		if(!doc) return cb('已经过的过注册积分');
+		if(!doc) return cb('已经获取过注册积分');
 		obj.addScoreHistory(qobj,cb)
 	})
+}
 
-	
+obj.forwardingRule = function(qobj,data,cb){ //注册
+	qobj.scoreWay = 'forwarding'
+	qobj.scoreDetail = 5;
+	qobj.mobile = data.mobile;
+	qobj.scoreCode1 = data.articleid;
+
+	newsModel.findOneByObj({
+		_id:data.articleid
+	},function(err,newsObj){
+		if(err) return cb(err);
+		specialModel.findOneByObj({
+				_id:data.articleid
+			},function(err,spObj){
+				if(err) return cb(err);
+				if(!newsObj && !spObj) return cb('未找到相关文章')
+				obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, null, null, function(err,doc){
+						if(err) return cb(err);
+						if(doc.length>0) return cb('已经转发过此文章');
+					obj.addScoreHistory(qobj,cb)
+				}, data.articleid)//是否已经转发过				
+		})//查找专刊
+	})//查找新闻活动
+
 }
 
 obj.gameRule = function(qobj,data,cb){ //游戏获得积分规则
@@ -87,16 +116,19 @@ obj.getHistoryByUserId = function(userId, cb){//根据用户id查询记录
 	})
 }
 
-obj.getHistoryByUserIdAndRule = function(userId, rule, cb){//根据用户id和规则查询记录
-	scoreGetModel.findByObj({
+obj.getHistoryByUserIdAndRule = function(userId, rule, page, limit, cb){//根据用户id和规则查询记录
+	var page = page || 0;
+	var limit = limit || 10;
+
+	scoreGetModel.findAll({
 		userId:userId,
 		scoreWay:rule,
-		},function(err,doc){
+		}, page*limit, limit, function(err,doc){
 			return cb(err,doc)
 	})
 }
 
-obj.getHistoryByStartAndEnd = function(userId, rule, s, e, cb){//根据用户id和规则查询记录
+obj.getHistoryByStartAndEnd = function(userId, rule, s, e, cb, sc1,sc2,sc3,sc4,sc5){//根据用户id和规则查询记录
 	//console.log(userId,rule,s,e)
 	var obj = {
 		userId:userId,
@@ -108,6 +140,22 @@ obj.getHistoryByStartAndEnd = function(userId, rule, s, e, cb){//根据用户id�
 			"$gt":new Date(s)
 		}
 	}
+	if(sc1){
+		obj.scoreCode1 = sc1;	
+	}
+	if(sc2){
+		obj.scoreCode2 = sc2;	
+	}
+	if(sc3){
+		obj.scoreCode3 = sc3;	
+	}
+	if(sc4){
+		obj.scoreCode4 = sc4;	
+	}
+	if(sc5){
+		obj.scoreCode5 = sc5;	
+	}
+
 	scoreGetModel.findByObj(obj,function(err,doc){
 			//console.log(doc)
 			return cb(err,doc)

@@ -6,15 +6,16 @@
 
 <article style="display: block;" class="articleList">
     <div class="head clearfix">
-        <h1 class="title"><%= doc.appNewsTitle %></h1>
-        <h2><span class="source"><span><%= title %></span> <span class="time"><%= doc.writeTime %></span></h2>
+        <h1 class="title content_h1"><%= doc.title %></h1>
+        <h2 class="content_h2"><span class="source"><span>发布时间：</span> <span class="time"><%= doc.writeTime %></span></h2>
     </div>
     <div class="text clearfix">
         <div class="text1"><p>
-        <% doc.appNewsPicture.forEach(function(path){ %>
-          <img src="<%= path %>" /><br>
+        <% doc.picture.forEach(function(path){ %>
+          <img src="<%= path %>" class="contentImg" /><br>
         <% }) %>
-        <%- doc.appNewsContent %>
+        <%- doc.content %>
+        </p>
         </div>
     </div>
 

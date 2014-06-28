@@ -4,23 +4,24 @@
 %>
 <% include inc/top %>
 
-<article style="display: block;" class="articleList">
+<article style="display: block;" class="articleList" id="special_detail">
     <div class="head clearfix">
-        <h1 class="title"><%= doc.appNewsTitle %></h1>
-        <h2><span class="source"><span><%= title %></span> <span class="time"><%= doc.writeTime %></span></h2>
+        <h1 class="title"><%= doc.title %></h1>
+        <h2><span class="source"><span>发布时间：</span> <span class="time"><%= doc.writeTime %></span></h2>
+        <div class="sp_favor_box">
         <% if(favorCount>0){ %>
             <a href="javascript:;" class="redBtn" spid="<%= doc._id %>">已收藏</a>
         <% }else{ %>
             <a href="javascript:;" class="redBtn" id="sendFavor" spid="<%= doc._id %>">收藏</a>
         <% } %>
-
+        </div>
     </div>
     <div class="text clearfix">
         <div class="text1"><p>
-        <% doc.appNewsPicture.forEach(function(path){ %>
+        <% doc.picture.forEach(function(path){ %>
           <img src="<%= path %>" /><br>
         <% }) %>
-        <%- doc.appNewsContent %>
+        <%- doc.content %>
         </div>
     </div>
 
@@ -41,7 +42,7 @@
 
 
 <div>
-<textarea width="90%" rows="5" cols="38" id="sendCommentText"></textarea>
+<textarea width="90%" rows="5" cols="38" id="sendCommentText" placeholder="请发表您的看法"></textarea>
 <br><button id="sendComment">发布</button>
 </div>
 

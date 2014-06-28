@@ -19,8 +19,6 @@ obj.gamelist = function(req,res){ //客户推荐页面
 			return res.send(500,'游戏列表页加载失败')
 		}
 
-		return res.json(list)
-
 		res.render('game_list.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,

@@ -10,13 +10,14 @@ app.set('salt', 'wxapp');
 app.set('views', __dirname + '/static');
 app.set('view engine', 'ejs');
 
-app.use(ifile.connect(
+/*app.use(ifile.connect(
 	[
 		['/m_skin',path.join(__dirname,'static')],
 		['/upload',path.join(__dirname,'..')]
 	]
-));
-
+));*/
+app.use('/m_skin', express.static(path.join(__dirname,'static','m_skin')));
+app.use('/upload', express.static(path.join(__dirname,'..','upload')));
 
 app.use(express.bodyParser(
 	{ keepExtensions: true, uploadDir: path.join(__dirname,'..','/upload/')}

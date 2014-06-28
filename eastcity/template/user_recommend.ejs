@@ -5,20 +5,23 @@
 <% include inc/top %>
 <% include inc/score_top %>
 
-<article style="display: block;" class="articleList">
-    <h2>请输入被推荐人手机号</h2>
-    <dl>
-      <dt>
-          手机号：
-      </dt>
-      <dd>
-          <input type="text" value="" id="mobile" name="mobile" />
-          <span id="mobile_tips"></span>
-      </dd>
+<article style="display: block;" class="articleList articleList2">
+    <h2 class="h2_title">请输入被推荐人手机号</h2>
+    <h3 id="errtip" class="errtip"></h3>
+    <dl class="input_common_dl clear">
+        <dt>
+            手机号：
+        </dt>
+        <dd>
+            <input type="text" value="" id="mobile" name="mobile" />
+            <span id="mobile_tips"></span>
+        </dd>
+    </dl>
 
+    <dl class="input_common_dl clear">
       <dt></dt>
       <dd>
-          <button id="submitBtn">提交</button>
+          <a href="javascript:;" id="submitBtn" class="redBtn">提交</a>
       </dd>
     <dl>
 </article>
@@ -27,17 +30,22 @@
   $(function(){
 
       $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+
           var mobile = $('#mobile').val();
           if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
-              $('#mobile_tips').html('手机号输入有误')
+              $('#errtip').html('手机号输入有误')
               return false;
           }
+          window.isajax = true
+          $('#errtip').empty()
           $.post('/api/user/recommend',{
             'mobile':mobile,
             'wxuserid':window.userid
           },function(d){
-              if(d.error) return alert(d.data)
-              alert(d.data);
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(d.data)
+              alert('推荐成功,请等待审核');
               location.href = location.href
           },'json')
 

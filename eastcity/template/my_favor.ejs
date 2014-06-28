@@ -1,0 +1,27 @@
+<% include inc/head %>
+<%
+  var title = '个人空间'
+%>
+<% include inc/top %>
+<% include inc/my_top %>
+<script>
+	var my_pos = 2;
+</script>
+
+<article style="display: block;" class="articleList">
+    
+    <div class="comment_title comment_title2 sTitle">
+        我的收藏(<span class="replyCount" id="favor_count"><%= count %></span>条)
+    </div>
+
+<ul  class="newsPage"  id="my_favor_list">
+
+</ul>
+
+
+
+
+<div id="listMore" class="pageBtn" >点击查看更多</div>
+
+</article>
+<% include inc/foot %>

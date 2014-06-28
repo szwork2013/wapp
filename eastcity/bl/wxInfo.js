@@ -8,6 +8,8 @@ var specialModel = require('../dl/appSpecialModel.js');
 var bookModel = require('../dl/appBookModel.js'); 
 //评论模型
 var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
+//评论模型
+var userModel = require('../dl/userModel.js'); 
 
 var utils = require('../lib/utils.js');
 var obj = {}
@@ -45,9 +47,25 @@ obj.getSpecialByTypePage = function(appId,type,page,size,cb){ //某一类型专�
 		isShow:1
 	},skip, size,function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);
+		if(doc.length==0) return cb(null, doc);
+		
+		var tempary = []
 
-		return cb(err,doc)
+		doc.forEach(function(obj){
+			tempary.push({
+				_id:obj._id,
+				title:obj.title,
+				//content:obj.content,
+				picture:obj.picture.split(',') || '',
+				type:obj.type,
+				code1:obj.code1,
+				code2:obj.code2,
+				writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+			})
+		})
+
+
+		return cb(err,tempary)
 	})
 }
 
@@ -59,8 +77,22 @@ obj.getSpecialById = function(id,cb){ //某一类型专刊的详细内容
 		isShow:1
 	},function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);		
-		return cb(err,doc)
+		if(!doc) return cb(null, doc);	
+		var tempary = []
+		var obj = doc
+
+		tempary = {
+			_id:obj._id,
+			title:obj.title,
+			//content:obj.content,
+			picture:obj.picture.split(',') || '',
+			type:obj.type,
+			code1:obj.code1,
+			code2:obj.code2,
+			writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+		}
+
+		return cb(err,tempary)
 	})
 }
 
@@ -74,8 +106,25 @@ obj.getNewsByTypePage = function(appId,type,page,size,cb){ //某一类型公告�
 		isShow:1
 	},skip, size,function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);	
-		return cb(err,doc)
+		if(!doc) return cb(null, doc);
+
+		var tempary = []
+
+		doc.forEach(function(obj){
+			tempary.push({
+				_id:obj._id,
+				title:obj.title,
+				//content:obj.content,
+				picture:obj.picture.split(',') || '',
+				url:obj.url,
+				type:obj.type,
+				code1:obj.code1,
+				code2:obj.code2,
+				writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+			})
+		})
+
+		return cb(err,tempary)
 	})
 }
 
@@ -157,18 +206,25 @@ obj.getCommentByspecialid = function(spid,page,pagesize,cb){ //获取用户的�
 				content:o.content,
 				writeTime:moment(o.writeTime).format('YYYY-MM-DD HH:mm:ss')
 			})
-			uids.push(o._id)
+			if(uids.indexOf(o.userId) == -1){
+					uids.push(o.userId)
+			}
+			
 		})
-
-		newsModel.getUserByIds(uids,function(err,list){
+		console.log(uids)
+		userModel.getUserByIds(uids,function(err,list){
 			if(err) return cb(err)
+			console.log(list)
 			temparray.forEach(function(o){
 
 				var len = list.length;
 				for(var i=0;i<len;i++){
-					if(list[i]._id == o.userId){
-						o.appUserName = list[i].appUserName;
-						break;
+					
+					if(list[i].value.toString() == o.userId){
+						
+						o.appUserName = list[i].text;
+						//console.log(o.appUserName)
+						return;
 					}
 				}
 				o.appUserName = '未知用户'
@@ -185,8 +241,7 @@ obj.getCommentByspecialid = function(spid,page,pagesize,cb){ //获取用户的�
 }
 
 obj.countCommentByspecialid = function(spid,cb){ //获取评论总数
-	var size = size || 10;
-	var skip = (page-1) * size
+
 	commentModel.countAll({
 		specialId:spid,
 		type:1,
@@ -232,6 +287,16 @@ obj.createCommentBySpid = function(appId, userId, spid, content, type, cb){
 }
 
 
+obj.removeCommentBySpid = function(appId, userId, spid, content, type, cb){
+	commentModel.destroy({
+		appId:appId,
+		userId:userId,
+		specialId:spid,
+		type:type
+	},function(err,doc){
+		return cb(err,doc)
+	})
+}
 
 
 

@@ -1,68 +1,40 @@
 <% include inc/head %>
 <%
-  var title = '在线留言'
+  var title = '每日签到'
 %>
 <% include inc/top %>
 
-<script type="text/javascript" src="/static/Repair.js"></script>
-
-<form id="form1" action="" method="post">
-  <div data-role="content" class="property_box fw black2 clearfix">
-    
-    <div id="divName" class="input_text02_box">
-      <p class="f16">联系人：</p>
-      <input name="suggestName" type="text" id="repair_input_text01" onfocus="if(this.value=='请输入您的真实姓名') {this.value=''}" onblur="checkName()" value="<%= userObj.appUserName%>">
-      <span id="wName" class="wrong">必填</span></div>
-    <div id="wNames" class="input_text02_box_err_t" style="display:none;">请输入2-6位中文<span></span></div>
-   
-    <div id="divTel" class="input_text02_box">
-      <p class="f16">电话：</p>
-      <%
-        var mobile = userObj.appUserMobile;
-        if(mobile == 0){
-            mobile = '请输入11位手机号码'
-        }
-      %>
-      <input name="suggestTel" type="tel" id="repair_input_text02" onfocus="if(this.value=='请输入11位手机号码') {this.value=''}" onblur="checkTel()" value="<%= mobile%>">
-      <span id="wTel" class="wrong">必填</span></div>
-    <div id="wTels" class="input_text02_box_err_t" style="display:none;">请输入11位手机号码，如13987654321<span></span></div>
-
-    <div class="repair_tit01 f16">留言内容</div>
-    <div class="input_textarea01_box">
-      <textarea name="suggestContent" id="textarea2" class="repair_textarea black3 fw" onfocus="if(this.value=='请输入留言内容') {this.value='';}" onblur="checkContent()" maxlength="200">请输入留言内容</textarea>
+<article style="display: block;" class="articleList">
+    <div class="head clearfix">
+        <h1 class="h2_title"></h1>
     </div>
-    <div id="wContent" class="input_text02_box_err_t" style="display:none;">请输入留言内容，200字以内<span></span></div>
-
-    <div class="login_btn01 f20"><a href="javascript:void(0);" id="submit">提 交</a></div>
-  </div>
-
-  <input name="wxuserid" type="hidden" value="<%= userObj._id%>" />
-  <input name="suggestType" type="hidden" value="3" />
-</from>
-
+    <div class="daySignBox clearfix">
+        <% if(todaySign){%>
+          <p>您今天 <%= date %> 已经签过到了</p>
+        <%}else{%>
+          <p>您今天还没签到，<a href="javascript:;" id="day_sign" class="redBtn">立即签到 <%= date %></a></p>
+        <%}%>
+          <p>立即查看<a href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank" class="reda">我的积分</a></p>
+    </div>
+</article>
 <script type="text/javascript">
-$(function(){
-    $('#submit').click(function(){
-      var r1 = checkName()
-      var r2 = checkTel()
-      var r3 = checkContent()
+  $(function(){
 
-      if(!r1 || !r2 || !r3) return false;
+      $('#day_sign').click(function(){
+        if(window.isajax) return false;
+          window.isajax = true         
+          $.post('/api/score/daysign',{
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return alert(d.data)
+              alert('签到成功');
+              location.href = location.href
+          },'json')
 
-      $.post('/api/suggest/sendMessage', $('#form1').serialize() ,function(d){
-          if(d.error){
-            return alert(d.data)
-          }
-          alert('提交成功');
-          setTimeout(function(){
-              location.href = location.href;
-          },2000)
-      },'json')
+      })
 
-    })
-})
+  })
 </script>
-
-<% include inc/footPowerBy %> 
 
 <% include inc/foot %>

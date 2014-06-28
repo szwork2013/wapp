@@ -7,6 +7,7 @@ var obj = { //定义结构,奖品doc
   startPrice:{type:Number,default: 0},           //起拍价格
   highPrice:{type:Number,default: 0},           //当前最高出价
   highUserId:{ type: String, default: ''},      //当前最高出价的人的userid
+  highMobile:{ type: String, default: ''},      //当前最高出价的人的联系方式
   startTime:{ type: Date,required:true},    //开始拍卖时间
   endTime:{ type: Date,required:true},      //结束拍卖时间
   status:{type:Number,default: 1},          //此拍卖商品状态，1、未拍出 2、已拍出 3、已发货
@@ -49,5 +50,41 @@ objSchema.statics.createOneOrUpdate = function (query, update, cb) {
 objSchema.statics.destroy = function (query, cb) { 
     return this.remove(query, cb); 
 }
+
+//后台kendoui使用
+objSchema.statics.getByIds = function (ids, cb) {
+  var ids = ids || [];
+  this.find({
+    "_id":{
+      "$in":ids
+    }
+  }).limit(1000).exec(function(err,docs){
+    if(err) return cb(err);
+    if(!docs || docs.length == 0) return cb(null,[]);
+    var idsary=[]
+    docs.forEach(function(v){
+      idsary.push({
+        _id:v._id,
+        name:v.name,
+        price:v.price,
+        startPrice:v.startPrice,
+        highPrice:v.highPrice,
+        highUserId:v.highUserId,
+        startTime:v.startTime,
+        endTime:v.endTime,
+        status:v.status,
+        totalNumber:v.totalNumber,
+        imgUrl:v.imgUrl,
+        desc:v.desc,
+        code1:v.code1,
+        code2:v.code2,
+        writeTime:v.writeTime,
+      })
+    });
+
+    cb(null,idsary)
+  })
+}
+
 
 module.exports = mongoose.model('wxSale', objSchema);

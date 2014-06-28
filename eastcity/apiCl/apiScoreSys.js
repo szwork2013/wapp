@@ -48,6 +48,25 @@ obj.game = function(req, res){ //游戏规则
 	
 }
 
+obj.forwarding = function(req, res){
+	var articleid = req.param('articleid');
+	var userId = req.wxuobj._id;
+	var openId = req.wxuobj.openId;
+	var appId = global.wxAppObj._id;
+	var rule = 'forwardingRule';
+
+	if(!articleid || articleid.length != 24){
+		 return res.send({error:1,data:'articleid有误'})
+	}
+
+	scoreBl.scoreRule(appId, userId, openId, {'mobile':req.wxuobj.appUserMobile,'articleid':articleid}, rule, function(err,doc){
+		if(err){
+	        return res.send({error:1,data:err}) 
+     	}
+     	res.send({error:0,data:''});
+	})
+
+}
 
 
 module.exports = obj;

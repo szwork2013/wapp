@@ -29,26 +29,65 @@ obj.getSaleList = function(appId,cb){ //获取竞拍列表
 		var userids = [] //获得出价的用户id数组，去查询这些用户的数据
 		doc.forEach(function(saleobj){
 			if(saleobj.highUserId == '') return;
-			userids.push(saleobj.highUserId)
+			if(userids.indexOf(saleobj.highUserId) == -1){
+				userids.push(saleobj.highUserId)
+			}
+			
 		})
+		//console.log(userids)
 
 		userModel.getUserByIds(userids,function(err,userlist){
 			if(err) return cb(err);
-			if(userlist.length==0) return cb(); //如果没有找到用户
+			//if(userlist.length==0) return cb(); //如果没有找到用户
+			//console.log(userlist);
 
-			doc.forEach(function(saleobj){
-				if(saleobj.highUserId == ''){
-					saleobj.userDetail = {}
-					return;
+			var tempary = [];
+			doc.forEach(function(obj){
+				var state = 0;
+				if(moment()<moment(obj.startTime)){
+					state = 1;
 				}
-				for(var i=0;i<userlist.length;i++){
-					if(userlist[i]._id == saleobj.highUserId ){
-						saleobj.userDetail = userlist[i];
-						break;
+				if(moment()>moment(obj.endTime)){
+					state = 2;
+				}
+				if(obj.startPrice>obj.highPrice){
+					highPrice = obj.startPrice 
+				}
+				else{
+					highPrice = obj.highPrice
+				}
+				var appUserName;
+				if(obj.highUserId == ''){
+					appUserName = '暂无人出价'
+				}
+				else{
+					for(var i=0;i<userlist.length;i++){
+						if(userlist[i].value == obj.highUserId ){
+							appUserName = userlist[i].text
+							break;
+						}
 					}
 				}
+
+				tempary.push({
+					  state:state,
+					  appUserName:appUserName,
+					  _id:obj._id,	
+					  name:obj.name,
+					  highPrice:highPrice,
+					  highUserId:obj.highUserId,
+					  startTime:moment(obj.startTime).format('YYYY-MM-DD hh:mm:ss'),
+					  endTime:moment(obj.endTime).format('YYYY-MM-DD hh:mm:ss'),
+					  imgUrl:obj.imgUrl,
+					  code1:obj.code1,
+					  code2:obj.code2,
+					  userDetail:obj.userDetail
+				})
+
 			})
-			cb(null, doc)
+
+			//console.log(tempary)
+			cb(null, tempary)
 		})
 	})
 }
@@ -59,7 +98,7 @@ obj.getUserPrize = function(userId,appId,cb){ //获取自己的礼品流水
 		userId:userId,
 		appId:appId,
 		scoreType:2,
-		scoreWay:'prize',
+		scoreWay:'exchange',
 	},function(err,doc){
 		cb(err,doc);
 	})
@@ -146,7 +185,7 @@ obj.obtainPrize = function(qobj,mobile,cb){
 }
 
 
-obj.saleprize = function(saleid, userId, score, cb){
+obj.saleprize = function(saleid, userId, score, mobile, cb){
 
 	saleModel.findOneByObj({
 		_id:saleid,
@@ -190,7 +229,8 @@ obj.saleprize = function(saleid, userId, score, cb){
 					_id:saleid
 				},{
 					highPrice:score,
-					highUserId:userId
+					highUserId:userId,
+					highMobile:mobile
 				},function(err,doc){
 					if(err){
 						//更新价目失败
@@ -225,6 +265,84 @@ obj.saleprize = function(saleid, userId, score, cb){
 
 
 
+}
+
+
+
+obj.getMyOrder = function(appId, userId, cb){
+
+	scoreGetModel.findAll({
+		appId:appId,
+		userId:userId,
+		scoreType:2,
+		 $or: [ { scoreWay: 'exchange' }, { scoreWay: 'sale' } ]
+	},0,1000,function(err,list){
+		if(err) return cb(err);
+		if(list.length == 0) return cb(null,list);
+		var templist = []
+		var ids_shop = [];
+		var ids_sale = [];
+		list.forEach(function(o){
+			var status = '待发货';
+			if(o.scoreCode2 == '1'){
+				status = '已发货'
+			}
+
+			templist.push({
+				_id:o._id,
+				mobile:o.mobile,
+				scoreGuid:o.scoreGuid,
+				scoreDetail:o.scoreDetail,
+				scoreCode1:o.scoreCode1,
+				status:status,
+				scoreWay:o.scoreWay,
+				writeTime:moment(o.writeTime).format('YYYY-MM-DD hh:mm:ss')
+			})
+			if(o.scoreWay == 'exchange' && ids_shop.indexOf(o.scoreCode1) == -1){
+				ids_shop.push(o.scoreCode1)
+			}
+			if(o.scoreWay == 'sale' && ids_sale.indexOf(o.scoreCode1) == -1){
+				ids_sale.push(o.scoreCode1)
+			}
+		})
+		
+		prizeModel.getByIds(ids_shop,function(err,list_prize){
+			if(err) return cb(err);
+			prizeModel.getByIds(ids_sale,function(err,list_sale){
+				if(err) return cb(err);
+				var len_prize = list_prize.length;
+				var len_sale = list_sale.length;
+
+				var temp2list = [];
+
+				templist.forEach(function(tempo,j){
+					if(tempo.scoreWay == 'exchange'){//兑换
+						tempo.scoreWayName = '兑换';
+						for(var i=0;i<len_prize;i++){
+							if(list_prize[i]._id == tempo.scoreCode1){
+								tempo.shopname = list_prize[i].name;
+								tempo.imgurl = list_prize[i].imgUrl;
+								temp2list.push(tempo);
+								return;
+							}
+						}
+					}
+					else if(tempo.scoreWay == 'sale'){//拍卖
+						tempo.scoreWayName = '拍卖';
+						for(var i=0;i<len_sale;i++){
+							if(list_sale[i]._id == tempo.scoreCode1){
+								tempo.shopname = list_sale[i].name;
+								tempo.imgurl = list_sale[i].imgUrl;
+								temp2list.push(tempo);
+								return;
+							}
+						}
+					}			
+				})
+				return cb(null,temp2list)
+			})
+		})
+	})
 }
 	
 

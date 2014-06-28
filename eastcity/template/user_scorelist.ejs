@@ -24,8 +24,8 @@ $(function(){
       $.post('/api/user/scorerank',{'wxuserid':window.userid},function(d){
           if(d.error) return alert(d.data);
           var s=''
-          d.forEach(function(o,i){
-              s+='<tr><td>'+(i+1)+'</td><td>'+o.appUserName+'</td><td>'+o.appUserScore+'</td></tr>'
+          d.data.forEach(function(o,i){
+              s+='<tr><td>'+(i+1)+'</td><td>'+o.appUserName+'</td><td><b>'+o.appUserScore+'</b></td></tr>'
           })
           $('#rank_tbody').html(s);
       },'json')

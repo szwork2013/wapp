@@ -2,6 +2,7 @@ var userModel = require('../dl/userModel.js'); //加载用户模型
 var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
 var recommendModel = require('../dl/recommendModel.js'); //加载评论模型
 var scoreModel = require('../dl/scoreGetModel.js');  //score模型
+var appSpecialModel = require('../dl/appSpecialModel.js');  //appSpecialModel模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
 var utils = require('../lib/utils.js');
@@ -282,8 +283,61 @@ obj.commentAndFavor = function(userid,type,page,pagesize,cb){ //获取用户的�
 		type:type,
 	},skip, size,function(err,doc){
 		if(err) return cb(err)
-		if(!doc) return cb(null, doc);
-		return cb(err,doc)
+		if(doc.length==0) return cb(null, doc);
+
+		if(type == 1){//如果获取的是评论内容
+				var tempary = []
+				doc.forEach(function(obj){
+					tempary.push({
+						_id:obj._id,
+						specialId:obj.specialId,
+						content:obj.content,
+						type:obj.type,
+						code1:obj.code1,
+						code2:obj.code2,
+						writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+					})
+				})
+				return cb(err,tempary)
+		}
+		else{//如果获取的是收藏夹内容
+			var ids =[];
+			doc.forEach(function(o2){
+				if(ids.indexOf(o2.specialId) == -1){
+					ids.push(o2.specialId);
+				}
+			})
+
+			appSpecialModel.getByIds(ids,function(err,list){
+				if(err) return cb(err);
+				var tempary = [];
+
+				doc.forEach(function(obj){
+					var len = list.length;
+					for(var i=0;i<len;i++){
+						if(list[i]._id == obj.specialId){
+							tempary.push({
+								_id:obj._id,
+								specialId:obj.specialId,
+								title:list[i].title,
+								picture:list[i].picture,
+								type:list[i].type,
+								writeTime:list[i].writeTime
+							})
+							return;
+						}
+					}
+
+				})
+
+				return cb(null,tempary)
+			})
+
+
+
+		}
+
+
 	})
 }
 
@@ -350,5 +404,29 @@ obj.recommend = function(appId, userId, mobile, cb){
 
 }
 
+
+obj.countMyComment = function(appId,uid,type,cb){ //获取我的评论数
+
+	commentModel.countAll({
+		appId:appId,
+		userId:uid,
+		type:type,
+	},function(err,count){
+		if(err) return cb(null,0)
+		return cb(null,count)
+	})
+}
+
+obj.countMyFavor = function(appId,uid,cb){ //获取我的收藏数
+
+	commentModel.countAll({
+		appId:appId,
+		userId:uid,
+		type:2,
+	},function(err,count){
+		if(err) return cb(null,0)
+		return cb(null,count)
+	})
+}
 
 module.exports = obj;

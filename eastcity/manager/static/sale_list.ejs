@@ -48,6 +48,12 @@
             <div data-container-for="highUserId" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="highUserId" data-bind="value:highUserId" >
             </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="highMobile" >最高出价用户手机号</label>
+            </div>
+            <div data-container-for="highMobile" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="highMobile" data-bind="value:highMobile" >
+            </div>
 
 
             <div class="k-edit-label  w-800-l">
@@ -193,6 +199,7 @@
                                     "startPrice": { editable: true,  type:'number'},
                                     "highPrice": { editable: true,  type:'number'},
                                     "highUserId": { editable: true},
+                                    "highMobile":{ editable: true},
                                     "startTime": { editable: true,  type:'date'},
                                     "endTime": { editable: true,  type:'date'},
                                     "status": { editable: true,  type:'number'},
@@ -261,6 +268,10 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "highUserId",
                             title: "最高价用户",
                         },
+                        { 
+                            field: "highMobile",
+                            title: "最高价手机",
+                        },                       
                         { 
                             field: "startTime",
                             title: "开始时间",

@@ -47,4 +47,35 @@ objSchema.statics.destroy = function (query, cb) {
     return this.remove(query, cb); 
 }
 
+//后台kendoui使用
+objSchema.statics.getByIds = function (ids, cb) {
+  var ids = ids || [];
+  this.find({
+    "_id":{
+      "$in":ids
+    }
+  }).limit(1000).exec(function(err,docs){
+    if(err) return cb(err);
+    if(!docs || docs.length == 0) return cb(null,[]);
+    var idsary=[]
+    docs.forEach(function(v){
+      idsary.push({
+        _id:v._id,
+        name:v.name,
+        price:v.price,
+        accountBuyNumber:v.accountBuyNumber,
+        totalNumber:v.totalNumber,
+        imgUrl:v.imgUrl,
+        desc:v.desc,
+        code1:v.code1,
+        code2:v.code2,
+        writeTime:v.writeTime,
+      })
+    });
+
+    cb(null,idsary)
+  })
+}
+
+
 module.exports = mongoose.model('wxPrize', objSchema);

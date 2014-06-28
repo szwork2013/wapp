@@ -27,8 +27,8 @@ obj.speciallist = function(req,res){
 	var userId = req.wxuobj._id;
 	var openId = req.wxuobj.openId;
 	var appId = global.wxAppObj._id;
-	var type = req.query.type || 1;
-	var page = req.query.page || 1;
+	var type = req.body.type || 1;
+	var page = req.body.page || 1;
 
 	infoBl.getSpecialByTypePage(appId,type,page,null,function(err,doc){
 		if(err){

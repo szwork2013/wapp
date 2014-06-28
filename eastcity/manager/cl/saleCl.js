@@ -93,7 +93,7 @@ obj.complete = function(req, res){
                     var qobj={
                             appId:saleobj.appId,
                             userId:saleobj.highUserId,
-                            mobile:uobj.appUserMobile,
+                            mobile:saleobj.highMobile,
                             scoreDetail:saleobj.highPrice,
                             scoreType:2,
                             scoreWay:'sale',

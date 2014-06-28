@@ -75,7 +75,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 		req.wxuobj = {
 			  _id:uobj.uobj._id,
 			  appId:uobj.uobj.appId,                 //appId表示用户第一次绑定的app应用id
-			  appUserName:uobj.uobj.appUserName,       //会员姓名
+			  appUserName:uobj.uobj.appUserName || '未知用户',       //会员姓名
 			  appUserMobile:uobj.uobj.appUserMobile,  //会员手机号
 			  appUserSex:uobj.uobj.appUserSex, //0表示女性，1表示男性
 			  appUserBirth: moment(uobj.uobj.appUserBirth).format('YYYY-MM-DD'), //会员生日
@@ -139,6 +139,8 @@ var addroute = function(app){
 	app.post('/api/score/daysign',getUserMid, apiScoreSys.daySign);
 	//游戏完成积分
 	app.post('/api/score/game',getUserMid, apiScoreSys.game);
+	//转发完成积分
+	app.post('/api/score/forwarding',getUserMid, apiScoreSys.forwarding);
 	//用户注册
 	app.post('/api/user/binder',getUserMid, apiUser.binder);
 	//用户修改资料
@@ -157,12 +159,15 @@ var addroute = function(app){
 	app.post('/api/special/sendcomment',getUserMid, apiSpecial.sendcomment);
 	//收藏某一篇文章
 	app.post('/api/special/sendfavor',getUserMid, apiSpecial.sendfavor);
+	//取消收藏某一篇文章
+	app.post('/api/special/cancelfavor',getUserMid, apiSpecial.cancelfavor);
+
 	//获取新闻公告和专刊列表页
-	app.get('/api/info/newslist',getUserMid, apiInfo.newslist);
-	app.get('/api/info/speciallist',getUserMid, apiInfo.speciallist);
+	app.post('/api/info/newslist',getUserMid, apiInfo.newslist);
+	app.post('/api/info/speciallist',getUserMid, apiInfo.speciallist);
 	
 	//排行榜接口
-	app.get('/api/user/scorerank',getUserMid, apiUser.scoreRank);
+	app.post('/api/user/scorerank',getUserMid, apiUser.scoreRank);
 	//推荐用户接口
 	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
 	//兑换商品
@@ -178,7 +183,7 @@ var addroute = function(app){
 
 	//下面是页面控制器
 
-	 //活动页面，可能是金数据投票列表页
+	//活动页面，可能是金数据投票列表页
 	app.get('/view/service/activelist',getUserMid, viewService.activelist);
 	//物语空间公告
 	app.get('/view/service/announce',getUserMid, viewService.announce);   
@@ -190,41 +195,57 @@ var addroute = function(app){
 
 	//一键呼叫，预约服务
 	app.get('/view/service/call',getUserMid, viewService.call);
-	
-	
 
 	//专刊列表,根据type显示不同的专刊内容
 	app.get('/view/service/speciallist',getUserMid, viewService.speciallist);
 	//专刊详细
 	app.get('/view/service/specialdetail',getUserMid, viewService.specialdetail);
 
-	//用户注册
-	app.get('/view/user/regist',getUserMid, viewUser.regist);
-	//修改资料
-	app.get('/view/user/modify',getUserMid, viewUser.modify);
+	//游戏列表页
+	app.get('/view/game/gamelist',getUserMid, viewGame.gamelist);
+	//游戏详细页
+	app.get('/view/game/gamedetail',getUserMid, viewGame.gamedetail);
+
 	//帖子空间，ajax动态获取我的评论和收藏
-	app.get('/view/user/myzone',getUserMid, viewUser.myzone);
-	//签到页面
-	app.get('/view/user/day',getUserMid, viewUser.day);
-	//积分查询
-	app.get('/view/user/myscore',getUserMid, viewUser.myscore);
+	app.get('/view/user/mycomment',getUserMid, viewUser.mycomment);
+	//帖子空间，ajax动态获取我的评论和收藏
+	app.get('/view/user/myfavor',getUserMid, viewUser.myfavor);
+
+	//我的订单
+	app.get('/view/user/myorder',getUserMid, viewUser.myorder);
+	//拍卖页面
+	app.get('/view/shop/salelist',getUserMid, viewShop.salelist);
 	//推荐用户页面
 	app.get('/view/user/recommend',getUserMid, viewUser.recommend);
 	//排行榜页面
 	app.get('/view/user/scorelist',getUserMid, viewUser.scorelist);
 	//积分规则
 	app.get('/view/user/scorerule',getUserMid, viewUser.scorerule);
-
-	//游戏列表页
-	app.get('/view/game/gamelist',getUserMid, viewGame.gamelist);
-	//游戏详细页
-	app.get('/view/game/gamedetail',getUserMid, viewGame.gamedetail);
-
-
 	//兑换商品页面
 	app.get('/view/shop/shoplist',getUserMid, viewShop.shoplist);
-	//拍卖页面
-	app.get('/view/shop/salelist',getUserMid, viewShop.salelist);
+	//签到页面
+	app.get('/view/user/day',getUserMid, viewUser.day);
+
+
+	//修改资料
+	app.get('/view/user/modify',getUserMid, viewUser.modify);
+	//用户注册
+	app.get('/view/user/regist',getUserMid, viewUser.regist);
+	
+	//积分查询
+	//app.get('/view/user/myscore',getUserMid, viewUser.myscore);
+	
+	
+	
+
+
+
+	
+	
+
+	
+	
+	
 
 	//增加页面接口
 	//1、兑换商品页面
