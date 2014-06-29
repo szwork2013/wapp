@@ -25,8 +25,10 @@
         <td>
 
           <span>名称：<%= obj.name %></span>
-          <span>最高出价：<b><%= obj.highPrice %>积分</b><font>出价人：<%= obj.appUserName %></font></span>
-          <span>起止时间：<%= obj.startTime %> - <%= obj.endTime %></span>
+          <span>最高出价：<b><%= obj.highPrice %>积分</b></span>
+          <span>出价人：<%= obj.appUserName %></span>
+          <span>开始时间：<%= obj.startTime %></span>
+          <span>结束时间：<%= obj.endTime %></span>
           <span>
           <% if(obj.state == 2){ %>
               <a class="redBtn grayBtn" href="javasciprt:;">已经结束</a>
