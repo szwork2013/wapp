@@ -8,9 +8,10 @@ $(function(){
             desc: "我挑战了“搜房豪宅之梦”，获得了" + share_score + "分的好成绩！你也来试试吧!",
             fakeid: "",
             callback: function() {
+                alert(window.articleid)
         		if(window.articleid){
         			$.post('/api/score/forwarding',{'articleid':window.articleid,'wxuserid':window.userid},function(d){
-
+                            alert(JSON.stringify(d.data))
         			},'json')
         		}
         		}
@@ -43,7 +44,7 @@ $(function(){
                         "desc": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！",
                         "title": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！"
                     },
-                    function(res) {});
+                    function(res) { (dataForWeixin.callback)(); });
                 });
                 WeixinJSBridge.on('menu:share:weibo',
                 function(argv) {
@@ -64,7 +65,7 @@ $(function(){
                         "desc": dataForWeixin.desc,
                         "title": dataForWeixin.title
                     },
-                    function(res) {});
+                    function(res) { (dataForWeixin.callback)(); });
                 });
             };
              if (document.addEventListener) {
