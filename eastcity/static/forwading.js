@@ -7,11 +7,11 @@ WeixinJSBridge.call('hideToolbar');
 });
 function attention_wx()
 {
-     alert(11111)
-     alert(window.articleid)
+     //alert(11111)
+    //alert(window.articleid)
      if(window.articleid){
         $.post('/api/score/forwarding',{'articleid':window.articleid,'wxuserid':window.userid},function(d){
-            alert(JSON.stringify(d))
+            //alert(JSON.stringify(d))
         },'json')
     }
 }
