@@ -1,8 +1,13 @@
+var share_score = 2000;
+var _host = "http://" + window.location.host;
+
+
 document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
 WeixinJSBridge.call('hideToolbar');
 });
 function attention_wx()
 {
+     alert(11111)
      alert(window.articleid)
      if(window.articleid){
         $.post('/api/score/forwarding',{'articleid':window.articleid,'wxuserid':window.userid},function(d){
