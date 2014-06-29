@@ -42,7 +42,8 @@ body>header{-webkit-box-shadow:0 2px 2px 0 #BABABA;box-shadow:0 2px 2px 0 #BABAB
 
 .topNews,.photos,.photo,body>footer,.navArea.hide{display:none;clear: both;}
 .topNews nav{overflow:hidden;font-size:20px;color:#515151;background:#F3F3F3;font-weight:bold; text-align: center;}
-.topNews nav li{ display: inline-block; width:19%;text-align:left;height:40px;line-height:40px;text-align: center;}
+.topNews nav li{ font-size: 16px;
+display: inline-block; width:18%;text-align:left;height:40px;line-height:40px;text-align: center;}
 .topNews nav .current{color:#BA2636;}
 
 
@@ -811,6 +812,7 @@ padding-top:5px;
 	
 }
 .confirm_box h2{
+	font-size: 18px;
 	padding:20px 20px 10px;
 }
 .confirm_box h2 span{
@@ -818,6 +820,7 @@ padding-top:5px;
 	padding: 0 5px;
 }
 .confirm_box p {
+	font-size: 14px;
 	padding: 10px 20px;
 }
 .confirm_box p input{
