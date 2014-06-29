@@ -13,6 +13,7 @@ obj.regist = function(req,res){ //用户注册
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId
 
+//console.log(req.wxBinder)
 	res.render('user_regist.ejs',{
 		'userObj':req.wxuobj,
 		'binderObj':req.wxBinder,

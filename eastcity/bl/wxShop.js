@@ -201,6 +201,9 @@ obj.saleprize = function(saleid, userId, score, mobile, cb){
 		var highUserId = saledoc.highUserId; //当前最高出价的用户id
 		var highPrice = saledoc.highPrice;   //当前最高出价
 
+		if(saledoc.status != 1){
+			return cb('拍品已经拍出')
+		}
 		if(s>now){
 			return cb('竞拍还未开始')
 		}
@@ -279,6 +282,9 @@ obj.getMyOrder = function(appId, userId, cb){
 	},0,1000,function(err,list){
 		if(err) return cb(err);
 		if(list.length == 0) return cb(null,list);
+		//console.log(list)
+
+
 		var templist = []
 		var ids_shop = [];
 		var ids_sale = [];
@@ -305,10 +311,11 @@ obj.getMyOrder = function(appId, userId, cb){
 				ids_sale.push(o.scoreCode1)
 			}
 		})
+		//console.log(ids_sale)
 		
 		prizeModel.getByIds(ids_shop,function(err,list_prize){
 			if(err) return cb(err);
-			prizeModel.getByIds(ids_sale,function(err,list_sale){
+			saleModel.getByIds(ids_sale,function(err,list_sale){
 				if(err) return cb(err);
 				var len_prize = list_prize.length;
 				var len_sale = list_sale.length;

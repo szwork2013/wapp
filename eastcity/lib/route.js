@@ -183,12 +183,13 @@ var addroute = function(app){
 
 	//下面是页面控制器
 
-	//活动页面，可能是金数据投票列表页
+	//活动页面，可能是金数据投票列表页,乐活空间活动
 	app.get('/view/service/activelist',getUserMid, viewService.activelist);
+	//乐活空间活动
+	app.get('/view/service/newsall',getUserMid, viewService.newsall);
 	//物语空间公告
 	app.get('/view/service/announce',getUserMid, viewService.announce);   
-	//物语空间活动
-	app.get('/view/service/newsall',getUserMid, viewService.newsall);   
+	   
 
 	//乐活空间公告、物语空间公告、物语空间活动详细页面
 	app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);

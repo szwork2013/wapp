@@ -138,6 +138,9 @@ $(function(){
 
 				$('#commentList').prepend(s)
 				alert('回帖成功')
+				$('#sendCommentText').val('')
+				var c = $('#replyCount').html() - 0
+				$('#replyCount').html(c+1)
 			},'json')
 
 		})

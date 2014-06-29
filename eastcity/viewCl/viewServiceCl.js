@@ -22,7 +22,7 @@ obj.activelist = function(req,res){
 		
 		
 		res.render('active_list.ejs',{
-			'title':'乐活空间公告',
+			'title':'乐活空间活动',
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
@@ -33,7 +33,7 @@ obj.activelist = function(req,res){
 }
 
 
-//物语空间公告
+//乐活空间公告
 obj.newsall = function(req,res){ 
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
@@ -47,7 +47,7 @@ obj.newsall = function(req,res){
 		//return res.json(list)
 
 		res.render('active_list.ejs',{
-			'title':'物语空间公告',
+			'title':'乐活空间公告',
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list

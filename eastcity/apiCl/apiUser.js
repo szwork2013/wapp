@@ -22,7 +22,7 @@ obj.binder = function(req,res){ //用户认证绑定
 
 		appUserName:req.body.appUserName,
 		appUserSex:req.body.appUserSex,
-		appUserBirth:req.body.appUserBirth,
+		appUserBirth:req.body.appUserBirth || '1970-01-01',
 		appUserMobile:req.body.appUserMobile,
 		//选填项
 		
@@ -38,7 +38,7 @@ obj.binder = function(req,res){ //用户认证绑定
 	}
 
 	if(!/^1[0-9][0-9]\d{4,8}$/.test(qobj.appUserMobile)){
-		return res.send({error:1,data:'手机号格式有误'}) 
+		return res.send({error:1,data:'手机号输入有误'}) 
 	}
 	if(qobj.appUserSex != 1 && qobj.appUserSex != 0){
 		return res.send({error:1,data:'性别格式有误'}) 
@@ -92,7 +92,7 @@ obj.modify = function(req,res){ //用户认证绑定
 		//必填项
 		appUserName:req.body.appUserName,
 		appUserSex:req.body.appUserSex,
-		appUserBirth:req.body.appUserBirth,
+		//appUserBirth:req.body.appUserBirth,
 		
 		appUserCommunity:req.body.appUserCommunity,
 		appUserBuilding:req.body.appUserBuilding,
