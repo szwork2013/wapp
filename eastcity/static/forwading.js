@@ -19,7 +19,7 @@ var WeixinApi = (function () {
 });
 // 所有功能必须包含在 WeixinApi.ready 中进行
 WeixinApi.ready(function(Api){
- 
+    alert(111)
     // 微信分享的数据
     var wxData = {
         "imgUrl":'http://www.baidufe.com/fe/blog/static/img/weixin-qrcode-2.jpg',
@@ -32,10 +32,12 @@ WeixinApi.ready(function(Api){
     var wxCallbacks = {
         // 分享操作开始之前
         ready:function () {
+            alert('ready')
             // 你可以在这里对分享的数据进行重组
         },
         // 分享被用户自动取消
         cancel:function (resp) {
+            alert('cancel')
             // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
         },
         // 分享失败了
