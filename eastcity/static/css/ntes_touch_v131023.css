@@ -778,8 +778,9 @@ padding-top:5px;
 	margin: 15px auto;
 }
 .shop_table tbody td{
+	font-size: 14px;
 	padding: 10px 0;
-	
+	vertical-align: top;
 	border-bottom: #ccc 1px dotted;
 }
 .shop_table tbody td span{
@@ -801,13 +802,13 @@ padding-top:5px;
 	left: 0;
 }
 .confirm_box{
-	width: 350px;
+	width: 94%;
 	height: 250px;
 	background: #fff;
 	position: fixed;
 	top: 100px;
-	left: 50%;
-	margin-left: -175px;
+	left:3%;
+	
 }
 .confirm_box h2{
 	padding:20px 20px 10px;

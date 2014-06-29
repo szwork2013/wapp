@@ -485,20 +485,20 @@ margin-left: -110px;
     margin-bottom:2px;
 }
 #sendscore{
-    display: block;
-width: 280px;
-height: 40px;
+display: block;
+width: 200px;
+height: 25px;
 border: #551c11 3px solid;
-line-height: 40px;
+line-height: 25px;
 background-color: #f18b35;
 color: #551c11;
 text-decoration: none;
-margin: 0 auto;
-font-size: 20px;
+margin: -15px auto 0;
+font-size: 14px;
 }
 .result_p_tip{
-padding: 5px 0 20px 0;
-font-size: 20px;
+padding: 5px 0 0 0;
+font-size: 14px;
 width: 400px;
 margin: 0 auto;
 }

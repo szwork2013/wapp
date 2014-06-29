@@ -6,10 +6,13 @@
 left:75px;
 bottom: 112px;
 }
+#modal .footer button{
+	width: 100px;
+}
 #modal .footer .sendscore{
 right: 15px;
 left: initial;
-width: 200px;
+width: 170px;
 bottom: 112px;
 
 }
