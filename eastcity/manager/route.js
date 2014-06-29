@@ -6,7 +6,7 @@ var appCl = require('./cl/appCl.js');
 var bookCl = require('./cl/appBookCl.js');
 var commentCl = require('./cl/appCommentCl.js');
 var gameCl = require('./cl/appGameCl.js');
-var newsCl = require('./cl/NewsCl.js');
+var newsCl = require('./cl/newsCl.js');
 var specialCl = require('./cl/appSpecialCl.js');
 
 var userCl = require('./cl/userCl.js');
