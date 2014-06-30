@@ -1,8 +1,14 @@
+var specialtop ='<li class="newsHead newsHead2" >'+
+				'<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
+				'<div class="specialtop"><img class="specialtop_img" src="{pic}" />'+
+				'<span class="specialtop_title">{title}</span></div></a></li>'
+
 var specialListTemplate = '<li class="newsHead" >'+
                 '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
                 '<img src="{pic}" width="70" height="52"/></a>'+
                 '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
-                '<div><p class="newsTitle">{title}</p>'+
+                '<div><p class="newsTitle newsTitle2">{title}</p>'+
+                '<p class="call_p">{writeTime}</p>'+
                 '</div>'+
                 '</a> </li>'
 
@@ -13,7 +19,7 @@ var specialListTemplate2 = '<li class="newsHead" >'+
                 '<div><p class="newsTitle newsTitle2">{title}</p>'+
                 '<p class="call_p"><a href="javascript:;" name="cancelFavor" spid="{spid}" class="reda">取消收藏</a></p>'+
                 '</div>'+
-                '</a> </li>'
+                '</a></li>'
 
 var specialCommentTemplate = '<div><p class="clearfix">'+
     						 '<span class="fl-l author61">{name}</span>'+
@@ -65,8 +71,21 @@ $(function(){
 						 .replace(/\{uid\}/g,window.userid)
 						 .replace(/\{pic\}/g,o.picture[0])
 						 .replace(/\{title\}/g,o.title)
+						 .replace(/\{writeTime\}/g,o.writeTime)
+
+						 
 					temp += s;
 				})
+
+				if(d.topdoc.length > 0){//如果有置顶的数据
+					var o = d.topdoc[0];
+					tops = specialtop.replace(/\{spid\}/g,o._id)
+								.replace(/\{uid\}/g,window.userid)
+								.replace(/\{pic\}/g,o.picture[0])
+								.replace(/\{title\}/g,o.title)
+					temp = tops + temp
+				}
+
 				$('#specialListContent').append(temp)
 			},'json')
 		})
@@ -201,7 +220,10 @@ $(function(){
 						window.isajax = false;
 						window.current_sp_page++;
 						if(d.error) return alert(d.data);
-						if(d.data.length == 0) return $('#listMore').hide();
+
+						if(d.data.length == 0){
+							$('#listMore').hide();
+						} 
 						var temp = ''
 						d.data.forEach(function(o){
 							var s = specialListTemplate2;
@@ -211,6 +233,7 @@ $(function(){
 								 .replace(/\{title\}/g,o.title)
 							temp += s;
 						})
+
 						$('#my_favor_list').append(temp)
 					},'json')
 				}).trigger('click')

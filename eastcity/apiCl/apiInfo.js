@@ -30,11 +30,21 @@ obj.speciallist = function(req,res){
 	var type = req.body.type || 1;
 	var page = req.body.page || 1;
 
+
 	infoBl.getSpecialByTypePage(appId,type,page,null,function(err,doc){
 		if(err){
 	        return res.send({error:1,data:err}) 
      	}
-     	res.send({error:0,data:doc});
+     	if(page == 1){
+     		infoBl.getSpecialTop(appId,type,function(err,topdoc){
+     			if(err) return res.send({error:1,data:err});
+
+     			res.send({error:0, data:doc, topdoc:topdoc});
+     		})
+     	}
+     	else{
+     		res.send({error:0,data:doc});
+     	}
 	})
 
 }

@@ -272,6 +272,12 @@ window.exchange_status = [
                         { text: '已发货', value: '1' }
                       ]
 
+
+window.special_top = [
+                        { text: "不置顶", value: '' },
+                        { text: '置顶', value: '1' }
+                      ]
+
 window.dropdown_init = function($obj, $array,onchange,init){
       var $obj = $obj || $("#isShow_inp")
       var $array = $array || window.is_show_array

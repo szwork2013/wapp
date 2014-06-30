@@ -150,7 +150,6 @@ obj.speciallist = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 
-
 	res.render('special_list.ejs',{
 		'userObj':req.wxuobj,
 		'binderObj':req.wxBinder

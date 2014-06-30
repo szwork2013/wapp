@@ -44,6 +44,7 @@ obj.getSpecialByTypePage = function(appId,type,page,size,cb){ //某一类型专�
 	specialModel.findAll({
 		appId:appId,
 		type:type,
+		code1:'',
 		isShow:1
 	},skip, size,function(err,doc){
 		if(err) return cb(err)
@@ -84,7 +85,7 @@ obj.getSpecialById = function(id,cb){ //某一类型专刊的详细内容
 		tempary = {
 			_id:obj._id,
 			title:obj.title,
-			//content:obj.content,
+			content:obj.content,
 			picture:obj.picture.split(',') || '',
 			type:obj.type,
 			code1:obj.code1,
@@ -163,7 +164,7 @@ obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 				type:obj.type,
 				code1:obj.code1,
 				code2:obj.code2,
-				writeTime:moment(obj.writeTime).format('YYYY-MM-DD')
+				writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
 			})
 		})
 		return cb(err,tempary[0])
@@ -298,6 +299,33 @@ obj.removeCommentBySpid = function(appId, userId, spid, content, type, cb){
 	})
 }
 
+obj.getSpecialTop = function(appId, type, cb){
+	specialModel.findAll({
+		appId:appId,
+		type:type,
+		code1:'1',
+	},0,5,function(err,doc){
+		if(err || doc.length == 0){
+			return cb(err,doc)
+		}
+
+
+		var tempary = []
+
+		doc.forEach(function(obj){
+			tempary.push({
+				_id:obj._id,
+				title:obj.title,
+				//content:obj.content,
+				picture:obj.picture.split(',') || '',
+				writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+			})
+		})
+
+		return cb(err,tempary)
+
+	})
+}
 
 
 module.exports = obj;
