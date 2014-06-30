@@ -303,6 +303,7 @@ window.lastData = e.data
 
 $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
                 var d3= []
+                var lastDataId = window.lastData._id;
 
                 djson.forEach(function(v){
                     d3.push({
@@ -463,12 +464,15 @@ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
                             }
                         }, 
                     edit:function(e2){
+                            console.log(e2)
+                            console.log($(this))
+
                             $('.secLevelHide').hide();
 
                             $('#appId_inp').val(window.appIdv).change()
                             $('#menuType_inp').val(2).change();
-    
-                            $('#parentId_inp').val(window.lastData._id).change();
+                            //alert(lastDataId)
+                            $('#parentId_inp').val(lastDataId).change();
 
                             window.dropdown_init($('#replyId_inp'), d3);
 
