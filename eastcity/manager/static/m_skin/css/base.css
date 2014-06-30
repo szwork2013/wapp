@@ -135,3 +135,17 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444',end
 	padding-bottom: 5px;
 }
 
+
+.k-addfolder{
+	display: none !important;
+}
+
+.k-imagebrowser .k-toolbar-wrap button{
+	display: none;
+}
+.k-imagebrowser  .k-breadcrumbs, .k-imagebrowser  .k-search-wrap{
+display: none;
+}
+.k-tile{
+	width: 215px !important;
+}

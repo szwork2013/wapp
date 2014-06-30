@@ -19,8 +19,7 @@ obj.activelist = function(req,res){
 			logger.error('obj.activelist error, appId %s, err %s', appId, err);
 			return res.send(500,'乐活空间公告加载失败')
 		}
-		
-		
+				
 		res.render('active_list.ejs',{
 			'title':'乐活空间活动',
 			'userObj':req.wxuobj,
@@ -33,11 +32,11 @@ obj.activelist = function(req,res){
 }
 
 
-//乐活空间公告
+//乐活空间公告，不用登录
 obj.newsall = function(req,res){ 
-	var userId = req.wxuobj._id;
+	//var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
-	var openId = req.wxuobj.openId;
+	//var openId = req.wxuobj.openId;
 
 	infoBl.getNewsByTypePage(appId, 2, 1, 100, function(err,list){
 		if(err){
@@ -48,8 +47,8 @@ obj.newsall = function(req,res){
 
 		res.render('active_list.ejs',{
 			'title':'乐活空间公告',
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
+			'userObj':{'_id':'0'},
+			'binderObj':{},
 			'list':list
 		})
 		return;
@@ -60,9 +59,9 @@ obj.newsall = function(req,res){
 
 //物语空间活动
 obj.announce = function(req,res){ 
-	var userId = req.wxuobj._id;
+	//var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
-	var openId = req.wxuobj.openId;
+	//var openId = req.wxuobj.openId;
 
 	infoBl.getNewsByTypePage(appId, 3, 1, 100, function(err,list){
 		if(err){
@@ -73,8 +72,8 @@ obj.announce = function(req,res){
 
 		res.render('active_list.ejs',{
 			'title':'物语空间公告',
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
+			'userObj':{'_id':'0'},
+			'binderObj':{},
 			'list':list
 		})
 		return;
@@ -117,11 +116,46 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 }
 
 
-//一键呼叫，预约服务
-obj.call = function(req,res){ 
-	var userId = req.wxuobj._id;
+ //共用新闻详细页,不用登录
+obj.newsDetail2 = function(req,res){ //共用新闻详细页
+	//var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
-	var openId = req.wxuobj.openId;
+	//var openId = req.wxuobj.openId;
+	var newsId = req.query.newsId;
+
+	if(!newsId || newsId.length != 24){
+		return res.send(500,'新闻id有误')
+	}
+
+	infoBl.getNewsById(newsId, '0', function(err,doc){
+		if(err){
+			logger.error('obj.newsDetail error, newsId %s, err %s', newsId, err);
+			return res.send(500,'详细页面加载失败')
+		}
+		if(doc.type == 1 && doc.url != ''){
+			res.redirect(doc.url)
+			return;
+		}
+
+		//return res.json(doc)
+
+		res.render('news_detail.ejs',{
+			'userObj':{'_id':'0'},
+			'binderObj':{},
+			'doc':doc
+		})
+		return;
+	})
+
+}
+
+
+
+//一键呼叫，预约服务，不用登录
+obj.call = function(req,res){ 
+	//var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	//var openId = req.wxuobj.openId;
 
 	infoBl.getBookList(appId, function(err,list){
 		if(err){
@@ -129,11 +163,9 @@ obj.call = function(req,res){
 			return res.send(500,'一键呼叫加载失败');
 		}
 
-		//return res.json(list)
-
 		res.render('service_call.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
+			'userObj':{},
+			'binderObj':{},
 			'list':list
 		})
 		return;

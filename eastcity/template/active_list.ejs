@@ -11,10 +11,16 @@
             if(i%10==0){
                 j++;
             }
+            if(obj.type == 1){
+              var url = '/view/service/newsdetail?newsId='+obj._id+'&wxuserid='+userObj._id;
+            }
+            else{
+               var url = '/view/service/newsdetail2?newsId='+obj._id;
+            }
           %>
             <li name="newsBlock_<%= j %>" class="newsHead" style="display:none;">
-                <a target="_blank" href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>"><img src="<%= obj.picture[0] %>" width="70" height="52"/></a>
-                <a target="_blank" href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>">
+                <a target="_blank" href="<%= url %>"><img src="<%= obj.picture[0] %>" width="70" height="52"/></a>
+                <a target="_blank" href="<%= url %>">
                 <div>
                     <p class="newsTitle newsTitle2"><%= obj.title %></p>
                     <p class="call_p"><%= obj.writeTime %></p>

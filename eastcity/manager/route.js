@@ -1,4 +1,5 @@
 var uploadCl = require('./cl/uploadCl.js');
+var thumbCl = require('./cl/thumbCl.js');
 
 var loginCl = require('./cl/loginCl.js');
 var adminCl = require('./cl/adminCl.js');
@@ -44,6 +45,13 @@ var addroute = function(app){
 	//上传
 	app.post('/manger/upload/save', checkLogin, uploadCl.save)
 	app.post('/manger/upload/remove', checkLogin, uploadCl.remove)
+
+	//编辑器图片上传插入
+	app.post('/manger/thumb/read', checkLogin, thumbCl.read)
+	app.post('/manger/thumb/destroy', checkLogin, thumbCl.destroy)
+	app.post('/manger/thumb/create', checkLogin, thumbCl.create)
+	app.post('/manger/thumb/upload', checkLogin, thumbCl.upload)
+
 
 	//登录
 	app.get('/', loginCl.Login)

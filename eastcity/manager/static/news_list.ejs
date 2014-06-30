@@ -254,10 +254,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                         $('#writeTime').kendoDateTimePicker();
                         
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
-                         $("#intro").kendoEditor({
-                                tools: window.editor_tools,
-                                messages: window.editor_messages
-                         });  
+                         $("#intro").kendoEditor(window.kendo_edit_option);  
                         window.dropdown_init($('#appId_inp'),d)
                         window.dropdown_init()  
                         window.dropdown_init($('#newsType'),window.news_type2)                       

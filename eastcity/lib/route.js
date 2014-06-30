@@ -119,6 +119,17 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 	}
 }
 
+var checkIsReg = function(req,res,next){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId;
+	if(req.wxBinder.appUserType == 0){
+		return res.json({'error':1,'data':'非认证会员不能操作'})
+	}
+	next();
+}
+
+
 var addroute = function(app){
 	wxRoute(app); //定义微信的路由
 	
@@ -171,9 +182,9 @@ var addroute = function(app){
 	//推荐用户接口
 	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
 	//兑换商品
-	app.post('/api/shop/exchangeprize',getUserMid, apiShop.exchangePrize);
+	app.post('/api/shop/exchangeprize',getUserMid, checkIsReg, apiShop.exchangePrize);
 	//兑换商品
-	app.post('/api/shop/saleprize',getUserMid, apiShop.saleprize);
+	app.post('/api/shop/saleprize',getUserMid, checkIsReg, apiShop.saleprize);
 
 	//增加api接口
 	//1、兑换商品接口
@@ -183,19 +194,22 @@ var addroute = function(app){
 
 	//下面是页面控制器
 
-	//活动页面，可能是金数据投票列表页,乐活空间活动
-	app.get('/view/service/activelist',getUserMid, viewService.activelist);
-	//乐活空间活动
-	app.get('/view/service/newsall',getUserMid, viewService.newsall);
-	//物语空间公告
-	app.get('/view/service/announce',getUserMid, viewService.announce);   
-	   
+
+	//乐活空间活动,不用登录
+	app.get('/view/service/newsall', viewService.newsall);
+	//物语空间公告,不用登录
+	app.get('/view/service/announce', viewService.announce);   
+	//新闻详情页面,不用登录
+	app.get('/view/service/newsdetail2', viewService.newsDetail2);
+	//一键呼叫，预约服务,不用登录
+	app.get('/view/service/call', viewService.call);
 
 	//乐活空间公告、物语空间公告、物语空间活动详细页面
 	app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);
 
-	//一键呼叫，预约服务
-	app.get('/view/service/call',getUserMid, viewService.call);
+	//活动页面，可能是金数据投票列表页,乐活空间活动
+	app.get('/view/service/activelist',getUserMid, viewService.activelist);
+	
 
 	//专刊列表,根据type显示不同的专刊内容
 	app.get('/view/service/speciallist',getUserMid, viewService.speciallist);

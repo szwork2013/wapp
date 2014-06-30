@@ -8,6 +8,12 @@
     <div class="head clearfix">
         <h1 class="h2_title"></h1>
     </div>
+
+<% if(binderObj.appUserType == 0){ %>
+     <div class="daySignBox clearfix">       
+          <p>未认证会员不能签到，前往<a href="/view/user/regist?wxuserid=<%= userObj._id %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
+    </div>   
+<%} else{ %>
     <div class="daySignBox clearfix">
         <% if(todaySign){%>
           <p>您今天 <%= date %> 已经签过到了</p>
@@ -16,6 +22,8 @@
         <%}%>
           <p>立即查看<a href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank" class="reda">我的积分</a></p>
     </div>
+<% } %>
+
 </article>
 <script type="text/javascript">
   $(function(){

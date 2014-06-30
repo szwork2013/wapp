@@ -176,11 +176,11 @@
   var gameid = '<%= doc._id %>';
   var userid = '<%= userObj._id %>';
   var resultToScore = [
-      {min:0,max:100,score:10},
-      {min:100,max:500,score:100},
-      {min:500,max:1000,score:200},
-      {min:999,max:99999999999,score:500}
-  ]
+      {min:0,max:100,score:1},
+      {min:100,max:500,score:2},
+      {min:500,max:1000,score:3},
+      {min:999,max:99999999999,score:5}
+]
   $(function(){
       $('#sendscore').click(function(){
           var myscore = $('#kickCount').html()

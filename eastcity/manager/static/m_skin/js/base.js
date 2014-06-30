@@ -278,6 +278,35 @@ window.special_top = [
                         { text: '置顶', value: '1' }
                       ]
 
+
+window.kendo_edit_option = {
+    tools: window.editor_tools,
+    messages: window.editor_messages,
+    imageBrowser: {
+           messages: {
+            dropFilesHere: "将图片拖进来"
+           },
+           transport: {
+                read: {
+                     url:"/manger/thumb/read",
+                     type: "POST"
+                },
+                destroy: {
+                    url: "/manger/thumb/destroy",
+                    type: "POST"
+                },
+                create: {
+                    url: "/manger/thumb/create",
+                    type: "POST"
+                },
+                thumbnailUrl: "/upload/",
+                uploadUrl: "/manger/thumb/upload",
+                imageUrl: "/upload/{0}"
+           }
+        }
+}
+
+
 window.dropdown_init = function($obj, $array,onchange,init){
       var $obj = $obj || $("#isShow_inp")
       var $array = $array || window.is_show_array

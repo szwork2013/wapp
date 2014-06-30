@@ -212,10 +212,10 @@ obj.getCommentByspecialid = function(spid,page,pagesize,cb){ //获取用户的�
 			}
 			
 		})
-		console.log(uids)
+		//console.log(uids)
 		userModel.getUserByIds(uids,function(err,list){
 			if(err) return cb(err)
-			console.log(list)
+			//console.log(list)
 			temparray.forEach(function(o){
 
 				var len = list.length;

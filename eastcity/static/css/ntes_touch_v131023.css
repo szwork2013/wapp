@@ -659,10 +659,7 @@ div.logoBar .homeback{-moz-box-sizing: border-box;background: url("http://img1.c
 	height: 25px;
 padding-top:5px;
 }
-.sp_favor_box{
-	text-align: right;
-	padding:10px 20px;
-}
+
 .redBtn{
 	display: inline-block;
 	padding: 5px 10px;
@@ -768,7 +765,7 @@ padding-top:5px;
 }
 .score_rule_p{
 	padding: 20px;
-	line-height: 25px;
+	line-height: 20px;
 }
 .score_rule_p span{
 	display: block;
@@ -922,4 +919,26 @@ p img{
 }
 #sendCommentText{
 	width: 60%;
+}
+.specialH2{
+	font-size: 14px;
+	font-weight: normal;
+	height: 25px;
+	line-height: 25px;
+	position: relative;
+}
+.sp_favor_box{
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: right;
+	display: block;
+	line-height: 14px;
+}
+.sp_favor_box .redBtn2{
+	line-height: 14px;
+	padding-left: 2px 5px;
+	margin-right: 10px;
+	font-size: 14px;
+	color: #fff;
 }

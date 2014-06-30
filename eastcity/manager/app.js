@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var ifile = require('ifile');
 var fs = require('fs');
 var path = require('path');
@@ -16,8 +17,39 @@ app.set('view engine', 'ejs');
 		['/upload',path.join(__dirname,'..')]
 	]
 ));*/
+
+var getThumbMid = function(req,res,next){
+	var pathf = req.query.path;
+	if(pathf){
+		//console.log(pathf)
+		var thumbPath =  path.join(__dirname,'..','upload',pathf);
+		//console.log(thumbPath)
+		fs.exists(thumbPath,function(exists){
+			//console.log(exists)
+			if(!exists) return res.send(404);
+			fs.stat(thumbPath, function(err,stat){
+				if(err) return res.send(404)
+				if(stat.isFile()){
+					return fs.createReadStream(thumbPath).pipe(res)
+				}
+				else{
+					return res.send('ok')
+				}
+			})
+						
+			return;
+		})		
+		 
+	}else{
+		next();
+	}
+
+
+}
+
 app.use('/m_skin', express.static(path.join(__dirname,'static','m_skin')));
-app.use('/upload', express.static(path.join(__dirname,'..','upload')));
+app.use('/upload', getThumbMid)
+app.use('/upload',express.static(path.join(__dirname,'..','upload')));
 
 app.use(express.bodyParser(
 	{ keepExtensions: true, uploadDir: path.join(__dirname,'..','/upload/')}
