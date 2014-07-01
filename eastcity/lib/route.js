@@ -73,6 +73,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 		delete uobj.bind
 		req.wxBinder = bindObj;
 		req.wxuobj = {
+			  currentSite:config.currentSite,
 			  _id:uobj.uobj._id,
 			  appId:uobj.uobj.appId,                 //appId表示用户第一次绑定的app应用id
 			  appUserName:uobj.uobj.appUserName || '未知用户',       //会员姓名
@@ -105,6 +106,23 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 		})
 	}
 	else if(userid){//如果没有传openid，则使用userid
+		
+		if(userid=='0'){ //如果是分享来的,则使用用户id为0的客户id
+			req.wxBinder = {
+				appUserType:0
+			};
+			req.wxuobj = {
+				  currentSite:config.currentSite,
+				  _id:0,
+				  appId:global.wxAppObj._id,                 //appId表示用户第一次绑定的app应用id
+				  appUserName:'未知用户',       //会员姓名
+				  appUserMobile:0,  //会员手机号
+				  appUserSex:0, //0表示女性，1表示男性				  
+				  appUserScore:0,
+			};
+			next();
+			return;
+		}
 		userBl.getUserByUserId(userid,function(err,uobj){
 			if(err){
 				logger.error('getUserMid userBl.getUserByUserId error,openid is %s, error is %s', openid, err)

@@ -674,10 +674,7 @@ padding-top:5px;
 	background-color: #609700;
 }
 .commentList{margin-bottom: 20px;}
-#sendCommentText{
-	padding: 5px;
-	margin: 0 0 10px 20px;
-}
+
 #sendComment{
 	padding:5px;
 	margin: 0 0 10px 20px;
@@ -917,8 +914,10 @@ padding-top:5px;
 p img{
 	max-width: 100%;
 }
-#sendCommentText{
-	width: 60%;
+#sendCommentText,#sendComment{
+	width: 90%;
+	margin: 10px auto;
+	display: block;
 }
 .specialH2{
 	font-size: 14px;
@@ -941,4 +940,13 @@ p img{
 	margin-right: 10px;
 	font-size: 14px;
 	color: #fff;
+}
+.sendCommentText_box{
+	width: 100%;
+	margin:0 auto;
+	padding: 10px;
+}
+
+.topNews2 nav li{
+	width: 23%;
 }

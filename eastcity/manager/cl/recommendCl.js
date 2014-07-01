@@ -70,6 +70,8 @@ obj.destroy = function(req, res){
   })
 }
 
+
+var recommendScore = 20;
 obj.check = function(req,res){//通过他人推荐注册审核
   var recommendid = req.body.recommendid;
   //if(!mobile) return res.json({'error':1,'data':'被推荐人手机号无效'})
@@ -95,7 +97,7 @@ obj.check = function(req,res){//通过他人推荐注册审核
               userdl.createOneOrUpdate({ //判断成功，更新推荐人积分
                   _id:recdoc.userId
                 },{
-                  $inc:{appUserScore:10} //推荐他人注册成功，+10分
+                  $inc:{appUserScore:recommendScore} //推荐他人注册成功，+20分
 
                 },function(err,udoc){ //开始写入积分获取流水
                    if(err) return res.json({'error':1,'data':err});
@@ -104,7 +106,7 @@ obj.check = function(req,res){//通过他人推荐注册审核
                       appId:recdoc.appId,
                       userId:recdoc.userId,
                       mobile:udoc.appUserMobile,
-                      scoreDetail:10,
+                      scoreDetail:recommendScore,
                       scoreType:1,
                       scoreWay:'recommend',
                       scoreCode1:recdoc._id

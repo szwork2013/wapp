@@ -10,6 +10,7 @@
         <h2 class="specialH2">
             <span class="source"><span>时间：</span> <span class="time"><%= doc.writeTime %></span>
 
+<% if(userObj._id != 0){ %>
              <div class="sp_favor_box">
                     <% if(favorCount>0){ %>
                         <a href="javascript:;" class="redBtn redBtn2" spid="<%= doc._id %>">已收藏</a>
@@ -18,7 +19,7 @@
                     <% } %>
                     <a href="#sendCommentText" class="redBtn redBtn2">评论</a>
             </div>
-
+<%}%>
 
         </h2>
     </div>
@@ -46,21 +47,28 @@
 <div id="listMore" class="pageBtn" spid="<%= doc._id %>">点击查看更多</div>
 
 
-<% if(binderObj.appUserType == 0){ %>
-     <div id="sendCommentText">       
-          <p>未认证会员不能评论，前往<a href="/view/user/regist?wxuserid=<%= userObj._id %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
-    </div>   
-<%} else{ %>
-    <div>
-    <textarea width="80%" rows="5" cols="38" id="sendCommentText" placeholder="请发表您的看法"></textarea>
-    <br><button id="sendComment">发布</button>
-    </div>
-<%}%>
 
+<% if(userObj._id != 0) {%>
+    <% if(binderObj.appUserType == 0){ %>
+         <div id="sendCommentText">       
+              <p>未认证会员不能评论，前往<a href="/view/user/regist?wxuserid=<%= userObj._id %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
+        </div>   
+    <%} else{ %>
+        <div class="sendCommentText_box">
+        <textarea rows="5" id="sendCommentText" placeholder="请发表您的看法"></textarea>
+        <button id="sendComment">发布</button>
+        </div>
+    <%}%>
+<%}%>
 </article>
 
 <script type="text/javascript" >
     window.articleid = '<%= doc._id %>'
+
+    window.forwardingImg = '<%=userObj.currentSite %><%= doc.picture[0] %>'
+    window.forwardingTitle = '<%= doc.title %>';
+    window.forwardingUrl = '<%=userObj.currentSite %>/view/service/specialdetail?spid=<%= doc._id %>&wxuserid=0'
+
 </script>
 <script type="text/javascript" src="/static/forwading.js"></script>
 <% include inc/foot %>

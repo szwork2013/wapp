@@ -1,8 +1,13 @@
 <% include inc/head %>
+<link rel="stylesheet" type="text/css" href="/static/css/card.css" >
 <%
   var title = '每日签到'
 %>
 <% include inc/top %>
+
+<div class="qiandaobanner">     
+    <img src="/static/images/qiandao.jpg">     
+</div>
 
 <article style="display: block;" class="articleList">
     <div class="head clearfix">
@@ -14,15 +19,43 @@
           <p>未认证会员不能签到，前往<a href="/view/user/regist?wxuserid=<%= userObj._id %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
     </div>   
 <%} else{ %>
-    <div class="daySignBox clearfix">
+
+        <div class="cardexplain">
+
         <% if(todaySign){%>
-          <p>您今天 <%= date %> 已经签过到了</p>
+          <a class="receive" id="qiandao">
+                <span class="red">今天您已经签到了</span>
+            </a>
         <%}else{%>
-          <p>您今天还没签到，<a href="javascript:;" id="day_sign" class="redBtn">立即签到 <%= date %></a></p>
+            <a class="receive" id="day_sign">
+                <span class="red" >点此签到 <%= date %></span>
+            </a>
         <%}%>
-          <p>立即查看<a href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank" class="reda">我的积分</a></p>
-    </div>
-<% } %>
+            <div class="jifen-box" style="margin-top: 13px;">
+                <ul class="zongjifen">
+                   
+                    <li style="width: 100%">
+                        <div class="fengexian">
+                            <p>剩余积分</p>
+                            <span id="totalaward"><%= userObj.appUserScore %> 分</span>
+                        </div>
+                    </li>
+                   
+                </ul>
+                <div class="clr"></div>
+            </div>
+
+            <div class="jifen-box header_highlight">
+                <div class="tab month_sel">
+                    <span class="title" href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank">查看签到及积分详情
+                    </span>
+          <font color="red">每人每天签到一次，多签无效</font>
+                </div>
+              
+            </div>
+
+        </div>
+<%} %>
 
 </article>
 <script type="text/javascript">

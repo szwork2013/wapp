@@ -21,6 +21,7 @@ obj.read = function(req, res){
 		 	return -1;
 		 }
 		});
+		//console.log(list)
 		var templist = [];
 		list.forEach(function(o){
 			if(fs.statSync(path.join(uploadPath, o)).isFile()){

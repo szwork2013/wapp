@@ -9,7 +9,7 @@ function attention_wx()
 {
      //alert(11111)
     //alert(window.articleid)
-     if(window.articleid){
+     if(window.articleid && window.userid && window.userid != '0'){
         $.post('/api/score/forwarding',{'articleid':window.articleid,'wxuserid':window.userid},function(d){
             //alert(JSON.stringify(d))
         },'json')
@@ -24,11 +24,11 @@ function is_zero()
 }
 var dataForWeixin = {
     appId: "",
-    MsgImg: "http://imgdn5.soufunimg.com/2014/04/07/gz/gebz/ab601d81e4724a4a8bd5ac01ee66ee62/mlylogo.jpg",
-    TLImg: "http://imgdn5.soufunimg.com/2014/04/07/gz/gebz/ab601d81e4724a4a8bd5ac01ee66ee62/mlylogo.jpg",
-    url:  "http://imgdn5.soufunimg.com/2014/04/07/gz/gebz/ab601d81e4724a4a8bd5ac01ee66ee62/",
-    title: "我挑战了“搜房豪宅之梦”快来一起挑战吧！",
-    desc: "我挑战了“搜房豪宅之梦”，获得了" + share_score + "分的好成绩！你也来试试吧!",
+    MsgImg: window.forwardingImg,
+    TLImg: window.forwardingImg,
+    url:  window.forwardingUrl,
+    title: window.forwardingTitle,
+    desc: window.forwardingTitle+"获得了5积分！你也来试试吧!",
     fakeid: "",
     callback: function() {
         setTimeout(function(){
