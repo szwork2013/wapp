@@ -22,6 +22,11 @@
 </article>
 <script type="text/javascript" >
     window.articleid = '<%= doc._id %>'
+
+    window.forwardingImg = '<%=userObj.currentSite %><%= doc.picture[0] %>'
+    window.forwardingTitle = '<%= doc.title %>';
+    window.forwardingUrl = '<%=userObj.currentSite %>'+location.pathname+'?spid=<%= doc._id %>&wxuserid=0'
+
 </script>
-<script type="text/javascript" src="/static/forwading.js"></script>
+<script type="text/javascript" src="/static/forwading.js?v=0701"></script>
 <% include inc/foot %>
