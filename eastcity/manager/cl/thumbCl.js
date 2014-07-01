@@ -11,7 +11,16 @@ obj.read = function(req, res){
 		if(err) {
 			return res.send(err,500);
 		}
-		list = list.sort(function(){ return 1});
+		list = list.sort(function(a,b){
+		 try{
+		 	var an = a.split('-')[0];
+		 	var bn = a.split('-')[0];
+		 	return bn - an
+		 }
+		 catch(e){
+		 	return -1;
+		 }
+		});
 		var templist = [];
 		list.forEach(function(o){
 			if(fs.statSync(path.join(uploadPath, o)).isFile()){
