@@ -14,7 +14,7 @@ obj.read = function(req, res){
 		list = list.sort(function(a,b){
 		 try{
 		 	var an = a.split('-')[0] - 0;
-		 	var bn = a.split('-')[0] - 0;
+		 	var bn = b.split('-')[0] - 0;
 		 	return bn - an
 		 }
 		 catch(e){
