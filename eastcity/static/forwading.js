@@ -28,7 +28,7 @@ var dataForWeixin = {
     TLImg: window.forwardingImg,
     url:  window.forwardingUrl,
     title: window.forwardingTitle,
-    desc: window.forwardingTitle+"关注上院生活，转发获得5积分！你也来试试吧!",
+    desc: window.forwardingTitle+"，关注\"上院生活\"，赢积分，赚礼品！你也来试试吧!",
     fakeid: "",
     callback: function() {
         setTimeout(function(){
