@@ -149,3 +149,6 @@ display: none;
 .k-tile{
 	width: 215px !important;
 }
+.k-imagebrowser .k-tiles-arrange{
+	display: none;
+}
