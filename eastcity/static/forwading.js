@@ -28,7 +28,7 @@ var dataForWeixin = {
     TLImg: window.forwardingImg,
     url:  window.forwardingUrl,
     title: window.forwardingTitle,
-    desc: window.forwardingTitle+"获得了5积分！你也来试试吧!",
+    desc: window.forwardingTitle+"关注上院生活，转发获得5积分！你也来试试吧!",
     fakeid: "",
     callback: function() {
         setTimeout(function(){
@@ -45,8 +45,8 @@ var dataForWeixin = {
                 "img_width": "120",
                 "img_height": "120",
                 "link": dataForWeixin.url,
-                "desc": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！",
-                "title": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧!"
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
             },
             function(res) { (dataForWeixin.callback)();
             });
@@ -59,8 +59,8 @@ var dataForWeixin = {
                 "img_width": "120",
                 "img_height": "120",
                 "link": dataForWeixin.url,
-                "desc": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！",
-                "title": "我挑战了“搜房豪宅之梦”获得了" + share_score + "分的好成绩！你也来试试吧！"
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
             },
             function(res) {});
         });
