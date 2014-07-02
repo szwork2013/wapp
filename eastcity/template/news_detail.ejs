@@ -29,7 +29,7 @@
         </div> 
     <% }else{ %>
             <% if(joinInfo) {%>
-                 <p >您已经报名此活动了，活动累计报名<b><%= activeCount %></b>人</p>
+                 <p>您已经报名此活动了<br/>活动已报名<b><%= activeCount %></b>人</p>
                  <p>报名人：<b><%= joinInfo.username %></b></p>
                  <p>手机号：<b><%= joinInfo.mobile %></b></p>
             <% }else{ %>
@@ -59,10 +59,12 @@
                           <a href="javascript:;" id="submitBtn" class="redBtn">提交</a>          
                       </dd>
                     <dl>
-                        <dl class="input_common_dl clear">
+                       
+
+                      <dl class="input_common_dl clear">
                       <dt></dt>
                       <dd>
-                         本活动累计报名<b><%= activeCount %></b>人
+                         已经报名<b><%= activeCount %></b>人
                       </dd>
                     <dl>
 
