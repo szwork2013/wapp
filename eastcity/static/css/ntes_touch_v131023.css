@@ -704,14 +704,14 @@ padding-top:5px;
 }
 .input_common_dl dt {
 	float: left;
-	width: 30%;
+	width: 40%;
 	text-align: right;
 	height: 25px;
 	line-height: 25px;
 }
 .input_common_dl dd{
 	float: left;
-	width: 70%;
+	width: 60%;
 
 }
 .input_common_dl dd input{
@@ -843,7 +843,7 @@ padding-top:5px;
 	color:#c00;
 }
 .daySignBox{
-	padding: 0 30px 30px 30px;
+	padding: 0 20px 30px;
 	line-height: 25px
 }
 .daySignBox p {
