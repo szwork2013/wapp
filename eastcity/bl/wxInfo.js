@@ -10,6 +10,8 @@ var bookModel = require('../dl/appBookModel.js');
 var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
 //评论模型
 var userModel = require('../dl/userModel.js'); 
+//活动日志模型
+var activeLogModel = require('../dl/activeLogModel.js'); 
 
 var utils = require('../lib/utils.js');
 var obj = {}
@@ -325,6 +327,44 @@ obj.getSpecialTop = function(appId, type, cb){
 		return cb(err,tempary)
 
 	})
+}
+
+
+
+//活动的bl
+obj.saveActive = function(obj,cb){
+	activeLogModel.findOneByObj({
+		userid:obj.userid,
+		appId:obj.appId,
+		activeId:obj.activeId,
+	},function(err,doc){
+		if(err) return cb(err);
+		if(doc) return cb('你已经报名了');
+		activeLogModel.insertOneByObj(obj,cb)
+	})
+}
+
+
+obj.findMeActiveByActiveId = function(appId,userid,activeId,cb){
+	activeLogModel.findOneByObj({
+		userid:userid,
+		appId:appId,
+		activeId:activeId,
+	},cb)
+}
+
+obj.findMyActive = function(appId,userid,activeId,cb){
+	activeLogModel.findAll({
+		userid:userid,
+		appId:appId,
+	},0,1000,cb)
+}
+
+obj.countActiveByActiveId = function(appId,activeId,cb){
+	activeLogModel.countAll({
+		activeId:activeId,
+		appId:appId,
+	},cb)
 }
 
 

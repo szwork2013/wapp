@@ -25,7 +25,8 @@
                 <label for="userId" >用户Id</label>
             </div>
             <div data-container-for="userId" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+               <input type="text" class="k-input k-textbox w-50-inp" id="user_name_inp" name="userId" data-bind="value:userId" required="required">
+               <div id="user_name"></div>
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -39,7 +40,7 @@
                 <label for="scoreGuid" >流水号</label>
             </div>
             <div data-container-for="scoreGuid" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="scoreGuid" data-bind="value:scoreGuid" required="required">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreGuid" id="guid_inp" data-bind="value:scoreGuid" required="required">
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -55,8 +56,6 @@
             <div data-container-for="scoreDetail" class="k-edit-field w-800-r">
                <input type="number" class="k-input k-textbox w-50-inp" name="scoreDetail" data-bind="value:scoreDetail" required="required">
             </div>
-
-            
 
             <div class="k-edit-label  w-800-l">
                 <label for="scoreWay" >获取/消费方式</label>
@@ -100,7 +99,46 @@
             <div data-container-for="scoreCode5" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="scoreCode5" data-bind="value:scoreCode5" >
             </div>
+<div class="clear" style="clear:both">
+<pre>
 
+1、当type为 regist 时，表示用户注册获得积分
+pass
+
+2、当type为 daysign 时，签到获得积分
+scoreCode1 签到当天的0点时间戳
+
+3、当type为 active 时，表示金数据投票或者其他活动返回积分
+scoreCode1 活动的id
+scoreCode2 如果是金数据返回，这里记录金数据的id
+scoreCode3 如果是金数据返回，结果字符串
+
+4、当type为 forwarding 时，表示转发获得积分
+scoreCode1 为转发的条目id
+
+5、当type为 game 时，表示玩游戏成功获得积分
+scoreCode1 为游戏的id
+
+5.1、当type为 recommend 时，表示推荐注册用户成功获得积分
+scoreCode1 为推荐记录的id
+
+6、购房抵房款 buyhouse 消费
+scoreCode1 记录购买楼盘号
+scoreCode2 记录购买房号
+
+7、兑换下线商品 exchange 消费
+scoreCode1 记录购买商品名称或Id
+
+8、消费开发商的服务 service 消费
+scoreCode1 记录购买服务名称或Id
+
+9、拍卖竞拍品消费 sale
+scoreCode1 记录竞拍品的id
+
+10、type为 manual 表示手工
+scoreCode1 为手工添加记录备注
+</pre>
+</div>
         </script>
 
 
@@ -288,7 +326,26 @@
                             $('#writeTime').kendoDateTimePicker();
                             window.dropdown_init($('#appId_inp'),d) 
                             window.dropdown_init($('#scoreType_inp'),window.scoreget_type)
-                            window.dropdown_init($('#scoreWay_inp'),window.scoreWay_type1)               
+                            window.dropdown_init($('#scoreWay_inp'),window.scoreWay_type1)  
+
+                             $.get('/manger/guid/getguid',{r:Date.now()},function(d){
+                                if(d.error) return alert('流水号获取失败，请刷新页面')
+                                $('#guid_inp').val(d.data).change();
+                            },'json')
+
+                            var getname = function(){
+                                $.post('/manger/user/getOne',{
+                                    id:uid
+                                },function(d){
+                                     if(d.error == 1) d.data= '<b style="color:#c00">未找到用户</b>'
+                                    $('#user_name').html('用户名：'+d.data);
+                                },'json')
+                            }
+
+                            $('#user_name_inp').change(function(){
+                                uid = $('#user_name_inp').val()
+                                getname()
+                            })
 
                         },100)
                         

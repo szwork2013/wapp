@@ -7,7 +7,7 @@ var obj = { //定义结构
       appId:{type:String,required:true,index:true},    		    //应用id
       userId:{type:String,required:true, index:true},                 //用户id
       mobile:{type:String,required:true, index:true},                 //用户手机号码
-      scoreGuid:{type:String,required:true},              //交易流水号
+      scoreGuid:{type:String,required:true,unique:true},              //交易流水号
       scoreDetail:{type:Number,default:0},  //积分获取流水，获取或者扣除的积分数目
       scoreType:{type:Number,default:1},    //积分是获取还是消费，1表示获取，2表示消费
       scoreWay:{type:String,required:true,index:true},  		    //积分获取/消费方式，枚举，比如 regist,daysign,active,forwarding,game
@@ -45,7 +45,6 @@ scoreCode1 为推荐记录的id
 
 
 
-
 6、购房抵房款 buyhouse 消费
 scoreCode1 记录购买楼盘号
 scoreCode2 记录购买房号
@@ -58,6 +57,11 @@ scoreCode1 记录购买服务名称或Id
 
 9、拍卖竞拍品消费 sale
 scoreCode1 记录竞拍品的id
+
+
+10、type为 manual 表示手工
+scoreCode1 为手工添加记录备注
+
 
 */
 

@@ -1,3 +1,5 @@
+var guidModel = require('../dl/guidModel.js');
+
 var uploadCl = require('./cl/uploadCl.js');
 var thumbCl = require('./cl/thumbCl.js');
 
@@ -20,6 +22,8 @@ var menuCl = require('./cl/menuCl.js')
 var prizeCl = require('./cl/prizeCl.js')
 var recommendCl = require('./cl/recommendCl.js')
 var saleCl = require('./cl/saleCl.js')
+
+var activeLogCl = require('./cl/activeLogCl.js')
 
 var utils = require('../lib/utils.js')
 
@@ -175,6 +179,14 @@ var addroute = function(app){
 	app.post('/manger/recommend/create', checkLogin, recommendCl.create)
 	app.post('/manger/recommend/check', checkLogin, recommendCl.check)
 
+	//activeLogCl
+	app.get('/manger/activelog/list', checkLogin, activeLogCl.list)
+	app.post('/manger/activelog/read', checkLogin, activeLogCl.read)
+	app.post('/manger/activelog/update', checkLogin, activeLogCl.update)
+	app.post('/manger/activelog/destroy', checkLogin, activeLogCl.destroy)
+	app.post('/manger/activelog/create', checkLogin, activeLogCl.create)
+
+
 	//sale
 	app.get('/manger/sale/list', checkLogin, saleCl.list)
 	app.post('/manger/sale/read', checkLogin, saleCl.read)
@@ -185,6 +197,15 @@ var addroute = function(app){
 	app.post('/manger/sale/getOne', checkLogin, saleCl.getOne)
 
 
+	//获得guid
+	app.get('/manger/guid/getguid', checkLogin, function(req,res){ 
+		guidModel.getGuid(function(err,guid){
+			if(err) res.send({'error':1,'data':err});
+			
+			res.send({'error':0,'data':guid})
+
+		})
+	})
 }
 
 

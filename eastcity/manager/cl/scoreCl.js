@@ -49,34 +49,75 @@ obj.read = function(req, res){
 }
 obj.update = obj.create = function(req, res){
 	var query;
-	if(req.models[0]["_id"]){
-		query = {"_id": req.models[0]["_id"]};
-	}
-	else{
-		query = {'writeTime':new Date('1970/1/1')}
-	}
-	
-	delete req.models[0]["_id"];
+	var isadd = false;
+	var addDoc = function(cb){
 
-	if(!req.models[0]["scoreGuid"]){ //如果没有传guid
-		guidModel.getGuid(function(err,guid){
-			if(err) res.send(500,err);
-			req.models[0]["scoreGuid"] = guid;
+		if(!req.models[0]["scoreGuid"]){ //如果没有传guid
+			guidModel.getGuid(function(err,guid){
+				if(err) res.send(500,err);
+				req.models[0]["scoreGuid"] = guid;
+				dl.createOneOrUpdate(query, req.models[0], function(err, doc){
+					if(err) return res.send(500,err);
+					if(!doc) return res.json([])
+					res.json(doc);
+				})
+
+			})
+		}
+		else{
 			dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 				if(err) return res.send(500,err);
 				if(!doc) return res.json([])
 				res.json(doc);
 			})
+		}
+	}
 
-		})
+
+	if(req.models[0]["_id"]){
+		query = {"_id": req.models[0]["_id"]};
 	}
 	else{
-		dl.createOneOrUpdate(query, req.models[0], function(err, doc){
-			if(err) return res.send(500,err);
-			if(!doc) return res.json([])
-			res.json(doc);
-		})
+		isadd = true
+		query = {'writeTime':new Date('1970/1/1')}
 	}
+	
+	delete req.models[0]["_id"];
+
+	if(isadd){
+		dl2.findOneByObj({
+			_id:req.models[0]["userId"]
+		},function(err,userdoc){
+			if(err) return res.send(500,err);
+			if(!userdoc) return res.json(500,'未找到用户')
+			var rate = req.models[0]["scoreType"] == 1 ? 1 : -1;
+
+				if(rate<0 && userdoc.appUserScore < (req.models[0]["scoreDetail"]-0)){
+					return res.json(500,'用户积分不够')
+				}
+
+				dl2.createOneOrUpdate({ //增加或减少用户积分
+                   _id:req.models[0]["userId"]
+                },{
+                   $inc:{appUserScore: rate*(req.models[0]["scoreDetail"]-0)} //手工增加或减少积分
+                },function(err,udoc){
+                	if(err) return res.send(500,err);
+                	addDoc()
+                })
+
+
+		})
+
+
+	}
+	else{
+		addDoc()
+	}
+
+
+
+
+
 }
 
 

@@ -7,10 +7,10 @@
 <script id="popup_editor" type="text/x-kendo-template">
           
             <div class="k-edit-label w-800-l">
-                <label for="_id">评论/收藏id</label>
+                <label for="_id">活动记录id</label>
             </div>
             <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
-                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+                <input type="text" id="recommend_id" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
             </div>
 
 
@@ -21,34 +21,36 @@
                <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="userId" >用户id</label>
-            </div>
-            <div data-container-for="userId" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="specialId" >专刊id</label>
-            </div>
-            <div data-container-for="specialId" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="specialId" data-bind="value:specialId" required="required">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="type" >类型</label>
-            </div>
-            <div data-container-for="type" class="k-edit-field w-800-r">
-               <input type="number" id="newsType" class="k-input k-textbox w-50-inp" name="type" data-bind="value:type" required="required">
-            </div>
             
             <div class="k-edit-label  w-800-l">
-                <label for="content" >内容</label>
+                <label for="userid" >用户id</label>
             </div>
-            <div data-container-for="content" class="k-edit-field w-800-r">
-               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="content" data-bind="value:content"></textarea>
+            <div data-container-for="userid" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userid" data-bind="value:userid" required="required">
             </div>
-     
+
+            <div class="k-edit-label  w-800-l">
+                <label for="activeId" >活动id</label>
+            </div>
+            <div data-container-for="activeId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="activeId" data-bind="value:activeId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="username" >报名人</label>
+            </div>
+            <div data-container-for="username" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="username" data-bind="value:username" required="required">
+            </div>
+ 
+
+            <div class="k-edit-label  w-800-l">
+                <label for="mobile" >手机</label>
+            </div>
+            <div data-container-for="mobile" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="mobile" data-bind="value:mobile" required="required">
+            </div>
+
             <div style="display:none;">
                 <div class="k-edit-label  w-800-l">
                     <label for="code1" >备用1</label>
@@ -61,7 +63,7 @@
                     <label for="code2" >备用2</label>
                 </div>
                 <div data-container-for="code2" class="k-edit-field w-800-r">
-                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2">
+                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
                 </div>
             </div>
 
@@ -71,8 +73,6 @@
             <div data-container-for="writeTime" class="k-edit-field w-800-r">
                <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
             </div>
-
-           
 
         </script>
 
@@ -99,24 +99,25 @@
                         batch: true,
                         pageSize: 15,
                         serverFiltering:true,
+                       
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/comment/read",
+                                url: DataHost + "/manger/activelog/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/comment/update",
+                                url: DataHost + "/manger/activelog/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/comment/destroy",
+                                url: DataHost + "/manger/activelog/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/comment/create",
+                                url:DataHost + "/manger/activelog/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
@@ -131,10 +132,9 @@
                                 fields: {
                                     "_id": { editable: false },
                                     "appId": { editable: true },
-                                    "userId": { editable: true },
-                                    "specialId":{ editable: true },
-                                    "content": { editable: true},
-                                    "type": { editable: true, type:'number'},                                   
+                                    "activeId": { editable: true },
+                                    "username": { editable: true},
+                                    "mobile": { editable: true},                                   
                                     "code1": { editable: true},
                                     "code2": { editable: true},
                                     "writeTime": {editable: true, type: "date" },
@@ -163,7 +163,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                     columns: [
                         {
                             field:'_id',
-                            title:'预约id',
+                            title:'活动日志id',
                             hidden:true
                         },
                         { 
@@ -173,23 +173,21 @@ $.post('/manger/app/getList',{},function(data_ary){
                             hidden:true
                         },
                         { 
-                            field: "userId",
+                            field: "userid",
                             title: "用户id",
                             hidden:true
                         },
-                       { 
-                            field: "specialId",
-                            title: "专刊id",
-                            hidden:true
+                        { 
+                            field: "activeId",
+                            title: "活动id",
                         },
                         { 
-                            field: "content",
-                            title: "内容",                           
+                            field: "username",
+                            title: "报名人",
                         },
                         { 
-                            field: "type",
-                            title: "类型",
-                            values:window.comment_type,
+                            field: "mobile",
+                            title: "手机",
                         },
                          { 
                             field: "code1",
@@ -200,7 +198,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "code2",
                             title: "备用2",                           
                              hidden:true
-                        },           
+                        },            
                         { 
                             field: "writeTime",
                             title: "创建日期",
@@ -222,16 +220,16 @@ $.post('/manger/app/getList',{},function(data_ary){
        
                         $('#writeTime').kendoDateTimePicker();
                         
-                         $("#intro").kendoEditor(window.kendo_edit_option);  
-                        window.dropdown_init() 
-                        window.dropdown_init($('#appId_inp'),d)  
-                        window.dropdown_init($('#newsType'),window.comment_type)                       
+                        window.dropdown_init($('#appId_inp'),d)
+
+
 
                     },
                     filterable:window.filter_obj         
                 });
       })                              
 });
+
 
 </script>
 <% include inc/foot %>

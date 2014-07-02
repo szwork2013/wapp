@@ -950,3 +950,23 @@ p img{
 .topNews2 nav li{
 	width: 23%;
 }
+.ft14{
+	font-size: 14px;
+}
+.active_join_box{
+	padding: 20px;
+	margin: 20px auto;
+	width: 80%;
+	border: #ccc 1px solid;
+	color: #777;
+	line-height: 24px;
+}
+.active_join_box b{
+	color: #f70;
+	padding: 0 5px;
+}
+.active_title{
+	color: #333;
+	text-align: center;
+	font-weight: bold;
+}

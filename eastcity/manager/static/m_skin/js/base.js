@@ -232,6 +232,7 @@ window.scoreWay_type = [
               { text: "购房抵用", value: 'buyhouse' },
               { text: "实物兑换", value: 'exchange' },
               { text: "服务消费", value: 'service' },
+              { text: "手工方式", value: 'manual' },
 ]
 
 window.scoreWay_type1 = [
@@ -241,6 +242,7 @@ window.scoreWay_type1 = [
               { text: "转发获取", value: 'forwarding' },
               { text: "游戏获取", value: 'game' },
               { text: "推荐获取", value: 'recommend' },
+              { text: "手工方式", value: 'manual' },
 ]
 
 window.scoreWay_type2 = [
@@ -248,6 +250,7 @@ window.scoreWay_type2 = [
               { text: "实物兑换", value: 'exchange' },
               { text: "服务消费", value: 'service' },
               { text: "竞拍消费", value: 'sale' },
+              { text: "手工方式", value: 'manual' },
 ]
 
 window.scoreget_type = [

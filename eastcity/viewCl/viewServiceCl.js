@@ -19,7 +19,7 @@ obj.activelist = function(req,res){
 			logger.error('obj.activelist error, appId %s, err %s', appId, err);
 			return res.send(500,'乐活空间公告加载失败')
 		}
-				
+
 		res.render('active_list.ejs',{
 			'title':'乐活空间活动',
 			'userObj':req.wxuobj,
@@ -103,14 +103,34 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 			return;
 		}
 
-		//return res.json(doc)
+		var defaultActiveCount =  parseInt(doc.code1) || 0;
+		
+		//查找参加活动人数
+		infoBl.countActiveByActiveId(appId,newsId,function(err,count){
+			if(err){
+				return res.send(500,'详细页面加载失败')
+			}
 
-		res.render('news_detail.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'doc':doc
+			var activeCount = defaultActiveCount + count;
+
+			//查找用户是否有已经报名过了
+			infoBl.findMeActiveByActiveId(appId,userId,newsId,function(err,actdoc){
+				if(err){
+					return res.send(500,'详细页面加载失败')
+				}
+				//console.log(actdoc)
+				res.render('news_detail.ejs',{
+					'userObj':req.wxuobj,
+					'binderObj':req.wxBinder,
+					'activeCount':activeCount,
+					'joinInfo':actdoc,
+					'doc':doc
+				})
+				return;
+			})
+
 		})
-		return;
+		
 	})
 
 }
@@ -142,6 +162,8 @@ obj.newsDetail2 = function(req,res){ //共用新闻详细页
 		res.render('news_detail.ejs',{
 			'userObj':{'_id':'0'},
 			'binderObj':{},
+			'activeCount':0,
+			'joinInfo':false,
 			'doc':doc
 		})
 		return;

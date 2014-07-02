@@ -181,6 +181,8 @@ var addroute = function(app){
 	app.post('/api/user/myfavor',getUserMid, apiUser.myfavor);
 	//进数据数据推送接口
 	app.post('/api/user/activeback',getUserMid, apiUser.activeback);//to do coding
+	
+
 
 	//获取专刊中某一片文章的评论
 	app.post('/api/special/getcomment',getUserMid, apiSpecial.getcomment);
@@ -194,6 +196,8 @@ var addroute = function(app){
 	//获取新闻公告和专刊列表页
 	app.post('/api/info/newslist',getUserMid, apiInfo.newslist);
 	app.post('/api/info/speciallist',getUserMid, apiInfo.speciallist);
+	//用户报名活动接口
+	app.post('/api/info/active',getUserMid, apiInfo.active);//
 	
 	//排行榜接口
 	app.post('/api/user/scorerank',getUserMid, apiUser.scoreRank);
@@ -213,7 +217,7 @@ var addroute = function(app){
 	//下面是页面控制器
 
 
-	//乐活空间活动,不用登录
+	//乐活空间公告,不用登录
 	app.get('/view/service/newsall', viewService.newsall);
 	//物语空间公告,不用登录
 	app.get('/view/service/announce', viewService.announce);   

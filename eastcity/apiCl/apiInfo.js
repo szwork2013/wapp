@@ -49,6 +49,46 @@ obj.speciallist = function(req,res){
 
 }
 
+//参加活动
+obj.active = function(req,res){ 
+
+	var userId = req.wxuobj._id;
+	var openId = req.wxuobj.openId;
+	var appId = global.wxAppObj._id;
+
+	var username = req.body.username;
+	var mobile = req.body.mobile;
+	var activeId = req.body.activeid;
+
+	if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+		return res.send({error:1,data:'手机号输入有误'}) 
+	}
+
+	if(!username){
+		return res.send({error:1,data:'用户名输入有误'}) 
+	}
+
+	if(!activeId || activeId.length !=24){
+		return res.send({error:1,data:'活动id输入有误'}) 
+	}
+
+	var obj = {
+		appId:appId,
+		activeId:activeId,
+		userid:userId,
+		username:username,
+		mobile:mobile,
+	}
+	infoBl.saveActive(obj,function(err,doc){
+		if(err){
+	        return res.send({error:1,data:err}) 
+     	}
+
+     	return res.send({error:0,data:''});
+
+	})
+
+}
 
 
 module.exports = obj;
