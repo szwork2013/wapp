@@ -216,28 +216,7 @@
 
 
 
- $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
-                var d3= []
-                var lastDataId = window.lastData._id;
-
-                djson.forEach(function(v){
-                    d3.push({
-                        text: v.replyTitle, 
-                        value:v._id
-                    })
-                })
-
-                if(d3.length==0){
-                    d3.push({
-                        text:'请先添加回复内容',
-                        value:-1,
-                    })
-                }else{
-                    d3.push({
-                     text:'无回复菜单', 
-                     value:0
-                        })
-                }
+  
 
         $("#grid").kendoGrid({
             dataSource: dataSource,
@@ -299,32 +278,75 @@
                     }
                 },
             edit:function(e){
-                $('.oneLevelHide').hide();
-                $('#appId_inp').val(window.appIdv).change()
-                $('#menuType_inp').val(1).change();
-                $('#parentId_inp').val(0).change();
 
-                window.dropdown_init($('#replyId_inp'), d3);
-                //$('#replyId_inp').val(0).change();
-                (function(){
-                    $('input[name="replyKey"]').val('menu_'+Date.now()).change();
-                })()
 
-                window.dropdown_init()
-                window.dropdown_init($("#appId_inp"), d)
+                $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
+                        var d3= []
+                        var lastDataId = window.lastData._id;
 
-              
+                        djson.forEach(function(v){
+                            d3.push({
+                                text: v.replyTitle, 
+                                value:v._id
+                            })
+                        })
+
+                        if(d3.length==0){
+                            d3.push({
+                                text:'请先添加回复内容',
+                                value:-1,
+                            })
+                        }
+                        else{
+                            d3.push({
+                                text:'无回复',
+                                value:0
+                            })
+                        }
+
+
+                        $('.oneLevelHide').hide();
+                        $('#appId_inp').val(window.appIdv).change()
+                        $('#menuType_inp').val(1).change();
+                        $('#parentId_inp').val(0).change();
+
+                        window.dropdown_init($('#replyId_inp'), d3);
+                        //$('#replyId_inp').val(0).change();
+                        (function(){
+                            $('input[name="replyKey"]').val('menu_'+Date.now()).change();
+                        })()
+
+                        window.dropdown_init()
+                        window.dropdown_init($("#appId_inp"), d)
+
+                })
 
             },
             filterable:false
         });
-  });    
+    
 
 function detailInit(e) {
 window.lastData = e.data
 
 
+$.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
+                var d3= []
+                var lastDataId = window.lastData._id;
 
+                djson.forEach(function(v){
+                    d3.push({
+                        text: v.replyTitle, 
+                        value:v._id
+                    })
+                })
+
+                if(d3.length==0){
+                    d3.push({
+                        text:'请先添加回复内容',
+                        value:-1,
+                    })
+                }
 
 
         var cellobj = $("<div/>").appendTo(e.detailCell)
@@ -491,8 +513,14 @@ window.lastData = e.data
                     
                     }  
             });//end gird
+
+        })//end getlist by replycl
+
      }//end detail function
-   })//end getlist by replycl                  
+
+
+    })
+                                    
 });
 
 </script>
