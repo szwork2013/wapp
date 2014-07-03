@@ -1,6 +1,6 @@
 <% include inc/head %>
 <%
-  var title = '专刊内容'
+  var title = '上院生活'
 %>
 <% include inc/top %>
 
@@ -18,6 +18,7 @@
                         <a href="javascript:;" class="redBtn redBtn2" id="sendFavor" spid="<%= doc._id %>">收藏</a>
                     <% } %>
                     <a href="#sendCommentText" class="redBtn redBtn2">评论</a>
+                    <a href="http://mp.weixin.qq.com/s?__biz=MjM5ODI3ODYzNQ==&mid=200487799&idx=1&sn=11e18128416d4ca8847a1ffeba4b3248#rd" class="redBtn redBtn2" target="_blank">关注</a>
             </div>
 <%}%>
 
@@ -57,6 +58,7 @@
         <div class="sendCommentText_box">
         <textarea rows="5" id="sendCommentText" placeholder="请发表您的看法"></textarea>
         <button id="sendComment">发布</button>
+        <p class="comment_tip ft14">评论即可获得5积分</p>
         </div>
     <%}%>
 <%}%>

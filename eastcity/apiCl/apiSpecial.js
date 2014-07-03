@@ -1,6 +1,7 @@
 var infoBl = require('../bl/wxInfo.js')
 var utils = require('../lib/utils.js');
 var userBl = require('../bl/wxUser.js');
+var scoreBl = require('../bl/wxScoreSys.js')
 var obj = {}
 
 
@@ -49,11 +50,20 @@ obj.sendcomment = function(req,res){
     	return res.send({error:1,data:'未找到专刊内容'})
     }
 
-		infoBl.createCommentBySpid(appId, userId, spid, content, 1, function(err,doc){
+		infoBl.createCommentBySpid(appId, userId, spid, content, 1, function(err,commentDoc){
 			if(err){
 		        return res.send({error:1,data:err}) 
 	     	}
-	     	res.send({error:0,data:doc});	
+	     	var commentId = commentDoc._id;
+	     	var rule = 'commentRule';
+	     	
+	     	//尝试对评论增加积分
+	     	scoreBl.scoreRule(appId, userId, openId, {'mobile':req.wxuobj.appUserMobile,'scoreCode1':spid,'scoreCode2':commentId}, rule, function(err,doc){
+				if(err){
+			        return res.send({error:1,data:err}) 
+		     	}
+		     	res.send({error:0,data:commentDoc});
+			})
 		})
 
 	})

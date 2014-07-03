@@ -257,6 +257,17 @@ $(function(){
 
 
 
+      $.post('/api/score/daysign',{
+        'wxuserid':window.userid
+      },function(d){
+          window.isajax = false;
+          if(d.error) return;
+          $('#day_sign_toolbar').fadeIn()
+          setTimeout(function(){
+          	$('#day_sign_toolbar').fadeOut()
+          },3000)
+      },'json')
+
 
 
 })

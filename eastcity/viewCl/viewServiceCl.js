@@ -21,7 +21,7 @@ obj.activelist = function(req,res){
 		}
 
 		res.render('active_list.ejs',{
-			'title':'乐活空间活动',
+			'title':'活动',
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
 			'list':list
@@ -46,7 +46,7 @@ obj.newsall = function(req,res){
 		//return res.json(list)
 
 		res.render('active_list.ejs',{
-			'title':'乐活空间公告',
+			'title':'公告',
 			'userObj':{'_id':'0'},
 			'binderObj':{},
 			'list':list

@@ -21,10 +21,26 @@ obj.registRule = function(qobj,data,cb){ //注册
 
 	obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, null, null, function(err,doc){
 		if(err) return cb(err);
-		if(!doc) return cb('已经获取过注册积分');
+		if(doc && doc.length>0) return cb('已经获取过注册积分');
 		obj.addScoreHistory(qobj,cb)
 	})
 }
+
+
+obj.commentRule = function(qobj,data,cb){ //评论规则，评论每人每篇文章可获得5积分，可多次评论不可重复获取
+	qobj.scoreWay = 'comment'
+	qobj.scoreDetail = 5;
+	qobj.mobile = data.mobile;
+	qobj.scoreCode1 = data.scoreCode1;
+	qobj.scoreCode2 = data.scoreCode2;
+
+	obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, null, null, function(err,doc){
+		if(err) return cb(err);
+		if(doc && doc.length>0) return cb(null,null);//不增加积分，但是返回成功，让用户继续评论
+		obj.addScoreHistory(qobj,cb)
+	}, qobj.scoreCode1, qobj.scoreCode2)
+}
+
 
 obj.forwardingRule = function(qobj,data,cb){ //注册
 	qobj.scoreWay = 'forwarding'

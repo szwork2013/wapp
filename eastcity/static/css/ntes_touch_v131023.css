@@ -55,7 +55,7 @@ display: inline-block; width:18%;text-align:left;height:40px;line-height:40px;te
 .newsPage>li>a,.newsPage>li>a:visited{height:35px;display:block;overflow:hidden;}
 
 .newsPage>li>a:after,.cateEntry:after{float:right;}
-.newsPage>.newsHead{border-top:none;height: 56px;border-bottom: 1px solid #efefef;padding: 10px 0;}
+.newsPage>.newsHead{border-top:none;height: 70px;border-bottom: 1px solid #efefef;padding: 0 0 10px 0;}
 .newsPage>.newsHead:before,.newsPage>.newsHead:after,.newsPage>.newsHead>a:before,.newsPage>.newsHead>a:after{content:'';}
 .newsPage>.newsHead>a,.newsPage>.newsHead>a:visited{height:auto;display:inline;}
 .newsPage>.newsHead img{display:block;float:left;width:111px;height:83px;}
@@ -273,7 +273,7 @@ MAvgX4jUf9grAt5kAAAAAElFTkSuQmCC) no-repeat;background-size:auto 25px;}
 .imgNews .fImg{float: left;margin: 0 10px 0 0;}*/
 
 .newsPage > .newsHead div {width:auto;margin-top:0px;position: relative;float: none}
-.newsPage > .newsHead img{width:70px;height: 52px;margin-right:4%;margin-top:5px;}
+.newsPage > .newsHead img{max-width:70px;max-height: 70px;margin-right:4%;margin-top:5px;}
 .newsPage > .newsHead .newsTips{width:70px;height: 16px;position: absolute;right:0px;bottom: 2px;font-size: 12px;line-height: 16px;color: #808080;text-align: right;}
 .newsPage > .newsHead .special{width: 30px;height: 14px;line-height:14px;text-align: center;color:#fff;background: #a20001;display: block;font-size: 12px;position: absolute;right:8px;bottom: 2px;}
 .newsPage > li{border-top: none 0;border-bottom: 1px dashed #999}
@@ -416,7 +416,7 @@ body > header, body > footer {background: #BE2C37}
 .newsPage > li > a:after{content:url(http://img1.cache.netease.com/3g/img11/3gtouch13/arrowRight.png);}
 div.logoBar .homeback{-moz-box-sizing: border-box;background: url("http://img1.cache.netease.com/3g/img11/3gtouch13/icon_home.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);background-size:auto 21.5px;border-right: 1px solid #9E141B;display: block;float: left;height: 40px;width: 20%;}
  .newsTitle{height: 50px;line-height: 50px;}
- .newsTitle2{height: 30px;line-height: 30px; padding-top: 3px;}
+ .newsTitle2{height: 30px;line-height: 30px; padding-top: 8px;}
  .olp-bg-search{background: url(http://img1.cache.netease.com/3g/img11/3gtouch13/searchbtn.png) no-repeat scroll 50% 50%;}
  .logoBar{background: url(http://img1.cache.netease.com/3g/img11/3gtouch13/newlogo.png) no-repeat 6.7% 50%;background-size:auto 21px;}
  .current a{color:#be2c37}
@@ -700,7 +700,7 @@ padding-top:5px;
 	clear: both;
 	padding: 5px 0;
 	width: 90%;
-	margin: 15px 0;
+	margin: 10px 0;
 }
 .input_common_dl dt {
 	float: left;
@@ -710,6 +710,7 @@ padding-top:5px;
 	line-height: 25px;
 }
 .input_common_dl dd{
+	line-height: 25px;
 	float: left;
 	width: 60%;
 
@@ -937,14 +938,14 @@ p img{
 .sp_favor_box .redBtn2{
 	line-height: 14px;
 	padding-left: 2px 5px;
-	margin-right: 10px;
+	margin-right: 5px;
 	font-size: 14px;
 	color: #fff;
 }
 .sendCommentText_box{
 	width: 100%;
 	margin:0 auto;
-	padding: 10px;
+	padding: 10px 0;
 }
 
 .topNews2 nav li{
@@ -969,4 +970,30 @@ p img{
 	color: #333;
 	text-align: center;
 	font-weight: bold;
+}
+.day_sign_toolbar{
+	position: fixed;
+	z-index: 999;
+	background-color:#ffa832; 
+	color:#fff;
+	text-align: center;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	font-size: 15px;
+	top: 40px;
+	left: 0;
+}
+.newsHead{
+	clear: both !important;
+}
+.comment_tip{
+	 width: 90%;
+	 margin: 0 auto;
+}
+.comment_tip2{
+	display: block;
+	clear: both;
+	text-align: center;
+	padding: 15px 0;
 }

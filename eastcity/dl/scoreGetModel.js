@@ -42,6 +42,9 @@ scoreCode1 为游戏的id
 5.1、当type为 recommend 时，表示推荐注册用户成功获得积分
 scoreCode1 为推荐记录的id
 
+5.2、当type为 comment 时，表示用户评论获得积分
+scoreCode1 为评论的专刊id记录
+scoreCode2 为此条获取积分的评论id
 
 
 
