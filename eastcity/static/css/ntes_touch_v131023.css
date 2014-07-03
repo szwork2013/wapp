@@ -656,8 +656,8 @@ div.logoBar .homeback{-moz-box-sizing: border-box;background: url("http://img1.c
 	padding: 10px 0;
 }
 .call_p{
-	height: 25px;
-padding-top:5px;
+height: 25px !important;
+padding-top:8px !important;
 }
 
 .redBtn{
