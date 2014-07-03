@@ -280,7 +280,7 @@
             edit:function(e){
 
 
-                $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
+                $.post('/manger/reply/getList', {appId:e.model.appId},function(djson){
                         var d3= []
                         var lastDataId = window.lastData._id;
 
