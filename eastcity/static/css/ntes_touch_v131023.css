@@ -416,7 +416,7 @@ body > header, body > footer {background: #BE2C37}
 .newsPage > li > a:after{content:url(http://img1.cache.netease.com/3g/img11/3gtouch13/arrowRight.png);}
 div.logoBar .homeback{-moz-box-sizing: border-box;background: url("http://img1.cache.netease.com/3g/img11/3gtouch13/icon_home.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);background-size:auto 21.5px;border-right: 1px solid #9E141B;display: block;float: left;height: 40px;width: 20%;}
  .newsTitle{height: 50px;line-height: 50px;}
- .newsTitle2{height: 30px;line-height: 30px; padding-top: 8px;}
+ .newsTitle2{height: 30px;line-height: 30px; padding-top: 8px; font-size: 14px;}
  .olp-bg-search{background: url(http://img1.cache.netease.com/3g/img11/3gtouch13/searchbtn.png) no-repeat scroll 50% 50%;}
  .logoBar{background: url(http://img1.cache.netease.com/3g/img11/3gtouch13/newlogo.png) no-repeat 6.7% 50%;background-size:auto 21px;}
  .current a{color:#be2c37}
