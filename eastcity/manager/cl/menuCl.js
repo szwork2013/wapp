@@ -114,11 +114,23 @@ obj.sync = function(req, res){
 					}
 					else{
 
-						wxMenu.button.push({ //如果没有子菜单，是图文回复菜单
-							type:'click',
-							name:v.menuTitle,
-							key:v.replyKey.trim()
-						})
+						if(v.replyKey.indexOf('http') == 0){
+							wxMenu.button.push({ //如果主菜单是跳转
+								'type':'click',
+								'name':v.menuTitle,
+								'url':v.replyKey.trim()
+							})
+						}
+						else{
+							wxMenu.button.push({ //如果是图文回复菜单
+								'type':'click',
+								'name':v.menuTitle,
+								'key':v.replyKey.trim()
+							})
+						}
+
+
+						
 						
 					}
 				})

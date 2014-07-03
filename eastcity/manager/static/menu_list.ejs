@@ -313,7 +313,9 @@
                         window.dropdown_init($('#replyId_inp'), d3);
                         //$('#replyId_inp').val(0).change();
                         (function(){
-                            $('input[name="replyKey"]').val('menu_'+Date.now()).change();
+                            if(!$('input[name="replyKey"]').val().trim()){
+                                $('input[name="replyKey"]').val('menu_'+Date.now()).change();
+                            }
                         })()
 
                         window.dropdown_init()
