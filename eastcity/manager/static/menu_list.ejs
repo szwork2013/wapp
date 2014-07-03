@@ -282,7 +282,7 @@
 
                 $.post('/manger/reply/getList', {appId:e.model.appId},function(djson){
                         var d3= []
-                        var lastDataId = window.lastData._id;
+                        //var lastDataId = window.lastData._id;
 
                         djson.forEach(function(v){
                             d3.push({
