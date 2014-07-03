@@ -114,7 +114,7 @@ obj.sync = function(req, res){
 					}
 					else{
 
-						wxMenu.button.push({ //如果是图文回复菜单
+						wxMenu.button.push({ //如果没有子菜单，是图文回复菜单
 							type:'click',
 							name:v.menuTitle,
 							key:v.replyKey.trim()

@@ -67,10 +67,10 @@
                <input type="text" id="parentId_inp" class="k-input k-textbox " name="parentId" data-bind="value:parentId" >
             </div>
 
-              <div name="replyKey_div" class="k-edit-label  oneLevelHide">
+              <div name="replyKey_div" class="k-edit-label  ">
                 <label for="replyId" >关联回复</label>
             </div>
-            <div name="replyKey_div" data-container-for="replyId" class="k-edit-field oneLevelHide">
+            <div name="replyKey_div" data-container-for="replyId" class="k-edit-field ">
                <input type="text" class="k-input k-textbox" id="replyId_inp" name="replyId" data-bind="value:replyId" >
             </div>
 
@@ -216,7 +216,28 @@
 
 
 
-  
+ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
+                var d3= []
+                var lastDataId = window.lastData._id;
+
+                djson.forEach(function(v){
+                    d3.push({
+                        text: v.replyTitle, 
+                        value:v._id
+                    })
+                })
+
+                if(d3.length==0){
+                    d3.push({
+                        text:'请先添加回复内容',
+                        value:-1,
+                    })
+                }else{
+                    d3.push({
+                     text:'无回复菜单', 
+                     value:0
+                        })
+                }
 
         $("#grid").kendoGrid({
             dataSource: dataSource,
@@ -282,7 +303,9 @@
                 $('#appId_inp').val(window.appIdv).change()
                 $('#menuType_inp').val(1).change();
                 $('#parentId_inp').val(0).change();
-                $('#replyId_inp').val(0).change();
+
+                window.dropdown_init($('#replyId_inp'), d3);
+                //$('#replyId_inp').val(0).change();
                 (function(){
                     $('input[name="replyKey"]').val('menu_'+Date.now()).change();
                 })()
@@ -295,29 +318,13 @@
             },
             filterable:false
         });
-    
+  });    
 
 function detailInit(e) {
 window.lastData = e.data
 
 
-$.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
-                var d3= []
-                var lastDataId = window.lastData._id;
 
-                djson.forEach(function(v){
-                    d3.push({
-                        text: v.replyTitle, 
-                        value:v._id
-                    })
-                })
-
-                if(d3.length==0){
-                    d3.push({
-                        text:'请先添加回复内容',
-                        value:-1,
-                    })
-                }
 
 
         var cellobj = $("<div/>").appendTo(e.detailCell)
@@ -488,9 +495,6 @@ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
         })//end getlist by replycl
 
      }//end detail function
-
-
-    })
                                     
 });
 
