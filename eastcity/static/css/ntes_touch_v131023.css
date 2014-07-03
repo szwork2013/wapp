@@ -997,3 +997,26 @@ p img{
 	text-align: center;
 	padding: 15px 0;
 }
+.newsPage > .newsHead img.listimg{
+max-width: 70px;
+max-height: 70px;
+top:4px;
+left: 0;
+position: absolute;
+display: block;
+}
+.newsPage > .newsHead div.listdiv{
+width: auto;
+margin-top: 0px;
+position: relative;
+float: none;
+line-height: 24px;
+padding-left: 75px;
+margin: 0;
+padding-top: 5px;
+}
+.newsTitle2{
+	height: auto;
+	line-height: 20px;
+	padding-top: 0;
+}
