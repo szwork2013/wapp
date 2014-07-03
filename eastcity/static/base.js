@@ -5,18 +5,18 @@ var specialtop ='<li class="newsHead newsHead2" >'+
 
 var specialListTemplate = '<li class="newsHead" >'+
                 '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
-                '<img src="{pic}" width="70" height="52"/></a>'+
+                '<img class="listimg" src="{pic}" width="70" height="52"/></a>'+
                 '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
-                '<div><p class="newsTitle newsTitle2">{title}</p>'+
+                '<div class="listdiv"><p class="newsTitle newsTitle2">{title}</p>'+
                 '<p class="call_p">{writeTime}</p>'+
                 '</div>'+
                 '</a> </li>'
 
 var specialListTemplate2 = '<li class="newsHead" >'+
                 '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
-                '<img src="{pic}" width="70" height="52"/></a>'+
+                '<img class="listimg" src="{pic}" width="70" height="52"/></a>'+
                 '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
-                '<div><p class="newsTitle newsTitle2">{title}</p>'+
+                '<div class="listdiv"><p class="newsTitle newsTitle2">{title}</p>'+
                 '<p class="call_p"><a href="javascript:;" name="cancelFavor" spid="{spid}" class="reda">取消收藏</a></p>'+
                 '</div>'+
                 '</a></li>'

@@ -12,9 +12,9 @@
             list.forEach(function(obj,i){ 
           %>
             <li class="newsHead">
-                <a href="tel:<%= obj.tel %>"><img src="<%= obj.picture %>" width="70" height="52"/></a>
+                <a href="tel:<%= obj.tel %>"><img class="listimg" src="<%= obj.picture %>" width="70" height="52"/></a>
                 <a href="tel:<%= obj.tel %>">
-                <div>
+                <div lass="listdiv">
                     <p class="newsTitle newsTitle2"><%= obj.name %></p>
                     <p class='call_p'>联系电话：<%= obj.tel %></p>
                 </div>
