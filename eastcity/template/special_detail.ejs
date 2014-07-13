@@ -9,9 +9,9 @@
         <h1 class="title"><%= doc.title %></h1>
         <h2 class="specialH2">
             <span class="source"><span class="time"><%= doc.writeTime %></span>
-
+                <div class="sp_favor_box">
 <% if(userObj._id != 0){ %>
-             <div class="sp_favor_box">
+
                     <% if(favorCount>0){ %>
                         <a href="javascript:;" class="redBtn redBtn2" spid="<%= doc._id %>">已收藏</a>
                     <% }else{ %>
@@ -20,7 +20,7 @@
                     <a href="#sendCommentText" class="redBtn redBtn2">评论</a>
 <%}%>
                     <a href="http://mp.weixin.qq.com/s?__biz=MjM5ODI3ODYzNQ==&mid=200487799&idx=1&sn=11e18128416d4ca8847a1ffeba4b3248#rd" class="redBtn redBtn2" target="_blank">关注</a>
-            </div>
+                </div>
 
 
         </h2>
