@@ -13,15 +13,19 @@
             }
             if(obj.type == 1){
               if(obj.url){
-                var url = '/view/service/newsdetail?newsId='+obj._id+'&wxuserid='+userObj._id;
+                 var url = obj.url; 
               }
               else{
-                var url = obj.url;
-              }
-              
+                 var url = '/view/service/newsdetail?newsId='+obj._id+'&wxuserid='+userObj._id;
+              }              
             }
             else{
-               var url = '/view/service/newsdetail2?newsId='+obj._id;
+              if(obj.url){
+                var url = obj.url;
+              }
+              else{
+                var url = '/view/service/newsdetail2?newsId='+obj._id;
+              }              
             }
           %>
             <li name="newsBlock_<%= j %>" class="newsHead" style="display:none;">
