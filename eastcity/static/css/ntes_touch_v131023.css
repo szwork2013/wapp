@@ -1029,3 +1029,10 @@ padding-top: 5px;
 .newsHead{
 	position: relative;
 }
+.newsPage>.newsHead4{
+	height: 90px;
+}
+.newsPage > .newsHead div.listdiv4{
+	padding-top: 10px;
+}
+}
