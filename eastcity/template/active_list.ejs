@@ -12,7 +12,13 @@
                 j++;
             }
             if(obj.type == 1){
-              var url = '/view/service/newsdetail?newsId='+obj._id+'&wxuserid='+userObj._id;
+              if(obj.url){
+                var url = '/view/service/newsdetail?newsId='+obj._id+'&wxuserid='+userObj._id;
+              }
+              else{
+                var url = obj.url;
+              }
+              
             }
             else{
                var url = '/view/service/newsdetail2?newsId='+obj._id;

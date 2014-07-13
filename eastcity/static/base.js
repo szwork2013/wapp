@@ -183,9 +183,9 @@ $(function(){
 
 		//未认证会员
 		$('#sendFavor2').click(function(){
-			var confirmTitle = '收藏功能仅对认证会员开放，前往认证吗？'
+			var confirmTitle = '使用收藏功能，必须关注上院生活，确定关注吗？'
 			if(confirmTitle){
-				location.href = '/view/user/regist?wxuserid='+window.userid
+				location.href = 'http://mp.weixin.qq.com/s?__biz=MjM5ODI3ODYzNQ==&mid=200487799&idx=1&sn=11e18128416d4ca8847a1ffeba4b3248#rd'
 			}
 			return false
 		})
