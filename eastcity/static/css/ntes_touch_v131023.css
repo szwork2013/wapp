@@ -1006,6 +1006,11 @@ left: 0;
 position: absolute;
 display: block;
 }
+.newsPage > .newsHead img.listimg4{
+max-width: 90px;
+max-height: 90px;
+}
+
 .newsPage > .newsHead div.listdiv{
 width: auto;
 margin-top: 0px;

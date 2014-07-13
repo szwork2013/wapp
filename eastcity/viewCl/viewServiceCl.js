@@ -197,6 +197,31 @@ obj.call = function(req,res){
 
 
 
+//专刊列表封面
+obj.specialindex = function(req,res){ 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId;
+
+
+	infoBl.getSpecialByTypePage(appId,false,0,5,function(err,list){
+		if(err){
+			return res.send(500,'专刊封面页面失败');
+		}
+
+		res.render('special_index.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+			'list':list
+		})
+
+	})
+
+	return;
+
+}
+
+
 
 //专刊列表,根据type显示不同的专刊内容
 obj.speciallist = function(req,res){ 

@@ -233,6 +233,9 @@ var addroute = function(app){
 	app.get('/view/service/activelist',getUserMid, viewService.activelist);
 	
 
+	//专刊列表,封面页
+	app.get('/view/service/specialindex',getUserMid, viewService.specialindex);
+
 	//专刊列表,根据type显示不同的专刊内容
 	app.get('/view/service/speciallist',getUserMid, viewService.speciallist);
 	//专刊详细

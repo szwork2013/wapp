@@ -42,13 +42,19 @@ obj.getOneGameById = function(id,cb){ //获取指定游戏内容
 
 obj.getSpecialByTypePage = function(appId,type,page,size,cb){ //某一类型专刊的列表，分页支持
 	var size = size || 10;
-	var skip = (page-1) * size
-	specialModel.findAll({
+	var skip = (page-1) * size;
+
+	var qobj = {
 		appId:appId,
-		type:type,
 		code1:'',
 		isShow:1
-	},skip, size,function(err,doc){
+	}
+
+	if(type){
+		qobj.type = type;
+	}
+
+	specialModel.findAll(qobj,skip, size,function(err,doc){
 		if(err) return cb(err)
 		if(doc.length==0) return cb(null, doc);
 		
@@ -145,6 +151,8 @@ obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 
 		doc.forEach(function(obj){
 			var tempurl = obj.url;
+
+			/*
 			if(obj.type == 1 && obj.url != ''){
 				
 				if(obj.url.indexOf('?') == -1){
@@ -156,6 +164,7 @@ obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 				var qs = 'x_field_1='+id+'_'+uid
 				tempurl += qs;
 			}
+			*/
 			
 			tempary.push({
 				_id:obj._id,

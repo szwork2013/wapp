@@ -164,6 +164,7 @@ $(function(){
 
 		})
 
+		//收藏
 		$('#sendFavor').click(function(){
 			if(window.isajax) return false;
 			var that = $(this);
@@ -179,6 +180,17 @@ $(function(){
 			},'json')
 
 		})
+
+		//未认证会员
+		$('#sendFavor2').click(function(){
+			var confirmTitle = '收藏功能仅对认证会员开放，前往认证吗？'
+			if(confirmTitle){
+				location.href = '/view/user/regist?wxuserid='+window.userid
+			}
+			return false
+		})
+
+
 
 	}
 
