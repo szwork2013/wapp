@@ -668,6 +668,9 @@ padding-top:8px !important;
 	color: #fff;
 	text-decoration: none;
 }
+.redBtn:visited{
+	color:#fff;
+}
 .grayBtn{
 	background-color: #999;
 }
@@ -1035,4 +1038,4 @@ padding-top: 5px;
 .newsPage > .newsHead div.listdiv4{
 	padding-top: 10px;
 }
-}
+
