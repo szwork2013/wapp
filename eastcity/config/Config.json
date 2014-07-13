@@ -1,5 +1,5 @@
 {
-	"currentSite":"http://127.0.0.1:7000",
+	"currentSite":"http://ec.wujb.net",
 	"appEname":"eastcity",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/eastcity",
 	"monoosePool":10,

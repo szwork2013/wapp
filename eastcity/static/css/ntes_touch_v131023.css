@@ -999,8 +999,8 @@ p img{
 	padding: 15px 0;
 }
 .newsPage > .newsHead img.listimg{
-max-width: 70px;
-max-height: 70px;
+max-width: 90px;
+max-height: 60px;
 top:4px;
 left: 0;
 position: absolute;
@@ -1012,7 +1012,7 @@ margin-top: 0px;
 position: relative;
 float: none;
 line-height: 24px;
-padding-left: 80px;
+padding-left:100px;
 margin: 0;
 padding-top: 5px;
 }
