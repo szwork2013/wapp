@@ -1083,6 +1083,6 @@ padding-right:100px;
 .newsPage > .newsHead div.listdiv2 .newsTitle{
 	font-size: 16px !important;
 }
-body{
-	padding-bottom: 20px !important;
+ul{
+	margin-bottom: 20px !important;
 }
