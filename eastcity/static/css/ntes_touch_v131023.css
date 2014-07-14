@@ -2,7 +2,7 @@
 body{/*background:#EFF0F4;*/text-align:left;/*font-family:STHeiti,Arial;*//*font-family: "HiraginoSansGB W3";*/font-family: "Helvetica"}
 li{list-style:none;}
 a,a:visited{text-decoration:none;color:#000;}
-
+.clearfix{clear: both;}
 .clearfix:after {clear:both;height:0;overflow:hidden;display:block;visibility:hidden;content:".";}
 .fl-l{float:left;}
 .fl-r{float:right;}
