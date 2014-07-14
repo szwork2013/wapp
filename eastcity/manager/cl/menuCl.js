@@ -49,7 +49,7 @@ obj.update = obj.create = function(req, res){
 
 
 	var replayIds = '0';
-	if(req.models[0]['replyId'].length>0){
+	if(req.models[0]['replyId'] && req.models[0]['replyId'].length>0){
 		var replayIds = [];
 		req.models[0]['replyId'].forEach(function(obj){
 			replayIds.push(obj.value);
