@@ -7,8 +7,7 @@
 
 <article class="topNews">
 <section class="newsList">
-<ul page="0" class="newsPage"  id="specialListContent">
-
+<ul page="0" class="newsPage" >
 
 <li class="newsHead newsHead2" >
 	<a href="/view/service/specialdetail?spid=<%= topdoc._id %>&wxuserid=<%= userObj._id %>" target="_blank">
@@ -21,21 +20,17 @@
 	%>
 
 	<li class="newsHead" >
-	    <a href="/view/service/specialdetail?spid=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank" class="img_a_box">
-	   		<img class="listimg listimg5" src="<%= obj.picture[0] %>" />
-		</a>
 	    <a href="/view/service/specialdetail?spid=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank">
-	    <div class="listdiv listdiv2"><p class="newsTitle newsTitle2"><%= obj.title %></p>
+	    <img class="listimg" src="<%= obj.picture[0] %>" width="70" height="52"/></a>
+	    <a href="/view/service/specialdetail?spid=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank">
+	    <div class="listdiv"><p class="newsTitle newsTitle2"><%= obj.title %></p>
 	    </div>
 	    </a>
 	</li>
 
 	<% })   %>
 
-
-
 </ul>
-<div id="listMore" class="pageBtn" style="display:none;">点击查看更多</div>
 </section>
 </article>
 <% include inc/foot %>

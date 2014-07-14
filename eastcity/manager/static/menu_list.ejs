@@ -71,7 +71,13 @@
                 <label for="replyId" >关联回复</label>
             </div>
             <div name="replyKey_div" data-container-for="replyId" class="k-edit-field ">
-               <input type="text" class="k-input k-textbox" id="replyId_inp" name="replyId" data-bind="value:replyId" >
+
+<input type="text" class="k-input k-textbox" id="replyId_inp" name="replyId" data-bind="value:replyId" >
+
+<input type="hidden" class="k-input k-textbox" id="replyId_inp2" data-bind="value:replyId" >
+
+
+
             </div>
 
              <div name="replyKey_div" class="k-edit-label ">
@@ -310,7 +316,18 @@
                         $('#menuType_inp').val(1).change();
                         $('#parentId_inp').val(0).change();
 
-                        window.dropdown_init($('#replyId_inp'), d3);
+
+                        var multiVal = $('#replyId_inp2').val().split(',');
+                        $("#replyId_inp").kendoMultiSelect({
+                            dataTextField: "text",
+                            dataValueField: "value",
+                            dataSource: d3,
+                        })
+                        var multiselect = $("#replyId_inp").data("kendoMultiSelect");
+                        multiselect.value(multiVal);
+                        $("#replyId_inp").change();
+   
+                        //window.dropdown_init($('#replyId_inp'), d3);
                         //$('#replyId_inp').val(0).change();
                         (function(){
                             if(!$('input[name="replyKey"]').val().trim()){
@@ -342,6 +359,7 @@ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
                         value:v._id
                     })
                 })
+
 
                 if(d3.length==0){
                     d3.push({
@@ -505,7 +523,16 @@ $.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
                             //alert(lastDataId)
                             $('#parentId_inp').val(lastDataId).change();
 
-                            window.dropdown_init($('#replyId_inp'), d3);
+
+                            var multiVal = $('#replyId_inp2').val().split(',');
+                            $("#replyId_inp").kendoMultiSelect({
+                                dataTextField: "text",
+                                dataValueField: "value",
+                                dataSource: d3,
+                            })
+                            var multiselect = $("#replyId_inp").data("kendoMultiSelect");
+                            multiselect.value(multiVal);
+                            $("#replyId_inp").change();
 
                             (function(){
                                 if( !$('input[name="replyKey"]').val().trim()){

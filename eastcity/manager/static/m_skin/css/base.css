@@ -152,3 +152,10 @@ display: none;
 .k-imagebrowser .k-tiles-arrange{
 	display: none;
 }
+.k-multiselect-wrap .k-delete{
+	left: initial;
+}
+.k-multiselect-wrap li{
+	padding: .1em 1.15em .1em .4em;
+	position: relative;
+}

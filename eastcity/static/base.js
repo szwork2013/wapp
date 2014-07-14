@@ -4,7 +4,7 @@ var specialtop ='<li class="newsHead newsHead2" >'+
 				'<span class="specialtop_title">{title}</span></div></a></li>'
 
 var specialListTemplate = '<li class="newsHead" >'+
-                '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
+                '<a class="img_a_box2" href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
                 '<img class="listimg" src="{pic}" width="70" height="52"/></a>'+
                 '<a href="/view/service/specialdetail?spid={spid}&wxuserid={uid}" target="_blank">'+
                 '<div class="listdiv"><p class="newsTitle newsTitle2">{title}</p>'+
@@ -107,7 +107,7 @@ $(function(){
 		})
 
 
-		$('#listMore').click()
+		//$('#listMore').click()
 		
 
 	}

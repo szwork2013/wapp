@@ -160,9 +160,16 @@ var wxFunction = function(app){
                   }
 
                   var replyId = menuobj[0].replyId
+                  var replyIdAry = replyId.split(',');
 
-                  wxReplyDl.findOneByObj({
-                        _id:replyId,
+                  if(replyIdAry.indexOf('0') != -1 || replyIdAry.indexOf('-1') != -1){
+                      return res.reply(UNKNOW_REPLY);
+                  }
+
+                  wxReplyDl.findByObj({
+                        '_id':{
+                          '$in':replyIdAry
+                        },
                         isShow:1,
                       },function(err, menuDoc){
                         if(err){
@@ -170,7 +177,7 @@ var wxFunction = function(app){
                             res.reply(ERR_REPLY);
                             return;
                         }
-                        if(!menuDoc){ //如果没有找到菜单
+                        if(!menuDoc || menuDoc.length == 0){ //如果没有找到菜单
                             logger.info('wxReplyDl.findByObj not found, replyType is 2, menu click, menu key is %s',EventKey);
                             return res.reply(UNKNOW_REPLY);
                         }

@@ -204,15 +204,19 @@ obj.specialindex = function(req,res){
 	var openId = req.wxuobj.openId;
 
 
-	infoBl.getSpecialByTypePage(appId,false,0,5,function(err,list){
+	infoBl.getSpecialByTypePage(appId,false,1,5,function(err,list){
 		if(err){
+			console.log(err)
 			return res.send(500,'专刊封面页面失败');
 		}
+		var topDoc = list[0];
+		var list2 = list.slice(1);
 
 		res.render('special_index.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
-			'list':list
+			'topdoc':topDoc,
+			'list':list2
 		})
 
 	})
@@ -229,10 +233,23 @@ obj.speciallist = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId;
 
-	res.render('special_list.ejs',{
-		'userObj':req.wxuobj,
-		'binderObj':req.wxBinder
+	infoBl.getSpecialByTypePage(appId,false,1,5,function(err,list){
+		if(err){
+			console.log(err)
+			return res.send(500,'专刊封面页面失败');
+		}
+		var topDoc = list[0];
+		var list2 = list.slice(1);
+
+		res.render('special_list.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+			'topdoc':topDoc,
+			'list':list2
+		})
+
 	})
+
 	return;
 
 }

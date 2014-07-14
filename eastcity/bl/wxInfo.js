@@ -46,12 +46,12 @@ obj.getSpecialByTypePage = function(appId,type,page,size,cb){ //某一类型专�
 
 	var qobj = {
 		appId:appId,
-		code1:'',
 		isShow:1
 	}
 
-	if(type){
+	if(type){//如果有类型，则传入类型和code1
 		qobj.type = type;
+		qobj.code1 = '';
 	}
 
 	specialModel.findAll(qobj,skip, size,function(err,doc){

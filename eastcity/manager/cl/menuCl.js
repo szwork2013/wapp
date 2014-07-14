@@ -47,6 +47,20 @@ obj.update = obj.create = function(req, res){
 	
 	delete req.models[0]["_id"];
 
+
+	var replayIds = '0';
+	if(req.models[0]['replyId'].length>0){
+		var replayIds = [];
+		req.models[0]['replyId'].forEach(function(obj){
+			replayIds.push(obj.value);
+		})
+		replayIds = replayIds.join(',');
+	}
+
+	req.models[0]['replyId'] = replayIds
+
+	console.log(req.models[0]['replyId'])
+
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
