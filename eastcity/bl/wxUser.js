@@ -1,13 +1,14 @@
 var userModel = require('../dl/userModel.js'); //加载用户模型
 var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
-var recommendModel = require('../dl/recommendModel.js'); //加载评论模型
+var recommendModel = require('../dl/recommendModel.js'); //加载推荐模型
 var scoreModel = require('../dl/scoreGetModel.js');  //score模型
+var scoreGetModel = require('../dl/scoreGetModel.js');
 var appSpecialModel = require('../dl/appSpecialModel.js');  //appSpecialModel模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
 var utils = require('../lib/utils.js');
 var obj = {}
-
+var recommendScore = 20;
 
 obj.getUserByOpenid = function(openId,cb){ //根据openid查找用户信息
 	var cb = cb || function(){}
@@ -148,7 +149,11 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 								},function(err,doc2){
 
 									if(err) return cb(err);
+
+									obj.checkRecommend(appId, udoc.uobj._id, qobj.appUserMobile);
+
 									cb(null,doc2)
+
 								})//end userAppModel.createOneOrUpdate
 
 							})//end userAppModel.findByObj
@@ -158,6 +163,83 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 				})
 			}
 		})
+}
+
+
+
+obj.checkRecommend = function(appId, userid, mobile){
+
+	//根据手机号查找推荐条目
+	recommendModel.findByObj({
+		appId:appId,
+		recommendMobile:mobile,
+		status:1,
+	},function(err,rec_list){
+		if(err){
+			console.log(err);
+			return;
+		}
+		if(rec_list.length == 0){
+			return;
+		}
+
+		//第一条表示推荐成功
+		var recObj = rec_list[0];
+		var noRecAry = rec_list.slice(1);
+		var noRecIds = [];
+		noRecAry.forEach(function(o){
+			noRecIds.push(o._id);
+		})
+
+		userModel.createOneOrUpdate({ //判断成功，更新推荐人积分
+                  _id:recObj.userId
+                },{
+                  $inc:{
+                  	appUserScore:recommendScore
+                  } //推荐他人注册成功，+20分
+
+                },function(err,udoc){ //开始写入积分获取流水
+                   if(err) return;
+                   if(!udoc) return;
+                   var qobj={
+                      appId:recObj.appId,
+                      userId:recObj.userId,
+                      mobile:mobile,
+                      scoreDetail:recommendScore,
+                      scoreType:1,
+                      scoreWay:'recommend',
+                      scoreCode1:recObj._id
+                   }
+                    guidModel.getGuid(function(err,guid){ //生成guid
+                        if(err) return;
+                        qobj.scoreGuid = guid;
+                        
+                        //插入获取积分流水
+                        scoreGetModel.insertOneByObj(qobj,function(err,doc){
+	                           
+	                            if(err) return;
+                                recommendModel.createOneOrUpdate({_id:recObj._id}, {
+	                                status:2,
+	                                code1:userid,	//保存被推荐人用户id
+                                }, function(err, doc){ //更新推荐状态
+                                    if(err) return;
+                                })
+
+                                recommendModel.createOneOrUpdate({'_id':{
+                                	'$in':noRecIds
+                                }}, {status:3}, function(err, doc){ //更新推荐状态
+                                    if(err) return;
+                                })
+
+                        })// end scoreGetModel.insertOneByObj
+                    })//end guidModel.getGuid         
+        })//end userdl.createOneOrUpdate
+
+
+	})
+
+
+
 }
 
 obj.enter = function(openId,appId,cb){ //用户进入
@@ -400,8 +482,6 @@ obj.recommend = function(appId, userId, mobile, cb){
 			})
 		})
 	})
-
-
 }
 
 

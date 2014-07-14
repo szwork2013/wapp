@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构
       appId:{type:String,required:true},    			  //应用id
       userId:{type:String,required:true}, 	        //推荐人id
-      recommendMobile:{type:String,required:true},  //推荐人手机号
+      recommendMobile:{type:String,required:true},  //被推荐人手机号
       status:{type:String,default:1},           //状态：1、新的请求 2、审核通过 3、审核不通过
-      code1:{type:String,default:''},           //备用字段1
+      code1:{type:String,default:''},           //认证成功之后，被推荐人userid
       code2:{type:String,default:''},           //备用字段2
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }

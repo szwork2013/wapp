@@ -231,6 +231,8 @@ window.scoreWay_type = [
               { text: "游戏获取", value: 'game' },
               { text: "推荐获取", value: 'recommend' },
               { text: "评论获取", value: 'comment' },
+              { text: "下线获取", value: 'extra' },
+              
               { text: "购房抵用", value: 'buyhouse' },
               { text: "实物兑换", value: 'exchange' },
               { text: "服务消费", value: 'service' },
@@ -246,6 +248,7 @@ window.scoreWay_type1 = [
               { text: "推荐获取", value: 'recommend' },
               { text: "评论获取", value: 'comment' },
               { text: "手工方式", value: 'manual' },
+              { text: "下线获取", value: 'extra' },
 ]
 
 window.scoreWay_type2 = [

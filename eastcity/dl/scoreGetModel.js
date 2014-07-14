@@ -46,6 +46,9 @@ scoreCode1 为推荐记录的id
 scoreCode1 为评论的专刊id记录
 scoreCode2 为此条获取积分的评论id
 
+5.3、当type为 extra 时，表示由此用户的下线获得分数而获得的额外分数
+scoreCode1 下线用户获得的分数的id
+
 
 
 6、购房抵房款 buyhouse 消费

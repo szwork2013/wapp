@@ -2,6 +2,7 @@ var moment = require('moment');
 var guidModel = require('../dl/guidModel.js');
 var gameModel = require('../dl/appGameModel.js');
 var scoreGetModel = require('../dl/scoreGetModel.js');
+var recommendModel = require('../dl/recommendModel.js'); //加载推荐模型
 
  //新闻模型
 var newsModel = require('../dl/appNewsModel.js');
@@ -22,7 +23,7 @@ obj.registRule = function(qobj,data,cb){ //注册
 	obj.getHistoryByStartAndEnd(qobj.userId, qobj.scoreWay, null, null, function(err,doc){
 		if(err) return cb(err);
 		if(doc && doc.length>0) return cb('已经获取过注册积分');
-		obj.addScoreHistory(qobj,cb)
+		obj.addScoreHistory(qobj,cb,true)
 	})
 }
 
@@ -42,7 +43,7 @@ obj.commentRule = function(qobj,data,cb){ //评论规则，评论每人每篇文
 }
 
 
-obj.forwardingRule = function(qobj,data,cb){ //注册
+obj.forwardingRule = function(qobj,data,cb){ //转发
 	qobj.scoreWay = 'forwarding'
 	qobj.scoreDetail = 5;
 	qobj.mobile = data.mobile;
@@ -179,7 +180,7 @@ obj.getHistoryByStartAndEnd = function(userId, rule, s, e, cb, sc1,sc2,sc3,sc4,s
 }
 
 
-obj.addScoreHistory = function(qobj,cb){ //插入获取积分流水表
+obj.addScoreHistory = function(qobj,cb,noCheckRecommend){ //插入获取积分流水表
 
 	guidModel.getGuid(function(err,guid){ //生成guid
 		if(err) return cb(err);
@@ -187,18 +188,52 @@ obj.addScoreHistory = function(qobj,cb){ //插入获取积分流水表
 		
 		scoreGetModel.insertOneByObj(//插入获取积分流水
 			qobj,
-			function(err,doc){
+			function(err,doc2){
 				if(err) return cb(err);
-				userBl.addScore(qobj.userId, qobj.scoreDetail, function(err,doc){//用户获取积分，对用户表做加分的操作
+				userBl.addScore(qobj.userId, qobj.scoreDetail, function(err,doc){
+				//用户获取积分，对用户表做加分的操作
 					if(err){
 						logger.error('user obtain score but not add, userid is %s', qobj.userId)
 					}
-					cb(err,doc)
+					if(!noCheckRecommend){
+						obj.addRecommendUserScore(qobj, doc2._id)
+					}
+						cb(err,doc)					
 				})
 			})
 		})
 }
 
+obj.addRecommendUserScore = function(lastobj,socreGetId){
+	var qobj={}
+	var addScoreUserId = lastobj.userId
+
+	recommendModel.findOneByObj({
+		appId:lastobj.appId,
+		status:2,
+		code1:addScoreUserId
+	},function(err,recobj){
+		if(err || !recobj) return;
+
+		qobj.scoreWay = 'extra';
+		qobj.appId = lastobj.appId;
+		qobj.userId = recobj.userId;
+		qobj.mobile = lastobj.mobile;
+		qobj.scoreDetail = parseInt(lastobj.scoreDetail*0.1) || 1;
+		qobj.scoreType = 1;		
+		qobj.scoreCode1 = socreGetId;
+
+		obj.addScoreHistory(qobj,function(err,doc){
+			if(err) return console.log(err)
+			//console.log(doc)
+		},true)
+	})
+
+
+
+	
+
+}
 
 obj.scoreRule = function(appId, userId, openId, data, rule, cb){ //根据rule调用规则
 	if(!appId || !userId || !rule){

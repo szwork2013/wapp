@@ -123,9 +123,12 @@ obj.check = function(req,res){//通过他人推荐注册审核
                                         if(err) return res.json({'error':1,'data':err});
                                         res.json({'error':0,'data':'推荐他人注册成功'})
                                     })                                    
-                                  })
+                            })
                     })              
                   })
+
+
+
                 })
             })
       })
