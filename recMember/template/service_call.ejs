@@ -1,0 +1,26 @@
+<% include inc/head %>
+<%
+	var title = '预约'
+%>
+<article class="topNews">
+<section class="newsList">
+
+<ul page="0" class="newsPage" >
+          <% 
+            list.forEach(function(obj,i){ 
+          %>
+            <li class="newsHead newsHead4">
+                <a href="tel:<%= obj.tel %>"><img class="listimg listimg4" src="<%= obj.picture %>" width="70" height="52"/></a>
+                <a href="tel:<%= obj.tel %>">
+                <div class="listdiv listdiv4">
+                    <p class="newsTitle newsTitle2 newsTitle3"><%= obj.name %></p>
+                    <p class='call_p newsTitle3'>联系电话：<%= obj.tel %></p>
+                </div>
+                </a>
+            </li>
+        <% })   %>                                     
+</ul>
+
+</section>
+</article>
+<% include inc/foot %>

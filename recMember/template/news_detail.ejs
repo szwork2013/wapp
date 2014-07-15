@@ -1,0 +1,112 @@
+<% include inc/head %>
+<%
+  var title = '详细内容'
+%>
+<% include inc/top %>
+<div class="header2"></div>
+<article style="display: block;" class="articleList">
+    <div class="head clearfix">
+        <h1 class="title content_h1"><%= doc.title %></h1>
+        <h2 class="content_h2"><span class="source"><span>发布时间：</span> <span class="time"><%= doc.writeTime %></span></h2>
+    </div>
+    <div class="text clearfix">
+        <div class="text1"><p>
+        <% doc.picture.forEach(function(path){ %>
+          <img src="<%= path %>" class="contentImg" /><br>
+        <% }) %>
+        <%- doc.content %>
+        </p>
+        </div>
+    </div>
+
+
+
+<% if(doc.type == 1) {%>
+<div class="active_join_box">
+     <% if(binderObj.appUserType == 0) {%>
+        <div class="daySignBox clearfix">       
+          <p>未认证会员不能报名，前往<a href="/view/user/regist?wxuserid=<%= userObj._id %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
+        </div> 
+    <% }else{ %>
+            <% if(joinInfo) {%>
+                 <p>您已经报名此活动了<br/>活动已报名<b><%= activeCount %></b>人</p>
+                 <p>报名人：<b><%= joinInfo.username %></b></p>
+                 <p>手机号：<b><%= joinInfo.mobile %></b></p>
+            <% }else{ %>
+
+                    <p class="active_title">报名参加活动<p>
+
+                    <dl class="input_common_dl clear">
+                        <dt>
+                            真实姓名：
+                        </dt>
+                        <dd>
+                            <input type="text" id="appUserName" name="appUserName" maxlength="20" value="<%=userObj.appUserName %>" />
+                        </dd>
+                    </dl>
+                    <dl class="input_common_dl clear">
+                        <dt>
+                            手机号：
+                        </dt>
+                        <dd>
+                            <input type="text" id="mobile" name="mobile" maxlength="11" value="<%=userObj.appUserMobile %>" />
+                            <span id="mobile_tips" class="redt2 ft14">手机号是您参加活动重要的联系方式，请如实填写</span>
+                        </dd>
+                    </dl>
+                    <dl class="input_common_dl clear">
+                      <dt></dt>
+                      <dd>
+                          <a href="javascript:;" id="submitBtn" class="redBtn">提交</a>          
+                      </dd>
+                    <dl>
+                       
+
+                      <dl class="input_common_dl clear">
+                      <dt></dt>
+                      <dd>
+                         已经报名<b><%= activeCount %></b>人
+                      </dd>
+                    <dl>
+
+                <% } %>
+    <% } %>
+<% } %>
+    </div>
+</article>
+<script type="text/javascript" >
+    window.articleid = '<%= doc._id %>'
+
+    window.forwardingImg = '<%=userObj.currentSite %><%= doc.picture[0] %>'
+    window.forwardingTitle = '<%= doc.title %>';
+    window.forwardingUrl = '<%=userObj.currentSite %>'+location.pathname+'?spid=<%= doc._id %>&wxuserid=0'
+
+    $('#submitBtn').click(function(){
+        var vu = $.trim($('#appUserName').val());
+        var vm = $.trim($('#mobile').val());
+        if(!vu){
+            alert('姓名填写有误')
+            return false;
+        }
+        if(!/^1[0-9][0-9]\d{4,8}$/.test(vm)){
+            alert('手机号填写有误')
+            return false;
+        }
+
+        $.post('/api/info/active',{
+            wxuserid:window.userid,
+            username:vu,
+            mobile:vm,
+            activeid:window.articleid
+        },function(d){
+            if(d.error) return alert(d.data);
+            alert('报名成功')
+            setTimeout(function(){
+                location.href = location.href;
+            },300)
+            
+        },'json')        
+    })    
+
+</script>
+<script type="text/javascript" src="/static/forwading.js"></script>
+<% include inc/foot %>

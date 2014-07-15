@@ -1,0 +1,112 @@
+<% include inc/head %>
+<%
+  var title = '会员认证'
+%>
+<% include inc/top %>
+   <div class="regist_bg"></div> 
+<article style="display: block;" class="articleList articleList2">
+
+
+<% if(binderObj.appUserType == 0){ %>
+    
+    
+    <dl class="input_common_dl clear">
+        <dt>
+            手机号：
+        </dt>
+        <dd>
+            <input type="text" value="" id="mobile" name="mobile" maxlength="11" />
+            <span id="mobile_tips" class="redt2">手机号是您参加活动重要的联系方式,注册后不可更改</span>
+        </dd>
+    </dl>
+    <dl class="input_common_dl clear">
+        <dt>
+            真实姓名：
+        </dt>
+        <dd>
+            <input type="text" value="" id="appUserName" name="appUserName" maxlength="20" />
+        </dd>
+    </dl>
+    <dl class="input_common_dl clear">
+        <dt>
+            性别：
+        </dt>
+        <dd>
+            <select class="registSex" id="sex">
+                <option value="1" selected="selected">男性</option>
+                <option value="0">女性</option>
+            </select>
+        </dd>
+    </dl>
+    <dl class="input_common_dl clear">
+      <dt></dt>
+      <dd>
+          <b id="errtip" class="errtip err_img_box"></b>
+      </dd>
+    </dl>
+
+
+
+    <dl class="input_common_dl clear">
+      <dt></dt>
+      <dd>
+          <a href="javascript:;" id="submitBtn" class="redBtn">提交</a>
+          
+      </dd>
+    <dl>
+<%} else{ %>
+
+  <div class="daySignBox clearfix">
+        
+          <p><%= userObj.appUserName %>，您已经是认证会员了</p>
+          <p>前往<a href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank" class="reda">个人中心</a>，立即查看我的积分和参与活动吧</p>
+    </div>
+
+<%}%>
+
+</article>
+
+
+<script type="text/javascript">
+  $(function(){
+      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+
+          var mobile = $('#mobile').val();
+          var appUserName = $.trim($('#appUserName').val());
+          var sex = $('#sex').val();
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+              $('#errtip').html(errimg+'手机号输入有误')
+              return false;
+          }
+          if(!appUserName){
+              $('#errtip').html(errimg+'请输入真实姓名')
+              return false;
+          }
+
+
+          window.isajax = true
+          $('#errtip').empty()
+          $.post('/api/user/binder',{
+            'appUserName':appUserName,
+            'appUserSex':sex,
+            'appUserMobile':mobile,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(errimg+d.data)
+              alert('认证成功');
+              setTimeout(function(){
+                location.href = location.href
+              },500)             
+          },'json')
+
+      })
+
+  })
+</script>
+
+
+<% include inc/foot %>

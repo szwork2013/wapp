@@ -1,0 +1,22 @@
+<% include inc/head %>
+<%
+  var title = '我的评论'
+%>
+<% include inc/top %>
+<% include inc/my_top %>
+<script>
+	var my_pos = 1;
+</script>
+
+<article style="display: block;" class="articleList">
+    
+    <div class="comment_title comment_title2 sTitle">
+        我的评论(<span class="replyCount"><%= count %></span>条)
+    </div>
+
+ <div class="commentList" id="commentList">
+</div>
+<div id="listMore" class="pageBtn" >点击查看更多</div>
+
+</article>
+<% include inc/foot %>

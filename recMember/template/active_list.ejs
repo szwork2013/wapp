@@ -1,0 +1,47 @@
+<% include inc/head %>
+<% include inc/top %>
+<article class="topNews">
+<section class="newsList">
+<ul page="0" class="newsPage"  id="newsListContent">
+        <% 
+            var j = 0;
+         %>
+        <% 
+            list.forEach(function(obj,i){ 
+            if(i%10==0){
+                j++;
+            }
+            if(obj.type == 1){
+              if(obj.url){
+                 var url = obj.url; 
+              }
+              else{
+                 var url = '/view/service/newsdetail?newsId='+obj._id+'&wxuserid='+userObj._id;
+              }              
+            }
+            else{
+              if(obj.url){
+                var url = obj.url;
+              }
+              else{
+                var url = '/view/service/newsdetail2?newsId='+obj._id;
+              }              
+            }
+          %>
+            <li name="newsBlock_<%= j %>" class="newsHead" style="display:none;">
+
+                <a target="_blank" href="<%= url %>"><img class="listimg" src="<%= obj.picture[0] %>" width="70" height="52"/></a>
+                <a target="_blank" href="<%= url %>">
+                <div class="listdiv">
+                    <p class="newsTitle newsTitle2"><%= obj.title %></p>
+                    <p class="call_p"><%= obj.writeTime %></p>
+                </div>
+                </a>
+            </li>
+        <% })   %>                                     
+</ul>
+<div id="listMore" class="pageBtn">点击查看更多</div>
+<div class="clearfix"></div>
+</section>
+</article>
+<% include inc/foot %>

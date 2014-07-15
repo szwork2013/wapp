@@ -1,0 +1,13 @@
+{
+	"currentSite":"http://recmem.wujb.net",
+	"appEname":"recmem",
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/recmem",
+	"monoosePool":10,
+	"currentHost":"127.0.0.1",
+	"currentVersion":"v1",
+	"listenPort":7000,
+	"mangerListenPort":7001,
+	"wxAppId":"123",
+	"wxAppSecret":"123",
+	"wxAppToken":"weixin"
+}
