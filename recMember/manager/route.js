@@ -148,6 +148,18 @@ var addroute = function(app){
 	app.post('/manger/transac/destroy', checkLogin, transacCl.destroy)
 	app.post('/manger/transac/create', checkLogin, transacCl.create)
 
+	//recrecord
+	app.get('/manger/recrecord/list', checkLogin, recRecordCl.list)
+	app.post('/manger/recrecord/read', checkLogin, recRecordCl.read)
+	app.post('/manger/recrecord/update', checkLogin, recRecordCl.update)
+	app.post('/manger/recrecord/destroy', checkLogin, recRecordCl.destroy)
+	app.post('/manger/recrecord/create', checkLogin, recRecordCl.create)
+
+	//excelCl
+	app.get('/manger/excel/list', checkLogin, excelCl.list)
+	app.post('/manger/excel/update', checkLogin, excelCl.update)
+
+
 
 
 	//获得guid
