@@ -16,7 +16,6 @@ var userappCl = require('./cl/userAppCl.js');
 var replyCl = require('./cl/replyCl.js')
 var menuCl = require('./cl/menuCl.js')
 
-var excelCl = require('./cl/excelCl.js');
 var transacCl = require('./cl/transacCl.js');
 var recRecordCl = require('./cl/recRecordCl.js');
 
@@ -111,6 +110,10 @@ var addroute = function(app){
 	app.post('/manger/userapp/fail', checkLogin, userappCl.fail)
 
 
+	app.get('/manger/userbind/list', checkLogin, userappCl.bindlist)
+	app.get('/manger/userbindcheck/list', checkLogin, userappCl.bindcheck)
+
+
 
 
 
@@ -155,9 +158,6 @@ var addroute = function(app){
 	app.post('/manger/recrecord/destroy', checkLogin, recRecordCl.destroy)
 	app.post('/manger/recrecord/create', checkLogin, recRecordCl.create)
 
-	//excelCl
-	app.get('/manger/excel/list', checkLogin, excelCl.list)
-	app.post('/manger/excel/update', checkLogin, excelCl.update)
 
 
 

@@ -3,14 +3,18 @@ var Schema = mongoose.Schema;
 
 var obj = { //定义结构
       appId:{type:String,required:true},    		//应用id
-      coId:{type:String,required:true}, 	            //推荐小区Id,
-      coHouse:{type:String,default:''},               //推荐楼房号
-      coRoom:{type:String,default:''},                //推荐房间号
-      userId:{type:String,required:true}, 	      //推荐人用户Id,
-      openId:{type:String,required:true},             //推荐人微信id
+      userId:{type:String,required:true},             //推荐人用户Id,
+      //coId:{type:String,required:true}, 	            //推荐小区Id,
+      buyHouse:{type:String,default:''},               //推荐楼房号
+      buyRoom:{type:String,default:''},                //推荐房间号
+      
       recName:{type:String,required:true},            //被推荐人姓名
       recSex:{type:Number,default:1},                 //被推荐人性别 0表示女性，1表示男性
       recTel:{type:String,required:true},             //被推荐人电话
+      recArea:{type:String,default:''},             //被推荐人意向面积
+      recPrice:{type:Number,default:0},             //被推荐人意向总价单位万
+      recRoom:{type:String,default:''},             //被推荐人意向户型
+
       recStatus:{type:Number,required:true,default:1}, 
       //推荐状态,1表示待审核，
       //2表示不通过
@@ -21,8 +25,10 @@ var obj = { //定义结构
       //6签约，只有签约，这个客户才能结佣金
 
       comments:[
-      {content: String, date: Date }],      //管理员评论数组，以/n分割提交上来
-	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
+        {content: String, date: String }
+      ],      //管理员评论数组，以/n分割提交上来
+
+	    
 
       isCash:{type:Number,default:0},                 //是否已经结佣金, 0表示没有结佣金，1表示已经结佣金
 
@@ -30,6 +36,8 @@ var obj = { //定义结构
       recCode2:{type:String,default:''},              //预留字段2
       recCode3:{type:String,default:''},              //预留字段3
       recCode4:{type:String,default:''},              //预留字段4
+
+      writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 
 

@@ -6,13 +6,13 @@ var obj = { //定义结构
       userId:{ type:String,required:true,index:true}, 				   //此用户在数据库中的_id
       openId:{type:String,required:true,index:true,unique:true},				  //微信id
       appId:{type:String,required:true,index:true},                  //表示用户是从哪个微信项目绑定的
-      //appUserCity:{type:String,default:''},                 //用户物业所在城市
-      //appUserCommunity:{type:String,default:''},            //用户物业所在小区
-      //appUserBuilding:{type:String,default:''},             //用户物业所在楼号
-      //appUserRoom:{type:String,default:''},                 //用户物业所在房号
-      //appCardNumber:{type:String,default:''},            //用户会员卡
+      appUserCity:{type:String,default:''},                 //用户物业所在城市
+      appUserCommunity:{type:String,default:''},            //用户物业所在小区
+      appUserBuilding:{type:String,default:''},             //用户物业所在楼号
+      appUserRoom:{type:String,default:''},                 //用户物业所在房号
+      appCardNumber:{type:String,default:''},            //用户会员卡
       appUserType:{type:Number,default:0},               //0表示用户未认证，1表示认证会员（没有填写小区），2表示vip认证会员（填写小区）
-	    //isNewSubmit:{type:Number,default:0},               //新的验证，1表示用户提交了信息请求验证，0表示默认或已审核，2表示用户请求了验证被驳回不通过
+	    isNewSubmit:{type:Number,default:0},               //新的验证，1表示用户提交了信息请求验证，0表示默认或已审核，2表示用户请求了验证被驳回不通过
       writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 

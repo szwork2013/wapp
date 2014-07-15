@@ -287,6 +287,36 @@ window.special_top = [
                         { text: '置顶', value: '1' }
                       ]
 
+window.scoreWay_type2 = [
+              { text: "购房抵用", value: 'buyhouse' },
+              { text: "实物兑换", value: 'exchange' },
+              { text: "服务消费", value: 'service' },
+              { text: "竞拍消费", value: 'sale' },
+              { text: "手工方式", value: 'manual' },
+]
+
+
+window.recStatus_type = [
+              { text: "待审核", value: 1 },
+              { text: "不通过", value: 2 },
+              { text: "预约", value: 3 },
+              { text: "带看", value: 4 },
+              { text: "认筹", value: 5 },
+              { text: "签约", value: 6 },
+]
+
+window.isCash_type = [
+              { text: "未结佣金", value: 0 },
+              { text: "已结佣金", value: 1 },
+]
+
+window.bank_status = [
+              { text: "待审核", value: 1 },
+              { text: "不通过", value: 2 },
+              { text: "已受理", value: 3 },
+              { text: "已发放", value: 4 },
+              ]
+
 
 window.kendo_edit_option = {
     tools: window.editor_tools,

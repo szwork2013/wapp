@@ -7,7 +7,7 @@
 <script id="popup_editor" type="text/x-kendo-template">
           
             <div class="k-edit-label w-800-l">
-                <label for="_id">新闻id</label>
+                <label for="_id">结佣id</label>
             </div>
             <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
                 <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
@@ -15,60 +15,73 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="appId" >地产商</label>
+                <label for="userId" >用户Id</label>
             </div>
-            <div data-container-for="appId" class="k-edit-field w-800-r">
-               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="title" >标题</label>
-            </div>
-            <div data-container-for="title" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" required="required">
-            </div>
-            
-            <div class="k-edit-label  w-800-l">
-                <label for="picture">图片</label>
-            </div>
-            <div data-container-for="picture" class="k-edit-field w-800-r">
-                <input type="file" name="upload_file" id="upload_file">
-                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="url" >跳转地址</label>
+                <label for="recRecords" >推荐id</label>
             </div>
-            <div data-container-for="url" class="k-edit-field w-800-r">
-               <input type="text" id="" class="k-input k-textbox w-50-inp" name="url" data-bind="value:url" >
+            <div data-container-for="recRecords" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recRecords" data-bind="value:recRecords" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="cardNo" >银行卡号</label>
+            </div>
+            <div data-container-for="cardNo" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="cardNo" data-bind="value:cardNo" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="bankName" >开户行</label>
+            </div>
+            <div data-container-for="bankName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="bankName" data-bind="value:bankName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="trueName" >真实姓名</label>
+            </div>
+            <div data-container-for="trueName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="trueName" data-bind="value:trueName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="idNumber" >身份证</label>
+            </div>
+            <div data-container-for="idNumber" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="idNumber" data-bind="value:idNumber" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="cash" >佣金</label>
+            </div>
+            <div data-container-for="cash" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="cash" data-bind="value:cash" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="status" >佣金状态</label>
+            </div>
+            <div data-container-for="status" class="k-edit-field w-800-r">
+               <input type="number" id="status_inp" class="k-input k-textbox w-50-inp" name="status" data-bind="value:status" >
                <br/>
-               如果是新闻，或者公告，此处留空
+               <span class="redt">
+               如果状态改为 "已发放"，则将自动修改相关 "推荐信息" 的佣金发放状态
+               </span>
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="type" >类型</label>
+                <label for="comment" >管理员留言</label>
             </div>
-            <div data-container-for="type" class="k-edit-field w-800-r">
-               <input type="number" id="newsType" class="k-input k-textbox w-50-inp" name="type" data-bind="value:type" required="required">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="content" >内容</label>
-            </div>
-            <div data-container-for="content" class="k-edit-field w-800-r">
-               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="content" data-bind="value:content"></textarea>
+            <div data-container-for="comment" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="comment" data-bind="value:comment" >
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="code1" >初始参与人数</label>
-            </div>
-            <div data-container-for="code1" class="k-edit-field w-800-r">
-               <input type="text" id="" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
-               <br/>
-               请填入整数，初始参与人的数量
-            </div>
-
-
+ 
             <div style="display:none;">
                 <div class="k-edit-label  w-800-l">
                     <label for="code2" >备用2</label>
@@ -78,12 +91,6 @@
                 </div>
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="isShow">是否启用</label>
-            </div>
-            <div data-container-for="isShow" class="k-edit-field w-800-r">
-               <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
-            </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="writeTime">创建日期</label>
@@ -122,22 +129,22 @@
                        
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/news/read",
+                                url: DataHost + "/manger/transac/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/news/update",
+                                url: DataHost + "/manger/transac/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/news/destroy",
+                                url: DataHost + "/manger/transac/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/news/create",
+                                url:DataHost + "/manger/transac/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
@@ -151,15 +158,17 @@
                                 id:"_id",
                                 fields: {
                                     "_id": { editable: false },
-                                    "appId": { editable: true },
-                                    "title": { editable: true },
-                                    "content": { editable: true},
-                                    "picture": { editable: true },
-                                    "url": { editable: true},
-                                    "type": { editable: true, type:'number'},                                   
+                                    "userId": { editable: true },
+                                    "recRecords": { editable: true },
+                                    "cardNo": { editable: true},
+                                    "bankName": { editable: true },
+                                    "trueName": { editable: true},
+                                    "idNumber": { editable: true},
+                                    "cash": { editable: true, type:'number' },
+                                    "status": { editable: true, type:'number'},
+                                    "comment": { editable: true},
                                     "code1": { editable: true},
                                     "code2": { editable: true},
-                                    "isShow": { editable: true, type:'number' },
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -186,38 +195,46 @@ $.post('/manger/app/getList',{},function(data_ary){
                     columns: [
                         {
                             field:'_id',
-                            title:'预约id',
+                            title:'结佣id',
                             hidden:true
                         },
                         { 
-                            field: "appId",
-                            title: "地产商", 
-                            values:d,
+                            field: "userId",
+                            title: "用户id",
+                        },
+                        { 
+                            field: "recRecords",
+                            title: "推荐id",
+                        },
+                        { 
+                            field: "cardNo",
+                            title: "银行卡",
+                        },
+                        { 
+                            field: "bankName",
+                            title: "开户行",
+                        },
+                         { 
+                            field: "trueName",
+                            title: "姓名",
+                        },
+                         { 
+                            field: "idNumber",
+                            title: "身份证",
+                        },
+                         { 
+                            field: "cash",
+                            title: "金额",
+                        },
+                         { 
+                            field: "status",
+                            title: "状态",
+                            values:window.bank_status
+                        },
+                         { 
+                            field: "comment",
+                            title: "审核留言",
                             hidden:true
-                        },
-                        { 
-                            field: "title",
-                            title: "标题",
-                        },
-                        { 
-                            field: "content",
-                            title: "内容",
-                            hidden:true
-                        },
-                        { 
-                            field: "picture",
-                            title: "图片",
-                            hidden:true
-                        },
-                        { 
-                            field: "url",
-                            title: "跳转地址",
-                            hidden:true
-                        },
-                        { 
-                            field: "type",
-                            title: "类型",
-                            values:window.news_type2,
                         },
                          { 
                             field: "code1",
@@ -228,11 +245,6 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "code2",
                             title: "备用2",                           
                              hidden:true
-                        },
-                        { 
-                            field: "isShow",
-                            title: "是否启用", 
-                            values:window.is_show_array
                         },            
                         { 
                             field: "writeTime",
@@ -250,16 +262,13 @@ $.post('/manger/app/getList',{},function(data_ary){
                             }
                         },
                     edit:function(e){
+
                         $('.k-window-content').addClass('w-800-content');
                         $('.k-edit-form-container').addClass('w-800-content');
        
                         $('#writeTime').kendoDateTimePicker();
                         
-                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
-                         $("#intro").kendoEditor(window.kendo_edit_option);  
-                        window.dropdown_init($('#appId_inp'),d)
-                        window.dropdown_init()  
-                        window.dropdown_init($('#newsType'),window.news_type2)                       
+                        window.dropdown_init($('#status_inp'),window.bank_status)                       
 
                     },
                     filterable:window.filter_obj         
