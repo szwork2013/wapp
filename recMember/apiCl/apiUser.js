@@ -1,7 +1,6 @@
 var userBl = require('../bl/wxUser.js');
 
 var utils = require('../lib/utils.js');
-var scoreBl = require('../bl/wxScoreSys.js')
 var obj = {}
 var pwdSalt = 'wappwapp'
 
@@ -10,11 +9,6 @@ obj.binder = function(req,res){ //用户认证绑定
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId;
 
-	//console.log(req.wxBinder)
-	//var pwd = ''
-	//if(req.body.appLoginPassword){ //如果有密码，则md5加密后保存
-	//	pwd = utils.md5(req.body.appLoginPassword+pwdSalt);
-	//}
 
 	var qobj = {
 		//必填项
@@ -121,72 +115,56 @@ obj.modify = function(req,res){ //用户认证绑定
 }
 
 
-
-
-obj.mycomment = function(req,res){ //我的评论
-	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
-	var openId = req.wxBinder.openId;
-	var page = req.body.page || 1;
-	
-	userBl.commentAndFavor(userId, 1, page, null, function(err,doc){
-		if(err){
-	        return res.send({error:1,data:err}) 
-     	}
-     	res.send({error:0,data:doc});		
-	})
-}
-
-
-obj.myfavor = function(req,res){ //我的收藏
-
-	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
-	var openId = req.wxBinder.openId;
-	var page = req.body.page || 1;
-	
-	userBl.commentAndFavor(userId, 2, page, null, function(err,doc){
-		if(err){
-	        return res.send({error:1,data:err}) 
-     	}
-     	res.send({error:0,data:doc});		
-	})
-}
-
-
-
-obj.activeback = function(req,res){ //金数据返回接口
-	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
-	var openId = req.wxBinder.openId;
-
-	//to do
-}
-
-
-obj.scoreRank = function(req,res){ //积分排行
-	userBl.scoreRank(function(err,doclist){
-		if(err) return res.json({'error':1,'data':err})
-		res.json({'error':0,'data':doclist})
-	})
-}
-
-
 obj.recommend = function(req,res){ //推荐人
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId;
-	var mobile = req.body.mobile; //获得被推荐人手机号
 
-	if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+	var recName = req.body.recName;
+	var recSex = req.body.recSex || 1;
+	var recTel = req.body.recTel;
+	var recArea = req.body.recArea;
+	var recPrice = req.body.recPrice;
+	var recRoom = req.body.recRoom;
+
+	if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
 		return res.send({error:1,data:'手机号格式有误'}) 
 	}
 
-	userBl.recommend(appId, userId, mobile, function(err,doc){
+	userBl.recommend(appId, userId, {
+		recName:recName,
+		recSex:recSex,
+		recTel:recTel,
+		recArea:recArea,
+		recPrice:recPrice,
+		recRoom:recRoom,
+	}, function(err,doc){
 		if(err) return res.json({'error':1,'data':err})
 		res.json({'error':0,'data':doc})
 	})
 }
+
+
+obj.createtransac = function(req,res){ //申请结佣
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId;
+
+	var recRecordsId = req.body.recRecordsId;
+
+
+	if(!recRecordsId || recRecordsId.length != 24){
+		return res.send(500,'推荐记录id有误')
+	}
+
+
+	
+	userBl.createTransac(appId, userId, recRecordsId, function(err,doc){
+		if(err) return res.json({'error':1,'data':err})
+		res.json({'error':0,'data':doc})
+	})
+}
+
 
 
 module.exports = obj;

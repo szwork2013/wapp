@@ -1,12 +1,17 @@
 var userModel = require('../dl/userModel.js'); //加载用户模型
-var commentModel = require('../dl/appCommentModel.js'); //加载评论模型
-var recommendModel = require('../dl/recommendModel.js'); //加载推荐模型
-var scoreModel = require('../dl/scoreGetModel.js');  //score模型
-var scoreGetModel = require('../dl/scoreGetModel.js');
-var appSpecialModel = require('../dl/appSpecialModel.js');  //appSpecialModel模型
+var recRecordModel = require('../dl/recRecordModel.js'); //加载推荐模型
+var recBankTransac = require('../dl/recBankTransac.js'); //加载结佣模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
+var moment = require('moment');
 var utils = require('../lib/utils.js');
+//加载老用户信息
+//第一列为姓名
+//第二列为电话
+//第三列为楼号
+//第四列为房号
+var oldMember = require('../oldMember.json') || [];
+
 var obj = {}
 var recommendScore = 20;
 
@@ -26,6 +31,33 @@ obj.getUserByOpenid = function(openId,cb){ //根据openid查找用户信息
 	})
 
 }
+
+//检查这个用户是否是老用户
+obj.checkIsOldMember = function(uobj){
+	if(!Array.isArray(oldMember) || oldMember.length == 0) return false;
+
+	var len = oldMember.length;
+	for(var i=0;i<len;i++){
+		var foundCount = 0;
+		if(oldMember[i][0] == uobj.appUserName){
+			foundCount++;
+		}
+		if(oldMember[i][1] == uobj.appUserMobile){
+			foundCount++;
+		}
+		if(uobj.appUserBuilding.indexOf(oldMember[i][2]) != -1){
+			foundCount++;
+		}
+		if(uobj.appUserRoom.indexOf(oldMember[i][3]) != -1){
+			foundCount++;
+		}
+		if(foundCount>=3){
+			return true;
+		}
+	}
+	return false;
+}
+
 
 obj.getUserByUserId = function(userId,cb){ //根据用户id查找用户信息
 	var cb = cb || function(){}
@@ -95,17 +127,18 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 					appUserMobile:qobj.appUserMobile
 				},function(err,udoc2){
 					if(err) return cb(err)
-					if(udoc2) return cb('手机号已经被使用')
+					//if(udoc2) return cb('手机号已经被使用')
+
+					//生成会员卡号
 					guidModel.getGuid(function(err,guid){
 						if(err) return cb(err); //如果出错
-
-
-
-						var isNewSubmit = 0
+						/*
 						if(qobj.appUserRoom && qobj.appUserCommunity && qobj.appUserBuilding){
 							isNewSubmit = 1
 						}
+						*/
 
+						//更新或写入用户数据
 						userModel.createOneOrUpdate({
 							_id:udoc.uobj._id,				
 						},{						
@@ -114,16 +147,8 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 							appUserSex:qobj.appUserSex || 1,
 							appUserBirth:qobj.appUserBirth || '1970/1/1'	
 						},function(err,doc){
-							if(err) return cb(err);
-							var type = 1;
-							var isNewSubmit = 0;
+							if(err) return cb(err);						
 
-
-							if(qobj.appUserRoom && qobj.appUserCommunity && qobj.appUserBuilding){ 
-							//如果传递了房号，小区和楼号则表示，这个人是请求验证vip认证会员，需要手工
-								type = 1;
-								isNewSubmit = 1
-							}
 							userAppModel.findByObj({
 								userId:udoc.uobj._id,
 								openId:openId,
@@ -134,6 +159,23 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 								if(appDoc && appDoc.length>0 && appDoc[0].appCardNumber){
 									guid = appDoc[0].appCardNumber
 								}
+
+								var isOldMember = obj.checkIsOldMember({
+									appUserName:qobj.appUserName,
+									appUserMobile:qobj.appUserMobile,
+									appUserBuilding:qobj.appUserCommunity,
+									appUserRoom:qobj.appUserRoom,
+								})
+								//新的用户提交，将会审核
+								var isNewSubmit = 1;
+								//判断是否是老会员，如果是老会员则type2，
+								if(isOldMember){
+									var type = 2
+								}
+								else{
+									var type = 0
+								}
+
 								userAppModel.createOneOrUpdate({
 									userId:udoc.uobj._id,
 									openId:openId,
@@ -150,7 +192,7 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 
 									if(err) return cb(err);
 
-									obj.checkRecommend(appId, udoc.uobj._id, qobj.appUserMobile);
+									//obj.checkRecommend(appId, udoc.uobj._id, qobj.appUserMobile);
 
 									cb(null,doc2)
 
@@ -166,81 +208,6 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 }
 
 
-
-obj.checkRecommend = function(appId, userid, mobile){
-
-	//根据手机号查找推荐条目
-	recommendModel.findByObj({
-		appId:appId,
-		recommendMobile:mobile,
-		status:1,
-	},function(err,rec_list){
-		if(err){
-			console.log(err);
-			return;
-		}
-		if(rec_list.length == 0){
-			return;
-		}
-
-		//第一条表示推荐成功
-		var recObj = rec_list[0];
-		var noRecAry = rec_list.slice(1);
-		var noRecIds = [];
-		noRecAry.forEach(function(o){
-			noRecIds.push(o._id);
-		})
-
-		userModel.createOneOrUpdate({ //判断成功，更新推荐人积分
-                  _id:recObj.userId
-                },{
-                  $inc:{
-                  	appUserScore:recommendScore
-                  } //推荐他人注册成功，+20分
-
-                },function(err,udoc){ //开始写入积分获取流水
-                   if(err) return;
-                   if(!udoc) return;
-                   var qobj={
-                      appId:recObj.appId,
-                      userId:recObj.userId,
-                      mobile:mobile,
-                      scoreDetail:recommendScore,
-                      scoreType:1,
-                      scoreWay:'recommend',
-                      scoreCode1:recObj._id
-                   }
-                    guidModel.getGuid(function(err,guid){ //生成guid
-                        if(err) return;
-                        qobj.scoreGuid = guid;
-                        
-                        //插入获取积分流水
-                        scoreGetModel.insertOneByObj(qobj,function(err,doc){
-	                           
-	                            if(err) return;
-                                recommendModel.createOneOrUpdate({_id:recObj._id}, {
-	                                status:2,
-	                                code1:userid,	//保存被推荐人用户id
-                                }, function(err, doc){ //更新推荐状态
-                                    if(err) return;
-                                })
-
-                                recommendModel.createOneOrUpdate({'_id':{
-                                	'$in':noRecIds
-                                }}, {status:3}, function(err, doc){ //更新推荐状态
-                                    if(err) return;
-                                })
-
-                        })// end scoreGetModel.insertOneByObj
-                    })//end guidModel.getGuid         
-        })//end userdl.createOneOrUpdate
-
-
-	})
-
-
-
-}
 
 obj.enter = function(openId,appId,cb){ //用户进入
 	var cb = cb || function(){}
@@ -272,36 +239,7 @@ obj.enter = function(openId,appId,cb){ //用户进入
 	})
 }
 
-obj.removeScore = function(userId,score,cb){ //减去积分
-	obj.getUserByUserId(userId,function(err,uobj){
-		if(err) return(err);
-		var doc = uobj.uobj
 
-		if(doc.appUserScore < score){
-			return cb('没有足够的积分');
-		}
-		userModel.createOneOrUpdate({
-			_id:userId
-		},{
-			$inc :{appUserScore:score*-1}
-		},function(err,doc){
-			cb(err, doc)
-		})
-	})
-}
-
-
-obj.addScore = function(userId,score,cb){//增加积分
-
-		userModel.createOneOrUpdate({
-			_id:userId
-		},{
-			$inc:{appUserScore:score}
-		},function(err,doc){
-			//console.log(err)
-			cb(err, doc)
-		})
-}
 
 obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(!userId){
@@ -357,156 +295,198 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 }
 
 
-obj.commentAndFavor = function(userid,type,page,pagesize,cb){ //获取用户的评论或者收藏列表
-	var size = size || 10;
-	var skip = (page-1) * size
-	commentModel.findAll({
-		userId:userid,
-		type:type,
-	},skip, size,function(err,doc){
-		if(err) return cb(err)
-		if(doc.length==0) return cb(null, doc);
 
-		if(type == 1){//如果获取的是评论内容
-				var tempary = []
-				doc.forEach(function(obj){
-					tempary.push({
-						_id:obj._id,
-						specialId:obj.specialId,
-						content:obj.content,
-						type:obj.type,
-						code1:obj.code1,
-						code2:obj.code2,
-						writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
-					})
-				})
-				return cb(err,tempary)
+
+obj.recommend = function(appId, userId, qobj, cb){
+
+	var qobj = qobj || {}
+	var recName = qobj.recName;
+	var recSex = qobj.recSex || 1;
+	var recTel = qobj.recTel;
+	var recArea = qobj.recArea;
+	var recPrice = qobj.recPrice;
+	var recRoom = qobj.recRoom;
+	var recStatus = 1;
+
+	if(!recName || recName.length>50){
+		cb('推荐人姓名有误')
+	}
+	if(recSex != 0 && recSex != 1){
+		cb('推荐人性别有误')
+	}
+	if(!recTel || recTel.length != 11 || recTel != recTel -0){
+		cb('手机号输入有误')
+	}
+	if(recArea != '' && recArea != recArea - 0){
+		cb('面积输入有误')
+	}
+	if(recPrice != '' && recPrice != recPrice - 0){
+		cb('价格输入有误')
+	}
+	if(recRoom != '' && recRoom.length>50){
+		cb('房型输入有误')
+	}
+
+	recRecordModel.findByObj({
+		recName:recName,
+		recTel:recTel,
+		recStatus:{
+			'$ne':2
+		},
+	},function(err,list){
+		if(err) return cb(err)
+		if(list.length>0) return cb('此人已经被推荐过')
+
+		//判断正常，将操作写入数据库
+		recRecordModel.createOneOrUpdate({
+			recName:recName,
+			recTel:recTel,
+			recStatus:{
+				'$ne':2
+			},
+		},{
+			appId:appId,
+			userId:userId,
+			recName:recName,
+			recSex:recSex,
+			recTel:recTel,
+			recArea:recArea,
+			recPrice:recPrice,
+			recRoom:recRoom,
+			recStatus:1
+		},function(err,doc){
+			if(err) return cb(err);
+			cb(null, doc);
+		})//end insert
+
+
+	})//end findByObj
+
+
+}
+
+obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
+	
+	var qobj = qobj || {}
+	qobj.appId = appId;
+	qobj.userId = userId;
+
+	recRecordModel.findAll(qobj,0,500,function(err,list){
+		if(err){
+			return cb(err)
 		}
-		else{//如果获取的是收藏夹内容
-			var ids =[];
-			doc.forEach(function(o2){
-				if(ids.indexOf(o2.specialId) == -1){
-					ids.push(o2.specialId);
-				}
+		var tempary = []
+		var ids = []
+		list.forEach(function(o){
+			tempary.push({
+				_id:o._id,
+				appId:o.appId,
+				userId:o.userId,
+				recName:o.recName,
+				recSex:o.recSex,
+				recTel:o.recTel,
+				recArea:o.recArea,
+				recPrice:o.recPrice,
+				recRoom:o.recRoom,
+				recStatus:o.recStatus,
+				comments:o.comments,
+				isCash:o.isCash,
+				cashStatus:0, //表示结佣状态，0表示不能结佣
+				cashTransacId:'0',//表示结佣id
+				writeTime:moment(o.writeTime).format('YYYY-MM-DD hh:mm:ss')
 			})
 
-			appSpecialModel.getByIds(ids,function(err,list){
-				if(err) return cb(err);
-				var tempary = [];
+			if(o.recStatus=='6'){
+				ids.push(o._id);
+			}
 
-				doc.forEach(function(obj){
-					var len = list.length;
-					for(var i=0;i<len;i++){
-						if(list[i]._id == obj.specialId){
-							tempary.push({
-								_id:obj._id,
-								specialId:obj.specialId,
-								title:list[i].title,
-								picture:list[i].picture,
-								type:list[i].type,
-								writeTime:list[i].writeTime
-							})
-							return;
+		})
+
+		if(ids.length == 0){
+			return cb(null, tempary)
+		}
+
+		recBankTransac.findByObj({
+			"_id":{
+				"$in":ids
+			}
+		},function(err,list2){
+			if(err) return cb(err);
+			if(list2.length == 0) return cb(null,tempary)			
+
+				tempary.forEach(function(tempo){
+
+					list2.forEach(function(listo2){
+
+						if(tempo._id == listo2.recRecords){
+							tempo.cashStatus = listo2.status
+							tempo.cashTransacId = listo2._id						
 						}
-					}
 
-				})
+					})//end list2
+
+				})//end tempary
 
 				return cb(null,tempary)
-			})
+
+		})//end recBankTransac
 
 
-
-		}
-
-
-	})
-}
-
-obj.getFavorOrCommentById = function(spid,userid, type,cb){
-
-	commentModel.findOneByObj({
-		specialId:spid,
-		userId:userid,
-		type:type
-	},function(err,doc){
-		return cb(err,doc)
-	})
-
+	})//end recRecordModel.findAll
 
 }
 
 
 
+//根据获取结佣流水列表
+obj.getTransacList = function(appId, userId, cb){
 
-obj.getScoreList = function(appid,userid, cb){
-	scoreModel.findAll({
-		appId:appid,
-		userId:userid
-	},0,50,function(err,doc){
-		return cb(err,doc)
-	})
-}
-
-
-obj.scoreRank = function(cb){
-	userModel.scoreRank({},20,function(err,doclist){
-		return cb(err,doclist)
-	})
-}
-
-obj.recommend = function(appId, userId, mobile, cb){
-
-	recommendModel.findOneByObj({
-		recommendMobile:mobile,
-		status:2
-	},function(err,doc){
+	recBankTransac.findByObj({
+		appId:appId,
+		userId:userId,
+	},function(err,list){
 		if(err) return cb(err)
-		if(doc) return cb('此人已经被推荐过了')
+		cb(null, list)
+	})
+}
 
-		recommendModel.findOneByObj({
-			recommendMobile:mobile,
+
+//根据id获取结佣流水信息
+obj.getTransacById = function(appId, userId, tranId, cb){
+
+	recBankTransac.findOneByObj({
+		_id:tranId,
+		appId:appId,
+		userId:userId,
+	},function(err,tranobj){
+		if(err) return cb(err)
+		if(!tranobj) return cb('未找到结佣记录')
+		cb(null, tranobj)
+	})
+}
+
+//申请结佣业务
+obj.createTransac = function(appId, userId, recRecordsId, cb){
+
+	recBankTransac.findOneByObj({
+		recRecords:recRecordsId,
+		appId:appId,
+	},function(err,tranobj){
+		if(err) return cb(err)
+		if(tranobj) return cb('此推荐记录已经申请过结佣')
+
+		recBankTransac.createOneOrUpdate({
 			userId:userId,
-			status:1
+			recRecords:recRecordsId,
+			appId:appId,
 		},function(err,doc){
 			if(err) return cb(err)
-			if(doc) return cb('你已经推荐过了')
+			cb(null, doc)
+		}) //end recBankTransac.createOneOrUpdate
+	})//end recBankTransac.findOneByObj
 
-			recommendModel.insertOneByObj({//插入数据
-				appId:appId,
-				userId:userId,
-				recommendMobile:mobile,
-				status:1
-			},function(err,doc){
-				return cb(err,doc)
-			})
-		})
-	})
 }
 
 
-obj.countMyComment = function(appId,uid,type,cb){ //获取我的评论数
-
-	commentModel.countAll({
-		appId:appId,
-		userId:uid,
-		type:type,
-	},function(err,count){
-		if(err) return cb(null,0)
-		return cb(null,count)
-	})
-}
-
-obj.countMyFavor = function(appId,uid,cb){ //获取我的收藏数
-
-	commentModel.countAll({
-		appId:appId,
-		userId:uid,
-		type:2,
-	},function(err,count){
-		if(err) return cb(null,0)
-		return cb(null,count)
-	})
-}
 
 module.exports = obj;

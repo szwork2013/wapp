@@ -1,35 +1,8 @@
 var userBl = require('../bl/wxUser.js');
-var scoreBl = require('../bl/wxScoreSys.js');
 var infoBl = require('../bl/wxInfo.js');
 var utils = require('../lib/utils.js');
 var moment = require('moment');
 var obj = {}
-
-
-
-
-//活动页面，可能是金数据投票列表页
-obj.activelist = function(req,res){ 
-	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
-	var openId = req.wxuobj.openId;
-
-	infoBl.getNewsByTypePage(appId, 1, 1, 100, function(err,list){
-		if(err){
-			logger.error('obj.activelist error, appId %s, err %s', appId, err);
-			return res.send(500,'乐活空间公告加载失败')
-		}
-
-		res.render('active_list.ejs',{
-			'title':'活动',
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'list':list
-		})
-		return;
-	})
-
-}
 
 
 //乐活空间公告，不用登录

@@ -8,16 +8,11 @@ var wxRoute = require('../weixCl/wCl.js');
 
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
-var apiSpecial = require('../apiCl/apiSpecial.js');
-var apiScoreSys = require('../apiCl/apiScoreSys.js');
-var apiShop = require('../apiCl/apiShop.js');
 var apiUser = require('../apiCl/apiUser.js');
-var apiInfo = require('../apiCl/apiInfo.js');
+
 
 var viewUser = require('../viewCl/viewUserCl.js');
 var viewService = require('../viewCl/viewServiceCl.js');
-var viewGame = require('../viewCl/viewGameCl.js');
-var viewShop = require('../viewCl/viewShopCl.js');
 
 
 //console.log(global.config)
@@ -164,127 +159,36 @@ var addroute = function(app){
 	})
 
 	//下面是ajax控制器
-	//每日签到
-	app.post('/api/score/daysign',getUserMid, apiScoreSys.daySign);
-	//游戏完成积分
-	app.post('/api/score/game',getUserMid, apiScoreSys.game);
-	//转发完成积分
-	app.post('/api/score/forwarding',getUserMid, apiScoreSys.forwarding);
+	
 	//用户注册
 	app.post('/api/user/binder',getUserMid, apiUser.binder);
 	//用户修改资料
 	app.post('/api/user/modify',getUserMid, apiUser.modify);
 
-	//我的评论
-	app.post('/api/user/mycomment',getUserMid, apiUser.mycomment);
-	//我的收藏
-	app.post('/api/user/myfavor',getUserMid, apiUser.myfavor);
-	//进数据数据推送接口
-	app.post('/api/user/activeback',getUserMid, apiUser.activeback);//to do coding
-	
-
-
-	//获取专刊中某一片文章的评论
-	app.post('/api/special/getcomment',getUserMid, apiSpecial.getcomment);
-	//向某一个专刊发送评论
-	app.post('/api/special/sendcomment',getUserMid, apiSpecial.sendcomment);
-	//收藏某一篇文章
-	app.post('/api/special/sendfavor',getUserMid, apiSpecial.sendfavor);
-	//取消收藏某一篇文章
-	app.post('/api/special/cancelfavor',getUserMid, apiSpecial.cancelfavor);
-
-	//获取新闻公告和专刊列表页
-	app.post('/api/info/newslist',getUserMid, apiInfo.newslist);
-	app.post('/api/info/speciallist',getUserMid, apiInfo.speciallist);
-	//用户报名活动接口
-	app.post('/api/info/active',getUserMid, apiInfo.active);//
-	
-	//排行榜接口
-	app.post('/api/user/scorerank',getUserMid, apiUser.scoreRank);
-	//推荐用户接口
+	//发送推荐用户
 	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
-	//兑换商品
-	app.post('/api/shop/exchangeprize',getUserMid, checkIsReg, apiShop.exchangePrize);
-	//兑换商品
-	app.post('/api/shop/saleprize',getUserMid, checkIsReg, apiShop.saleprize);
-
-	//增加api接口
-	//1、兑换商品接口
-	//2、推荐用户接口，增加相应积分
-	//3、排行榜接口
-	//4、对某个拍品出价拍卖
-
+	//我的收藏
+	app.post('/api/user/createtransac',getUserMid, apiUser.createtransac);
+	
 	//下面是页面控制器
 
 
-	//乐活空间公告,不用登录
+	//新闻列表,不用登录
 	app.get('/view/service/newsall', viewService.newsall);
-	//物语空间公告,不用登录
-	app.get('/view/service/announce', viewService.announce);   
 	//新闻详情页面,不用登录
-	app.get('/view/service/newsdetail2', viewService.newsDetail2);
+	app.get('/view/service/newsdetail', viewService.newsDetail);	
 	//一键呼叫，预约服务,不用登录
 	app.get('/view/service/call', viewService.call);
 
-	//乐活空间公告、物语空间公告、物语空间活动详细页面
-	app.get('/view/service/newsdetail',getUserMid, viewService.newsDetail);
 
-	//活动页面，可能是金数据投票列表页,乐活空间活动
-	app.get('/view/service/activelist',getUserMid, viewService.activelist);
-	
-
-	//专刊列表,封面页
-	app.get('/view/service/specialindex',getUserMid, viewService.specialindex);
-
-	//专刊列表,根据type显示不同的专刊内容
-	app.get('/view/service/speciallist',getUserMid, viewService.speciallist);
-	//专刊详细
-	app.get('/view/service/specialdetail',getUserMid, viewService.specialdetail);
-
-	//游戏列表页
-	app.get('/view/game/gamelist',getUserMid, viewGame.gamelist);
-	//游戏详细页
-	app.get('/view/game/gamedetail',getUserMid, viewGame.gamedetail);
-
-	//帖子空间，ajax动态获取我的评论和收藏
-	app.get('/view/user/mycomment',getUserMid, viewUser.mycomment);
-	//帖子空间，ajax动态获取我的评论和收藏
-	app.get('/view/user/myfavor',getUserMid, viewUser.myfavor);
-
-	//我的订单
-	app.get('/view/user/myorder',getUserMid, viewUser.myorder);
-	//拍卖页面
-	app.get('/view/shop/salelist',getUserMid, viewShop.salelist);
-	//推荐用户页面
+	//推荐用户
 	app.get('/view/user/recommend',getUserMid, viewUser.recommend);
-	//排行榜页面
-	app.get('/view/user/scorelist',getUserMid, viewUser.scorelist);
-	//积分规则
-	app.get('/view/user/scorerule',getUserMid, viewUser.scorerule);
-	//兑换商品页面
-	app.get('/view/shop/shoplist',getUserMid, viewShop.shoplist);
-	//签到页面
-	app.get('/view/user/day',getUserMid, viewUser.day);
-
-	//---未完成
-	//修改资料
-	app.get('/view/user/modify',getUserMid, viewUser.modify);
+	//工程进度
+	app.get('/view/user/recrecord',getUserMid, viewUser.recrecord);
+	//某条结佣详细信息
+	app.get('/view/user/transacdetail',getUserMid, viewUser.transacDetail);
 	//用户注册
 	app.get('/view/user/regist',getUserMid, viewUser.regist);
-	
-	//积分查询
-	//app.get('/view/user/myscore',getUserMid, viewUser.myscore);
-	
-	
-	
-
-
-
-	
-	
-
-	
-	
 	
 
 	//增加页面接口

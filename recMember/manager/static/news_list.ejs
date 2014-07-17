@@ -36,6 +36,7 @@
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
             </div>
 
+<div style="display:none;">
             <div class="k-edit-label  w-800-l">
                 <label for="url" >跳转地址</label>
             </div>
@@ -51,6 +52,7 @@
             <div data-container-for="type" class="k-edit-field w-800-r">
                <input type="number" id="newsType" class="k-input k-textbox w-50-inp" name="type" data-bind="value:type" required="required">
             </div>
+</div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="content" >内容</label>
@@ -218,6 +220,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "type",
                             title: "类型",
                             values:window.news_type2,
+                            hidden:true
                         },
                          { 
                             field: "code1",

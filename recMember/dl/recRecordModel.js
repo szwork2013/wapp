@@ -5,8 +5,8 @@ var obj = { //定义结构
       appId:{type:String,required:true},    		//应用id
       userId:{type:String,required:true},             //推荐人用户Id,
       //coId:{type:String,required:true}, 	            //推荐小区Id,
-      buyHouse:{type:String,default:''},               //推荐楼房号
-      buyRoom:{type:String,default:''},                //推荐房间号
+      buyHouse:{type:String,default:''},               //用户最终买的楼房号
+      buyRoom:{type:String,default:''},                //用户最终买的房间号
       
       recName:{type:String,required:true},            //被推荐人姓名
       recSex:{type:Number,default:1},                 //被推荐人性别 0表示女性，1表示男性
@@ -15,7 +15,7 @@ var obj = { //定义结构
       recPrice:{type:Number,default:0},             //被推荐人意向总价单位万
       recRoom:{type:String,default:''},             //被推荐人意向户型
 
-      recStatus:{type:Number,required:true,default:1}, 
+      recStatus:{type:Number,default:1}, 
       //推荐状态,1表示待审核，
       //2表示不通过
       //3以上表示通过

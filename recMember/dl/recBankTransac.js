@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var obj = { //定义结构,结佣金流水
   userId:{ type: String, required:true},       //推荐用户的用户id
-  recRecords:{ type: String, required:true},   //对应的推荐记录_id
+  recRecords:{ type: String, required:true, unique:true},   //对应的推荐记录_id
   cardNo:{ type: String, default:''},          //银行卡号
   bankName:{ type: String, default:''},        //开户行
   trueName:{ type: String, default:''},        //真实姓名
