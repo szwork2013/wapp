@@ -38,7 +38,7 @@
     </dl>
     <dl class="input_common_dl clear">
         <dt>
-            真实姓名：
+            昵称：
         </dt>
         <dd>
             <input type="text" value="<%= userObj.appUserName %>" id="appUserName" name="appUserName" maxlength="20" />
@@ -94,7 +94,7 @@
           var sex = $('#sex').val();
 
           if(!appUserName){
-              $('#errtip').html(errimg+'请输入真实姓名')
+              $('#errtip').html(errimg+'请输入昵称')
               return false;
           }
 
