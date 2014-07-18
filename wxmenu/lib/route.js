@@ -5,17 +5,12 @@ var fs = require('fs');
 var wxRoute = require('../weixCl/wCl.js');
 
 
-
 var wxAppBl = require('../bl/wxApp.js');
-var userBl = require('../bl/wxUser.js');
-var apiUser = require('../apiCl/apiUser.js');
 
-
-var viewUser = require('../viewCl/viewUserCl.js');
-var viewService = require('../viewCl/viewServiceCl.js');
 
 
 //console.log(global.config)
+/*
 wxAppBl.getByEname(config.appEname,function(err,appObj){
       if(err){
         logger.error('wxAppBl.getByEname get error,ename is %s, error: %s',config.appEname,err);
@@ -40,6 +35,7 @@ wxAppBl.getByEname(config.appEname,function(err,appObj){
 
       global.wxAppObj = appObj2;
 })
+*/
 
 var uploadPath = path.join(__dirname,'..','upload');
 if(!fs.existsSync(uploadPath)){
@@ -145,6 +141,8 @@ var checkIsReg = function(req,res,next){
 
 var addroute = function(app){
 	wxRoute(app); //定义微信的路由
+
+/*
 	
 	//登录
 	//app.get('/', loginCl.Login);
@@ -198,7 +196,7 @@ var addroute = function(app){
 	//2、推荐用户页面
 	//3、排行榜页面
 	//4、拍卖页面
-
+*/
 	app.get('/', function(req,res){
 		var count = req.csession['count'];
 		if(!count) count = 1;

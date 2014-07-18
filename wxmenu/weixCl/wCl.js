@@ -10,7 +10,7 @@ var UNKNOW_REPLY = '未知操作'
 var currentSite = global.config.currentSite;
 
 
-var wxGenSingleObj = function(replyObj,openId){
+var wxGenSingleObj = function(replyObj,openId,appId){
     var Obj = {}
     Obj.title = replyObj.replyTitle.trim()  || '';
     Obj.description = replyObj.replyDesc.trim()  || '';
@@ -18,16 +18,16 @@ var wxGenSingleObj = function(replyObj,openId){
     Obj.url = replyObj.replyUrl.trim()  || '';
 
     if(replyObj.replyUrl.indexOf('?') != -1){ //增加 url 参数
-        Obj.url = replyObj.replyUrl+'&wxopenid='+openId+'&wxappid='+global.wxAppObj._id;
+        Obj.url = replyObj.replyUrl+'&wxopenid='+openId+'&wxappid='+appId;
     }
     else{
-        Obj.url = replyObj.replyUrl+'?wxopenid='+openId+'&wxappid='+global.wxAppObj._id;
+        Obj.url = replyObj.replyUrl+'?wxopenid='+openId+'&wxappid='+appId;
     }
 
     return Obj;
 }
 
-var wxGenReplyObj = function(replyObj,openId){ //生成 回复 对象
+var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
 
     var replyObj = replyObj;
     var wxObj;
@@ -62,6 +62,37 @@ var wxGenReplyObj = function(replyObj,openId){ //生成 回复 对象
     return wxObj;
 }
 
+var getAppInfo = function(req,res,next){
+    var appEname = req.appEname
+    wxAppBl.getByEname(appEname,function(err,appObj){
+      if(err){
+        logger.error('wxAppBl.getByEname get error,ename is %s, error: %s',config.appEname,err);
+        return
+      }
+      if(!appObj){
+        logger.error('wxAppBl.getByEname not found appObj, appEname is %s', config.appEname);
+        return
+      }
+      appObj2 = {
+        _id:appObj._id,
+        appName:appObj.appName,
+        appEname:appObj.appEname,
+        appTelphone:appObj.appTelphone,
+        appCustomTel:appObj.appCustomTel,
+        appPicture:appObj.appPicture.split(',') || [],
+        appIntro:appObj.appIntro,
+        wxAppId:appObj.wxAppId,
+        wxAppSecret:appObj.wxAppSecret,
+        writeTime:  moment(appObj.writeTime).format('YYYY-MM-DD hh:mm:ss'),  
+      }
+
+      req.wxAppObj = appObj2;
+      next();
+})
+
+
+}
+
 
 var wxFunction = function(app){
     var wxAppId = config.wxAppId;
@@ -70,7 +101,7 @@ var wxFunction = function(app){
     var appEname = config.appEname;
 
     
-    app.use('/wechat', wechat(wxAppToken, wechat.text(function (message, req, res, next) {
+    app.use('/wechat/:appEname', getAppInfo, wechat(wxAppToken, wechat.text(function (message, req, res, next) {
             // message 为文本内容
             // { ToUserName: 'gh_d3e07d51b513',
             // FromUserName: 'oPKu7jgOibOA-De4u8J2RuNKpZRw',
@@ -80,8 +111,10 @@ var wxFunction = function(app){
             // MsgId: '5837397576500011341' }
 
           //console.log(message)
+          
 
-          var appId = global.wxAppObj._id;
+
+          var appId = req.wxAppObj._id;
 
           wxReplyDl.findByObj({ //查找自动回复，有没有匹配的
                     appId:appId,
@@ -97,7 +130,7 @@ var wxFunction = function(app){
                           return;
                       }
                       if(menuDoc.length>0){ //如果找到匹配项
-                         res.reply(wxGenReplyObj(menuDoc, message.FromUserName)); //创建回复对象
+                         res.reply(wxGenReplyObj(menuDoc, message.FromUserName, appId)); //创建回复对象
                          return;
                       }
 
@@ -112,7 +145,7 @@ var wxFunction = function(app){
                                 return;
                             }
                             if(menuDoc){ //找到默认回复
-                               res.reply(wxGenReplyObj(menuDoc, message.FromUserName)); //创建回复对象
+                               res.reply(wxGenReplyObj(menuDoc, message.FromUserName, appId)); //创建回复对象
                                return;
                             }
                             else{ //什么都没找到
@@ -136,10 +169,11 @@ var wxFunction = function(app){
         // Longitude: '113.352425',
         // Precision: '119.385040',
         // MsgId: '5837397520665436492' }
-
+        
+            var appId = req.wxAppObj._id;
             message.Event = message.Event.toLowerCase()
 
-            var appId = global.wxAppObj._id;
+            var appId = req.wxAppObj._id;
             if(message.Event == 'click'){ //如果是点击事件
               var EventKey = message.EventKey;
               //如果key没找到，或者key不是mongodb  _id，表示非菜单点击
@@ -182,7 +216,7 @@ var wxFunction = function(app){
                             return res.reply(UNKNOW_REPLY);
                         }
                         
-                        res.reply(wxGenReplyObj(menuDoc, message.FromUserName)); //创建回复对象
+                        res.reply(wxGenReplyObj(menuDoc, message.FromUserName, appId)); //创建回复对象
 
                   })
                 })
@@ -204,7 +238,7 @@ var wxFunction = function(app){
                            return;
                         }
 
-                        res.reply(wxGenReplyObj(replyDoc, message.FromUserName)); //创建回复对象
+                        res.reply(wxGenReplyObj(replyDoc, message.FromUserName, appId)); //创建回复对象
 
                   })
                 
