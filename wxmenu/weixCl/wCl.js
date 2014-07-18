@@ -65,8 +65,8 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
 }
 
 var checkSign = function(req,res,next){
-  console.log(11111111111111111)
-  console.log(req.query)
+  //console.log(11111111111111111)
+  //console.log(req.query)
 
   if(req.query["signature"] &&  req.query["timestamp"] && req.query["nonce"]){
       //如果有随机数，表示验证
@@ -82,7 +82,7 @@ var checkSign = function(req,res,next){
       var sha1str = crypto.createHash('sha1').update(tempstr).digest('hex');
 
 
-      console.log(sha1str, signature);
+      //console.log(sha1str, signature);
 
       if(signature == sha1str){
           res.end(echostr)
@@ -133,7 +133,7 @@ var getAppInfo = function(req,res,next){
       }
 
       req.wxAppObj = appObj2;
-      console.log(req.wxAppObj)
+      //console.log(req.wxAppObj)
       next();
     })
 
