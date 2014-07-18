@@ -6,9 +6,6 @@ var thumbCl = require('./cl/thumbCl.js');
 var loginCl = require('./cl/loginCl.js');
 var adminCl = require('./cl/adminCl.js');
 var appCl = require('./cl/appCl.js');
-var bookCl = require('./cl/appBookCl.js');
-
-var newsCl = require('./cl/newsCl.js');
 
 var userCl = require('./cl/userCl.js');
 var userappCl = require('./cl/userAppCl.js');
@@ -16,8 +13,6 @@ var userappCl = require('./cl/userAppCl.js');
 var replyCl = require('./cl/replyCl.js')
 var menuCl = require('./cl/menuCl.js')
 
-var transacCl = require('./cl/transacCl.js');
-var recRecordCl = require('./cl/recRecordCl.js');
 
 
 
@@ -82,12 +77,6 @@ var addroute = function(app){
 	app.post('/manger/app/create', checkLogin, appCl.create)
 	app.post('/manger/app/getList', checkLogin, appCl.getList)
 
-	//book
-	app.get('/manger/book/list', checkLogin, bookCl.list)
-	app.post('/manger/book/read', checkLogin, bookCl.read)
-	app.post('/manger/book/update', checkLogin, bookCl.update)
-	app.post('/manger/book/destroy', checkLogin, bookCl.destroy)
-	app.post('/manger/book/create', checkLogin, bookCl.create)
 
 	//user
 	app.get('/manger/user/list', checkLogin, userCl.list)
@@ -110,19 +99,8 @@ var addroute = function(app){
 	app.post('/manger/userapp/fail', checkLogin, userappCl.fail)
 
 
-	app.get('/manger/userbind/list', checkLogin, userappCl.bindlist)
-	app.get('/manger/userbindcheck/list', checkLogin, userappCl.bindcheck)
 
 
-
-
-
-	//news
-	app.get('/manger/news/list', checkLogin, newsCl.list)
-	app.post('/manger/news/read', checkLogin, newsCl.read)
-	app.post('/manger/news/update', checkLogin, newsCl.update)
-	app.post('/manger/news/destroy', checkLogin, newsCl.destroy)
-	app.post('/manger/news/create', checkLogin, newsCl.create)
 
 	
 
@@ -144,19 +122,7 @@ var addroute = function(app){
     app.post('/manger/menu/sync', checkLogin, menuCl.sync)
 
   	
-  	//transac
-	app.get('/manger/transac/list', checkLogin, transacCl.list)
-	app.post('/manger/transac/read', checkLogin, transacCl.read)
-	app.post('/manger/transac/update', checkLogin, transacCl.update)
-	app.post('/manger/transac/destroy', checkLogin, transacCl.destroy)
-	app.post('/manger/transac/create', checkLogin, transacCl.create)
 
-	//recrecord
-	app.get('/manger/recrecord/list', checkLogin, recRecordCl.list)
-	app.post('/manger/recrecord/read', checkLogin, recRecordCl.read)
-	app.post('/manger/recrecord/update', checkLogin, recRecordCl.update)
-	app.post('/manger/recrecord/destroy', checkLogin, recRecordCl.destroy)
-	app.post('/manger/recrecord/create', checkLogin, recRecordCl.create)
 
 
 
