@@ -66,7 +66,7 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
 var getAppInfo = function(req,res,next){
 
     try{
-      var appEname = req.path.split('/')[1] || ''
+      var appEname = req.query.appename || ''
     }
     catch(e){
       return next(e)
