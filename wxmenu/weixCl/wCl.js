@@ -66,6 +66,7 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
 
 var checkSign = function(req,res,next){
   console.log(req.query)
+
   if(req.query["signature"] &&  req.query["timestamp"] && req.query["nonce"]){
       //如果有随机数，表示验证
       var signature = req.query["signature"].toLowerCase();
@@ -129,9 +130,9 @@ var getAppInfo = function(req,res,next){
       }
 
       req.wxAppObj = appObj2;
-      //console.log(req.wxAppObj)
+      console.log(req.wxAppObj)
       next();
-})
+    })
 
 
 }
