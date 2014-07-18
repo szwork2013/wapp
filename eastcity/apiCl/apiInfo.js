@@ -27,16 +27,16 @@ obj.speciallist = function(req,res){
 	var userId = req.wxuobj._id;
 	var openId = req.wxuobj.openId;
 	var appId = global.wxAppObj._id;
-	var type = req.body.type || 1;
+	//var type = req.body.type || 1;
 	var page = req.body.page || 1;
 
 
-	infoBl.getSpecialByTypePage(appId,type,page,null,function(err,doc){
+	infoBl.getSpecialByTypePage(appId,0,page,null,function(err,doc){
 		if(err){
 	        return res.send({error:1,data:err}) 
      	}
      	if(page == 1){
-     		infoBl.getSpecialTop(appId,type,function(err,topdoc){
+     		infoBl.getSpecialTop(appId,1,function(err,topdoc){
      			if(err) return res.send({error:1,data:err});
 
      			res.send({error:0, data:doc, topdoc:topdoc});

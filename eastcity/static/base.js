@@ -89,7 +89,10 @@ $(function(){
 				$('#specialListContent').append(temp)
 			},'json')
 		})
+		
+		$('#listMore').show().click()
 
+		/*
 		jq_nav_li.click(function(){
 			var that = $(this);
 			if(that.hasClass('current')){
@@ -105,6 +108,7 @@ $(function(){
 			$('#listMore').click()
 
 		})
+		*/
 
 
 		//$('#listMore').click()
