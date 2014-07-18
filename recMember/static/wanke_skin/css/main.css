@@ -1,0 +1,171 @@
+@charset "utf-8";
+
+/*样式重置*/
+body,html{overflow-y:auto}
+body{margin:0;font-family:Tahoma,"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:12px;color:#666;line-height:1.428571428571429em;-webkit-text-size-adjust:none}
+a{color:#17b4c8;text-decoration:none}
+fieldset{border:none}
+h1,h2,h3,h4,h5,h6{font-size:12px;font-weight:normal}
+h1,h2,h3,h4,h5,h6,fieldset,input,p,ul,ol,dl,dd{margin:0}
+img{max-width:100%}
+input,img{vertical-align:middle}
+input,select,textarea{outline:0;border-radius:0;-webkit-appearance:none}
+input{padding:0;background:#fff;border:1px solid #aaa;border-radius:0}
+table{border-collapse:collapse}
+fieldset,legend,ul,ol,dl{padding:0}
+ul,ol{list-style:none}
+/*全局通用*/
+body{min-height:567px;background:url(../img/common-bg.jpg);background-size:100% 100%}
+.container{margin:0 auto;width:320px}
+.icon{background-image:url(../img/icon.png);background-repeat:no-repeat;background-size:252px auto;text-indent:-9999px}
+.page-content{padding-top:58px}
+.mask{display:none;position:fixed;z-index:5;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7)}
+/* ----- 首页 ----- */
+body.index{background:url(../img/index-bg.jpg);background-size:100% 100%}
+/* 导航 */
+.page-header{position:fixed;z-index:10;top:0;left:0;width:100%;height:58px;background:rgba(78,150,132,.34);box-shadow:0 0 10px rgba(0,0,0,.3)}
+nav{-webkit-transform:translate(-200px,0);display:none;position:fixed;z-index:15;top:0;left:0;width:200px;height:100%;overflow:scroll;background:url(../img/nav-bg.jpg);background-size:100% 100%}
+nav.show{-webkit-animation:navShow .6s forwards;}
+nav.hide{-webkit-animation:navHide .6s forwards;}
+@-webkit-keyframes navShow{
+	0%{
+		-webkit-transform:translate(-200px,0);
+	}
+	100%{
+		-webkit-transform:translate(0,0);
+	}
+}
+@-webkit-keyframes navHide{
+	0%{
+		-webkit-transform:translate(0,0);
+	}
+	100%{
+		-webkit-transform:translate(-200px,0);
+	}
+}
+nav .nav-head{margin-right:2px;position:relative;height:60px;border-bottom:1px solid #bdbdbd}
+nav .nav-head h2{padding:14px 0 0 20px;font-size:12px;color:#333;font-weight:bold;line-height:16px}
+nav .nav-head p{margin:6px 0 0 20px;width:18px;height:11px;background-image:url(../img/card.png);background-size:56px auto;text-indent:-9999px}
+nav .nav-head p.blue{background-position:0 -72px}
+nav .nav-head p.silver{background-position:0 -83px}
+nav .nav-head p.gold{background-position:0 -94px}
+nav .nav-head p.platinum{background-position:0 -105px}
+nav .nav-head .menu-back{display:block;position:absolute;top:0;right:0;width:60px;height:60px;background-position:-175px -165px}
+nav ul a{position:relative;display:block;margin-right:2px;padding:20px 0 20px 60px;height:40px;border-bottom:1px solid #bdbdbd}
+nav ul h3{font-size:14px;color:#333;font-weight:bold;line-height:20px}
+nav ul p{font-size:12px;color:#666;line-height:20px}
+nav ul p i{display:inline-block;position:relative;top:1px;margin-right:4px;padding:0 4px;background:#fe5556;border-radius:4px;color:#fff;font-style:normal;line-height:14px}
+nav ul a span{display:block;position:absolute;top:23px;left:13px;width:34px;height:34px}
+nav li.tequan span{background-position:-38px -166px}
+nav li.yezhu span{background-position:-72px -166px}
+nav li.xinxi span{background-position:-106px -166px}
+nav li.yuyue span{top:13px;background-position:-140px -166px}
+/* 菜单按钮 */
+.page-header .menu{display:block;position:absolute;width:58px;height:58px}
+/* Logo */
+.page-header .logo{margin-left:58px;width:120px;height:58px;background-position:-58px 0}
+/* ----- 首页内容 ----- */
+.content-index{padding-top:78px;width:237px}
+.content-index h1{margin:0 0 6px 18px;width:204px;height:25px;background-position:0 -58px}
+.content-index .info{padding:14px;height:180px;background:#e6e6e6;border-radius:3px}
+.content-index .info div{position:relative;margin-bottom:9px;width:100%;height:38px}
+.content-index .info div:last-child{margin-bottom:0}
+.content-index .info label{display:block;position:absolute;top:0;left:0;width:38px;height:38px}
+.content-index .info-name label{background-position:0 -83.5px}
+.content-index .info-phone label{background-position:0 -122px}
+.content-index .info-type label{background-position:0 -161px}
+.content-index .info-numb label{background-position:0 -199px}
+.content-index .info select{margin-left:38px;padding:8px;width:170px;height:38px;background-color:#fff;background-position:-38px -128.5px;border:0;font-size:15px;color:#b5b5b5;text-indent:0}
+.content-index .info input{margin-left:38px;padding:8px;width:154px;background:#fff;border:0;font-size:15px;color:#333;line-height:22px}
+.content-index .protocol{position:relative;margin:10px 0 15px;height:46px;background-position:0 -237.5px}
+.content-index .protocol .tick{display:block;width:45px;height:45px;background-position:-38px -83.5px}
+.content-index .protocol .enter{position:absolute;top:0;right:0;width:180px;height:46px}
+.content-index .submit input{display:block;width:100%;height:47px;background-color:transparent;background-position:0 -283px;border:0}
+/* 协议 */
+.protocol-dialog{display:none;position:absolute;z-index:20;top:50%;left:50%;margin:-180px 0 0 -122px;width:244px;height:361px;background:url(../img/protocol.jpg);background-size:244px 361px;border-radius:2px}
+.protocol-content{margin:70px 0 0 37px;width:170px;height:234px;overflow:scroll}
+.protocol-content p{margin-bottom:10px;color:#3b3b3b;text-indent:2em;line-height:24px}
+.button-close{display:block;position:absolute;top:0;right:0;width:34px;height:34px;text-indent:-9999px}
+.button-true{display:block;position:absolute;bottom:12px;right:49px;width:150px;height:30px;text-indent:-9999px}
+/* 报错 */
+.sorry-dialog{display:none;position:absolute;z-index:20;top:50%;left:50%;margin:-85px 0 0 -122px;width:244px;height:171px;background:url(../img/sorry.jpg);background-size:244px 171px;border-radius:2px}
+/* 验证页面 */
+.card-small{margin-top:120px}
+.validate-ing{margin:40px 0 0 144px;background-position:-83px -84px;width:31px;height:31px;-webkit-animation:rollingInf 1s linear infinite;}
+.validate-ing-word{margin-top:15px;font-size:27px;color:#fff;text-align:center}
+.interests{margin-top:20px;text-align:center}
+.interests a{position:relative;display:inline-block;font-size:14px;color:#fff;line-height:20px;text-decoration:underline}
+.interests a:before{content:"";position:absolute;top:50%;margin-top:-4px;left:-20px;width:0;height:0;border-top:4px solid transparent;border-right:8px solid transparent;border-bottom:4px solid transparent;border-left:8px solid #fff;}
+@-webkit-keyframes rollingInf{
+	100%{
+		-webkit-transform:rotate(360deg);
+	}
+}
+/* 验证成功页面 */
+.card-large{margin-top:75px}
+.validate-end-word{margin:8px 0 22px;text-align:center}
+.validate-end-word span{font-size:19px;color:#fff;line-height:20px}
+.validate-end-word strong{font-size:27px;color:#fff;line-height:28px}
+.validate-r-button{display:block;margin-left:41px;width:237px;height:47px;background-position:0 -330px;}
+/* Home */
+.page-home-header .logo{margin-left:85px;width:150px;background-position:0 -376px}
+.home-welcome{padding:52px 0 34px 142px;background:url(../img/card-home.png) 60px 44px no-repeat;background-size:76px auto;color:#fff}
+.home-welcome .hello{font-size:13px;line-height:20px}
+.home-welcome .welcome{font-size:27px;font-weight:bold;line-height:30px}
+.home-qrcode{text-align:center}
+#qrcode{display:inline-block;}
+.home-qrcode .tips{margin-top:10px;width:189px}
+/* Interests */
+.page-interests-header .logo{margin-left:87px;width:146px;background-position:0 -434px}
+.content-item ul{padding:24px 22px 0}
+.content-item ul li{margin-bottom:12px}
+.content-item ul a{position:relative;display:block;padding:3px 24px 3px 97px;width:157px;height:300px;background:url(../img/item-bg.jpg);background-size:278px 295px;border-radius:3px;overflow:hidden}
+.content-item ul a img{position:absolute;top:3px;left:3px;width:270px}
+.content-item ul a h1{margin-bottom:10px;font-size:20px;color:#4f4f4f;line-height:24px}
+.content-item ul a p {font-size:11px;color:#525252;line-height:20px}
+.content-item ul a p:last-child{margin-top:4px;}
+.content-item ul a p span{display:inline-block;margin-right:4px;width:48px;background:#18b4b6;color:#fff;text-align:center}
+/* Preset */
+.page-preset-header .logo{margin-left:87px;width:146px;background-position:0 -492px}
+/* Owner */
+.page-owner-header .logo{margin-left:87px;width:146px;background-position:0 -550px}
+/* Info */
+.content-info{width:252px}
+.info-my{margin-top:56px;background:#fff;border-radius:2px}
+.info-my header{position:relative;padding-left:70px;height:45px;background:#eee;border-radius:2px 2px 0 0}
+.info-my header h1{position:relative;display:inline-block;font-size:24px;color:#333;line-height:45px}
+.info-my header h1:after{content:"";position:absolute;top:17px;right:-62px;width:56px;height:18px;background-image:url(../img/card.png);background-size:56px auto}
+.info-silver .info-my header h1:after{background-position:0 -18px}
+.info-gold .info-my header h1:after{background-position:0 -36px}
+.info-platinum .info-my header h1:after{background-position:0 -54px}
+.info-my header div{position:absolute;top:-23px;left:-8px;width:58px;height:58px;overflow:hidden;border:2px solid #fff;border-radius:60px;}
+.info-my header img{border-radius:60px}
+.info-my header:after{content:"";position:absolute;top:23px;left:36px;z-index:4;width:18px;height:11px;background-image:url(../img/card.png);background-size:56px auto}
+.info-blue .info-my header:after{background-position:0 -72px}
+.info-silver .info-my header:after{background-position:0 -83px}
+.info-gold .info-my header:after{background-position:0 -94px}
+.info-platinum .info-my header:after{background-position:0 -105px}
+.info-my ul{padding:6px 0 12px}
+.info-my ul li{margin:0 10px;border-bottom:1px solid #eee;line-height:30px}
+.info-my ul li h2{display:inline-block;margin-right:15px;font-size:15px;color:#999;}
+.info-my ul li p{display:inline-block;font-size:14px;color:#575757;}
+.info-my .info-numb{display:none}
+.info-blue .info-myhouse{display:none}
+.info-myhouse{display:block;margin-top:12px;padding:10px;background:#fff;border-radius:2px}
+.info-myhouse h2{padding-bottom:2px;margin-bottom:5px;border-bottom:1px solid #eee;font-size:17px;color:#999;line-height:20px}
+.info-myhouse p{font-size:14px;color:#575757;}
+.content-info .level{display:none;margin-top:35px;height:57px;background-position:0 -608px}
+.info-blue .level,.info-silver .level{display:block}
+/* 介绍 */
+.content-introduce{margin-top:78px;padding:10px;width:272px;background:#d5eedc;border-radius:3px}
+.content-introduce .introduce-block{margin-bottom:25px;padding:0 5px;border-bottom:1px solid #748c86}
+.content-introduce .introduce-block>div{margin-bottom:10px}
+.content-introduce h1{margin-bottom:10px;height:50px;background:url(../img/card-introduce.png) no-repeat;background-size:160px auto;font-size:15px;color:#414141;text-indent:-9999px}
+.introduce-blue h1{background-position:0 -150px}
+.introduce-silver h1{background-position:0 -100px}
+.introduce-gold h1{background-position:0 -50px}
+.content-introduce h2{font-size:13px;color:#262626;line-height:20px}
+.content-introduce ul,.content-introduce p{font-size:12px;color:#4c4c4c;line-height:20px}
+/* 版权 */
+.copyright{padding:10px 0;color:#fff;text-align:center}
+.copyright a{color:#fff}

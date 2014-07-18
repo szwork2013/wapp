@@ -183,12 +183,14 @@ var addroute = function(app){
 
 	//推荐用户
 	app.get('/view/user/recommend',getUserMid, viewUser.recommend);
-	//工程进度
+	//推荐记录
 	app.get('/view/user/recrecord',getUserMid, viewUser.recrecord);
 	//某条结佣详细信息
 	app.get('/view/user/transacdetail',getUserMid, viewUser.transacDetail);
 	//用户注册
 	app.get('/view/user/regist',getUserMid, viewUser.regist);
+	//用户中心
+	app.get('/view/user/modify',getUserMid, viewUser.modify);
 	
 
 	//增加页面接口
