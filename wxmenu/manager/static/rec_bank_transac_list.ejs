@@ -1,0 +1,280 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">结佣id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userId" >用户Id</label>
+            </div>
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recRecords" >推荐id</label>
+            </div>
+            <div data-container-for="recRecords" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recRecords" data-bind="value:recRecords" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="cardNo" >银行卡号</label>
+            </div>
+            <div data-container-for="cardNo" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="cardNo" data-bind="value:cardNo" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="bankName" >开户行</label>
+            </div>
+            <div data-container-for="bankName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="bankName" data-bind="value:bankName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="trueName" >真实姓名</label>
+            </div>
+            <div data-container-for="trueName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="trueName" data-bind="value:trueName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="idNumber" >身份证</label>
+            </div>
+            <div data-container-for="idNumber" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="idNumber" data-bind="value:idNumber" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="cash" >佣金</label>
+            </div>
+            <div data-container-for="cash" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="cash" data-bind="value:cash" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="status" >佣金状态</label>
+            </div>
+            <div data-container-for="status" class="k-edit-field w-800-r">
+               <input type="number" id="status_inp" class="k-input k-textbox w-50-inp" name="status" data-bind="value:status" >
+               <br/>
+               <span class="redt">
+               如果状态改为 "已发放"，则将自动修改相关 "推荐信息" 的佣金发放状态
+               </span>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="comment" >管理员留言</label>
+            </div>
+            <div data-container-for="comment" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="comment" data-bind="value:comment" >
+            </div>
+
+ 
+            <div style="display:none;">
+                <div class="k-edit-label  w-800-l">
+                    <label for="code2" >备用2</label>
+                </div>
+                <div data-container-for="code2" class="k-edit-field w-800-r">
+                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+                </div>
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+
+    window.news_type = [window.news_type[0]];
+
+
+ $(function () {
+                var toolbarAry = [
+                                { name: "create", text: "添加" }
+                              ]
+                var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+                                           
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                       
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/transac/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/transac/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/transac/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/transac/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "userId": { editable: true },
+                                    "recRecords": { editable: true },
+                                    "cardNo": { editable: true},
+                                    "bankName": { editable: true },
+                                    "trueName": { editable: true},
+                                    "idNumber": { editable: true},
+                                    "cash": { editable: true, type:'number' },
+                                    "status": { editable: true, type:'number'},
+                                    "comment": { editable: true},
+                                    "code1": { editable: true},
+                                    "code2": { editable: true},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                
+
+$.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'结佣id',
+                            hidden:true
+                        },
+                        { 
+                            field: "userId",
+                            title: "用户id",
+                        },
+                        { 
+                            field: "recRecords",
+                            title: "推荐id",
+                        },
+                        { 
+                            field: "cardNo",
+                            title: "银行卡",
+                        },
+                        { 
+                            field: "bankName",
+                            title: "开户行",
+                        },
+                         { 
+                            field: "trueName",
+                            title: "姓名",
+                        },
+                         { 
+                            field: "idNumber",
+                            title: "身份证",
+                        },
+                         { 
+                            field: "cash",
+                            title: "金额",
+                        },
+                         { 
+                            field: "status",
+                            title: "状态",
+                            values:window.bank_status
+                        },
+                         { 
+                            field: "comment",
+                            title: "审核留言",
+                            hidden:true
+                        },
+                         { 
+                            field: "code1",
+                            title: "备用1",                           
+                             hidden:true
+                        },
+                         { 
+                            field: "code2",
+                            title: "备用2",                           
+                             hidden:true
+                        },            
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+       
+                        $('#writeTime').kendoDateTimePicker();
+                        
+                        window.dropdown_init($('#status_inp'),window.bank_status)                       
+
+                    },
+                    filterable:window.filter_obj         
+                });
+      })                              
+});
+
+</script>
+<% include inc/foot %>

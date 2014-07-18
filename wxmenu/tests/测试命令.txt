@@ -1,0 +1,9 @@
+1、自动回复
+webot send --token weixin --des http://127.0.0.1:8080/wechat --user "123123123"
+webot send t Hello
+
+2、关注回复
+webot send e "subscribe" --token weixin --des http://127.0.0.1:8080/wechat --user "123123123"
+
+3、点击自定义菜单
+webot send e "click" "menu_1399362466065"  --token weixin --des http://127.0.0.1:8080/wechat --user "123123123"
