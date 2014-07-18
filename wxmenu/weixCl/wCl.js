@@ -65,6 +65,7 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
 }
 
 var checkSign = function(req,res,next){
+  console.log(11111111111111111)
   console.log(req.query)
 
   if(req.query["signature"] &&  req.query["timestamp"] && req.query["nonce"]){
