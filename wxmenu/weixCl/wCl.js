@@ -102,7 +102,7 @@ var checkSign = function(req,res,next){
 var getAppInfo = function(req,res,next){
 
     try{
-      var appEname = req.param('appename') || ''
+      var appEname = req.path.split('/')[1] || ''
       //console.log(appEname)
     }
     catch(e){
@@ -147,9 +147,9 @@ var wxFunction = function(app){
     var wxAppToken =  config.wxAppToken;
     var appEname = config.appEname;
 
-    app.use('/wechat/:appename', getAppInfo);
-    app.use('/wechat/:appename', checkSign);
-    app.use('/wechat/:appename', wechat(wxAppToken, wechat.text(function (message, req, res, next) {
+    app.use('/wechat', getAppInfo);
+    app.use('/wechat', checkSign);
+    app.use('/wechat', wechat(wxAppToken, wechat.text(function (message, req, res, next) {
             // message 为文本内容
             // { ToUserName: 'gh_d3e07d51b513',
             // FromUserName: 'oPKu7jgOibOA-De4u8J2RuNKpZRw',
