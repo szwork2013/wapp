@@ -65,7 +65,7 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
 }
 
 var checkSign = function(req,res,next){
-  
+  console.log(req.query)
   if(req.query["signature"] &&  req.query["timestamp"] && req.query["nonce"]){
       //如果有随机数，表示验证
       var signature = req.query["signature"].toLowerCase();
@@ -144,7 +144,7 @@ var wxFunction = function(app){
     var appEname = config.appEname;
 
     
-    app.use('/wechat', getAppInfo, wechat(wxAppToken, wechat.text(function (message, req, res, next) {
+    app.use('/wechat', getAppInfo, checkSign, wechat(wxAppToken, wechat.text(function (message, req, res, next) {
             // message 为文本内容
             // { ToUserName: 'gh_d3e07d51b513',
             // FromUserName: 'oPKu7jgOibOA-De4u8J2RuNKpZRw',
