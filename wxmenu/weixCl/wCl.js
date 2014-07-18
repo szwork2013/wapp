@@ -3,6 +3,7 @@ var utils = require('../lib/utils.js')
 var wxReplyDl = require('../dl/wxReplyModel.js');
 var wxMenuDl = require('../dl/menuModel.js');
 var wxAppBl = require('../bl/wxApp.js');
+var crypto = require('crypto')
 
 var ERR_REPLY = '系统错误，请您重试';
 var UNKNOW_REPLY = '未知操作'
@@ -63,11 +64,42 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
     return wxObj;
 }
 
+var checkSign = function(req,res,next){
+  
+  if(req.query["signature"] &&  req.query["timestamp"] && req.query["nonce"]){
+      //如果有随机数，表示验证
+      var signature = req.query["signature"].toLowerCase();
+      var timestamp = req.query["timestamp"];
+      var nonce = req.query["nonce"];
+      var echostr = req.query["echostr"];
+
+      var token = req.wxAppObj.wxAppToken;
+
+      var temparray = [token, timestamp, nonce].sort();
+      var tempstr = temparray.join('');
+      var sha1str = crypto.createHash('md5').update(tempstr).digest('hex');
+
+      console.log(sha1str, signature);
+
+      if(signature == sha1str){
+          res.send(echostr)
+      } 
+      else{
+          res.send('signature error')
+      }
+  }
+
+  //如果没有随机数则下一步
+  return next();
+}
+
+
+
 var getAppInfo = function(req,res,next){
 
     try{
       var appEname = req.param('appename') || ''
-      console.log(appEname)
+      //console.log(appEname)
     }
     catch(e){
       return next(e)
@@ -92,11 +124,12 @@ var getAppInfo = function(req,res,next){
         appIntro:appObj.appIntro,
         wxAppId:appObj.wxAppId,
         wxAppSecret:appObj.wxAppSecret,
+        wxAppToken:appObj.wxAppToken,
         writeTime:  moment(appObj.writeTime).format('YYYY-MM-DD hh:mm:ss'),  
       }
 
       req.wxAppObj = appObj2;
-      console.log(req.wxAppObj)
+      //console.log(req.wxAppObj)
       next();
 })
 

@@ -43,7 +43,12 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="wxAppSecret" data-bind="value:wxAppSecret" required="required" data-required-msg="请填写微信appsecret" aria-invalid="true">
             </div>
 
-
+             <div class="k-edit-label  w-800-l">
+                <label for="wxAppToken" >Token</label>
+            </div>
+            <div data-container-for="wxAppToken" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppToken" data-bind="value:wxAppToken" required="required" data-required-msg="请填写微信Token" aria-invalid="true">
+            </div>
 
 
             <div class="k-edit-label  w-800-l">
@@ -135,6 +140,7 @@
                                     "appEname": { editable: true, type:'string', validation: { required: {message: "请填写开发商英文名"}}},
                                     "wxAppId": { editable: true, type:'string',},
                                     "wxAppSecret": { editable: true, type:'string',},
+                                    "wxAppToken": { editable: true, type:'string',},
                                     "appTelphone": { editable: true, type:'string', validation: { required: {message: "请填写联系电话"}}},
                                     "appCustomTel": { editable: true, type:'string', validation: { required: {message: "请填写客服电话"}}},
                                     "appPicture": { editable: true, type:'string', validation: { required: {message: "请上传介绍图片"}}},
@@ -180,6 +186,10 @@
                         { 
                             field: "wxAppSecret",
                             title: "微信appsecret", 
+                        },
+                        { 
+                            field: "wxAppToken",
+                            title: "微信Token", 
                         },
                          { 
                             field: "appEname",

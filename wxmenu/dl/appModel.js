@@ -10,6 +10,7 @@ var obj = { //定义结构
       appIntro:{ type:String,required:true,default:''},
       wxAppId:{type:String,required:true,default:''},  //微信的appid
       wxAppSecret:{type:String,required:true,default:''},  //微信的appsecret
+      wxAppToken:{type:String,required:true,default:''},  //微信的 token
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 
