@@ -145,8 +145,9 @@ var wxFunction = function(app){
     var wxAppToken =  config.wxAppToken;
     var appEname = config.appEname;
 
-    
-    app.use('/wechat', getAppInfo, checkSign, wechat(wxAppToken, wechat.text(function (message, req, res, next) {
+    app.use('/wechat/:appename',getAppInfo);
+    app.use('/wechat/:appename',checkSign);
+    app.use('/wechat/:appename', wechat(wxAppToken, wechat.text(function (message, req, res, next) {
             // message 为文本内容
             // { ToUserName: 'gh_d3e07d51b513',
             // FromUserName: 'oPKu7jgOibOA-De4u8J2RuNKpZRw',
