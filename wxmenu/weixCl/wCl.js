@@ -90,6 +90,7 @@ var checkSign = function(req,res,next){
       else{
           res.end('signature error')
       }
+      return;
   }
 
   //如果没有随机数则下一步
