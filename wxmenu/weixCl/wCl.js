@@ -95,7 +95,7 @@ var getAppInfo = function(req,res,next){
       }
 
       req.wxAppObj = appObj2;
-      //console.log(req.wxAppObj)
+      console.log(req.wxAppObj)
       next();
 })
 
