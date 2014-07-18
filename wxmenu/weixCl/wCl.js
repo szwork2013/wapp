@@ -79,7 +79,7 @@ var checkSign = function(req,res,next){
 
       var temparray = [token, timestamp, nonce].sort();
       var tempstr = temparray.join('');
-      var sha1str = crypto.createHash('md5').update(tempstr).digest('hex');
+      var sha1str = crypto.createHash('sha1').update(tempstr).digest('hex');
 
       console.log(sha1str, signature);
 
@@ -145,8 +145,8 @@ var wxFunction = function(app){
     var wxAppToken =  config.wxAppToken;
     var appEname = config.appEname;
 
-    app.use('/wechat',getAppInfo);
-    app.use('/wechat',checkSign);
+    app.use('/wechat', getAppInfo);
+    app.use('/wechat', checkSign);
     app.use('/wechat', wechat(wxAppToken, wechat.text(function (message, req, res, next) {
             // message 为文本内容
             // { ToUserName: 'gh_d3e07d51b513',
