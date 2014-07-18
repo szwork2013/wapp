@@ -68,7 +68,7 @@ var checkSign = function(req,res,next){
   //console.log(11111111111111111)
   //console.log(req.query)
 
-  if(req.query["signature"] &&  req.query["timestamp"] && req.query["nonce"]){
+  if(req.query["signature"] &&  req.query["timestamp"] && req.query["nonce"] && req.query["echostr"]){
       //如果有随机数，表示验证
       var signature = req.query["signature"].toLowerCase();
       var timestamp = req.query["timestamp"];
@@ -92,6 +92,7 @@ var checkSign = function(req,res,next){
       }
       return;
   }
+
 
   //如果没有随机数则下一步
   return next();
