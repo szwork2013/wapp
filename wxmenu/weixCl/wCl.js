@@ -48,7 +48,7 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
         else{
           wxObj = [];
           replyObj.forEach(function(v){
-            wxObj.push(wxGenSingleObj(v,openId,1)); //生成单个回复对象
+            wxObj.push(wxGenSingleObj(v,openId,appId)); //生成单个回复对象
           })
         }
     }
@@ -57,7 +57,7 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
           wxObj = replyObj.replyDesc;
       }
       else{
-          wxObj = [wxGenSingleObj(replyObj,openId)];        
+          wxObj = [wxGenSingleObj(replyObj,openId,appId)];        
       }
     }
     //console.log(wxObj)
