@@ -77,7 +77,7 @@ $(function(){
 					temp += s;
 				})
 
-				if(d.topdoc.length > 0){//如果有置顶的数据
+				if(d.topdoc && d.topdoc.length > 0){//如果有置顶的数据
 					var o = d.topdoc[0];
 					tops = specialtop.replace(/\{spid\}/g,o._id)
 								.replace(/\{uid\}/g,window.userid)
