@@ -80,6 +80,7 @@ var checkSign = function(req,res,next){
       var temparray = [token, timestamp, nonce].sort();
       var tempstr = temparray.join('');
       var sha1str = crypto.createHash('sha1').update(tempstr).digest('hex');
+      
 
       console.log(sha1str, signature);
 
