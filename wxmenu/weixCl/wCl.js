@@ -2,6 +2,7 @@ var wechat = require('wechat');
 var utils = require('../lib/utils.js')
 var wxReplyDl = require('../dl/wxReplyModel.js');
 var wxMenuDl = require('../dl/menuModel.js');
+var wxAppBl = require('../bl/wxApp.js');
 
 var ERR_REPLY = '系统错误，请您重试';
 var UNKNOW_REPLY = '未知操作'
@@ -63,15 +64,22 @@ var wxGenReplyObj = function(replyObj,openId,appId){ //生成 回复 对象
 }
 
 var getAppInfo = function(req,res,next){
-    var appEname = req.appEname
+
+    try{
+      var appEname = req.path.split('/')[1] || ''
+    }
+    catch(e){
+      return next(e)
+    }
+
     wxAppBl.getByEname(appEname,function(err,appObj){
       if(err){
         logger.error('wxAppBl.getByEname get error,ename is %s, error: %s',config.appEname,err);
-        return
+        return next('no such app')
       }
       if(!appObj){
         logger.error('wxAppBl.getByEname not found appObj, appEname is %s', config.appEname);
-        return
+        return next('no such app')
       }
       appObj2 = {
         _id:appObj._id,
@@ -87,6 +95,7 @@ var getAppInfo = function(req,res,next){
       }
 
       req.wxAppObj = appObj2;
+      //console.log(req.wxAppObj)
       next();
 })
 
@@ -101,7 +110,7 @@ var wxFunction = function(app){
     var appEname = config.appEname;
 
     
-    app.use('/wechat/:appEname', getAppInfo, wechat(wxAppToken, wechat.text(function (message, req, res, next) {
+    app.use('/wechat', getAppInfo, wechat(wxAppToken, wechat.text(function (message, req, res, next) {
             // message 为文本内容
             // { ToUserName: 'gh_d3e07d51b513',
             // FromUserName: 'oPKu7jgOibOA-De4u8J2RuNKpZRw',

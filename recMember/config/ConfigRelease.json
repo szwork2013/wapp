@@ -5,8 +5,8 @@
 	"monoosePool":10,
 	"currentHost":"127.0.0.1",
 	"currentVersion":"v1",
-	"listenPort":7000,
-	"mangerListenPort":7001,
+	"listenPort":7004,
+	"mangerListenPort":7005,
 	"wxAppId":"123",
 	"wxAppSecret":"123",
 	"wxAppToken":"weixin"
