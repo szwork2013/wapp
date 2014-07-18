@@ -349,7 +349,7 @@ function detailInit(e) {
 window.lastData = e.data
 
 
-$.post('/manger/reply/getList', {appId:e.data.appId},function(djson){
+$.post('/manger/reply/getList', {appId:window.appIdv},function(djson){
                 var d3= []
                 var lastDataId = window.lastData._id;
 
