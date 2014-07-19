@@ -417,19 +417,20 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 
 		})
 
+
 		if(ids.length == 0){
 			return cb(null, tempary)
 		}
-
+		//console.log(ids)
 		recBankTransac.findByObj({
-			"_id":{
+			"recRecords":{
 				"$in":ids
 			}
 		},function(err,list2){
 			if(err) return cb(err);
 			if(list2.length == 0) return cb(null,tempary)			
-				console.log(list2)
-			
+				//console.log(list2)
+
 				tempary.forEach(function(tempo){
 
 					list2.forEach(function(listo2){
