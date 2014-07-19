@@ -1,20 +1,22 @@
 <% include inc/head %>
 <%
-  var title = '详细内容'
+  var title = '新闻公告'
 %>
 <% include inc/top %>
 
 <section class="page-content container content-interests content-item">
-    <ul>
-      <li>
-        <a href="#">
-          <img src="img/pic2.jpg">
-          
-        </a>
-      </li>
-      
-      
-    </ul>
-  </section>
+<div class="news_content">
+	<h2><%= doc.title %></h2>
+	<h3>发布时间：<%= doc.writeTime %></h3>
+	<div class="content_box">
+	    <% doc.picture.forEach(function(path){ %>
+          <img src="<%= path %>" class="contentImg" /><br>
+        <% }) %>
+        <%- doc.content %>
+	</div>
+
+
+</div>
+</section>
 
 <% include inc/foot %>

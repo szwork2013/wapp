@@ -317,7 +317,7 @@ obj.recommend = function(appId, userId, qobj, cb){
 	if(!recTel || recTel.length != 11 || recTel != recTel -0){
 		cb('手机号输入有误')
 	}
-	if(recArea != '' && recArea != recArea - 0){
+	if(recArea == ''){
 		cb('面积输入有误')
 	}
 	if(recPrice != '' && recPrice != recPrice - 0){
@@ -365,6 +365,18 @@ obj.recommend = function(appId, userId, qobj, cb){
 
 }
 
+
+
+var record_status = [
+	"无",
+	"待审核",
+	"审核不通过",
+	"预约",
+	"带看",
+	"认筹",
+	"签约",
+]
+
 obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 	
 	var qobj = qobj || {}
@@ -378,6 +390,8 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 		var tempary = []
 		var ids = []
 		list.forEach(function(o){
+			o.comments = o.comments.sort(function(a,b){return 1})
+
 			tempary.push({
 				_id:o._id,
 				appId:o.appId,
@@ -388,7 +402,8 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 				recArea:o.recArea,
 				recPrice:o.recPrice,
 				recRoom:o.recRoom,
-				recStatus:o.recStatus,
+				recStatus:o.recStatus-0,
+				Status:record_status[o.recStatus-0],
 				comments:o.comments,
 				isCash:o.isCash,
 				cashStatus:0, //表示结佣状态，0表示不能结佣
@@ -413,7 +428,8 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 		},function(err,list2){
 			if(err) return cb(err);
 			if(list2.length == 0) return cb(null,tempary)			
-
+				console.log(list2)
+			
 				tempary.forEach(function(tempo){
 
 					list2.forEach(function(listo2){
@@ -468,6 +484,7 @@ obj.getTransacById = function(appId, userId, tranId, cb){
 //申请结佣业务
 obj.createTransac = function(appId, userId, recRecordsId, cb){
 
+
 	recBankTransac.findOneByObj({
 		recRecords:recRecordsId,
 		appId:appId,
@@ -476,10 +493,14 @@ obj.createTransac = function(appId, userId, recRecordsId, cb){
 		if(tranobj) return cb('此推荐记录已经申请过结佣')
 
 		recBankTransac.createOneOrUpdate({
+			recRecords:recRecordsId,
+			appId:appId,
+		},{
 			userId:userId,
 			recRecords:recRecordsId,
 			appId:appId,
 		},function(err,doc){
+			console.log('4444444444')
 			if(err) return cb(err)
 			cb(null, doc)
 		}) //end recBankTransac.createOneOrUpdate

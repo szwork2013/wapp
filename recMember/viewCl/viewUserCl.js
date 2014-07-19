@@ -12,8 +12,27 @@ obj.regist = function(req,res){ //用户注册
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId
 
-//console.log(req.wxBinder)
+	//如果是已经认证用户
+	if(req.wxBinder.appUserType >= 1){
+		obj.modify(req,res);
+		return;
+	}
+
 	res.render('user_regist.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+	})
+
+}
+
+
+obj.modify = function(req,res){ //用户修改资料
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId
+
+//console.log(req.wxBinder)
+	res.render('user_modify.ejs',{
 		'userObj':req.wxuobj,
 		'binderObj':req.wxBinder,
 	})
@@ -32,7 +51,7 @@ obj.recrecord = function(req,res){
 			return res.send(500,'我的推荐记录加载失败')
 		}
 
-			res.render('my_recrecord.ejs',{
+			res.render('recrecord_list.ejs',{
 				'userObj':req.wxuobj,
 				'binderObj':req.wxBinder,
 				'list':list,

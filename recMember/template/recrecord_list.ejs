@@ -6,15 +6,97 @@
 
 <section class="page-content container content-interests content-item">
     <ul>
-      <li>
-        <a href="#">
-          <img src="img/pic2.jpg">
-          
-        </a>
-      </li>
-      
-      
+       
+<% 
+ list.forEach(function(obj,i){ 
+%>
+
+<li class="recrecord_list_box">
+
+<% if(obj.recStatus==6){%>
+	<% if(obj.cashTransacId == '0'){ %>
+
+        	<span class="rec_list_btn">
+        		<a name="send_create_transac" record_id="<%= obj._id %>" href="javascript:;">申请结佣</a>
+        	</span>
+
+
+    <%}else{%>
+        	<span class="rec_list_btn">
+        		<a target="_blank" href="/view/user/transacdetail?transacid=<%= obj.cashTransacId %>&wxuserid=<%= userObj._id %>">结佣详情</a>
+        	</span>
+    <%}%> 
+<%}%>
+
+
+            <h1><%= obj.recName %></h1>
+            <p><span>状 态</span><%= obj.Status %></p>
+            <p><span>时 间</span><%= obj.writeTime %></p>
+            <p><span>电 话</span><%= obj.recTel %></p>
+            <p><span>房 型</span><%= obj.recRoom %></p>
+            <p><span>面 积</span><%= obj.recArea %></p>
+
+<% if(obj.recStatus==6){%>
+		<% if(obj.cashTransacId == '0'){ %>
+            <p><span>结 佣</span>未结佣 <a name="send_create_transac" record_id="<%= obj._id %>" href="javascript:;">立即申请</a></p>
+		<%} else if(obj.cashStatus != 4){%>
+         	<p><span>结 佣</span>已申请 <a target="_blank" href="/view/user/transacdetail?transacid=<%= obj.cashTransacId %>&wxuserid=<%= userObj._id %>">查看详情</a></p>
+        <%} else if(obj.cashStatus == 4){%>
+         	<p><span>结 佣</span>已结佣 <a target="_blank" href="/view/user/transacdetail?transacid=<%= obj.cashTransacId %>&wxuserid=<%= userObj._id %>">查看详情</a></p>
+        <%}%>
+<%}%>
+         	<p><span>动 态</span></p>
+<% if(obj.comments && obj.comments.length>0){ %>
+	<% 
+	 obj.comments.forEach(function(oc,j){ 
+	%>
+         	<p>
+         		<b><%=oc.date%></b>
+         		<font><%=oc.content%></font>
+         	</p>
+ 	<% }) %>        	
+<%}else{%>
+			<p>
+         		暂无动态
+         	</p>
+<%}%>
+
+
+
+
+
+</li>
+<% }) %>
+
     </ul>
   </section>
+<script type="text/javascript">
+ $(function(){
+
+ 	$('a[name="send_create_transac"]').click(function(){
+ 		var that = $(this);
+ 		var recRecordsId = that.attr('record_id');
+
+ 		if(window.isajax) return false;
+ 		window.isajax = true;
+
+ 		$.post('/api/user/createtransac',{
+            'recRecordsId':recRecordsId,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return alert(d.data)
+              alert('申请成功,请等待审核');
+              setTimeout(function(){
+                location.href = location.href
+              },500)             
+          },'json')
+ 	})
+
+
+ })
+
+</script>
+
 
 <% include inc/foot %>

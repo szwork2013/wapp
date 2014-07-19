@@ -1,46 +1,50 @@
 <% include inc/head %>
 <%
-  var title = '朋友推荐'
+  var title = '推荐朋友'
 %>
 <% include inc/top %>
 
 
 
-<section class="page-content container content-interests content-item">
-    <ul>
-      <li>
-        <a href="tj.html">
-          <img src="img/pic1.jpg">
-          
-        </a>
-      </li>
-      
-      
-    </ul>
-  </section>
+<section class="page-content container content-interests content-item" id="step_1" style="display:none;">
 
-<section class="main">
-  <div class="so-head">
-    <p>老友记</p>
-    <div class="so-jian"></div>
-  </div>
+      <div class="recommend_box">
+        <a href="javascript:;" id="recommend_btn">
+          <h2>富士达</h2>
+          <p>
+            <b>活动详情：</b>
+            <br/>
+            自2014年5月4日起，凡"杭州万科V服务"注册金卡会员，成功推荐亲友购买杭州万科旗下一手住宅，商铺，每成交一套，即可获得该套房源一年物业管理费额度的兑换奖励
+          </p>
+          <span>
+            <img src="/static/wanke_skin/img/recommend_btn.png" />
+          </span>
+        </a>
+      </div>
+ 
+</section>
+
+<section class="main"  id="step_2" style="display:;">
+
+
   <div class="so-p">
-    <p>万小猛先生/女士  <br>哪位朋友想和你做邻居？请告诉我们他的信息吧</p>
+    <p><%= userObj.appUserName %>先生/女士  <br>哪位朋友想和你做邻居？请告诉我们他的信息吧</p>
   </div>
 
   <div class="rem-box">
-  <form action="/index.php?g=Wap&amp;m=OldFriend&amp;a=friend&amp;wecha_id=oqxqrjqvCH9Gh_3vCGTgnAEevW_8" id="I_sub_form">
+    <div class="rem-p1 rem-p1-2" id="errtip" style="display:none;">
+    </div>
     <div class="rem-p1">
       <label>购房人姓名：</label>
-      <input type="text" name="bname" id="I_name" placeholder="请输入...">
+      <input type="text" name="bname"  placeholder="请输入购房人姓名" id="recName"  maxlength="20">
     </div>
     <div class="rem-p1">
       <label>购房人电话：</label>
-      <input type="text" name="btel" id="I_tel" placeholder="请输入...">
+      <input type="text" name="btel"  placeholder="请输入购房人手机号码" id="recTel"  maxlength="11">
     </div>
     <div class="rem-p1">
       <label>意向户型：</label>
-      <select name="bhtype">
+      <select name="bhtype" id="recRoom">
         <option value="一房">一房</option>
         <option value="两房">两房</option>
         <option value="三房">三房</option>
@@ -49,7 +53,7 @@
     </div>
     <div class="rem-p1">
       <label>面积尺寸：</label>
-      <select name="bharea">
+      <select name="bharea" id="recArea">
         <option value="50-80㎡">50-80㎡</option>
         <option value="80-100㎡">80-100㎡</option>
         <option value="100-120㎡">100-120㎡</option>
@@ -61,39 +65,56 @@
       </select>
     </div>
     
-    
-    <input type="hidden" name="wecha_id" value="oqxqrjqvCH9Gh_3vCGTgnAEevW_8">
-  <input type="hidden" name="__hash__" value="531f5ffc9b98fa73f03e59ca090f57f2_b0b46d73fda6c6362219b8678b1247b0"></form>
   </div>
   <div class="sus-btn-box">
-  <a class="rem-btn-back" id="I_subfrom_btn" href="javascript:;">提&nbsp;&nbsp;&nbsp;交</a>
+  <a class="rem-btn-back" id="submitBtn" href="javascript:;">提&nbsp;&nbsp;&nbsp;交</a>
   </div>
 
 </section>
 
 
-
 <script type="text/javascript">
   $(function(){
 
+      $('body').addClass('index')
+
+      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
       $('#submitBtn').click(function(){
         if(window.isajax) return false;
+          $('#errtip').hide();
 
-          var mobile = $('#mobile').val();
-          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
-              $('#errtip').html('手机号输入有误')
+          var recTel = $.trim($('#recTel').val());
+          var recName = $.trim($('#recName').val());
+          var recRoom = $.trim($('#recRoom').val());
+          var recArea = $.trim($('#recArea').val());
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
+              $('#errtip').html(errimg+'手机号输入有误').show()
               return false;
           }
+
+
+          if(!recName){
+              $('#errtip').html(errimg+'请输入真实姓名').show()
+              return false;
+          } 
+          
           window.isajax = true
-          $('#errtip').empty()
+          $('#errtip').empty().hide();
+
           $.post('/api/user/recommend',{
-            'mobile':mobile,
+            'recTel':recTel,
+            'recName':recName,
+            'recRoom':recRoom,
+            'recArea':recArea,
             'wxuserid':window.userid
           },function(d){
               window.isajax = false;
-              if(d.error) return $('#errtip').html(d.data)
+              if(d.error) return $('#errtip').html(errimg+d.data).show();
               alert('推荐成功,请等待审核');
-              location.href = location.href
+              setTimeout(function(){
+                location.href = '/view/user/recrecord?wxuserid='+window.userid
+              },500)             
           },'json')
 
       })

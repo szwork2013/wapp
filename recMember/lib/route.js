@@ -167,18 +167,18 @@ var addroute = function(app){
 
 	//发送推荐用户
 	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
-	//我的收藏
+	//申请结佣
 	app.post('/api/user/createtransac',getUserMid, apiUser.createtransac);
 	
 	//下面是页面控制器
 
 
 	//新闻列表,不用登录
-	app.get('/view/service/newsall', viewService.newsall);
+	app.get('/view/service/newsall', getUserMid, viewService.newsall);
 	//新闻详情页面,不用登录
-	app.get('/view/service/newsdetail', viewService.newsDetail);	
+	app.get('/view/service/newsdetail', getUserMid, viewService.newsDetail);	
 	//一键呼叫，预约服务,不用登录
-	app.get('/view/service/call', viewService.call);
+	app.get('/view/service/call', getUserMid, viewService.call);
 
 
 	//推荐用户

@@ -3,101 +3,117 @@
   var title = '会员认证'
 %>
 <% include inc/top %>
-   <div class="regist_bg"></div> 
-<article style="display: block;" class="articleList articleList2">
 
+<section class="page-content container content-index">
+    <h1 class="icon">会员中心</h1>
 
-<% if(binderObj.appUserType == 0){ %>
-    
-    
-    <dl class="input_common_dl clear">
-        <dt>
-            手机号：
-        </dt>
-        <dd>
-            <input type="text" value="" id="mobile" name="mobile" maxlength="11" />
-            <span id="mobile_tips" class="redt2">手机号是您参加活动重要的联系方式,注册后不可更改</span>
-        </dd>
-    </dl>
-    <dl class="input_common_dl clear">
-        <dt>
-            真实姓名：
-        </dt>
-        <dd>
-            <input type="text" value="" id="appUserName" name="appUserName" maxlength="20" />
-        </dd>
-    </dl>
-    <dl class="input_common_dl clear">
-        <dt>
-            性别：
-        </dt>
-        <dd>
-            <select class="registSex" id="sex">
-                <option value="1" selected="selected">男性</option>
-                <option value="0">女性</option>
-            </select>
-        </dd>
-    </dl>
-    <dl class="input_common_dl clear">
-      <dt></dt>
-      <dd>
-          <b id="errtip" class="errtip err_img_box"></b>
-      </dd>
-    </dl>
+      <fieldset class="info">
 
-
-
-    <dl class="input_common_dl clear">
-      <dt></dt>
-      <dd>
-          <a href="javascript:;" id="submitBtn" class="redBtn">提交</a>
-          
-      </dd>
-    <dl>
-<%} else{ %>
-
-  <div class="daySignBox clearfix">
-        
-          <p><%= userObj.appUserName %>，您已经是认证会员了</p>
-          <p>前往<a href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank" class="reda">个人中心</a>，立即查看我的积分和参与活动吧</p>
-    </div>
-
+<% if(binderObj.isNewSubmit == 1){ %>
+<div class="info-errtip info-errtip2">
+    资料审核中，请耐心等待
+</div>
+<%
+}else if(binderObj.isNewSubmit == 2){ 
+%>
+<div class="info-errtip info-errtip2">
+    审核不通过，请重新认证
+</div>
 <%}%>
+        
 
-</article>
+        <div class="info-errtip" style="display:none" id="errtip"></div>
+        <div class="info-name">
+          <label class="icon">姓名</label>
+          <input type="text" placeholder="请输入真实姓名" id="appUserName" name="appUserName" maxlength="20" />
+        </div>
+        <div class="info-phone">
+          <label class="icon">手机</label>
+          <input type="text" placeholder="请输入手机号" id="mobile" name="mobile" maxlength="11" />
+        </div>
+        <div class="info-type">
+          <label class="icon">房号</label>
+          <input type="text" placeholder="例如: 10-2101" id="house" name="house" maxlength="50" />
+          
+        </div>
+        <!--
+        <div class="info-numb">
+          <label class="icon">证件号码</label>
+          <input type="text" placeholder="证件号码" name="card_no">
+        </div>
+        -->
+      </fieldset>
+      <fieldset class="icon protocol">
+        <a class="tick icon" href="javascript:;">勾选</a>
+        <a class="enter" href="javascript:;">蜜糖业主老带新说明</a>
+      </fieldset>
+      <fieldset class="submit">
+        <input class="icon" type="button" id="submitBtn" value="认证">
+      </fieldset>
+   
+  </section>
 
+<div class="protocol-dialog" style="display: none;">
+    <a class="button-close" href="javascript:;">关闭</a>
+    <a class="button-true" href="javascript:;">确定</a>
+    <div class="protocol-content">
+      <p>相关说明</p>
+      <p>相关说明</p>
+      <p>相关说明</p>
+      <p>相关说明</p>
+      <p>相关说明</p>
+      <p>相关说明</p>
+    </div>
+  </div>
 
 <script type="text/javascript">
   $(function(){
+
+      $('body').addClass('index')
+
       var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
       $('#submitBtn').click(function(){
         if(window.isajax) return false;
+          $('#errtip').hide();
 
           var mobile = $('#mobile').val();
           var appUserName = $.trim($('#appUserName').val());
-          var sex = $('#sex').val();
+          var house = $.trim($('#house').val());
+          var appUserBuilding = ''
+          var appUserRoom = ''
 
           if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
-              $('#errtip').html(errimg+'手机号输入有误')
+              $('#errtip').html(errimg+'手机号输入有误').show()
               return false;
           }
           if(!appUserName){
-              $('#errtip').html(errimg+'请输入真实姓名')
+              $('#errtip').html(errimg+'请输入真实姓名').show()
               return false;
+          } 
+          if(house){
+
+              if(house.indexOf('-') == -1){
+                 $('#errtip').html(errimg+'楼房号用"-"分割').show()
+                 return false;
+              }
+              appUserBuilding = house.split('-')[0]
+              appUserRoom = house.split('-')[1]
+              
           }
 
-
           window.isajax = true
-          $('#errtip').empty()
+          $('#errtip').empty().hide();
+
           $.post('/api/user/binder',{
             'appUserName':appUserName,
-            'appUserSex':sex,
+            'appUserBuilding':appUserBuilding,
+            'appUserRoom':appUserRoom,
             'appUserMobile':mobile,
             'wxuserid':window.userid
           },function(d){
               window.isajax = false;
-              if(d.error) return $('#errtip').html(errimg+d.data)
-              alert('认证成功');
+              if(d.error) return $('#errtip').html(errimg+d.data).show();
+              alert('认证成功,请等待审核');
               setTimeout(function(){
                 location.href = location.href
               },500)             

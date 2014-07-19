@@ -27,7 +27,7 @@ obj.getNewsByTypePage = function(appId,type,page,size,cb){ //某一类型公告�
 				type:obj.type,
 				code1:obj.code1,
 				code2:obj.code2,
-				writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+				writeTime:moment(obj.writeTime).format('YYYY-MM-DD')
 			})
 		})
 

@@ -15,7 +15,7 @@ obj.binder = function(req,res){ //用户认证绑定
 		openId:openId,
 
 		appUserName:req.body.appUserName,
-		appUserSex:req.body.appUserSex,
+		appUserSex:req.body.appUserSex || 1,
 		appUserBirth:req.body.appUserBirth || '1970-01-01',
 		appUserMobile:req.body.appUserMobile,
 		//选填项
@@ -49,14 +49,7 @@ obj.binder = function(req,res){ //用户认证绑定
      	var userId = req.wxuobj._id;
 		var openId = req.wxuobj.openId;
 		var appId = global.wxAppObj._id;
-     	var rule = 'registRule'
 
-     	scoreBl.scoreRule(appId, userId, openId, {'mobile':req.wxuobj.appUserMobile}, rule, function(err,doc){
-			if(err){
-		        return res.send({error:1,data:err}) 
-	     	}
-	     	res.send({error:0,data:''});
-		})
 
      	res.send({error:0,data:doc});		
 	})
@@ -120,12 +113,15 @@ obj.recommend = function(req,res){ //推荐人
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId;
 
+	var recTel = req.body.recTel;
 	var recName = req.body.recName;
 	var recSex = req.body.recSex || 1;
-	var recTel = req.body.recTel;
-	var recArea = req.body.recArea;
-	var recPrice = req.body.recPrice;
+
 	var recRoom = req.body.recRoom;
+	var recArea = req.body.recArea;
+
+	var recPrice = req.body.recPrice || 0;
+	
 
 	if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
 		return res.send({error:1,data:'手机号格式有误'}) 
@@ -154,11 +150,9 @@ obj.createtransac = function(req,res){ //申请结佣
 
 
 	if(!recRecordsId || recRecordsId.length != 24){
-		return res.send(500,'推荐记录id有误')
+		return res.json({'error':1,'data':'推荐记录id有误'})
 	}
 
-
-	
 	userBl.createTransac(appId, userId, recRecordsId, function(err,doc){
 		if(err) return res.json({'error':1,'data':err})
 		res.json({'error':0,'data':doc})

@@ -7,52 +7,25 @@ var obj = {}
 
 //乐活空间公告，不用登录
 obj.newsall = function(req,res){ 
-	//var userId = req.wxuobj._id;
+	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
-	//var openId = req.wxuobj.openId;
+	var openId = req.wxuobj.openId;
+	var newsId = req.query.newsId;
 
 	infoBl.getNewsByTypePage(appId, 2, 1, 100, function(err,list){
 		if(err){
 			logger.error('obj.newsall error, appId %s, err %s', appId, err);
-			return res.send(500,'物语空间活动加载失败')
+			return res.send(500,'新闻列表页加载失败')
 		}
-		//return res.json(list)
 
-		res.render('active_list.ejs',{
-			'title':'公告',
-			'userObj':{'_id':'0'},
-			'binderObj':{},
+		res.render('news_list.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
 			'list':list
 		})
 		return;
 	})
 }
-
-
-
-//物语空间活动
-obj.announce = function(req,res){ 
-	//var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
-	//var openId = req.wxuobj.openId;
-
-	infoBl.getNewsByTypePage(appId, 3, 1, 100, function(err,list){
-		if(err){
-			logger.error('obj.announce error, appId %s, err %s', appId, err);
-			return res.send(500,'物语空间公告加载失败')
-		}
-		//return res.json(list)
-
-		res.render('active_list.ejs',{
-			'title':'物语空间公告',
-			'userObj':{'_id':'0'},
-			'binderObj':{},
-			'list':list
-		})
-		return;
-	})
-}
-
 
 
 
@@ -71,39 +44,15 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 			logger.error('obj.newsDetail error, newsId %s, err %s', newsId, err);
 			return res.send(500,'详细页面加载失败')
 		}
-		if(doc.type == 1 && doc.url != ''){
-			res.redirect(doc.url)
-			return;
-		}
 
-		var defaultActiveCount =  parseInt(doc.code1) || 0;
-		
-		//查找参加活动人数
-		infoBl.countActiveByActiveId(appId,newsId,function(err,count){
-			if(err){
-				return res.send(500,'详细页面加载失败')
-			}
-
-			var activeCount = defaultActiveCount + count;
-
-			//查找用户是否有已经报名过了
-			infoBl.findMeActiveByActiveId(appId,userId,newsId,function(err,actdoc){
-				if(err){
-					return res.send(500,'详细页面加载失败')
-				}
-				//console.log(actdoc)
-				res.render('news_detail.ejs',{
-					'userObj':req.wxuobj,
-					'binderObj':req.wxBinder,
-					'activeCount':activeCount,
-					'joinInfo':actdoc,
-					'doc':doc
-				})
-				return;
-			})
-
+		//console.log(actdoc)
+		res.render('news_detail.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+			'doc':doc
 		})
-		
+		return;
+
 	})
 
 }

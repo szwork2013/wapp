@@ -7,7 +7,7 @@
 /**************
  * 微信分享
  **************/
-_WXShare('分享显示的LOGO','100','100','分享标题','分享描述','分享链接','微信APPID(一般不用填)');
+//_WXShare('分享显示的LOGO','100','100','分享标题','分享描述','分享链接','微信APPID(一般不用填)');
 
 /**************
  * 分享提示
@@ -22,24 +22,7 @@ _WXShare('分享显示的LOGO','100','100','分享标题','分享描述','分享
 /**************
  * KISSY
  **************/
-KISSY.use('node,gallery/qrcode/1.0/',function(S,Node,QRCode){
-	var $ = Node.all;
-	/*//预加载
-	_PreLoadImg(['static/img/01.jpg',
-	'static/img/02.png'],function(){  
-		$('.loading').remove();
-		$('.p-index').show();
-	});*/
-	//二维码
-	var qrcode = new QRCode("qrcode",{
-		text:url,
-		width:167,
-		height:167,
-		colorDark:"#000",
-		colorLight:"#fff",
-		correctLevel:QRCode.CorrectLevel.H
-    });
-});
+
 
 /**************
  * jquery
@@ -64,9 +47,9 @@ $(function(){
 		$(this).css("color","#333");
 	});
 	//协议勾选
-	$(".protocol .tick").click(function(){
-		$(this).toggleClass("icon");
-	});
+	//$(".protocol .tick").click(function(){
+	//	$(this).toggleClass("icon");
+	//});
 	//查看协议
 	$(".protocol .enter").click(function(){
 		$(".protocol-dialog,.mask").show();
