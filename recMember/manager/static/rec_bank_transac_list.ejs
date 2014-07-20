@@ -18,7 +18,9 @@
                 <label for="userId" >用户Id</label>
             </div>
             <div data-container-for="userId" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+               <input type="text" id="user_name_inp" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+               <br/>
+               <span id="user_name"></span>
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -268,7 +270,33 @@ $.post('/manger/app/getList',{},function(data_ary){
        
                         $('#writeTime').kendoDateTimePicker();
                         
-                        window.dropdown_init($('#status_inp'),window.bank_status)                       
+                        window.dropdown_init($('#status_inp'),window.bank_status)
+
+                        setTimeout(function(){
+
+                            var getname = function(){
+                                $.post('/manger/user/getOne',{
+                                    id:uid
+                                },function(d){
+                                     if(d.error == 1){
+                                        var str= '<b style="color:#c00">未找到用户</b>'
+                                    }
+                                    else{
+                                        var str = '姓名：'+d.data.appUserName+'；电话：'+d.data.appUserMobile
+                                    }
+                                    $('#user_name').html(str);
+                                },'json')
+                            }
+
+                            var uid = $('#user_name_inp').val()
+                            $('#user_name_inp').change(function(){
+                                uid = $('#user_name_inp').val()
+                                getname()
+                            })
+
+                            getname()
+
+                        },500)       
 
                     },
                     filterable:window.filter_obj         

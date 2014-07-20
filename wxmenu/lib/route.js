@@ -3,7 +3,7 @@ var moment = require('moment');
 var path = require('path');
 var fs = require('fs');
 var wxRoute = require('../weixCl/wCl.js');
-
+var oauthCl = require('../viewCl/OAuthCl.js')
 
 var wxAppBl = require('../bl/wxApp.js');
 
@@ -141,6 +141,9 @@ var checkIsReg = function(req,res,next){
 
 var addroute = function(app){
 	wxRoute(app); //定义微信的路由
+
+	//定义微信的OAuth接口
+	oauthCl.oauthJumpBack(app);
 
 /*
 	

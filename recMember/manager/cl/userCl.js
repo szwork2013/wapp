@@ -91,7 +91,14 @@ obj.getOne = function(req, res){
 	}, function(err, doc){
 		if(err) return res.json({'error':1,data:err})
 		if(!doc) return res.json({'error':1,data:'未找到信息'})
-		res.json({'error':0,data:doc.appUserName});
+		res.json(
+			{
+				'error':0,
+				data:{
+					appUserName:doc.appUserName,
+					appUserMobile:doc.appUserMobile
+				}
+		});
 	})
 }
 

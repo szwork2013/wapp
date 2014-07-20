@@ -7,7 +7,8 @@
 	"currentVersion":"v1",
 	"listenPort":7002,
 	"mangerListenPort":7003,
-	"wxAppId":"123",
-	"wxAppSecret":"123",
-	"wxAppToken":"weixin"
+	"wxAppId":"wx37d508578c160439",
+	"wxAppSecret":"944bff595d3b025ef18d57d7c1ce46d0",
+	"wxAppToken":"weixin",
+	"oauthScope":"snsapi_userinfo"
 }

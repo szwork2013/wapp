@@ -28,6 +28,30 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="appUserName" data-bind="value:appUserName" required="required" data-required-msg="请填写真实姓名" aria-invalid="true">
             </div>
 
+
+             <div class="k-edit-label  w-800-l">
+                <label for="wxName">微信昵称</label>
+            </div>
+            <div data-container-for="wxName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxName" data-bind="value:wxName" >
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="wxAvatar">微信头像</label>
+            </div>
+            <div data-container-for="wxAvatar" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAvatar" data-bind="value:wxAvatar" >
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="wxAddress">微信地址</label>
+            </div>
+            <div data-container-for="wxAddress" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAddress" data-bind="value:wxAddress" >
+            </div>
+
+
+
             <div class="k-edit-label  w-800-l">
                 <label for="appUserMobile">手机号码</label>
             </div>
@@ -120,6 +144,9 @@
                                 fields: {
                                     "_id": { editable: false },
                                     "appId": { editable: true },
+                                    "wxName": { editable: true },
+                                    "wxAvatar": { editable: true },
+                                    "wxAddress": { editable: true },
                                     "appUserName":{editable: true},
                                     "appUserMobile":{editable: true},
                                     "appUserSex":{editable: true},
@@ -180,6 +207,21 @@
                         { 
                             field: "appUserName",
                             title: "真实姓名",
+                        },
+                        { 
+                            field: "wxName",
+                            title: "微信昵称",
+                           
+                        },
+                        { 
+                            field: "wxAvatar",
+                            title: "微信头像",
+                            hidden:true
+                        },
+                        { 
+                            field: "wxAddress",
+                            title: "微信地址",
+                            hidden:true
                         },
                         { 
                             field: "appUserMobile",

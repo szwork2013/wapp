@@ -8,9 +8,12 @@ var app = express();
 var config = require('../config/config.js');
 var addRoute = require('./route.js');
 
+
 //使用客户端cookie
 var cs = require('client-session');
-var clientSession = cs('eastcitywujbnet');
+var clientSession = cs('wxwujbnet',{
+	maxAge:24*3600*7
+});
 
 app.enable('trust proxy');
 app.set('x-powered-by', 'openresty');
