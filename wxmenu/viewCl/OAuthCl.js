@@ -149,7 +149,7 @@ obj.oauthJumpBack = function(app){
 
 	app.get(oauth_back_url,function(req,res){
 		var code = req.query.code;
-		var state = req.state.state;
+		var state = req.query.state;
 		var oauth_jump = req.csession['oauth_jump'] || oauth_oob;
 
 		req.csession['oauth_jump'] = null;
