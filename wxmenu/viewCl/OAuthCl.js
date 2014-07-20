@@ -8,7 +8,7 @@ var moment = require('moment');
 
 var obj = {}
 var oauth_back_url = '/oatuh/back';
-var oauth_oob = '/oatuh/oob';
+var oauth_oob = '/oauth/oob';
 
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
