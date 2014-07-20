@@ -113,7 +113,13 @@
           },function(d){
               window.isajax = false;
               if(d.error) return $('#errtip').html(errimg+d.data).show();
-              alert('认证成功,请等待审核');
+
+              if(d.data.appUserType == 2){
+                alert('您是老业主，认证成功');
+              }
+              else{
+                alert('提交成功,请等待审核');
+              }
               setTimeout(function(){
                 location.href = location.href
               },500)             

@@ -6,7 +6,16 @@
 
 <section class="page-content container content-interests content-item">
     <ul>
-       
+
+
+
+
+
+
+
+
+
+<% if(list.length > 0){%>   
 <% 
  list.forEach(function(obj,i){ 
 %>
@@ -67,6 +76,19 @@
 
 </li>
 <% }) %>
+<%}else{%>
+
+
+<li class="recrecord_list_box">
+
+  <h1 class="no_record_h1">暂无推荐记录</h1>
+
+</li>
+
+
+
+<%}%>
+
 
     </ul>
   </section>

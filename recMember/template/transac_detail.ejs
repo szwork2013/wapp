@@ -11,43 +11,33 @@
 
 <li class="recrecord_list_box">
 
-<% if(obj.recStatus==6){%>
-	<% if(obj.cashTransacId == '0'){ %>
+            <h1><%= obj.statusName %></h1>
+            <p><span>被推荐人</span><%= obj.recName %></p>
+            <p><span>推荐状态</span>已签约</p>
 
-        	<span class="rec_list_btn">
-        		<a name="send_create_transac" record_id="<%= obj._id %>" href="javascript:;">申请结佣</a>
-        	</span>
+            <% if(obj.bankName != ''){%>
+            <p><span>开户行</span><%= obj.bankName %></p>
+            <%}%>
+            <% if(obj.bankName != ''){%>
+            <p><span>卡&nbsp;&nbsp;号</span><%= obj.cardNo %></p>
+            <%}%>
 
-    <%}else{%>
-        	<span class="rec_list_btn">
-        		<a target="_blank" href="/view/user/transacdetail?transacid=<%= obj.cashTransacId %>&wxuserid=<%= userObj._id %>">结佣详情</a>
-        	</span>
-    <%}%> 
-<%}%>
+            <% if(obj.bankName != ''){%>
+            <p><span>姓&nbsp;&nbsp;名</span><%= obj.trueName %></p>
+             <%}%>
 
+            <% if(obj.bankName != ''){%>
+            <p><span>身份证</span><%= obj.idNumber %></p>
+             <%}%>
 
-            <h1><%= obj.recName %></h1>
-            <p><span>状 态</span><%= obj.Status %></p>
-            <p><span>时 间</span><%= obj.writeTime %></p>
-            <p><span>电 话</span><%= obj.recTel %></p>
-            <p><span>房 型</span><%= obj.recRoom %></p>
-            <p><span>面 积</span><%= obj.recArea %></p>
+            <% if(obj.bankName != 0){%>
+            <p><span>获得佣金</span><%= obj.cash %>元</p>
+            <%}%>
 
-<% if(obj.recStatus==6){%>
-		<% if(obj.cashTransacId == '0'){ %>
-            <p><span>结 佣</span>未结佣 <a name="send_create_transac" record_id="<%= obj._id %>" href="javascript:;">立即申请</a></p>
-		<%} else if(obj.cashStatus != 4){%>
-         	<p><span>结 佣</span>已申请 <a target="_blank" href="/view/user/transacdetail?transacid=<%= obj.cashTransacId %>&wxuserid=<%= userObj._id %>">查看详情</a></p>
-        <%} else if(obj.cashStatus == 4){%>
-         	<p><span>结 佣</span>已结佣 <a target="_blank" href="/view/user/transacdetail?transacid=<%= obj.cashTransacId %>&wxuserid=<%= userObj._id %>">查看详情</a></p>
-        <%}%>
-<%}%>
-         	<p><span>动 态</span></p>
-
-
-
-
-
+            <% if(obj.bankName != ''){%>
+            <p><span>留&nbsp;&nbsp;言</span></p>
+         	  <p><%= obj.comment %></p>
+            <%}%>
 
 </li>
 

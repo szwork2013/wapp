@@ -39,6 +39,7 @@ obj.checkIsOldMember = function(uobj){
 	var len = oldMember.length;
 	for(var i=0;i<len;i++){
 		var foundCount = 0;
+
 		if(oldMember[i][0] == uobj.appUserName){
 			foundCount++;
 		}
@@ -51,6 +52,13 @@ obj.checkIsOldMember = function(uobj){
 		if(uobj.appUserRoom.indexOf(oldMember[i][3]) != -1){
 			foundCount++;
 		}
+		/*
+		console.log(oldMember[i][0],uobj.appUserName)
+		console.log(oldMember[i][1],uobj.appUserMobile)
+		console.log(oldMember[i][2],uobj.appUserBuilding)
+		console.log(oldMember[i][3],uobj.appUserRoom)
+		console.log(foundCount)
+		*/
 		if(foundCount>=3){
 			return true;
 		}
@@ -163,7 +171,7 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 								var isOldMember = obj.checkIsOldMember({
 									appUserName:qobj.appUserName,
 									appUserMobile:qobj.appUserMobile,
-									appUserBuilding:qobj.appUserCommunity,
+									appUserBuilding:qobj.appUserBuilding,
 									appUserRoom:qobj.appUserRoom,
 								})
 								//新的用户提交，将会审核
@@ -408,7 +416,7 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 				isCash:o.isCash,
 				cashStatus:0, //表示结佣状态，0表示不能结佣
 				cashTransacId:'0',//表示结佣id
-				writeTime:moment(o.writeTime).format('YYYY-MM-DD hh:mm:ss')
+				writeTime:moment(o.writeTime).format('YYYY-MM-DD HH:mm:ss')
 			})
 
 			if(o.recStatus=='6'){
@@ -454,6 +462,13 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 }
 
 
+var transac_status = [
+	"无",
+	"结佣申请 待审核",
+	"结佣申请 审核不通过",
+	"结佣申请 已受理",
+	"结佣申请 已发放",
+]
 
 //根据获取结佣流水列表
 obj.getTransacList = function(appId, userId, cb){
@@ -475,11 +490,35 @@ obj.getTransacById = function(appId, userId, tranId, cb){
 		_id:tranId,
 		appId:appId,
 		userId:userId,
-	},function(err,tranobj){
+	},function(err,o){
 		if(err) return cb(err)
-		if(!tranobj) return cb('未找到结佣记录')
-		cb(null, tranobj)
-	})
+		if(!o) return cb('未找到结佣记录')
+
+		var tranobj = {
+			 userId:o.userId,
+  			 recRecords:o.recRecords,
+  			 cardNo:o.cardNo,
+  			 bankName:o.bankName,
+  			 trueName:o.trueName,
+  			 idNumber:o.idNumber,
+  			 cash:o.cash,
+  			 status:o.status,
+  			 statusName:transac_status[o.status-0],
+  			 comment:o.comment,
+  			 writeTime:moment(o.writeTime).format('YYYY-MM-DD HH:mm:ss')
+		}
+
+		recRecordModel.findOneByObj({
+			_id:o.recRecords
+		},function(err,o2){
+			if(err) return cb(err)
+			if(!o2) return cb('未找到相关推荐记录')
+			tranobj.recName = o2.recName
+			cb(null, tranobj)
+		
+		})//end recRecordModel.findOneByObj
+
+	})// end recBankTransac.findOneByObj
 }
 
 //申请结佣业务

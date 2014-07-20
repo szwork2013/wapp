@@ -48,6 +48,11 @@ objSchema.statics.findByObj = function(obj,cb){
       return this.find(obj, cb);
 }
 
+objSchema.statics.findOneByObj = function(obj,cb){
+      var obj = obj || {};
+      return this.findOne(obj, cb);
+}
+
 objSchema.statics.insertOneByObj = function (obj,cb) {
 	var obj = obj || {};
  	return this.create(obj,cb)

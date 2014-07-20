@@ -141,7 +141,7 @@ font-family: "Microsoft YaHei";
 }
 .content-item ul p {font-size:11px;color:#525252;line-height:20px}
 .content-item ul p:last-child{margin-top:4px;}
-.content-item ul span{display:inline-block;margin-right:4px;width:48px;background:#18b4b6;color:#fff;text-align:center}
+.content-item ul span{display:inline-block;margin-right:4px;width:55px;background:#18b4b6;color:#fff;text-align:center}
 /* Preset */
 .page-preset-header .logo{
 	margin-left:87px;width:146px;background-position:0 -492px;
@@ -306,4 +306,9 @@ font-family: "Microsoft YaHei";
 }
 .rec_list_btn a{
 	color: #fff;
+}
+.no_record_h1{
+	text-align: center;
+	min-height: 80px;
+	line-height: 80px;
 }

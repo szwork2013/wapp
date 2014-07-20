@@ -81,7 +81,7 @@ obj.transacDetail = function(req,res){
 		res.render('transac_detail.ejs',{
 			'userObj':req.wxuobj,
 			'binderObj':req.wxBinder,
-			'doc':doc
+			'obj':doc
 		})
 	})
 
