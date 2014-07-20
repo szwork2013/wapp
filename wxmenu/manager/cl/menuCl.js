@@ -131,7 +131,7 @@ obj.sync = function(req, res){
 
 						if(v.replyKey.indexOf('http') == 0){
 							wxMenu.button.push({ //如果主菜单是跳转
-								'type':'click',
+								'type':'view',
 								'name':v.menuTitle,
 								'url':v.replyKey.trim()
 							})
