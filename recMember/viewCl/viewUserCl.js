@@ -100,6 +100,12 @@ obj.recommend = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
 
+	//如果是已经认证用户
+	if(req.wxBinder.appUserType < 1){
+		obj.regist(req,res);
+		return;
+	}
+
 	res.render('user_recommend.ejs',{
 		'userObj':req.wxuobj,
 		'binderObj':req.wxBinder,
