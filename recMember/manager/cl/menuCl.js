@@ -48,13 +48,14 @@ obj.update = obj.create = function(req, res){
 	delete req.models[0]["_id"];
 
 
-	var replayIds = '0';
-	if(req.models[0]['replyId'] && req.models[0]['replyId'].length>0){
+	var replayIds = req.models[0]['replyId'];
+
+	if(Array.isArray(req.models[0]['replyId'])){
 		var replayIds = [];
 		req.models[0]['replyId'].forEach(function(obj){
 			replayIds.push(obj.value);
 		})
-		replayIds = replayIds.join(',');
+		replayIds = replayIds.join(',') || '0';
 	}
 
 	req.models[0]['replyId'] = replayIds
