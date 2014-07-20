@@ -1,0 +1,48 @@
+{
+  "apps" : [
+      {
+        "name"      : "ec",
+        "script"    : "/var/nodejs/wapp/eastcity/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "ecadmin",
+        "script"    : "/var/nodejs/wapp/eastcity/manager/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+
+      {
+        "name"      : "wxmenu",
+        "script"    : "/var/nodejs/wapp/wxmenu/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "wxmenuadmin",
+        "script"    : "/var/nodejs/wapp/wxmenu/manager/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+
+      {
+        "name"      : "mix",
+        "script"    : "/var/nodejs/wapp/recMember/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "mixadmin",
+        "script"    : "/var/nodejs/wapp/recMember/manager/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      }
+  ]
+}

@@ -1,0 +1,12 @@
+mongod --dbpath=/var/mongodb_datebase/ --fork --logpath=/var/mongodb_log/log
+nginx
+
+
+pm2 start /var/nodejs/wapp/eastcity/app.js -n ec
+pm2 start /var/nodejs/wapp/eastcity/manager/app.js -n ecadmin
+
+pm2 start /var/nodejs/wapp/wxmenu/app.js -n wxmenu
+pm2 start /var/nodejs/wapp/wxmenu/manager/app.js -n wxmenuadmin
+
+pm2 start /var/nodejs/wapp/recMember/app.js -n mix
+pm2 start /var/nodejs/wapp/recMember/manager/app.js -n mixadmin
