@@ -12,7 +12,7 @@ var oauth_oob = '/oauth/oob';
 
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
-	req.csession['oauth_jump'] = null;
+	req.session['oauth_jump'] = null;
 	var wxopenid = req.session['oauth_openid'] || req.csession['oauth_openid'] || req.query.wxopenid;
 
 	//如果用户存在session，则根据session获取用户信息
@@ -44,7 +44,7 @@ obj.jumpOAuthUrl = function(req,res){
 	catch(e){
 		res.send(500,e)
 	}
-	req.csession['oauth_jump'] = oauth_jump;
+	req.session['oauth_jump'] = oauth_jump;
 
 	//生成跳转到腾讯微信的授权url地址
 	var url = api.getAuthorizeURL(oauth_jump_back,'wujb',global.config.oauthScope||'snsapi_base');
@@ -167,9 +167,9 @@ obj.oauthJumpBack = function(app){
 	app.get(oauth_back_url,function(req,res){
 		var code = req.query.code;
 		var state = req.query.state;
-		var oauth_jump = req.csession['oauth_jump'] || oauth_oob;
+		var oauth_jump = req.session['oauth_jump'] || oauth_oob;
 
-		req.csession['oauth_jump'] = null;
+		req.session['oauth_jump'] = null;
 
 		if(state != 'wujb'){
 			req.csflush();
