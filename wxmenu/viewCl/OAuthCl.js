@@ -164,7 +164,7 @@ obj.oauthJumpBack = function(app){
 					'<h1>头像：<img src="'+req.wxuobj.wxAvatar+'" /></h1>'
 
 		req.csflush();
-		res.sned(resStr);
+		res.send(resStr);
 
 	})
 
