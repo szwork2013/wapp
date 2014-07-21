@@ -141,13 +141,20 @@ obj.oauthJumpBack = function(app){
 		if(!count) count = 1;
 		else count++;
 		req.csession['count'] = count;
-		 
+
+
+		var count2 = req.session['count'];
+		if(!count2) count2 = 1;
+		else count2++;
+		req.session['count'] = count2;
+
 		//拼接用户数据，全部打印出来
 		var sendObj = {
 			csession:req.csession,
 			wxuobj:req.wxuobj,
 			wxBinder:req.wxBinder,
-			count:req.csession['count']
+			count:req.csession['count'],
+			count2:req.session['count']
 		} 
 
 		req.csflush();
