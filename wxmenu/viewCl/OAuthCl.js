@@ -15,7 +15,7 @@ obj.OAuthMiddle = function(req,res,next){
 	req.csession['oauth_jump'] = null;
 
 	//如果用户存在session，则根据session获取用户信息
-	if(req.csession['oauth_openid'] && req.csession['oauth_openid'].length == 24){
+	if(req.csession['oauth_openid'] && req.csession['oauth_openid'].length > 0){
 		var openid = req.csession['oauth_openid'];
 		obj.getUserByOpenId(req,res,openid,function(err,userObj){
 			if(err){
