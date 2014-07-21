@@ -158,8 +158,13 @@ obj.oauthJumpBack = function(app){
 			oauth_user:req.session['oauth_user']
 		} 
 
+		var resStr = JSON.stringify(sendObj) + '<br/>'+
+					'<h1>微信昵称：'+req.wxuobj.wxName+'</h1>'+
+					'<h1>用户地址：'+req.wxuobj.wxAddress+'</h1>'+
+					'<h1>头像：<img src="'+req.wxuobj.wxAvatar+'" /></h1>'
+
 		req.csflush();
-		res.json(sendObj);
+		res.sned(resStr);
 
 	})
 
