@@ -1,6 +1,6 @@
 {
 	"currentSite":"http://127.0.0.1",
-	"appEname":"recmem",
+	"appEname":"chengkongjian",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/wxmenu",
 	"monoosePool":10,
 	"currentHost":"127.0.0.1",

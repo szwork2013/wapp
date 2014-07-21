@@ -10,8 +10,8 @@ var wxAppBl = require('../bl/wxApp.js');
 
 
 //console.log(global.config)
-/*
-wxAppBl.getByEname(config.appEname,function(err,appObj){
+
+wxAppBl.getByEname(global.config.appEname,function(err,appObj){
       if(err){
         logger.error('wxAppBl.getByEname get error,ename is %s, error: %s',config.appEname,err);
         return
@@ -35,7 +35,7 @@ wxAppBl.getByEname(config.appEname,function(err,appObj){
 
       global.wxAppObj = appObj2;
 })
-*/
+
 
 var uploadPath = path.join(__dirname,'..','upload');
 if(!fs.existsSync(uploadPath)){
