@@ -229,6 +229,7 @@ obj.oauthJumpBack = function(app){
 							 wxAvatar:userinfo.headimgurl,                //微信用户头像
 							 wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
 						},function(err,updatedoc){
+							
 							//处理完异常
 							req.csflush();
 							if(err){

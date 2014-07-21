@@ -25,6 +25,11 @@ obj.read = function(req, res){
 			d2.push({
 				  _id:v._id+'',
 				  appId:v.appId,
+				  
+				  wxName:v.wxName,
+				  wxAvatar:v.wxAvatar,
+				  wxAddress:v.wxAddress,
+
 				  appUserName:v.appUserName,
 				  appUserMobile:v.appUserMobile,
 				  appUserSex:v.appUserSex,
