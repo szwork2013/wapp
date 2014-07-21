@@ -77,9 +77,9 @@ obj.getUserByOpenId = function(req,res,openId, cb){ //根据openid,获取用户�
 		req.wxuobj = {
 			  currentSite:config.currentSite,
 			  _id:uobj.uobj._id,
-			  wxName:uobj.wxName,//用户微信昵称
-			  wxAvatar:uobj.wxAvatar,//用户微信头像
-			  wxAddress:uobj.wxAddress,//用户地址
+			  wxName:uobj.uobj.wxName,//用户微信昵称
+			  wxAvatar:uobj.uobj.wxAvatar,//用户微信头像
+			  wxAddress:uobj.uobj.wxAddress,//用户地址
 			  appId:uobj.uobj.appId,                 //appId表示用户第一次绑定的app应用id
 			  appUserName:uobj.uobj.appUserName || '未知用户',       //会员姓名
 			  appUserMobile:uobj.uobj.appUserMobile,  //会员手机号
@@ -140,7 +140,7 @@ obj.oauthJumpBack = function(app){
 		//拼接用户数据，全部打印出来
 		var sendObj = {
 			csession:req.csession['oauth_user'],
-			wxUser:req.wxuobj,
+			wxuobj:req.wxuobj,
 			wxBinder:req.wxBinder
 		} 
 
@@ -229,7 +229,7 @@ obj.oauthJumpBack = function(app){
 							 wxAvatar:userinfo.headimgurl,                //微信用户头像
 							 wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
 						},function(err,updatedoc){
-							
+
 							//处理完异常
 							req.csflush();
 							if(err){
