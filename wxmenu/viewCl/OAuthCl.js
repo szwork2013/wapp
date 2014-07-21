@@ -137,13 +137,20 @@ obj.oauthJumpBack = function(app){
 	//测试oauth是否能正常工作地址 oob
 	app.get(oauth_oob, obj.OAuthMiddle, function(req,res){
 
+		var count = req.csession['count'];
+		if(!count) count = 1;
+		else count++;
+		req.csession['count'] = count;
+		 
 		//拼接用户数据，全部打印出来
 		var sendObj = {
-			csession:req.csession['oauth_user'],
+			csession:req.csession,
 			wxuobj:req.wxuobj,
-			wxBinder:req.wxBinder
+			wxBinder:req.wxBinder,
+			count:req.csession['count']
 		} 
 
+		req.csflush();
 		res.json(sendObj);
 
 	})
