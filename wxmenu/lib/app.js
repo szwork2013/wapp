@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 
 
 app.use(express.cookieParser());
-app.use(express.session({secret: 'wxapp', cookie: {maxAge: 60000}}));
+app.use(express.session({secret: 'wxapp', cookie: {maxAge: 3600*24*7}}));
 app.use(clientSession.connect());
 
 /*
