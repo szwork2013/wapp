@@ -13,7 +13,7 @@ var oauth_oob = '/oauth/oob';
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
 	req.csession['oauth_jump'] = null;
-	var wxopenid = req.csession['oauth_openid'] || req.query.wxopenid;
+	var wxopenid = req.session['oauth_openid'] || req.csession['oauth_openid'] || req.query.wxopenid;
 
 	//如果用户存在session，则根据session获取用户信息
 	if(wxopenid && wxopenid.length > 0){
@@ -154,7 +154,8 @@ obj.oauthJumpBack = function(app){
 			wxuobj:req.wxuobj,
 			wxBinder:req.wxBinder,
 			count:req.csession['count'],
-			count2:req.session['count']
+			count2:req.session['count'],
+			oauth_user:req.session['oauth_user']
 		} 
 
 		req.csflush();
@@ -252,6 +253,9 @@ obj.oauthJumpBack = function(app){
 							if(!updatedoc){
 								return	res.send(500,'update weixin info error'); 
 							}
+
+							req.session['oauth_user'] = req.csession['oauth_user'];
+							req.session['oauth_openid'] = req.csession['oauth_openid'];
 							//完毕跳转到指定页面
 							res.redirect(oauth_jump);
 						});// end userModel.createOneOrUpdate			
