@@ -120,10 +120,10 @@ obj.createJumpPath = function(path,openid){
 	}
 
 	if(path.indexOf('?') == -1){
-		path +=  '?wxopenid='+result.openid
+		path +=  '?wxopenid='+openid
 	}
 	else{
-		path +=  '&wxopenid='+result.openid
+		path +=  '&wxopenid='+openid
 	}
 
 	return {error:0,data:path}
