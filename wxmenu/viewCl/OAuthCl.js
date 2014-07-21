@@ -211,7 +211,7 @@ obj.oauthJumpBack = function(app){
 						}
 
 						//将用户信息写入sessoin
-						var userWxObj = req.csession['oauth_user'] = {
+						req.csession['oauth_user'] = {
 							openid:userinfo.openid,
 							nickname:userinfo.nickname,
 							sex:userinfo.sex,
@@ -225,9 +225,9 @@ obj.oauthJumpBack = function(app){
 						userModel.createOneOrUpdate({
 							_id:doc._id
 						},{
-							 wxName:userWxObj.nickname,                   //微信用户昵称
-							 wxAvatar:userWxObj.headimgurl,                //微信用户头像
-							 wxAddress:userWxObj.country+','+userWxObj.province+','+userWxObj.city
+							 wxName:userinfo.nickname,                   //微信用户昵称
+							 wxAvatar:userinfo.headimgurl,                //微信用户头像
+							 wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
 						},function(err,updatedoc){
 							//处理完异常
 							req.csflush();
