@@ -13,16 +13,18 @@ var oauth_oob = '/oauth/oob';
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
 	req.csession['oauth_jump'] = null;
+	var wxopenid = req.csession['oauth_openid'] || req.query.wxopenid;
 
 	//如果用户存在session，则根据session获取用户信息
-	if(req.csession['oauth_openid'] && req.csession['oauth_openid'].length > 0){
-		var openid = req.csession['oauth_openid'];
-		obj.getUserByOpenId(req,res,openid,function(err,userObj){
+	if(wxopenid && wxopenid.length > 0){
+		req.csession['oauth_openid'] = wxopenid;
+		obj.getUserByOpenId(req,res,wxopenid,function(err,userObj){
 			if(err){
 				req.csflush();
 				return	res.send(500,err);
 			}
 			if(!userObj) return obj.jumpOAuthUrl(req,res);
+			req.csflush();
 			next();//如果已经有身份，则next进入下一个流程
 		})
 	}
@@ -158,7 +160,7 @@ obj.oauthJumpBack = function(app){
 			req.csflush();
 			return res.send(403,'state error')
 		}
-		if(!code){
+		if(!code || code == 'authdeny'){
 			req.csflush();
 			return res.send(403,'user not authorize')
 		}
