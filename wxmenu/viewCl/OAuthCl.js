@@ -231,7 +231,7 @@ obj.oauthJumpBack = function(app){
 						}
 
 						//将用户信息写入sessoin
-						req.csession['oauth_user'] = {
+						var oauth_user = {
 							openid:userinfo.openid,
 							nickname:userinfo.nickname,
 							sex:userinfo.sex,
@@ -259,7 +259,7 @@ obj.oauthJumpBack = function(app){
 								return	res.send(500,'update weixin info error'); 
 							}
 
-							req.session['oauth_user'] = req.csession['oauth_user'];
+							req.session['oauth_user'] = oauth_user;
 							req.session['oauth_openid'] = req.csession['oauth_openid'];
 							//完毕跳转到指定页面
 							res.redirect(oauth_jump);
