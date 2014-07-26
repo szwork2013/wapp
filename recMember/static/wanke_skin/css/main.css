@@ -312,3 +312,19 @@ font-family: "Microsoft YaHei";
 	min-height: 80px;
 	line-height: 80px;
 }
+.day_sign_toolbar{
+	position: fixed;
+	z-index: 9;
+	background-color:#ffa832; 
+	color:#fff;
+	text-align: center;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	font-size: 15px;
+	top: 58px;
+	left: 0;
+}
+.day_sign_toolbar b{
+	color: #c00;
+}

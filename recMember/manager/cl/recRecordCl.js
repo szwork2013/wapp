@@ -52,6 +52,7 @@ obj.read = function(req, res){
 				recCode3:o.recCode3,
 				recCode4:o.recCode4,
 
+				updateTime: o.updateTime,
 				writeTime: o.writeTime,
 			})
 
@@ -91,6 +92,8 @@ obj.update = obj.create = function(req, res){
 		res.send(500,e)
 	}
 
+	//每次修改都回改变修改时间
+	req.models[0]["updateTime"] = Date.now();
 
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);

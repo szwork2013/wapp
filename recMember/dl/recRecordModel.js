@@ -36,7 +36,7 @@ var obj = { //定义结构
       recCode2:{type:String,default:''},              //预留字段2
       recCode3:{type:String,default:''},              //预留字段3
       recCode4:{type:String,default:''},              //预留字段4
-
+      updateTime:{ type: Date, default: function(){return Date.now()} },    //更新时间
       writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 

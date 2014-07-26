@@ -159,6 +159,19 @@ obj.createtransac = function(req,res){ //申请结佣
 	})
 }
 
+//获得此用户的推荐状态更新
+obj.getrecnews = function(req,res){ 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId;
+	var lastActiveTime = req.wxBinder.lastActiveTime;
+
+	userBl.getRecNews(appId, userId, lastActiveTime,function(err,recdoc){
+		if(err) return res.json({'error':1,'data':err});
+		res.json({'error':0,'data':recdoc})
+	})
+
+}
 
 
 module.exports = obj;

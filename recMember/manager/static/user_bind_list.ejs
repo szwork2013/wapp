@@ -65,6 +65,7 @@
                                     "appCardNumber":{editable: false},
                                     "appUserType":{editable: true, type:"number"},
                                     "isNewSubmit":{editable: true, type:"number"},
+                                    "lastActiveTime":{editable: true, type:"date"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -174,7 +175,12 @@
                               { text: "新认证", value: 1 },
                               { text: "不通过", value: 2 }
                             ]
-                        },           
+                        },
+                        { 
+                            field: "lastActiveTime",
+                            title: "上次活跃时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },          
                         { 
                             field: "writeTime",
                             title: "创建日期",

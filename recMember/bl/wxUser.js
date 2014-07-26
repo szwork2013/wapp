@@ -548,6 +548,71 @@ obj.createTransac = function(appId, userId, recRecordsId, cb){
 
 }
 
+//更新用户活跃时间
+obj.updateActiveTime = function(appId, userId, cb){
+	userAppModel.findOneByObj({
+		userId:userId,
+		appId:appId
+	},function(err,appUDoc){
+		if(err) return cb(err); //如果出错
+		if(!appUDoc){
+			return cb('update active error,not found user by userid='+userId)
+		}
+		userAppModel.createOneOrUpdate({
+				userId:userId,
+				appId:appId
+			},{lastActiveTime:Date.now()},cb)
+	})
 
+}
+
+//根据用户id获取新的推荐状态变更
+obj.getRecNews = function(appId, userId, lastActiveTime,cb){
+
+	recRecordModel.findAll({
+		appId:appId,
+		userId:userId,
+		updateTime:{
+			$gte:lastActiveTime
+		}
+	},0,100,function(err,doc){
+
+		//获取完状态，异步更新用户活跃时间
+		obj.updateActiveTime(appId, userId, function(err){
+			if(err) global.logger.error('userBl.updateActiveTime'+err);
+		})
+
+		if(err) return cb(err);
+		if(doc.length == 0) return cb(null,[]);
+
+		var tempary = []
+		var ids = []
+		doc.forEach(function(o){
+			o.comments = o.comments.sort(function(a,b){return 1})
+
+			tempary.push({
+				_id:o._id,
+				appId:o.appId,
+				userId:o.userId,
+				recName:o.recName,
+				recSex:o.recSex,
+				recTel:o.recTel,
+				recArea:o.recArea,
+				recPrice:o.recPrice,
+				recRoom:o.recRoom,
+				recStatus:o.recStatus-0,
+				Status:record_status[o.recStatus-0],
+				comments:o.comments,
+				isCash:o.isCash,
+				cashStatus:0, //表示结佣状态，0表示不能结佣
+				cashTransacId:'0',//表示结佣id
+				writeTime:moment(o.writeTime).format('YYYY-MM-DD HH:mm:ss')
+			})
+		})
+		return cb(null,tempary);
+	})
+
+
+}
 
 module.exports = obj;

@@ -13,6 +13,7 @@ var obj = { //定义结构
       appCardNumber:{type:String,default:''},            //用户会员卡
       appUserType:{type:Number,default:0},               //0表示用户未认证，1表示认证会员（没有填写小区），2表示vip认证会员（填写小区）
 	    isNewSubmit:{type:Number,default:0},               //新的验证，1表示用户提交了信息请求验证，0表示默认或已审核，2表示用户请求了验证被驳回不通过
+      lastActiveTime:{ type: Date, default: function(){return Date.now()} }, //最后一次活跃时间,用来做消息推送的时间凭证
       writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 

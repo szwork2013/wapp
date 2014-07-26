@@ -125,7 +125,7 @@
                                     "appUserSex":{editable: true},
                                     "appUserBirth":{editable: true},
                                     "appUserScore":{editable: true},
-                                    "isShow": { editable: true,type:"number" },                                    
+                                    "isShow": { editable: true,type:"number" },
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -319,6 +319,7 @@ var dataSource2 = new kendo.data.DataSource({
                                     "appCardNumber":{editable: true},
                                     "appUserType":{editable: true, type:"number"},  
                                     "isNewSubmit":{editable: true, type:"number"},
+                                    "lastActiveTime":{editable: true, type:"date"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -333,7 +334,6 @@ var dataSource2 = new kendo.data.DataSource({
                         toolbar: [
                                     { name: "create", text: "添加绑定" }
                                   ],
-                    detailInit: detailInit,
                     columns: [
                         {
                             field:'_id',
@@ -393,7 +393,12 @@ var dataSource2 = new kendo.data.DataSource({
                               { text: "新认证", value: 1 },
                               { text: "不通过", value: 2 }
                             ]
-                        },            
+                        },
+                        { 
+                            field: "lastActiveTime",
+                            title: "上次活跃时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },  
                         { 
                             field: "writeTime",
                             title: "创建日期",
@@ -412,7 +417,7 @@ var dataSource2 = new kendo.data.DataSource({
                     edit:function(e2){
                             var d = window.appd;
 
-                            $('input[name="userId"]').val(e.data._id).prop('readonly','readonly').change();
+                $('input[name="userId"]').val(e.data._id).prop('readonly','readonly').change();
                             //$('input[name="openId"]').val(e.data.openId).prop('readonly','readonly').change();
                   
                            }  

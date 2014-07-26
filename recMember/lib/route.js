@@ -132,6 +132,9 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 	}
 }
 
+
+
+
 var checkIsReg = function(req,res,next){
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
@@ -169,6 +172,8 @@ var addroute = function(app){
 	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
 	//申请结佣
 	app.post('/api/user/createtransac',getUserMid, apiUser.createtransac);
+	//ajax检查是否有推荐状态消息
+	app.post('/api/user/getrecnews',getUserMid, apiUser.getrecnews);
 	
 	//下面是页面控制器
 

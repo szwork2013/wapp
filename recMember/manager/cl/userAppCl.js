@@ -25,8 +25,7 @@ obj.read = function(req, res){
 	var skip = req.body.skip || 0;
 	var pageSize = req.body.pageSize || 20;
 	var resObj = {"Data":[],"Total":0};
-
-
+	
 
 	dl.findAll(filter, skip, pageSize, function(err,doc){
 		if(err) return res.send(500,err);
@@ -43,6 +42,9 @@ obj.read = function(req, res){
 			dl2.getUserByIds(ids,function(err,idsary){ //获得用户id和用户名对应关系
 				if(err) return res.json(err)
 				var dary=[]
+
+				//console.log(resObj["Data"])
+
 				resObj["Data"].forEach(function(v){
 
 					  var uname = v.userId
@@ -69,6 +71,7 @@ obj.read = function(req, res){
 						      appCardNumber:v.appCardNumber,
 						      appUserType:v.appUserType,
 						      isNewSubmit:v.isNewSubmit,
+						      lastActiveTime:v.lastActiveTime,
 							  writeTime: v.writeTime,
 					  })
 				})
