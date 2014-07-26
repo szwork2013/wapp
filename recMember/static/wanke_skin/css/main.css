@@ -128,7 +128,7 @@ font-family: "Microsoft YaHei";
 /* Interests */
 .page-interests-header .logo{margin-left:87px;width:146px;background-position:0 -434px}
 .content-item ul{padding:24px 0}
-.content-item ul li{margin-bottom:12px}
+.content-item ul li{margin:0 auto 12px;width: 280px;}
 .content-item ul a.lista{position:relative;display:block;padding:3px 24px 3px 97px;width:157px;
 	height:91px;background:url(../img/item-bg.jpg);background-size:278px 100px;border-radius:3px;overflow:hidden}
 .content-item ul a img{position:absolute;top:3px;left:3px;
