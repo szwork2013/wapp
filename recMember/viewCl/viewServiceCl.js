@@ -58,34 +58,26 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 }
 
 
- //共用新闻详细页,不用登录
-obj.newsDetail2 = function(req,res){ //共用新闻详细页
-	//var userId = req.wxuobj._id;
+
+
+
+ //只显示推荐说明的详细页
+obj.newsDetail2 = function(req,res){ 
+	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
-	//var openId = req.wxuobj.openId;
-	var newsId = req.query.newsId;
+	var openId = req.wxuobj.openId;
 
-	if(!newsId || newsId.length != 24){
-		return res.send(500,'新闻id有误')
-	}
 
-	infoBl.getNewsById(newsId, '0', function(err,doc){
+	infoBl.getNewsByType(appId, 2, function(err,doc){
 		if(err){
-			logger.error('obj.newsDetail error, newsId %s, err %s', newsId, err);
-			return res.send(500,'详细页面加载失败')
+			return res.send(500,'推荐说明加载失败')
 		}
-		if(doc.type == 1 && doc.url != ''){
-			res.redirect(doc.url)
-			return;
-		}
-
 		//return res.json(doc)
 
 		res.render('news_detail.ejs',{
-			'userObj':{'_id':'0'},
-			'binderObj':{},
-			'activeCount':0,
-			'joinInfo':false,
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+			"title_detail":'推荐说明',
 			'doc':doc
 		})
 		return;

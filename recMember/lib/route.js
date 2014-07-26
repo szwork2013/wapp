@@ -181,7 +181,9 @@ var addroute = function(app){
 	//新闻列表,不用登录
 	app.get('/view/service/newsall', getUserMid, viewService.newsall);
 	//新闻详情页面,不用登录
-	app.get('/view/service/newsdetail', getUserMid, viewService.newsDetail);	
+	app.get('/view/service/newsdetail', getUserMid, viewService.newsDetail);
+	//直接查看推荐说明
+	app.get('/view/service/newsdetail2', getUserMid, viewService.newsDetail2);	
 	//一键呼叫，预约服务,不用登录
 	app.get('/view/service/call', getUserMid, viewService.call);
 

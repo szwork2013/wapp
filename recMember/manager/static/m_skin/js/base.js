@@ -205,9 +205,9 @@ window.prize_type=[
             ]
 
 window.news_type2=[
-              { text: "乐活空间活动", value: 1 },
-              { text: "乐活空间公告", value: 2 },
-              { text: "物语空间公告", value: 3 }
+              { text: "新闻公告", value: 1 },
+              { text: "推荐说明", value: 2 },
+              //{ text: "物语空间公告", value: 3 }
             ]
 
 window.special_type=[
