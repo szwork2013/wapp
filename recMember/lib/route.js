@@ -3,7 +3,7 @@ var moment = require('moment');
 var path = require('path');
 var fs = require('fs');
 var wxRoute = require('../weixCl/wCl.js');
-
+var guidDl = require('../dl/guidModel.js')
 
 
 var wxAppBl = require('../bl/wxApp.js');
@@ -14,6 +14,11 @@ var apiUser = require('../apiCl/apiUser.js');
 var viewUser = require('../viewCl/viewUserCl.js');
 var viewService = require('../viewCl/viewServiceCl.js');
 
+var defaultGuidNum = 120;
+guidDl.setGuidFromNum(defaultGuidNum,function(err,doc){
+	if(err) return console.log('set guid to '+defaultGuidNum+'error, '+err)
+	console.log('set guid to default num '+defaultGuidNum)
+})
 
 //console.log(global.config)
 wxAppBl.getByEname(config.appEname,function(err,appObj){

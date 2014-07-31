@@ -32,6 +32,17 @@ obj.getUserByOpenid = function(openId,cb){ //根据openid查找用户信息
 
 }
 
+obj.genCardNumber = function(trueCardNum){
+	var trueCardNum = trueCardNum +''
+	var len = 6-trueCardNum.length;
+	if(len<=0) return trueCardNum;
+	for(var i=0;i<len;i++){
+		trueCardNum = '0'+trueCardNum;
+	}
+	return trueCardNum;
+}
+
+
 //检查这个用户是否是老用户
 obj.checkIsOldMember = function(uobj){
 	if(!Array.isArray(oldMember) || oldMember.length == 0) return false;
@@ -379,10 +390,10 @@ var record_status = [
 	"无",
 	"待审核",
 	"审核不通过",
-	"预约",
-	"带看",
-	"认筹",
-	"签约",
+	"未到访",
+	"已到访",
+	"已认购",
+	"已签约",
 ]
 
 obj.getRecrecordByUserId = function(appId, userId, qobj, cb){

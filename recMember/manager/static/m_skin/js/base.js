@@ -299,10 +299,10 @@ window.scoreWay_type2 = [
 window.recStatus_type = [
               { text: "待审核", value: 1 },
               { text: "不通过", value: 2 },
-              { text: "预约", value: 3 },
-              { text: "带看", value: 4 },
-              { text: "认筹", value: 5 },
-              { text: "签约", value: 6 },
+              { text: "未到访", value: 3 },
+              { text: "已到访", value: 4 },
+              { text: "已认购", value: 5 },
+              { text: "已签约", value: 6 },
 ]
 
 window.isCash_type = [

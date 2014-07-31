@@ -31,6 +31,7 @@ obj.modify = function(req,res){ //用户修改资料
 	var appId = global.wxAppObj._id;
 	var openId = req.wxBinder.openId
 
+	req.wxBinder.appCardNumber = userBl.genCardNumber(req.wxBinder.appCardNumber)
 //console.log(req.wxBinder)
 	res.render('user_modify.ejs',{
 		'userObj':req.wxuobj,
