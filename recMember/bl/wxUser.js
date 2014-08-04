@@ -51,10 +51,10 @@ obj.checkIsOldMember = function(uobj){
 	for(var i=0;i<len;i++){
 		var foundCount = 0;
 
-		if(oldMember[i][0] == uobj.appUserName){
+		if(oldMember[i][0].indexOf(uobj.appUserName)!=-1){
 			foundCount++;
 		}
-		if(oldMember[i][1] == uobj.appUserMobile){
+		if(oldMember[i][1].indexOf(uobj.appUserMobile)!=-1){
 			foundCount++;
 		}
 		if(uobj.appUserBuilding.indexOf(oldMember[i][2]) != -1){
