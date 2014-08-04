@@ -6,8 +6,34 @@ var obj = {}
 var salt = global.app.get('salt');
 
 
+
+
 obj.list = function(req, res){
 	res.render('rec_record_list', {session:req.session});
+}
+
+obj.success = function(req, res){
+	dl.createOneOrUpdate({
+		_id:req.body._id
+	}, {
+		recStatus:6
+	}, function(err, doc){
+		if(err) return res.send(500,err);
+		if(!doc) return res.json([])
+		res.json(doc);
+	})
+}
+
+obj.fail = function(req, res){
+	dl.createOneOrUpdate({
+		_id:req.body._id
+	}, {
+		recStatus:2
+	}, function(err, doc){
+		if(err) return res.send(500,err);
+		if(!doc) return res.json([])
+		res.json(doc);
+	})
 }
 
 

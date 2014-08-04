@@ -162,3 +162,6 @@ display: none;
 .redt{
 	color: #c00;
 }
+.k-grid-success,.k-grid-fail{
+	margin-bottom: 5px !important;
+}

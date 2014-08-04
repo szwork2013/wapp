@@ -158,6 +158,9 @@ var addroute = function(app){
 	app.post('/manger/recrecord/update', checkLogin, recRecordCl.update)
 	app.post('/manger/recrecord/destroy', checkLogin, recRecordCl.destroy)
 	app.post('/manger/recrecord/create', checkLogin, recRecordCl.create)
+	app.post('/manger/recrecord/success', checkLogin, recRecordCl.success)
+	app.post('/manger/recrecord/fail', checkLogin, recRecordCl.fail)
+	
 
 
 
