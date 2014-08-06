@@ -225,6 +225,7 @@ obj.oauthJumpBack = function(app){
 
 					if(global.config.oauthScope == 'snsapi_base'){
 						req.csflush();
+						req.session['oauth_openid'] = req.csession['oauth_openid'];
 						return res.redirect(oauth_jump);
 					}
 					
