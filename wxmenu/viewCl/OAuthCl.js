@@ -7,7 +7,7 @@ var utils = require('../lib/utils.js');
 var moment = require('moment');
 
 var obj = {}
-var oauth_back_url = '/oatuh/back';
+var oauth_back_url = '/oauth/back';
 var oauth_oob = '/oauth/oob';
 
 //必须使用client session
