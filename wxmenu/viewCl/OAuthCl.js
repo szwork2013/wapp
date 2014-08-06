@@ -14,7 +14,7 @@ var oauth_logout = '/oauth/logout';
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
 	req.session['oauth_jump'] = null;
-	var wxopenid = req.session['oauth_openid'] //|| req.csession['oauth_openid'] //|| req.query.wxopenid;
+	var wxopenid = req.session['oauth_openid'] || req.csession['oauth_openid'] //|| req.query.wxopenid;
 
 	//如果用户存在session，则根据session获取用户信息
 	if(wxopenid && wxopenid.length > 0){
