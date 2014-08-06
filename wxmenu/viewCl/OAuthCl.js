@@ -172,6 +172,7 @@ obj.oauthJumpBack = function(app){
 	app.get(oauth_logout,function(req,res){
 		req.session.destroy();
 		req.csession['oauth_openid'] = null
+		req.csflush();
 		return res.send('logout')
 	})
 
