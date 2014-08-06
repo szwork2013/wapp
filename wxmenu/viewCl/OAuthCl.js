@@ -9,6 +9,7 @@ var moment = require('moment');
 var obj = {}
 var oauth_back_url = '/oauth/back';
 var oauth_oob = '/oauth/oob';
+var oauth_logout = '/oauth/logout';
 
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
@@ -168,6 +169,10 @@ obj.oauthJumpBack = function(app){
 
 	})
 
+	app.get(oauth_logout,function(req,res){
+		req.session.destroy();
+		return res.send('logout')
+	})
 
 	app.get(oauth_back_url,function(req,res){
 		var code = req.query.code;
