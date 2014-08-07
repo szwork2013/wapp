@@ -6,11 +6,22 @@
  <div id="grid"></div>
 
 <script>
-function req_success(e) {
+function req_success1(e) {
             e.preventDefault();
             var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-            //console.log(dataItem)
-            $.post(window.DataHost+'/manger/userapp/success',{"models[0][_id]":dataItem._id},function(d){
+            req_success(dataItem._id,'易居')
+    }
+function req_success2(e) {
+            e.preventDefault();
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+            req_success(dataItem._id,'中原')
+            
+    }
+
+function req_success(_id,fromStr) {
+
+            $.post(window.DataHost+'/manger/userapp/success',{"models[0][_id]":_id, "from_str":fromStr},function(d){
                 if(d._id){
                     $("#grid").data("kendoGrid").dataSource.read(); 
                 }   
@@ -68,7 +79,7 @@ function req_fail(e) {
                                     "_id": { editable: false },
                                     "userId": { editable: false },
                                     "userMobile": { editable: false },
-                                    "userSex": { editable: false },                                    
+                                    "userSex": { editable: false},
                                     "openId": { editable: false },
                                     "appId": { editable: false},
                                     "appUserCity": { editable: true},
@@ -89,7 +100,8 @@ function req_fail(e) {
                 var commandAry = [];
          
                 var commandAry = [
-                                { name: "success", text: "通过" , click:req_success},
+                                { name: "success1", text: "易居通过" , click:req_success1},
+                                { name: "success2", text: "中原通过" , click:req_success2},
                                 { name: "fail", text: "不通过", click:req_fail},
                               ]
 

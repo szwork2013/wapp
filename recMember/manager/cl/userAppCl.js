@@ -134,6 +134,8 @@ obj.success = function(req, res){
 	if(!req.models[0]["_id"]) return res.send(500)
 	var query;
 	query = {"_id": req.models[0]["_id"]};	
+	var fromStr = req.body.from_str || '其它'
+
 
 	dl.createOneOrUpdate(query, {
 		appUserType:2,
@@ -141,7 +143,17 @@ obj.success = function(req, res){
 	}, function(err, doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
-		res.json(doc);
+		var userid = doc.userId;
+
+		//更新用户的来源
+		dl2.createOneOrUpdate({
+			_id:userid
+		},{userFrom:fromStr},function(err,doc){
+			if(err) return res.send(500,err);
+			if(!doc) return res.json([])
+			res.json(doc);
+		})
+		
 	})
 }
 

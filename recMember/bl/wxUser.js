@@ -10,7 +10,9 @@ var utils = require('../lib/utils.js');
 //第二列为电话
 //第三列为楼号
 //第四列为房号
+//第五列为来源
 var oldMember = require('../oldMember.json') || [];
+
 
 var obj = {}
 var recommendScore = 20;
@@ -71,7 +73,8 @@ obj.checkIsOldMember = function(uobj){
 		console.log(foundCount)
 		*/
 		if(foundCount>=3){
-			return true;
+			var from = oldMember[i][4]
+			return from || '其它';
 		}
 	}
 	return false;
@@ -157,6 +160,26 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 						}
 						*/
 
+						var isOldMember = obj.checkIsOldMember({
+									appUserName:qobj.appUserName,
+									appUserMobile:qobj.appUserMobile,
+									appUserBuilding:qobj.appUserBuilding,
+									appUserRoom:qobj.appUserRoom,
+						})
+						//新的用户提交，将会审核
+						var isNewSubmit = 1;
+
+						//判断是否是老会员，如果是老会员则type2，
+						if(isOldMember){
+							var type = 2
+							var fromStr = isOldMember; //获取
+						}
+						else{
+							var type = 0
+							var fromStr = "其它"; //获取
+						}
+
+
 						//更新或写入用户数据
 						userModel.createOneOrUpdate({
 							_id:udoc.uobj._id,				
@@ -164,7 +187,8 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 							appUserName:qobj.appUserName,
 							appUserMobile:qobj.appUserMobile,
 							appUserSex:qobj.appUserSex || 1,
-							appUserBirth:qobj.appUserBirth || '1970/1/1'	
+							appUserBirth:qobj.appUserBirth || '1970/1/1',
+							userFrom:fromStr //获取用户来源
 						},function(err,doc){
 							if(err) return cb(err);						
 
@@ -179,21 +203,7 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 									guid = appDoc[0].appCardNumber
 								}
 
-								var isOldMember = obj.checkIsOldMember({
-									appUserName:qobj.appUserName,
-									appUserMobile:qobj.appUserMobile,
-									appUserBuilding:qobj.appUserBuilding,
-									appUserRoom:qobj.appUserRoom,
-								})
-								//新的用户提交，将会审核
-								var isNewSubmit = 1;
-								//判断是否是老会员，如果是老会员则type2，
-								if(isOldMember){
-									var type = 2
-								}
-								else{
-									var type = 0
-								}
+								
 
 								userAppModel.createOneOrUpdate({
 									userId:udoc.uobj._id,

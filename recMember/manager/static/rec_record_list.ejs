@@ -126,6 +126,12 @@
                <input type="number" id="isCash_inp" class="k-input k-textbox w-50-inp" name="isCash" data-bind="value:isCash" >
             </div>
 
+            <div class="k-edit-label  w-800-l">
+                <label for="userFrom" >来源</label>
+            </div>
+            <div data-container-for="userFrom" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom" >
+            </div>
 
 <div style="display:none">
             <div class="k-edit-label  w-800-l">
@@ -153,6 +159,9 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="recCode4" data-bind="value:recCode4" >
             </div>
 </div>            
+
+ 
+
 
             
             <div class="k-edit-label  w-800-l">
@@ -327,6 +336,8 @@ function req_fail(e) {
                                     
                                     "updateTime": {editable: true, type: "date" },
                                     "writeTime": {editable: true, type: "date" },
+
+                                    "userFrom":{ editable: true},
                                 }
                             }
                         }
@@ -392,6 +403,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                          { 
                             field: "recArea",
                             title: "意向面积",
+                            hidden:true
                         },
                         { 
                             field: "recPrice",
@@ -400,7 +412,13 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                         { 
                             field: "recRoom",
-                            title: "意向户型", 
+                            title: "意向户型",
+                            hidden:true
+                        },
+                        { 
+                            field: "userFrom",
+                            title: "来源",
+                            filterable:false,
                         },
                         { 
                             field: "recStatus",

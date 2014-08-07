@@ -50,6 +50,7 @@ obj.read = function(req, res){
 		if(!doc || doc.length==0) return res.json(resObj);
 
 		var templist = []
+		var userIdList = []
 		doc.forEach(function(o){
 
 			templist.push({
@@ -80,19 +81,40 @@ obj.read = function(req, res){
 
 				updateTime: o.updateTime,
 				writeTime: o.writeTime,
-			})
 
+				userFrom:''
+			})
+			userIdList.push(o.userId)
 		})
 
 		resObj["Data"] = templist;
 		
-
 		dl.countAll(filter,function(err,count){
-			if(err) return res.send(500,err);
+				if(err) return res.send(500,err);
+				if(userIdList.length == 0){
+					resObj["Total"] = count				
+					res.json(resObj);
+					return;
+				}
 
-				resObj["Total"] = count
+				dl2.getUserByIds(userIdList,function(err,lists){
+					if(err) return res.send(500,err);
+
+					//循环列表匹配用户id是否相等，相等则把来源赋值
+					lists.forEach(function(uobj){
+						var user_id = uobj._id;
+						resObj["Data"].forEach(function(resobj){
+							if(resobj.userId == user_id){
+								resobj.userFrom = uobj.userFrom
+							}
+						})
+					})
+					resObj["Total"] = count				
+					res.json(resObj);
+					return;
+					
+				})
 				
-				res.json(resObj);
 			
 		})
 		

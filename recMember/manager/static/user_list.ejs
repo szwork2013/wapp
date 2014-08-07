@@ -56,6 +56,13 @@
                <input type="number" class="k-input k-textbox w-50-inp" name="appUserScore" data-bind="value:appUserScore" >
             </div>
 
+            <div class="k-edit-label  w-800-l">
+                <label for="userFrom">来源</label>
+            </div>
+            <div data-container-for="userFrom" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom" >
+            </div>
+
            <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
             </div>
@@ -126,6 +133,9 @@
                                     "appUserBirth":{editable: true},
                                     "appUserScore":{editable: true},
                                     "isShow": { editable: true,type:"number" },
+                                    "userFrom":{editable: true},
+                                    "code1":{editable: true},
+                                    "code2":{editable: true},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -191,7 +201,8 @@
                             values:[
                               { text: "男", value: 1 },
                               { text: "女", value: 0 }
-                            ]
+                            ],
+                            hidden:true
                         },
                         { 
                             field: "appUserBirth",
@@ -201,6 +212,11 @@
                         { 
                             field: "appUserScore",
                             title: "积分",
+                            hidden:true
+                        },
+                        { 
+                            field: "userFrom",
+                            title: "来源",
                         },
                         { 
                             field: "isShow",
