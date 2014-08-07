@@ -179,6 +179,34 @@
     window.news_type = [window.news_type[0]];
 
 
+function req_success(e) {
+            e.preventDefault();
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            //console.log(dataItem)
+            $.post(window.DataHost+'/manger/recrecord/success',{"_id":dataItem._id},function(d){
+                if(d._id){
+                    $("#grid").data("kendoGrid").dataSource.read(); 
+                }   
+                else{
+                    alert('审核失败')
+                }
+            })
+    }
+function req_fail(e) {
+            e.preventDefault();
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            console.log(dataItem)
+            $.post(window.DataHost+'/manger/recrecord/fail',{"_id":dataItem._id},function(d){
+                if(d._id){
+                    $("#grid").data("kendoGrid").dataSource.read(); 
+                }   
+                else{
+                    alert('审核失败')
+                }
+            })
+         }
+
+
  $(function () {
     var commentTemplate =
         '<div>'+
@@ -227,8 +255,11 @@
                                 { name: "create", text: "添加" }
                               ]
                 var commandAry = [
+                                { name: "success", text: "通过" , click:req_success},
+                                { name: "fail", text: "不通过", click:req_fail},
                                 { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
                                 { name: "destroy", text: "删除"},
+
                               ]
                                            
                 var DataHost = window.DataHost,
@@ -352,6 +383,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "recSex",
                             title: "性别",
                             values:window.sex_ary,
+                            hidden:true
                         },
                          { 
                             field: "recTel",
@@ -364,6 +396,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "recPrice",
                             title: "意向价格", 
+                            hidden:true
                         },
                         { 
                             field: "recRoom",
@@ -383,6 +416,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "isCash",
                             title: "是否结佣",
                             values:window.isCash_type,
+                            hidden:true
                         },
                         { 
                             field: "recCode1",

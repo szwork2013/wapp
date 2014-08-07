@@ -393,7 +393,7 @@ var record_status = [
 	"未到访",
 	"已到访",
 	"已认购",
-	"已签约",
+	"已通过",
 ]
 
 obj.getRecrecordByUserId = function(appId, userId, qobj, cb){

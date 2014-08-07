@@ -302,7 +302,7 @@ window.recStatus_type = [
               { text: "未到访", value: 3 },
               { text: "已到访", value: 4 },
               { text: "已认购", value: 5 },
-              { text: "已签约", value: 6 },
+              { text: "已通过/签约", value: 6 },
 ]
 
 window.isCash_type = [

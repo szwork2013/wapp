@@ -7,13 +7,14 @@ var utils = require('../lib/utils.js');
 var moment = require('moment');
 
 var obj = {}
-var oauth_back_url = '/oatuh/back';
+var oauth_back_url = '/oauth/back';
 var oauth_oob = '/oauth/oob';
+var oauth_logout = '/oauth/logout';
 
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
 	req.session['oauth_jump'] = null;
-	var wxopenid = req.session['oauth_openid'] || req.csession['oauth_openid'] || req.query.wxopenid;
+	var wxopenid = req.session['oauth_openid'] || req.csession['oauth_openid'] //|| req.query.wxopenid;
 
 	//如果用户存在session，则根据session获取用户信息
 	if(wxopenid && wxopenid.length > 0){
@@ -168,6 +169,12 @@ obj.oauthJumpBack = function(app){
 
 	})
 
+	app.get(oauth_logout,function(req,res){
+		req.session.destroy();
+		req.csession['oauth_openid'] = null
+		req.csflush();
+		return res.send('logout')
+	})
 
 	app.get(oauth_back_url,function(req,res){
 		var code = req.query.code;
@@ -219,6 +226,7 @@ obj.oauthJumpBack = function(app){
 
 					if(global.config.oauthScope == 'snsapi_base'){
 						req.csflush();
+						req.session['oauth_openid'] = req.csession['oauth_openid'];
 						return res.redirect(oauth_jump);
 					}
 					

@@ -93,8 +93,8 @@ font-family: "Microsoft YaHei";
 .content-index .submit input{display:block;width:100%;height:47px;background-color:transparent;background-position:0 -283px;border:0}
 /* 协议 */
 .protocol-dialog{display:none;position:absolute;z-index:20;top:50%;left:50%;margin:-180px 0 0 -122px;width:244px;height:361px;background:url(../img/protocol.jpg);background-size:244px 361px;border-radius:2px}
-.protocol-content{margin:70px 0 0 37px;width:170px;height:234px;overflow: auto;}
-.protocol-content p{margin-bottom:10px;color:#3b3b3b;text-indent:2em;line-height:24px}
+.protocol-content{margin:70px 0 0 10px;width: 225px;height:234px;overflow: auto;}
+.protocol-content p{margin-bottom:10px;color:#3b3b3b;line-height:24px}
 .button-close{display:block;position:absolute;top:0;right:0;width:34px;height:34px;text-indent:-9999px}
 .button-true{display:block;position:absolute;bottom:12px;right:49px;width:150px;height:30px;text-indent:-9999px}
 /* 报错 */
