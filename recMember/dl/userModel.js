@@ -87,6 +87,7 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 				name:v.appUserName,
 				sex:v.appUserSex,
 				mobile:v.appUserMobile,
+				userFrom:v.userFrom
 			})
 		});
 

@@ -99,16 +99,18 @@ obj.read = function(req, res){
 
 				dl2.getUserByIds(userIdList,function(err,lists){
 					if(err) return res.send(500,err);
-
-					//循环列表匹配用户id是否相等，相等则把来源赋值
-					lists.forEach(function(uobj){
-						var user_id = uobj._id;
-						resObj["Data"].forEach(function(resobj){
-							if(resobj.userId == user_id){
+					//console.log(lists)
+					//循环列表匹配用户id是否相等，相等则把来源赋值				
+					resObj["Data"].forEach(function(resobj){
+						lists.forEach(function(uobj){
+							//console.log(resobj.userId, uobj.value)
+							//console.log(resobj.userId == uobj.value.toString())
+							if(resobj.userId == uobj.value.toString()){
 								resobj.userFrom = uobj.userFrom
 							}
 						})
 					})
+
 					resObj["Total"] = count				
 					res.json(resObj);
 					return;
