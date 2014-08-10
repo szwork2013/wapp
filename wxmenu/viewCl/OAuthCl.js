@@ -273,11 +273,8 @@ obj.oauthJumpBack = function(app,applist){
 						if(oauthScope == 'snsapi_base'){
 							req.csflush();
 							req.session[appEname+'_oauth_openid'] = req.csession[appEname+'_oauth_openid'];
-							//将用户写入数据库
-							userBl.enter(result.openid, req.wxAppObj._id, function(err,userDoc){
-								if(err) return res.send(500,'用户访问写入数据库有误')
-								return res.redirect(oauth_jump);
-							})
+							
+							return res.redirect(oauth_jump);
 
 						}
 						
