@@ -153,6 +153,10 @@ window.is_show_array = [
                   { text: "启用", value: 1 },
                   { text: "不启用", value: 0 }
                 ]
+window.oauth_scope = [
+                  { text: "仅OPenId，自动跳转", value: 'snsapi_base' },
+                  { text: "详细信息，用户授权", value: 'snsapi_userinfo' }
+                ]
 window.sex_ary=[
               { text: "男", value: 1 },
               { text: "女", value: 0 }

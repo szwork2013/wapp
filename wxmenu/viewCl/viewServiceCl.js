@@ -8,7 +8,7 @@ var obj = {}
 //乐活空间公告，不用登录
 obj.newsall = function(req,res){ 
 	//var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	//var openId = req.wxuobj.openId;
 
 	infoBl.getNewsByTypePage(appId, 2, 1, 100, function(err,list){
@@ -33,7 +33,7 @@ obj.newsall = function(req,res){
 //物语空间活动
 obj.announce = function(req,res){ 
 	//var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	//var openId = req.wxuobj.openId;
 
 	infoBl.getNewsByTypePage(appId, 3, 1, 100, function(err,list){
@@ -58,7 +58,7 @@ obj.announce = function(req,res){
 
 obj.newsDetail = function(req,res){ //共用新闻详细页
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxuobj.openId;
 	var newsId = req.query.newsId;
 
@@ -112,7 +112,7 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
  //共用新闻详细页,不用登录
 obj.newsDetail2 = function(req,res){ //共用新闻详细页
 	//var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	//var openId = req.wxuobj.openId;
 	var newsId = req.query.newsId;
 
@@ -149,7 +149,7 @@ obj.newsDetail2 = function(req,res){ //共用新闻详细页
 //一键呼叫，预约服务，不用登录
 obj.call = function(req,res){ 
 	//var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	//var openId = req.wxuobj.openId;
 
 	infoBl.getBookList(appId, function(err,list){
@@ -173,7 +173,7 @@ obj.call = function(req,res){
 //专刊列表封面
 obj.specialindex = function(req,res){ 
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxuobj.openId;
 
 
@@ -203,7 +203,7 @@ obj.specialindex = function(req,res){
 //专刊列表,根据type显示不同的专刊内容
 obj.speciallist = function(req,res){ 
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxuobj.openId;
 
 	infoBl.getSpecialByTypePage(appId,false,1,5,function(err,list){
@@ -232,7 +232,7 @@ obj.speciallist = function(req,res){
 //专刊详细
 obj.specialdetail = function(req,res){ 
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxuobj.openId;
 	var spid = req.query.spid;
 

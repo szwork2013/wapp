@@ -11,6 +11,10 @@ var obj = { //定义结构
       wxAppId:{type:String,required:true,default:''},  //微信的appid
       wxAppSecret:{type:String,required:true,default:''},  //微信的appsecret
       wxAppToken:{type:String,required:true,default:''},  //微信的 token
+      useOAuth:{type:Number,default:0},  //只能一个，使用这个app的OAuth跳转
+      oauthScope:{type:String,default:'snsapi_base'},
+      //snsapi_base 自动跳转，只获取opendi
+      //snsapi_userinfo 用户授权，获取用户昵称，头像，位置等信息
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 

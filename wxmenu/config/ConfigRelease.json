@@ -1,14 +1,10 @@
 {
 	"currentSite":"http://menu.wujb.net",
-	"appEname":"chengkongjian",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/wxmenu",
 	"monoosePool":10,
 	"currentHost":"127.0.0.1",
 	"currentVersion":"v1",
 	"listenPort":7002,
 	"mangerListenPort":7003,
-	"wxAppId":"wx37d508578c160439",
-	"wxAppSecret":"944bff595d3b025ef18d57d7c1ce46d0",
-	"wxAppToken":"weixin",
 	"oauthScope":"snsapi_base"
 }

@@ -1,5 +1,5 @@
 var OAuth = require('wechat').OAuth;
-var api = new OAuth(global.config.wxAppId, global.config.wxAppSecret);
+
 var userModel = require('../dl/userModel.js'); //加载用户模型
 
 var userBl = require('../bl/wxUser.js');
@@ -8,17 +8,38 @@ var moment = require('moment');
 
 var obj = {}
 var oauth_back_url = '/oauth/back';
-var oauth_oob = '/oauth/oob';
+var oauth_oob = 'oob';
 var oauth_logout = '/oauth/logout';
+var oauth_state = 'wujb'
 
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
 	req.session['oauth_jump'] = null;
-	var wxopenid = req.session['oauth_openid'] || req.csession['oauth_openid'] //|| req.query.wxopenid;
+	//根据路由获取appEname
+	try{
+      var appEname = req.path.split('/')[1] || ''
+      //console.log(appEname)
+    }
+    catch(e){
+      return next(e)
+    }
+    var hasFound = false;
+    global.appGlobalList.forEach(function(appObj){
+        if(appObj.appEname == appEname){
+            hasFound = true
+            req.wxAppObj = appObj
+        }
+    })
+    if(!hasFound){
+        logger.error('wxAppBl.getByEname not found appObj, appEname is %s', config.appEname);
+        return next('no such app')
+    }
+
+    var wxopenid = req.session[appEname+'_oauth_openid'] || req.csession[appEname+'_oauth_openid']
 
 	//如果用户存在session，则根据session获取用户信息
 	if(wxopenid && wxopenid.length > 0){
-		req.csession['oauth_openid'] = wxopenid;
+		req.csession[appEname+'_oauth_openid'] = wxopenid;
 		obj.getUserByOpenId(req,res,wxopenid,function(err,userObj){
 			if(err){
 				req.csflush();
@@ -37,7 +58,7 @@ obj.OAuthMiddle = function(req,res,next){
 obj.jumpOAuthUrl = function(req,res){
 
 	
-	var oauth_jump_back = global.config.currentSite + oauth_back_url;
+	var oauth_jump_back = global.config.currentSite + oauth_back_url+'/'+req.wxAppObj.appEname;
 
 	try{
 		var oauth_jump = decodeURIComponent(global.config.currentSite+req.originalUrl);
@@ -48,7 +69,7 @@ obj.jumpOAuthUrl = function(req,res){
 	req.session['oauth_jump'] = oauth_jump;
 
 	//生成跳转到腾讯微信的授权url地址
-	var url = api.getAuthorizeURL(oauth_jump_back,'wujb',global.config.oauthScope||'snsapi_base');
+	var url = req.wxAppObj.api.getAuthorizeURL(oauth_jump_back, oauth_state, req.wxAppObj.oauthScope);
 
 	req.csflush();
 	res.redirect(url)
@@ -132,155 +153,171 @@ obj.createJumpPath = function(path,openid){
 	return {error:0,data:path}
 }
 
-obj.oauthJumpBack = function(app){
+obj.oauthJumpBack = function(app,applist){
 
 
-	//测试oauth是否能正常工作地址 oob
-	app.get(oauth_oob, obj.OAuthMiddle, function(req,res){
+	//赋值api
+	applist.forEach(function(appObj){
+		//生成多个api实例
+		appObj.api = new OAuth(appObj.wxAppId, appObj.wxAppSecret);
+		var oauthScope = appObj.oauthScope;
+		var appEname = appObj.appEname
 
-		var count = req.csession['count'];
-		if(!count) count = 1;
-		else count++;
-		req.csession['count'] = count;
+		//测试oauth是否能正常工作地址 oob
+		app.get('/oauth/'+appEname+'/'+oauth_oob, obj.OAuthMiddle, function(req,res){
+
+			var count = req.csession['count'];
+			if(!count) count = 1;
+			else count++;
+			req.csession['count'] = count;
 
 
-		var count2 = req.session['count'];
-		if(!count2) count2 = 1;
-		else count2++;
-		req.session['count'] = count2;
+			var count2 = req.session['count'];
+			if(!count2) count2 = 1;
+			else count2++;
+			req.session['count'] = count2;
 
-		//拼接用户数据，全部打印出来
-		var sendObj = {
-			csession:req.csession,
-			wxuobj:req.wxuobj,
-			wxBinder:req.wxBinder,
-			count:req.csession['count'],
-			count2:req.session['count'],
-			oauth_user:req.session['oauth_user']
-		} 
+			//拼接用户数据，全部打印出来
+			var sendObj = {
+				csession:req.csession,
+				wxuobj:req.wxuobj,
+				wxBinder:req.wxBinder,
+				count:req.csession['count'],
+				count2:req.session['count'],
+				oauth_user:req.session[appEname+'_oauth_user']
+			} 
 
-		var resStr = JSON.stringify(sendObj) + '<br/>'+
-					'<h1>微信昵称：'+req.wxuobj.wxName+'</h1>'+
-					'<h1>用户地址：'+req.wxuobj.wxAddress+'</h1>'+
-					'<h1>头像：<img src="'+req.wxuobj.wxAvatar+'" /></h1>'
+			var resStr = JSON.stringify(sendObj) + '<br/>'+
+						'<h1>微信昵称：'+req.wxuobj.wxName+'</h1>'+
+						'<h1>用户地址：'+req.wxuobj.wxAddress+'</h1>'+
+						'<h1>头像：<img src="'+req.wxuobj.wxAvatar+'" /></h1>'
 
-		req.csflush();
-		res.send(resStr);
+			req.csflush();
+			res.send(resStr);
+
+		})
+
+		app.get(oauth_back_url+'/'+appEname,function(req,res){
+			var code = req.query.code;
+			var state = req.query.state;
+			var oauth_jump = req.session['oauth_jump'] || ('/oauth/'+appEname+'/'+oauth_oob)
+
+			req.session['oauth_jump'] = null;
+
+			if(state != oauth_state){
+				req.csflush();
+				return res.send(403,'state error')
+			}
+			if(!code || code == 'authdeny'){
+				req.csflush();
+				return res.send(403,'user not authorize')
+			}
+
+			//获取access token
+			appObj.api.getAccessToken(code, function(err,result){
+				if(err){
+					req.csflush();
+					return res.send(403,err)
+				}
+
+				//snsapi_userinfo和snsapi_base
+				//仅获取openid
+
+				obj.getUserByOpenId(req, res, result.openid, function(err,doc){
+
+						if(err){
+							req.csflush();					
+							return	res.send(500,err);
+						}
+						if(!doc){
+							req.csflush();					
+							return	res.send(500,'user get fail');
+						}
+
+						//正常处理，将openid写入session，这样下次就不会自动跳去授权了
+						req.csession[appEname+'_oauth_openid'] = result.openid
+
+						//生成跳转地址
+						var r = obj.createJumpPath(oauth_jump, result.openid);
+						if(r.error == 1){
+							req.csflush();
+							return res.send(500,r.data);
+						}
+						oauth_jump = r.data;
+
+						//如果是仅获取openid，自动跳转的
+						if(oauthScope == 'snsapi_base'){
+							req.csflush();
+							req.session[appEname+'_oauth_openid'] = req.csession[appEname+'_oauth_openid'];
+							//将用户写入数据库
+							userBl.enter(result.openid, req.wxAppObj._id, function(err,userDoc){
+								if(err) return res.send(500,'用户访问写入数据库有误')
+								return res.redirect(oauth_jump);
+							})
+
+						}
+						
+						//如果是oauth获取用户详细信息的
+						appObj.api.getUser(result.openid, function(err,userinfo){
+							
+							if(err){
+								req.csflush();				
+								return	res.send(500,err);
+							}
+
+							//将用户信息写入sessoin
+							var oauth_user = {
+								openid:userinfo.openid,
+								nickname:userinfo.nickname,
+								sex:userinfo.sex,
+								province:userinfo.province ||'',
+								city:userinfo.city ||'',
+								country:userinfo.country ||'',
+								headimgurl:userinfo.headimgurl || '',
+							};
+
+							//更新用户的微信属性
+							userModel.createOneOrUpdate({
+								_id:doc._id
+							},{
+								 wxName:userinfo.nickname,                   //微信用户昵称
+								 wxAvatar:userinfo.headimgurl,                //微信用户头像
+								 wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
+							},function(err,updatedoc){
+
+								//处理完异常
+								req.csflush();
+								if(err){
+									return	res.send(500,err); 
+								}
+								if(!updatedoc){
+									return	res.send(500,'update weixin info error'); 
+								}
+
+								req.session[appEname+'_oauth_user'] = oauth_user;
+								req.session[appEname+'_oauth_openid'] = req.csession[appEname+'_oauth_openid'];
+								//完毕跳转到指定页面
+								res.redirect(oauth_jump);
+							});// end userModel.createOneOrUpdate			
+
+						});//end api.getUser
+
+					});// end obj.getUserByOpenId
+
+			});//end api.getAccessToken
+
+		})//end app.get
 
 	})
 
+	
 	app.get(oauth_logout,function(req,res){
 		req.session.destroy();
-		req.csession['oauth_openid'] = null
+		req.csession = {}
 		req.csflush();
 		return res.send('logout')
 	})
-
-	app.get(oauth_back_url,function(req,res){
-		var code = req.query.code;
-		var state = req.query.state;
-		var oauth_jump = req.session['oauth_jump'] || oauth_oob;
-
-		req.session['oauth_jump'] = null;
-
-		if(state != 'wujb'){
-			req.csflush();
-			return res.send(403,'state error')
-		}
-		if(!code || code == 'authdeny'){
-			req.csflush();
-			return res.send(403,'user not authorize')
-		}
-
-		//获取access token
-		api.getAccessToken(code, function(err,result){
-			if(err){
-				req.csflush();
-				return res.send(403,err)
-			}
-
-			//snsapi_userinfo和snsapi_base
-			//仅获取openid
-
-			obj.getUserByOpenId(req, res, result.openid, function(err,doc){
-
-					if(err){
-						req.csflush();					
-						return	res.send(500,err);
-					}
-					if(!doc){
-						req.csflush();					
-						return	res.send(500,'user get fail');
-					}
-
-					//正常处理，将openid写入session，这样下次就不会自动跳去授权了
-					req.csession['oauth_openid'] = result.openid
-
-					//生成跳转地址
-					var r = obj.createJumpPath(oauth_jump, result.openid);
-					if(r.error == 1){
-						req.csflush();
-						return res.send(500,r.data);
-					}
-					oauth_jump = r.data;
-
-					if(global.config.oauthScope == 'snsapi_base'){
-						req.csflush();
-						req.session['oauth_openid'] = req.csession['oauth_openid'];
-						return res.redirect(oauth_jump);
-					}
-					
-					//如果是oauth获取用户详细信息的
-					api.getUser(result.openid, function(err,userinfo){
-						
-						if(err){
-							req.csflush();				
-							return	res.send(500,err);
-						}
-
-						//将用户信息写入sessoin
-						var oauth_user = {
-							openid:userinfo.openid,
-							nickname:userinfo.nickname,
-							sex:userinfo.sex,
-							province:userinfo.province ||'',
-							city:userinfo.city ||'',
-							country:userinfo.country ||'',
-							headimgurl:userinfo.headimgurl || '',
-						};
-
-						//更新用户的微信属性
-						userModel.createOneOrUpdate({
-							_id:doc._id
-						},{
-							 wxName:userinfo.nickname,                   //微信用户昵称
-							 wxAvatar:userinfo.headimgurl,                //微信用户头像
-							 wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
-						},function(err,updatedoc){
-
-							//处理完异常
-							req.csflush();
-							if(err){
-								return	res.send(500,err); 
-							}
-							if(!updatedoc){
-								return	res.send(500,'update weixin info error'); 
-							}
-
-							req.session['oauth_user'] = oauth_user;
-							req.session['oauth_openid'] = req.csession['oauth_openid'];
-							//完毕跳转到指定页面
-							res.redirect(oauth_jump);
-						});// end userModel.createOneOrUpdate			
-
-					});//end api.getUser
-
-				});// end obj.getUserByOpenId
-
-		});//end api.getAccessToken
-
-	})//end app.get
-
+	
 }
 
 

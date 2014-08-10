@@ -9,7 +9,7 @@ var obj = {}
 
 obj.regist = function(req,res){ //用户注册
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxBinder.openId
 
 //console.log(req.wxBinder)
@@ -24,7 +24,7 @@ obj.regist = function(req,res){ //用户注册
 //我的推荐记录，工程进度
 obj.recrecord = function(req,res){
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxuobj.openId
 
 	userBl.getRecrecordByUserId(appId, userId, {}, function(err,list){
@@ -46,7 +46,7 @@ obj.recrecord = function(req,res){
 //某条详细的结佣记录
 obj.transacDetail = function(req,res){
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxuobj.openId;
 	var transacId = req.query.transacid;
 
@@ -78,7 +78,7 @@ obj.transacDetail = function(req,res){
 //推荐用户录入页面
 obj.recommend = function(req,res){
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxuobj.openId
 
 	res.render('user_recommend.ejs',{

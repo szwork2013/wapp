@@ -10,31 +10,45 @@ var wxAppBl = require('../bl/wxApp.js');
 
 
 //console.log(global.config)
+function getAllApp(callback){
 
-wxAppBl.getByEname(global.config.appEname,function(err,appObj){
-      if(err){
-        logger.error('wxAppBl.getByEname get error,ename is %s, error: %s',config.appEname,err);
-        return
-      }
-      if(!appObj){
-      	logger.error('wxAppBl.getByEname not found appObj, appEname is %s', config.appEname);
-        return
-      }
-      appObj2 = {
-      	_id:appObj._id,
-		appName:appObj.appName,
-		appEname:appObj.appEname,
-		appTelphone:appObj.appTelphone,
-		appCustomTel:appObj.appCustomTel,
-		appPicture:appObj.appPicture.split(',') || [],
-		appIntro:appObj.appIntro,
-		wxAppId:appObj.wxAppId,
-		wxAppSecret:appObj.wxAppSecret,
-		writeTime:  moment(appObj.writeTime).format('YYYY-MM-DD hh:mm:ss'),  
-      }
+	wxAppBl.getAllApp(function(err,appList){
+	      if(err){
+	        logger.error('getAllApp error: %s',err);
+	        return process.exit(2)
+	      }
+	      if(appList.length == 0){
+	      	logger.error('not found app data');
+	        return
+	      }
+	      var appGlobalList = [];
 
-      global.wxAppObj = appObj2;
-})
+	      appList.forEach(function(appObj){
+      		var o = {
+			      	_id:appObj._id,
+			      	appId:appObj._id,
+					appName:appObj.appName,
+					appEname:appObj.appEname,
+					appTelphone:appObj.appTelphone,
+					appCustomTel:appObj.appCustomTel,
+					appPicture:appObj.appPicture.split(',') || [],
+					appIntro:appObj.appIntro,
+					wxAppId:appObj.wxAppId,
+					wxAppSecret:appObj.wxAppSecret,
+					wxAppToken:appObj.wxAppToken,
+					useOAuth:appObj.useOAuth,
+					oauthScope:appObj.oauthScope,
+					writeTime:  moment(appObj.writeTime).format('YYYY-MM-DD hh:mm:ss'),  
+			      }
+
+			appGlobalList.push(o)
+	      })
+
+	      global.appGlobalList = appGlobalList;
+
+	      callback(appGlobalList)
+	})
+}
 
 
 var uploadPath = path.join(__dirname,'..','upload');
@@ -46,7 +60,7 @@ if(!fs.existsSync(uploadPath)){
 var getUserMid = function(req, res, next){ //中间件，获取用户信息
 	var openid = req.param('wxopenid');
 	var userid = req.param('wxuserid');
-	var appid =  global.wxAppObj._id
+	var appid =  req.param('wxappid');
 
 	var genReqUserObj = function(uobj){
 		if(!uobj){
@@ -55,7 +69,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 		var bindObj = false;
 		if(uobj.bind && uobj.bind.length>0){
 			uobj.bind.forEach(function(bindApp){
-				if(bindApp.appId == global.wxAppObj._id){ //如果用户已经绑定了本app
+				if(bindApp.appId == appid){ //如果用户已经绑定了本app
 					bindObj = bindApp
 				}
 			})
@@ -105,7 +119,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 			req.wxuobj = {
 				  currentSite:config.currentSite,
 				  _id:0,
-				  appId:global.wxAppObj._id,                 //appId表示用户第一次绑定的app应用id
+				  appId:appid,                 //appId表示用户第一次绑定的app应用id
 				  appUserName:'未知用户',       //会员姓名
 				  appUserMobile:0,  //会员手机号
 				  appUserSex:0, //0表示女性，1表示男性				  
@@ -130,7 +144,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 
 var checkIsReg = function(req,res,next){
 	var userId = req.wxuobj._id;
-	var appId = global.wxAppObj._id;
+	var appId = req.wxuobj.appId;
 	var openId = req.wxBinder.openId;
 	if(req.wxBinder.appUserType == 0){
 		return res.json({'error':1,'data':'非认证会员不能操作'})
@@ -140,75 +154,82 @@ var checkIsReg = function(req,res,next){
 
 
 var addroute = function(app){
-	wxRoute(app); //定义微信的路由
+	var app = app;
 
-	//定义微信的OAuth接口
-	oauthCl.oauthJumpBack(app);
+	//先获取所有的 app开发商
+	getAllApp(function(applist){
 
-/*
-	
-	//登录
-	//app.get('/', loginCl.Login);
+		 //定义微信的路由
+		wxRoute(app,applist);
+		//定义微信的OAuth接口
+		oauthCl.oauthJumpBack(app,applist);
 
 
-	//api路由
-	app.get('/api/user/enter', getUserMid,function(req,res){
-		res.json({
-			wxBinder:req.wxBinder,
-			wxuobj:req.wxuobj,
+		//定义完微信接口，再定义路由
+		/*
+			
+			//登录
+			//app.get('/', loginCl.Login);
+
+
+			//api路由
+			app.get('/api/user/enter', getUserMid,function(req,res){
+				res.json({
+					wxBinder:req.wxBinder,
+					wxuobj:req.wxuobj,
+				})
+			})
+
+			//下面是ajax控制器
+			
+			//用户注册
+			app.post('/api/user/binder',getUserMid, apiUser.binder);
+			//用户修改资料
+			app.post('/api/user/modify',getUserMid, apiUser.modify);
+
+			//发送推荐用户
+			app.post('/api/user/recommend',getUserMid, apiUser.recommend);
+			//我的收藏
+			app.post('/api/user/createtransac',getUserMid, apiUser.createtransac);
+			
+			//下面是页面控制器
+
+
+			//新闻列表,不用登录
+			app.get('/view/service/newsall', viewService.newsall);
+			//新闻详情页面,不用登录
+			app.get('/view/service/newsdetail', viewService.newsDetail);	
+			//一键呼叫，预约服务,不用登录
+			app.get('/view/service/call', viewService.call);
+
+
+			//推荐用户
+			app.get('/view/user/recommend',getUserMid, viewUser.recommend);
+			//推荐记录
+			app.get('/view/user/recrecord',getUserMid, viewUser.recrecord);
+			//某条结佣详细信息
+			app.get('/view/user/transacdetail',getUserMid, viewUser.transacDetail);
+			//用户注册
+			app.get('/view/user/regist',getUserMid, viewUser.regist);
+			//用户中心
+			app.get('/view/user/modify',getUserMid, viewUser.modify);
+			
+
+			//增加页面接口
+			//1、兑换商品页面
+			//2、推荐用户页面
+			//3、排行榜页面
+			//4、拍卖页面
+		*/
+		app.get('/', function(req,res){
+			var count = req.csession['count'];
+			if(!count) count = 1;
+			else count++;
+			req.csession['count'] = count;
+			req.csflush(); 
+			res.send('welcome count: '+count.toString());
 		})
 	})
-
-	//下面是ajax控制器
-	
-	//用户注册
-	app.post('/api/user/binder',getUserMid, apiUser.binder);
-	//用户修改资料
-	app.post('/api/user/modify',getUserMid, apiUser.modify);
-
-	//发送推荐用户
-	app.post('/api/user/recommend',getUserMid, apiUser.recommend);
-	//我的收藏
-	app.post('/api/user/createtransac',getUserMid, apiUser.createtransac);
-	
-	//下面是页面控制器
-
-
-	//新闻列表,不用登录
-	app.get('/view/service/newsall', viewService.newsall);
-	//新闻详情页面,不用登录
-	app.get('/view/service/newsdetail', viewService.newsDetail);	
-	//一键呼叫，预约服务,不用登录
-	app.get('/view/service/call', viewService.call);
-
-
-	//推荐用户
-	app.get('/view/user/recommend',getUserMid, viewUser.recommend);
-	//推荐记录
-	app.get('/view/user/recrecord',getUserMid, viewUser.recrecord);
-	//某条结佣详细信息
-	app.get('/view/user/transacdetail',getUserMid, viewUser.transacDetail);
-	//用户注册
-	app.get('/view/user/regist',getUserMid, viewUser.regist);
-	//用户中心
-	app.get('/view/user/modify',getUserMid, viewUser.modify);
-	
-
-	//增加页面接口
-	//1、兑换商品页面
-	//2、推荐用户页面
-	//3、排行榜页面
-	//4、拍卖页面
-*/
-	app.get('/', function(req,res){
-		var count = req.csession['count'];
-		if(!count) count = 1;
-		else count++;
-		req.csession['count'] = count;
-		req.csflush(); 
-		res.send('welcome count: '+count.toString());
-	})
-
 }
 
 

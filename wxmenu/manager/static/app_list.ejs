@@ -72,8 +72,25 @@
                 <input type="file" name="upload_file" id="upload_file">
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="appPicture" data-bind="value:appPicture">
             </div>
-
           
+
+            <div class="k-edit-label  w-800-l">
+                <label for="useOAuth">OAuth</label>
+            </div>
+            <div data-container-for="useOAuth" class="k-edit-field w-800-r">
+               <input type="number" id="useOAuth_inp" class="k-input k-textbox w-50-inp" name="useOAuth" data-bind="value:useOAuth" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="oauthScope" >授权方式</label>
+            </div>
+            <div data-container-for="oauthScope" class="k-edit-field w-800-r">
+               <input type="text" id="oauthScope_inp" class="k-input k-textbox w-50-inp" name="oauthScope" data-bind="value:oauthScope" >
+            </div>
+
+
+
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="appIntro" >开发商介绍</label>
@@ -146,6 +163,7 @@
                                     "appPicture": { editable: true, type:'string', validation: { required: {message: "请上传介绍图片"}}},
                                     "appIntro":{editable: true, type:"string", validation: { required: {message: "请填写介绍"}}},
                                     "writeTime": {editable: true, type: "date" },
+                                    "useOAuth":{ editable: true, type:'number'},
                                 }
                             }
                         }
@@ -203,7 +221,18 @@
                             field: "appCustomTel",
                             title: "客服电话", 
                         },
-                         { 
+                        { 
+                            field: "useOAuth",
+                            title: "OAuth",
+                            values:window.is_show_array
+                        },
+                        { 
+                            field: "oauthScope",
+                            title: "授权方式",
+                            values:window.oauth_scope,
+                            hidden:true
+                        },
+                        { 
                             field: "appPicture",
                             title: "介绍图片", 
                             hidden:true
@@ -235,7 +264,9 @@
                          $("#intro").kendoEditor(window.kendo_edit_option);             
 
                         
-
+                        window.dropdown_init($("#useOAuth_inp"), window.is_show_array)
+                        window.dropdown_init($("#oauthScope_inp"), window.oauth_scope)
+                        
                         $('#writeTime').kendoDateTimePicker();
 
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
