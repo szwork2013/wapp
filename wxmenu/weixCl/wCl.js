@@ -120,7 +120,7 @@ var getAppInfo = function(req,res,next){
     })
 
     if(!hasFound){
-        logger.error('wxAppBl.getByEname not found appObj, appEname is %s', config.appEname);
+        logger.error('wxAppBl.getByEname not found appObj, appEname is %s', appEname);
         return next('no such app')
     }
 

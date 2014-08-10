@@ -163,6 +163,10 @@ obj.oauthJumpBack = function(app,applist){
 		var oauthScope = appObj.oauthScope;
 		var appEname = appObj.appEname
 
+		//如果不启用OAuth
+		if(appObj.useOAuth == 0){
+			return;
+		}
 		//测试oauth是否能正常工作地址 oob
 		app.get('/oauth/'+appEname+'/'+oauth_oob, obj.OAuthMiddle, function(req,res){
 
