@@ -1,5 +1,5 @@
 var OAuth = require('wechat').OAuth;
-
+var url = require('url')
 var userModel = require('../dl/userModel.js'); //加载用户模型
 
 var userBl = require('../bl/wxUser.js');
@@ -14,10 +14,13 @@ var oauth_state = 'wujb'
 
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
+
+	var pathname = url.format(req.originalUrl).pathname || ''
+	
 	req.session['oauth_jump'] = null;
 	//根据路由获取appEname
 	try{
-      var appEname = req.path.split('/')[1] || ''
+      var appEname = pathname.split('/')[1] || ''
       //console.log(appEname)
     }
     catch(e){

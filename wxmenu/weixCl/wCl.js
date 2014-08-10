@@ -4,7 +4,7 @@ var wxReplyDl = require('../dl/wxReplyModel.js');
 var wxMenuDl = require('../dl/menuModel.js');
 var wxAppBl = require('../bl/wxApp.js');
 var crypto = require('crypto')
-
+var url = require('url')
 var ERR_REPLY = '系统错误，请您重试';
 var UNKNOW_REPLY = '未知操作'
 
@@ -103,8 +103,10 @@ var checkSign = function(req,res,next){
 //根据ename获取app对象内容，赋值给req.wxAppObj
 var getAppInfo = function(req,res,next){
 
+    var pathname = url.format(req.originalUrl).pathname || ''
+
     try{
-      var appEname = req.path.split('/')[1] || ''
+      var appEname = pathname.split('/')[1] || ''
       //console.log(appEname)
     }
     catch(e){
