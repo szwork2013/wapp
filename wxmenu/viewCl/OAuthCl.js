@@ -83,7 +83,7 @@ obj.jumpOAuthUrl = function(req,res){
 
 obj.getUserByOpenId = function(req,res,openId, cb){ //根据openid,获取用户信息
 	var openid = openId;
-	var appid =  global.wxAppObj._id;
+	var appid =  req.wxAppObj._id;
 
 	var genReqUserObj = function(uobj){
 		if(!uobj){
@@ -92,7 +92,7 @@ obj.getUserByOpenId = function(req,res,openId, cb){ //根据openid,获取用户�
 		var bindObj = false;
 		if(uobj.bind && uobj.bind.length>0){
 			uobj.bind.forEach(function(bindApp){
-				if(bindApp.appId == global.wxAppObj._id){ //如果用户已经绑定了本app
+				if(bindApp.appId == req.wxAppObj._id){ //如果用户已经绑定了本app
 					bindObj = bindApp
 				}
 			})
@@ -222,6 +222,8 @@ obj.oauthJumpBack = function(app,applist){
 		    }
 
 		    var appObj = appBl.getAppObjByEname(appEname)
+		    req.wxAppObj = appObj;
+
 		    if(!appObj){
 		    	return res.send(404,'not found appEname is %s',appEname)
 		    }
@@ -270,10 +272,10 @@ obj.oauthJumpBack = function(app,applist){
 						oauth_jump = r.data;
 
 						//如果是仅获取openid，自动跳转的
-						if(oauthScope == 'snsapi_base'){
+						if(appObj.oauthScope == 'snsapi_base'){
 							req.csflush();
 							req.session[appEname+'_oauth_openid'] = req.csession[appEname+'_oauth_openid'];
-							
+
 							return res.redirect(oauth_jump);
 
 						}
