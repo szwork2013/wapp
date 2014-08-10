@@ -358,3 +358,9 @@ font-family: "Microsoft YaHei";
 	z-index: 2;
 	font-family: "Arial"
 }
+.true_input{
+	text-align: center;
+	padding: 10px 0;
+	font-weight: normal;
+	clear: both;
+}

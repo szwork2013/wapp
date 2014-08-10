@@ -130,7 +130,25 @@
                 <label for="userFrom" >来源</label>
             </div>
             <div data-container-for="userFrom" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom" >
+               <input type="text" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom"  readonly="readonly">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserName" >推荐人姓名</label>
+            </div>
+            <div data-container-for="appUserName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appUserName" data-bind="value:appUserName"  readonly="readonly">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserMobile" >推荐人手机</label>
+            </div>
+            <div data-container-for="appUserMobile" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appUserMobile" data-bind="value:appUserMobile"  readonly="readonly">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserBuildingRoom" >推荐人楼房</label>
+            </div>
+            <div data-container-for="appUserBuildingRoom" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appUserBuildingRoom" data-bind="value:appUserBuildingRoom"  readonly="readonly">
             </div>
 
 <div style="display:none">
@@ -337,7 +355,10 @@ function req_fail(e) {
                                     "updateTime": {editable: true, type: "date" },
                                     "writeTime": {editable: true, type: "date" },
 
-                                    "userFrom":{ editable: true},
+                                    "userFrom":{ editable: false},
+                                    "appUserName":{ editable: false},
+                                    "appUserMobile":{ editable: false},
+                                    "appUserBuildingRoom":{ editable: false},
                                 }
                             }
                         }
@@ -375,6 +396,22 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "userId",
                             title: "推荐人Id",
+                            hidden:true
+                        },
+                        { 
+                            field: "appUserName",
+                            title: "推荐人姓名",
+                            filterable:false
+                        },
+                        { 
+                            field: "appUserMobile",
+                            title: "推荐人手机",
+                            filterable:false
+                        },
+                        { 
+                            field: "appUserBuildingRoom",
+                            title: "推荐人楼房",
+                            filterable:false
                         },
                         { 
                             field: "buyHouse",

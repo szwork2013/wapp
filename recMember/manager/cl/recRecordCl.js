@@ -82,7 +82,10 @@ obj.read = function(req, res){
 				updateTime: o.updateTime,
 				writeTime: o.writeTime,
 
-				userFrom:''
+				userFrom:'',
+				appUserName:'',
+				appUserMobile:'',
+				appUserBuildingRoom:''
 			})
 			userIdList.push(o.userId)
 		})
@@ -107,6 +110,9 @@ obj.read = function(req, res){
 							//console.log(resobj.userId == uobj.value.toString())
 							if(resobj.userId == uobj.value.toString()){
 								resobj.userFrom = uobj.userFrom
+								resobj.appUserName = uobj.appUserName
+								resobj.appUserMobile = uobj.appUserMobile
+								resobj.appUserBuildingRoom = uobj.appUserBuilding  + '-' +uobj.appUserRoom
 							}
 						})
 					})

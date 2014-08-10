@@ -63,5 +63,33 @@ objSchema.statics.destroy = function (query, cb) {
     return this.remove(query, cb); 
 }
 
+//后台kendoui使用
+objSchema.statics.getUserByIds = function (ids, cb) {
+  var ids = ids || [];
+  this.find({
+    "userId":{
+      "$in":ids
+    }
+  }).limit(1000).exec(function(err,docs){
+    if(err) return cb(err);
+    if(!docs || docs.length == 0) return cb(null,[]);
+    var idsary=[]
+    docs.forEach(function(v){
+      idsary.push({
+        appUserId:v.userId,
+        appUserCity:v.appUserCity,
+        appUserCommunity:v.appUserCommunity,
+        appUserBuilding:v.appUserBuilding,
+        appUserRoom:v.appUserRoom,
+        appCardNumber:v.appCardNumber,
+        appUserType:v.appUserType,
+        isNewSubmit:v.isNewSubmit,
+        lastActiveTime:v.lastActiveTime
+      })
+    });
+
+    cb(null,idsary)
+  })
+}
 
 module.exports = mongoose.model('wxUserApp', objSchema);

@@ -1,5 +1,6 @@
 var mongoose =require('./db_conn.js');
 var Schema = mongoose.Schema;
+var appUserDl = require('./userAppModel.js')
 
 var obj = { //定义结构
 	  appId:{type:String, required:true,index:true},                 //appId表示用户第一次绑定的app应用id 
@@ -80,18 +81,33 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 		if(err) return cb(err);
 		if(!docs || docs.length == 0) return cb(null,[]);
 		var idsary=[]
-		docs.forEach(function(v){
-			idsary.push({
-				text:v.appUserName,
-				value:v._id,
-				name:v.appUserName,
-				sex:v.appUserSex,
-				mobile:v.appUserMobile,
-				userFrom:v.userFrom
-			})
-		});
 
-		cb(null,idsary)
+		//去查找用户app信息
+		appUserDl.getUserByIds(ids,function(err,useApps){
+			if(err) return cb(err);
+
+			docs.forEach(function(v){
+				var tempObj = {
+					text:v.appUserName,
+					value:v._id,
+					appUserName:v.appUserName,
+					sex:v.appUserSex,
+					mobile:v.appUserMobile,
+					userFrom:v.userFrom,
+					appUserMobile:v.appUserMobile
+				}
+				useApps.forEach(function(userAppObj){
+					 if(userAppObj.appUserId != v._id) return;
+					 var keylist = Object.keys(userAppObj)
+					 keylist.forEach(function(key){
+					 	tempObj[key] = userAppObj[key];
+					 })
+				})
+				idsary.push(tempObj)
+			});
+			cb(null,idsary)
+
+		})
 	})
 }
 
