@@ -15,5 +15,16 @@ obj.getAllApp = function(cb){
 	appModel.findAll({},0,1000,cb);
 }
 
+obj.getAppObjByEname = function(ename){
+
+	var hasFound = false
+	global.appGlobalList.forEach(function(appObj){
+        if(appObj.appEname == ename){
+            hasFound = appObj
+        }
+    })
+    return hasFound;
+}
+
 
 module.exports = obj;

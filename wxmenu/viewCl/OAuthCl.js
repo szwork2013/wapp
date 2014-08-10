@@ -3,6 +3,7 @@ var url = require('url')
 var userModel = require('../dl/userModel.js'); //加载用户模型
 
 var userBl = require('../bl/wxUser.js');
+var appBl = require('../bl/wxApp.js');
 var utils = require('../lib/utils.js');
 var moment = require('moment');
 
@@ -11,6 +12,10 @@ var oauth_back_url = '/oauth/back';
 var oauth_oob = 'oob';
 var oauth_logout = '/oauth/logout';
 var oauth_state = 'wujb'
+
+
+
+
 
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
@@ -26,17 +31,13 @@ obj.OAuthMiddle = function(req,res,next){
     catch(e){
       return next(e)
     }
-    var hasFound = false;
-    global.appGlobalList.forEach(function(appObj){
-        if(appObj.appEname == appEname){
-            hasFound = true
-            req.wxAppObj = appObj
-        }
-    })
+    var hasFound = appBl.getAppObjByEname(appEname);
+
     if(!hasFound){
         logger.error('wxAppBl.getByEname not found appObj, appEname is %s', config.appEname);
         return next('no such app')
     }
+    req.wxAppObj = hasFound;
 
     var wxopenid = req.session[appEname+'_oauth_openid'] || req.csession[appEname+'_oauth_openid']
 
@@ -208,6 +209,22 @@ obj.oauthJumpBack = function(app,applist){
 			var code = req.query.code;
 			var state = req.query.state;
 			var oauth_jump = req.session['oauth_jump'] || ('/oauth/'+appEname+'/'+oauth_oob)
+
+			var pathname = url.parse(req.originalUrl).pathname || ''
+
+			//根据路由获取appEname
+			try{
+		      var appEname = pathname.split('/')[3] || ''
+		      //console.log(appEname)
+		    }
+		    catch(e){
+		      return next(e)
+		    }
+
+		    var appObj = appBl.getAppObjByEname(appEname)
+		    if(!appObj){
+		    	return res.send(404,'not found appEname is %s',appEname)
+		    }
 
 			req.session['oauth_jump'] = null;
 
