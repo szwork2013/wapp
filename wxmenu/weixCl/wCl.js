@@ -103,10 +103,10 @@ var checkSign = function(req,res,next){
 //根据ename获取app对象内容，赋值给req.wxAppObj
 var getAppInfo = function(req,res,next){
 
-    var pathname = url.format(req.originalUrl).pathname || ''
+    var pathname = url.parse(req.originalUrl).pathname || ''
 
     try{
-      var appEname = pathname.split('/')[1] || ''
+      var appEname = pathname.split('/')[2] || ''
       //console.log(appEname)
     }
     catch(e){

@@ -15,12 +15,12 @@ var oauth_state = 'wujb'
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
 
-	var pathname = url.format(req.originalUrl).pathname || ''
-	
+	var pathname = url.parse(req.originalUrl).pathname || ''
+
 	req.session['oauth_jump'] = null;
 	//根据路由获取appEname
 	try{
-      var appEname = pathname.split('/')[1] || ''
+      var appEname = pathname.split('/')[2] || ''
       //console.log(appEname)
     }
     catch(e){
