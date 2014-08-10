@@ -16,7 +16,8 @@ obj.success = function(req, res){
 	dl.createOneOrUpdate({
 		_id:req.body._id
 	}, {
-		recStatus:6
+		recStatus:6,
+		updateTime:new Date(),
 	}, function(err, doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
@@ -28,7 +29,8 @@ obj.fail = function(req, res){
 	dl.createOneOrUpdate({
 		_id:req.body._id
 	}, {
-		recStatus:2
+		recStatus:2,
+		updateTime:new Date(),
 	}, function(err, doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])

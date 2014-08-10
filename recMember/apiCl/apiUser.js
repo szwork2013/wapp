@@ -122,6 +122,10 @@ obj.recommend = function(req,res){ //推荐人
 
 	var recPrice = req.body.recPrice || 0;
 	
+	if(req.wxBinder.appUserType < 1){
+		res.send({error:1,data:'认证会员才能推荐朋友'})
+		return;
+	}
 
 	if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
 		return res.send({error:1,data:'手机号格式有误'}) 

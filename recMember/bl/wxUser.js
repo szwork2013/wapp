@@ -382,7 +382,9 @@ obj.recommend = function(appId, userId, qobj, cb){
 			recArea:recArea,
 			recPrice:recPrice,
 			recRoom:recRoom,
-			recStatus:1
+			recStatus:1,
+			updateTime:new Date(),
+			writeTime:new Date()
 		},function(err,doc){
 			if(err) return cb(err);
 			cb(null, doc);
