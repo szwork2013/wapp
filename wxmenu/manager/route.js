@@ -13,6 +13,9 @@ var userappCl = require('./cl/userAppCl.js');
 var replyCl = require('./cl/replyCl.js')
 var menuCl = require('./cl/menuCl.js')
 
+var activeCl = require('./cl/activeCl.js');
+var activeLogCl = require('./cl/activeLogCl.js');
+
 
 
 
@@ -121,11 +124,22 @@ var addroute = function(app){
 	app.post('/manger/menu/create', checkLogin, menuCl.create)
     app.post('/manger/menu/sync', checkLogin, menuCl.sync)
 
+
+    //active
+	app.get('/manger/active/list', checkLogin, activeCl.list)
+	app.post('/manger/active/read', checkLogin, activeCl.read)
+	app.post('/manger/active/update', checkLogin, activeCl.update)
+	app.post('/manger/active/destroy', checkLogin, activeCl.destroy)
+	app.post('/manger/active/create', checkLogin, activeCl.create)
+
+
+    //active log
+	app.get('/manger/activelog/list', checkLogin, activeLogCl.list)
+	app.post('/manger/activelog/read', checkLogin, activeLogCl.read)
+	app.post('/manger/activelog/update', checkLogin, activeLogCl.update)
+	app.post('/manger/activelog/destroy', checkLogin, activeLogCl.destroy)
+	app.post('/manger/activelog/create', checkLogin, activeLogCl.create)
   	
-
-
-
-
 
 
 	//获得guid
