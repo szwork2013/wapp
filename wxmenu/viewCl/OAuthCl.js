@@ -163,7 +163,7 @@ obj.oauthJumpBack = function(app,applist){
 	//赋值api
 	applist.forEach(function(appObj){
 		//生成多个api实例
-		appObj.api = new OAuth(appObj.wxAppId, appObj.wxAppSecret);
+		appObj.api = new OAuth(appObj.wxAppId.trim(), appObj.wxAppSecret.trim());
 		var oauthScope = appObj.oauthScope;
 		var appEname = appObj.appEname
 
