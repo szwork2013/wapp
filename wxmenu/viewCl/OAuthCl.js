@@ -279,7 +279,9 @@ obj.oauthJumpBack = function(app,applist){
 							return res.redirect(oauth_jump);
 
 						}
-						
+						//获取oauth返回的结果
+						var result = result.data;
+
 						//如果是oauth获取用户详细信息的
 						appObj.api.getUser(result.openid, function(err,userinfo){
 							
