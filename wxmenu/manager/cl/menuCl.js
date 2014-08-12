@@ -160,23 +160,12 @@ obj.sync = function(req, res){
 				var API = wechat.API;
 				var api = new API(appid, secret);
 				console.log(JSON.stringify(wxMenu))
-				if(!api.isAccessTokenValid()){
-					api.getAccessToken(function(err,result){
-						//console.log(err)
-						//console.log(result)
-						api.createMenu(wxMenu, function(err,result){
-							if(err) return res.json({result:0,msg:err});
-							res.send({result:1})
-						});
-					})
-				}
-				else{
-					api.createMenu(wxMenu, function(err,result){
+
+				api.createMenu(wxMenu, function(err,result){
 						if(err) return res.json({result:0,msg:err});
 						res.send({result:1})
 					});
-				}
-
+				
 			})
 
 
