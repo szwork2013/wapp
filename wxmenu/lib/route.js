@@ -223,10 +223,11 @@ var addroute = function(app){
 			//4、拍卖页面
 		*/
 
-		app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
+		//active活动页面，需要oauth支持
+		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
 		app.post('/active_data/:appename/addsupport', activeCl.addSupport)
 		app.get('/active_data/getrank', activeCl.activeRank)
-
+		//end active
 
 		app.get('/', function(req,res){
 			var count = req.csession['count'];
