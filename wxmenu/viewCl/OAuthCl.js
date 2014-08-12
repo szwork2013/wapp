@@ -171,12 +171,6 @@ obj.oauthJumpBack = function(app,applist){
 		//测试oauth是否能正常工作地址 oob
 		app.get('/oauth/'+appEname+'/'+oauth_oob, obj.OAuthMiddle, function(req,res){
 
-		
-			if(!count) count = 1;
-			else count++;
-		
-
-
 			var count2 = req.session['count'];
 			if(!count2) count2 = 1;
 			else count2++;
