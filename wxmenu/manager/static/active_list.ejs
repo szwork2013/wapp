@@ -22,22 +22,25 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
+                <label for="ename" >唯一英文名</label>
+            </div>
+            <div data-container-for="ename" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="ename" data-bind="value:ename" required="required">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
                 <label for="title" >活动标题</label>
             </div>
             <div data-container-for="title" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" required="required">
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="url" >活动跳转地址</label>
-            </div>
-            <div data-container-for="url" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="url" data-bind="value:url" required="required">
-            </div>
 
+            
 
-            <div class="k-edit-label  w-800-l">
-             
+            
+            
             <div class="k-edit-label  w-800-l">
                 <label for="picture">图片介绍</label>
             </div>
@@ -45,6 +48,7 @@
                 <input type="file" name="upload_file" id="upload_file">
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
             </div>
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="intro" >活动介绍</label>
@@ -56,6 +60,16 @@
 
 
 <div style="display:none">
+            <div class="k-edit-label  w-800-l">
+                <label for="url" >活动模版</label>
+            </div>
+            <div data-container-for="url" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="url" data-bind="value:url" >
+               <p>
+                    请以.ejs结尾，例如“user.ejs”
+               </p>
+            </div>
+
             <div class="k-edit-label  w-800-l">
                 <label for="recCode1" >备用1</label>
             </div>
@@ -144,6 +158,8 @@
                                     "_id": { editable: false },
                                     "appId": { editable: true },
                                     "title": { editable: true },
+                                    "ename":{ editable: true },
+
 
                                     "intro": { editable: true },
                                     "picture": { editable: true}, 
@@ -188,6 +204,10 @@ $.post('/manger/app/getList',{},function(data_ary){
                             values:d,
                         },
                         { 
+                            field: "ename",
+                            title: "唯一英文名",
+                        },
+                        { 
                             field: "title",
                             title: "活动标题",
                         },
@@ -203,7 +223,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                         { 
                             field: "url",
-                            title: "页面地址",
+                            title: "跳转地址",
+                            hidden:true
                         },
                         { 
                             field: "code1",
@@ -248,6 +269,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                         window.dropdown_init($('#appId_inp'),d)
                         window.dropdown_init()
 
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 1)
 
                     },
                     filterable:window.filter_obj         

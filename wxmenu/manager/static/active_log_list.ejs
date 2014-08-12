@@ -15,14 +15,6 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="appId" >地产商</label>
-            </div>
-            <div data-container-for="appId" class="k-edit-field w-800-r">
-               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
-            </div>
-
-
-            <div class="k-edit-label  w-800-l">
                 <label for="fromOpenId" >投票openid</label>
             </div>
             <div data-container-for="fromOpenId" class="k-edit-field w-800-r">
@@ -134,7 +126,6 @@
                                 id:"_id",
                                 fields: {
                                     "_id": { editable: false },
-                                    "appId": { editable: true },
                                     "fromOpenId": { editable: true },
 
                                     "fromUserId": { editable: true },
@@ -172,11 +163,6 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field:'_id',
                             title:'记录Id',
                             hidden:true
-                        },
-                        { 
-                            field: "appId",
-                            title: "地产商", 
-                            values:d,
                         },
                         { 
                             field: "fromOpenId",

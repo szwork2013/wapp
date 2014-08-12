@@ -4,6 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var wxRoute = require('../weixCl/wCl.js');
 var oauthCl = require('../viewCl/OAuthCl.js')
+var activeCl = require('../viewCl/viewActiveCl.js')
 
 var wxAppBl = require('../bl/wxApp.js');
 
@@ -221,6 +222,12 @@ var addroute = function(app){
 			//3、排行榜页面
 			//4、拍卖页面
 		*/
+
+		app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
+		app.post('/active_data/:appename/addsupport', activeCl.addSupport)
+		app.get('/active_data/getrank', activeCl.activeRank)
+
+
 		app.get('/', function(req,res){
 			var count = req.csession['count'];
 			if(!count) count = 1;

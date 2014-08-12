@@ -8,6 +8,7 @@ var obj = { //定义结构
       intro:{type:String,required:true},              //简介
       picture:{type:String,required:true},            //缩略图
       url:{type:String,required:true},                //模版地址
+      ename:{type:String,required:true,unique:true},   //唯一的英文名
       code1:{type:String,default:''},                 //备用字段1
       code2:{type:String,default:''},                 //备用字段2
       isShow:{type:Number,default:1},             

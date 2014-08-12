@@ -97,7 +97,69 @@ obj.enter = function(openId,appId,cb){ //用户进入
 }
 
 
+obj.getUserByIds = function(uidList, cb){
+
+	userModel.getUserByIds(uidList,function(err,list){
+		if(err || list.length == 0){
+			return cb(err,list)
+		}
+		cb(null, list)
+
+	})
+}
 
 
+obj.modify = function(userId, openId, qobj,cb){//修改用户资料
+	if(!userId){
+		return cb('缺少 userid')
+	}
+	if(!openId){
+		return cb('缺少 openId')
+	}
+
+	var appMObj = {}
+	if(qobj.appUserCommunity){
+		appMObj.appUserCommunity = qobj.appUserCommunity
+	}
+	if(qobj.appUserBuilding){
+		appMObj.appUserBuilding = qobj.appUserBuilding
+	}
+	if(qobj.appUserRoom){
+		appMObj.appUserRoom = qobj.appUserRoom
+	}
+
+	var userMObj = {}
+	if(qobj.appUserName){
+		userMObj.appUserName = qobj.appUserName
+	}
+	if(qobj.appUserSex){
+		userMObj.appUserSex = qobj.appUserSex
+	}
+	if(qobj.appUserBirth){
+		userMObj.appUserBirth = qobj.appUserBirth
+	}
+	if(qobj.appUserMobile){
+		userMObj.appUserMobile = qobj.appUserMobile
+	}
+	//console.log(appMObj)
+
+	/*
+	userAppModel.createOneOrUpdate({
+			userId:userId,
+			openId:openId,
+		},qobj,function(err,doc2){
+			if(err) return cb(err);
+	*/
+			userModel.createOneOrUpdate({
+				_id:userId
+			},userMObj, function(err,doc){
+				if(err) return cb(err);
+				cb(null,{
+					'userObj':doc
+					//'binderObj':doc2
+				})//end cb		
+			})//end userModel.createOneOrUpdate
+	//	})// end userAppModel.createOneOrUpdate 
+}
 
 module.exports = obj;

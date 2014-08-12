@@ -15,8 +15,6 @@ var oauth_state = 'wujb'
 
 
 
-
-
 //必须使用client session
 obj.OAuthMiddle = function(req,res,next){
 
@@ -39,18 +37,17 @@ obj.OAuthMiddle = function(req,res,next){
     }
     req.wxAppObj = hasFound;
 
-    var wxopenid = req.session[appEname+'_oauth_openid'] || req.csession[appEname+'_oauth_openid']
+    var wxopenid = req.session[appEname+'_oauth_openid']
 
 	//如果用户存在session，则根据session获取用户信息
 	if(wxopenid && wxopenid.length > 0){
-		req.csession[appEname+'_oauth_openid'] = wxopenid;
 		obj.getUserByOpenId(req,res,wxopenid,function(err,userObj){
 			if(err){
-				req.csflush();
+		
 				return	res.send(500,err);
 			}
 			if(!userObj) return obj.jumpOAuthUrl(req,res);
-			req.csflush();
+
 			next();//如果已经有身份，则next进入下一个流程
 		})
 	}
@@ -75,7 +72,7 @@ obj.jumpOAuthUrl = function(req,res){
 	//生成跳转到腾讯微信的授权url地址
 	var url = req.wxAppObj.api.getAuthorizeURL(oauth_jump_back, oauth_state, req.wxAppObj.oauthScope);
 
-	req.csflush();
+
 	res.redirect(url)
 
 }
@@ -174,10 +171,10 @@ obj.oauthJumpBack = function(app,applist){
 		//测试oauth是否能正常工作地址 oob
 		app.get('/oauth/'+appEname+'/'+oauth_oob, obj.OAuthMiddle, function(req,res){
 
-			var count = req.csession['count'];
+		
 			if(!count) count = 1;
 			else count++;
-			req.csession['count'] = count;
+		
 
 
 			var count2 = req.session['count'];
@@ -187,10 +184,10 @@ obj.oauthJumpBack = function(app,applist){
 
 			//拼接用户数据，全部打印出来
 			var sendObj = {
-				csession:req.csession,
+
 				wxuobj:req.wxuobj,
 				wxBinder:req.wxBinder,
-				count:req.csession['count'],
+	
 				count2:req.session['count'],
 				oauth_user:req.session[appEname+'_oauth_user']
 			} 
@@ -200,7 +197,7 @@ obj.oauthJumpBack = function(app,applist){
 						'<h1>用户地址：'+req.wxuobj.wxAddress+'</h1>'+
 						'<h1>头像：<img src="'+req.wxuobj.wxAvatar+'" /></h1>'
 
-			req.csflush();
+	
 			res.send(resStr);
 
 		})
@@ -231,18 +228,18 @@ obj.oauthJumpBack = function(app,applist){
 			req.session['oauth_jump'] = null;
 
 			if(state != oauth_state){
-				req.csflush();
+			
 				return res.send(403,'state error')
 			}
 			if(!code || code == 'authdeny'){
-				req.csflush();
+				
 				return res.send(403,'user not authorize')
 			}
 
 			//获取access token
 			appObj.api.getAccessToken(code, function(err,result){
 				if(err){
-					req.csflush();
+				
 					return res.send(403,err)
 				}
 
@@ -251,30 +248,25 @@ obj.oauthJumpBack = function(app,applist){
 
 				obj.getUserByOpenId(req, res, result.openid, function(err,doc){
 
-						if(err){
-							req.csflush();					
+						if(err){				
 							return	res.send(500,err);
 						}
-						if(!doc){
-							req.csflush();					
+						if(!doc){				
 							return	res.send(500,'user get fail');
 						}
 
 						//正常处理，将openid写入session，这样下次就不会自动跳去授权了
-						req.csession[appEname+'_oauth_openid'] = result.openid
 
 						//生成跳转地址
 						var r = obj.createJumpPath(oauth_jump, result.openid);
 						if(r.error == 1){
-							req.csflush();
 							return res.send(500,r.data);
 						}
 						oauth_jump = r.data;
 
 						//如果是仅获取openid，自动跳转的
 						if(appObj.oauthScope == 'snsapi_base'){
-							req.csflush();
-							req.session[appEname+'_oauth_openid'] = req.csession[appEname+'_oauth_openid'];
+							req.session[appEname+'_oauth_openid'] = result.openid
 
 							return res.redirect(oauth_jump);
 
@@ -285,8 +277,7 @@ obj.oauthJumpBack = function(app,applist){
 						//如果是oauth获取用户详细信息的
 						appObj.api.getUser(result.openid, function(err,userinfo){
 							
-							if(err){
-								req.csflush();				
+							if(err){	
 								return	res.send(500,err);
 							}
 
@@ -311,7 +302,6 @@ obj.oauthJumpBack = function(app,applist){
 							},function(err,updatedoc){
 
 								//处理完异常
-								req.csflush();
 								if(err){
 									return	res.send(500,err); 
 								}
@@ -320,7 +310,7 @@ obj.oauthJumpBack = function(app,applist){
 								}
 
 								req.session[appEname+'_oauth_user'] = oauth_user;
-								req.session[appEname+'_oauth_openid'] = req.csession[appEname+'_oauth_openid'];
+								req.session[appEname+'_oauth_openid'] = result.openid;
 								//完毕跳转到指定页面
 								res.redirect(oauth_jump);
 							});// end userModel.createOneOrUpdate			
@@ -338,8 +328,7 @@ obj.oauthJumpBack = function(app,applist){
 	
 	app.get(oauth_logout,function(req,res){
 		req.session.destroy();
-		req.csession = {}
-		req.csflush();
+
 		return res.send('logout')
 	})
 	

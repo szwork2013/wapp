@@ -1,7 +1,9 @@
 var dl = require('../../dl/appActiveLogModel.js');
 
 var dl2 = require('../../dl/userModel.js');
+var dl3 = require('../../dl/appActiveModel.js');
 var utils = require('../../lib/utils.js');
+var bl = require('../../bl/activeBl.js');
 var obj = {}
 var salt = global.app.get('salt');
 
@@ -76,6 +78,23 @@ obj.destroy = function(req, res){
 }
 
 
+
+obj.ranklist = function(req, res){
+	res.render('active_log_rank_list', {session:req.session});
+}
+
+
+obj.getrank =  function(req, res){
+
+	var ename = req.body.activeEname;
+
+	bl.getRankByEname(ename, 1000, function(err,list){
+		if(err) return res.json({error:1,data:err})
+		return res.json({error:0,data:list})
+	})
+
+
+}
 
 
 

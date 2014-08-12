@@ -139,7 +139,9 @@ var addroute = function(app){
 	app.post('/manger/activelog/update', checkLogin, activeLogCl.update)
 	app.post('/manger/activelog/destroy', checkLogin, activeLogCl.destroy)
 	app.post('/manger/activelog/create', checkLogin, activeLogCl.create)
-  	
+
+	app.get('/manger/activelog/ranklist', checkLogin, activeLogCl.ranklist)
+  	app.post('/manger/activelog/getrank', checkLogin, activeLogCl.getrank)
 
 
 	//获得guid
