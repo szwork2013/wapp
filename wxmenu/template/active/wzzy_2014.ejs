@@ -34,7 +34,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:400px;">
+  <div class="modal-dialog" style="width:400px;margin: 30px auto;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -43,12 +43,16 @@
 	  <form class="bs-example bs-example-form" role="form">
 		  <div class="modal-body">			
 				<div class="input-group input-group-lg">
-				  <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+				  <span class="input-group-addon"  style="padding:0 10px;">
+				  	<span class="glyphicon glyphicon-user"></span>
+				  </span>
 				  <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="<%= toUserObj.appUserName %>" maxlength="20">
 				</div>
 				<br/>
 				<div class="input-group input-group-lg">
-				  <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+				  <span class="input-group-addon" style="padding:0 10px;">
+				  	<span class="glyphicon glyphicon-phone" ></span>
+				  </span>
 				  <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="<%= toUserObj.appUserMobile %>" maxlength="11">
 				</div>
 		  
