@@ -1,0 +1,94 @@
+<header class="page-header page-preset-header">
+
+		<a class="icon menu" href="javascript:;">菜单</a>
+
+		<div class="container">
+			<h1 class="icon logo"><%= title %></h1>
+		</div>
+		<nav class="hide" style="display: none;">
+				<div class="nav-head">
+				<h2>
+					<%= userObj.appUserName %>
+				</h2>
+				<p class=" blue">
+					<% if(binderObj.appUserType == 0){%>
+						未认证
+					<%}else{%>	
+						vip会员
+					<%}%>
+				</p>
+				<a class="icon menu-back" href="javascript:;">返回</a>
+			</div>
+			<ul>
+<% if(binderObj.appUserType == 0){%>
+
+				<li class="xinxi ">
+					<a href="/view/user/regist?wxuserid=<%= userObj._id %>">
+						<h3>会员认证</h3>
+						<p>立即认证会员</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+				<li class="tequan ">
+					<a href="/view/user/regist?wxuserid=<%= userObj._id %>">
+						<h3>推荐朋友</h3>
+						<p><i>new</i>需要认证会员</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+				<li class="yezhu">
+					<a href="/view/user/regist?wxuserid=<%= userObj._id %>">
+						<h3>推荐查询</h3>
+						<p><i>new</i>需要认证会员</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+<%}else{%>	
+				<li class="tequan ">
+					<a href="/view/user/recommend?wxuserid=<%= userObj._id %>">
+						<h3>推荐朋友</h3>
+						<p><i>new</i>赢取百万奖金</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+				<li class="xinxi ">
+					<a href="/view/user/modify?wxuserid=<%= userObj._id %>">
+						<h3>个人中心</h3>
+						<p>查看帐号相关信息</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+				<li class="yezhu">
+					<a href="/view/user/recrecord?wxuserid=<%= userObj._id %>">
+						<h3>推荐查询</h3>
+						<p><i>new</i>查询推荐进度</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+
+<%}%>				
+				<li class="yuyue">
+                     <a href="/view/service/newsall?wxuserid=<%= userObj._id %>">
+						<h3>新闻公告</h3>
+						<p>了解最新工程进度</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+				<li class="recrule">
+                     <a href="/view/service/newsdetail2?wxuserid=<%= userObj._id %>">
+						<h3>推荐说明</h3>
+						<p>推荐客户赢取佣金说明</p>
+						<span class="icon"></span>
+					</a>
+				</li>
+
+			</ul>
+		</nav>
+	</header>

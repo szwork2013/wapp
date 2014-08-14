@@ -1,0 +1,43 @@
+<% include inc/head %>
+<%
+  var title = '个人中心'
+%>
+<% include inc/top %>
+
+
+<section class="page-content container content-info  info-blue">
+    <div class="card_wrap">
+        <img src="/static/\wanke_skin/img/card2.png" class="card_img" />
+        <span class="card_num">NO. <%= binderObj.appCardNumber %></span>
+    </div>
+    <section class="info-my">
+      <header>
+        <h1><%= userObj.appUserName %></h1>
+        <div>
+          <img src="/static/wanke_skin/img/mem_head.jpg">
+        </div>
+      </header>
+      <ul>
+        <li>
+          <h2>联系电话</h2>
+          <p><%= userObj.appUserMobile %></p>
+        </li>
+        <li>
+            <h2>楼号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+            <p><%= binderObj.appUserBuilding %> 栋</p>
+        </li>
+        <li>
+             <h2>房号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+              <p><%= binderObj.appUserRoom %> 室</p>
+        </li>                               
+      </ul>
+    </section>
+          <!--<a class="icon level" href="tel:057187971125">升级会员</a>   -->
+  </section>
+<% include inc/rule %>
+<script type="text/javascript">
+  $(function(){
+    $('#rule_div_box').show()
+  })
+</script>
+<% include inc/foot %>

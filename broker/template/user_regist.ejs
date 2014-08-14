@@ -1,0 +1,129 @@
+<% include inc/head %>
+<%
+  var title = '会员认证'
+%>
+<% include inc/top %>
+
+<section class="page-content container content-index">
+    <h1 class="icon">会员中心</h1>
+
+      <fieldset class="info">
+
+<% if(binderObj.isNewSubmit == 1){ %>
+<div class="info-errtip info-errtip2">
+    资料审核中，请耐心等待
+</div>
+<%
+}else if(binderObj.isNewSubmit == 2){ 
+%>
+<div class="info-errtip info-errtip2">
+    审核不通过，请重新认证
+</div>
+<%}%>
+        
+
+        <div class="info-errtip" style="display:none" id="errtip"></div>
+        <div class="info-name">
+          <label class="icon">姓名</label>
+          <input type="text" placeholder="请输入真实姓名" id="appUserName" name="appUserName" maxlength="20" />
+        </div>
+        <div class="info-phone">
+          <label class="icon">手机</label>
+          <input type="text" placeholder="请输入手机号" id="mobile" name="mobile" maxlength="11" />
+        </div>
+        <div class="info-type">
+          <label class="icon">房号</label>
+          <input type="text" placeholder="例如: 10-2101" id="house" name="house" maxlength="50" />
+          
+        </div>
+
+        <h3 class="true_input">请如实填写购房合同上的姓名及电话</h3>
+        <!--
+        <div class="info-numb">
+          <label class="icon">证件号码</label>
+          <input type="text" placeholder="证件号码" name="card_no">
+        </div>
+        -->
+      </fieldset>
+      <fieldset class="icon protocol">
+        <a class="tick icon" href="javascript:;">勾选</a>
+        <a class="enter" href="javascript:;">万科合伙人说明</a>
+      </fieldset>
+      <fieldset class="submit">
+        <input class="icon" type="button" id="submitBtn" value="认证">
+      </fieldset>
+   
+  </section>
+
+<% include inc/rule %>
+
+<script type="text/javascript">
+  $(function(){
+
+      $('body').addClass('index')
+
+      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+          $('#errtip').hide();
+
+          var mobile = $('#mobile').val();
+          var appUserName = $.trim($('#appUserName').val());
+          var house = $.trim($('#house').val());
+          var appUserBuilding = ''
+          var appUserRoom = ''
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+              $('#errtip').html(errimg+'手机号输入有误').show()
+              return false;
+          }
+          if(!appUserName){
+              $('#errtip').html(errimg+'请输入真实姓名').show()
+              return false;
+          } 
+          if(!house){
+              $('#errtip').html('请输入楼房号').show()
+              return false;
+          }
+          if(house){
+
+              if(house.indexOf('-') == -1){
+                 $('#errtip').html(errimg+'楼房号用"-"分割').show()
+                 return false;
+              }
+              appUserBuilding = house.split('-')[0]
+              appUserRoom = house.split('-')[1]
+              
+          }
+
+          window.isajax = true
+          $('#errtip').empty().hide();
+
+          $.post('/api/user/binder',{
+            'appUserName':appUserName,
+            'appUserBuilding':appUserBuilding,
+            'appUserRoom':appUserRoom,
+            'appUserMobile':mobile,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(errimg+d.data).show();
+
+              if(d.data.appUserType == 2){
+                alert('您是老业主，认证成功');
+              }
+              else{
+                alert('提交成功,请等待审核');
+              }
+              setTimeout(function(){
+                location.href = location.href
+              },500)             
+          },'json')
+
+      })
+
+  })
+</script>
+
+
+<% include inc/foot %>

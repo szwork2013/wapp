@@ -1,0 +1,13 @@
+{
+	"currentSite":"http://boker.wujb.net",
+	"appEname":"boker",
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/boker",
+	"monoosePool":10,
+	"currentHost":"127.0.0.1",
+	"currentVersion":"v1",
+	"listenPort":7006,
+	"mangerListenPort":7007,
+	"wxAppId":"123",
+	"wxAppSecret":"123",
+	"wxAppToken":"weixin"
+}

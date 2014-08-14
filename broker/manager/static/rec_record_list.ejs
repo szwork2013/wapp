@@ -1,0 +1,562 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">推荐id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appId" >地产商</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userId" >用户Id</label>
+            </div>
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="buyHouse" >购买楼号</label>
+            </div>
+            <div data-container-for="buyHouse" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="buyHouse" data-bind="value:buyHouse" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="buyRoom" >购买房号</label>
+            </div>
+            <div data-container-for="buyRoom" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="buyRoom" data-bind="value:buyRoom" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recName" >被推荐人姓名</label>
+            </div>
+            <div data-container-for="recName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recName" data-bind="value:recName" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recSex" >被推荐人性别</label>
+            </div>
+            <div data-container-for="recSex" class="k-edit-field w-800-r">
+               <input type="number" id="recSex_inp" class="k-input k-textbox w-50-inp" name="recSex" data-bind="value:recSex" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recTel" >被推荐人电话</label>
+            </div>
+            <div data-container-for="recTel" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recTel" data-bind="value:recTel" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recArea" >意向面积</label>
+            </div>
+            <div data-container-for="recArea" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recArea" data-bind="value:recArea" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recPrice" >意向价格</label>
+            </div>
+            <div data-container-for="recPrice" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="recPrice" data-bind="value:recPrice" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recRoom" >意向户型</label>
+            </div>
+            <div data-container-for="recRoom" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recRoom" data-bind="value:recRoom" >
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recStatus" >状态</label>
+            </div>
+            <div data-container-for="recStatus" class="k-edit-field w-800-r">
+               <input type="number" id="recStatus_inp" class="k-input k-textbox w-50-inp" name="recStatus" data-bind="value:recStatus" >
+            </div>
+
+<div style="display:none">
+            <div class="k-edit-label  w-800-l">
+                <label for="comments" >管理员评论</label>
+            </div>
+            <div data-container-for="comments" class="k-edit-field w-800-r">
+               <input type="text" id="comments_inp" class="k-input k-textbox w-50-inp" name="comments" data-bind="value:comments" >
+            </div>
+</div> 
+
+    <div class="k-edit-label w-800-l">
+                <label>管理员评论</label>
+    </div>
+    <div class="k-edit-field w-800-r" id="comments_box"></div>
+
+
+    <div class="k-edit-label  w-800-l"><label ></label></div>
+    <div class="k-edit-field w-800-r">
+        <a class="k-button k-button-icontext k-grid-add" id="comments_add" href="javascript:;">
+        <span class="k-icon k-add"></span>添加评论</a>
+        <a class="k-button k-button-icontext k-grid-add" id="comments_save" href="javascript:;">
+        <span class="k-icon k-edit"></span>保存评论</a>
+        <br/>
+        <span class="redt">增加，修改，删除评论内容后请点击 "保存评论" 按钮</span>
+    </div>
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="isCash" >是否结佣</label>
+            </div>
+            <div data-container-for="isCash" class="k-edit-field w-800-r">
+               <input type="number" id="isCash_inp" class="k-input k-textbox w-50-inp" name="isCash" data-bind="value:isCash" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userFrom" >来源</label>
+            </div>
+            <div data-container-for="userFrom" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom"  readonly="readonly">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserName" >推荐人姓名</label>
+            </div>
+            <div data-container-for="appUserName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appUserName" data-bind="value:appUserName"  readonly="readonly">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserMobile" >推荐人手机</label>
+            </div>
+            <div data-container-for="appUserMobile" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appUserMobile" data-bind="value:appUserMobile"  readonly="readonly">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserBuildingRoom" >推荐人楼房</label>
+            </div>
+            <div data-container-for="appUserBuildingRoom" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appUserBuildingRoom" data-bind="value:appUserBuildingRoom"  readonly="readonly">
+            </div>
+
+<div style="display:none">
+            <div class="k-edit-label  w-800-l">
+                <label for="recCode1" >备用1</label>
+            </div>
+            <div data-container-for="recCode1" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="recCode2" >备用2</label>
+            </div>
+            <div data-container-for="recCode2" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recCode2" data-bind="value:recCode2" >
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="recCode3" >备用3</label>
+            </div>
+            <div data-container-for="recCode3" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recCode3" data-bind="value:recCode3" >
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="recCode4" >备用4</label>
+            </div>
+            <div data-container-for="recCode4" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recCode4" data-bind="value:recCode4" >
+            </div>
+</div>            
+
+ 
+
+
+            
+            <div class="k-edit-label  w-800-l">
+                <label for="updateTime">更新日期</label>
+            </div>
+            <div data-container-for="updateTime" class="k-edit-field w-800-r">
+               <input type="text" id="updateTime" class="k-input k-textbox " name="updateTime" data-bind="value:updateTime">
+            </div>
+
+
+           <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+ 
+        </script>
+
+
+<script>
+
+    window.news_type = [window.news_type[0]];
+
+
+function req_success(e) {
+            e.preventDefault();
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            //console.log(dataItem)
+            $.post(window.DataHost+'/manger/recrecord/success',{"_id":dataItem._id},function(d){
+                if(d._id){
+                    $("#grid").data("kendoGrid").dataSource.read(); 
+                }   
+                else{
+                    alert('审核失败')
+                }
+            })
+    }
+function req_fail(e) {
+            e.preventDefault();
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            console.log(dataItem)
+            $.post(window.DataHost+'/manger/recrecord/fail',{"_id":dataItem._id},function(d){
+                if(d._id){
+                    $("#grid").data("kendoGrid").dataSource.read(); 
+                }   
+                else{
+                    alert('审核失败')
+                }
+            })
+         }
+
+
+ $(function () {
+    var commentTemplate =
+        '<div>'+
+            '<input type="text" class="k-input k-textbox" name="comments_content" value="{v}" />'+
+            '&nbsp;&nbsp;<input type="text" class="k-input k-textbox" name="comments_writetime" value="{d}" />'+
+            '&nbsp;&nbsp;<a class="k-button k-button-icontext k-grid-delete" name="comments_delete" href="#">'+
+            '<span class="k-icon k-delete"></span>删除</a>'+
+        '</div>'
+
+    var putTemplate = function(list){
+        var str = commentTemplate;
+        if(list){
+            var s = str
+            var temps = ''
+            list.forEach(function(o){
+                if(!$.trim(o.content)) return;
+                temps += s.replace('{v}',o.content)
+                          .replace('{d}',o.date)
+            })
+            $('#comments_box').html(temps)
+        }
+        else{
+            str = str.replace('{v}','')
+                     .replace('{d}',moment().format("YYYY-MM-DD"))
+
+            $('#comments_box').append(str)
+
+        }
+    }
+
+    var saveComment = function(){
+
+        var len =  $('input[name="comments_content"]').length;
+        var array = [];
+        for(var i=0;i<len;i++){
+            array.push({
+                content:$('input[name="comments_content"]').eq(i).val(),
+                date:$('input[name="comments_writetime"]').eq(i).val(),
+            })
+        }
+        return array;
+    }
+
+
+                var toolbarAry = [
+                                { name: "create", text: "添加" }
+                              ]
+                var commandAry = [
+                                { name: "success", text: "通过" , click:req_success},
+                                { name: "fail", text: "不通过", click:req_fail},
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+
+                              ]
+                                           
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                       
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/recrecord/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/recrecord/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/recrecord/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/recrecord/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "appId": { editable: true },
+                                    "userId": { editable: true },
+                                    "buyHouse": { editable: true },
+                                    "buyRoom": { editable: true},
+
+                                    
+                                    "recName": { editable: true},
+                                    "recSex": { editable: true, type:'number'},
+                                    "recTel": { editable: true},
+                                    "recArea": { editable: true},
+                                    "recPrice": { editable: true},
+                                    "recRoom": { editable: true},
+
+                                    "recStatus": { editable: true, type:'number'},
+                                    "comments":{ editable: true},
+
+                                    "isCash": { editable: true, type:'number'},
+                                    
+                                    "recCode1": { editable: true},
+                                    "recCode2": { editable: true},
+                                    "recCode3": { editable: true},
+                                    "recCode4": { editable: true},
+                                    
+                                    "updateTime": {editable: true, type: "date" },
+                                    "writeTime": {editable: true, type: "date" },
+
+                                    "userFrom":{ editable: false},
+                                    "appUserName":{ editable: false},
+                                    "appUserMobile":{ editable: false},
+                                    "appUserBuildingRoom":{ editable: false},
+                                }
+                            }
+                        }
+                    });
+
+                
+
+$.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'推荐Id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appId",
+                            title: "地产商", 
+                            values:d,
+                            hidden:true
+                        },
+                        { 
+                            field: "userId",
+                            title: "推荐人Id",
+                            hidden:true
+                        },
+                        { 
+                            field: "appUserName",
+                            title: "推荐人姓名",
+                            filterable:false
+                        },
+                        { 
+                            field: "appUserMobile",
+                            title: "推荐人手机",
+                            filterable:false
+                        },
+                        { 
+                            field: "appUserBuildingRoom",
+                            title: "推荐人楼房",
+                            filterable:false
+                        },
+                        { 
+                            field: "buyHouse",
+                            title: "购买楼号",
+                            hidden:true
+                        },
+                        { 
+                            field: "buyRoom",
+                            title: "购买房号",
+                            hidden:true
+                        },
+                        { 
+                            field: "recName",
+                            title: "姓名",
+                        },
+                        { 
+                            field: "recSex",
+                            title: "性别",
+                            values:window.sex_ary,
+                            hidden:true
+                        },
+                         { 
+                            field: "recTel",
+                            title: "电话",
+                        },
+                         { 
+                            field: "recArea",
+                            title: "意向面积",
+                            hidden:true
+                        },
+                        { 
+                            field: "recPrice",
+                            title: "意向价格", 
+                            hidden:true
+                        },
+                        { 
+                            field: "recRoom",
+                            title: "意向户型",
+                            hidden:true
+                        },
+                        { 
+                            field: "userFrom",
+                            title: "来源",
+                            filterable:false,
+                        },
+                        { 
+                            field: "recStatus",
+                            title: "推荐状态",
+                            values:window.recStatus_type,
+                        },
+                        { 
+                            field: "comments",
+                            title: "管理员评论",
+                            hidden:true
+                        },
+                        { 
+                            field: "isCash",
+                            title: "是否结佣",
+                            values:window.isCash_type,
+                            hidden:true
+                        },
+                        { 
+                            field: "recCode1",
+                            title: "备用1",
+                            hidden:true
+                        },
+                        { 
+                            field: "recCode2",
+                            title: "备用2",
+                            hidden:true
+                        },
+                        { 
+                            field: "recCode3",
+                            title: "备用3",
+                            hidden:true
+                        },
+                        { 
+                            field: "recCode4",
+                            title: "备用4",
+                            hidden:true
+                        },
+                        { 
+                            field: "updateTime",
+                            title: "更新日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}",
+                            hidden:true
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+
+                        $('#comments_add').click(function(){
+                            putTemplate();
+                            return false;
+                        })
+
+                        $('#comments_save').click(function(){
+                            var list = saveComment();
+                            $('#comments_inp').val(JSON.stringify(list)).change();
+                            alert('评论保存成功,请点击更新保存到数据库')
+                            return false;
+                        })
+
+                        $('#comments_box').delegate('a[name="comments_delete"]','click',function(){
+                            var that = $(this);
+                            if(confirm('确定删除吗？')){
+                                that.parent().remove();
+                                alert('删除成功,请点击保存')
+                            }                   
+                            return false;
+                        })
+
+                        var templist = JSON.parse($('#comments_inp').val()||'[]')
+                        putTemplate(templist)
+
+                        $('#writeTime').kendoDateTimePicker();
+                        $('#updateTime').kendoDateTimePicker();
+                        
+                    
+                        window.dropdown_init($('#appId_inp'),d)
+                        window.dropdown_init($('#isCash_inp'),window.isCash_type)
+                        window.dropdown_init($('#recStatus_inp'),window.recStatus_type)
+                        window.dropdown_init($('#recSex_inp'),window.sex_ary)
+
+
+                    },
+                    filterable:window.filter_obj         
+                });
+      })                              
+});
+
+</script>
+<% include inc/foot %>
