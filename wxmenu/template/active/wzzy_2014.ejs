@@ -9,26 +9,22 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<link rel="stylesheet" href="skin/css/base.css">
+	<link rel="stylesheet" href="/static/wzzy_2014_skin/css/base.css">
 	
-	<link rel="stylesheet" href="skin/bootstrap/css/bootstrap.min.css">
-	<script src="skin/js/jquery.1.11.1.min.js"  type="text/javascript"></script>
-	<script src="skin/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/wzzy_2014_skin/bootstrap/css/bootstrap.min.css">
+	<script src="/static/wzzy_2014_skin/js/jquery.1.11.1.min.js" type="text/javascript"></script>
+	<script src="/static/wzzy_2014_skin/bootstrap/js/bootstrap.min.js"></script>
 	
 </head>
 <body>
 <div class="wrap">
-    <p class="p1" id="p1">123</p>
-    <p class="p2" id="p2">123</p>
+    <p class="p1" id="p1"></p>
+    <p class="p2" id="p2"></p>
 	<p class="p3" id="p3">
-		发送到发达发生大幅度的是发送到发达发生大幅度的是发送到发达发生大幅度的是发送到发达发生大幅度的是
-		发送到发达发生大幅度的是发送到发达发生大幅度的是发送到发达发生大幅度的是
-		发送到发达发生大幅度的是发送到发达发生大幅度的是发送到发达发生大幅度的是发送到发达发生大幅度的是发送到发达发生大幅度的是
-		发送到发达发生大幅度的是发送到发达发生大幅度的是
 	</p>
 
     <a id="button1" href="javascript:;" class="button"></a>
-	<a id="button2" href="javascript:;" class="button button2"></a>
+	<a id="button2" href="http://mp.weixin.qq.com/s?__biz=MjM5MDMxODc0NA==&mid=200285981&idx=1&sn=f627835298740c7ed217f65fcee9b38c#rd" target="_blank" class="button button2"></a>
 	
 	<div class="modify" id="modify">
 		<div class=""></div>
@@ -38,7 +34,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width:400px;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -48,12 +44,12 @@
 		  <div class="modal-body">			
 				<div class="input-group input-group-lg">
 				  <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-				  <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="" maxlength="20">
+				  <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="<%= toUserObj.appUserName %>" maxlength="20">
 				</div>
 				<br/>
 				<div class="input-group input-group-lg">
 				  <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
-				  <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
+				  <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="<%= toUserObj.appUserMobile %>" maxlength="11">
 				</div>
 		  
 		  </div>
@@ -70,8 +66,21 @@
 <script type="text/javascript">
 $(function(){
 	var hasSupport = false;
+
+	var appId = '<%= appId %>'
+	var appEname = '<&= appEname %>'
+	var isMyPage = <%= isMyPage %>;
+	var toUserId = '<%= toUserId %>'
+	var fromUserId = '<%= fromUserId %>'
+	var activeId = '<%= activeId %>'
+	var supportCount = <%= supportCount %>
+	var hasAdd = <%= hasAdd %>
+
 	
-	if(window.localStorage['has_modify'] != '1'){
+	$('#p2').html('<%= toUserObj.appUserName %>')
+	$('#p1').html(supportCount)
+
+	if(isMyPage && window.localStorage['has_modify'] != '1'){
 		$('#myModal').modal()
 	}
 
@@ -89,8 +98,8 @@ $(function(){
 		$.post('/api/user/modify',{
 		appUserName:appUserName, 
 		appUserMobile:appUserMobile,
-		wxopenid:'123',
-		wxappid:'123',
+		wxuserid:fromUserId,
+		wxappid:appId,
 		},function(d){
 			if(d.error == 1) return alert(d.data);
 			alert('资料完善成功，快把链接分享给好友吧')
@@ -106,15 +115,15 @@ $(function(){
 			alert('您已经支持过啦')
 			return false
 		}
-		$.post('/active_data/:appename/addsupport',{
-			activeId:'123', 
-			fromUserId:'123',
-			toUserId:'123',
+		$.post('/active_data/<%= appEname %>/addsupport',{
+			activeId:activeId, 
+			fromUserId:fromUserId,
+			toUserId:toUserId,
 		},function(d){
 			if(d.error == 1) return alert(d.data);
 			alert('恭喜您，支持成功')
-			var n = $('#p2').html()-0+1
-			$('#p2').html(n)
+			var n = $('#p1').html()-0+1
+			$('#p1').html(n)
 		},'json')
 	})
 	

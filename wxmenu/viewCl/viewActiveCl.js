@@ -1,4 +1,5 @@
 var userBl = require('../bl/wxUser.js');
+var appBl = require('../bl/wxApp.js');
 var activeBl = require('../bl/activeBl.js');
 var url = require('url')
 
@@ -21,7 +22,7 @@ obj.activeMiddle = function(req,res,next){
       return res.send(500,e)
     }
 
-    //req.session[appEname+'_oauth_openid'] = 'qwe'
+    //req.session[appEname+'_oauth_openid'] = 'asd'
 
 	var openId = req.session[appEname+'_oauth_openid'] 
 
@@ -30,35 +31,54 @@ obj.activeMiddle = function(req,res,next){
 		return res.send(500,'not have openId Auth fail')
 	}
 
-	userBl.getUserByOpenid(openId,function(err,uobj){
+	appBl.getByEname(appEname, function(err,appObj){
 		if(err){
 			return res.send(500,err)
 		}
-		if(!uobj){
+		if(!appObj){
 			return res.send(500,'not found user')
 		}
-		
 
-		//根据ename，查找活动
-		activeBl.getActiveByEname(activeEname, function(err, aObj){
-			if(err) return res.send(500,err) 
-			if(!aObj) return res.send(500,'not found active')
+			userBl.getUserByOpenid(openId,function(err,uobj){
+				if(err){
+					return res.send(500,err)
+				}
+				if(!uobj){
+					return res.send(500,'not found user')
+				}
+				
 
-			//console.log(uobj)
-			//console.log(aObj)
+				//根据ename，查找活动
+				activeBl.getActiveByEname(activeEname, function(err, aObj){
+					if(err) return res.send(500,err) 
+					if(!aObj) return res.send(500,'not found active')
 
-			req.fromUserObj = uobj.uobj;
-			req.activeObj = {
-				appEname:appEname,
-				openId:openId,
-				activeObj:aObj
-			}
-			return next()
-		})//end getActiveByEname
-		
+					userBl.getUserByUserId(toUserId,function(err,toUserObj){
+						if(err) return res.send(500,err) 
+						if(!toUserObj) return res.send(500,'not found toUserObj')
+						//console.log(toUserObj)
+						//console.log(uobj)
+						//console.log(aObj)
+						req.toUserObj = toUserObj.uobj;
+						req.appId = appObj._id;
+						req.appEname = appEname;
+						req.fromUserObj = uobj.uobj;
+						req.activeObj = {
+							appEname:appEname,
+							openId:openId,
+							activeObj:aObj
+						}
+						return next()
+
+
+
+					})
+
+				})//end getActiveByEname
+				
+			})
 	})
-
-
+	
 }
 
 
@@ -77,9 +97,21 @@ obj.activePage = function(req,res){ //活动页面展示
 			return
 		}
 
-		var myObj = false
+		var toUserObj = {}
+		var isMyPage = false
 		if(toUserId == fromUserId){//如果是自己的页面
-			myObj = req.fromUserObj
+			isMyPage = true;
+			toUserObj = req.fromUserObj
+		}
+		else{
+			toUserObj = req.toUserObj
+		}
+
+		if(toUserObj.appUserName == '未认证会员'){
+				toUserObj.appUserName = ''
+		}
+		if(toUserObj.appUserMobile.length != 11){
+			toUserObj.appUserMobile = ''
 		}
 
 		activeBl.getIfHasAdd(acitveId, openId, toUserId, function(err, hasAdd){
@@ -90,8 +122,12 @@ obj.activePage = function(req,res){ //活动页面展示
 			activeBl.getCountByActiveIdAndToUserId(acitveId, toUserId, function(err,count){
 				if(err) return res.send(500,err)
 
+
 				res.render('active/'+templateName+'.ejs',{
-						'myObj':myObj,           //是否是自己的活动页面
+						'appId':req.appId,
+						'appEname':req.appEname,
+						'toUserObj':toUserObj,           //是否是自己的活动页面
+						'isMyPage':isMyPage,
 						'toUserId':toUserId,     //目标用户的用户id
 						'fromUserId':fromUserId, //来源用户的用户id
 						'fromOpenId':openId,    //来源用户的openid

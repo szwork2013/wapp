@@ -7,6 +7,7 @@ var oauthCl = require('../viewCl/OAuthCl.js')
 var activeCl = require('../viewCl/viewActiveCl.js')
 var userCl = require('../viewCl/viewUserCl.js')
 var wxAppBl = require('../bl/wxApp.js');
+var userBl = require('../bl/wxUser.js');
 
 
 
