@@ -53,6 +53,11 @@ obj.activeMiddle = function(req,res,next){
 					if(err) return res.send(500,err) 
 					if(!aObj) return res.send(500,'not found active')
 
+					if(!toUserId){//重新加载本页
+						res.redirect(req.originalUrl+'&touserid='+uobj.uobj._id)
+						return;
+					}
+
 					userBl.getUserByUserId(toUserId,function(err,toUserObj){
 						if(err) return res.send(500,err) 
 						if(!toUserObj) return res.send(500,'not found toUserObj')
@@ -91,11 +96,12 @@ obj.activePage = function(req,res){ //活动页面展示
 		var fromUserId = req.fromUserObj._id
 		var templateName = req.activeObj.activeObj.ename
 		var acitveId = req.activeObj.activeObj._id
-
+/*
 		if(!toUserId){//重新加载本页
 			res.redirect(req.originalUrl+'&touserid='+fromUserId)
 			return
 		}
+*/
 
 		var toUserObj = {}
 		var isMyPage = false
