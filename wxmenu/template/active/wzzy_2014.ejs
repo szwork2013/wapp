@@ -89,7 +89,9 @@ $(function(){
 	$('#p1').html(supportCount)
 
 	if(isMyPage && window.localStorage['has_modify'] != '1'){
-		$('#myModal').modal()
+		$('#myModal').modal({
+			backdrop:false
+		})
 	}
 
 	$('#save_change').click(function(){
