@@ -11,7 +11,7 @@ var utils = require('../lib/utils.js');
 //第三列为楼号
 //第四列为房号
 //第五列为来源
-var oldMember = require('../oldMember.json') || [];
+//var oldMember = require('../oldMember.json') || [];
 
 
 var obj = {}
@@ -160,12 +160,15 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 						}
 						*/
 
+						/*
 						var isOldMember = obj.checkIsOldMember({
 									appUserName:qobj.appUserName,
 									appUserMobile:qobj.appUserMobile,
 									appUserBuilding:qobj.appUserBuilding,
 									appUserRoom:qobj.appUserRoom,
 						})
+						*/
+						var isOldMember = true
 						//新的用户提交，将会审核
 						var isNewSubmit = 1;
 

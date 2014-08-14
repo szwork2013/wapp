@@ -31,13 +31,13 @@
           <label class="icon">手机</label>
           <input type="text" placeholder="请输入手机号" id="mobile" name="mobile" maxlength="11" />
         </div>
+        <!--
         <div class="info-type">
           <label class="icon">房号</label>
-          <input type="text" placeholder="例如: 10-2101" id="house" name="house" maxlength="50" />
-          
+          <input type="text" placeholder="例如: 10-2101" id="house" name="house" maxlength="50" />         
         </div>
-
         <h3 class="true_input">请如实填写购房合同上的姓名及电话</h3>
+         -->
         <!--
         <div class="info-numb">
           <label class="icon">证件号码</label>
@@ -81,6 +81,8 @@
               $('#errtip').html(errimg+'请输入真实姓名').show()
               return false;
           } 
+
+          /*
           if(!house){
               $('#errtip').html('请输入楼房号').show()
               return false;
@@ -95,26 +97,29 @@
               appUserRoom = house.split('-')[1]
               
           }
+          */
 
           window.isajax = true
           $('#errtip').empty().hide();
 
           $.post('/api/user/binder',{
             'appUserName':appUserName,
-            'appUserBuilding':appUserBuilding,
-            'appUserRoom':appUserRoom,
             'appUserMobile':mobile,
             'wxuserid':window.userid
           },function(d){
               window.isajax = false;
               if(d.error) return $('#errtip').html(errimg+d.data).show();
 
+              /*
               if(d.data.appUserType == 2){
                 alert('您是老业主，认证成功');
               }
               else{
                 alert('提交成功,请等待审核');
               }
+              */
+
+               alert('恭喜您注册成功')
               setTimeout(function(){
                 location.href = location.href
               },500)             
