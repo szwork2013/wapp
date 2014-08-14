@@ -105,6 +105,7 @@ $(function(){
 			alert('资料完善成功，快把链接分享给好友吧')
 			$('#myModal').modal('hide')
 			window.localStorage['has_modify'] = '1';
+			$('#p2').html(appUserName)
 		},'json')
 		return false;
 	})
