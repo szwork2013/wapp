@@ -5,7 +5,7 @@ var fs = require('fs');
 var wxRoute = require('../weixCl/wCl.js');
 var oauthCl = require('../viewCl/OAuthCl.js')
 var activeCl = require('../viewCl/viewActiveCl.js')
-
+var userCl = require('../viewCl/viewUserCl.js')
 var wxAppBl = require('../bl/wxApp.js');
 
 
@@ -228,6 +228,7 @@ var addroute = function(app){
 		app.post('/active_data/:appename/addsupport', activeCl.addSupport)
 		app.get('/active_data/getrank', activeCl.activeRank)
 		//end active
+		app.post('/api/user/modify',getUserMid, userCl.modify);
 
 		app.get('/', function(req,res){
 			var count = req.csession['count'];
