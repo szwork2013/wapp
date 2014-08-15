@@ -1,6 +1,6 @@
 {
 	"currentSite":"http://boker.wujb.net",
-	"appEname":"boker",
+	"appEname":"broker",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/boker",
 	"monoosePool":10,
 	"currentHost":"127.0.0.1",
