@@ -27,6 +27,12 @@
       <input type="text" name="btel"  placeholder="请输入购房人手机号码" id="recTel"  maxlength="11">
     </div>
     <div class="rem-p1">
+      <label>指定接待：</label>
+      <input type="text" name="proxy"  placeholder="请输入代理公司，可不填" id="proxy"  maxlength="20">
+    </div>
+
+
+    <div class="rem-p1" style="display:none;">
       <label>意向户型：</label>
       <select name="bhtype" id="recRoom">
         <option value="一房">一房</option>
@@ -35,7 +41,7 @@
         <option value="四房">四房</option>
       </select>
     </div>
-    <div class="rem-p1">
+    <div class="rem-p1" style="display:none;">
       <label>推荐项目：</label>
       <select name="bharea" id="recArea">
         <option value="常州万科城">常州万科城</option>
@@ -64,6 +70,7 @@
           var recName = $.trim($('#recName').val());
           var recRoom = $.trim($('#recRoom').val());
           var recArea = $.trim($('#recArea').val());
+          var recCode1 = $.trim($('#proxy').val());
 
           if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
               $('#errtip').html(errimg+'手机号输入有误').show()
@@ -84,6 +91,7 @@
             'recName':recName,
             'recRoom':recRoom,
             'recArea':recArea,
+            'recCode1':recCode1,
             'wxuserid':window.userid
           },function(d){
               window.isajax = false;
