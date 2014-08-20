@@ -123,7 +123,7 @@ $(function(){
 	
 	
 	$('#button1').click(function(){
-		if(hasSupport){
+		if(hasAdd){
 			alert('您已经支持过啦')
 			return false
 		}
@@ -132,7 +132,14 @@ $(function(){
 			fromUserId:fromUserId,
 			toUserId:toUserId,
 		},function(d){
-			if(d.error == 1) return alert(d.data);
+			if(d.error == 1){
+				if(d.data == 'no openid'){
+					alert('身份过期，刷新页面重新支持')
+					return location.href = location.href;
+				}
+				else alert(d.data);
+				return		
+			} 
 			alert('恭喜您，支持成功')
 			var n = $('#p1').html()-0+1
 			$('#p1').html(n)
