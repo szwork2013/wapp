@@ -233,11 +233,10 @@ var addroute = function(app){
 		app.post('/api/user/modify',getUserMid, userCl.modify);
 
 		app.get('/', function(req,res){
-			var count = req.csession['count'];
+			var count = req.session['count'];
 			if(!count) count = 1;
 			else count++;
-			req.csession['count'] = count;
-			req.csflush(); 
+			
 			res.send('welcome count: '+count.toString());
 		})
 	})
