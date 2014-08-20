@@ -126,12 +126,8 @@
                <input type="number" id="isCash_inp" class="k-input k-textbox w-50-inp" name="isCash" data-bind="value:isCash" >
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="userFrom" >来源</label>
-            </div>
-            <div data-container-for="userFrom" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom"  readonly="readonly">
-            </div>
+
+
             <div class="k-edit-label  w-800-l">
                 <label for="appUserName" >推荐人姓名</label>
             </div>
@@ -151,13 +147,24 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="appUserBuildingRoom" data-bind="value:appUserBuildingRoom"  readonly="readonly">
             </div>
 
-<div style="display:none">
+
             <div class="k-edit-label  w-800-l">
-                <label for="recCode1" >备用1</label>
+                <label for="recCode1" >指定接待</label>
             </div>
             <div data-container-for="recCode1" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
             </div>
+
+<div style="display:none">
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userFrom" >来源</label>
+            </div>
+            <div data-container-for="userFrom" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom"  readonly="readonly">
+            </div>
+
+
             <div class="k-edit-label  w-800-l">
                 <label for="recCode2" >备用2</label>
             </div>
@@ -282,8 +289,8 @@ function req_fail(e) {
                                 { name: "create", text: "添加" }
                               ]
                 var commandAry = [
-                                { name: "success", text: "通过" , click:req_success},
-                                { name: "fail", text: "不通过", click:req_fail},
+                                //{ name: "success", text: "通过" , click:req_success},
+                                //{ name: "fail", text: "不通过", click:req_fail},
                                 { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
                                 { name: "destroy", text: "删除"},
 
@@ -456,6 +463,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "userFrom",
                             title: "来源",
                             filterable:false,
+                            hidden:true
                         },
                         { 
                             field: "recStatus",
@@ -475,8 +483,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                         { 
                             field: "recCode1",
-                            title: "备用1",
-                            hidden:true
+                            title: "指定接待",
+                            hidden:false
                         },
                         { 
                             field: "recCode2",

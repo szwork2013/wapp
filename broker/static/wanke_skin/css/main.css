@@ -221,6 +221,7 @@ font-family: "Microsoft YaHei";
 	font-size: 14px;
 	overflow: hidden;
 	padding: 10px 0;
+	line-height: 25px;
 }
 
 .news_content .content_box img{

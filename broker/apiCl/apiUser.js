@@ -121,6 +121,8 @@ obj.recommend = function(req,res){ //推荐人
 	var recArea = req.body.recArea;
 
 	var recPrice = req.body.recPrice || 0;
+
+	var recCode1 = req.body.recCode1 || ''
 	
 	if(req.wxBinder.appUserType < 1){
 		res.send({error:1,data:'认证会员才能推荐朋友'})
@@ -138,6 +140,7 @@ obj.recommend = function(req,res){ //推荐人
 		recArea:recArea,
 		recPrice:recPrice,
 		recRoom:recRoom,
+		recCode1:recCode1
 	}, function(err,doc){
 		if(err) return res.json({'error':1,'data':err})
 		res.json({'error':0,'data':doc})
