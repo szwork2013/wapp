@@ -22,7 +22,7 @@ obj.activeMiddle = function(req,res,next){
       return res.send(500,e)
     }
 
-    //req.session[appEname+'_oauth_openid'] = 'asd'
+    //req.session[appEname+'_oauth_openid'] = '123'
 
 	var openId = req.session[appEname+'_oauth_openid'] 
 
@@ -120,10 +120,10 @@ obj.activePage = function(req,res){ //活动页面展示
 			toUserObj.appUserMobile = ''
 		}
 
-		activeBl.getIfHasAdd(acitveId, openId, toUserId, function(err, hasAdd){
+		activeBl.getIfHasAdd(acitveId, openId, toUserId, function(err, hasObj){
 			if(err) return res.send(500,err)
 			var  hasAdd = false
-			if(hasAdd) hasAdd = true
+			if(hasObj) hasAdd = true
 
 			activeBl.getCountByActiveIdAndToUserId(acitveId, toUserId, function(err,count){
 				if(err) return res.send(500,err)
