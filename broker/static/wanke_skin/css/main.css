@@ -365,3 +365,9 @@ font-family: "Microsoft YaHei";
 	font-weight: normal;
 	clear: both;
 }
+.rem-p2{
+	padding: 15px 5px 0 5px;
+	text-align: center;
+	font-size: 14px;
+	border: none;
+}
