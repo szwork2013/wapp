@@ -338,6 +338,7 @@ obj.recommend = function(appId, userId, qobj, cb){
 	var recArea = qobj.recArea;
 	var recPrice = qobj.recPrice;
 	var recRoom = qobj.recRoom;
+	var recCode1 = qobj.recCode1 || '';
 	var recStatus = 1;
 
 	if(!recName || recName.length>50){
@@ -386,6 +387,7 @@ obj.recommend = function(appId, userId, qobj, cb){
 			recPrice:recPrice,
 			recRoom:recRoom,
 			recStatus:1,
+			recCode1:recCode1,
 			updateTime:new Date(),
 			writeTime:new Date()
 		},function(err,doc){
@@ -408,7 +410,7 @@ var record_status = [
 	"未到访",
 	"已到访",
 	"已认购",
-	"已通过",
+	"已认购",
 ]
 
 obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
@@ -436,6 +438,8 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 				recArea:o.recArea,
 				recPrice:o.recPrice,
 				recRoom:o.recRoom,
+				recCode1:o.recCode1,
+				recCode2:o.recCode2,
 				recStatus:o.recStatus-0,
 				Status:record_status[o.recStatus-0],
 				comments:o.comments,
