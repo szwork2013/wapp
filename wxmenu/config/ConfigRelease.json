@@ -1,5 +1,5 @@
 {
-	"currentSite":"http://menu.wujb.net",
+	"currentSite":"http://menu.xy-tang.com",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/wxmenu",
 	"monoosePool":10,
 	"currentHost":"127.0.0.1",

@@ -43,6 +43,23 @@
         "env_production" : {
           "NODE_ENV": "production"
         }
+      },
+
+      {
+        "name"      : "broker",
+        "script"    : "/var/nodejs/wapp/broker/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "brokeradmin",
+        "script"    : "/var/nodejs/wapp/broker/manager/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
       }
+
+
   ]
 }

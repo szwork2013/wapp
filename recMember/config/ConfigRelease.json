@@ -1,5 +1,5 @@
 {
-	"currentSite":"http://wkmix.wujb.net",
+	"currentSite":"http://wkmix.xy-tang.com",
 	"appEname":"recmem",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/recmem",
 	"monoosePool":10,
