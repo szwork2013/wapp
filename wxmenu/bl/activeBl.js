@@ -103,7 +103,7 @@ obj.getCountByActiveIdAndToUserId = function(activeId, toUserId,cb){ //计算当
 
 }
 
-
+var overActiveList = ['wzzy_2014']
 //添加一条记录
 obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 	
@@ -124,6 +124,9 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 		if(err) return cb(err);
 		if(!doc) return cb('没找到活动')
 
+		if(overActiveList.indexOf(doc.ename||'') != -1 ){
+			return cb('活动已经结束了')
+		}
 
 		userBl.getUserByOpenid(fromOpenId,function(err, uobj1){
 			if(err) return cb(err);

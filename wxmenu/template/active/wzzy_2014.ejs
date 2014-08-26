@@ -98,11 +98,13 @@ $(function(){
 	$('#p2').html('<%= toUserObj.appUserName %>')
 	$('#p1').html(supportCount)
 
+/*
 	if(isMyPage && window.localStorage['has_modify'] != '1'){
 		$('#myModal').modal({
 			backdrop:false
 		})
 	}
+*/
 
 	$('#save_change').click(function(){
 		var appUserName = $('#appUserName').val().trim();
@@ -132,6 +134,9 @@ $(function(){
 	
 	
 	$('#button1').click(function(){
+        alert('活动已经结束啦，感谢支持！')
+        return false;
+
 		if(hasAdd){
 			alert('您已经支持过啦')
 			return false
