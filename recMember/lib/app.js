@@ -1,5 +1,5 @@
 var widget = {};
-
+var newrelic = require('newrelic');
 var logger = require('./log.js');
 var path = require('path');
 var ifile = require('ifile');
@@ -16,7 +16,7 @@ app.enable('trust proxy');
 app.set('x-powered-by', 'openresty');
 app.set('views', path.join(__dirname,'..','template'));
 app.set('view engine', 'ejs');
-
+app.locals.newrelic = newrelic;
 
 
 app.use(express.cookieParser());
