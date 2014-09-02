@@ -56,6 +56,7 @@
                                     "userId": { editable: false },
                                     "userMobile":{ editable: false },
                                     "userSex":{ editable: false },
+                                    "userFrom":{ editable: false },
                                     "openId": { editable: false },
                                     "appId": { editable: false},
                                     "appUserCity": { editable: true},
@@ -122,8 +123,15 @@
                             field:'userSex',
                             title:'性别',
                             values:window.sex_ary,
+                            filterable:false,
+                            hidden:true
+                        },
+                        {
+                            field:'userFrom',
+                            title:'来源',
                             filterable:false
                         },
+                        
                         { 
                             field: "appId",
                             title: "开发商", 

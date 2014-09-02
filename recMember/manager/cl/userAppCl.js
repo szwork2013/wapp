@@ -55,6 +55,7 @@ obj.read = function(req, res){
 					  	  	uname = v2.text;
 					  	  	sex = v2.sex
 					  	  	mobile = v2.mobile
+					  	  	userFrom = v2.userFrom
 					  	  }
 					  }) 
 					  dary.push({
@@ -62,6 +63,7 @@ obj.read = function(req, res){
 							  userId:uname, 				   //此用户在数据库中的_id
 							  userMobile:mobile,
 							  userSex:sex,
+							  userFrom:userFrom,
 						      openId:v.openId,
 						      appId:v.appId,
 						      appUserCity:v.appUserCity,
