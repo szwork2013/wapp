@@ -97,7 +97,7 @@ var addroute = function(app){
 	app.post('/manger/user/create', checkLogin, userCl.create)
 	app.post('/manger/user/getList', checkLogin, userCl.getList)
 	app.post('/manger/user/getOne', checkLogin, userCl.getOne)
-
+	app.get('/manger/user/user.csv', checkLogin, userCl.csv)
 
 	//userbind
 	app.get('/manger/userapp/list', checkLogin, userappCl.list)
@@ -160,7 +160,7 @@ var addroute = function(app){
 	app.post('/manger/recrecord/create', checkLogin, recRecordCl.create)
 	app.post('/manger/recrecord/success', checkLogin, recRecordCl.success)
 	app.post('/manger/recrecord/fail', checkLogin, recRecordCl.fail)
-	
+	app.get('/manger/recrecord/rec.csv', checkLogin, recRecordCl.csv)
 
 
 

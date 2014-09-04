@@ -210,7 +210,11 @@
 
 <script>
 
-    window.news_type = [window.news_type[0]];
+window.news_type = [window.news_type[0]];
+
+function downFunc(e){
+    location.href = '/manger/recrecord/rec.csv'
+}
 
 
 function req_success(e) {
@@ -286,7 +290,8 @@ function req_fail(e) {
 
 
                 var toolbarAry = [
-                                { name: "create", text: "添加" }
+                                { name: "create", text: "添加" },
+                                {template: '<a class="k-button" href="\\#" onclick="return downFunc()">下载推荐列表</a>'}
                               ]
                 var commandAry = [
                                 //{ name: "success", text: "通过" , click:req_success},

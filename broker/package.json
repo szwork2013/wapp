@@ -48,7 +48,8 @@
        "wechat":"0.6.7",
        "webot":"0.1.8-1",
        "newrelic":"1.10.2",
-       "client-session":"*"
+       "client-session":"*",
+       "json2csv":"2.2.1"
    },
   "engines": {
     "node": ">=0.10.0"

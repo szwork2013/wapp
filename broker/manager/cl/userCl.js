@@ -1,13 +1,65 @@
 var dl = require('../../dl/userModel.js');
+var dlapp = require('../../dl/userAppModel.js');
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
-
+var json2csv = require('json2csv');
 
 obj.list = function(req, res){
 	res.render('user_list', {session:req.session});
 }
 
+obj.csv = function(req,res){
+	dl.findAll({},0,100000,function(err, ulist){
+		if(err) return res.send(500,err);
+		dlapp.findAll({},0,100000,function(err, applist){
+			if(err) return res.send(500,err);
+			var userJson = [];
+			var appLen = applist.length;
+
+			ulist.forEach(function(uobj){
+
+				for(var i=0;i<appLen;i++){
+
+					if(uobj._id.toString() == applist[i].userId){
+						userJson.push({
+							"userId":uobj._id.toString(),
+							"openId":applist[i].openId,
+							"appUserName":uobj.appUserName,
+							"appUserMobile":uobj.appUserMobile.toString(),
+							"appUserSex":uobj.appUserSex,
+							"userFrom":uobj.userFrom,
+							"appUserCity":applist[i].appUserCity,
+							"appUserCommunity":applist[i].appUserCommunity,
+							"appUserBuilding":applist[i].appUserBuilding,
+							"appCardNumber":applist[i].appCardNumber,
+							"appUserType":applist[i].appUserType,
+							"writeTime":applist[i].writeTime,
+						})
+						return;
+					}
+				}
+			})
+			
+			var title = [
+				'用户id','openid','姓名',
+				'电话','性别','来源',
+				'城市','小区','楼号','房号',
+				'会员卡号','会员状态','注册时间'
+			]
+
+			json2csv({data: userJson, fields: Object.keys(userJson[0])}, function(err, csv) {
+				  if(err) return res.send(500,err);
+				  res.attachment('user.csv');
+				  res.send(csv)
+			});
+
+
+		})
+	})
+
+
+}
 
 obj.read = function(req, res){
 	var filter =  utils.kendoToMongoose(req.body.filter,req.session.clientId);

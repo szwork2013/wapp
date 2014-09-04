@@ -4,12 +4,62 @@ var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
-
+var json2csv = require('json2csv');
 
 
 
 obj.list = function(req, res){
 	res.render('rec_record_list', {session:req.session});
+}
+
+
+statusObj = [0,'待审核','不通过','通过','预约','带看','认筹','签约']
+
+obj.csv = function(req, res){
+
+	dl.findAll({},0,100000,function(err,list){
+		if(err) return res.send(500,err);
+		var jsonArray = []
+
+		dl2.findAll({},0,100000,function(err,list2){
+			if(err) return res.send(500,err);
+			var len = list2.length;
+
+			list.forEach(function(obj){
+				
+				for(var i=0;i<len;i++){
+					if(list2[i]._id.toString() == obj.userId){
+						jsonArray.push({
+							'fromName':list2[i].appUserName,
+							'fromMobile':list2[i].appUserMobile,
+							'toName':obj.recName,
+							'toMobile':obj.recTel,
+							'company':obj.recCode1,
+							'status':statusObj[obj.recStatus],
+							'updateTime':obj.updateTime,
+							'writeTime':obj.writeTime,
+						})
+						return;
+					}					
+				}	
+			
+			})
+
+
+
+			json2csv({data: jsonArray, fields: Object.keys(jsonArray[0])}, function(err, csv) {
+				  if(err) return res.send(500,err);
+				  res.attachment('rec.csv');
+				  res.send(csv)
+			});
+
+		})
+	})
+
+
+
+
+
 }
 
 obj.success = function(req, res){

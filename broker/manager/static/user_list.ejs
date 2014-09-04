@@ -3,7 +3,7 @@
 <% include inc/left %>
 
 
- <div id="grid"></div>
+<div id="grid"></div>
 <script id="popup_editor" type="text/x-kendo-template">
           
             <div class="k-edit-label w-800-l">
@@ -83,6 +83,9 @@
 
 
 <script>
+function downFunc(e){
+    location.href = '/manger/user/user.csv'
+}
 
  $(function () {
                 window.appd;
@@ -147,7 +150,8 @@
                 var commandAry = [];
  
                     var toolbarAry = [
-                                { name: "create", text: "添加用户" }
+                                { name: "create", text: "添加用户" },
+                                 {template: '<a class="k-button" href="\\#" onclick="return downFunc()">下载用户列表</a>'}
                               ]
 
         
