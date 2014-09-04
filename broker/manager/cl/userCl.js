@@ -9,6 +9,9 @@ obj.list = function(req, res){
 	res.render('user_list', {session:req.session});
 }
 
+var userStatus = ['未认证','认证','vip会员']
+var userSex= ['女','男']
+
 obj.csv = function(req,res){
 	dl.findAll({},0,100000,function(err, ulist){
 		if(err) return res.send(500,err);
@@ -27,13 +30,13 @@ obj.csv = function(req,res){
 							"openId":applist[i].openId,
 							"appUserName":uobj.appUserName,
 							"appUserMobile":uobj.appUserMobile.toString(),
-							"appUserSex":uobj.appUserSex,
+							"appUserSex":userSex[uobj.appUserSex],
 							"userFrom":uobj.userFrom,
 							"appUserCity":applist[i].appUserCity,
 							"appUserCommunity":applist[i].appUserCommunity,
 							"appUserBuilding":applist[i].appUserBuilding,
 							"appCardNumber":applist[i].appCardNumber,
-							"appUserType":applist[i].appUserType,
+							"appUserType":userStatus[applist[i].appUserType],
 							"writeTime":applist[i].writeTime,
 						})
 						return;
