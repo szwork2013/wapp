@@ -57,6 +57,21 @@ obj.activeMiddle = function(req,res,next){
 						res.redirect(req.originalUrl+'&touserid='+uobj.uobj._id)
 						return;
 					}
+					//如果定义了跳转，则直接跳转到指定页面
+					var redirect_url = aObj.url.trim()
+					if(redirect_url){
+						//增加openid参数
+						if(redirect_url.indexOf('?') == -1){
+							redirect_url = redirect_url + '?openid='+openId
+						}
+						else{
+							redirect_url = redirect_url + '&openid='+openId
+						}
+						//跳转
+						res.redirect(redirect_url)
+						return;
+					}
+
 
 					userBl.getUserByUserId(toUserId,function(err,toUserObj){
 						if(err) return res.send(500,err) 
