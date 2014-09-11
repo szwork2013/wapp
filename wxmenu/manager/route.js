@@ -17,6 +17,9 @@ var activeCl = require('./cl/activeCl.js');
 var activeLogCl = require('./cl/activeLogCl.js');
 
 
+var lotteryCl = require('./cl/lotteryCl.js');
+var lotteryPrizeCl = require('./cl/lotteryPrizeCl.js');
+var lotteryRecCl = require('./cl/lotteryRecCl.js');
 
 
 
@@ -140,8 +143,35 @@ var addroute = function(app){
 	app.post('/manger/activelog/destroy', checkLogin, activeLogCl.destroy)
 	app.post('/manger/activelog/create', checkLogin, activeLogCl.create)
 
+	//active other
 	app.get('/manger/activelog/ranklist', checkLogin, activeLogCl.ranklist)
   	app.post('/manger/activelog/getrank', checkLogin, activeLogCl.getrank)
+
+	//lottery
+	app.get('/manger/lottery/list', checkLogin, lotteryCl.list)
+	app.post('/manger/lottery/read', checkLogin, lotteryCl.read)
+	app.post('/manger/lottery/update', checkLogin, lotteryCl.update)
+	app.post('/manger/lottery/destroy', checkLogin, lotteryCl.destroy)
+	app.post('/manger/lottery/create', checkLogin, lotteryCl.create)
+	app.post('/manger/lottery/getList', checkLogin, lotteryCl.getList)
+
+	//lottery prize
+	app.get('/manger/lotteryPrize/list', checkLogin, lotteryPrizeCl.list)
+	app.post('/manger/lotteryPrize/read', checkLogin, lotteryPrizeCl.read)
+	app.post('/manger/lotteryPrize/update', checkLogin, lotteryPrizeCl.update)
+	app.post('/manger/lotteryPrize/destroy', checkLogin, lotteryPrizeCl.destroy)
+	app.post('/manger/lotteryPrize/create', checkLogin, lotteryPrizeCl.create)
+	app.post('/manger/lotteryPrize/getList', checkLogin, lotteryPrizeCl.getList)
+
+	//lottery rec
+	app.get('/manger/lotteryRec/list', checkLogin, lotteryRecCl.list)
+	app.post('/manger/lotteryRec/read', checkLogin, lotteryRecCl.read)
+	app.post('/manger/lotteryRec/update', checkLogin, lotteryRecCl.update)
+	app.post('/manger/lotteryRec/destroy', checkLogin, lotteryRecCl.destroy)
+	app.post('/manger/lotteryRec/create', checkLogin, lotteryRecCl.create)
+
+
+	
 
 
 	//获得guid

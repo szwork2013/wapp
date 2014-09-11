@@ -1,0 +1,306 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">抽奖id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="ename" >唯一英文标识</label>
+            </div>
+            <div data-container-for="ename" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="ename" data-bind="value:ename" data-required-msg="请填写唯一英文标识" aria-invalid="true">
+               <br/>
+               <span>
+                唯一英文标识,所有活动唯一，英文数字组成，例如：lotteryName_2014.5.15 这样
+               </span>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="title" >抽奖标题</label>
+            </div>
+            <div data-container-for="title" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" data-required-msg="请填写活动标题" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="interval">抽奖间隔</label>
+            </div>
+            <div data-container-for="interval" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="interval" data-bind="value:interval" required="required" data-required-msg="请填写抽奖间隔" aria-invalid="true">
+               <br/>
+               <span>
+                抽奖的间隔时间，单位是小时，如设置用户每天只可以抽奖3次，则此处填入24，下面间隔次数填入3。
+               </span>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="intervalTimes">间隔次数</label>
+            </div>
+            <div data-container-for="intervalTimes" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="intervalTimes" data-bind="value:intervalTimes" required="required" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="forwardTimes">转发增加抽奖次数</label>
+            </div>
+            <div data-container-for="forwardTimes" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="forwardTimes" data-bind="value:forwardTimes" required="required" aria-invalid="true">
+               <br/>
+               间隔时间内，转发抽奖活动，可以增加的抽奖次数，-1或0表示没有增加，大于0的整数表示用户转发之后可以增加的次数
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="allowLotteryTimes">最大获奖次数</label>
+            </div>
+            <div data-container-for="allowLotteryTimes" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="allowLotteryTimes" data-bind="value:allowLotteryTimes" required="required" aria-invalid="true">
+               <br/>
+               表示用户每次活动间隔，可以获取奖品的最大总数，转发增加的次数算新的获奖次数中，填入-1或0表示不限制获奖次数。
+            </div>
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="startTime">开始时间</label>
+            </div>
+            <div data-container-for="startTime" class="k-edit-field w-800-r">
+               <input type="text" id="stime" class="k-input k-textbox " name="startTime" data-bind="value:startTime" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="endTime">结束时间</label>
+            </div>
+            <div data-container-for="endTime" class="k-edit-field w-800-r">
+               <input type="text" id="etime" class="k-input k-textbox " name="endTime" data-bind="value:endTime" >
+            </div>
+
+           
+
+           <div class="k-edit-label  w-800-l">
+                <label for="isShow">是否启用</label>
+            </div>
+            <div data-container-for="isShow" class="k-edit-field w-800-r">
+               <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="desc" >活动描述</label>
+            </div>
+            <div data-container-for="desc" class="k-edit-field w-800-r">
+               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="desc" data-bind="value:desc"></textarea>
+            </div>
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime_inp" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+
+ $(function () {
+                window.appd;
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/lottery/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/lottery/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/lottery/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/lottery/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "ename": { editable: true },
+                                    "title": { editable: true },
+                                    "desc": { editable: true },
+                                    "interval":{editable: true},
+                                    "intervalTimes":{editable: true},
+                                    "startTime":{editable: true, type: "date"},
+                                    "endTime":{editable: true, type: "date"},
+                                    "forwardTimes":{ editable: true , type: "number"},
+                                    "allowLotteryTimes":{ editable: true , type: "number"},
+                                    "isShow": { editable: true, type: "number"},                                    
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加抽奖" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'活动Id',
+                            hidden:true
+                        },
+                        { 
+                            field: "ename",
+                            title: "唯一标识", 
+                        },
+                         { 
+                            field: "title",
+                            title: "活动标题", 
+                        },
+                         { 
+                            field: "desc",
+                            title: "活动描述",
+                            hidden:true
+                        },
+                         { 
+                            field: "startTime",
+                            title: "开始时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { 
+                            field: "endTime",
+                            title: "结束时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { 
+                            field: "forwardTimes",
+                            title: "转发增加次数",
+                            hidden:true
+                        },
+                        { 
+                            field: "allowLotteryTimes",
+                            title: "允许最多获取奖品次数",
+                            hidden:true
+                        },
+                        { 
+                            field: "interval",
+                            title: "投票间隔",
+                            hidden:true
+                        },
+                        { 
+                            field: "intervalTimes",
+                            title: "间隔次数",
+                            hidden:true
+                        },
+                        { 
+                            field: "isShow",
+                            title: "是否启用", 
+                            values:window.is_show_array
+                        },                   
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                        filterable:window.filter_obj,
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+                  
+
+
+                         $('#writeTime_inp').kendoDateTimePicker();
+                         $('#stime').kendoDateTimePicker();
+                         $('#etime').kendoDateTimePicker();
+                         
+                
+                         $("#intro").kendoEditor({
+                                tools: window.editor_tools,
+                                messages: window.editor_messages
+                         });  
+
+
+                         window.dropdown_init()
+
+                    }
+                    
+                });
+
+                
+                                    
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+<% include inc/foot %>

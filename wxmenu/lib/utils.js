@@ -8,7 +8,7 @@ var http = require('http'),
 	util = require('util'),
 	isWindows = process.platform === 'win32',//是否是windows
     fs = require('fs');
-
+var url = require('url');
 
 
 
@@ -24,6 +24,21 @@ var http = require('http'),
  * @return {String}
  * @api public
  */
+
+ exports.getAppEname = function(originalUrl){
+
+  var pathname = url.parse(originalUrl).pathname || ''
+  try{
+      var appEname = pathname.split('/')[2] || ''
+      //console.log(appEname)
+    }
+    catch(e){
+      return {error:1,data:e}
+    }
+
+  return {error:0,data:appEname}
+
+ }
 
 var md5 = function (str, encoding){
   return crypto

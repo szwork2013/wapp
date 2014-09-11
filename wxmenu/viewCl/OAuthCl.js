@@ -306,6 +306,7 @@ obj.oauthJumpBack = function(app,applist){
 
 								req.session[appEname+'_oauth_user'] = oauth_user;
 								req.session[appEname+'_oauth_openid'] = result.openid;
+								req.session[appEname+'_userid'] = updatedoc._id.toString();
 								//完毕跳转到指定页面
 								res.redirect(oauth_jump);
 							});// end userModel.createOneOrUpdate			
