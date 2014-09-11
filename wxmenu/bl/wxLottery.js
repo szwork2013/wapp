@@ -134,6 +134,7 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用�
 			return cb('本活动无法增加抽奖次数')
 		}
 
+		
 
 		lotteryRecModel.findAll({//查找记录
 			userId:userId,
@@ -143,7 +144,18 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用�
 				return cb(err)
 			}
 
-			//如果设置了最大抽奖次数
+			var checkIsMax = function(){
+				var pos = limit - 1;
+				var olderRec = recList[pos];
+				var olderTimestamp = Date.parse(olderRec.writeTime);
+
+				if(now - olderTimestamp <= interval){//如果在这个间隔时间段内，已经超过最多抽奖次数了
+					return false
+				}
+				return true;
+			}
+
+			//如果设置了最大中奖次数
 			if(lotteryObj.allowLotteryTimes > 0 && recList.length>0){
 				var hasGetPrizeCount = 0;
 				var hasGetPrizeForwardCount = 0;
@@ -157,26 +169,29 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用�
 						return;
 					}
 				})
-				//如果超过了最大的抽奖次数
-				if(hasGetPrizeCount >= lotteryObj.allowLotteryTimes || hasGetPrizeForwardCount >= lotteryObj.allowLotteryTimes){
+				//如果超过了最大的中奖次数
+				if((!isForward && hasGetPrizeCount >= lotteryObj.allowLotteryTimes) || (isForward && hasGetPrizeForwardCount >= lotteryObj.allowLotteryTimes)){
+					
+					if(recList.length<limit){
+						return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb);//进入抽奖程序
+					}
 
+					if(!checkIsMax()){
+						return cb('参与次数过多')
+					}
 					return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb);//进入抽奖程序
-
-				}
-
+				
+				} 
 			}
 
 			if(recList.length == 0 || recList.length<limit){//用户没有抽过奖，或抽奖总数小于间隔抽奖数，则去抽奖
 				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb);//进入抽奖程序
 			}
 			else{//判断是否超过间隔的抽奖次数
-				var pos = limit - 1;
-				var olderRec = recList[pos];
-				var olderTimestamp = Date.parse(olderRec.writeTime);
-				if(now - olderTimestamp <= interval){//如果在这个间隔时间段内，已经超过最多抽奖次数了
+				if(!checkIsMax()){
 					return cb('参与次数过多')
 				}
-				return obj._getPrize(userId, lotteryId, recordIp, cb);//进入抽奖程序
+				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb);//进入抽奖程序
 			}
 
 		})//end lotteryRecModel.findAll

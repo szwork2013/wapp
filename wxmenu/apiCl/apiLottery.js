@@ -10,6 +10,9 @@ obj.getLotteryInfo = function(req,res){
 		return res.send(appobj)
 	}
 	var appEname = appobj.data;
+
+	//req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
+
 	var userid = req.session[appEname+'_userid'];
 	//如果用户身份丢失
 	if(!userid){
@@ -61,9 +64,10 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 	}
 
 	var lotteryId = req.body.lotteryId
+	var isforward = parseInt(req.body.isforward) || 0;
 	var recordIp = req.ips[0] || '127.0.0.1'
 
-	lotteryBl.startLottery(userId, lotteryId, recordIp, function(err,result){
+	lotteryBl.startLottery(userid, lotteryId, recordIp, isforward, function(err,result){
 		if(err){
 	        return res.send({error:1,data:err}) 
      	}

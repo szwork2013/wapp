@@ -1,0 +1,73 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<div id="infot"></div>
+<br/><br/>
+<button id="start">我要抽奖</button>
+<br/><br/>
+<div id="lottery_result"></div>
+
+<button id="zero">清零</button>
+
+<script src="http://sg.6998cdn.com/skin2013v2/js/jquery.1.7.1.min.js"  type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+window.lotteryData = {};
+
+     $(function(){
+
+        $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+            $('#infot').html(JSON.stringify(d))
+            window.lotteryData = d.data;
+            bind(d.data)
+        },'json')
+
+
+
+     })
+
+     $('#zero').click(function(){
+       window.localStorage.count=0
+     })
+
+     var bind = function(data){
+
+          $('#start').click(function(){
+              var forword = 0;
+              if(window.lotteryData.record.length>=3){
+                  forword = 1;
+              }
+
+              window.localStorage.count = parseInt(window.localStorage.count || 0) + 1
+              alert(window.localStorage.count)
+
+              $.post('/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>',{
+                  lotteryId:data.lottery._id,
+                  isforward:forword
+              },function(d2){
+                  $('#lottery_result').html(JSON.stringify(d2))
+                  $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+                      $('#infot').html(JSON.stringify(d))
+                      window.lotteryData = d.data;
+                  },'json')
+              },'json')
+
+          })
+
+
+
+     }
+
+
+
+</script>
+
+
+</body>
+</html>

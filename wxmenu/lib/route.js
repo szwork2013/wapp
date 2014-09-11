@@ -6,8 +6,11 @@ var wxRoute = require('../weixCl/wCl.js');
 var oauthCl = require('../viewCl/OAuthCl.js')
 var activeCl = require('../viewCl/viewActiveCl.js')
 var userCl = require('../viewCl/viewUserCl.js')
+var lotteryCl = require('../viewCl/viewLotteryCl.js')
+
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
+
 //lottery
 var apiLottery = require('../apiCl/apiLottery.js');
 
@@ -233,6 +236,13 @@ var addroute = function(app){
 		app.get('/active_data/getrank', activeCl.activeRank)
 		//end active
 		app.post('/api/user/modify',getUserMid, userCl.modify);
+
+		//lottery
+		app.get('/lottery/:appename', lotteryCl.lotteryPage)
+		app.get('/lottery/:appename/info', apiLottery.getLotteryInfo)
+		app.post('/lottery/:appename/start', apiLottery.startLottery)
+		app.post('/lottery/:appename/complete', apiLottery.improveInfo)
+
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];
