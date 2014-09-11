@@ -249,6 +249,8 @@ obj.oauthJumpBack = function(app,applist){
 						if(!doc){				
 							return	res.send(500,'user get fail');
 						}
+						//获取用户id
+						var userid = doc._id;
 
 						//正常处理，将openid写入session，这样下次就不会自动跳去授权了
 
@@ -262,7 +264,7 @@ obj.oauthJumpBack = function(app,applist){
 						//如果是仅获取openid，自动跳转的
 						if(appObj.oauthScope == 'snsapi_base'){
 							req.session[appEname+'_oauth_openid'] = result.openid
-
+							req.session[appEname+'_userid'] = userid;
 							return res.redirect(oauth_jump);
 
 						}
@@ -306,7 +308,7 @@ obj.oauthJumpBack = function(app,applist){
 
 								req.session[appEname+'_oauth_user'] = oauth_user;
 								req.session[appEname+'_oauth_openid'] = result.openid;
-								req.session[appEname+'_userid'] = updatedoc._id.toString();
+								req.session[appEname+'_userid'] = userid;
 								//完毕跳转到指定页面
 								res.redirect(oauth_jump);
 							});// end userModel.createOneOrUpdate			
