@@ -14,7 +14,7 @@
 <button id="zero">清零</button>
 
 <script src="http://sg.6998cdn.com/skin2013v2/js/jquery.1.7.1.min.js"  type="text/javascript"></script>
-
+<script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
 
 
 <script type="text/javascript">
@@ -33,7 +33,7 @@ window.lotteryData = {};
      })
 
      $('#zero').click(function(){
-       window.localStorage.count=0
+        $.cookie('count', '0', { expires: 365, path: '/' });
      })
 
      var bind = function(data){
@@ -44,8 +44,9 @@ window.lotteryData = {};
                   forword = 1;
               }
 
-              window.localStorage.count = parseInt(window.localStorage.count || 0) + 1
-              alert(window.localStorage.count)
+              var count = parseInt($.cookie('count') || 0) + 1;
+              $.cookie('count', count, { expires: 365, path: '/' });
+              alert($.cookie('count'))
 
               $.post('/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>',{
                   lotteryId:data.lottery._id,
