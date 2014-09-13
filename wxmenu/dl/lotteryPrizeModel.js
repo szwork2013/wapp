@@ -25,7 +25,10 @@ objSchema.statics.findByObj = function(obj,cb){
       var obj = obj || {};
       return this.find(obj, cb);
 }
-
+objSchema.statics.findOneByObj = function(obj,cb){
+      var obj = obj || {};
+      return this.findOne(obj, cb);
+}
 objSchema.statics.insertOneByObj = function (obj,cb) {
 	var obj = obj || {};
  	return this.create(obj,cb)
@@ -49,6 +52,20 @@ objSchema.statics.createOneOrUpdate = function (query, update, cb) {
 
 objSchema.statics.destroy = function (query, cb) { 
     return this.remove(query, cb); 
+}
+
+//后台kendoui使用
+objSchema.statics.getPrizeByIds = function (ids, cb) {
+  var ids = ids || [];
+  this.find({
+    "_id":{
+      "$in":ids
+    }
+  }).limit(1000).exec(function(err,docs){
+    if(err) return cb(err);
+    if(!docs || docs.length == 0) return cb(null,[]);
+    cb(null,docs)
+  })
 }
 
 module.exports = mongoose.model('wxLotteryPrize', objSchema);

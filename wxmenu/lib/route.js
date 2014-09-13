@@ -101,6 +101,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 
 
 	if(openid){//优先通过openid来查找用户
+
 		userBl.getUserByOpenid(openid,function(err,uobj){
 			if(err){
 				logger.error('getUserMid userBl.getUserByOpenid error,openid is %s, error is %s', openid, err)
@@ -238,7 +239,7 @@ var addroute = function(app){
 		app.post('/api/user/modify',getUserMid, userCl.modify);
 
 		//lottery
-		app.get('/lottery/:appename', lotteryCl.lotteryPage)
+		app.get('/lottery/:appename', getUserMid, lotteryCl.lotteryPage)
 		app.get('/lottery/:appename/info', apiLottery.getLotteryInfo)
 		app.post('/lottery/:appename/start', apiLottery.startLottery)
 		app.post('/lottery/:appename/complete', apiLottery.improveInfo)

@@ -18,6 +18,19 @@ obj.getLotteryByEname = function(lotteryEname,cb){
 	})
 }
 
+obj.getPrizeById = function(prizeid,cb){
+	if(!prizeid) return cb('no prizeid');
+	lotteryPrizeModel.findOneByObj({
+		_id:prizeid
+	},function(err,prizeObj){
+		if(err){
+			return cb(err)
+		}
+		return cb(null,prizeObj)
+	})
+
+}
+
 //根据用户Id查找他的抽奖记录
 obj.getUserLotteryRec = function(uid,skip,pagesize,cb){ 
 	var cb = cb || function(){}
@@ -32,9 +45,77 @@ obj.getUserLotteryRec = function(uid,skip,pagesize,cb){
 		if(err){
 			return cb(err)
 		}
-		cb(null, list);
+		obj.getPrizeInfoByRecordList(list,function(err,list2){
+			return cb(err, list2)
+		})
+
 	})
 }
+
+
+obj.getPrizeInfoByRecordList = function(list,cb){
+
+		if(list.length == 0){
+			return cb(null, list);
+		}
+		var tempList = [];
+
+		//如果用户获奖则去查找奖品的详细信息
+		var prizeIds = []
+		list.forEach(function(ro){
+
+			if(ro.prizeId != '0'){
+				prizeIds.push(ro.prizeId);
+			}
+			tempList.push({
+				 _id: ro._id,
+ 				lotteryId: ro.lotteryId,
+ 				userId: ro.userId,
+ 				truename: ro.truename,
+ 				mobile: ro.mobile,
+				writeTime: ro.writeTime,
+ 				code4: ro.code4,
+ 				code3: ro.code3,
+ 				code2: ro.code2,
+ 				code1: ro.code1,
+ 				isForward: ro.isForward,
+ 				giftId: ro.giftId,
+ 				prizeId: ro.prizeId
+			})
+
+		})
+
+		//如果这个用户没有中奖，则直接返回
+		if(prizeIds.length == 0){
+			return cb(null, list);
+		}
+
+		//根据ids去找奖品的详细信息
+		lotteryPrizeModel.getPrizeByIds(prizeIds,function(err, prizeList){
+			if(err){
+				return cb(err)
+			}
+							
+			tempList.forEach(function(ro){
+				if(ro.prizeId == '0') return;
+				prizeList.forEach(function(po){
+					//如果匹配，则赋值
+					if(ro.prizeId == po._id+''){
+
+						ro.prizeObj = po;
+						return;
+					}
+				})
+			})
+			//返回列表
+
+			return cb(null, tempList);
+
+		})
+
+}
+
+
 
 //根据用户Id和抽奖Id查找他的抽奖记录
 obj.getUserLotteryRecById = function(uid, lotteryId, skip, pagesize, cb){ 
@@ -51,7 +132,9 @@ obj.getUserLotteryRecById = function(uid, lotteryId, skip, pagesize, cb){
 		if(err){
 			return cb(err)
 		}
-		cb(null, list);
+		obj.getPrizeInfoByRecordList(list,function(err,list2){
+			return cb(err, list2)
+		})
 	})
 }
 

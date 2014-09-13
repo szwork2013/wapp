@@ -71,8 +71,22 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 		if(err){
 	        return res.send({error:1,data:err}) 
      	}
-     	res.send({error:0,data:result});
-
+     	if(result.prizeId && result.prizeId != '0'){
+     		//根据奖品id拿奖品信息
+     		lotteryBl.getPrizeById(result.prizeId, function(err,po){
+     			if(err){
+     				return res.send({error:1,data:err});
+     			}
+     			if(!po){
+     				return res.send({error:1,data:'奖品未找到'});
+     			}
+     			result.prizeObj = po;
+     			return res.send({error:0,data:result});
+     		})
+     	}
+     	else{
+     		return res.send({error:0,data:result});
+     	}
 	})
 
 }
