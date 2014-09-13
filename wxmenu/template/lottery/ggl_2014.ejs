@@ -26,8 +26,11 @@ ul{ overflow:hidden;}
 ul li{ list-style:none; float:left;}
 .wrapper{ width:320px; margin:0 auto; background:#fff;}
 .header{ background:url(http://wzzy2014skin.qiniudn.com/szggl_2014/images/bg.jpg) no-repeat;background-size: 320px 750px; width:320px;height:750px; position:relative;}
-.luck{ width:267px; height:157px; line-height:53px; cursor:pointer; position:absolute; right:26px; top:273px; font-size:28px; letter-spacing:25px; text-align:center; color:#000;}
-.myCanvas{ width:267px; height:157px; cursor:pointer; position:absolute; right:26px; top:273px;}
+.luck{ width:267px; height:157px; line-height:53px; cursor:pointer; position:absolute; right:26px; top:273px; font-size:28px; letter-spacing:25px; text-align:center; color:#000;
+z-index: 3;}
+.myCanvas{ width:267px; height:157px; cursor:pointer; position:absolute; right:26px; top:273px;
+z-index: 5;
+}
 
 .content ul{ padding:40px;}
 .content ul li{ margin-top:-0px;}
@@ -441,7 +444,7 @@ $(function(){
             //$.cookie('count', count, { expires: 365, path: '/' });
             //alert($.cookie('count'))
 
-            $(this).hide();
+            $(this).hide().css('z-index','-1');
 
             $.post('/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>',{
                 lotteryId:data.lottery._id,
