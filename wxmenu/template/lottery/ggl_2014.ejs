@@ -355,6 +355,8 @@ var forwardingDesc ='百分百中奖的刮刮乐，还有更多惊喜等着你'
 
 var userid = '<%= userid%>'
 var appId = '<%= appId%>'
+var u_username = '<%= wxuobj.appUserName %>'
+var u_mobile = '<%= wxuobj.appUserMobile %>'
 $(function(){
   $('#lottery_again').click(function(){
     location.href = location.href;
@@ -425,7 +427,10 @@ $(function(){
           })
      })
 
-     if(window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1'){
+     if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
+      ||
+      ( u_username == '未认证会员' || u_mobile.length != 11)
+      ){
         $('#myModal').modal({
             backdrop:false
           })
