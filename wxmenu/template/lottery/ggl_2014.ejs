@@ -113,7 +113,7 @@ font-size: 18px;
 }
 </style>
 <script type="text/javascript">
-  window.hasTouch = false
+  window.isTouch = false
 
   var hasTouch = 'ontouchstart' in window;
   var canvas;
@@ -141,13 +141,14 @@ font-size: 18px;
       var isDrag = false;
       var lastPoint;
       function touchCheck(evt) {
-          if(!window.hasTouch){
+          
+          if(!window.isTouch){
              setTimeout(function(){
 
                 $('#myCanvas').hide()
-             },5000)
+             },6000)
           }
-          window.hasTouch = true;
+          window.isTouch = true;
 
 
           evt.preventDefault();
@@ -242,8 +243,8 @@ font-size: 18px;
     <a href="javascript:;" title="再刮一次" id="lottery_again" class="lottery_again"></a>
     <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>
     <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a>
-        <div class="luck" id="lottery_result"></div>
-        <canvas id="myCanvas" class="myCanvas" width="267px" height="157px">
+        <div class="luck" id="lottery_result" style="display:;"></div>
+        <canvas id="myCanvas" class="myCanvas" width="267px" height="157px" style="display:;">
                 your browser does not support the canvas element
       </canvas>
       <ul id="prize_list" class="prize_list">
@@ -474,6 +475,8 @@ $(function(){
                   $('#lottery_result').html(d2.data.prizeObj.name)
                 }           
 
+                //$('#myCanvas, #lottery_result').show();
+
                 $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
                     if(d.error) return;
                     window.lotteryData = d.data;
@@ -481,6 +484,7 @@ $(function(){
 
             },'json')
 
+            return false;
         })
 
 
