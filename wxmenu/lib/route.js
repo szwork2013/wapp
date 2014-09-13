@@ -65,7 +65,7 @@ if(!fs.existsSync(uploadPath)){
 }
 
 var getUserMid = function(req, res, next){ //中间件，获取用户信息
-	var openid = req.param('wxopenid');
+	var openid = req.param('wxopenid') || req.param('openid');
 	var userid = req.param('wxuserid');
 	var appid =  req.param('wxappid');
 
