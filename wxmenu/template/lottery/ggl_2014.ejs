@@ -27,7 +27,10 @@ ul li{ list-style:none; float:left;}
 .wrapper{ width:320px; margin:0 auto; background:#fff;}
 .header{ background:url(http://wzzy2014skin.qiniudn.com/szggl_2014/images/bg.jpg) no-repeat;background-size: 320px 750px; width:320px;height:750px; position:relative;}
 .luck{ width:267px; height:157px; line-height:53px; cursor:pointer; position:absolute; right:26px; top:273px; font-size:28px; letter-spacing:25px; text-align:center; color:#000;
-z-index: 3;}
+z-index: 3;
+background-color: #d3d3d3;
+overflow:hidden;
+}
 .myCanvas{ width:267px; height:157px; cursor:pointer; position:absolute; right:26px; top:273px;
 z-index: 5;
 }
@@ -110,6 +113,8 @@ font-size: 18px;
 }
 </style>
 <script type="text/javascript">
+  window.hasTouch = false
+
   var hasTouch = 'ontouchstart' in window;
   var canvas;
   var ctx;
@@ -136,6 +141,15 @@ font-size: 18px;
       var isDrag = false;
       var lastPoint;
       function touchCheck(evt) {
+          if(!window.hasTouch){
+             setTimeout(function(){
+
+                $('#myCanvas').hide()
+             },5000)
+          }
+          window.hasTouch = true;
+
+
           evt.preventDefault();
           var touchX;
           var touchY;
