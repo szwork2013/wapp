@@ -80,13 +80,15 @@
                <input type="text" id="writeTime_inp" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
             </div>
 
-<div style="display:none">
+
             <div class="k-edit-label  w-800-l">
-                <label for="code1" >备用1</label>
+                <label for="code1" >是否已发奖</label>
             </div>
             <div data-container-for="code1" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
+               <input id="code1" type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
             </div>
+
+<div style="display:none">
             <div class="k-edit-label  w-800-l">
                 <label for="code2" >备用2</label>
             </div>
@@ -121,7 +123,7 @@
                         serverPaging: true,
                         serverSorting: true,
                         batch: true,
-                        pageSize: 15,
+                        pageSize: 50,
                         serverFiltering:true,
                         transport: {
                             read:  {
@@ -271,7 +273,7 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                         { 
                             field: "code1",
                             title: "备用1",
-                            hidden:true
+                            values:window.is_get_prize
                         },
                         { 
                             field: "code2",
@@ -308,6 +310,7 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                 
                          window.dropdown_init($("#lottery_inp"), window.lotteryData)
                          window.dropdown_init($("#prize_inp"), window.lotteryPrizeData)
+                         window.dropdown_init($("#code1"), window.is_get_prize)
 
 
                     }

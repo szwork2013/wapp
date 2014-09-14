@@ -10,7 +10,7 @@ var obj = { //定义结构
     recordIp:{type:String,default: '127.0.0.1'},           //用户抽奖时的ip地址
     giftId:{ type: Number, default:0, unique:true},        //用户领奖的6位id号码,0表示未中奖
     isForward:{ type: Number, default:0},                  //是否是转发额外的奖励，是否转发控制由前端处理
-    code1:{type:String,default: ''}, //备用字段
+    code1:{type:String,default: ''}, //是否手工已经发奖，1表示发奖，0表示未发奖
     code2:{type:String,default: ''}, //备用字段
     code3:{type:String,default: ''}, //备用字段
     code4:{type:String,default: ''}, //备用字段
