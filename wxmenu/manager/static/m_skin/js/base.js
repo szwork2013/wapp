@@ -320,11 +320,11 @@ window.bank_status = [
               { text: "已受理", value: 3 },
               { text: "已发放", value: 4 },
               ]
-window.is_get_prize = [{
+window.is_get_prize = [
   { text: "未发奖", value: '' },
   { text: "未发奖", value: '0' },
   { text: "已发奖", value: '1' },
-}]
+]
 
 window.kendo_edit_option = {
     tools: window.editor_tools,
