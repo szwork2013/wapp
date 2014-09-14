@@ -322,7 +322,7 @@ window.bank_status = [
               ]
 window.is_get_prize = [
   { text: "未发奖", value: '' },
-  { text: "未发奖", value: '0' },
+  { text: "不发奖", value: '0' },
   { text: "已发奖", value: '1' },
 ]
 
