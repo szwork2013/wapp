@@ -459,7 +459,8 @@ $(function(){
      var tmp_s = ''
      data.record.forEach(function(ro){
       if(ro.prizeId != '0' && ro.prizeObj){
-        tmp_s += '<li>您已经获得奖品：'+ro.prizeObj.name+'</li>'
+        
+        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
       }
      })
      $('#prize_list').html(tmp_s)
