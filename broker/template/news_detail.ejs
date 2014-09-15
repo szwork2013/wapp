@@ -13,7 +13,7 @@
 	<h2><%= doc.title %></h2>
 	<h3>发布时间：<%= doc.writeTime %></h3>
 	<div class="content_box">
-	    <% doc.picture.forEach(function(path){ %>
+	      <% doc.picture.forEach(function(path){ %>
           <img src="<%= path %>" class="contentImg" /><br>
         <% }) %>
         <%- doc.content %>

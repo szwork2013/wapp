@@ -317,6 +317,15 @@ window.bank_status = [
               { text: "已发放", value: 4 },
               ]
 
+window.user_identity = [
+              { text: "其他", value: '' },
+              { text: "公司员工", value: 'GSYG' },
+              { text: "大众经纪人", value:'WXFS' },
+              { text: "中介公司", value: 'ZJGS' },
+              { text: "代理公司", value:'DLGS' },
+              { text: "合作伙伴", value: 'HZHB' },
+  ]
+
 
 window.kendo_edit_option = {
     tools: window.editor_tools,

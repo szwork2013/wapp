@@ -44,13 +44,25 @@ obj.newsDetail = function(req,res){ //共用新闻详细页
 			logger.error('obj.newsDetail error, newsId %s, err %s', newsId, err);
 			return res.send(500,'详细页面加载失败')
 		}
-
+		if(!doc){
+			return res.send(404,'未找到相关新闻')
+		}
 		//console.log(actdoc)
-		res.render('news_detail.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'doc':doc
-		})
+		if(req.is_v2){
+			res.render('news_detail_v2.ejs',{
+				'userObj':req.wxuobj,
+				'binderObj':req.wxBinder,
+				'doc':doc
+			})
+		}
+		else{
+			res.render('news_detail.ejs',{
+				'userObj':req.wxuobj,
+				'binderObj':req.wxBinder,
+				'doc':doc
+			})
+		}
+		
 		return;
 
 	})

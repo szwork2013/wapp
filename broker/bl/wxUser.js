@@ -191,7 +191,8 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 							appUserMobile:qobj.appUserMobile,
 							appUserSex:qobj.appUserSex || 1,
 							appUserBirth:qobj.appUserBirth || '1970/1/1',
-							userFrom:fromStr //获取用户来源
+							userFrom:fromStr, //获取用户来源
+							code1:qobj.code1,      //用户身份
 						},function(err,doc){
 							if(err) return cb(err);						
 
@@ -302,6 +303,10 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(qobj.appUserBirth){
 		userMObj.appUserBirth = qobj.appUserBirth
 	}
+	if(qobj.code1){
+		userMObj.code1 = qobj.code1
+	}
+
 	/*if(qobj.appUserMobile){
 		userMObj.appUserMobile = qobj.appUserMobile
 	}*/

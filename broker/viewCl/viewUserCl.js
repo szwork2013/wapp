@@ -17,11 +17,18 @@ obj.regist = function(req,res){ //用户注册
 		obj.modify(req,res);
 		return;
 	}
-
-	res.render('user_regist.ejs',{
-		'userObj':req.wxuobj,
-		'binderObj':req.wxBinder,
-	})
+	if(req.is_v2){
+		res.render('user_regist_v2.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+		})
+	}
+	else{
+		res.render('user_regist.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+		})
+	}
 
 }
 
@@ -32,11 +39,20 @@ obj.modify = function(req,res){ //用户修改资料
 	var openId = req.wxBinder.openId
 
 	req.wxBinder.appCardNumber = userBl.genCardNumber(req.wxBinder.appCardNumber)
-//console.log(req.wxBinder)
-	res.render('user_modify.ejs',{
-		'userObj':req.wxuobj,
-		'binderObj':req.wxBinder,
-	})
+	//console.log(req.wxBinder)
+
+	if(req.is_v2){
+		res.render('user_modify_v2.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+		})
+	}
+	else{
+		res.render('user_modify.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+		})
+	}
 
 }
 
@@ -51,13 +67,23 @@ obj.recrecord = function(req,res){
 		if(err){
 			return res.send(500,'我的推荐记录加载失败')
 		}
-
+		if(req.is_v2){
+			res.render('recrecord_list_v2.ejs',{
+				'userObj':req.wxuobj,
+				'binderObj':req.wxBinder,
+				'list':list,
+				'count':list.length
+			})
+		}
+		else{
 			res.render('recrecord_list.ejs',{
 				'userObj':req.wxuobj,
 				'binderObj':req.wxBinder,
 				'list':list,
 				'count':list.length
 			})
+		}
+			
 	})
 
 }
@@ -89,12 +115,6 @@ obj.transacDetail = function(req,res){
 }
 
 
-
-
-
-
-
-
 //推荐用户录入页面
 obj.recommend = function(req,res){
 	var userId = req.wxuobj._id;
@@ -107,9 +127,79 @@ obj.recommend = function(req,res){
 		return;
 	}
 
-	res.render('user_recommend.ejs',{
+	if(req.is_v2){
+		res.render('user_recommend_v2.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+		})
+	}
+	else{
+		res.render('user_recommend.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+		})	
+	}
+}
+
+
+
+//入口地址
+obj.enter_v2 = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	//根据用户类型跳转到不同的地址
+	if(req.wxBinder.appUserType > 0){
+		res.redirect('/view/user/index_login_v2?wxuserid='+userId)
+	}
+	else{
+		res.redirect('/view/user/cover_v2?wxuserid='+userId)
+	}
+	
+}
+
+//封面页
+obj.cover_v2 = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	
+	res.render('cover_v2.ejs',{
 		'userObj':req.wxuobj,
 		'binderObj':req.wxBinder,
+	})
+
+}
+
+
+//未登录主页
+obj.index_nologin_v2 = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	
+	res.render('index_nologin_v2.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+	})
+
+}
+
+
+//登录主页
+obj.index_login_v2 = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	
+	userBl.getRecrecordByUserId(appId, userId, {}, function(err,list){
+		if(err){
+			return res.send(500,'个人主页加载失败')
+		}
+
+		res.render('index_login_v2.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+			'list':list,
+			'count':list.length
+		})
+
 	})
 }
 

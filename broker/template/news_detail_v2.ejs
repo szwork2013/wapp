@@ -1,0 +1,18 @@
+<% include inc/headfile_v2 %>
+
+<section class="main animated fadeInDown">
+    <div class="main-box">
+        <div class="rule-detail border-box">
+            <h1><%= doc.title %></h1>
+            <div class="detail_div">
+        <% doc.picture.forEach(function(path){ %>
+          <img src="<%= path %>" class="contentImg" /><br>
+        <% }) %>
+        <%- doc.content %>
+	        </div>
+        </div>
+    </div>
+</section>
+
+
+<% include inc/foot_v2 %>

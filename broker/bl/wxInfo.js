@@ -43,7 +43,7 @@ obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 		isShow:1
 	},function(err,doc){
 		if(err) return cb(err)
-		if(doc.length == 0) return cb(null, doc);
+		if(doc.length == 0) return cb(null, null);
 
 		var tempary = []
 

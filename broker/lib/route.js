@@ -82,6 +82,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 			  appUserBirth: moment(uobj.uobj.appUserBirth).format('YYYY-MM-DD'), //会员生日
 			  appUserScore:uobj.uobj.appUserScore,
 			  isShow:uobj.uobj.isShow, //是否启用这个用户,1表示启用，0表示未启用
+			  code1:uobj.uobj.code1,
 			  writeTime: moment(uobj.uobj.writeTime).format('YYYY-MM-DD hh:mm:ss'),   //写入时间
 		};
 		next();
@@ -150,6 +151,11 @@ var checkIsReg = function(req,res,next){
 	next();
 }
 
+var v2_mid = function(req,res,next){
+	req.is_v2 = true;
+	next();
+}
+
 
 var addroute = function(app){
 	wxRoute(app); //定义微信的路由
@@ -204,6 +210,25 @@ var addroute = function(app){
 	//用户中心
 	app.get('/view/user/modify',getUserMid, viewUser.modify);
 	
+	//v2 路由
+	//新闻详细页v2
+	app.get('/view/service/newsdetail_v2', v2_mid, getUserMid, viewService.newsDetail);
+	//推荐用户v2
+	app.get('/view/user/recommend_v2', v2_mid, getUserMid, viewUser.recommend);
+	//推荐记录v2
+	app.get('/view/user/recrecord_v2', v2_mid, getUserMid, viewUser.recrecord);
+	//用户注册
+	app.get('/view/user/regist_v2', v2_mid, getUserMid, viewUser.regist);
+	//用户修改资料
+	app.get('/view/user/modify_v2', v2_mid, getUserMid, viewUser.modify);
+	//用户登录后主页
+	app.get('/view/user/index_login_v2', v2_mid, getUserMid, viewUser.index_login_v2);
+	//用户未登录主页
+	app.get('/view/user/index_nologin_v2', v2_mid, getUserMid, viewUser.index_nologin_v2);
+	//封面页
+	app.get('/view/user/cover_v2', v2_mid, getUserMid, viewUser.cover_v2);
+	//入口页
+	app.get('/view/enter_v2', v2_mid, getUserMid, viewUser.enter_v2);
 
 	//增加页面接口
 	//1、兑换商品页面

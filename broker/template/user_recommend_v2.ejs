@@ -1,0 +1,96 @@
+<% include inc/headfile_v2 %>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+
+				<h1 class="jjr-register"></h1>
+				<p class="rb-row" id="errtip"></p>
+				<p class="rb-row">
+					<input class="input" type="text" name="bname"  placeholder="请输入购房人姓名" id="recName"  maxlength="20">
+				</p>
+				<p class="rb-row">
+					<input type="text" name="btel"  placeholder="请输入购房人手机号码" class="input" id="recTel"  maxlength="11">
+				</p>
+                <p class="rb-row">
+                	<input class="input" type="text" name="proxy"  placeholder="请输入代理公司，可不填" id="proxy"  maxlength="20">
+
+                </p>
+				
+				<div class="recommend-tips">
+					<h6>提示</h6>
+					<p>请务必提交真实的客户信息，若多次提交错误信息，您的账号将被禁用。指定接待可填代理公司或置业顾问姓名</p>
+				</div>
+				<p class="rb-submit"><input type="button" value="推荐" class="btn" id="submitBtn"/></p>
+				
+			</div>
+
+
+
+<div class="rem-p1" style="display:none;">
+      <label>意向户型：</label>
+      <select name="bhtype" id="recRoom">
+        <option value="一房">一房</option>
+        <option value="两房">两房</option>
+        <option value="三房">三房</option>
+        <option value="四房">四房</option>
+      </select>
+    </div>
+    <div class="rem-p1" style="display:none;">
+      <label>推荐项目：</label>
+      <select name="bharea" id="recArea">
+        <option value="常州万科城">常州万科城</option>
+      </select>
+    </div>
+
+		</section>
+		
+<script type="text/javascript">
+  $(function(){
+
+      $('body').addClass('index')
+
+      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+          $('#errtip').hide();
+
+          var recTel = $.trim($('#recTel').val());
+          var recName = $.trim($('#recName').val());
+          var recRoom = $.trim($('#recRoom').val());
+          var recArea = $.trim($('#recArea').val());
+          var recCode1 = $.trim($('#proxy').val());
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
+              $('#errtip').html(errimg+'手机号输入有误').show()
+              return false;
+          }
+
+
+          if(!recName){
+              $('#errtip').html(errimg+'请输入真实姓名').show()
+              return false;
+          } 
+          
+          window.isajax = true
+          $('#errtip').empty().hide();
+
+          $.post('/api/user/recommend',{
+            'recTel':recTel,
+            'recName':recName,
+            'recRoom':recRoom,
+            'recArea':recArea,
+            'recCode1':recCode1,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(errimg+d.data).show();
+              alert('推荐成功,请等待审核');
+              setTimeout(function(){
+                location.href = '/view/user/recrecord_v2?wxuserid='+window.userid
+              },500)             
+          },'json')
+
+      })
+
+  })
+</script>
+<% include inc/foot_v2 %>

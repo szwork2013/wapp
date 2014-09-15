@@ -26,6 +26,8 @@ obj.binder = function(req,res){ //用户认证绑定
 		//不填项
 		appUserCity:req.body.appUserCity || '',
 
+		code1:req.body.code1 || '',
+
 	}
 	if(!qobj.appUserName || qobj.appUserName.length>20){
 		return res.send({error:1,data:'真实姓名格式有误'}) 
@@ -40,6 +42,7 @@ obj.binder = function(req,res){ //用户认证绑定
 	if(!qobj.appUserBirth){
 		return res.send({error:1,data:'生日格式有误'}) 
 	}
+	
 
 
 	userBl.binder(qobj, appId, function(err,doc){
@@ -87,6 +90,7 @@ obj.modify = function(req,res){ //用户认证绑定
 
 		//不填项
 		appUserCity:req.body.appUserCity || '',
+		code1:req.body.code1 || '',
 
 	}
 
