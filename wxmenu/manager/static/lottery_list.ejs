@@ -14,6 +14,13 @@
             </div>
 
              <div class="k-edit-label  w-800-l">
+                <label for="appId" >开发商</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
+            </div>
+
+             <div class="k-edit-label  w-800-l">
                 <label for="ename" >唯一英文标识</label>
             </div>
             <div data-container-for="ename" class="k-edit-field w-800-r">
@@ -39,6 +46,8 @@
                <br/>
                <span>
                 抽奖的间隔时间，单位是小时，如设置用户每天只可以抽奖3次，则此处填入24，下面间隔次数填入3。
+                <br/>
+                当填入小时超过或等于24小时，则按照自然天计算
                </span>
             </div>
 
@@ -158,6 +167,7 @@
                                 id:"_id",
                                 fields: {
                                     "_id": { editable: false },
+                                    "appId":{ editable: true },
                                     "ename": { editable: true },
                                     "title": { editable: true },
                                     "desc": { editable: true },
@@ -189,6 +199,16 @@
                               ]
 
 
+$.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+                window.appd = d;
 
 
                 $("#grid").kendoGrid({
@@ -201,6 +221,11 @@
                             field:'_id',
                             title:'活动Id',
                             hidden:true
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商",
+                            values: d
                         },
                         { 
                             field: "ename",
@@ -269,8 +294,9 @@
                     edit:function(e){
                         $('.k-window-content').addClass('w-800-content');
                         $('.k-edit-form-container').addClass('w-800-content');
-                  
+                    
 
+                        window.dropdown_init($("#appId_inp"), d)
 
                          $('#writeTime_inp').kendoDateTimePicker();
                          $('#stime').kendoDateTimePicker();
@@ -289,7 +315,7 @@
                     
                 });
 
-                
+    })         
                                     
 });
 

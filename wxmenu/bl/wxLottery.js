@@ -210,7 +210,12 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用�
 		}
 		
 		var interval = lotteryObj.interval*60*60*1000; //将小时转换成毫秒
-		
+		var isDay = false;
+		if(lotteryObj.interval >= 24){ 
+		//当后台设置时间间隔大于等于24小时，则表示按自然天来计算
+			isDay = true;
+		}
+
 		//判断是否有forward
 		//如果传递了额外抽奖，并且本活动没有开启额外抽奖，则报错
 		if(isForward && lotteryObj.forwardTimes <= 0){
@@ -231,6 +236,14 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用�
 				var pos = limit - 1;
 				var olderRec = recList[pos];
 				var olderTimestamp = Date.parse(olderRec.writeTime);
+
+				//如果时间超过24小时，表示自然天间隔
+				if(isDay){
+					var olderMoment = moment(olderRec.writeTime).hour(0).minute(0).second(0);
+					//将moment对象转换为unix时间戳
+					olderTimestamp = olderMoment.unix()*1000;
+				}	
+
 
 				if(now - olderTimestamp <= interval){//如果在这个间隔时间段内，已经超过最多抽奖次数了
 					return false

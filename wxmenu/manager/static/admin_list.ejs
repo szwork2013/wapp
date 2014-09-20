@@ -58,6 +58,7 @@
                                     "_id": { editable: false },
                                     "admin": { editable: true, type:'string',validation: { required: {message: "请填写管理员"}}  },
                                     "password": { editable: true, type:'string', validation: { required: {message: "请填写密码"}}},
+                                    "appId":{editable: true},
                                     "isShow":{editable: true, type:"number"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
@@ -78,6 +79,18 @@
                                 { name: "destroy", text: "删除"},
                               ]
 
+$.post('/manger/app/getList',{},function(data_ary){
+                var d = [{
+                            text: '不限制',
+                            value:'1'
+                        }]
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
                 $("#grid").kendoGrid({
                     dataSource: dataSource,
                     pageable: true,
@@ -96,6 +109,11 @@
                         { 
                             field: "password",
                             title: "密码", 
+                        },
+                        {
+                            field: "appId",
+                            title: "所属应用",
+                            values: d
                         },
                         { 
                             field: "isShow",
@@ -120,13 +138,14 @@
                         },
                     edit:function(e){
                            
+                            window.dropdown_init($('input[name="appId"]'),d)
 
                             window.dropdown_init($('input[name="isShow"]'), window.is_show_array)  
          
                     },
                     //filterable:true         
                 });
-                                    
+      });                              
 });
 
 </script>

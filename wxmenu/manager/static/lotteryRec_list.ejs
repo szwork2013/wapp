@@ -3,7 +3,43 @@
 <% include inc/left %>
 
 
- <div id="grid"></div>
+
+<div class="app_sel_boc">
+    <span>选择抽奖活动：  </span>
+    <input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
+
+    <button  id="down" class="k-primary sync_button k-primary k-button">
+        <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+        导出获奖名单</button>
+
+</div>
+
+
+<script type="text/javascript">
+//导出获奖名单
+    var lotteryList = <%- lotteryList%>
+    var lotteryKV = []
+    lotteryList.forEach(function(lo){
+        lotteryKV.push(
+             { text: lo.title, value: lo._id+'|'+lo.title }
+        )
+    })
+    window.dropdown_init($("#app_sel_inp"), lotteryKV)
+
+    $('#down').click(function(){
+        var v = $("#app_sel_inp").val();
+        var lotteryid = v.split('|')[0];
+        var lotteryename = v.split('|')[1];
+
+        location.href = '/manger/lotteryRec/download?lotteryid='+lotteryid+'&lotteryename='+lotteryename
+        return false;
+    })
+
+</script>
+
+
+
+<div id="grid"></div>
 <script id="popup_editor" type="text/x-kendo-template">
           
             <div class="k-edit-label w-800-l">

@@ -169,6 +169,8 @@ var addroute = function(app){
 	app.post('/manger/lotteryRec/update', checkLogin, lotteryRecCl.update)
 	app.post('/manger/lotteryRec/destroy', checkLogin, lotteryRecCl.destroy)
 	app.post('/manger/lotteryRec/create', checkLogin, lotteryRecCl.create)
+	app.get('/manger/lotteryRec/download', checkLogin, lotteryRecCl.download) //下载列表
+
 
 
 	

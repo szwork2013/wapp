@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+
+<title>万科过生日-全城派红包</title>
+<link href="http://wzzy2014skin.qiniudn.com/wk_zp2014/activity-style.css" rel="stylesheet" type="text/css">
+<script src="http://sg.6998cdn.com/skin2013v2/js/jquery.1.7.1.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+
+<script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+
+<%- newrelic.getBrowserTimingHeader() %>
+</head>
+<style type="text/css">
+
+.main{
+	height: 700px !important;
+}
+#noprize{
+	background: url("http://wzzy2014skin.qiniudn.com/wk_zp2014/1.jpg") no-repeat center 0;
+	background-size: 320px 480px;
+}
+#prizebox{
+	background: url("http://wzzy2014skin.qiniudn.com/wk_zp2014/2.jpg") no-repeat center 0;
+	background-size: 320px 480px;
+}
+</style>
+<body>
+<div class="body_wrap ">
+
+<div class="main activity-lottery-winning" id="main" style="display:none;">
+<div id="outercont">
+<div id="outer-cont">
+<div id="outer" style="-webkit-transform: rotate(2136deg);">
+	<img src="http://wzzy2014skin.qiniudn.com/wk_zp2014/activity-lottery-1.png" width="432px"></div>
+</div>
+<div id="inner-cont">
+<div id="inner">
+	<img src="http://wzzy2014skin.qiniudn.com/wk_zp2014/activity-lottery-2.png">
+</div>
+</div>
+</div>
+<div class="content">
+</div>
+</div>
+
+
+
+<div id="noprize" class="question" style="display:none;">
+	<div class="question-title"></div>
+	<div class="options button">
+	    <ul></ul>
+	  </div>
+	<div class="share tools-button" onclick="mask();"></div>
+
+</div> 
+  
+<div id="prizebox" class="question" style="display:none;">
+	<div class="question-title"></div>
+	<div class="options button">
+	    <ul></ul>
+	  </div>
+	<div class="share tools-button" onclick="mask();"></div>
+	
+</div>
+  
+  
+<div id="mobile" class="question"  style="display:none;">
+	<div class="question-title"></div>
+	<div class="options button">
+	    <ul></ul>
+	  </div>
+	<div id="prize_num" class="prize_num"></div>
+	<div id="modify_info_btn" class="share tools-button openBtn" ></div>
+	<input id="mobile_inp" class="mobile_inp" placeholder="请输入手机号码(仅限中国移动)" value="" maxlength="11">
+</div>  
+  
+  
+<div id="mask" class="mask_box" onclick="mask();"><img src="http://wzzy2014skin.qiniudn.com/wk_zp2014/guide.png"/></div> 
+  
+  
+  
+</div>
+	
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var mask = function () {
+		var maskObj = $('#mask');
+		var tip = $('#tip');
+		if(maskObj.is(':visible')){
+			maskObj.hide();
+			tip.hide();
+		}
+		else{
+			maskObj.show();
+			tip.show();
+		}
+}
+
+
+$(function() {
+
+var forwardingUrl = 'http://menu.xy-tang.com/active/xinyutang?ename=wkzp_2014';
+var forwardingImg = 'http://wzzy2014skin.qiniudn.com/wk_zp2014/wk_zp2014_logo.jpg'
+var forwardingTitle ='万科过生日，全城送红包'
+var forwardingDesc ='1984-2014万科30周年，万元红包全城大派送'
+
+var lotteryid = '<%= lotteryObj._id %>'
+var userid = '<%= userid%>'
+var appId = '<%= appId%>'
+var u_username = '<%= wxuobj.appUserName %>'
+var u_mobile = '<%= wxuobj.appUserMobile %>'
+var appUserName = u_username
+var appUserMobile = u_mobile 
+
+
+
+window.hasPlay = false;
+$.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+    if(d.error == 1){
+      return alert(d.data)
+    }
+        window.lotteryData = d.data;
+        
+        if(d.data.record && d.data.record.length > 0){
+        	var now = moment();
+       		var lastRecordTime = moment(d.data.record[d.data.record.length-1].writeTime);
+       		if(now.dayOfYear() == lastRecordTime.dayOfYear()){
+       			window.hasPlay = true;
+       		}
+        	if(d.data.record.length>=2){
+        		window.hasPlay = true;
+        	}
+        }
+
+    },'json')
+
+
+
+	var boxObjs = $('#mobile, #prizebox, #noprize, #main')
+
+
+
+
+
+window.requestAnimFrame = (function() {
+		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+		function(callback) {
+			window.setTimeout(callback, 1000 / 60)
+		}
+	})();
+
+
+	var totalDeg = 360 * 3 + 0;
+	var steps = [];
+	var lostDeg = [260];
+	var prizeDeg = [6, 135, 110, 60, 300, 210, 190, 40];
+	//[921元，1984元，1元，92.1元，1元，9元，30元，2元]
+	var prize, sncode;
+	var count = 0;
+	var now = 0;
+	var a = 0.01;
+	var outter, inner, timer, running = false;
+	function countSteps() {
+		var t = Math.sqrt(2 * totalDeg / a);
+		var v = a * t;
+		for (var i = 0; i < t; i++) {
+			steps.push((2 * v * i - a * i * i) / 2)
+		}
+		steps.push(totalDeg)
+	}
+
+	function step() {
+		outter.style.webkitTransform = 'rotate(' + steps[now++] + 'deg)';
+		outter.style.MozTransform = 'rotate(' + steps[now++] + 'deg)';
+		if (now < steps.length) {
+			requestAnimFrame(step)
+		} else {
+			running = false;
+			setTimeout(function() {
+							
+					if(!window.prizeTitle){//没中奖
+						alert(window.result)
+						setTimeout(function(){
+							boxObjs.hide();
+							$('#noprize').show();
+						},1000)
+						
+					}
+					else{
+						alert(window.result)
+						
+						setTimeout(function(){
+							boxObjs.hide();
+							$('#prize_num').html(prizeTitle.slice(0,-1))
+							$('#mobile').show();
+						},1000)
+						
+					}
+
+			},
+			200)
+		}
+	}
+
+
+	function start(deg,haserror) {
+		deg = deg || lostDeg[parseInt(lostDeg.length * Math.random())];
+		running = true;
+		clearInterval(timer);
+		totalDeg = 360 * 5 + deg;
+		steps = [];
+		now = 0;
+		countSteps();
+		if(haserror){
+			return;
+		}
+		requestAnimFrame(step)
+	}
+	window.start = start;
+	outter = document.getElementById('outer');
+	inner = document.getElementById('inner');
+	i = 10;
+	$("#inner").click(function() {
+		if (running) return;
+		if (window.hasPlay) {
+			alert('您已经参加过活动啦');
+			return
+		}
+
+
+		//start(prizeDeg[7])
+		//[921元，1984元，1元，92.1元，1元，9元，30元，2元]
+
+		//return;
+		
+		$.ajax({
+			url: "/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>",
+			dataType: "json",
+			type:'POST',
+			data: {
+				 lotteryId:lotteryid
+			},
+			beforeSend: function() {
+				running = true;
+				timer = setInterval(function() {
+					i += 5;
+					outter.style.webkitTransform = 'rotate(' + i + 'deg)';
+					outter.style.MozTransform = 'rotate(' + i + 'deg)'
+				},
+				1)
+			},
+			success: function(d) {
+
+					var prizeObj = {
+						'921元':prizeDeg[0],
+						'1984元':prizeDeg[1],
+						'1元':prizeDeg[2],
+						'92.1元':prizeDeg[3],
+						'1元':prizeDeg[4],
+						'9元':prizeDeg[5],
+						'30元':prizeDeg[6],
+						'2元':prizeDeg[7]
+					}
+					//[921元，1984元，1元，92.1元，1元，9元，30元，2元]
+
+					if(d.error == 1){						
+						window.prizeTitle = false;
+						window.result = d.data;
+						start(lostDeg[0],true);
+						return;
+					}  
+					var prizeId = d.data.prizeId;
+					if(prizeId == '0'){ //没有中奖
+						window.prizeTitle = false;
+						window.result = '很遗憾没有中奖哦';
+						return start(lostDeg[0]);
+					}
+
+					var prizeTitle = d.data.prizeObj.name;
+					//[921元，1984元，1元，92.1元，1元，9元，30元，2元]
+					var pos = prizeObj[prizeTitle]
+					if(typeof pos == 'undefined'){
+						window.prizeTitle = false;
+						window.result = '您没有中奖哦';
+						return start(lostDeg[0]);
+					}
+					
+					window.prizeTitle = d.data.prizeObj.name;
+					window.result = '恭喜您抽中'+window.prizeTitle
+					window.lastRecordId = d.data.recordId.toString();
+					start(pos);
+					//console.log(window.prizeTitle)
+				
+			},
+			error: function() {
+				start(lostDeg[0]);
+			},
+			timeout: 5000
+		})
+	})
+
+	
+
+var mobile_num = ['139','138','137','136','135','134','159','150','151','158','157','188','187','152','182','147']
+$('#modify_info_btn').click(function(){
+
+    var appUserMobile = $('#mobile_inp').val().trim();
+
+    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+      alert('请输入正确的手机号码')
+      return false;
+    }
+    var front3 = appUserMobile.slice(0,3);
+    if(mobile_num.indexOf(front3) == -1){
+    	alert('请输入移动号码')
+      	return false;
+    }
+
+    $.post('/lottery/<%= appEname%>/complete',{
+	    truename:u_username, 
+	    mobile:appUserMobile,
+	    recordId:window.lastRecordId,
+    },function(d){
+      if(d.error == 1) return alert(d.data);
+      boxObjs.hide();
+      $('#prizebox').show();
+     
+    },'json')
+    return false;
+	
+})
+
+
+
+	$('#main').show();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+//移动开通
+//139、138、137、136、135、134、159、150、151、158、157、188、187、152、182、147
+</script>
+
+
+
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4d70084ab8a23d1e8e76861a9553677d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+
+</body>
+
+
+</html>

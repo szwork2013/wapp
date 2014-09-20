@@ -16,9 +16,10 @@ UserLogin.UserLogin = function(req,res){
 		admin:req.body.admin
 	}, 0,100,function(err,doc){
 		if(err) return res.send(500);
-
+		//console.log(doc, doc[0].password,utils.md5(req.body.password+salt))
 		if(doc &&  doc.length>0 && doc[0].password === utils.md5(req.body.password+salt)){
 			req.session.admin = req.body.admin;
+			req.session.adminAppId = doc[0].appId;
 			res.redirect('/manger/main/')
 			return;
 		}

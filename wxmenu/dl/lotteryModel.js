@@ -2,6 +2,7 @@ var mongoose =require('./db_conn.js');
 var Schema = mongoose.Schema;
 
 var obj =  { //定义结构,lottery抽奖活动的doc
+      appId:{type:String,required:true}, //应用id
       ename:{type: String, required:true, unique:true,index:true}, //活动唯一的名字，英文标注
       title: { type: String, required:true}, //抽奖活动标题
       interval:{type:Number,default:24}, //允许同一用户抽奖的间隔时间,单位是小时HOURS

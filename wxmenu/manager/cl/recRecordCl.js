@@ -18,7 +18,6 @@ obj.read = function(req, res){
 	var resObj = {"Data":[],"Total":0};
 
 
-
 	dl.findAll(filter, skip, pageSize, function(err,doc){
 		if(err) return res.send(500,err);
 		if(!doc || doc.length==0) return res.json(resObj);
