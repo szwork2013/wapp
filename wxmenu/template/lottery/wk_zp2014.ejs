@@ -236,6 +236,7 @@ window.requestAnimFrame = (function() {
 		now = 0;
 		countSteps();
 		if(haserror){
+			alert(window.result)
 			return;
 		}
 		requestAnimFrame(step)
