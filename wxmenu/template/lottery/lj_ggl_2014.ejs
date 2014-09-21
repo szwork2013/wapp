@@ -472,7 +472,7 @@ $(function(){
      //end pu prize
 
      //last times
-     if($.cookie('isforward') == '1'){
+     if($.cookie('isforward_lj') == '1'){
           var times = 6 - window.lotteryData.record.length  
      }
      else if(window.lotteryData.record.length>3){
@@ -495,7 +495,7 @@ $(function(){
                return false;
             }
 
-              if(window.lotteryData.record.length>=3 && $.cookie('isforward') != '1'){
+              if(window.lotteryData.record.length>=3 && $.cookie('isforward_lj') != '1'){
                   alert('您已经刮过3次了，转发本页面到朋友圈可再次获得3次刮奖机会')
                   return false;
               }
@@ -572,7 +572,7 @@ WeixinJSBridge.call('hideToolbar');
 });
 function attention_wx()
 {
-    $.cookie('isforward', '1', { expires: 365, path: '/' });
+    $.cookie('isforward_lj', '1', { expires: 365, path: '/' });
 }
 function is_zero()
 {
