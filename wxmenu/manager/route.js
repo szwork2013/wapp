@@ -2,6 +2,7 @@ var guidModel = require('../dl/guidModel.js');
 
 var uploadCl = require('./cl/uploadCl.js');
 var thumbCl = require('./cl/thumbCl.js');
+var guidCl = require('./cl/guidCl.js');
 
 var loginCl = require('./cl/loginCl.js');
 var adminCl = require('./cl/adminCl.js');
@@ -74,6 +75,14 @@ var addroute = function(app){
 	app.post('/manger/admin/update', checkLogin, adminCl.update)
 	app.post('/manger/admin/destroy', checkLogin, adminCl.destroy)
 	app.post('/manger/admin/create', checkLogin, adminCl.create)
+
+	//guid
+	app.get('/manger/guid/list', checkLogin, guidCl.list)
+	app.post('/manger/guid/read', checkLogin,  guidCl.read)
+	app.post('/manger/guid/update', checkLogin, guidCl.update)
+
+
+
 
 	//app
 	app.get('/manger/app/list', checkLogin, appCl.list)

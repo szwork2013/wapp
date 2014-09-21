@@ -1,0 +1,168 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+
+ $(function () {
+                window.uids
+                window.appd;
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        requestEnd: function(e) {
+                           
+                        },
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/guid/read",
+                                type: "post",
+                            },
+                            update: {
+                                url: DataHost + "/manger/guid/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "row": { type:"number", editable: false },
+                                    "guid":{ type:"number", editable: false },
+                                    "guid2":{ type:"number", editable: true },
+                                    "guid3":{ type:"number", editable: true },
+                                    "guid4":{ type:"number", editable: true },
+                                    "guid5":{ type:"number", editable: true },
+                                    "guid6":{ type:"number", editable: true },
+                                    "guid7":{ type:"number", editable: true },
+                                    "guid8":{ type:"number", editable: true },
+                                    "guid9":{ type:"number", editable: true },
+                                    "guid10":{ type:"number", editable: true },
+                                }
+                            }
+                        }
+                    });
+
+
+                var toolbarAry = [];
+                var commandAry = [];
+         
+                var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} }
+                              ]
+
+
+
+
+
+
+                window.grid = $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'guid主键',
+                            hidden:true
+                        },
+                        {
+                            field:'row',
+                            title:'guid主键',
+                            hidden:true
+                        },
+                        {
+                            field:'guid',
+                            title:'通用流水号',
+                        },
+                        {
+                            field:'guid2',
+                            title:'20140921微信图片回复',
+                        },
+                        {
+                            field:'guid3',
+                            title:'guid3',
+                            hidden:true
+                        },
+                        {
+                            field:'guid4',
+                            title:'guid4',
+                            hidden:true
+                        },
+                        {
+                            field:'guid5',
+                            title:'guid5',
+                            hidden:true
+                        },
+                        {
+                            field:'guid6',
+                            title:'guid6',
+                            hidden:true
+                        },
+                        {
+                            field:'guid7',
+                            title:'guid7',
+                            hidden:true
+                        },
+                        {
+                            field:'guid8',
+                            title:'guid8',
+                            hidden:true
+                        },
+                        {
+                            field:'guid9',
+                            title:'guid9',
+                            hidden:true
+                        },
+                        {
+                            field:'guid10',
+                            title:'guid10',
+                            hidden:true
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                        filterable:window.filter_obj,
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        
+                        window : {
+                                title: "添加/修改",
+                            }
+                        },
+                    edit:function(e){
+                        alert('流水号涉及重要，请谨慎修改')
+                    }
+                    
+                });
+
+                                    
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+<% include inc/foot %>

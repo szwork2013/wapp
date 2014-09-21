@@ -1,4 +1,5 @@
 var wechat = require('wechat');
+var util = require('util')
 var utils = require('../lib/utils.js')
 var wxReplyDl = require('../dl/wxReplyModel.js');
 var wxMenuDl = require('../dl/menuModel.js');
@@ -8,6 +9,8 @@ var url = require('url')
 var ERR_REPLY = '系统错误，请您重试';
 var UNKNOW_REPLY = '未知操作'
 
+//临时加载
+var wxpic_20140921_dl = require('../tempDl/20140921_wxpic.js');
 
 var currentSite = global.config.currentSite;
 
@@ -286,7 +289,7 @@ var wxFunction = function(app, applist){
          
           })
 
-          /*
+          
           .image(function (message, req, res, next) {
             // message为图片内容
             // { ToUserName: 'gh_d3e07d51b513',
@@ -296,7 +299,16 @@ var wxFunction = function(app, applist){
             // PicUrl: 'http://mmsns.qpic.cn/mmsns/bfc815ygvIWcaaZlEXJV7NzhmA3Y2fc4eBOxLjpPI60Q1Q6ibYicwg/0',
             // MediaId: 'media_id',
             // MsgId: '5837397301622104395' }
-          }).voice(function (message, req, res, next) {
+            
+            if( appEname =='szlonghu'){
+              wxpic_20140921_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
+                  res.reply(util.format('您的抽奖码为：%d', guid));
+              })
+            }
+
+
+          })
+          /*.voice(function (message, req, res, next) {
             // message为音频内容
             // { ToUserName: 'gh_d3e07d51b513',
             // FromUserName: 'oPKu7jgOibOA-De4u8J2RuNKpZRw',
