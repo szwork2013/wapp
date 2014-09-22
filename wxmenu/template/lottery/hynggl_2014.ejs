@@ -372,6 +372,17 @@ var forwardingDesc ='ipadmini，各种小家电，等你领回家'
 
 window.isforward_today = moment().hour(23).minute(59).second(59)
 window.isforward_today = new Date(window.isforward_today)
+
+if($.cookie('isforward') == '1'){
+  $.removeCookie('isforward');
+  $.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+}
+if($.cookie('has_modify_info') == '1'){
+  $.removeCookie('has_modify_info');
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: '/' });
+}
+
+
 //alert(window.isforward_today)
 //$.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
 //alert($.cookie('isforward'))
@@ -427,7 +438,7 @@ $(function(){
       if(d.error == 1) return alert(d.data);
       alert('资料完善成功，赶快去刮奖吧')
       $('#myModal').modal('hide')
-      $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
+      $.cookie('has_modify_info', 1, { expires: window.isforward_today, path: '/' })
       //window.localStorage['has_modify'] = '1';
       //$('#p2').html(appUserName)
     },'json')
