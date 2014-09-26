@@ -60,7 +60,7 @@ top: 334px;
 	background-size: 480px 720px;
 }
 #prizebox{
-	background: url("http://wzzy2014skin.qiniudn.com/wk_zp2014/2_v1.jpg") no-repeat center 0;
+	background: url("http://bcs.duapp.com/xytimg/fx925.jpg") no-repeat center 0;
 	background-size: 480px 720px;
 }
 #mobile{
@@ -73,7 +73,7 @@ top: 334px;
 	height: 720px !important;
 }
 .share{
-	margin-top: 430px !important;
+	margin-top: 510px !important;
 }
 .mobile_inp{
 top: 361px;
@@ -431,10 +431,10 @@ $('#modify_info_btn').click(function(){
     },function(d){
       if(d.error == 1) return alert(d.data);
       alert('资料完善成功，记得来未来城领奖')
-      location.href = location.href;
-      return;
-      //boxObjs.hide();
-      //$('#prizebox').show();
+      //location.href = location.href;
+     //return;
+      boxObjs.hide();
+      $('#prizebox').show();
      
     },'json')
     return false;
