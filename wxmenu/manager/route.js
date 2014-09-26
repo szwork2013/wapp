@@ -22,7 +22,10 @@ var lotteryCl = require('./cl/lotteryCl.js');
 var lotteryPrizeCl = require('./cl/lotteryPrizeCl.js');
 var lotteryRecCl = require('./cl/lotteryRecCl.js');
 
-
+var voteCl =  require('./cl/voteCl.js');
+var voteGroupCl = require('./cl/voteGroupCl.js');
+var voteItemCl = require('./cl/voteItemCl.js');
+var voteRecordCl = require('./cl/voteRecordCl.js');
 
 
 
@@ -181,8 +184,43 @@ var addroute = function(app){
 	app.get('/manger/lotteryRec/download', checkLogin, lotteryRecCl.download) //下载列表
 
 
+	//vote
+	app.get('/manger/vote/list', checkLogin, voteCl.list)
+	app.post('/manger/vote/read', checkLogin, voteCl.read)
+	app.post('/manger/vote/update', checkLogin, voteCl.update)
+	app.post('/manger/vote/destroy', checkLogin, voteCl.destroy)
+	app.post('/manger/vote/create', checkLogin, voteCl.create)
+	app.post('/manger/vote/getList', checkLogin, voteCl.getList)
 
-	
+
+	//vote group
+	app.get('/manger/voteGroup/list', checkLogin, voteGroupCl.list)
+	app.post('/manger/voteGroup/read', checkLogin, voteGroupCl.read)
+	app.post('/manger/voteGroup/update', checkLogin, voteGroupCl.update)
+	app.post('/manger/voteGroup/destroy', checkLogin, voteGroupCl.destroy)
+	app.post('/manger/voteGroup/create', checkLogin, voteGroupCl.create)
+	app.post('/manger/voteGroup/getList', checkLogin, voteGroupCl.getList)
+
+	//vote item
+	app.get('/manger/voteItem/list', checkLogin, voteItemCl.list)
+	app.post('/manger/voteItem/read', checkLogin, voteItemCl.read)
+	app.post('/manger/voteItem/update', checkLogin, voteItemCl.update)
+	app.post('/manger/voteItem/destroy', checkLogin, voteItemCl.destroy)
+	app.post('/manger/voteItem/create', checkLogin, voteItemCl.create)
+	app.post('/manger/voteItem/getList', checkLogin, voteItemCl.getList)
+
+
+	//vote record
+	app.get('/manger/voteRec/list', checkLogin, voteRecordCl.list)
+	app.post('/manger/voteRec/read', checkLogin, voteRecordCl.read)
+	app.post('/manger/voteRec/update', checkLogin, voteRecordCl.update)
+	app.post('/manger/voteRec/destroy', checkLogin, voteRecordCl.destroy)
+	app.post('/manger/voteRec/create', checkLogin, voteRecordCl.create)
+	app.get('/manger/voteRec/download', checkLogin, voteRecordCl.download) //下载列表，导出excel
+	//统计计算
+	app.get('/manger/voteRec/aggressivelist',checkLogin, voteRecordCl.aggressiveList) //统计
+	app.get('/manger/voteRec/aggressive',checkLogin, voteRecordCl.aggressive) //统计ajax接口
+
 
 
 	//获得guid
