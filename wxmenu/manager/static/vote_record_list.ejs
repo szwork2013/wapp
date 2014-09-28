@@ -20,106 +20,56 @@
                <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
             </div>
 
-             <div class="k-edit-label  w-800-l">
-                <label for="ename" >唯一英文标识</label>
-            </div>
-            <div data-container-for="ename" class="k-edit-field w-800-r">
-               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="ename" data-bind="value:ename" data-required-msg="请填写唯一英文标识" aria-invalid="true">
-               <br/>
-               <span>
-                唯一英文标识,所有活动唯一，英文数字组成，例如：voteName_201405015 这样
-               </span>
-            </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="title" >投票标题</label>
+                <label for="voteId" >所属投票</label>
             </div>
-            <div data-container-for="title" class="k-edit-field w-800-r">
-               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" data-required-msg="请填写活动标题" aria-invalid="true">
+            <div data-container-for="voteId" class="k-edit-field w-800-r">
+               <input type="text" id="voteId_inp" class="k-input k-textbox w-50-inp" name="voteId" data-bind="value:voteId" data-required-msg="" aria-invalid="true">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l hide">
+                <label for="itemId">投票项Id</label>
+            </div>
+            <div data-container-for="itemId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="itemId" data-bind="value:itemId" required="required" data-required-msg="" aria-invalid="true">
             </div>
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="interval">投票间隔</label>
+                <label for="itemTitle">投票项</label>
             </div>
-            <div data-container-for="interval" class="k-edit-field w-800-r">
-               <input type="number" class="k-input k-textbox w-50-inp" name="interval" data-bind="value:interval" required="required" data-required-msg="请填写投票间隔" aria-invalid="true">
-               <br/>
-               <span>
-                投票的间隔时间，单位是小时，如设置用户每天只可以投票3次，并且对每个投票项只能投1次，则此处填入24，下面间隔次数填入3，再下面每投票项限制数量填入1
-                <br/>
-                当填入的小时数超过或等于24小时，则按照自然天计算
-               </span>
+            <div data-container-for="itemTitle" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="itemTitle" data-bind="value:itemTitle" required="required" data-required-msg="" aria-invalid="true">
             </div>
 
 
-            <div class="k-edit-label  w-800-l">
-                <label for="intervalTimes">间隔时间内投票次数</label>
+            <div class="k-edit-label  w-800-l hide">
+                <label for="userId">用户id</label>
             </div>
-            <div data-container-for="intervalTimes" class="k-edit-field w-800-r">
-               <input type="number" class="k-input k-textbox w-50-inp" name="intervalTimes" data-bind="value:intervalTimes" required="required" data-required-msg="请填写间隔" aria-invalid="true">
-               <br/>
-               <span>
-                投票的间隔时间内，一个用户可以投票的总次数，填入-1或0表示不限制
-               </span>
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required" data-required-msg="" aria-invalid="true">
             </div>
 
 
-            <div class="k-edit-label  w-800-l">
-                <label for="intervalPerUserTimes">被投票项次数限制</label>
+            <div class="k-edit-label  w-800-l hide">
+                <label for="recordIp">操作ip</label>
             </div>
-            <div data-container-for="intervalPerUserTimes" class="k-edit-field w-800-r">
-               <input type="number" class="k-input k-textbox w-50-inp" name="intervalPerUserTimes" data-bind="value:intervalPerUserTimes" required="required" data-required-msg="请填写抽奖间隔" aria-invalid="true">
-               <br/>
-               <span>
-                投票间隔时间内，一个用户对一个被投票项可投票的次数，-1或0表示不限制
-               </span>
+            <div data-container-for="recordIp" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recordIp" data-bind="value:recordIp" required="required" data-required-msg="" aria-invalid="true">
             </div>
 
 
-            <div class="k-edit-label  w-800-l">
-                <label for="forwardTimes">转发增加投票次数</label>
+            <div class="k-edit-label  w-800-l hide">
+                <label for="isForward">是否转发</label>
             </div>
-            <div data-container-for="forwardTimes" class="k-edit-field w-800-r">
-               <input type="number" class="k-input k-textbox w-50-inp" name="forwardTimes" data-bind="value:forwardTimes" required="required" aria-invalid="true">
-               <br/>
-               间隔时间内，转发投票活动，可以增加的投票次数，-1或0表示没有增加，大于0的整数表示用户转发之后可以增加的次数
-               <br/>
-               新增加的次数，同样适用于被投票项次数限制，但是重新计算。比如有活动用户可以对某一个人每天投票一次，转发后，用户增加了投票次数，可以再对那个人投票一次。
+            <div data-container-for="isForward" class="k-edit-field w-800-r">
+               <input type="text" id="isForward_inp" class="k-input k-textbox w-50-inp" name="isForward" data-bind="value:isForward" required="required" data-required-msg="" aria-invalid="true">
             </div>
 
 
-            <div class="k-edit-label  w-800-l">
-                <label for="startTime">开始时间</label>
-            </div>
-            <div data-container-for="startTime" class="k-edit-field w-800-r">
-               <input type="text" id="stime" class="k-input k-textbox " name="startTime" data-bind="value:startTime" >
-            </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="endTime">结束时间</label>
-            </div>
-            <div data-container-for="endTime" class="k-edit-field w-800-r">
-               <input type="text" id="etime" class="k-input k-textbox " name="endTime" data-bind="value:endTime" >
-            </div>
-
-            
-
-            <div name="img_div" class="k-edit-label  w-800-l">
-                <label for="picture">投票宣传图片</label>
-            </div>
-            <div name="img_div" data-container-for="picture" class="k-edit-field w-800-r">
-                <input type="file" name="upload_file" id="upload_file">
-                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
-            </div>
-          
-
-            <div class="k-edit-label  w-800-l">
-                <label for="desc" >活动描述</label>
-            </div>
-            <div data-container-for="desc" class="k-edit-field w-800-r">
-               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="desc" data-bind="value:desc"></textarea>
-            </div>
 <div style="display:none">
             
             <div class="k-edit-label  w-800-l">
@@ -149,13 +99,6 @@
             </div>
 </div> 
 
-            <div class="k-edit-label  w-800-l">
-                <label for="isShow">是否启用</label>
-            </div>
-            <div data-container-for="isShow" class="k-edit-field w-800-r">
-               <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
-            </div>
-
 
             <div class="k-edit-label  w-800-l">
                 <label for="writeTime">创建日期</label>
@@ -184,22 +127,22 @@
                         serverFiltering:true,
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/vote/read",
+                                url: DataHost + "/manger/voteRec/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/vote/update",
+                                url: DataHost + "/manger/voteRec/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/vote/destroy",
+                                url: DataHost + "/manger/voteRec/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/vote/create",
+                                url:DataHost + "/manger/voteRec/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
@@ -214,25 +157,18 @@
                                 fields: {
                                     "_id": { editable: false },
                                     "appId":{ editable: true },
-                                    "ename": { editable: true },
-                                    "interval":{editable: true, type: "number"},
-                                    "intervalTimes":{editable: true, type: "number"},
-                                    "intervalPerUserTimes":{editable: true, type: "number"},
-                                    "forwardTimes":{ editable: true , type: "number"},
-
-                                    "title": { editable: true },
-                                    "picture": { editable: true },
-                                    "desc": { editable: true },
-                     
-                                    "startTime":{editable: true, type: "date"},
-                                    "endTime":{editable: true, type: "date"},
+                                    "voteId": { editable: true },
+                                    "voteTitle": { editable: true },
+                                    "itemId":{ editable: true },
+                                    "userId":{editable: true},
+                                    "recordIp":{editable: true},
+                                    "isForward":{editable: true},
                                     
                                     "code1": { editable: true },
                                     "code2": { editable: true },
                                     "code3": { editable: true },
                                     "code4": { editable: true },
 
-                                    "isShow": { editable: true, type: "number"},                                    
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -244,7 +180,7 @@
                 var commandAry = [];
  
                     var toolbarAry = [
-                                { name: "create", text: "添加投票" }
+                                { name: "create", text: "添加记录" }
                               ]
 
         
@@ -266,6 +202,19 @@ $.post('/manger/app/getList',{},function(data_ary){
                 window.appd = d;
 
 
+$.post('/manger/vote/getList',{},function(data_ary){
+                var d2 = []
+                data_ary.forEach(function(v){
+                    d2.push({
+                        text: v.title, 
+                        value:v._id
+                    })
+                })
+
+                window.voted = d2;
+
+
+
                 $("#grid").kendoGrid({
                     dataSource: dataSource,
                     pageable: true,
@@ -283,54 +232,35 @@ $.post('/manger/app/getList',{},function(data_ary){
                             values: d
                         },
                         { 
-                            field: "ename",
-                            title: "唯一标识", 
+                            field: "voteId",
+                            title: "所属投票", 
+                            values: d2
                         },
                         { 
-                            field: "interval",
-                            title: "间隔小时", 
+                            field: "itemId",
+                            title: "投票项id", 
                             hidden:true
-                         },
-                         { 
-                            field: "intervalTimes",
-                            title: "间隔次数", 
-                            hidden:true
-                         },
-                         { 
-                            field: "intervalPerUserTimes",
-                            title: "间隔每项可被投票数", 
-                            hidden:true
-                         },
-                         { 
-                            field: "forwardTimes",
-                            title: "转发增加次数", 
-                            hidden:true
-                         },
-                         { 
-                            field: "title",
-                            title: "活动标题", 
-                         },
-                         { 
-                            field: "picture",
-                            title: "活动宣传图片", 
-                            hidden:true
-                         },
-                         { 
-                            field: "desc",
-                            title: "活动描述", 
-                            hidden:true
-                         },
-
-                         { 
-                            field: "startTime",
-                            title: "开始时间",
-                            format: "{0: yyyy-MM-dd HH:mm:ss}"
                         },
                         { 
-                            field: "endTime",
-                            title: "结束时间",
-                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                            field: "itemTitle",
+                            title: "投票项", 
+                            filterable:false
                         },
+                        { 
+                            field: "userId",
+                            title: "用户id", 
+                            hidden:true
+                        },
+                        { 
+                            field: "recordIp",
+                            title: "操作ip", 
+                        },
+                        { 
+                            field: "isForward",
+                            title: "是否转发", 
+                            values: window.is_forward
+                        },
+                     
                         { 
                             field: "code1",
                             title: "备用字段1", 
@@ -350,17 +280,11 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "code4",
                             title: "备用字段4", 
                             hidden:true
-                         },
-                        { 
-                            field: "isShow",
-                            title: "是否启用", 
-                            values:window.is_show_array
-                        },                   
+                         },                   
                         { 
                             field: "writeTime",
                             title: "创建日期",
                             format: "{0: yyyy-MM-dd HH:mm:ss}",
-                            hidden:true
                         },
                         { command: commandAry, title: "&nbsp;", width: "160px" }],
                         filterable:window.filter_obj,
@@ -377,27 +301,20 @@ $.post('/manger/app/getList',{},function(data_ary){
                         $('.k-window-content').addClass('w-800-content');
                         $('.k-edit-form-container').addClass('w-800-content');
                     
-                        multiUpload($("#upload_file"), $('#appPicture_inp'), 1)
+
                         
                         window.dropdown_init($("#appId_inp"), d)
+                        window.dropdown_init($("#voteId_inp"), d2)
+                        window.dropdown_init($("#isForward_inp"), window.is_forward)
+
 
                          $('#writeTime_inp').kendoDateTimePicker();
-                         $('#stime').kendoDateTimePicker();
-                         $('#etime').kendoDateTimePicker();
-                         
-                            
-                         $("#intro").kendoEditor({
-                                tools: window.editor_tools,
-                                messages: window.editor_messages
-                         });  
 
-
-                         window.dropdown_init()
 
                     }
                     
                 });
-
+        })
     })         
                                     
 });

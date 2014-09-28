@@ -331,6 +331,15 @@ window.is_freeze = [
   { text: "已冻结", value: '1' },
 ]
 
+window.is_forward = [
+  { text: "未转发", value: '0' },
+  { text: "已转发", value: '1' },
+]
+
+window.not_sel = [
+  { text: "请选择", value: '' }
+]
+
 
 window.kendo_edit_option = {
     tools: window.editor_tools,

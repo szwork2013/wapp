@@ -1,0 +1,105 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div class="app_sel_boc">
+     <p>
+        <label for="app_sel_inp">选择投票活动：:</label><input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
+    </p>
+     <p>
+        <label for="start">开始日期:</label><input id="start" style="width: 200px" value="" />
+    </p>
+
+    <p>
+        <label for="end">结束日期:</label><input id="end" style="width: 200px" value=""/>
+    </p>
+
+    <button  id="down2" class="k-primary sync_button k-primary k-button">
+        <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+        查询</button>
+    <button  id="down" class="k-primary sync_button k-primary k-button">
+    <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+    导出列表</button>
+ 
+</div>
+
+
+
+<div id="grid"></div>
+
+<script type="text/javascript">
+$(function(){
+    $.post('/manger/vote/getList',{},function(data_ary){
+                    var d2 = []
+                    data_ary.forEach(function(v){
+                        d2.push({
+                            text: v.title, 
+                            value:v._id
+                        })
+                    })
+
+                    window.voted = d2;
+                    window.dropdown_init($("#app_sel_inp"), d2)
+
+        var getDataToQuery = function(){
+            return {
+                voteid:$('#app_sel_inp').val(),
+                stime:$('#start').val(),
+                etime:$('#end').val()
+               }
+        }
+
+        $('#down2').click(function(){
+            $.post('/manger/voteRec/aggressive', getDataToQuery(), function(d){
+                if(d.error){
+                    return alert(d.data)
+                }
+
+                $("#grid").kendoGrid({
+                        dataSource: {
+                            data: d.data,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        _id: { type: "string" },
+                                        title: { type: "string" },
+                                        supportCount: { type: "number" },
+                                        position: { type: "number" }
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        height: 550,
+                        scrollable: true,
+                        sortable: true,
+                        filterable: true,
+                        pageable: {
+                            input: true,
+                            numeric: false
+                        },
+                        columns: [
+                            { field: "_id", title: "被投票id"},
+                            { field: "title", title: "名称"},
+                            { field: "supportCount", title: "票数"},
+                            { field: "position", title: "位置"},
+                        ]
+                    });
+
+            },'json')
+        })
+    
+
+        $('#down').click(function(){
+            var url = '/manger/voteRec/download?voteid='+$('#app_sel_inp').val()+'&stime='+
+                      $('#start').val()+'&etime='+$('#end').val();
+
+            location.href = url
+        })
+    })
+})
+
+</script>
+
+<% include inc/foot %>

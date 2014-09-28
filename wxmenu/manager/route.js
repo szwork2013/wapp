@@ -216,10 +216,11 @@ var addroute = function(app){
 	app.post('/manger/voteRec/update', checkLogin, voteRecordCl.update)
 	app.post('/manger/voteRec/destroy', checkLogin, voteRecordCl.destroy)
 	app.post('/manger/voteRec/create', checkLogin, voteRecordCl.create)
-	app.get('/manger/voteRec/download', checkLogin, voteRecordCl.download) //下载列表，导出excel
+	
 	//统计计算
 	app.get('/manger/voteRec/aggressivelist',checkLogin, voteRecordCl.aggressiveList) //统计
-	app.get('/manger/voteRec/aggressive',checkLogin, voteRecordCl.aggressive) //统计ajax接口
+	app.post('/manger/voteRec/aggressive',checkLogin, voteRecordCl.aggressive) //统计ajax接口
+	app.get('/manger/voteRec/download', checkLogin, voteRecordCl.download) //下载列表，导出excel
 
 
 

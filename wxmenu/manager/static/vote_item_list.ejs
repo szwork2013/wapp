@@ -56,7 +56,7 @@
             </div>
             <div name="img_div" data-container-for="picture" class="k-edit-field w-800-r">
                 <input type="file" name="upload_file" id="upload_file2">
-                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
+                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp2" name="picture" data-bind="value:picture">
             </div>
 
             
@@ -64,14 +64,14 @@
                 <label for="sex" >性别</label>
             </div>
             <div data-container-for="sex" class="k-edit-field w-800-r">
-               <input type="number" id="appId_inp" class="k-input k-textbox w-50-inp" name="sex" data-bind="value:sex" data-required-msg="请填写性别" aria-invalid="true">
+               <input type="number" id="sex_inp" class="k-input k-textbox w-50-inp" name="sex" data-bind="value:sex" data-required-msg="请填写性别" aria-invalid="true">
             </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="age" >年龄</label>
             </div>
             <div data-container-for="age" class="k-edit-field w-800-r">
-               <input type="number" id="appId_inp" class="k-input k-textbox w-50-inp" name="age" data-bind="value:age" data-required-msg="请填写年龄" aria-invalid="true">
+               <input type="number" id="" class="k-input k-textbox w-50-inp" name="age" data-bind="value:age" data-required-msg="请填写年龄" aria-invalid="true">
             </div>
 
 
@@ -99,8 +99,22 @@
             </div>
 
 
+            <div class="k-edit-label  w-800-l">
+                <label for="lastdayVoteOrder" >昨日排名</label>
+            </div>
+            <div data-container-for="lastdayVoteOrder" class="k-edit-field w-800-r">
+               <input type="number" id="appId_inp" class="k-input k-textbox w-50-inp" name="lastdayVoteOrder" data-bind="value:lastdayVoteOrder" data-required-msg="请填写年龄" aria-invalid="true">
+            </div>
 
-            
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="isFreez">是否冻结</label>
+            </div>
+            <div data-container-for="isFreez" class="k-edit-field w-800-r">
+               <input type="number" id="isFreez_inp" class="k-input k-textbox" name="isFreez" data-bind="value:isFreez" >
+               <span>如果被冻结，则此项无法被投票</span>
+            </div>            
             
 
             <div class="k-edit-label  w-800-l">
@@ -115,7 +129,7 @@
                 <label for="desc2" >描述</label>
             </div>
             <div data-container-for="desc2" class="k-edit-field w-800-r">
-               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="desc2" data-bind="value:desc2"></textarea>
+               <textarea id="intro2" type="text" class="k-input k-textbox w-90-inp" name="desc2" data-bind="value:desc2"></textarea>
             </div>
 
 <div style="display:none">
@@ -226,6 +240,7 @@
 
                                     "todayVoteNumber": { editable: true, type: "number"}, 
                                     "lastdayVoteNumber": { editable: true, type: "number"}, 
+                                    "lastdayVoteOrder": { editable: true, type: "number"}, 
                                     "isFreez": { editable: true, type: "number"}, 
                           
                                     "code1": { editable: true },
@@ -233,7 +248,7 @@
                                     "code3": { editable: true },
                                     "code4": { editable: true },
 
-                                    "isShow": { editable: true, type: "number"},                                    
+                                    "isShow": { editable: true, type: "number"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -278,6 +293,19 @@ $.post('/manger/vote/getList',{},function(data_ary){
                 window.voted = d2;
 
 
+$.post('/manger/voteGroup/getList',{},function(data_ary){
+                var d3 = []
+                data_ary.forEach(function(v){
+                    d3.push({
+                        text: v.title, 
+                        value:v._id
+                    })
+                })
+
+                window.vote_group = d3;
+
+
+
 
                 $("#grid").kendoGrid({
                     dataSource: dataSource,
@@ -287,7 +315,7 @@ $.post('/manger/vote/getList',{},function(data_ary){
                     columns: [
                         {
                             field:'_id',
-                            title:'活动Id',
+                            title:'被投票项Id',
                             hidden:true
                         },
                         { 
@@ -296,53 +324,75 @@ $.post('/manger/vote/getList',{},function(data_ary){
                             values: d
                         },
                         { 
-                            field: "ename",
-                            title: "唯一标识", 
+                            field: "voteId",
+                            title: "所属投票",
+                            values: d2
                         },
-                        { 
-                            field: "interval",
-                            title: "间隔小时", 
-                            hidden:true
-                         },
-                         { 
-                            field: "intervalTimes",
-                            title: "间隔次数", 
-                            hidden:true
-                         },
-                         { 
-                            field: "intervalPerUserTimes",
-                            title: "间隔每项可被投票数", 
-                            hidden:true
-                         },
-                         { 
-                            field: "forwardTimes",
-                            title: "转发增加次数", 
-                            hidden:true
-                         },
-                         { 
-                            field: "title",
-                            title: "活动标题", 
-                         },
-                         { 
-                            field: "picture",
-                            title: "活动宣传图片", 
-                            hidden:true
-                         },
-                         { 
-                            field: "desc",
-                            title: "活动描述", 
-                            hidden:true
-                         },
+                        {
 
-                         { 
-                            field: "startTime",
-                            title: "开始时间",
-                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                            field: "groupId",
+                            title: "所属分组",
+                            values: d3
                         },
                         { 
-                            field: "endTime",
-                            title: "结束时间",
-                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                            field: "title",
+                            title: "名称"
+                        },
+                        { 
+                            field: "pictureThumb",
+                            title: "缩略图",
+                             hidden:true
+                        },
+                        { 
+                            field: "picture",
+                            title: "大图",
+                             hidden:true
+                        },
+                        { 
+                            field: "sex",
+                            title: "性别",
+                            values:window.sex_ary
+
+                        },
+                        { 
+                            field: "age",
+                            title: "年龄",
+                            hidden:true
+
+                        },
+                        { 
+                            field: "number",
+                            title: "工号",
+                            hidden:true
+                        },
+                        { 
+                            field: "desc",
+                            title: "简介",
+                            hidden:true
+                        },
+                        { 
+                            field: "desc2",
+                            title: "描述",
+                            hidden:true
+                        },
+                        { 
+                            field: "todayVoteNumber",
+                            title: "今日票数",
+                        },
+                        { 
+                            field: "lastdayVoteNumber",
+                            title: "昨日票数",
+                            hidden:true
+                        },
+                        { 
+                            field: "lastdayVoteOrder",
+                            title: "昨日排名",
+                            hidden:true
+                        },
+                        { 
+                            field: "isFreez",
+                            title: "是否冻结",
+                            values:window.is_freeze
                         },
                         { 
                             field: "code1",
@@ -390,22 +440,65 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         $('.k-window-content').addClass('w-800-content');
                         $('.k-edit-form-container').addClass('w-800-content');
                     
+
+
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 1)
+                        multiUpload($("#upload_file2"), $('#appPicture_inp2'), 1)
                         
+                        window.dropdown_init($("#sex_inp"), window.sex_ary)
+                        window.dropdown_init($("#isFreez_inp"), window.is_freeze)
+
+
+
+
                         window.dropdown_init($("#appId_inp"), d)
+                        window.dropdown_init($("#voteId_inp"), d2, function(){
+                            var v = $(this).val();
+                            changeVote(v)
+                        })
+
+
+                        var voteid = $.trim($("#voteId_inp").val())
+
+                        var changeVote = function(vid){
+                            $.post('/manger/voteGroup/getList',{voteid:vid},
+                                function(data_ary){
+                                    var d4 = []
+                                    data_ary.forEach(function(v){
+                                        d4.push({
+                                            text: v.title, 
+                                            value:v._id
+                                        })
+                                    })
+                                    var dropdownlist = $("#groupId_inp").data("kendoDropDownList");
+                                    dropdownlist.setDataSource(d4);
+                                })
+                        }
+
+                        if(voteid){
+                            window.dropdown_init($('#groupId_inp'),window.d3)
+                            changeVote(voteid)
+                        }
+                        else{
+                            window.dropdown_init($('#groupId_inp'),window.not_sel)
+                        }
+                        
+
 
                          $('#writeTime_inp').kendoDateTimePicker();
-                         $('#stime').kendoDateTimePicker();
-                         $('#etime').kendoDateTimePicker();
+         
                          
                             
                          $("#intro").kendoEditor({
                                 tools: window.editor_tools,
                                 messages: window.editor_messages
+                         });
+                         $("#intro2").kendoEditor({
+                                tools: window.editor_tools,
+                                messages: window.editor_messages
                          });  
 
-
-                         window.dropdown_init()
+                          window.dropdown_init()
 
                     }
                     

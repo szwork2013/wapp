@@ -16,8 +16,9 @@ var obj =  { //定义结构,投票抽奖活动，被投票项分组group的doc
       desc:{type: String, default:''},//描述1
       desc2:{type: String, default:''},//描述2
 
-      todayVoteNumber:{type:Number,default:0},
-      lastdayVoteNumber:{type:Number,default:0},
+      todayVoteNumber:{type:Number,default:0},//今日票数
+      lastdayVoteNumber:{type:Number,default:0},//昨日票数
+      lastdayVoteOrder:{type:Number,default:0}, //昨日排名
 
       isFreez:{type:Number,default:0},
       //是否冻结，如果冻结，则此投票项都被冻结，无法被投票，0表示不冻结，1表示冻结
@@ -69,6 +70,20 @@ objSchema.statics.createOneOrUpdate = function (query, update, cb) {
 
 objSchema.statics.destroy = function (query, cb) { 
     return this.remove(query, cb); 
+}
+
+//后台kendoui使用
+objSchema.statics.getByIds = function (ids, cb) {
+  var ids = ids || [];
+  this.find({
+    "_id":{
+      "$in":ids
+    }
+  }).limit(100000).exec(function(err,docs){
+    if(err) return cb(err);
+    if(!docs || docs.length == 0) return cb(null,[]);
+    cb(null,docs)
+  })
 }
 
 module.exports = mongoose.model('wxVoteItem', objSchema);

@@ -48,4 +48,27 @@ objSchema.statics.destroy = function (query, cb) {
     return this.remove(query, cb); 
 }
 
+
+
+objSchema.statics.aggregateOrder = function (query, cb) { 
+    return this.aggregate()
+      .match({
+            "voteId":query.voteId
+            "writeTime":{"gte":query.s},
+            "writeTime":{"lte":query.e},
+        })
+      .group( {
+            '_id' : "$itemId",
+            'supportCount' : { $sum : 1 },
+        })
+      .sort({
+        'supportCount':-1
+      })
+      .limit(limit||100000)
+      .exec(cb)
+}
+
+
+
+
 module.exports = mongoose.model('wxVoteRecord', objSchema);
