@@ -1,4 +1,4 @@
-var dl = require('../../dl/lotteryModel.js');
+var dl = require('../../dl/voteGroupModel.js');
 
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
@@ -7,7 +7,7 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('lottery_list', {session:req.session});
+	res.render('lottery_group_list', {session:req.session});
 }
 
 
@@ -72,8 +72,14 @@ obj.destroy = function(req, res){
 
 
 obj.getList = function(req, res){
-
-	dl.findAll({}, 0, 1000, function(err,doc){
+	var voteid = req.body.voteid;
+	if(voteid){
+		var q = { voteId:voteid}
+	}
+	else{
+		var q = {}
+	}
+	dl.findAll(q, 0, 1000, function(err,doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
 		res.json(doc);

@@ -1,4 +1,4 @@
-var dl = require('../../dl/lotteryModel.js');
+var dl = require('../../dl/voteItemModel.js');
 
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
@@ -7,7 +7,7 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('lottery_list', {session:req.session});
+	res.render('vote_item_list', {session:req.session});
 }
 
 

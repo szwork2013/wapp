@@ -326,6 +326,12 @@ window.is_get_prize = [
   { text: "已发奖", value: '1' },
 ]
 
+window.is_freeze = [
+  { text: "未冻结", value: '0' },
+  { text: "已冻结", value: '1' },
+]
+
+
 window.kendo_edit_option = {
     tools: window.editor_tools,
     messages: window.editor_messages,
