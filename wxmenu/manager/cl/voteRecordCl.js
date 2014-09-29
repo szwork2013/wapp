@@ -4,7 +4,7 @@ var dl3= require('../../dl/voteItemModel.js');
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
-var json2csv = require('json2csv')
+var json2csv = require('json2csv');
 
 obj.list = function(req, res){
 	res.render('vote_record_list', {session:req.session});
@@ -37,7 +37,7 @@ obj.aggressive = function(req, res){
 		return res.json({error:1, data:'未选择投票项'})
 	}
 
-	dl3findOneByObj.({_id: voteId},function(err, voteObj){
+	dl3.findOneByObj({_id: voteId},function(err, voteObj){
 		if(err){
 				if(req.downloadCallback){
 					return req.downloadCallback(err)
@@ -162,23 +162,23 @@ obj.read = function(req, res){
 				}
 				var tempList = [];
 
-				doc.forEach(function(do){
+				doc.forEach(function(dobj){
 					list.forEach(function(lo){
-						if(lo._id.toString() == do.itemId){
+						if(lo._id.toString() == dobj.itemId){
 							tempList.push({
-								_id:do._id.toString(),
-								appId:do.appId,
-								voteId:do.voteId,
-								itemId:do.itemId,
+								_id:dobj._id.toString(),
+								appId:dobj.appId,
+								voteId:dobj.voteId,
+								itemId:dobj.itemId,
 								itemTitle:lo.title,
-								userId:do.userId,
-								recordIp:do.recordIp,
-								isForward:do.isForward,
-								code1:do.code1,
-								code2:do.code2,
-								code3:do.code3,
-								code4:do.code4,
-								writeTime:do.writeTime
+								userId:dobj.userId,
+								recordIp:dobj.recordIp,
+								isForward:dobj.isForward,
+								code1:dobj.code1,
+								code2:dobj.code2,
+								code3:dobj.code3,
+								code4:dobj.code4,
+								writeTime:dobj.writeTime
 							})
 						}
 					})

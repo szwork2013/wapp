@@ -53,7 +53,7 @@ objSchema.statics.destroy = function (query, cb) {
 objSchema.statics.aggregateOrder = function (query, cb) { 
     return this.aggregate()
       .match({
-            "voteId":query.voteId
+            "voteId":query.voteId,
             "writeTime":{"gte":query.s},
             "writeTime":{"lte":query.e},
         })
