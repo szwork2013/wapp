@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>绿地中心国庆送大礼</title>
+<title>王者绿地，绿巨人全球送礼</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no;"/>
 <meta name="apple-touch-fullscreen" content="yes" />
@@ -25,22 +25,37 @@ img{ border:none; vertical-align:middle;}
 ul{ overflow:hidden;}
 ul li{ list-style:none; float:left;}
 .wrapper{ width:320px; margin:0 auto; background:#fff;}
-.header{ background:url('http://bcs.duapp.com/xytimg/ldbg928.jpg') no-repeat;background-size: 320px 750px; width:320px;height:750px; position:relative;}
-.luck{
- width:267px; height:157px; line-height:53px; cursor:pointer; position:absolute; right:26px; top:273px; font-size:22px; letter-spacing:10px; text-align:center; color:#000;
+.header{ background:url('http://bcs.duapp.com/xytimg/ldbg928.jpg') no-repeat;background-size: 320px 980px; width:320px;height:980px; position:relative;}
+.luck {
+width: 267px;
+height: 79px;
+line-height: 53px;
+cursor: pointer;
+position: absolute;
+right: 26px;
+top: 403px;
+font-size: 22px;
+letter-spacing: 10px;
+text-align: center;
+color: #000;
 z-index: 3;
 background-color: #d3d3d3;
-overflow:hidden;
+overflow: hidden;
 }
-.myCanvas{ width:267px; height:157px; cursor:pointer; position:absolute; right:26px; top:273px;
+.myCanvas {
+width: 267px;
+height: 79px;
+cursor: pointer;
+position: absolute;
+right: 26px;
+top: 403px;
 z-index: 5;
 }
-
 .content ul{ padding:40px;}
 .content ul li{ margin-top:-0px;}
 .lottery_again{
   position: absolute;
-  top: 460px;
+  top: 490px;
   left:10px;
 
   display: block;
@@ -80,23 +95,23 @@ text-align: left;
   line-height: 25px;
   color: #c00;
 }
-.start{
-  width: 300px;
-  height: 200px;
-  display: block;
-  z-index: 99;
-  position: absolute;
-  font-size: 22px;
-  color: #777;
-  line-height: 200px;
-  top: 252px;
-  left:10px;
+.start {
+width: 300px;
+height: 90px;
+display: block;
+z-index: 99;
+position: absolute;
+font-size: 22px;
+color: #777;
+line-height: 83px;
+top: 399px;
+left: 10px;
 }
 .start:hover{
   text-decoration: none;
   color: #777;
 }
-.last_time{
+.last_time {
 width: 15px;
 height: 15px;
 display: block;
@@ -105,9 +120,9 @@ position: absolute;
 font-size: 12px;
 color: #000;
 line-height: 16px;
-top: 225px;
-left: 191px;
-background-color: #fff2d5;
+top: 387px;
+left: 180px;
+background-color: transparent;
 }
 .modal-title, .modal-body{
   color: #000;
@@ -121,7 +136,7 @@ height: 38px;
 line-height: 38px;
 display: block;
 position: absolute;
-top: 709px;
+top: 944px;
 left: 20px;
 color: #555;
 font-size: 18px;
@@ -256,9 +271,9 @@ font-size: 18px;
   <div class="header">
     <div class="last_time" id="last_time"></div>
     <a href="javascript:;" title="再刮一次" id="lottery_again" class="lottery_again"></a>
-    <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>
-    <p class="get_prize_tip">奖品仅限本人领取，不得代领</p>
-    <p class="get_prize_tip get_prize_tip2">2014年9月28日-9月30日</p>
+   <!-- <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a> -->
+<!--    <p class="get_prize_tip">奖品仅限本人领取，不得代领</p>
+    <p class="get_prize_tip get_prize_tip2">2014年9月28日-9月30日</p>-->
     <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a>
         <div class="luck" id="lottery_result" style="display:;"></div>
         <canvas id="myCanvas" class="myCanvas" width="267px" height="157px" style="display:;">
@@ -318,6 +333,8 @@ font-size: 18px;
 
 
 <!-- Modal -->
+
+<!--
 <div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:300px;margin: 30px auto;">
     <div class="modal-content">
@@ -350,7 +367,7 @@ font-size: 18px;
   </div>
 </div>
 
-
+-->
 
 
 
@@ -362,8 +379,8 @@ font-size: 18px;
 
 var forwardingUrl = 'http://menu.xy-tang.com/active/xinyutang?ename=ldggl_2014';
 var forwardingImg = 'http://bcs.duapp.com/xytimg/ldlogo928.jpg'
-var forwardingTitle ='绿地中心国庆送大礼，iphone6、自行车好礼任你抽'
-var forwardingDesc ='绿地中心国庆送大礼，iphone6、自行车好礼任你抽'
+var forwardingTitle ='绿巨人全球送礼，iphone6，品牌自行车任你抽'
+var forwardingDesc ='绿巨人全球送礼，iphone6，品牌自行车任你抽'
 
 
 
@@ -483,7 +500,7 @@ $(function(){
             
             
             if(window.lotteryData.record.length>=6){
-               alert('谢谢参与，你已参加过本活动，如中奖您可以在10.1-10.7来绿地中心领取，详请请查看本活动规则')
+               alert('谢谢参与，你已刮过奖了，如中奖您可以在10.1-10.7来绿地中心领取，详请请查看本活动规则')
                return false;
             }
 
