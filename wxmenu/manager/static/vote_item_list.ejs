@@ -2,8 +2,7 @@
 <% include inc/top %>
 <% include inc/left %>
 
-
- <div id="grid"></div>
+<div id="grid"></div>
 <script id="popup_editor" type="text/x-kendo-template">
           
             <div class="k-edit-label w-800-l hide">
@@ -453,8 +452,11 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
 
                         window.dropdown_init($("#appId_inp"), d)
                         window.dropdown_init($("#voteId_inp"), d2, function(){
-                            var v = $(this).val();
-                            changeVote(v)
+                            setTimeout(function(){
+                                var v = $("#voteId_inp").val();
+                                changeVote(v)
+                            },100)
+                            
                         })
 
 
@@ -508,7 +510,7 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
     })         
                                     
 });
-
+})
 
 
 

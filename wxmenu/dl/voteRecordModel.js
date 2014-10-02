@@ -51,12 +51,38 @@ objSchema.statics.destroy = function (query, cb) {
 
 
 objSchema.statics.aggregateOrder = function (query, cb) { 
+    var limit = query.limit || 100000;
+
+/*
+    this.findByObj({
+                "voteId":query.voteId,
+                "writeTime":{
+                    "$gte":query.s, 
+                    "$lte":query.e,
+                  }
+              },function(err,list){
+                console.log(err,list)
+
+              })
+    return;
+
+    console.log(query.s)
+    console.log(query.e)
+
+*/
+  
     return this.aggregate()
-      .match({
-            "voteId":query.voteId,
-            "writeTime":{"gte":query.s},
-            "writeTime":{"lte":query.e},
-        })
+      .match(
+            {'$and': [
+              {"voteId":query.voteId},
+              {
+                "writeTime":{
+                    "$gte":new Date('2014/10/1 00:00'), 
+                    "$lte":new Date('2014/10/11 00:00'), 
+                  }
+              }
+            ]}
+        )
       .group( {
             '_id' : "$itemId",
             'supportCount' : { $sum : 1 },
@@ -64,7 +90,7 @@ objSchema.statics.aggregateOrder = function (query, cb) {
       .sort({
         'supportCount':-1
       })
-      .limit(limit||100000)
+      .limit(limit)
       .exec(cb)
 }
 

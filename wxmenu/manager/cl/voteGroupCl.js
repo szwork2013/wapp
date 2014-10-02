@@ -7,7 +7,7 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('lottery_group_list', {session:req.session});
+	res.render('vote_group_list', {session:req.session});
 }
 
 

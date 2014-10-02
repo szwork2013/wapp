@@ -162,3 +162,12 @@ display: none;
 .redt{
 	color: #c00;
 }
+.clear{zoom:1;}
+.clear:after{clear:both;content:'';display:block;}
+.fl_margin{
+	margin-right: 40px;
+	margin-top: 10px;
+}
+.fl {
+	float: left;
+}

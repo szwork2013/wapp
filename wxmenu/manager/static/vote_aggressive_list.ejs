@@ -7,18 +7,19 @@
      <p>
         <label for="app_sel_inp">选择投票活动：:</label><input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
     </p>
-     <p>
+<div class="clear">
+     <p class="fl fl_margin">
         <label for="start">开始日期:</label><input id="start" style="width: 200px" value="" />
     </p>
 
-    <p>
+    <p class="fl fl_margin">
         <label for="end">结束日期:</label><input id="end" style="width: 200px" value=""/>
     </p>
-
-    <button  id="down2" class="k-primary sync_button k-primary k-button">
+</div>
+    <button  id="down2" class="k-primary fl_margin k-primary k-button">
         <span class="k-sprite k-icon k-i-refresh">Refresh</span>
         查询</button>
-    <button  id="down" class="k-primary sync_button k-primary k-button">
+    <button  id="down" class="k-primary fl_margin k-primary k-button">
     <span class="k-sprite k-icon k-i-refresh">Refresh</span>
     导出列表</button>
  
@@ -41,6 +42,9 @@ $(function(){
 
                     window.voted = d2;
                     window.dropdown_init($("#app_sel_inp"), d2)
+                    $('#start').kendoDateTimePicker();
+                    $('#end').kendoDateTimePicker();
+
 
         var getDataToQuery = function(){
             return {

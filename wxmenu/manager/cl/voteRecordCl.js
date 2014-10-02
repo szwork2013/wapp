@@ -1,10 +1,12 @@
 var dl = require('../../dl/voteRecordModel.js');
 var dl2 = require('../../dl/userModel.js');
 var dl3= require('../../dl/voteItemModel.js');
+var dl4 = require('../../dl/voteModel.js');
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
 var json2csv = require('json2csv');
+var moment = require('moment')
 
 obj.list = function(req, res){
 	res.render('vote_record_list', {session:req.session});
@@ -18,6 +20,8 @@ obj.aggressive = function(req, res){
 	var s = req.param('stime');
 	var e = req.param('etime');
 	var voteId = req.param('voteid');
+
+
 	if(!s){
 		if(req.downloadCallback){
 			return req.downloadCallback('开始时间未填写')
@@ -37,7 +41,7 @@ obj.aggressive = function(req, res){
 		return res.json({error:1, data:'未选择投票项'})
 	}
 
-	dl3.findOneByObj({_id: voteId},function(err, voteObj){
+	dl4.findOneByObj({_id: voteId},function(err, voteObj){
 		if(err){
 				if(req.downloadCallback){
 					return req.downloadCallback(err)
@@ -54,9 +58,22 @@ obj.aggressive = function(req, res){
 
 			dl.aggregateOrder({
 				voteId:voteId,
-				s:s,
-				e:e
+				s:new Date(moment(s).format('YYYY/MM/DD HH:mm:ss')),
+				e:new Date(moment(e).format('YYYY/MM/DD HH:mm:ss'))
 			},function(err, orderList){
+				//console.log(err, orderList)
+				if(err){
+						if(req.downloadCallback){
+							return req.downloadCallback(err)
+						}
+						return res.json({error:1, data:err})
+				}
+				if(orderList.length == 0){
+					if(req.downloadCallback){
+							return req.downloadCallback(null,[])
+					}
+					return res.json({error:0, data:[]})
+				}
 				var ids = [];
 				orderList.forEach(function(orderObj){
 					if(ids.indexOf(orderObj._id) == -1){
@@ -96,12 +113,12 @@ obj.aggressive = function(req, res){
 						}
 						return res.json({error:0, data:tempList})
 
-					})
+					})//end dl3.getByIds
 
-				})
+				})//end orderList.forEach
 
 
-			})
+			})//dl.aggregateOrder
 
 	})
 
@@ -116,6 +133,14 @@ obj.download = function(req,res){
 	req.downloadCallback = function(err, orderList){
 		if(err){
 			return res.send(500, err);
+		}
+		if(orderList.length == 0){
+			json2csv({data: [], fields:{}}, function(err, csv) {
+				  if(err) return res.send(500,err);
+				  res.attachment(req.voteTitle+'.csv');
+				  res.send(csv)
+			});
+			return;
 		}
 		json2csv({data: orderList, fields: Object.keys(orderList[0] || {})}, function(err, csv) {
 			  if(err) return res.send(500,err);

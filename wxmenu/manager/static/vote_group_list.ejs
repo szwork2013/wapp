@@ -9,7 +9,7 @@
             <div class="k-edit-label w-800-l hide">
                 <label for="_id">分组id</label>
             </div>
-            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+            <div data-container-for="_id" class="k-edit-field w-800-r hide"  data-bind="value:_id">
                 <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
             </div>
 
@@ -293,7 +293,7 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         window.dropdown_init($("#appId_inp"), d)
                         window.dropdown_init($("#voteId_inp"), d2)
                         window.dropdown_init($("#isFreez_inp"), window.is_freeze)
-
+                        $('#writeTime_inp').kendoDateTimePicker();
                          window.dropdown_init()
 
                     }

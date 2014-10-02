@@ -8,10 +8,11 @@
                   <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
               <%}else if(session.admin.indexOf('vote') != -1){%>
                   <li class="nav-header">投票管理</li>
-                  <li class=""><a href="/manger/vote/list">抽奖流水</a></li>
-                  <li class=""><a href="/manger/voteGroup/list">抽奖流水</a></li>
-                  <li class=""><a href="/manger/voteItem/list">抽奖流水</a></li>
-                  <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
+                  <li class=""><a href="/manger/vote/list">投票活动</a></li>
+                  <li class=""><a href="/manger/voteGroup/list">投票项分组</a></li>
+                  <li class=""><a href="/manger/voteItem/list">投票项管理</a></li>
+                  <li class=""><a href="/manger/voteRec/list">投票流水</a></li>
+                  <li class=""><a href="/manger/voteRec/aggressivelist">投票统计</a></li>
               <%}else{%>
                   <li class="nav-header">系统设置</li>
                   <li><a href="/manger/admin/list">管理员</a></li>
@@ -35,11 +36,12 @@
                   <li class=""><a href="/manger/lotteryPrize/list">奖品管理</a></li>
                   <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
 
-                  <li class="nav-header">抽奖管理</li>
-                  <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
-                  <li class="nav-header">抽奖管理</li>
-                  <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
-
+                  <li class="nav-header">投票管理</li>
+                  <li class=""><a href="/manger/vote/list">投票活动</a></li>
+                  <li class=""><a href="/manger/voteGroup/list">投票项分组</a></li>
+                  <li class=""><a href="/manger/voteItem/list">投票项管理</a></li>
+                  <li class=""><a href="/manger/voteRec/list">投票流水</a></li>
+                  <li class=""><a href="/manger/voteRec/aggressivelist">投票统计</a></li>
               <%}%>
                    
             </ul>
