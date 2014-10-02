@@ -23,7 +23,7 @@
                 <label for="voteId" >所属投票</label>
             </div>
             <div data-container-for="voteId" class="k-edit-field w-800-r">
-               <input type="text" id="voteId_inp" class="k-input k-textbox w-50-inp" name="voteId" data-bind="value:voteId">
+               <input type="text" id="voteId_inp" class="k-input k-textbox w-50-inp" name="voteId" data-bind="value:voteId"  >
             </div>
 
 
@@ -31,7 +31,7 @@
                 <label for="groupId" >所属分组</label>
             </div>
             <div data-container-for="groupId" class="k-edit-field w-800-r">
-               <input type="text" id="groupId_inp" class="k-input k-textbox w-50-inp" name="groupId" data-bind="value:groupId">
+               <input type="text" id="groupId_inp" class="k-input k-textbox w-50-inp" name="groupId" data-bind="value:groupId" required="required" data-required-msg="请填写所属投票">
             </div>
             
             <div class="k-edit-label  w-800-l">
@@ -462,7 +462,10 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
 
                         var voteid = $.trim($("#voteId_inp").val())
 
+                        var hasInit = false;
                         var changeVote = function(vid){
+                            
+
                             $.post('/manger/voteGroup/getList',{voteid:vid},
                                 function(data_ary){
                                     var d4 = []
@@ -472,13 +475,27 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                                             value:v._id
                                         })
                                     })
-                                    var dropdownlist = $("#groupId_inp").data("kendoDropDownList");
-                                    dropdownlist.setDataSource(d4);
+                                    if(!hasInit){
+                                        window.dropdown_init($('#groupId_inp'),d4)
+                                        hasInit = true;
+                                    }
+                                    else{
+                                        d4.unshift({
+                                            text: '请选择', 
+                                            value:''
+                                        })
+                                        var dropdownlist = $("#groupId_inp").data("kendoDropDownList");
+                                        dropdownlist.setDataSource(d4)
+                                        $("#groupId_inp").val('')
+                                        
+                                    }
+
+                                                                    
+                                    
                                 })
                         }
 
-                        if(voteid){
-                            window.dropdown_init($('#groupId_inp'),window.d3)
+                        if(voteid){        
                             changeVote(voteid)
                         }
                         else{

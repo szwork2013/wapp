@@ -1,5 +1,7 @@
 var mongoose =require('./db_conn.js');
 var Schema = mongoose.Schema;
+var voteItemDl= require('./voteItemModel.js');
+var voteGroupDl = require('./voteGroupModel.js');
 
 var obj = { //定义结构
     appId:{ type: String, required:true}, //投票活动所属应用id
@@ -21,6 +23,21 @@ var objSchema = new Schema(obj);
 objSchema.statics.findByObj = function(obj,cb){
       var obj = obj || {};
       return this.find(obj, cb);
+}
+
+
+objSchema.statics.countByItemIds = function(itemIds, writetime, cb){
+      var itemIds = itemIds || [];
+      this.count({
+        "itemId":{
+          "$in":itemIds
+        },
+        writeTime:{'$gte': writetime}
+      }).exec(function(err,count){
+        if(err) return cb(err);
+        cb(null,count)
+      })
+
 }
 
 objSchema.statics.insertOneByObj = function (obj,cb) {
@@ -52,7 +69,18 @@ objSchema.statics.destroy = function (query, cb) {
 
 objSchema.statics.aggregateOrder = function (query, cb) { 
     var limit = query.limit || 100000;
-
+    var that = this;
+    if(!query.s || !query.e){
+       var writeQ = {}
+    }
+    else{
+      var writeQ = {
+                "writeTime":{
+                    "$gte":query.s, 
+                    "$lte":query.e, 
+                  }
+              }
+    }
 /*
     this.findByObj({
                 "voteId":query.voteId,
@@ -75,12 +103,7 @@ objSchema.statics.aggregateOrder = function (query, cb) {
       .match(
             {'$and': [
               {"voteId":query.voteId},
-              {
-                "writeTime":{
-                    "$gte":new Date('2014/10/1 00:00'), 
-                    "$lte":new Date('2014/10/11 00:00'), 
-                  }
-              }
+              writeQ
             ]}
         )
       .group( {
@@ -91,7 +114,62 @@ objSchema.statics.aggregateOrder = function (query, cb) {
         'supportCount':-1
       })
       .limit(limit)
-      .exec(cb)
+      .exec(function(err,list){
+        if(err || list.length == 0){
+          cb(err,list)
+          return;
+        }
+        var itemsId = []
+        var groupsId = []
+        var tempObj = []
+        list.forEach(function(lobj){
+            itemsId.push(lobj._id.toString());
+        })
+
+        //根据itemId查找item项
+        voteItemDl.getByIds(itemsId, function(err,itemlist){
+          if(err) return cb(err);
+          list.forEach(function(lobj){
+              itemlist.forEach(function(iobj){
+                  if(lobj._id.toString() == iobj._id.toString()){
+                      tempObj.push({
+                        _id:lobj._id.toString(),
+                        supportCount:lobj.supportCount,
+                        groupId:iobj.groupId
+                      })
+                      groupsId.push(iobj.groupId);
+                  }
+              })//end 1 foreach
+              
+          })//end 2 foreach
+
+          //根据groupId查找groupName
+          //console.log(groupsId)
+          voteGroupDl.getByIds(groupsId, function(err, glist){
+              if(err) return cb(err);
+              //console.log(glist)
+              tempObj.forEach(function(tobj){
+                  glist.forEach(function(gobj){
+                      if(tobj.groupId == gobj._id.toString()){
+                          tobj.groupName = gobj.title;
+                      }
+                  })
+              })//end temp foreach
+
+              //根据是否有groupId筛选
+              if(!query.groupId) return cb(null, tempObj)
+              tempObj = tempObj.filter(function(tobj){
+                    if(tobj.groupId == query.groupId) return true
+                    return false;
+              })
+              return cb(null, tempObj)
+          })//end voteGroupDl.getByIds
+
+
+        })//end voteItemDl.getByIds
+
+
+      })//end aggregate
 }
 
 

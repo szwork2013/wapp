@@ -171,3 +171,6 @@ display: none;
 .fl {
 	float: left;
 }
+.k-widget.k-tooltip-validation{
+	text-indent: 1.3em;
+}

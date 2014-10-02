@@ -7,12 +7,15 @@ var oauthCl = require('../viewCl/OAuthCl.js')
 var activeCl = require('../viewCl/viewActiveCl.js')
 var userCl = require('../viewCl/viewUserCl.js')
 var lotteryCl = require('../viewCl/viewLotteryCl.js')
+var voteCl = require('../viewCl/viewVoteCl.js')
 
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
 
 //lottery
 var apiLottery = require('../apiCl/apiLottery.js');
+//vote
+var apiVote = require('../apiCl/apiVote.js');
 
 
 
@@ -244,6 +247,12 @@ var addroute = function(app){
 		app.post('/lottery/:appename/start', apiLottery.startLottery)
 		app.post('/lottery/:appename/complete', apiLottery.improveInfo)
 
+		//lottery
+		app.get('/vote/:appename', getUserMid, lotteryCl.lotteryPage)//投票页面
+		app.get('/vote/:appename/info', apiLottery.getLotteryInfo)//投票详细信息，包括分组名称，包括我的投票记录
+		app.post('/vote/:appename/start', apiLottery.startLottery)//投某人一票，不传某人参数，表示随机
+		app.get('/vote/:appename/items', apiLottery.getLotteryInfo)//根据分组查询所有投票项信息列表
+		app.get('/vote/:appename/rank', apiLottery.getLotteryInfo)//根据分组或不分组，查询排名
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];

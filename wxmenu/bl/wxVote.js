@@ -1,57 +1,210 @@
 var moment = require('moment');
+var async = require('async');
 var userBl = require('./wxUser.js'); //加载用户Bl
 var guidModel = require('../dl/guidModel.js'); //guid 模型
 var utils = require('../lib/utils.js');
-var lotteryModel = require('../dl/lotteryModel.js'); //加载抽奖模型
-var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js'); //加载奖品
-var lotteryRecModel = require('../dl/lotteryRecordModel.js'); //加载抽奖记录模型
+
+var voteGroup = require('../dl/voteGroupModel.js'); //投票分组模型
+var voteItem = require('../dl/voteItemModel.js'); //投票项模型
+var vote = require('../dl/voteModel.js'); //投票模型
+var voteRecord = require('../dl/voteRecordModel.js'); //投票记录模型
 
 var obj = {}
 
 //根据英文短名获取抽奖信息
-obj.getLotteryByEname = function(lotteryEname,cb){
-	if(!lotteryEname) return cb('no lotteryEname');
-	lotteryModel.findOneByObj({
-		ename:lotteryEname,
+obj.getVoteByEname = function(voteEname,cb){
+	if(!voteEname) return cb('no voteEname');
+	vote.findOneByObj({
+		ename:voteEname,
 		isShow:1,
 	},function(err,doc){
 		cb(err,doc)
 	})
 }
 
-obj.getPrizeById = function(prizeid,cb){
-	if(!prizeid) return cb('no prizeid');
-	lotteryPrizeModel.findOneByObj({
-		_id:prizeid
-	},function(err,prizeObj){
-		if(err){
-			return cb(err)
-		}
-		return cb(null,prizeObj)
-	})
 
-}
-
-//根据用户Id查找他的抽奖记录
-obj.getUserLotteryRec = function(uid,skip,pagesize,cb){ 
-	var cb = cb || function(){}
+//根据用户Id和投票Id查找他的记录
+obj.getUserLotteryRecById = function(uid, voteId, skip, pagesize, cb){ 
+	var cb = cb || function(){};
 	var skip = skip || 0;
 	var pagesize = pagesize || 50; 
 
 	if(!uid) return cb('no uid');
 
 	lotteryRecModel.findAll({
-		userId:uid
-	},skip, pagesize, function(err,list){
+		userId:uid,
+		voteId:voteId
+	}, skip, pagesize, function(err,list){
 		if(err){
 			return cb(err)
 		}
-		obj.getPrizeInfoByRecordList(list,function(err,list2){
-			return cb(err, list2)
-		})
-
+		return cb(null, list)
 	})
 }
+
+obj.getGroupByVoteId = function(voteid, cb){
+	var cb = cb || function(){};
+	if(!voteid) return cb('no voteid');
+	voteGroup.findByObj({
+		voteId:voteid,
+		isShow:1
+	},function(err,list){
+		//排序
+		list = list.sort(function(a,b){
+			if(a.todayVoteNumber > b.todayVoteNumber){
+				return false;
+			}
+			return true;
+		})
+		cb(err,list)
+	})
+}
+
+obj.getItemByGroupId = function(groupid, cb){
+	var cb = cb || function(){};
+	if(!groupid){
+		var q = { isShow:1 }
+	} 
+	else{
+		var q = { 
+			isShow:1,
+			groupId:groupid
+		}
+	}
+
+	voteItem.findByObj(q, function(err,list){
+		cb(err,list)
+	})
+}
+
+
+//根据voteid和groupid查找item排行
+obj.getRankByVoteIdGroupId=  function(voteid, groupid, cb){
+	var cb = cb || function(){};
+	var query = {
+		voteId:voteid
+	};
+	if(groupid){
+		query.groupId = groupid;
+	}
+	//分组计算
+	voteRecord.aggregateOrder(query, function(err,list){
+			if(err) return cb(err);
+			var itemsIds = [];
+			list.forEach(function(listobj){
+				itemsIds.push(listobj._id.toString());
+			})
+			//根据items的id查找item的信息
+			voteItem.getByIds(itemsIds, function(err, ilist){
+				if(err) return cb(err);
+				list.forEach(function(listobj){
+					ilist.forEach(function(iobj){
+						if(listobj._id.toString() == iobj._id.toString()){
+							listobj.itemName = iobj.title;
+						}
+					})//end iobj.forEach
+				})//end list.forEach
+
+				cb(null, listobj)
+
+			})//end voteItem.getByIds
+	})//end voteRecord.aggregateOrder
+
+}
+
+
+
+
+obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
+	var cb = cb || function(){};
+	if(!voteid) return cb('no voteid');
+	if(!lastTimeStamp){
+		var lastTimeStamp = Date.now() - 24*3600*1000;
+	}
+	if('number' != typeof lastTimeStamp ){
+		return cb('lastTimeStamp error')
+	}
+	var lastTime = new Date(moment(lastTimeStamp).format('YYYY/MM/DD HH:mm:ss'));
+
+	obj.getGroupByVoteId(voteid, function(err, grouplist){
+		if(err) return cb(err);
+		var groupIds = []
+		grouplist.forEach(function(gobj){
+			groupIds.push(gobj._id.toString());
+		})
+		var groupCountArray = []
+
+		var groupCountFn = function(groupid, cb2){
+			voteItem.find({
+				groupId:groupid
+			},function(err, ilist){
+				if(err) return cb2(err)
+				var itemIds = []
+				ilist.forEach(function(iobj){
+					itemIds.push(iobj._id.toString());
+				})//end ilist.forEach
+
+				voteGroup.countByItemIds(itemIds, lastTime, function(err,count){
+					if(err) return cb2(err)
+					groupCountArray.push({
+						groupid:groupid,
+						count:count
+					})
+					cb2();//执行回调函数
+				})// end voteGroup.countByItemIds
+			})//end voteItem.find
+		}
+
+		//拼凑异步方法数组
+		var fnList = [];
+		//groupids循环
+		groupIds.forEach(function(groupid){
+			var groupid = groupid;
+			fnList.push(function(callback){
+				groupCountFn(groupid, callback)
+			})
+		})
+		//利用异步库
+		async.series(fnList, function(err){
+			if(err) return cb(err;)
+			cb(groupCountArray)
+		})
+
+	})//end obj.getGroupByVoteId
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 obj.getPrizeInfoByRecordList = function(list,cb){

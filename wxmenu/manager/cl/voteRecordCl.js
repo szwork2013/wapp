@@ -12,6 +12,7 @@ obj.list = function(req, res){
 	res.render('vote_record_list', {session:req.session});
 }
 
+
 obj.aggressiveList = function(req, res){
 	res.render('vote_aggressive_list', {session:req.session});
 }
@@ -20,6 +21,10 @@ obj.aggressive = function(req, res){
 	var s = req.param('stime');
 	var e = req.param('etime');
 	var voteId = req.param('voteid');
+	var groupId = req.param('groupid');
+	if(groupId == '0' || groupId == ''){
+		groupId = null;
+	}
 
 
 	if(!s){
@@ -59,7 +64,8 @@ obj.aggressive = function(req, res){
 			dl.aggregateOrder({
 				voteId:voteId,
 				s:new Date(moment(s).format('YYYY/MM/DD HH:mm:ss')),
-				e:new Date(moment(e).format('YYYY/MM/DD HH:mm:ss'))
+				e:new Date(moment(e).format('YYYY/MM/DD HH:mm:ss')),
+				groupId:groupId
 			},function(err, orderList){
 				//console.log(err, orderList)
 				if(err){
@@ -103,6 +109,8 @@ obj.aggressive = function(req, res){
 										title:lo.title,
 										supportCount:orderObj.supportCount,
 										position:pos++,
+										groupId:orderObj.groupId,
+										groupName:orderObj.groupName,
 									})
 								}
 

@@ -4,9 +4,14 @@
 
 
 <div class="app_sel_boc">
+<div class="clear">
      <p>
-        <label for="app_sel_inp">选择投票活动：:</label><input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
+        <label for="app_sel_inp">选择投票活动：</label><input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
     </p>
+    <p class="fl">
+        <label for="end">选择分组:</label><input id="groupId_inp" style="width: 200px" value=""/>
+    </p>
+</div>
 <div class="clear">
      <p class="fl fl_margin">
         <label for="start">开始日期:</label><input id="start" style="width: 200px" value="" />
@@ -30,7 +35,47 @@
 <div id="grid"></div>
 
 <script type="text/javascript">
+
 $(function(){
+
+
+
+
+var hasInit = false;
+ var changeVote = function(vid){
+                            
+
+            $.post('/manger/voteGroup/getList',{voteid:vid},
+                function(data_ary){
+                    var d4 = []
+                    data_ary.forEach(function(v){
+                        d4.push({
+                            text: v.title, 
+                            value:v._id
+                        })
+                    })
+                    d4.unshift({
+                            text: '全部', 
+                            value:''
+                        })
+                    if(!hasInit){
+
+                        window.dropdown_init($('#groupId_inp'),d4)
+                        hasInit = true;
+                    }
+                    else{
+
+                        var dropdownlist = $("#groupId_inp").data("kendoDropDownList");
+                        dropdownlist.setDataSource(d4)
+                        $("#groupId_inp").val('')
+                        
+                    }
+                    
+                })
+        }
+
+
+
     $.post('/manger/vote/getList',{},function(data_ary){
                     var d2 = []
                     data_ary.forEach(function(v){
@@ -41,7 +86,25 @@ $(function(){
                     })
 
                     window.voted = d2;
-                    window.dropdown_init($("#app_sel_inp"), d2)
+                    
+                    window.dropdown_init($("#app_sel_inp"), d2, function(){
+                            setTimeout(function(){
+                                var v = $("#app_sel_inp").val();
+                                changeVote(v)
+                            },100)
+                            
+                        })
+
+                    var voteid = $.trim($("#app_sel_inp").val())
+                    if(voteid){
+                        changeVote(voteid)
+                    }
+                    else{
+                        window.dropdown_init($('#groupId_inp'),window.not_sel)
+                    }
+
+
+                    window.dropdown_init($('#groupId_inp'),window.not_sel)
                     $('#start').kendoDateTimePicker();
                     $('#end').kendoDateTimePicker();
 
@@ -50,7 +113,8 @@ $(function(){
             return {
                 voteid:$('#app_sel_inp').val(),
                 stime:$('#start').val(),
-                etime:$('#end').val()
+                etime:$('#end').val(),
+                groupid:$('#groupId_inp').val(),
                }
         }
 
@@ -69,6 +133,8 @@ $(function(){
                                         _id: { type: "string" },
                                         title: { type: "string" },
                                         supportCount: { type: "number" },
+                                        groupName:{ type: "string" },
+                                        groupId:{ type: "string" },
                                         position: { type: "number" }
                                     }
                                 }
@@ -78,16 +144,18 @@ $(function(){
                         height: 550,
                         scrollable: true,
                         sortable: true,
-                        filterable: true,
+                        filterable: false,
                         pageable: {
                             input: true,
                             numeric: false
                         },
                         columns: [
-                            { field: "_id", title: "被投票id"},
+                            { field: "position", title: "位置"},
+                            { field: "_id", title: "被投票id" ,hidden:true},
                             { field: "title", title: "名称"},
                             { field: "supportCount", title: "票数"},
-                            { field: "position", title: "位置"},
+                            { field: "groupId", title: "分组Id", hidden:true},
+                            { field: "groupName", title: "分组名称"},
                         ]
                     });
 
