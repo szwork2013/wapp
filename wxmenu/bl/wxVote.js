@@ -1,5 +1,6 @@
 var moment = require('moment');
 var async = require('async');
+var node_schedule = require('node-schedule');
 var userBl = require('./wxUser.js'); //加载用户Bl
 var guidModel = require('../dl/guidModel.js'); //guid 模型
 var utils = require('../lib/utils.js');
@@ -9,6 +10,7 @@ var voteItem = require('../dl/voteItemModel.js'); //投票项模型
 var vote = require('../dl/voteModel.js'); //投票模型
 var voteRecord = require('../dl/voteRecordModel.js'); //投票记录模型
 
+
 var obj = {}
 
 //根据英文短名获取抽奖信息
@@ -16,6 +18,16 @@ obj.getVoteByEname = function(voteEname,cb){
 	if(!voteEname) return cb('no voteEname');
 	vote.findOneByObj({
 		ename:voteEname,
+		isShow:1,
+	},function(err,doc){
+		cb(err,doc)
+	})
+}
+//根据id获取抽奖信息
+obj.getVoteById = function(voteId,cb){
+	if(!voteId) return cb('no voteId');
+	vote.findOneByObj({
+		_id:voteId,
 		isShow:1,
 	},function(err,doc){
 		cb(err,doc)
@@ -42,6 +54,7 @@ obj.getUserLotteryRecById = function(uid, voteId, skip, pagesize, cb){
 	})
 }
 
+//根据voteid获取分组信息列表
 obj.getGroupByVoteId = function(voteid, cb){
 	var cb = cb || function(){};
 	if(!voteid) return cb('no voteid');
@@ -60,20 +73,81 @@ obj.getGroupByVoteId = function(voteid, cb){
 	})
 }
 
-obj.getItemByGroupId = function(groupid, cb){
+
+
+
+//根据itemid查找item信息
+obj.getItemByItemId = function(ItemId, cb){
+
+	voteItem.findOneByObj({
+		_id:ItemId,
+		isShow:1
+	},function(err, itemobj){
+		cb(err, itemobj)
+	})
+
+}
+
+
+//根据分组groupid获取分组被投票项列表
+obj.getItemByGroupId = function(voteid, groupid, cb){
 	var cb = cb || function(){};
+
+	//当不传递groupid,则表示查询所有分组的被投票项
 	if(!groupid){
-		var q = { isShow:1 }
+		var q = {
+			voteId:voteid, 
+			isShow:1 
+		}
+		var q2 = {
+			voteId:voteid,
+			isShow:1
+		}
 	} 
 	else{
 		var q = { 
+			voteId:voteid,
 			isShow:1,
 			groupId:groupid
+		}
+		var q2 = {
+			_id:groupid,
+			voteId:voteid,			
+			isShow:1
 		}
 	}
 
 	voteItem.findByObj(q, function(err,list){
-		cb(err,list)
+		if(err) return cb(err);
+		if(list.length == 0) return cb(null, []);
+		//查询分组信息
+		voteGroup.findByObj(q2,function(err,grouplist){
+			if(err) return cb(err);
+			if(grouplist.length == 0) return cb(null, []);
+			//开始筛选分组信息
+			var tempList = []
+			list.forEach(function(listobj){
+				grouplist.forEach(function(groupobj){
+					if(groupobj._id.toString() == listobj.groupId){
+						tempList.push(listobj)
+					}
+				})
+			})
+			//将分组isshow为-1的被投票项剔除
+			if(tempList.length == 0){
+				 return cb(null, []);
+			}
+
+			//排序
+			list = tempList.sort(function(a,b){
+				if(a.todayVoteNumber > b.todayVoteNumber){
+					return false;
+				}
+				return true;
+			})
+			cb(err,list)
+		})
+
 	})
 }
 
@@ -113,8 +187,7 @@ obj.getRankByVoteIdGroupId=  function(voteid, groupid, cb){
 }
 
 
-
-
+//根据voteid查找所有分组在 lastTimeStamp 之后的投票数量
 obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 	var cb = cb || function(){};
 	if(!voteid) return cb('no voteid');
@@ -177,587 +250,300 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-obj.getPrizeInfoByRecordList = function(list,cb){
-
-		if(list.length == 0){
-			return cb(null, list);
-		}
-		var tempList = [];
-
-		//如果用户获奖则去查找奖品的详细信息
-		var prizeIds = []
-		list.forEach(function(ro){
-
-			if(ro.prizeId != '0'){
-				prizeIds.push(ro.prizeId);
-			}
-			tempList.push({
-				 _id: ro._id,
- 				lotteryId: ro.lotteryId,
- 				userId: ro.userId,
- 				truename: ro.truename,
- 				mobile: ro.mobile,
-				writeTime: ro.writeTime,
- 				code4: ro.code4,
- 				code3: ro.code3,
- 				code2: ro.code2,
- 				code1: ro.code1,
- 				isForward: ro.isForward,
- 				giftId: ro.giftId,
- 				prizeId: ro.prizeId
-			})
-
-		})
-
-		//如果这个用户没有中奖，则直接返回
-		if(prizeIds.length == 0){
-			return cb(null, list);
-		}
-
-		//根据ids去找奖品的详细信息
-		lotteryPrizeModel.getPrizeByIds(prizeIds,function(err, prizeList){
-			if(err){
-				return cb(err)
-			}
-							
-			tempList.forEach(function(ro){
-				if(ro.prizeId == '0') return;
-				prizeList.forEach(function(po){
-					//如果匹配，则赋值
-					if(ro.prizeId == po._id+''){
-
-						ro.prizeObj = po;
-						return;
-					}
-				})
-			})
-			//返回列表
-
-			return cb(null, tempList);
-
-		})
-
-}
-
-
-
-//根据用户Id和抽奖Id查找他的抽奖记录
-obj.getUserLotteryRecById = function(uid, lotteryId, skip, pagesize, cb){ 
-	var cb = cb || function(){};
-	var skip = skip || 0;
-	var pagesize = pagesize || 50; 
-
-	if(!uid) return cb('no uid');
-
-	lotteryRecModel.findAll({
-		userId:uid,
-		lotteryId:lotteryId
-	}, skip, pagesize, function(err,list){
-		if(err){
-			return cb(err)
-		}
-		obj.getPrizeInfoByRecordList(list,function(err,list2){
-			return cb(err, list2)
-		})
-	})
-}
-
-
-obj.getLotteryAndPrize = function(lotteryId,cb){
-	var cb = cb || function(){}
-	if(!lotteryId) return cb('no lotteryId');
-	lotteryModel.findByObj({//获得抽奖活动的对象
-		_id:lotteryId,
-		isShow:1
-	},function(err,loList){
-		if(err){
-			return cb(err)
-		}
-		if(!loList || !loList[0]){ //没有找到抽奖活动
-			return cb('没有找到活动')
-		}
-		var lotteryObj = loList[0];
-		lotteryPrizeModel.findByObj({//获得奖品列表
-			lotteryId:lotteryId,
-			isShow:1
-		},function(err,prList){
-			if(err){
-				return cb(err)
-			}
-			if(!prList || !prList.length == 0){ //没有找到奖品
-				return cb('没有找到奖品')
-			}
-			cb(null,{				//返回抽奖的信息和奖品的列表
-				lottery:lotteryObj,
-				prize:prList
-			})
-		})
-	})
-}
-
-
-
-
-
-obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用户进入抽奖页面点击抽奖程序
-	var cb = cb || function(){}
-	if(!userId) return cb('no userId');
-	if(!lotteryId) return cb('no lotteryId');
-	var recordIp = recordIp || '127.0.0.1';
-	var isForward = isForward ? 1:0;
-
-	lotteryModel.findByObj({//获得抽奖活动的对象
-		_id:lotteryId,
-		isShow:1
-	},function(err,loList){
-		if(err){
-			return cb(err)
-		}
-		if(!loList || !loList[0]){ //没有找到抽奖活动
-			return cb('没有找到活动')
-		}
-		var lotteryObj = loList[0];
-		var now = Date.now();
-		var s = Date.parse(lotteryObj.startTime)
-		var e = Date.parse(lotteryObj.endTime)
-		if(s > now){//判断活动是否开始或者已经结束
-			return cb('活动还没开始')
-		}
-		if(e < now){
-			return cb('活动已经结束')
-		}
-		if(lotteryObj.forwardTimes > 0){
-			var limit = lotteryObj.intervalTimes + lotteryObj.forwardTimes;
-		}
-		else{
-			var limit = lotteryObj.intervalTimes;
-		}
-		
-		var interval = lotteryObj.interval*60*60*1000; //将小时转换成毫秒
-		var isDay = false;
-		if(lotteryObj.interval >= 24){ 
-		//当后台设置时间间隔大于等于24小时，则表示按自然天来计算
-			isDay = true;
-		}
-
-		//判断是否有forward
-		//如果传递了额外抽奖，并且本活动没有开启额外抽奖，则报错
-		if(isForward && lotteryObj.forwardTimes <= 0){
-			return cb('本活动无法增加抽奖次数')
-		}
-
-		
-
-		lotteryRecModel.findAll({//查找记录
-			userId:userId,
-			lotteryId:lotteryId
-		},0,limit,function(err,recList){
-			if(err){
-				return cb(err)
-			}
-
-			var checkIsMax = function(){
-				var pos = limit - 1;
-				var olderRec = recList[pos];
-				var olderTimestamp = Date.parse(olderRec.writeTime);
-
-				//如果时间超过24小时，表示自然天间隔
-				if(isDay){
-					var olderMoment = moment(olderRec.writeTime).hour(0).minute(0).second(0);
-					//将moment对象转换为unix时间戳
-					olderTimestamp = olderMoment.unix()*1000;
-				}	
-
-
-				if(now - olderTimestamp <= interval){//如果在这个间隔时间段内，已经超过最多抽奖次数了
-					return false
-				}
-				return true;
-			}
-
-			//如果设置了最大中奖次数
-			if(lotteryObj.allowLotteryTimes > 0 && recList.length>0){
-				var hasGetPrizeCount = 0;
-				var hasGetPrizeForwardCount = 0;
-				recList.forEach(function(o){
-					if(o.prizeId != '0' && o.isForward == 0){
-						hasGetPrizeCount++;
-						return;
-					}
-					if(o.prizeId != '0' && o.isForward == 1){
-						hasGetPrizeForwardCount++;
-						return;
-					}
-				})
-				//如果超过了最大的中奖次数
-				if((!isForward && hasGetPrizeCount >= lotteryObj.allowLotteryTimes) || (isForward && hasGetPrizeForwardCount >= lotteryObj.allowLotteryTimes)){
-					
-					if(recList.length<limit){
-						return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb);//进入抽奖程序
-					}
-
-					if(!checkIsMax()){
-						return cb('参与次数过多')
-					}
-					return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb);//进入抽奖程序
-				
-				} 
-			}
-
-			if(recList.length == 0 || recList.length<limit){//用户没有抽过奖，或抽奖总数小于间隔抽奖数，则去抽奖
-				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb);//进入抽奖程序
-			}
-			else{//判断是否超过间隔的抽奖次数
-				if(!checkIsMax()){
-					return cb('参与次数过多')
-				}
-				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb);//进入抽奖程序
-			}
-
-		})//end lotteryRecModel.findAll
-
-	})//end lotteryModel.findByObj
-
-}
-
-
-
-
-obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb){//用户进入抽奖程序
-
-	if(mustNoPrize){
-		return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+//用户ajax开始投票，要对其做各种约束
+obj.startVote = function(itemid, userid, ip, isforward, cb){
+	//判断itemid和userid是否合法
+	if(!itemid || itemid.length != 24){
+		return cb('error itemid')
+	}
+	if(!userid || userid.length != 24){
+		return cb('error userid')
 	}
 
-	lotteryPrizeModel.findByObj({//获得奖品列表
-			lotteryId:lotteryId,
-			isShow:1
-		},function(err,prList){
-			if(err){
-				return cb(err)
-			}
+	//查找itemid是否存在
+	obj.getItemByItemId(itemid, function(err, itemobj){
+		if(err) return cb(err)
+		//如果没有找到itemobj对象
+		if(!itemobj) return cb('未找到投票对象')
+		var voteid = itemobj.voteId
+		var groupid = itemobj.groupId
+		var appid = itemobj.appId
+		//获取vote信息
+		obj.getVoteById(voteid, function(err, voteobj){
+			if(err) return cb(err)
+			if(!voteobj) return cb('未找到投票活动')
+			//获取分组信息
+			voteGroup.findOneByObj({
+				_id:groupid,
+				isShow:1
+			},function(err,groupobj){
+				if(err) return cb(err)
+				if(!voteobj) return cb('未找到所在分组')
 
+				//首先判断活动是否已经结束或未开始
+				var now = Date.now();
+				var s = Date.parse(voteobj.startTime)
+				var e = Date.parse(voteobj.endTime)
+				if(now < s) return cb('活动还没开始')
+				if(now > s) return cb('活动已经结束')
+				//end
 
-			if(!prList || prList.length == 0){ //没有找到奖品，表示此次抽奖未中奖
-				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
-			}
-			prList = prList.filter(function(pobj){ //剔除奖品已经抽取完毕项
-				var last = pobj.totalNumber - pobj.countNum
-				return last > 0;  //将抽完的奖品从待抽奖数组中去掉
-			})
+				//判断分组是否冻结
+				if(groupobj.isFreez == 1) return cb('投票已经冻结')
+				//end
 
-			if(prList.length == 0){ //没有找到奖品，表示此次抽奖未中奖
-				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
-			}
+				//判断被投票项是否已经冻结
+				if(itemobj.isFreez) return cb('投票已冻结')
+				//end
 
-			var userRate = (Math.random()*100).toFixed(2); //用户抽出的随机数
+				//判断是否使用isforward转发，但是本活动未开启转发功能
+				if(isforward && voteobj.forwardTimes<=0) return cb('本活动无法增加抽奖次数')
+				//end
 
-			//console.log(userRate)
-
-			var ratePrizeAry = [];
-			var countPrizeAry = [];//记录奖品中是否含有计数抽奖的奖品，如果没有则概率没中可直接返回未中奖，提高效率
-
-			prList.forEach(function(pobj){
-				if(pobj.prizeLotteryType == 1 && pobj.rate >= userRate){ //如果是概率方式，并且中奖则将奖品放入数组中
-					ratePrizeAry.push(pobj);
+				//抽奖次数判断，先定义可以抽奖的次数
+				if(voteobj.forwardTimes > 0){
+					var limit = voteobj.intervalTimes + voteobj.forwardTimes;
 				}
-				if(pobj.prizeLotteryType == 2){ //如果有奖品是计数抽奖的
-					countPrizeAry.push(pobj)
+				else{
+					var limit = voteobj.intervalTimes;
 				}
-			})
+				//end
 
-			var prizeLen = ratePrizeAry.length
-			if(prizeLen>0){
-				var prizePos = ~~(Math.random()*prizeLen); //获得随机的一个中奖奖品
-				var userPrizeId = ratePrizeAry[prizePos]._id;
-				return obj._completeLottery(userId, lotteryId, recordIp, userPrizeId, 0, isForward, cb);//抽到奖品 userPrizeId
-			}
-			else if(countPrizeAry.length == 0){ //如果没有概率中奖，并且也没有计数抽奖的奖品，则表示用户没有中奖
-				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
-			}
 
-			//如果用户概率没有中奖，并且有奖品是计数中奖的，则进入计数抽奖流程
-
-			lotteryRecModel.countAll({ //查找此 抽奖活动 的抽奖记录数
-				lotteryId:lotteryId,
-			},function(err,recCount){
-				if(err){
-					return cb(err)
+				//是否按自然天来分割投票的间隙控制
+				var interval = voteobj.interval*60*60*1000; //将小时转换成毫秒
+				var isDay = false;
+				if(lotteryObj.interval >= 24){ 
+				//当后台设置时间间隔大于等于24小时，则表示按自然天来计算
+					isDay = true;
 				}
-				recCount = recCount + 1; //表示本次抽奖计数
 
-				var userCountPrizeId = 0; //中奖prizeid变量
-				var prizePos = -1;
+				//这个用户，最新的limit条查找记录
+				voteRecord.findAll({
+					userId:userid,
+					voteId:voteid
+				},0,limit,function(err,recList){
+					if(err) return cb(err)
+					//如果记录为0，则表示此用户从未投票过，则直接进入投票成功函数
+					if(recList.length == 0) return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb)
 
-				countPrizeAry.forEach(function(cpobj,i){ //循环待抽奖数组
-					//console.log(cpobj.priceNum, recCount)
-
-					if(cpobj.priceNum == recCount){ //如果正好中奖
-						userCountPrizeId = cpobj._id;
-						prizePos = i
+					//否则要做一些limit的限制
+					//1、是否超过投票间隔限制判断
+					var pos = limit - 1;
+					var olderRec = recList[pos];
+					var olderTimestamp = Date.parse(olderRec.writeTime);
+					var now = Date.now();
+					//如果时间超过24小时，表示自然天间隔
+					if(isDay){
+						var olderMoment = moment(olderRec.writeTime).hour(0).minute(0).second(0);
+						//将moment对象转换为unix时间戳
+						olderTimestamp = olderMoment.unix()*1000;
 					}
-				})
+					//如果在这个间隔时间段内，已经超过最多参与次数了
+					if(now - olderTimestamp > interval){
+						return cb('超过最大投票次数')
+					}
+					//end 1 判断
 
-				if(userCountPrizeId == 0){ //如果计数抽奖也没中
-					return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
-				}
-
-				
-				var nextPriceNum = 0;
-				var pos = 0;
-				do{
-					//生成被抽掉的奖品的下次抽奖次数
-					nextPriceNum = countPrizeAry[prizePos].priceNum * 2 + ~~(Math.random()*(countPrizeAry[prizePos].priceNum/2));
-					
-					pos = -1;
-					//循环匹配下次抽奖次数是否有重复
-					for(var j=0;j<countPrizeAry.length;j++){
-						if(countPrizeAry[j].priceNum == nextPriceNum){
-							pos = j;
-							break;
-						}
-					}				
-				}
-				while(pos != -1)
-
-				return obj._completeLottery(userId, lotteryId, recordIp, userCountPrizeId, nextPriceNum, isForward, cb);//表示没有抽到奖品
-
-			})// end lotteryRecModel.countAll
-
-
-
-	})//end lotteryPrizeModel.findByObj
-
-}
-
-
-obj._completeLottery = function(userId, lotteryId, recordIp, prizeId, nextPriceNum, isForward, cb){//用户抽奖结束，更新记录和相关信息
-	var prizeId = prizeId || 0;
-	var nextPriceNum = nextPriceNum || 0;
-
-	guidModel.getGuid(function(err,guid){
-		if(err) return cb(err); //如果出错
-		if(!guid) return cb('获取兑奖码失败');
-
-		userBl.getUserByUserId(userId,function(err,udoc){//查找用户对象
-			if(err) return cb(err);
-			if(!udoc || !udoc.uobj) return cb('未找到用户');
-
-			var userObj = udoc.uobj
-			/*
-			if(prizeId == 0){
-				guid = 0;
-			}
-			*/
-
-			lotteryRecModel.insertOneByObj({
-				lotteryId:lotteryId,
-				prizeId:prizeId,
-				userId:userId,
-				truename:userObj.appUserName,
-				mobile:userObj.appUserMobile,
-				recordIp:recordIp,
-				giftId:guid,
-				isForward:isForward?1:0,
-			},function(err,recDoc){
-				if(err) return cb(err); //如果出错
-				if(!recDoc) return cb('抽奖记录生成失败');
-
-				if(prizeId == 0){ //如果没有中奖，则返回控制器，不执行更新奖品集合代码
-					cb(null,{
-						prizeId:0
+					//2、判断是否对某一个人在间隔时间次数投票过多
+					var count = 0;
+					recList.forEach(function(recobj){
+						if(recobj.itemId == itemid) count++
 					})
-
-					obj._checkWrongCountPrize(lotteryId); //运行检查奖品程序
-					return;
-				}
-
-				//更新奖品集合，存入 nextPriceNum 和把 countNum 加1
-				lotteryPrizeModel.createOneOrUpdate({
-					_id:prizeId
-				},{
-					$inc:{countNum:1},
-					priceNum:nextPriceNum
-				},function(err,doc){ 
-					if(err){
-						logger.error('update prize error,prize id %s,err: %s', prizeId, err);
-						return cb(err); //如果出错
-					} 
-					if(!doc) {
-						logger.error('update prize error,prize id %s,err: %s, lottery record id is %s', prizeId, err, recDoc._id);
-						return cb('更新奖品记录失败');
+					if(voteobj.intervalTimes > 0 && count >= voteobj.intervalTimes){
+						return cb('不能重复投票')
 					}
-					cb(null, {
-						prizeId:prizeId,
-						giftId:recDoc.giftId,
-						recordId:recDoc._id
-					});
+					//end 2 判断
 
-					obj._checkWrongCountPrize(lotteryId);
-					return;
-				}) //end lotteryPrizeModel.createOneOrUpdate
+					//所有判断都通过，开始进入成功后的流程
+					return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb)
 
-			})//end lotteryRecModel.createOneOrUpdate
-
-		})//end userBl.getUserByUserId
-		
-	})//end guidModel.getGuid
-
-}
-
-obj._checkWrongCountPrize = function(lotteryId){//检查是否有错误的计数抽奖的奖品，异步执行
-	var prizeId = prizeId || 0;
-
-	lotteryRecModel.countAll({ //查询所有抽奖的次数
-		lotteryId:lotteryId,
-	},function(err,recCount){
-		if(err){
-			logger.error('_checkWrongCountPrize lotteryRecModel.countAll error: %s', err);
-			return;
-		}
-
-		lotteryPrizeModel.findByObj({//获得奖品列表,条件是次数抽奖，并且isshow
-			lotteryId:lotteryId,
-			prizeLotteryType:2,   
-			isShow:1
-		},function(err,plist){
-			if(err){
-				logger.error('_checkWrongCountPrize lotteryPrizeModel.findByObj error: %s', err);
-				return;
-			}
-
-			plist = plist.filter(function(po){
-				var last = po.totalNumber - po.countNum
-				var priceNum = po.priceNum;
-				if(last <= 0 || priceNum > recCount){ //将抽完的奖品和符合要求的奖品从数组中去掉
-					return false;
-				}
-				return true;
-			})
-			if(plist.length == 0) return; //没有奖品可检查，return
-
-			logger.error('_checkWrongCountPrize has error prize pricenum array is : %s', JSON.stringify(plist));
-
-			var plist2 = [];
-
-			plist.forEach(function(v){ //将prizeId和priceNum转存到plist2种
-				plist2.push({
-					_id:v._id,
-					priceNum:v.priceNum
-				});
-			})
-
-			var pos = 0 //初始化pos
-			var errorCount = 0;
-			do{ //循环检查并且更新奖品的priceNum
-				errorCount++
-				pos = -1;
-				var len = plist2.length;
-				for(var i=0;i<len;i++){
-					plist2[i].priceNum = ~~(Math.random()*(plist2[i].priceNum/2)) + (plist2[i].priceNum + recCount);
-				}
-
-				for(var j=0;j<len;j++){
-					var tempPrice = plist2[j].priceNum
-					var tempId = plist2[j]._id
-					for(var k=0;k<len;k++){
-						if(tempId != plist2[k]._id && tempPrice == plist2[k].priceNum){
-							pos = k;
-							break;
-						}
-					}
-				}
-				if(errorCount>10){
-					logger.error('_checkWrongCountPrize do while plist error max count, prize list is: %s', JSON.stringify(plist));
-					return;
-				}
-			}
-			while(pos != -1)
-			//除错完毕，接下来写入数据库
-
-			plist2.forEach(function(p2obj){ //循环写入数据库
-
-				lotteryPrizeModel.createOneOrUpdate({
-					_id:p2obj._id
-				},{
-					priceNum:p2obj.priceNum
-				},function(err,doc){ 
-					if(err){
-						logger.error('_checkWrongCountPrize lotteryPrizeModel.createOneOrUpdate error prizeid is: %s, error is: %s', p2obj._id, err);
-					}
-				})//end lotteryPrizeModel.createOneOrUpdate
-
-			})//end plist2.forEach
-
-			logger.error('_checkWrongCountPrize success update error prize pricenum,plist is: %s', JSON.stringify(plist));
-
-		})//end lotteryPrizeModel.findByObj
-
-	})// end lotteryRecModel.countAll
-
+				})//end voteRecord.findAll
+			})//end voteGroup.findOneByObj
+		})//end obj.getVoteById
+	})//end obj.getItemByItemId
 }
 
 
 
-obj.improveInfo = function(recordId, truename, mobile, cb){ //抽奖完成,完善姓名和手机
-	var cb = cb || function(){}
-	if(!recordId) return cb('no recordId');
-	if(!truename) return cb('no truename');
-	if(!mobile) return cb('no mobile');
+obj.voteSuccessProcess = function(appid, voteid, groupid, itemid, userid, ip, isforward, cb){
 
-	lotteryRecModel.findByObj({ //查找一下recordId是否存在
-		_id:recordId
-	},function(err,d){
+	var insertObj = {
+		appId:appid,
+		voteId:voteid,
+		itemId:itemid,
+		userId:userid,
+		recordIp:ip,
+		isForward:isforward || 0,
+		writeTime:new Date()
+	}
+	//插入流水
+	voteRecord.insertOneByObj(insertObj, function(err, record){
 		if(err){
-			return cb(err)
-		}
-		if(!d || d.length == 0){ //如果不存在则报错
-			return cb('没有找到记录')
-		}
-		lotteryRecModel.createOneOrUpdate({ //更新记录
-			_id:recordId
+			logger.error('voteRecord.insertOneByObj insert error: ', err);
+			return cb(err);
+		} 
+
+		//更新item数据
+		voteItem.createOneOrUpdate({
+			_id:voteid
 		},{
-			truename:truename,
-			mobile:mobile
-		},function(err,list){ //更新成功回调控制器
+			todayVoteNumber:{ '$inc':1}
+		}, function(err,itemobj){
 			if(err){
-				return cb(err)
+				logger.error('voteItem.createOneOrUpdate error and recordid: ', err, record._id.toString());
+				return cb(err);
 			}
-			cb(null, list);
+			//更新成功，返回记录
+			obj.checkIsCheat(voteid, itemid, ip)
+			cb(null, record)
+		})//end voteItem.createOneOrUpdate
+	})//end voteRecord.insertOneByObj
+}
+
+
+
+
+//检查改被投票项是否作弊
+obj.checkIsCheat = function(voteid, itemid, ip){
+	//如果ip未捕获到，则不检查
+	if(ip == '127.0.0.1') return;
+
+	voteRecord.countAll({
+		voteId:voteid,
+		itemId:itemid,
+		recordIp:ip
+	},function(err, countNum){
+		if(err) return;
+		if(countNum == 0) return;
+		obj.getVoteById(voteid, function(err, voteobj){
+			if(err) return;
+			if(!voteobj) return;
+			var now = Date.now();
+			var s = Date.parse(voteobj.startTime)
+			var interval = voteobj.interval;
+			var intervalTimes = voteobj.intervalTimes;
+			var gapTimes = Math.ceil(now - s) / interval
+			//判断是否可能存在作弊
+			if(countNum >= gapTimes*intervalTimes*3){
+				//更新item记录，做出警告
+				voteItem.createOneOrUpdate({
+						_id:voteid
+					},{
+						code1:'同一ip投票超过正常3倍'
+					}, function(err,itemobj){
+						if(err) return cb(err);
+					})//end voteItem.createOneOrUpdate
+			}
+			return;
 		})
 	})
 
+
 }
+
+
+
+
+
+
+obj.scheduleJob = function(){
+	var nowS = Date.now();
+	var s = new Date(moment().add(-1, 'days').startOf('day').format('YYYY/MM/DD HH:mm:ss'));
+	var e = new Date(moment().startOf('day').format('YYYY/MM/DD HH:mm:ss'));
+
+	//循环处理item的update
+	var updateItem = function(itemid, count, pos , callback){
+		voteItem.createOneOrUpdate({
+			_id:voteid
+		},{
+			todayVoteNumber:0,
+			lastdayVoteNumber:count,
+			lastdayVoteOrder:pos
+		},function(err, itemobj){
+			if(err) return callback(err)
+			callback();
+		})
+
+	}
+
+	//循环处理voteid的aggregate
+	var dealAgg = function(voteid, callback){
+		var q = {
+			s:s,
+			e:e,
+			voteId:voteid
+		}
+		//进行分组计算
+		voteRecord.aggregateOrder(q, function(err, agglist){
+			if(err) return callback(err)
+			//如果没有记录，直接返回
+			if(agglist.length == 0) return callback();
+			var updateItemList = [];
+			//循环生成修改item项的函数，生成 series 工作函数数组
+			agglist.forEach(function(aggObj, i){
+				var itemid = aggObj._id.toString();
+				var count = aggObj.supportCount;
+				var pos = i+1;
+				updateItemList.push(function(cb){
+					updateItem(itemid, count, pos, cb)
+				})
+			})
+			//执行series异步序列化
+			async.series(updateItemList, function(err){
+				if(err) return callback(err)
+				callback();
+			})//end async.series
+
+		})//end voteRecord.aggregateOrder
+	
+	}//end dealAgg
+
+
+	//查找所有有效的vote活动
+	vote.findByObj({
+		isShow:1
+	},function(err, voteList){
+		if(err) return err;
+
+		//分组计算的函数数组
+		var voteIdsFn = []
+		voteList.forEach(function(vo){
+			//生成series函数数组
+			var voteid = vo._id.toString()
+			voteIdsFn.push(function(cb){
+				dealAgg(voteid, cb)
+			})
+		})
+
+		async.series(voteIdsFn, function(err){
+			if(err){
+				return logger.error('scheduleJob execute error: ',err);
+			}
+			//完成，打印工作时间
+			var nowE = Date.now();
+			var gap =  nowE - nowS;
+			logger.error('scheduleJob execute custom time(ms): ',gap.toString())
+			
+		})//end async.series
+
+	})//end vote.findByObj
+
+}
+
+//定义定时器
+obj.setSchedule = function(){
+	//定义规则
+	var rule = new schedule.RecurrenceRule();
+	rule.dayOfWeek = [new schedule.Range(0, 6)];
+	rule.hour = 0;
+	rule.minute = 0;
+	var j = schedule.scheduleJob(rule, function(){
+			//执行定时计划
+		   obj.scheduleJob()
+	});
+}
+
 
 
 module.exports = obj;

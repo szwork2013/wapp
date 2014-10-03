@@ -131,15 +131,16 @@
                <textarea id="intro2" type="text" class="k-input k-textbox w-90-inp" name="desc2" data-bind="value:desc2"></textarea>
             </div>
 
-<div style="display:none">
+
             
             <div class="k-edit-label  w-800-l">
-                <label for="code1" >备用1</label>
+                <label for="code1" >作弊警告</label>
             </div>
             <div data-container-for="code1" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
             </div>
 
+<div style="display:none">
             <div class="k-edit-label  w-800-l">
                 <label for="code2" >备用2</label>
             </div>
@@ -395,8 +396,7 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                         },
                         { 
                             field: "code1",
-                            title: "备用字段1", 
-                            hidden:true
+                            title: "作弊警告",
                          },
                          { 
                             field: "code2",
