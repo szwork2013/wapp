@@ -326,9 +326,9 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 					if(err) return cb(err)
 					//如果记录为0，则表示此用户从未投票过，则直接进入投票成功函数
 					if(recList.length == 0) return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb)
-						
+
 					if(recList.length >= limit){
-						
+
 						//否则要做一些limit的限制
 						//1、是否超过投票间隔限制判断
 						var pos = limit - 1;
@@ -391,11 +391,12 @@ obj.voteSuccessProcess = function(appid, voteid, groupid, itemid, userid, ip, is
 		if(err){
 			logger.error('voteRecord.insertOneByObj insert error: ', err);
 			return cb(err);
-		} 
+		}
+
 
 		//更新item数据
 		voteItem.createOneOrUpdate({
-			_id:voteid
+			_id:itemid
 		},{
 			'$inc':{todayVoteNumber:1}
 		}, function(err,itemobj){
@@ -416,7 +417,7 @@ obj.voteSuccessProcess = function(appid, voteid, groupid, itemid, userid, ip, is
 //检查改被投票项是否作弊
 obj.checkIsCheat = function(voteid, itemid, ip){
 	//如果ip未捕获到，则不检查
-	if(ip == '127.0.0.1') return;
+	//if(ip == '127.0.0.1') return;
 
 	voteRecord.countAll({
 		voteId:voteid,
@@ -430,14 +431,15 @@ obj.checkIsCheat = function(voteid, itemid, ip){
 			if(!voteobj) return;
 			var now = Date.now();
 			var s = Date.parse(voteobj.startTime)
-			var interval = voteobj.interval;
+			var interval = voteobj.interval*60*60*1000;
 			var intervalTimes = voteobj.intervalTimes;
-			var gapTimes = Math.ceil(now - s) / interval
+			var gapTimes = Math.ceil((now - s) / interval)
+			//console.log(gapTimes)
 			//判断是否可能存在作弊
 			if(countNum >= gapTimes*intervalTimes*3){
 				//更新item记录，做出警告
 				voteItem.createOneOrUpdate({
-						_id:voteid
+						_id:itemid
 					},{
 						code1:'同一ip投票超过正常3倍'
 					}, function(err,itemobj){
