@@ -36,14 +36,14 @@ obj.getVoteById = function(voteId,cb){
 
 
 //根据用户Id和投票Id查找他的记录
-obj.getUserLotteryRecById = function(uid, voteId, skip, pagesize, cb){ 
+obj.getUserVoteRecById = function(uid, voteId, skip, pagesize, cb){ 
 	var cb = cb || function(){};
 	var skip = skip || 0;
 	var pagesize = pagesize || 50; 
 
 	if(!uid) return cb('no uid');
 
-	lotteryRecModel.findAll({
+	voteRecord.findAll({
 		userId:uid,
 		voteId:voteId
 	}, skip, pagesize, function(err,list){
@@ -179,7 +179,7 @@ obj.getRankByVoteIdGroupId=  function(voteid, groupid, cb){
 					})//end iobj.forEach
 				})//end list.forEach
 
-				cb(null, listobj)
+				cb(null, list)
 
 			})//end voteItem.getByIds
 	})//end voteRecord.aggregateOrder
@@ -239,7 +239,7 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 		})
 		//利用异步库
 		async.series(fnList, function(err){
-			if(err) return cb(err;)
+			if(err) return cb(err)
 			cb(groupCountArray)
 		})
 
@@ -285,7 +285,7 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 				var s = Date.parse(voteobj.startTime)
 				var e = Date.parse(voteobj.endTime)
 				if(now < s) return cb('活动还没开始')
-				if(now > s) return cb('活动已经结束')
+				if(now > e) return cb('活动已经结束')
 				//end
 
 				//判断分组是否冻结
@@ -313,7 +313,7 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 				//是否按自然天来分割投票的间隙控制
 				var interval = voteobj.interval*60*60*1000; //将小时转换成毫秒
 				var isDay = false;
-				if(lotteryObj.interval >= 24){ 
+				if(voteobj.interval >= 24){ 
 				//当后台设置时间间隔大于等于24小时，则表示按自然天来计算
 					isDay = true;
 				}
@@ -326,31 +326,40 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 					if(err) return cb(err)
 					//如果记录为0，则表示此用户从未投票过，则直接进入投票成功函数
 					if(recList.length == 0) return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb)
-
-					//否则要做一些limit的限制
-					//1、是否超过投票间隔限制判断
-					var pos = limit - 1;
-					var olderRec = recList[pos];
-					var olderTimestamp = Date.parse(olderRec.writeTime);
-					var now = Date.now();
-					//如果时间超过24小时，表示自然天间隔
-					if(isDay){
-						var olderMoment = moment(olderRec.writeTime).hour(0).minute(0).second(0);
-						//将moment对象转换为unix时间戳
-						olderTimestamp = olderMoment.unix()*1000;
+						
+					if(recList.length >= limit){
+						
+						//否则要做一些limit的限制
+						//1、是否超过投票间隔限制判断
+						var pos = limit - 1;
+						var olderRec = recList[pos];
+						var olderTimestamp = Date.parse(olderRec.writeTime);
+						var now = Date.now();
+						//如果时间超过24小时，表示自然天间隔
+						if(isDay){
+							var olderMoment = moment(olderRec.writeTime).hour(0).minute(0).second(0);
+							//将moment对象转换为unix时间戳
+							olderTimestamp = olderMoment.unix()*1000;
+						}
+						//如果在这个间隔时间段内，已经超过最多参与次数了
+						if(now - olderTimestamp <= interval){
+							return cb('超过最大投票次数')
+						}
+						//end 1 判断
 					}
-					//如果在这个间隔时间段内，已经超过最多参与次数了
-					if(now - olderTimestamp > interval){
-						return cb('超过最大投票次数')
-					}
-					//end 1 判断
 
 					//2、判断是否对某一个人在间隔时间次数投票过多
 					var count = 0;
 					recList.forEach(function(recobj){
-						if(recobj.itemId == itemid) count++
+						if(isforward && recobj.itemId == itemid && recobj.isForward == 1){
+							 count++
+						}
+						else if(!isforward && recobj.itemId == itemid){
+							 count++
+						} 
 					})
-					if(voteobj.intervalTimes > 0 && count >= voteobj.intervalTimes){
+
+					if(voteobj.intervalPerUserTimes > 0 && count >= voteobj.intervalPerUserTimes){
 						return cb('不能重复投票')
 					}
 					//end 2 判断
@@ -388,7 +397,7 @@ obj.voteSuccessProcess = function(appid, voteid, groupid, itemid, userid, ip, is
 		voteItem.createOneOrUpdate({
 			_id:voteid
 		},{
-			todayVoteNumber:{ '$inc':1}
+			'$inc':{todayVoteNumber:1}
 		}, function(err,itemobj){
 			if(err){
 				logger.error('voteItem.createOneOrUpdate error and recordid: ', err, record._id.toString());

@@ -1,9 +1,10 @@
-var lotteryBl = require('../bl/wxLottery.js');
+var voteBl = require('../bl/wxVote.js');
 var userBl = require('../bl/wxUser.js');
 var utils = require('../lib/utils.js');
 var obj = {}
 
-obj.getLotteryInfo = function(req,res){
+//第一次加载，获取投票信息和用户投票记录
+obj.getVoteInfo = function(req,res){
 	//先获取用户id
 	var appobj = utils.getAppEname(req.originalUrl)
 	if(appobj.error){
@@ -11,6 +12,7 @@ obj.getLotteryInfo = function(req,res){
 	}
 	var appEname = appobj.data;
 
+	//测试用，真实情况注释
 	//req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
 
 	var userid = req.session[appEname+'_userid'];
@@ -20,27 +22,27 @@ obj.getLotteryInfo = function(req,res){
 		return;
 	}
 	//获取抽奖活动的ename
-	var lotteryEname = req.query.ename;
-	if(!lotteryEname){
+	var voteEname = req.query.ename;
+	if(!voteEname){
 		res.send({error:0,data:'缺少ename参数'})
 		return;
 	}
 	//根据ename获取抽奖活动的对象
-	lotteryBl.getLotteryByEname(lotteryEname,function(err,lotteryObj){
+	voteBl.getVoteByEname(voteEname,function(err,voteObj){
 		if(err){
 	        return res.send({error:1,data:err}) 
      	}
-     	if(!lotteryObj){
-     		return res.send({error:1,data:'未找到抽奖活动'}) 
+     	if(!voteObj){
+     		return res.send({error:1,data:'未找到投票活动'}) 
      	}
      	//获取该用户的抽奖记录
-     	lotteryBl.getUserLotteryRecById(userid, lotteryObj._id.toString(), 0, 1000, function(err,recordList){
+     	voteBl.getUserVoteRecById(userid, voteObj._id.toString(), 0, 1000, function(err,recordList){
      		if(err){
 		        return res.send({error:1,data:err}) 
 	     	}
 	     	//将结果返回给前端
 	     	return res.send({error:0,data:{
-	     		lottery:lotteryObj,
+	     		voteObj:voteObj,
 	     		record:recordList
 	     	}}) 
 
@@ -50,67 +52,100 @@ obj.getLotteryInfo = function(req,res){
 }
 
 
-//用户点击了抽奖按钮
-obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程序
+//用户点击了投票按钮
+obj.startVote = function(req,res){ //用户进入抽奖页面点击抽奖程序
 	var appobj = utils.getAppEname(req.originalUrl)
 	if(appobj.error){
 		return res.send(appobj)
 	}
 	var appEname = appobj.data;
+
+	//测试用，真实情况注释
+	//req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+
 	var userid = req.session[appEname+'_userid'];
+
 	if(!userid){
 		res.send({error:0,data:'用户身份丢失，请重新进入'})
 		return;
 	}
 
-	var lotteryId = req.body.lotteryId
+	var itemid = req.body.itemid
 	var isforward = parseInt(req.body.isforward) || 0;
-	var recordIp = req.ips[0] || '127.0.0.1'
+	var pos = req.ips.length - 1;
+	var recordIp = req.ips[pos] || '127.0.0.1'
 
-	lotteryBl.startLottery(userid, lotteryId, recordIp, isforward, function(err,result){
-		if(err){
-	        return res.send({error:1,data:err}) 
-     	}
-     	if(result.prizeId && result.prizeId != '0'){
-     		//根据奖品id拿奖品信息
-     		lotteryBl.getPrizeById(result.prizeId, function(err,po){
-     			if(err){
-     				return res.send({error:1,data:err});
-     			}
-     			if(!po){
-     				return res.send({error:1,data:'奖品未找到'});
-     			}
-     			result.prizeObj = po;
-     			return res.send({error:0,data:result});
-     		})
-     	}
-     	else{
-     		return res.send({error:0,data:result});
-     	}
+	voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
+		if(err) return res.send({error:1,data:err}) 
+     	
+     	if(!result._id.toString()) return res.send({error:1,data:'投票失败'}) 
+
+     	return res.send({error:0,data:result});
+     	
 	})
 
 }
 
 
-//完善资料
-obj.improveInfo = function(req,res){ //抽奖完成,完善姓名和手机
-	
-	var recordId = req.body.recordId
-	var truename = req.body.truename
-	var mobile = req.body.mobile
+//获取被投票项列表信息
+obj.getItemsInfo = function(req,res){
 
-	if(!recordId || !truename || !mobile){
-		return res.send({error:1,data:'请填写完整信息'})
+	var groupid = req.query.groupid;
+	var voteEname = req.query.ename;
+	if(groupid && groupid.length != 24){
+		return res.send({error:1,data:'groupid有误'})
 	}
 
-	lotteryBl.improveInfo(recordId, truename, mobile, function(err,result){
+	voteBl.getVoteByEname(voteEname,function(err,voteObj){
 		if(err){
 	        return res.send({error:1,data:err}) 
      	}
-     	res.send({error:0,data:''});
+     	if(!voteObj){
+     		return res.send({error:1,data:'未找到投票活动'}) 
+     	}
+
+     	voteBl.getItemByGroupId(voteObj._id.toString(), groupid, function(err,itemlist){
+	     	if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	     	return res.send({error:0,data:itemlist})
+     	})
+
 	})
 
+	
 }
+
+
+//获取实时排名
+obj.getRank = function(req,res){
+
+	var groupid = req.query.groupid;
+	var voteEname = req.query.ename;
+	if(groupid && groupid.length != 24){
+		return res.send({error:1,data:'groupid有误'})
+	}
+
+	voteBl.getVoteByEname(voteEname,function(err,voteObj){
+		if(err){
+	        return res.send({error:1,data:err}) 
+     	}
+     	if(!voteObj){
+     		return res.send({error:1,data:'未找到投票活动'}) 
+     	}
+
+     	voteBl.getRankByVoteIdGroupId(voteObj._id.toString(), groupid, function(err,itemlist){
+	     	if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	     	return res.send({error:0,data:itemlist})
+     	})
+
+	})
+
+	
+}
+
 
 
 module.exports = obj;
