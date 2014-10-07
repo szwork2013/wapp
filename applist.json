@@ -58,6 +58,20 @@
         "env_production" : {
           "NODE_ENV": "production"
         }
+      },
+      {
+        "name"      : "yjs",
+        "script"    : "/var/nodejs/wapp/yjs/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "yjsadmin",
+        "script"    : "/var/nodejs/wapp/yjs/manager/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
       }
 
 
