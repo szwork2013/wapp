@@ -1,0 +1,17 @@
+﻿c:\mongodb-win32-x86_64-2.4.5\bin\mongod.exe --dbpath f:\mongo_datebase 
+c:\mongodb-win32-x86_64-2.4.5\bin\mongod.exe  --dbpath f:\mongo_datebase\ --auth
+
+
+
+webot send text --host 127.0.0.1 --port 8001 --token joymap_starlight--route /wechat aaa
+webot send --token abc123 --des http://127.0.0.1:7080/wechat
+
+webot send t --token joymap_starlight --des http://127.0.0.1:3000/wechat
+votetest1
+webot send t --token joymap_starlight --des http://127.0.0.1:3000/wechat
+votetest2
+
+
+webot send t Hello
+webot send loc 20.12 120.33 "Somewhere Out There"
+通过 chcp命令改变代码页，UTF-8的代码页为65001 

@@ -1,0 +1,13 @@
+{
+	"currentSite":"http://yjs.xy-tang.com",
+	"appEname":"yjs",
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/yjs",
+	"monoosePool":10,
+	"currentHost":"127.0.0.1",
+	"currentVersion":"v1",
+	"listenPort":7008,
+	"mangerListenPort":7009,
+	"wxAppId":"123",
+	"wxAppSecret":"123",
+	"wxAppToken":"weixin"
+}
