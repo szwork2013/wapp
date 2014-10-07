@@ -35,8 +35,10 @@ obj.getVoteInfo = function(req,res){
      	if(!voteObj){
      		return res.send({error:1,data:'未找到投票活动'}) 
      	}
-     	//获取该用户的抽奖记录
-     	voteBl.getUserVoteRecById(userid, voteObj._id.toString(), 0, 1000, function(err,recordList){
+     	var todayDate = moment().hour(0).minute(0).second(0).millisecond(0).unix()*1000;
+     	todayDate = new Date(todayDate);
+     	//获取该用户的今日抽奖记录
+     	voteBl.getUserVoteRecById(userid, voteObj._id.toString(), todayDate, 0, 1000, function(err,recordList){
      		if(err){
 		        return res.send({error:1,data:err}) 
 	     	}
@@ -61,7 +63,7 @@ obj.startVote = function(req,res){ //用户进入抽奖页面点击抽奖程序
 	var appEname = appobj.data;
 
 	//测试用，真实情况注释
-	req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+	//req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
 
 	var userid = req.session[appEname+'_userid'];
 
@@ -108,6 +110,8 @@ obj.getItemsInfo = function(req,res){
 	     	if(err){
 		        return res.send({error:1,data:err}) 
 	     	}
+
+
 	     	return res.send({error:0,data:itemlist})
      	})
 

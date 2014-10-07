@@ -36,17 +36,28 @@ obj.getVoteById = function(voteId,cb){
 
 
 //根据用户Id和投票Id查找他的记录
-obj.getUserVoteRecById = function(uid, voteId, skip, pagesize, cb){ 
+obj.getUserVoteRecById = function(uid, voteId, gttime, skip, pagesize, cb){ 
 	var cb = cb || function(){};
 	var skip = skip || 0;
 	var pagesize = pagesize || 50; 
 
 	if(!uid) return cb('no uid');
+	if(gttime){
+		var q = {
+			userId:uid,
+			voteId:voteId,
+			writeTime:{'$gt': gttime}
+		}
+	}
+	else{
+		var q = {
+			userId:uid,
+			voteId:voteId
+		}
+	}
 
-	voteRecord.findAll({
-		userId:uid,
-		voteId:voteId
-	}, skip, pagesize, function(err,list){
+
+	voteRecord.findAll(q, skip, pagesize, function(err,list){
 		if(err){
 			return cb(err)
 		}
@@ -88,6 +99,41 @@ obj.getItemByItemId = function(ItemId, cb){
 
 }
 
+obj.getItemVoteCountsByIds = function(itemids, cb){
+	if(itemids.length == 0) return cb(null, [])
+	
+	var countFn = []
+	var result = []
+
+	itemids.forEach(function(itemid){
+		//放置每步的count函数
+		var itemid = itemid;
+		countFn.push(function(callback){
+
+			voteRecord.countAll({
+				itemId:itemid
+			},function(err, count){
+				if(err) return callback(err)
+				result.push({
+					itemId:itemid,
+					count:count
+				})
+				callback()
+
+			})//end countAll
+
+		})//end push
+
+	}) //end itemids.forEach
+
+	async.series(countFn, function(err){
+		if(err) return cb(err)
+		cb(null, result)
+	})
+
+
+}
+
 
 //根据分组groupid获取分组被投票项列表
 obj.getItemByGroupId = function(voteid, groupid, cb){
@@ -126,29 +172,70 @@ obj.getItemByGroupId = function(voteid, groupid, cb){
 			if(grouplist.length == 0) return cb(null, []);
 			//开始筛选分组信息
 			var tempList = []
+			var ids = []
 			list.forEach(function(listobj){
+
 				grouplist.forEach(function(groupobj){
 					if(groupobj._id.toString() == listobj.groupId){
-						tempList.push(listobj)
+						ids.push(listobj._id.toString())
+						tempList.push({
+							_id:listobj._id.toString(),
+							appId:listobj.appId,
+							voteId:listobj.voteId,
+							groupId:listobj.groupId,
+							groupName:groupobj.title,
+							title:listobj.title,
+							pictureThumb:listobj.pictureThumb,
+							picture:listobj.picture,
+							sex:listobj.sex,
+							age:listobj.age,
+							number:listobj.number,
+							desc:listobj.desc,
+							desc2:listobj.desc2,
+							todayVoteNumber:listobj.todayVoteNumber,
+							lastdayVoteNumber:listobj.lastdayVoteNumber,
+							lastdayVoteOrder:listobj.lastdayVoteOrder,
+							totalNumber:0, //总投票数
+							isFreez:listobj.isFreez,
+							code1:listobj.code1,
+							code2:listobj.code2,
+							code3:listobj.code3,
+							code4:listobj.code4,
+							writeTime:listobj.writeTime,
+						})
 					}
 				})
-			})
+			})//end forEach
 			//将分组isshow为-1的被投票项剔除
 			if(tempList.length == 0){
 				 return cb(null, []);
 			}
 
-			//排序
-			list = tempList.sort(function(a,b){
-				if(a.todayVoteNumber > b.todayVoteNumber){
-					return false;
-				}
-				return true;
-			})
-			cb(err,list)
-		})
+			obj.getItemVoteCountsByIds(ids, function(err, itemCountList){
+				if(err) return cb(err)
+				//生成totalNumber
+				tempList.forEach(function(tempo){
+					itemCountList.forEach(function(icounto){
+						if(tempo._id == icounto.itemId){
+							tempo.totalNumber = icounto.count
+						}
+					})
+				})//end tempList.forEach
 
-	})
+				//排序
+				list = tempList.sort(function(a,b){
+					if(a.totalNumber > b.totalNumber){
+						return false;
+					}
+					return true;
+				})
+				cb(null,list)
+
+			}) //end obj.getItemVoteCountsByIds
+
+		})//end voteGroup.findByObj
+
+	})//end voteItem.findByObj
 }
 
 
@@ -217,7 +304,7 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 					itemIds.push(iobj._id.toString());
 				})//end ilist.forEach
 
-				voteGroup.countByItemIds(itemIds, lastTime, function(err,count){
+				voteRecord.countByItemIds(itemIds, lastTime, function(err,count){
 					if(err) return cb2(err)
 					groupCountArray.push({
 						groupid:groupid,
@@ -240,7 +327,7 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 		//利用异步库
 		async.series(fnList, function(err){
 			if(err) return cb(err)
-			cb(groupCountArray)
+			cb(null, groupCountArray)
 		})
 
 	})//end obj.getGroupByVoteId

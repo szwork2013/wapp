@@ -23,7 +23,8 @@ var obj =  { //定义结构,投票活动的doc
       //forwardTimes 设定 -1
 
       title: { type: String, required:true}, //抽奖活动标题
-      picture:{type: String, default:''},  //投票活动的图片地址      
+      picture:{type: String, default:''},  //投票活动的图片地址
+      descShort:{type:String,default: ""},//抽奖活动的规则简述
       desc:{type:String,default: ""},//抽奖活动的描述，比如活动规则说明的    
       isShow:{type:Number,required:true, default:0}, 
 

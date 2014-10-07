@@ -114,6 +114,15 @@
             </div>
           
 
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="descShort" >规则简述</label>
+            </div>
+            <div data-container-for="descShort" class="k-edit-field w-800-r">
+               <textarea id="intro2" type="text" class="k-input k-textbox w-90-inp" name="descShort" data-bind="value:descShort"></textarea>
+            </div>
+
             <div class="k-edit-label  w-800-l">
                 <label for="desc" >活动描述</label>
             </div>
@@ -222,6 +231,7 @@
 
                                     "title": { editable: true },
                                     "picture": { editable: true },
+                                    "descShort": { editable: true },
                                     "desc": { editable: true },
                      
                                     "startTime":{editable: true, type: "date"},
@@ -232,7 +242,7 @@
                                     "code3": { editable: true },
                                     "code4": { editable: true },
 
-                                    "isShow": { editable: true, type: "number"},                                    
+                                    "isShow": { editable: true, type: "number"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -316,6 +326,11 @@ $.post('/manger/app/getList',{},function(data_ary){
                             hidden:true
                          },
                          { 
+                            field: "descShort",
+                            title: "规则简述", 
+                            hidden:true
+                         },
+                         { 
                             field: "desc",
                             title: "活动描述", 
                             hidden:true
@@ -390,7 +405,12 @@ $.post('/manger/app/getList',{},function(data_ary){
                                 tools: window.editor_tools,
                                 messages: window.editor_messages
                          });  
+                         $("#intro2").kendoEditor({
+                                tools: window.editor_tools,
+                                messages: window.editor_messages
+                         });
 
+                         
 
                          window.dropdown_init()
 
