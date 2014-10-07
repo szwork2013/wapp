@@ -74,8 +74,8 @@ obj.startVote = function(req,res){ //用户进入抽奖页面点击抽奖程序
 
 	var itemid = req.body.itemid
 	var isforward = parseInt(req.body.isforward) || 0;
-	var pos = req.ips.length - 1;
-	var recordIp = req.ips[pos] || '127.0.0.1'
+	//var pos = req.ips.length - 1;
+	var recordIp = req.ips[0] || '127.0.0.1'
 
 	voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
 		if(err) return res.send({error:1,data:err}) 
