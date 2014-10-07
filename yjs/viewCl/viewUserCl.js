@@ -193,12 +193,21 @@ obj.index_login_v2 = function(req,res){
 			return res.send(500,'个人主页加载失败')
 		}
 
-		res.render('index_login_v2.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'list':list,
-			'count':list.length
-		})
+		if(req.wxBinder.appUserType == 0){
+			res.render('index_nologin_v2.ejs',{
+				'userObj':req.wxuobj,
+				'binderObj':req.wxBinder,
+			})
+		}
+		else{
+			res.render('index_login_v2.ejs',{
+				'userObj':req.wxuobj,
+				'binderObj':req.wxBinder,
+				'list':list,
+				'count':list.length
+			})
+		}
+		
 
 	})
 }
