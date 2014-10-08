@@ -79,6 +79,7 @@ obj.update = obj.create = function(req, res){
 	}
 	
 	delete req.models[0]["_id"];
+	delete req.models[0]["__v"];
 
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);
