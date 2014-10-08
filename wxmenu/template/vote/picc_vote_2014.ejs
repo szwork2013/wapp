@@ -209,6 +209,12 @@
 	#group_sel_box{
 		margin-top: 10px;
 	}
+	.txt_c{
+		text-align: center;
+	}
+	.over_hidden{
+		overflow-x: hidden;
+	}
 </style>
 
 <%- newrelic.getBrowserTimingHeader() %>
@@ -236,7 +242,7 @@
     <div id="group_sel_box" class="demo-content-wide row show-grid">
 
     	<% groupList.forEach(function(groupObj){ %>
-    		<div class="col-xs-3 col-sm-4">
+    		<div class="col-xs-4 col-sm-4 txt_c">
     			<% 
 	    			if(groupObj.count >=500){
 	    				var btnClass = 'btn-danger'
@@ -614,7 +620,8 @@ $(function(){
 		var cf = 0
 		var perLimit = window.voteObj.intervalPerUserTimes
 		var voteType = 1; //可投票状态，1表示可投票，2表示不可投票，3表示转发后可投票
-		var btnClass = useSm ? 'btn-sm' : 'btn-lg'
+		//var btnClass = useSm ? 'btn-sm' : 'btn-lg'
+		var btnClass ='btn-sm'
 		var ta = '他'
 		if(itemobj.sex == 0) ta = '她'
 
