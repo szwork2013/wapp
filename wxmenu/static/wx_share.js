@@ -48,6 +48,7 @@ var dataForWeixin = {
         });
         WeixinJSBridge.on('menu:share:timeline',
         function(argv) { 
+            (dataForWeixin.callback)();
         is_zero();
             WeixinJSBridge.invoke('shareTimeline', {
                 "img_url": dataForWeixin.TLImg,
@@ -57,7 +58,7 @@ var dataForWeixin = {
                 "desc": dataForWeixin.desc,
                 "title": dataForWeixin.title
             },
-            function(res) {(dataForWeixin.callback)()});
+            function(res) {});
         });
         WeixinJSBridge.on('menu:share:weibo',
         function(argv) {
