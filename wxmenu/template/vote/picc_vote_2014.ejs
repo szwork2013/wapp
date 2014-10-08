@@ -13,7 +13,9 @@
 
 	.clear{zoom:1;}
 	.clear:after{clear:both;content:'';display:block;}
-
+	.ft13{
+		font-size: 13px !important;
+	}
 	#main_pic{
 		margin: 10px auto 0;
 		display: block;
@@ -736,10 +738,10 @@ $(function(){
 						'<span class="modal_item_info yh">'+
         				'No.'+pos+' '+itemObj.title+'<br/>票数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font></span>'+voteStr+
         				'</div><div  class="row show-grid yh">'+
-		        		'<div class="col-xs-6 col-sm-6">地区：'+itemObj.groupName+'</div>'+
-		        		'<div class="col-xs-6 col-sm-6">年龄：'+itemObj.age+'</div>'+
-		        		'<div class="col-xs-6 col-sm-6">性别：'+sex+'</div>'+
-		        		'<div class="col-xs-6 col-sm-6">工号：'+itemObj.number+'</div></div>'+
+		        		'<div class="col-xs-6 col-sm-6 ft13">地区：'+itemObj.groupName+'</div>'+
+		        		'<div class="col-xs-6 col-sm-6 ft13">年龄：'+itemObj.age+'</div>'+
+		        		'<div class="col-xs-6 col-sm-6 ft13">性别：'+sex+'</div>'+
+		        		'<div class="col-xs-6 col-sm-6 ft13">工号：'+itemObj.number+'</div></div>'+
         				'<div class="yh">'+
 			        	'<h6>简介：</h6>'+itemObj.desc+'<h6>优秀事迹：</h6>'+itemObj.desc2+'</div>'
 
