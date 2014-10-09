@@ -164,8 +164,14 @@ var hasInit = false;
     
 
         $('#down').click(function(){
+            var group_q = ''
+            if($('#groupId_inp').val() && $('#groupId_inp').val() != ''){
+                var group_q ='&groupid='+$('#groupId_inp').val()
+            }
+             
+
             var url = '/manger/voteRec/download?voteid='+$('#app_sel_inp').val()+'&stime='+
-                      $('#start').val()+'&etime='+$('#end').val();
+                      $('#start').val()+'&etime='+$('#end').val()+group_q;
 
             location.href = url
         })
