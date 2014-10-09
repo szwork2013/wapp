@@ -81,49 +81,53 @@ obj.aggressive = function(req, res){
 					return res.json({error:0, data:[]})
 				}
 				var ids = [];
+				var tempList = []
 				orderList.forEach(function(orderObj){
 					if(ids.indexOf(orderObj._id) == -1){
 						ids.push(orderObj._id)
 					}
-					dl3.getByIds(ids, function(err, list){
-						if(err){
-								if(req.downloadCallback){
-									return req.downloadCallback(err)
-								}
-								return res.json({error:1, data:err})
-						}
-						if(list.length==0){
-								if(req.downloadCallback){
-									return req.downloadCallback(0, [])
-								}
-								return res.json({error:0, data:[]})
-						}
-
-						var tempList = []
-						var pos = 1;
-						orderList.forEach(function(orderObj){
-							list.forEach(function(lo){
-								if(orderObj._id.toString() == lo._id.toString()){
-									tempList.push({
-										_id:orderObj._id,
-										title:lo.title,
-										supportCount:orderObj.supportCount,
-										position:pos++,
-										groupId:orderObj.groupId,
-										groupName:orderObj.groupName,
-									})
-								}
-
-							})
-						})//end foreach
-						if(req.downloadCallback){
-							return req.downloadCallback(0, tempList)
-						}
-						return res.json({error:0, data:tempList})
-
-					})//end dl3.getByIds
-
 				})//end orderList.forEach
+				
+				dl3.getByIds(ids, function(err, list){
+					if(err){
+							if(req.downloadCallback){
+								return req.downloadCallback(err)
+							}
+							return res.json({error:1, data:err})
+					}
+					if(list.length==0){
+							if(req.downloadCallback){
+								return req.downloadCallback(0, [])
+							}
+							return res.json({error:0, data:[]})
+					}
+
+					
+					var pos = 1;
+					//console.log(orderList)
+					orderList.forEach(function(orderObj){
+						list.forEach(function(lo){
+							if(orderObj._id.toString() == lo._id.toString()){
+								tempList.push({
+									_id:orderObj._id,
+									title:lo.title,
+									supportCount:orderObj.supportCount,
+									position:pos++,
+									groupId:orderObj.groupId,
+									groupName:orderObj.groupName,
+								})
+							}
+
+						})
+					})//end foreach
+					if(req.downloadCallback){
+						return req.downloadCallback(0, tempList)
+					}
+					return res.json({error:0, data:tempList})
+
+				})//end dl3.getByIds
+
+				
 
 
 			})//dl.aggregateOrder

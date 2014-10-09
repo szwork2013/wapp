@@ -119,6 +119,8 @@ objSchema.statics.aggregateOrder = function (query, cb) {
           cb(err,list)
           return;
         }
+        
+
         var itemsId = []
         var groupsId = []
         var tempObj = []
@@ -129,6 +131,7 @@ objSchema.statics.aggregateOrder = function (query, cb) {
         //根据itemId查找item项
         voteItemDl.getByIds(itemsId, function(err,itemlist){
           if(err) return cb(err);
+          
           list.forEach(function(lobj){
               itemlist.forEach(function(iobj){
                   if(lobj._id.toString() == iobj._id.toString()){
@@ -145,6 +148,7 @@ objSchema.statics.aggregateOrder = function (query, cb) {
 
           //根据groupId查找groupName
           //console.log(groupsId)
+
           voteGroupDl.getByIds(groupsId, function(err, glist){
               if(err) return cb(err);
               //console.log(glist)
@@ -157,11 +161,13 @@ objSchema.statics.aggregateOrder = function (query, cb) {
               })//end temp foreach
 
               //根据是否有groupId筛选
+              
               if(!query.groupId) return cb(null, tempObj)
               tempObj = tempObj.filter(function(tobj){
                     if(tobj.groupId == query.groupId) return true
                     return false;
               })
+            
               return cb(null, tempObj)
           })//end voteGroupDl.getByIds
 
