@@ -221,8 +221,8 @@ window.requestAnimFrame = (function() {
 	var totalDeg = 360 * 3 + 0;
 	var steps = [];
 	var lostDeg = [260];
-	var prizeDeg = [42, 135, 110, 60, 300, 210, 190, 40];
-	//[10元，888左2元（不中），888元（不中），888右2元（不中），谢谢参与左2元（不中），谢谢参与右2元，100元，10元]
+	var prizeDeg = [330, 135, 110, 60, 300, 210, 190, 40];
+	//[50元，888左2元（不中），888元（不中），888右2元（不中），谢谢参与左2元（不中），谢谢参与右2元，100元，10元]
 	var prize, sncode;
 	var count = 0;
 	var now = 0;
@@ -298,7 +298,7 @@ window.requestAnimFrame = (function() {
 
 
 		//start(prizeDeg[0])
-		//[10元，888左2元（不中），888元（不中），888右2元（不中），谢谢参与左2元（不中），谢谢参与右2元，100元，10元]
+		//[50元，888左2元（不中），888元（不中），888右2元（不中），谢谢参与左2元（不中），谢谢参与右2元，100元，10元]
 
 		//return;
 		
@@ -321,7 +321,7 @@ window.requestAnimFrame = (function() {
 			success: function(d) {
 
 					var prizeObj = {
-						'10元':prizeDeg[0],
+						'50元':prizeDeg[0],
 						'3元':prizeDeg[1],
 						'888元':prizeDeg[2],
 						'4元':prizeDeg[3],
@@ -330,7 +330,7 @@ window.requestAnimFrame = (function() {
 						'100元':prizeDeg[6],
 						'10元':prizeDeg[7]
 					}
-					//[10元，888左2元（不中），888元（不中），888右2元（不中），谢谢参与左2元（不中），谢谢参与右2元，100元，10元]
+					//[50元，888左2元（不中），888元（不中），888右2元（不中），谢谢参与左2元（不中），谢谢参与右2元，100元，10元]
 
 					if(d.error == 1){						
 						window.prizeTitle = false;
@@ -346,7 +346,7 @@ window.requestAnimFrame = (function() {
 					}
 
 					var prizeTitle = d.data.prizeObj.name;
-					//[921元，1984元，1元，92.1元，1元，9元，30元，2元]
+							//[50元，888左2元（不中），888元（不中），888右2元（不中），谢谢参与左2元（不中），谢谢参与右2元，100元，10元]
 					var pos = prizeObj[prizeTitle]
 					if(typeof pos == 'undefined'){
 						window.prizeTitle = false;
