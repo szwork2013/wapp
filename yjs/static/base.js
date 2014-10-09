@@ -52,3 +52,17 @@ $(function(){
 
 
 })
+
+
+
+
+
+
+
+var forwardingUrl = 'http://mp.weixin.qq.com/s?__biz=MjM5MDQwOTE2OA==&mid=201864670&idx=1&sn=947d00af04d47af41d65439542880da7&scene=2&from=timeline&isappinstalled=0#rd';
+var forwardingImg = 'http://wkmixtown.qiniudn.com/yjs_logo.jpg'
+var forwardingTitle ='【景瑞御江山】举手之劳，坐享江山财富'
+var forwardingDesc ='御江山全民经纪人活动盛大开启，轻松按动，便可坐享“江山财富”'
+var forwardingCallback = function(){
+  //alert(111)
+}
