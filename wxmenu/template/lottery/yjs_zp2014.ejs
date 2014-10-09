@@ -439,12 +439,12 @@ $('#modify_info_btn').click(function(){
       return false;
     }
     var front3 = appUserMobile.slice(0,3);
-    /*
+    
     if(mobile_num.indexOf(front3) == -1){
     	alert('请输入移动号码')
       	return false;
     }
-    */
+    
 
     $.post('/lottery/<%= appEname%>/complete',{
 	    truename:u_username, 
