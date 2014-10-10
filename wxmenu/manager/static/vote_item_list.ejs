@@ -5,33 +5,33 @@
 <div id="grid"></div>
 <script id="popup_editor" type="text/x-kendo-template">
           
-            <div class="k-edit-label w-800-l hide">
+            <div class="k-edit-label w-800-l vote_hide">
                 <label for="_id">投票id</label>
             </div>
-            <div data-container-for="_id" class="k-edit-field w-800-r hide"  data-bind="value:_id">
+            <div data-container-for="_id" class="k-edit-field w-800-r vote_hide"  data-bind="value:_id">
                 <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
             </div>
 
-             <div class="k-edit-label  w-800-l">
+             <div class="k-edit-label  w-800-l vote_hide">
                 <label for="appId" >开发商</label>
             </div>
-            <div data-container-for="appId" class="k-edit-field w-800-r">
+            <div data-container-for="appId" class="k-edit-field w-800-r vote_hide">
                <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
             </div>
 
-            <div class="k-edit-label  w-800-l">
+            <div class="k-edit-label  w-800-l vote_hide">
                 <label for="voteId" >所属投票</label>
             </div>
-            <div data-container-for="voteId" class="k-edit-field w-800-r">
+            <div data-container-for="voteId" class="k-edit-field w-800-r vote_hide">
                <input type="text" id="voteId_inp" class="k-input k-textbox w-50-inp" name="voteId" data-bind="value:voteId"  >
             </div>
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="groupId" >所属分组</label>
+                <label for="groupId" id="groupIdText"></label>
             </div>
             <div data-container-for="groupId" class="k-edit-field w-800-r">
-               <input type="text" id="groupId_inp" class="k-input k-textbox w-50-inp" name="groupId" data-bind="value:groupId" required="required" data-required-msg="请填写所属投票">
+               <input type="text" id="groupId_inp" class="k-input k-textbox w-50-inp" name="groupId" data-bind="value:groupId" required="required" data-required-msg="">
             </div>
             
             <div class="k-edit-label  w-800-l">
@@ -125,7 +125,7 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="desc2" >描述</label>
+                <label for="desc2" >事迹</label>
             </div>
             <div data-container-for="desc2" class="k-edit-field w-800-r">
                <textarea id="intro2" type="text" class="k-input k-textbox w-90-inp" name="desc2" data-bind="value:desc2"></textarea>
@@ -133,10 +133,10 @@
 
 
             
-            <div class="k-edit-label  w-800-l">
+            <div class="k-edit-label  w-800-l vote_hide">
                 <label for="code1" >作弊警告</label>
             </div>
-            <div data-container-for="code1" class="k-edit-field w-800-r">
+            <div data-container-for="code1" class="k-edit-field w-800-r vote_hide">
                <input type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
             </div>
 
@@ -248,6 +248,8 @@
                                     "code3": { editable: true },
                                     "code4": { editable: true },
 
+                                    "totalCount": { editable: false },
+                                    
                                     "isShow": { editable: true, type: "number"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
@@ -258,10 +260,14 @@
 
                 var toolbarAry = [];
                 var commandAry = [];
- 
-                    var toolbarAry = [
-                                { name: "create", text: "添加被投票项" }
-                              ]
+                var toolbarAry = [
+                        { name: "create", text: "添加被投票人" }
+                        ]
+if(!window.vote_hide){ 
+    var zoneTitle = '所属分组'
+ }else{
+    var zoneTitle = '所属地区'
+ }                             
 
         
                     var commandAry = [
@@ -316,28 +322,31 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                         {
                             field:'_id',
                             title:'被投票项Id',
-                            hidden:true
+                            hidden:true,
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "appId",
                             title: "开发商",
-                            values: d
+                            values: d,
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "voteId",
                             title: "所属投票",
-                            values: d2
+                            values: d2,
+                            hidden:window.vote_hide||false
                         },
                         {
 
                             field: "groupId",
-                            title: "所属分组",
+                            title: zoneTitle,
                             values: d3
                         },
                         { 
                             field: "title",
-                            title: "名称"
-                        },
+                            title: "姓名"
+                        },                     
                         { 
                             field: "pictureThumb",
                             title: "缩略图",
@@ -346,25 +355,24 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                         { 
                             field: "picture",
                             title: "大图",
-                             hidden:true
+                            hidden:true
                         },
                         { 
                             field: "sex",
                             title: "性别",
-                            values:window.sex_ary
-
+                            values:window.sex_ary,
+                      
                         },
                         { 
                             field: "age",
                             title: "年龄",
-                            hidden:true
-
                         },
+
                         { 
                             field: "number",
                             title: "工号",
-                            hidden:true
                         },
+
                         { 
                             field: "desc",
                             title: "简介",
@@ -376,8 +384,13 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                             hidden:true
                         },
                         { 
+                            field: "totalCount",
+                            title: '总票数', 
+                        },
+                        { 
                             field: "todayVoteNumber",
                             title: "今日票数",
+                            hidden:true
                         },
                         { 
                             field: "lastdayVoteNumber",
@@ -397,6 +410,7 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                         { 
                             field: "code1",
                             title: "作弊警告",
+                            hidden:window.vote_hide||false
                          },
                          { 
                             field: "code2",
@@ -439,7 +453,7 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                         $('.k-window-content').addClass('w-800-content');
                         $('.k-edit-form-container').addClass('w-800-content');
                     
-
+                        $('#groupIdText').html(zoneTitle)
 
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 1)
                         multiUpload($("#upload_file2"), $('#appPicture_inp2'), 1)

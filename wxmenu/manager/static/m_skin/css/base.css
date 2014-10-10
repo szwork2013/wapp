@@ -174,3 +174,9 @@ display: none;
 .k-widget.k-tooltip-validation{
 	text-indent: 1.3em;
 }
+#voteCount{
+	margin-right: 100px;
+}
+#countStatus{
+	margin: 10px 0 20px;
+}

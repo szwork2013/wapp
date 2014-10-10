@@ -5,7 +5,7 @@
 
 <div class="app_sel_boc">
 <div class="clear">
-     <p>
+     <p class="vote_hide">
         <label for="app_sel_inp">选择投票活动：</label><input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
     </p>
     <p class="fl">
@@ -31,6 +31,10 @@
 </div>
 
 
+<div id="countStatus" style="display:none;">
+总投票数：<span id="voteCount" ></span>
+总参与人数：<span id="voteMemberCount"></span>
+</div>
 
 <div id="grid"></div>
 
@@ -160,6 +164,14 @@ var hasInit = false;
                     });
 
             },'json')
+
+            $.post('/manger/voteRec/aggressiveCount', {voteid:$('#app_sel_inp').val()}, function(d){
+                    if(d.error) return alert(d.data);
+                    $('#voteCount').html(d.data.voteCount)
+                    $('#voteMemberCount').html(d.data.voteMemberCount)
+                    $('#countStatus').show();
+            },'json')
+
         })
     
 

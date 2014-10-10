@@ -66,8 +66,9 @@ var addroute = function(app){
 
 
 	//登录
-	app.get('/', loginCl.Login)
+	app.get('/', loginCl.Login2)
 	app.get('/manger/login', loginCl.Login)
+	app.get('/manger/login2', loginCl.Login2)
 	app.get('/manger/logout', checkLogin, loginCl.Logout)
 	app.post('/manger/login', loginCl.UserLogin)
 	app.get('/manger/main', checkLogin, loginCl.Main)
@@ -220,6 +221,7 @@ var addroute = function(app){
 	//统计计算
 	app.get('/manger/voteRec/aggressivelist',checkLogin, voteRecordCl.aggressiveList) //统计
 	app.post('/manger/voteRec/aggressive',checkLogin, voteRecordCl.aggressive) //统计ajax接口
+	app.post('/manger/voteRec/aggressiveCount',checkLogin, voteRecordCl.aggressiveCount) //统计vote参与人数和票数接口
 	app.get('/manger/voteRec/download', checkLogin, voteRecordCl.download) //下载列表，导出excel
 
 

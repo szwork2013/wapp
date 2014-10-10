@@ -270,5 +270,28 @@ obj.getList = function(req, res){
 	})
 }
 
+obj.aggressiveCount = function(req, res){
+	var voteid = req.body.voteid;
+
+	dl.countAll({
+		voteId:voteid
+	},function(err, count1){
+		if(err) return res.send(500,err);
+		dl.aggregateUser({
+			voteId:voteid
+		},function(err,list){
+			if(err) return res.send(500,err);
+			return res.send({
+				error:0,
+				data:{
+					voteCount:count1,
+					voteMemberCount:list.length
+				}
+			})
+		})
+	})
+
+}
+
 
 module.exports = obj;

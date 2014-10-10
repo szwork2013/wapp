@@ -6,7 +6,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="/manger/main/">微信自定义菜单专用</a>
+
+          <%if(session.admin.indexOf('95515_vote') != -1){%>
+            <a class="brand" href="/manger/main/">合众人寿微信投票管控后台</a>
+          <%}else{%>
+            <a class="brand" href="/manger/main/">微信自定义菜单专用</a>
+          <%}%>
+
+          
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
               欢迎您管理员 <%= session.admin %> <a href="/manger/logout" class="navbar-link">退出登录</a>

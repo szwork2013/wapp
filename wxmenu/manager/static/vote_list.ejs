@@ -6,24 +6,24 @@
  <div id="grid"></div>
 <script id="popup_editor" type="text/x-kendo-template">
           
-            <div class="k-edit-label w-800-l hide">
+            <div class="k-edit-label w-800-l vote_hide">
                 <label for="_id">投票id</label>
             </div>
-            <div data-container-for="_id" class="k-edit-field w-800-r hide"  data-bind="value:_id">
+            <div data-container-for="_id" class="k-edit-field w-800-r vote_hide"  data-bind="value:_id">
                 <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
             </div>
 
-             <div class="k-edit-label  w-800-l">
+             <div class="k-edit-label  w-800-l vote_hide">
                 <label for="appId" >开发商</label>
             </div>
-            <div data-container-for="appId" class="k-edit-field w-800-r">
+            <div data-container-for="appId" class="k-edit-field w-800-r vote_hide">
                <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
             </div>
 
-             <div class="k-edit-label  w-800-l">
+             <div class="k-edit-label  w-800-l vote_hide">
                 <label for="ename" >唯一英文标识</label>
             </div>
-            <div data-container-for="ename" class="k-edit-field w-800-r">
+            <div data-container-for="ename" class="k-edit-field w-800-r vote_hide">
                <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="ename" data-bind="value:ename" data-required-msg="请填写唯一英文标识" aria-invalid="true">
                <br/>
                <span>
@@ -253,15 +253,22 @@
                 var toolbarAry = [];
                 var commandAry = [];
  
+if(!window.vote_hide){
                     var toolbarAry = [
                                 { name: "create", text: "添加投票" }
                               ]
-
-        
-                    var commandAry = [
-                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
-                                { name: "destroy", text: "删除"},
-                              ]
+}
+if(!window.vote_hide){    
+    var commandAry = [
+                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                { name: "destroy", text: "删除"},
+              ]
+}
+else{
+    var commandAry = [
+                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+              ]
+}
 
 
 $.post('/manger/app/getList',{},function(data_ary){
@@ -290,11 +297,13 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "appId",
                             title: "开发商",
-                            values: d
+                            values: d,
+                            hidden:window.vote_hide || false
                         },
                         { 
                             field: "ename",
                             title: "唯一标识", 
+                            hidden:window.vote_hide || false
                         },
                         { 
                             field: "interval",

@@ -179,15 +179,24 @@
                 var toolbarAry = [];
                 var commandAry = [];
  
-                    var toolbarAry = [
-                                { name: "create", text: "添加记录" }
-                              ]
+ if(!window.vote_hide){
+    var toolbarAry = [
+        { name: "create", text: "添加记录" }
+      ]
+    var commandAry = [
+        { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+        { name: "destroy", text: "删除"},
+      ]
+ }
+ else{
+    var commandAry = [
+        { name: "destroy", text: "删除"},
+      ]
+ }
+
 
         
-                    var commandAry = [
-                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
-                                { name: "destroy", text: "删除"},
-                              ]
+                    
 
 
 $.post('/manger/app/getList',{},function(data_ary){
@@ -229,12 +238,14 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         { 
                             field: "appId",
                             title: "开发商",
-                            values: d
+                            values: d,
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "voteId",
                             title: "所属投票", 
-                            values: d2
+                            values: d2,
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "itemId",

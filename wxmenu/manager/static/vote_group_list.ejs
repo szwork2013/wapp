@@ -6,30 +6,30 @@
  <div id="grid"></div>
 <script id="popup_editor" type="text/x-kendo-template">
           
-            <div class="k-edit-label w-800-l hide">
+            <div class="k-edit-label w-800-l vote_hide">
                 <label for="_id">分组id</label>
             </div>
-            <div data-container-for="_id" class="k-edit-field w-800-r hide"  data-bind="value:_id">
+            <div data-container-for="_id" class="k-edit-field w-800-r vote_hide"  data-bind="value:_id">
                 <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
             </div>
 
-             <div class="k-edit-label  w-800-l">
+             <div class="k-edit-label  w-800-l vote_hide">
                 <label for="appId" >开发商</label>
             </div>
-            <div data-container-for="appId" class="k-edit-field w-800-r">
+            <div data-container-for="appId" class="k-edit-field w-800-r vote_hide">
                <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
             </div>
 
 
-            <div class="k-edit-label  w-800-l">
+            <div class="k-edit-label  w-800-l vote_hide">
                 <label for="voteId" >所属投票</label>
             </div>
-            <div data-container-for="voteId" class="k-edit-field w-800-r">
+            <div data-container-for="voteId" class="k-edit-field w-800-r vote_hide">
                <input type="text" id="voteId_inp" class="k-input k-textbox w-50-inp" name="voteId" data-bind="value:voteId" data-required-msg="请填写所属投票" aria-invalid="true">
             </div>
 
              <div class="k-edit-label  w-800-l">
-                <label for="ename" >唯一英文标识</label>
+                <label for="ename" >英文名称</label>
             </div>
             <div data-container-for="ename" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="ename" data-bind="value:ename" data-required-msg="请填写唯一英文标识" aria-invalid="true">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="title" >分组标题</label>
+                <label for="title" id="groupTitle">名称</label>
             </div>
             <div data-container-for="title" class="k-edit-field w-800-r">
                <input type="text" id="" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" data-required-msg="请填写分组标题" aria-invalid="true">
@@ -155,13 +155,14 @@
                                     "appId":{ editable: true },
                                     "voteId": { editable: true },
                                     "ename": { editable: true },
-                                    "title": { editable: true },                                    
+                                    "totalCount":{editable:false},
+                                    "title": { editable: true },           
                                     "code1": { editable: true },
                                     "code2": { editable: true },
                                     "code3": { editable: true },
                                     "code4": { editable: true },
                                     "isFreez": { editable: true, type: "number"},
-                                    "isShow": { editable: true, type: "number"},                                    
+                                    "isShow": { editable: true, type: "number"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -171,10 +172,17 @@
 
                 var toolbarAry = [];
                 var commandAry = [];
- 
-                    var toolbarAry = [
-                                { name: "create", text: "添加分组" }
-                              ]
+
+if(!window.vote_hide){ 
+    var zoneTitle = '分组'
+ }else{
+    var zoneTitle = '地区'
+ }    
+
+
+var toolbarAry = [
+            { name: "create", text: "添加"+zoneTitle }
+          ]
 
         
                     var commandAry = [
@@ -220,20 +228,27 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         { 
                             field: "appId",
                             title: "开发商",
-                            values: d
+                            values: d,
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "ename",
                             title: "唯一标识", 
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "voteId",
                             title: "所属投票", 
-                            values: d2
+                            values: d2,
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "title",
-                            title: "分组名称", 
+                            title: zoneTitle+"名称", 
+                        },
+                        { 
+                            field: "totalCount",
+                            title: '总票数', 
                         },
                         { 
                             field: "isFreez",
@@ -288,7 +303,7 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         $('.k-window-content').addClass('w-800-content');
                         $('.k-edit-form-container').addClass('w-800-content');
                     
-
+                        $('#groupTitle').html(zoneTitle+'名称')
                         
                         window.dropdown_init($("#appId_inp"), d)
                         window.dropdown_init($("#voteId_inp"), d2)

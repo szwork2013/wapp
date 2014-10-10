@@ -274,6 +274,7 @@ obj.getRankByVoteIdGroupId=  function(voteid, groupid, cb){
 }
 
 
+
 //根据voteid查找所有分组在 lastTimeStamp 之后的投票数量
 obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 	var cb = cb || function(){};

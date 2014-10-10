@@ -1,5 +1,5 @@
 var dl = require('../../dl/voteItemModel.js');
-
+var bl = require('../../bl/wxVote.js');
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
 var obj = {}
@@ -24,19 +24,66 @@ obj.read = function(req, res){
 	dl.findAll(filter, skip, pageSize, function(err,doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json(resObj);
-		resObj["Data"] = doc;
+	
+		var tempList = []
 		var ids = []
 		doc.forEach(function(v){
-			ids.push(v.userId)
+			ids.push(v._id.toString())
+
+			tempList.push({
+				_id:v._id.toString(),
+				appId:v.appId,
+				voteId:v.voteId,
+				groupId:v.groupId,
+
+				title:v.title,
+				pictureThumb:v.pictureThumb,
+				picture:v.picture,
+				sex:v.sex,
+				age:v.age,
+				number:v.number,
+
+				desc:v.desc,
+				desc2:v.desc2,
+				todayVoteNumber:v.todayVoteNumber,
+				lastdayVoteNumber:v.lastdayVoteNumber,
+				lastdayVoteOrder:v.lastdayVoteOrder,
+				isFreez:v.isFreez,
+
+				isShow:v.isShow,
+				code1:v.code1,
+				code2:v.code2,
+				code3:v.code3,
+				code4:v.code4,
+				totalCount:0,
+				writeTime:v.writeTime,
+			})
 		})
 
 		dl.countAll(filter,function(err,count){
 			if(err) return res.send(500,err);
 
-				resObj["Total"] = count
-				
-				res.json(resObj);
-			
+				bl.getItemVoteCountsByIds(ids, function(err,countList){
+					if(err) return res.send(500,err);
+
+					//循环匹配获取totalCount
+					tempList.forEach(function(tempo){
+						var vid = tempo.voteId
+
+							countList.forEach(function(obj){
+									if(obj.itemId == tempo._id){
+										tempo.totalCount = obj.count
+									}
+							})
+					})
+
+
+					resObj["Total"] = count
+					resObj["Data"] = tempList;
+					res.json(resObj);
+
+
+				})
 		})
 		
 	})

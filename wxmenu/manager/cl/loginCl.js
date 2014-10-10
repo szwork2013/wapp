@@ -7,10 +7,21 @@ UserLogin.Login = function(req,res){
 	res.render('login', {error:''});
 }
 
+UserLogin.Login2 = function(req,res){
+	res.render('login2', {error:''});
+}
+
 UserLogin.UserLogin = function(req,res){
 
+	if(req.body.login_page){
+		var template = req.body.login_page
+	}
+	else{
+		template = 'login'
+	}
+
 	if(!req.body.admin || !req.body.password){
-		return	res.render('login', {error:'用户名或密码未填写'})
+		return	res.render(template, {error:'用户名或密码未填写'})
 	}
 	Dl.findAll({
 		admin:req.body.admin
@@ -24,7 +35,7 @@ UserLogin.UserLogin = function(req,res){
 			return;
 		}
 		else{
-			return	res.render('login', {error:'用户名或密码错误'})
+			return	res.render(template, {error:'用户名或密码错误'})
 		}		
 	})
 	
@@ -33,8 +44,15 @@ UserLogin.UserLogin = function(req,res){
 
 UserLogin.Logout = function(req,res){
 
-	req.session = null;
-	res.redirect('/manger/login/')
+	if(req.session.admin.indexOf('95515_vote') != -1){
+		req.session = null;
+		res.redirect('/')
+	}
+	else{
+		req.session = null;
+		res.redirect('/manger/login/')
+	}
+	
 	
 }
 

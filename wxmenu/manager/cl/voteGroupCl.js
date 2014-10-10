@@ -1,7 +1,8 @@
 var dl = require('../../dl/voteGroupModel.js');
-
+var bl = require('../../bl/wxVote.js');
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
+var async = require('async')
 var obj = {}
 var salt = global.app.get('salt');
 
@@ -24,18 +25,74 @@ obj.read = function(req, res){
 	dl.findAll(filter, skip, pageSize, function(err,doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json(resObj);
-		resObj["Data"] = doc;
+		
 		var ids = []
+		var voteIds = [];
+		var tempList = [];
+		var groupList = {};
+		var oldTime = Date.parse('1980/01/01');
+
 		doc.forEach(function(v){
-			ids.push(v.userId)
+			if(voteIds.indexOf(v.voteId) == -1){
+				voteIds.push(v.voteId)
+			}
+
+			tempList.push({
+				_id:v._id.toString(),
+				appId:v.appId,
+				voteId:v.voteId,
+				ename:v.ename,
+				title:v.title,
+				isFreez:v.isFreez,
+				isShow:v.isShow,
+				code1:v.code1,
+				code2:v.code2,
+				code3:v.code3,
+				code4:v.code4,
+				totalCount:0,
+				writeTime:v.writeTime,
+			})
 		})
 
 		dl.countAll(filter,function(err,count){
 			if(err) return res.send(500,err);
 
-				resObj["Total"] = count
+				//生成异步操作函数数组
+				var dealFunc = []
+				voteIds.forEach(function(vid){
+					var vid = vid
+					dealFunc.push(function(callback){
+						bl.getGroupCountByVoteId(vid, oldTime, function(err, groupCountList){
+							if(err) callback(err)
+							groupList[vid] = groupCountList
+							callback()
+						})
+					})
+				})
+
+
+				//执行异步
+				async.series(dealFunc, function(err){
+					if(err) return res.send(500,err);
+
+					//循环匹配获取totalCount
+					tempList.forEach(function(tempo){
+						var vid = tempo.voteId
+						if(groupList[vid] && groupList[vid].length >0){
+								groupList[vid].forEach(function(groupobj){
+										if(groupobj.groupid == tempo._id){
+											tempo.totalCount = groupobj.count
+										}
+								})
+						}
+					})
+
+
+					resObj["Total"] = count
+					resObj["Data"] = tempList;
+					res.json(resObj);
+				})	
 				
-				res.json(resObj);
 			
 		})
 		

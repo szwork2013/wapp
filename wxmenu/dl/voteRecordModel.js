@@ -67,6 +67,39 @@ objSchema.statics.destroy = function (query, cb) {
 
 
 
+objSchema.statics.aggregateUser = function(query, cb){
+
+    if(!query.groupId){
+       var writeQ = {}
+    }
+    else{
+       var writeQ = {
+             groupId:query.groupId
+          }
+    }
+
+     return this.aggregate()
+      .match(
+            {'$and': [
+              {"voteId":query.voteId},
+              writeQ
+            ]}
+        )
+      .group( {
+            '_id' : "$userId",
+            'supportCount' : { $sum : 1 },
+        })
+      .sort({
+        'supportCount':-1
+      })
+      .exec(function(err,list){
+          return cb(err, list)
+      })
+}
+
+
+
+
 objSchema.statics.aggregateOrder = function (query, cb) { 
     var limit = query.limit || 100000;
     var that = this;
