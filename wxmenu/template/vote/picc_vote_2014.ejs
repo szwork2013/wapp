@@ -429,7 +429,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <script src="http://piccvote.qiniudn.com/dist/js/flat-ui-pro.js"></script>
 <script src="http://piccvote.qiniudn.com/assets/js/prettify.js"></script>
 <script src="http://piccvote.qiniudn.com/assets/js/application.js"></script>
-<script src="/static/shake.js"></script>
+<script src="/static/shake_v2.js"></script>
 <script src="/static/wx_share.js"></script>
 
 <script type="text/javascript">
@@ -915,12 +915,15 @@ $(function(){
 	})
 	
 	
-
+	//监听摇一摇事件
+	window.addEventListener('shake', function(){
+		start_shake();
+	}, false);
 
 	//初始化，并监听摇一摇事件
-	shake_init(function(){ 
-		start_shake();
-	})
+	//shake_init(function(){ 
+	//	start_shake();
+	//})
 
 })
 
