@@ -35,8 +35,8 @@ cursor: pointer;
 position: absolute;
 right: 37px;
 top: 619px;
-font-size: 22px;
-letter-spacing: 10px;
+font-size: 14px;
+letter-spacing: 1px;
 text-align: center;
 color: #000;
 z-index: 3;
@@ -164,7 +164,7 @@ font-size: 18px;
       canvas = document.getElementById('myCanvas');
       ctx = canvas.getContext('2d');
       ctx.fillStyle = "#999";
-      ctx.fillRect(0, 0, 535, 115);
+      ctx.fillRect(0, 0, 535, 75);
       //移动
       var START_EV = hasTouch ? 'touchstart' : 'mousedown';
       var MOVE_EV = hasTouch ? 'touchmove' : 'mousemove';
@@ -241,14 +241,14 @@ font-size: 18px;
           }
       }
       function DrawLine() {
-          ctx.clearRect(0, 0, 535, 115);
+          ctx.clearRect(0, 0, 535, 75);
           ctx.globalCompositeOperation = "source-over";
           ctx.fillStyle = "#999";
           /*
           var img = new Image();
           img.src = "images/luck.png";
           ctx.drawImage(img, 0, 0);*/
-          ctx.fillRect(0, 0, 535, 115);
+          ctx.fillRect(0, 0, 535, 75);
           ctx.globalCompositeOperation = "destination-out";
           ctx.beginPath();
           ctx.strokeStyle = color;
