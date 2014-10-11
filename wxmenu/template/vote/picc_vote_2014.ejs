@@ -13,10 +13,10 @@
 
 	.clear{zoom:1;}
 	.clear:after{clear:both;content:'';display:block;}
-	.ft13{
+	.ft13, .ft15{
 		font-size: 15px !important;
 	}
-	.ft16{
+	.ft16, .ft18{
 		font-size: 18px;
 	}
 	#main_pic{
@@ -215,6 +215,21 @@
 	.over_hidden{
 		overflow-x: hidden;
 	}
+	#other_zone{
+		display: block;
+		position: absolute;
+		top: 10px;
+		right: 15px;
+	}
+	#list{
+		position: relative;
+	}
+	.dropdown-menu, .select2-drop{
+		min-width: 143px;
+	}
+	#main{
+		font-size: 15px;
+	}
 </style>
 
 <%- newrelic.getBrowserTimingHeader() %>
@@ -268,6 +283,21 @@
 	      <span class="fui-arrow-left"></span>
 	      返回
 	</a>
+
+	<div class="btn-group" id="other_zone">
+      <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+        选择其他地区 <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" id="dropdown-menu-box">
+      	<% groupList.forEach(function(groupObj){ %>
+    			<li>
+	    		<a href="javascript:;" name="group_more_info" groupid="<%= groupObj._id %>">
+	    		<%= groupObj.title %></a>
+	    		</li>
+    	<% }) %>
+      </ul>
+    </div>
+
 	<div class="rule-title clear">
       <h5>投票人：</h5>
       <button name="shake_btn_list" class="btn btn-primary yh shake_btn">
@@ -748,12 +778,12 @@ $(function(){
 						'<span class="modal_item_info yh">'+
         				'No.'+pos+' '+itemObj.title+'<br/>票数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font></span>'+voteStr+
         				'</div><div  class="row show-grid yh">'+
-		        		'<div class="col-xs-6 col-sm-6 ft13">地区：'+itemObj.groupName+'</div>'+
-		        		'<div class="col-xs-6 col-sm-6 ft13">年龄：'+itemObj.age+'</div>'+
-		        		'<div class="col-xs-6 col-sm-6 ft13">性别：'+sex+'</div>'+
-		        		'<div class="col-xs-6 col-sm-6 ft13">工号：'+itemObj.number+'</div></div>'+
-        				'<div class="yh">'+
-			        	'<h6>简介：</h6>'+itemObj.desc+'<h6>优秀事迹：</h6>'+itemObj.desc2+'</div>'
+		        		'<div class="col-xs-6 col-sm-6 ft18">地区：'+itemObj.groupName+'</div>'+
+		        		'<div class="col-xs-6 col-sm-6 ft18">年龄：'+itemObj.age+'</div>'+
+		        		'<div class="col-xs-6 col-sm-6 ft18">性别：'+sex+'</div>'+
+		        		'<div class="col-xs-6 col-sm-6 ft18">工号：'+itemObj.number+'</div></div>'+
+        				'<div class="yh ft15">'+
+			        	'<h6 class="ft18">简介：</h6>'+itemObj.desc+'<h6 class="ft18">优秀事迹：</h6>'+itemObj.desc2+'</div>'
 
 		$('#modal_item_box').html(modal_str)
 		$('#item_info_modal').modal()
@@ -850,7 +880,7 @@ $(function(){
 
 //bind click
 	//绑定首页点击分组
-	$('#group_sel_box').delegate('a[name="group_more_info"]','click',function(e){
+	$('#group_sel_box, #dropdown-menu-box').delegate('a[name="group_more_info"]','click',function(e){
 		var that = $(this)
 		var groupid = that.attr('groupid')
 		shake_init();
@@ -919,6 +949,8 @@ $(function(){
 	window.addEventListener('shake', function(){
 		start_shake();
 	}, false);
+
+	$('.dropdown-toggle').dropdown()
 
 	//初始化，并监听摇一摇事件
 	//shake_init(function(){ 

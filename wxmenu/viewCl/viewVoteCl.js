@@ -16,7 +16,7 @@ obj.votePage = function(req,res){ //活动页面展示
 	var appEname = appobj.data;
 
 	//测试用，正式环境需注释
-	//req.session[appEname+'_userid'] = '53e9b092ab6cc994aa6e7a5b'
+	req.session[appEname+'_userid'] = '53e9b092ab6cc994aa6e7a5b'
 
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
