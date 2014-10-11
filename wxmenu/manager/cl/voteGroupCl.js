@@ -36,6 +36,7 @@ obj.read = function(req, res){
 			if(voteIds.indexOf(v.voteId) == -1){
 				voteIds.push(v.voteId)
 			}
+			ids.push(v._id.toString())
 
 			tempList.push({
 				_id:v._id.toString(),
@@ -87,15 +88,38 @@ obj.read = function(req, res){
 						}
 					})
 
+					//改分组被投票人的数量
+					bl.countUsersByGroupIds(ids, function(err, groupUserCountList){
+							if(err) return res.send(500,err);
+							tempList.forEach(function(tempo){
+								groupUserCountList.forEach(function(guo){
+									if(tempo._id == guo.groupId){
+										tempo.userCount = guo.count
+									}
+								})
+							})
 
-					resObj["Total"] = count
-					resObj["Data"] = tempList;
-					res.json(resObj);
-				})	
-				
-			
+						//改分组参与投票的用户数量
+						bl.countUserJoinByGroupIds(ids, function(err, groupUserJoinCountList){
+							console.log(groupUserJoinCountList)
+							if(err) return res.send(500,err);
+							tempList.forEach(function(tempo){
+								groupUserJoinCountList.forEach(function(guo){
+									if(tempo._id == guo.groupId){
+										tempo.userJoinCount = guo.groupJoinCount
+									}
+								})
+							})
+
+							resObj["Total"] = count
+							resObj["Data"] = tempList;
+							res.json(resObj);
+
+						})//end bl.countUserJoinByGroupIds
+
+					})//end bl.countUsersByGroupIds
+				})				
 		})
-		
 	})
 
 }

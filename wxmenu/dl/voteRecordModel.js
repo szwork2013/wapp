@@ -98,10 +98,51 @@ objSchema.statics.aggregateUser = function(query, cb){
 }
 
 
+objSchema.statics.aggregateUserJoin = function(query,cb){
+    var limit = query.limit || 10000000;
+    var that = this;
+    if(!query.s || !query.e){
+       var writeQ = {}
+    }
+    else{
+      var writeQ = {
+                "writeTime":{
+                    "$gte":query.s, 
+                    "$lte":query.e, 
+                  }
+              }
+    }
+
+    return this.aggregate()
+      .match(
+            {'$and': [
+              {"voteId":query.voteId},
+              writeQ
+            ]}
+        )
+      .group( {
+            '_id' : "$userId",
+            'supportCount' : { $sum : 1 },
+        })
+      .sort({
+        'supportCount':-1
+      })
+      .limit(limit)
+      .exec(function(err,list){
+        if(err || list.length == 0){
+          cb(err,list)
+          return;
+        }
+
+        return cb(null, list)
+
+      })
+}
+
 
 
 objSchema.statics.aggregateOrder = function (query, cb) { 
-    var limit = query.limit || 100000;
+    var limit = query.limit || 10000000;
     var that = this;
     if(!query.s || !query.e){
        var writeQ = {}

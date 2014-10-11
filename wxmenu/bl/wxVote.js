@@ -35,6 +35,97 @@ obj.getVoteById = function(voteId,cb){
 }
 
 
+obj.countUsersByGroupIds = function(groupids, cb){
+	var dealFuc = []
+	//循环处理groupid回调
+	var groupCountList = []
+	groupids.forEach(function(gid){
+		dealFuc.push(function(callback){
+			voteItem.countAll({
+				groupId:gid,
+				isShow:1,
+			},function(err,countNum){
+				if(err) callback(err)
+				groupCountList.push({
+					groupId:gid,
+					count:countNum
+				})
+				callback();
+			})
+		})
+	})//end 处理回调
+
+	//执行异步方法
+	async.series(dealFuc, function(err){
+		if(err) cb(err)
+		cb(null, groupCountList)
+	})
+
+}
+
+
+
+obj.countUserJoinByGroupIds = function(groupids, cb){
+	var dealFuc = []
+	//循环处理groupid回调
+	var groupJoinList = []
+
+
+	groupids.forEach(function(gid){
+		var gid = gid.toString();
+
+		dealFuc.push(function(callback){		
+			voteItem.findByObj({
+				groupId:gid,
+				isShow:1,
+			},function(err,itemList){
+				if(err) callback(err)
+				var ids = []
+				var dealFunc2 = [];
+				var groupJoinCount = 0
+
+				//对这个分组下所有的被投票项进行循环
+				itemList.forEach(function(itemo){
+
+					//将处理方法写入数组
+					dealFunc2.push(function(callback2){
+
+						voteRecord.aggregateUserJoin({
+							voteId:itemo.voteId
+						},function(err,list){
+							if(err) callback2(err)
+							groupJoinCount += list.length  //累计增加分组计数
+							callback2()
+						})
+
+					})
+				})// end foreach
+
+				//执行async异步方法
+				async.series(dealFunc2,function(err){
+					if(err) callback(err)
+					groupJoinList.push({
+						groupId:gid,
+						groupJoinCount:groupJoinCount
+					})
+					callback();
+				})
+
+			})//end voteItem.findByObj
+		})//end push dealFuc.push(function(callback){
+
+	})//end 处理回调
+
+	//执行异步方法
+	async.series(dealFuc, function(err){
+		if(err) cb(err)
+		cb(null, groupJoinList)
+	})
+
+}
+
+
+
 //根据用户Id和投票Id查找他的记录
 obj.getUserVoteRecById = function(uid, voteId, gttime, skip, pagesize, cb){ 
 	var cb = cb || function(){};
@@ -133,6 +224,10 @@ obj.getItemVoteCountsByIds = function(itemids, cb){
 
 
 }
+
+
+
+
 
 
 //根据分组groupid获取分组被投票项列表

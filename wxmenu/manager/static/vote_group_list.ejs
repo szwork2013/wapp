@@ -161,6 +161,8 @@
                                     "code2": { editable: true },
                                     "code3": { editable: true },
                                     "code4": { editable: true },
+                                    "userCount":{editable:false},
+                                    "userJoinCount":{editable:false},
                                     "isFreez": { editable: true, type: "number"},
                                     "isShow": { editable: true, type: "number"},
                                     "writeTime": {editable: true, type: "date" },
@@ -249,6 +251,17 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         { 
                             field: "totalCount",
                             title: '总票数', 
+                            filterable:false
+                        },
+                        { 
+                            field: "userCount",
+                            title: '被投票人数', 
+                            filterable:false
+                        },
+                        { 
+                            field: "userJoinCount",
+                            title: '参与人数', 
+                            filterable:false
                         },
                         { 
                             field: "isFreez",
