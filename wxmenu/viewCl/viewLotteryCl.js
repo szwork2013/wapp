@@ -15,7 +15,7 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 
 	var appEname = appobj.data;
 
-	req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+	//req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
 		return res.send('用户身份丢失，请重新进入')
