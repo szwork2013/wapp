@@ -45,11 +45,11 @@ UserLogin.UserLogin = function(req,res){
 UserLogin.Logout = function(req,res){
 
 	if(req.session.admin.indexOf('95515_vote') != -1){
-		req.session = null;
+		req.session = {};
 		res.redirect('/')
 	}
 	else{
-		req.session = null;
+		req.session = {};
 		res.redirect('/manger/login/')
 	}
 	

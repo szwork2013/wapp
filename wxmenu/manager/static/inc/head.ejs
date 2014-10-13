@@ -15,11 +15,23 @@
 <title>后台管理系统</title>
 
 <%
-	if(session.admin.indexOf('95515_vote') != -1){
+	if('undefined' != typeof session && session.admin.indexOf('95515_vote') != -1){
 %>
 <style>
 	.vote_hide{
 		display:none !important;
+	}
+	.vote-navbar-text{
+		line-height: 45px;
+		color: #fff !important;
+	}
+	.vote-navbar-text a{
+		color: #fff !important;
+		padding-left: 10px;
+	}
+	.navbar-inner{
+		background: none  !important;
+		background: #009966 !important;
 	}
 </style>
 <script type="text/javascript">

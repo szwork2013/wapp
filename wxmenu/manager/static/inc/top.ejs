@@ -8,18 +8,20 @@
           </button>
 
           <%if(session.admin.indexOf('95515_vote') != -1){%>
-            <a class="brand" href="/manger/main/">合众人寿微信投票管控后台</a>
+            <a class="brand" href="/manger/main/">
+            <img src="/m_skin/img/hezhong_logo.png" title="合众人寿微信投票管控后台" class="brand_img" />
+            </a>
           <%}else{%>
             <a class="brand" href="/manger/main/">微信自定义菜单专用</a>
           <%}%>
 
           
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
+            <p class="navbar-text pull-right vote-navbar-text">
               欢迎您管理员 <%= session.admin %> <a href="/manger/logout" class="navbar-link">退出登录</a>
             </p>
             <ul class="nav">
-              <li class="active"><a href="/manger/main/">首页</a></li>
+              <li class="active vote_hide"><a href="/manger/main/">首页</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
