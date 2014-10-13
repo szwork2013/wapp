@@ -842,6 +842,7 @@ $(function(){
 				window.isAjaxIng = false;
 				return alert(d.data);
 			} 
+			
 			updateVoteInfo(groupid, function(){
 				var itemobj;
 				window.itemList.forEach(function(iobj){
@@ -876,6 +877,9 @@ $(function(){
 				})
 				itemobj.totalNumber = itemobj.totalNumber + 1
 
+				//将详细信息模态框隐藏
+				$('#item_info_modal').modal('hide')
+				//显示成功模态框
 				$('#item_success_modal').modal({})
 				window.isAjaxIng = false;
 				updateVoteInfo()
