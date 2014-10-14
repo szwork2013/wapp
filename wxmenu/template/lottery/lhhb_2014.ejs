@@ -433,6 +433,10 @@ $(function(){
 
 
         $('#start').click(function(){
+		if(window.lotteryData.record.length>=1){
+               alert('您今天已经参与过了')
+               return false;
+            }
            /* 
            if(window.lotteryData.record.length>=6){
                alert('谢谢参与，您可以在9.20、10.1来香樟园，参与现场版iphone6的抽取，详请请查看本活动规则')
