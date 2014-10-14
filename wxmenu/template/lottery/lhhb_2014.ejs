@@ -371,45 +371,9 @@ $(function(){
           })
   })
 
-  //check username mobile
-  var user_v = $('#appUserName').val();
-  var mobile_v = $('#appUserMobile').val();
-  if(user_v == '未认证会员'){
-      $('#appUserName').val('');
-  }
-  if(mobile_v.length != 11){
-      $('#appUserMobile').val('');
-  }
-
-  //end check
 
 
-  $('#save_change').click(function(){
-    var appUserName = $('#appUserName').val().trim();
-    var appUserMobile = $('#appUserMobile').val().trim();
-    if(!appUserName || appUserName == '未认证会员'){
-      alert('请填写真实姓名')
-      return false;
-    }
-    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
-      alert('请输入正确的手机号码')
-      return false;
-    }
-    $.post('/api/user/modify',{
-    appUserName:appUserName, 
-    appUserMobile:appUserMobile,
-    wxuserid:userid,
-    wxappid:appId,
-    },function(d){
-      if(d.error == 1) return alert(d.data);
-      alert('资料完善成功，赶快去刮奖吧')
-      $('#myModal').modal('hide')
-      $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
-      //window.localStorage['has_modify'] = '1';
-      //$('#p2').html(appUserName)
-    },'json')
-    return false;
-  })
+
 
   window.lotteryData = {};
 
