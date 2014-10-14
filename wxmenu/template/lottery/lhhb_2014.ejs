@@ -286,7 +286,7 @@ font-size: 18px;
     <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>
     <p class="get_prize_tip">奖品仅限本人领取，不得代领</p>
     <p class="get_prize_tip get_prize_tip2">2014年9月13日-9月23日</p>-->
-    <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a>
+    <a href="javascript:;" id="start" class="start" title="">点击打开红包</a>
         <div class="luck" id="lottery_result" style="display:;"></div>
         <canvas id="myCanvas" class="myCanvas" width="267px" height="157px" style="display:;">
                 your browser does not support the canvas element
@@ -465,11 +465,11 @@ $(function(){
                   return $('#lottery_result').html(d2.data)
                 }
                 if(d2.data.prizeId == '0'){
-                  //alert('明天参与答题再来抽奖')
+                  alert('再接再厉，明天答题分享后再来参与抽红包')
                   $('#lottery_result').html('谢谢参与')
                 }
                 if(d2.data.prizeId != '0' && d2.data.prizeObj){
-                  //alert('恭喜您中奖，请带好中奖手机来案场领奖，明天再接再厉哦')
+                  alert('恭喜您中奖，请带好中奖手机来案场领奖，感觉自己棒棒哒！')
                   $('#lottery_result').html(d2.data.prizeObj.name)
                 }           
 
