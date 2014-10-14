@@ -465,11 +465,11 @@ $(function(){
                   return $('#lottery_result').html(d2.data)
                 }
                 if(d2.data.prizeId == '0'){
-                  alert('再接再厉，明天答题分享后再来参与抽红包')
-                  $('#lottery_result').html('别灰心！明天答题分享后再来参与抽红包')
+                  alert('别灰心！明天答题分享后再来参与抽红包')
+                  $('#lottery_result').html('谢谢参与')
                 }
                 if(d2.data.prizeId != '0' && d2.data.prizeObj){
-                  alert('恭喜您中奖，请带好中奖手机来案场领奖，感觉自己棒棒哒！')
+                  alert("恭喜您中得'+ro.prizeObj.name+'，请带好中奖手机来案场领奖，感觉自己棒棒哒！")
                   $('#lottery_result').html(d2.data.prizeObj.name)
                 }           
 
