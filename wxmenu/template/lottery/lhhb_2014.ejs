@@ -14,6 +14,7 @@
 <script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
 <script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
 <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 <%- newrelic.getBrowserTimingHeader() %>
 
 
@@ -375,6 +376,64 @@ $(function(){
 
 
 
+
+$.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+    if(d.error == 1){
+      return alert(d.data)
+    }
+        window.lotteryData = d.data;
+
+        //总限制数
+        if(lotteryObj.forwardTimes>=0){
+           var totalLimit = lotteryObj.intervalTimes + lotteryObj.forwardTimes
+        }
+        else{
+          var totalLimit = lotteryObj.intervalTimes
+        }
+
+        if(d.data.record && d.data.record.length > 0){
+          //获取当天的抽奖记录
+          var todayMoment = moment().hour(0).minute(0).second(0).millisecond(0);
+          var count = 0;
+          var countF = 0;
+          window.todayRecordList = d.data.record.filter(function(rObj){
+            //var rObjMoment = moment(rObj.writeTime)
+            //if(rObjMoment>=todayMoment){
+              if(rObj.isForward == 0){
+                count++
+              }
+              else if(rObj.isForward == 1){
+                countF++
+              }
+              return true;
+            //}
+            //return false;
+          })
+          if(window.todayRecordList.length>=totalLimit){
+            window.hasPlay = true;
+            window.hasForwardPlay = true;
+          }
+          else if(count<lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
+            window.hasPlay = false;
+            window.hasForwardPlay = false
+          }
+          else if(count>=lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
+            window.hasPlay = true;
+            window.hasForwardPlay = false;
+          }
+
+        }
+
+    },'json')
+
+
+
+
+
+
+
+
+
   window.lotteryData = {};
 
    $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
@@ -433,7 +492,7 @@ $(function(){
 
 
         $('#start').click(function(){
-		if(window.lotteryData.record.length>=1){
+		    if(window.hasPlay){
                alert('您已经参与过了')
                return false;
             }
@@ -479,10 +538,10 @@ $(function(){
 
                 //$('#myCanvas, #lottery_result').show();
 
-                $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
-                    if(d.error) return;
-                    window.lotteryData = d.data;
-                },'json')
+                //$.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+                    //if(d.error) return;
+                    //window.lotteryData = d.data;
+                //},'json')
 				
 				
 			       setTimeout(function(){
