@@ -34,6 +34,68 @@ obj.getVoteById = function(voteId,cb){
 	})
 }
 
+//获取我的投票记录分组group
+obj.getUserRecordGroupByItemId = function(voteid, userid, cb){
+	if(!voteid) return cb('no voteId');
+	if(!userid) return cb('no userid');
+
+	voteRecord.aggregateRecord({
+		voteId:voteid,
+		userId:userid,
+	},function(err, recordList){
+		if(err) return cb(err);
+		//console.log(recordList)
+		if(recordList.length == 0) return cb(null, []);
+		//生成数组ids
+		var ids = [];
+		recordList.forEach(function(recordObj){
+			ids.push(recordObj._id.toString())
+		})//end voteRecord.aggregateRecord,
+
+		var tempList = []
+		voteItem.getByIds(ids,function(err,itemlist){
+			if(err) return cb(err);
+			recordList.forEach(function(robj){
+
+				itemlist.forEach(function(listobj){
+					if(robj._id.toString() == listobj._id.toString()){
+						//放入临时数组
+						tempList.push({
+							_id:listobj._id.toString(),
+							appId:listobj.appId,
+							voteId:listobj.voteId,
+							groupId:listobj.groupId,
+							title:listobj.title,
+							pictureThumb:listobj.pictureThumb,
+							picture:listobj.picture,
+							sex:listobj.sex,
+							age:listobj.age,
+							number:listobj.number,
+							desc:listobj.desc,
+							desc2:listobj.desc2,
+							todayVoteNumber:listobj.todayVoteNumber,
+							lastdayVoteNumber:listobj.lastdayVoteNumber,
+							lastdayVoteOrder:listobj.lastdayVoteOrder,
+							myNumber:robj.supportCount || 0, //我的票数
+							isFreez:listobj.isFreez,
+							code1:listobj.code1,
+							code2:listobj.code2,
+							code3:listobj.code3,
+							code4:listobj.code4,
+							writeTime:listobj.writeTime,
+						})
+					}
+				})//end recordList.forEach
+				
+			})//end itemlist.forEach
+
+			cb(null, tempList)//返回生成数组
+
+		})//end voteItem.getByIds
+
+	})
+}
+
 
 obj.countUsersByGroupIds = function(groupids, cb){
 	var dealFuc = []
@@ -649,7 +711,7 @@ obj.scheduleJob = function(){
 	//循环处理item的update
 	var updateItem = function(itemid, count, pos , callback){
 		voteItem.createOneOrUpdate({
-			_id:voteid
+			_id:itemid
 		},{
 			todayVoteNumber:0,
 			lastdayVoteNumber:count,
@@ -674,20 +736,58 @@ obj.scheduleJob = function(){
 			//如果没有记录，直接返回
 			if(agglist.length == 0) return callback();
 			var updateItemList = [];
-			//循环生成修改item项的函数，生成 series 工作函数数组
-			agglist.forEach(function(aggObj, i){
-				var itemid = aggObj._id.toString();
-				var count = aggObj.supportCount;
-				var pos = i+1;
-				updateItemList.push(function(cb){
-					updateItem(itemid, count, pos, cb)
-				})
+
+			//获取itemid的数组
+			var itemIdsArray = [];
+			agglist.forEach(function(aggObj){
+				itemIdsArray.push(aggObj._id.toString())
 			})
-			//执行series异步序列化
-			async.series(updateItemList, function(err){
-				if(err) return callback(err)
-				callback();
-			})//end async.series
+
+
+			//根据获取的itemid数组，获取item数组
+			voteItem.getByIds(itemIdsArray, function(err, itemArray){
+					if(err) return callback(err)
+					//获取groupid分组
+				    var groupObjectKey = {}
+					itemArray.forEach(function(iobj){
+						//获得keys数组，看有没有被分配了
+						var keys = Object.keys(groupObjectKey)
+						if(keys.indexOf(iobj.groupId) == -1){
+							groupObjectKey[iobj.groupId] = {
+								list:[],
+								rank:[]
+							}
+						}
+						groupObjectKey[iobj.groupId].list.push(iobj._id.toString())
+					})
+					//生成带group的 groupObjectKey 对象
+
+					//循环生成修改item项的函数，生成 series 工作函数数组
+					var keys2 = Object.keys(groupObjectKey)
+					agglist.forEach(function(aggObj, i){
+						var itemid = aggObj._id.toString();
+						var count = aggObj.supportCount;
+
+						keys2.forEach(function(key2){
+							groupObjectKey[key2].list.forEach(function(iobjId){
+								if(iobjId == itemid){ //如果找到并且匹配
+									groupObjectKey[key2].rank.push(itemid);
+									var pos = groupObjectKey[key2].rank.length;
+									updateItemList.push(function(cb){
+										updateItem(itemid, count, pos, cb)
+									})//end update
+								}
+							})//end groupObjectKey[key2].list.forEach
+						})//end keys2.forEach
+					})//end agglist.forEach
+
+					//执行series异步序列化
+					async.series(updateItemList, function(err){
+						if(err) return callback(err)
+						callback();
+					})//end async.series
+
+			})//end voteItem.getByIds
 
 		})//end voteRecord.aggregateOrder
 	
@@ -705,6 +805,7 @@ obj.scheduleJob = function(){
 		voteList.forEach(function(vo){
 			//生成series函数数组
 			var voteid = vo._id.toString()
+
 			voteIdsFn.push(function(cb){
 				dealAgg(voteid, cb)
 			})
@@ -728,15 +829,19 @@ obj.scheduleJob = function(){
 //定义定时器
 obj.setSchedule = function(){
 	//定义规则
-	var rule = new schedule.RecurrenceRule();
-	rule.dayOfWeek = [new schedule.Range(0, 6)];
+	var rule = new node_schedule.RecurrenceRule();
+	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
 	rule.hour = 0;
 	rule.minute = 0;
-	var j = schedule.scheduleJob(rule, function(){
+	var j = node_schedule.scheduleJob(rule, function(){
 			//执行定时计划
 		   obj.scheduleJob()
 	});
+	//马上执行一次
+	obj.scheduleJob()
 }
+
+
 
 
 

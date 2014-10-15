@@ -11,6 +11,7 @@ var voteCl = require('../viewCl/viewVoteCl.js')
 
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
+var voteBl = require('../bl/wxVote.js')
 
 //lottery
 var apiLottery = require('../apiCl/apiLottery.js');
@@ -247,12 +248,15 @@ var addroute = function(app){
 		app.post('/lottery/:appename/start', apiLottery.startLottery)
 		app.post('/lottery/:appename/complete', apiLottery.improveInfo)
 
-		//lottery
+		//vote
 		app.get('/vote/:appename', getUserMid, voteCl.votePage)//投票页面
 		app.get('/vote/:appename/info', apiVote.getVoteInfo)//投票详细信息，包括分组名称，包括我的投票记录
 		app.post('/vote/:appename/start', apiVote.startVote)//投某人一票，不传某人参数，表示随机
 		app.get('/vote/:appename/items', apiVote.getItemsInfo)//根据分组查询所有投票项信息列表
 		app.get('/vote/:appename/rank', apiVote.getRank)//根据分组或不分组，查询排名
+		app.post('/vote/:appename/myrecord', apiVote.getMyRecord) //获取用户的记录
+
+
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];
@@ -267,4 +271,7 @@ var addroute = function(app){
 
 module.exports = function(app){
 	addroute(app);
+
+	//执行每日任务
+	voteBl.setSchedule()
 }

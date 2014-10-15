@@ -18,13 +18,13 @@ obj.getVoteInfo = function(req,res){
 	var userid = req.session[appEname+'_userid'];
 	//如果用户身份丢失
 	if(!userid){
-		res.send({error:0,data:'用户身份丢失，请重新进入'})
+		res.send({error:1,data:'用户身份丢失，请重新进入'})
 		return;
 	}
 	//获取抽奖活动的ename
 	var voteEname = req.query.ename;
 	if(!voteEname){
-		res.send({error:0,data:'缺少ename参数'})
+		res.send({error:1,data:'缺少ename参数'})
 		return;
 	}
 	//根据ename获取抽奖活动的对象
@@ -68,7 +68,7 @@ obj.startVote = function(req,res){ //用户进入抽奖页面点击抽奖程序
 	var userid = req.session[appEname+'_userid'];
 
 	if(!userid){
-		res.send({error:0,data:'用户身份丢失，请重新进入'})
+		res.send({error:1,data:'用户身份丢失，请重新进入'})
 		return;
 	}
 
@@ -150,6 +150,51 @@ obj.getRank = function(req,res){
 	
 }
 
+
+obj.getMyRecord = function(req, res){
+	//先获取用户id
+	var appobj = utils.getAppEname(req.originalUrl)
+	if(appobj.error){
+		return res.send(appobj)
+	}
+	var appEname = appobj.data;
+
+	//测试用，真实情况注释
+	//req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
+
+	var userid = req.session[appEname+'_userid'];
+	//如果用户身份丢失
+	if(!userid){
+		res.send({error:1,data:'用户身份丢失，请重新进入'})
+		return;
+	}
+	//获取抽奖活动的ename
+	var voteEname = req.body.ename;
+	if(!voteEname){
+		res.send({error:1,data:'缺少ename参数'})
+		return;
+	}
+	//根据ename获取抽奖活动的对象
+	voteBl.getVoteByEname(voteEname,function(err,voteObj){
+		if(err){
+	        return res.send({error:1,data:err}) 
+     	}
+     	if(!voteObj){
+     		return res.send({error:1,data:'未找到投票活动'}) 
+     	}
+     	var voteid = voteObj._id.toString();
+
+     	voteBl.getUserRecordGroupByItemId(voteid, userid, function(err, recordList){
+     		if(err){
+		        return res.send({error:1,data:err}) 
+	     	}
+	     	return res.send({error:0,data:recordList})
+
+     	})//end voteBl.getUserRecordGroupByItemId
+
+	})//end voteBl.getVoteByEname
+
+}
 
 
 module.exports = obj;

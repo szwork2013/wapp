@@ -75,7 +75,7 @@
 	.group_blk .group_vote{
 		display: block;
 		position: absolute;
-		top: 95px;
+		top: 129px;
 		left: 170px;
 		z-index: 2;
 	}
@@ -84,7 +84,7 @@
 	}
 	.group_blk .group_info{
 		width: 250px;
-		height: 68px;
+		height: 100px;
 		overflow: hidden;
 		line-height: 30px;
 		color: #34495e;
@@ -236,6 +236,43 @@
 	.w70{
 		width: 56% !important;
 	}
+	.myVoteList{
+		opacity: 0.8;
+		position: fixed;
+		left: 1px;
+		top:30%;
+		display: block;
+		font-size: 20px;
+	}
+	.voteBlk{
+		height: 195px;
+		position: relative;
+		text-align: center;
+
+	}
+	.voteBlk .votePic{
+		display: block;
+		width: 80px;
+		height: 80px;
+		border-radius: 80px;
+		margin: 0 auto;
+	}
+	.voteBlk .group_vote{
+		position: absolute;
+		top: 135px;
+		left: 50%;
+		margin-left: -47px;
+	}
+	.voteMyText{
+		margin-top: 3px;
+		display: block;
+	}
+	.my_vote_list_box{
+		padding-top: 10px !important;
+	}
+	.voteBlk .group_vote_has{
+		display: none !important;
+	}
 </style>
 
 <%- newrelic.getBrowserTimingHeader() %>
@@ -374,6 +411,20 @@
 
 
 
+<!-- 我的投票记录 -->
+<div id="votebox" class="container-fluid over_hidden" style="display:none;">
+	<a name="back_btn" class="btn btn-primary yh btn-info back_btn">
+	      <span class="fui-arrow-left"></span>
+	      返回
+	</a>
+
+	 <div id="my_vote_list_box" class="my_vote_list_box demo-content-wide row show-grid">
+	</div>
+	
+
+</div>
+<!-- 我的投票记录 -->
+
 
 <!-- modal div -->
 
@@ -441,12 +492,13 @@
 </div>
 <!-- 投票成功 -->
 
-
-
+<!-- 我的投票记录按钮 -->
+<a href="javascript:;" id="myVoteList" class="myVoteList btn btn-sm btn-primary mlm">
+	<span class="fui-user"></span>
+</a>
+<!-- 我的投票记录按钮 -->
 
 <!-- modal div -->
-
-
 <div id="loading_box" class="loading_box" style="display:none"></div>
 
 <div style="display:none;">
@@ -513,9 +565,16 @@ $(function(){
 		$('#main').hide()
 		$('#list').hide()
 		$('#shake').hide()
+		$('#votebox').hide()
 		$('#'+domid).show()
 		if(domid == 'list'){
 			window.backDiv = 'main'
+		}
+		if(domid == 'votebox'){
+			$('#myVoteList').hide()
+		}
+		else{
+			$('#myVoteList').show()
 		}
 	}
 
@@ -533,6 +592,42 @@ $(function(){
 			$('#shake_start').hide()
 			$('#shake_info').show()
 		})
+	}
+
+	var putMyRecord = function(list){
+		
+
+		var tmpstr = ''
+		list.forEach(function(listObj){
+			//生成str
+			var voteStr = getVoteType(listObj)
+
+			tmpstr += '<div class="col-xs-4 col-sm-4 txt_c voteBlk yh">'+
+					  '<img src="'+listObj.pictureThumb+'" class="votePic"/>'+
+					  '<span class="voteMyText ft15">'+
+					  listObj.title+'<br/>我已投票 '+listObj.myNumber+'</span>'+
+					  voteStr+'</div>'
+
+		})//end list.forEach
+		$('#my_vote_list_box').html(tmpstr)
+	}
+
+	var getMyRecordList = function(){
+		if(window.isAjaxIng) return false;
+		window.isAjaxIng = true;
+		loading();
+
+		$.post('/vote/'+appEname+'/myrecord', {
+			ename:voteEname
+		}, function(d3){
+			window.isAjaxIng = false;
+			hideLoding();
+
+			if(d3.error == 1) return alert(d3.data)
+			if(d3.data.length > 0){
+				putMyRecord(d3.data)
+			}
+		},'json')
 	}
 
 	var start_shake_ajax = function(cb){
@@ -693,10 +788,10 @@ $(function(){
 				'<span class="fui-heart"></span> 给'+ta+'投票</a>'
 		}
 		else if(voteType == 2){
-			var voteStr = '<span class="group_vote yh">已经支持过啦</span>'
+			var voteStr = '<span class="group_vote group_vote_has yh">已经支持过啦</span>'
 		}
 		else if(voteType == 3){
-			var voteStr = '<span class="group_vote yh">转发可再次支持哦</span>'
+			var voteStr = '<span class="group_vote group_vote_has yh">转发可再次支持哦</span>'
 		}
 		return voteStr
 	}
@@ -734,7 +829,7 @@ $(function(){
 						}
 						//表示下降
 						else if(numberPos - itemObj.lastdayVoteOrder > 0){
-							posStr = '<span class="group_rank group_up yh">'+
+							posStr = '<span class="group_rank group_down yh">'+
 	    								 '<span class="fui-triangle-down"></span>'+
 	    								 '今日下降 '+(numberPos - itemObj.lastdayVoteOrder)+' 位</span>'
 
@@ -747,7 +842,7 @@ $(function(){
 					'<a name="group_item_more" href="javascript:;" class="btn btn-default yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+
 	    			'<div class="group_info yh">'+
 	    			'No.'+numberPos+' '+itemObj.title+'<br/>'+
-	    			'票数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font></div>'+voteStr+'</div>'
+	    			'票数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</div>'+voteStr+'</div>'
 
 				})//end itemList.forEach
 
@@ -920,7 +1015,7 @@ $(function(){
 		getItemInfo(itemid, window.itemShakeList)
 	})
 
-	$('#modal_item_box, #shake_info_box').delegate('a[name="start_vote"]','click',function(e){
+	$('#modal_item_box, #shake_info_box, #my_vote_list_box').delegate('a[name="start_vote"]','click',function(e){
 		var that = $(this)
 		var groupid = that.attr('groupid')
 		updateVoteInfo(groupid, function(){
@@ -951,6 +1046,22 @@ $(function(){
 		window.backDiv = 'list'
 		shake_init()
 		goToDiv('shake')
+		return false;
+	})
+
+	$('#myVoteList').click(function(){
+		if($('#list').is(':visible')){
+			window.backDiv = 'list'
+		}
+		else{
+			window.backDiv = 'main'	
+		}
+		shake_init()
+		goToDiv('votebox')
+		updateVoteInfo(function(){
+			getMyRecordList();
+		})
+		
 		return false;
 	})
 	

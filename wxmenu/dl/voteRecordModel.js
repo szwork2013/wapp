@@ -139,6 +139,34 @@ objSchema.statics.aggregateUserJoin = function(query,cb){
       })
 }
 
+//分组itemid，获取用户投票记录
+objSchema.statics.aggregateRecord = function(query, cb){
+  var that = this;
+  //console.log(query)
+  return this.aggregate()
+      .match(
+            {'$and': [
+              {"voteId":query.voteId},
+              {"userId":query.userId},
+            ]}
+        )
+      .group( {
+            '_id' : "$itemId",
+            'supportCount' : { $sum : 1 },
+        })
+      .sort({
+        'supportCount':-1
+      })
+      .exec(function(err,list){
+        if(err || list.length == 0){
+          cb(err,list)
+          return;
+        }
+        cb(null, list);
+  })
+
+
+}
 
 
 objSchema.statics.aggregateOrder = function (query, cb) { 

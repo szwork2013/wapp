@@ -101,7 +101,7 @@ obj.read = function(req, res){
 
 						//改分组参与投票的用户数量
 						bl.countUserJoinByGroupIds(ids, function(err, groupUserJoinCountList){
-							console.log(groupUserJoinCountList)
+							//console.log(groupUserJoinCountList)
 							if(err) return res.send(500,err);
 							tempList.forEach(function(tempo){
 								groupUserJoinCountList.forEach(function(guo){
