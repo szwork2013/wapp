@@ -361,6 +361,17 @@ var userid = '<%= userid%>'
 var appId = '<%= appId%>'
 var u_username = '<%= wxuobj.appUserName %>'
 var u_mobile = '<%= wxuobj.appUserMobile %>'
+
+
+var lotteryObj =  <%- JSON.stringify(lotteryObj) %>
+var lotteryid = '<%= lotteryObj._id %>'
+var userid = '<%= userid%>'
+var appId = '<%= appId%>'
+var u_username = '<%= wxuobj.appUserName %>'
+var u_mobile = '<%= wxuobj.appUserMobile %>'
+var appUserName = u_username
+var appUserMobile = u_mobile 
+
 $(function(){
   $('#lottery_again').click(function(){
     location.href = location.href;
@@ -374,7 +385,7 @@ $(function(){
 
 
 
-
+window.lotteryData = {};
 
 
 $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
@@ -434,7 +445,7 @@ $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
 
 
 
-  window.lotteryData = {};
+  
 
    $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
     if(d.error == 1){
