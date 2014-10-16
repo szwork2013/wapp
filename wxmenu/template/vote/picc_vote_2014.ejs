@@ -215,11 +215,15 @@
 	.over_hidden{
 		overflow-x: hidden;
 	}
-	#other_zone{
+	#other_zone, .my_support{
 		display: block;
 		position: absolute;
 		top: 10px;
 		right: 15px;
+	}
+	.my_support{
+		margin-top: 10px !important;
+		top:0;
 	}
 	#list{
 		position: relative;
@@ -420,6 +424,9 @@
 	      <span class="fui-arrow-left"></span>
 	      返回
 	</a>
+	<div class="btn-group my_support">
+      <h5>我支持的选手：</h5>
+    </div>
 
 	 <div id="my_vote_list_box" class="my_vote_list_box demo-content-wide row show-grid">
 	</div>
