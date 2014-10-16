@@ -496,7 +496,7 @@
 <!-- 投票成功 -->
 
 <!-- 我的投票记录按钮 -->
-<a href="javascript:;" id="myVoteList" class="myVoteList btn btn-sm btn-primary mlm">
+<a href="javascript:;" id="myVoteList" class="myVoteList btn btn-sm btn-primary mlm" style="display:none">
 	<span class="fui-user"></span>
 </a>
 <!-- 我的投票记录按钮 -->
@@ -608,7 +608,7 @@ $(function(){
 			//生成str
 			var voteStr = getVoteType(listObj)
 
-			tmpstr += '<div class="col-xs-5 col-sm-5 txt_c voteBlk yh">'+
+			tmpstr += '<div class="col-xs-6 col-sm-6 txt_c voteBlk yh">'+
 					  '<img src="'+listObj.pictureThumb+'" class="votePic"/>'+
 					  '<span class="voteMyText ft15">'+
 					  listObj.title+'<br/>已支持 <font itemid="'+listObj._id+'">'+listObj.myNumber+'</font> 票</span>'+
@@ -1069,15 +1069,18 @@ $(function(){
 		else{
 			window.backDiv = 'main'	
 		}
-		shake_init()
-		goToDiv('votebox')
-		updateVoteInfo(function(){
+		shake_init()		
+		updateVoteInfo(null, function(){
+			goToDiv('votebox')
 			getMyRecordList();
 		})
 		
 		return false;
 	})
 	
+	setTimeout(function(){
+		$('#myVoteList').fadeIn()
+	},1500)
 		
 	//监听摇一摇事件
 	window.addEventListener('shake', function(){
