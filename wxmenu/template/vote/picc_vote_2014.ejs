@@ -534,6 +534,7 @@ window.isforward_today = moment().hour(23).minute(59).second(59)
 window.isforward_today = new Date(window.isforward_today)
 window.itemList = []
 window.itemShakeList = []
+window.myItemList = []
 
 
 var forwardingUrl = 'http://mp.weixin.qq.com/s?__biz=MjM5ODA2NzA4OQ==&mid=201261305&idx=1&sn=06bac8fe654d94dd3a30efd0619f28e1#rd';
@@ -543,8 +544,10 @@ var forwardingDesc ='1984-2014万科30周年，万元红包全城大派送'
 var forwardingCallback = function(){
 	//alert(111)
 	$.cookie('isForward', '1', { expires: window.isforward_today, path: location.pathname });
-
 }
+
+
+
 
 $(function(){
 	window.backDiv = $('#main')
@@ -605,7 +608,7 @@ $(function(){
 			tmpstr += '<div class="col-xs-4 col-sm-4 txt_c voteBlk yh">'+
 					  '<img src="'+listObj.pictureThumb+'" class="votePic"/>'+
 					  '<span class="voteMyText ft15">'+
-					  listObj.title+'<br/>我已投票 '+listObj.myNumber+'</span>'+
+					  listObj.title+'<br/>已支持 <font itemid="'+listObj._id+'">'+listObj.myNumber+'</font> 票</span>'+
 					  voteStr+'</div>'
 
 		})//end list.forEach
@@ -626,6 +629,7 @@ $(function(){
 			if(d3.error == 1) return alert(d3.data)
 			if(d3.data.length > 0){
 				putMyRecord(d3.data)
+				window.myItemList = d3.data
 			}
 		},'json')
 	}
@@ -952,7 +956,13 @@ $(function(){
 						}
 					})//end foreach
 				}
-
+				if(!itemobj){
+					window.myItemList.forEach(function(iobj){
+						if(iobj._id.toString() == itemid){
+							itemobj = iobj
+						}
+					})//end foreach	
+				}
 
 				var voteStr = getVoteType(itemobj, isSmBtnClass)
 				$('a[name="start_vote"]').each(function(){

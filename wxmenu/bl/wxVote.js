@@ -593,6 +593,8 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 						//end 1 判断
 					}
 
+
+
 					//2、判断是否对某一个人在间隔时间次数投票过多
 					var count = 0;
 					recList.forEach(function(recobj){
@@ -604,7 +606,7 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 						} 
 					})
 
-					if(voteobj.intervalPerUserTimes > 0 && count >= voteobj.intervalPerUserTimes){
+					if(voteobj.intervalPerUserTimes > 0 && now - olderTimestamp <= interval && count >= voteobj.intervalPerUserTimes){
 						return cb('不能重复投票')
 					}
 					//end 2 判断
@@ -726,12 +728,13 @@ obj.scheduleJob = function(){
 	//循环处理voteid的aggregate
 	var dealAgg = function(voteid, callback){
 		var q = {
-			s:s,
-			e:e,
+			//s:s,
+			//e:e,
 			voteId:voteid
 		}
 		//进行分组计算
 		voteRecord.aggregateOrder(q, function(err, agglist){
+			//console.log(agglist)
 			if(err) return callback(err)
 			//如果没有记录，直接返回
 			if(agglist.length == 0) return callback();
@@ -747,6 +750,7 @@ obj.scheduleJob = function(){
 			//根据获取的itemid数组，获取item数组
 			voteItem.getByIds(itemIdsArray, function(err, itemArray){
 					if(err) return callback(err)
+
 					//获取groupid分组
 				    var groupObjectKey = {}
 					itemArray.forEach(function(iobj){
@@ -762,6 +766,7 @@ obj.scheduleJob = function(){
 					})
 					//生成带group的 groupObjectKey 对象
 
+
 					//循环生成修改item项的函数，生成 series 工作函数数组
 					var keys2 = Object.keys(groupObjectKey)
 					agglist.forEach(function(aggObj, i){
@@ -770,11 +775,15 @@ obj.scheduleJob = function(){
 
 						keys2.forEach(function(key2){
 							groupObjectKey[key2].list.forEach(function(iobjId){
+
 								if(iobjId == itemid){ //如果找到并且匹配
 									groupObjectKey[key2].rank.push(itemid);
 									var pos = groupObjectKey[key2].rank.length;
-									updateItemList.push(function(cb){
-										updateItem(itemid, count, pos, cb)
+
+									//console.log(itemid, count, pos)
+
+									updateItemList.push(function(cb3){
+										updateItem(itemid, count, pos, cb3)
 									})//end update
 								}
 							})//end groupObjectKey[key2].list.forEach
