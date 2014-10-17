@@ -532,6 +532,10 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 				if(now < s) return cb('活动还没开始')
 				if(now > e) return cb('活动已经结束')
 				//end
+				var intervalTimes = voteobj.intervalTimes;
+				if(voteobj.intervalTimes<=0){
+					intervalTimes = 9999999999
+				}
 
 				//判断分组是否冻结
 				if(groupobj.isFreez == 1) return cb('投票已经冻结')
@@ -547,10 +551,10 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 
 				//抽奖次数判断，先定义可以抽奖的次数
 				if(voteobj.forwardTimes > 0){
-					var limit = voteobj.intervalTimes + voteobj.forwardTimes;
+					var limit = intervalTimes + voteobj.forwardTimes;
 				}
 				else{
-					var limit = voteobj.intervalTimes;
+					var limit = intervalTimes;
 				}
 				//end
 
@@ -679,7 +683,11 @@ obj.checkIsCheat = function(voteid, itemid, ip){
 			var now = Date.now();
 			var s = Date.parse(voteobj.startTime)
 			var interval = voteobj.interval*60*60*1000;
+
 			var intervalTimes = voteobj.intervalTimes;
+			if(intervalTimes <=0 ){ //不限制
+				intervalTimes = 10
+			}
 			var gapTimes = Math.ceil((now - s) / interval)
 			//console.log(gapTimes)
 			//判断是否可能存在作弊
