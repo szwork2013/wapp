@@ -174,10 +174,10 @@ display: none;
 .k-widget.k-tooltip-validation{
 	text-indent: 1.3em;
 }
-#voteCount{
+#voteCount,#resultVoteCount{
 	margin-right: 100px;
 }
-#countStatus{
+#countStatus,#resultVoteMemberCount{
 	margin: 10px 0 20px;
 }
 .color777{
@@ -190,4 +190,7 @@ display: none;
 .brand_img{
 	height: 25px;
 	display: block;
+}
+#resultStatus{
+	padding:10px 0 20px 0;
 }

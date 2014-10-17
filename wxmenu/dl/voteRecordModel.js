@@ -97,46 +97,74 @@ objSchema.statics.aggregateUser = function(query, cb){
       })
 }
 
-
+//获得参与人数
 objSchema.statics.aggregateUserJoin = function(query,cb){
     var limit = query.limit || 10000000;
     var that = this;
-    if(!query.s || !query.e){
-       var writeQ = {}
-    }
-    else{
-      var writeQ = {
-                "writeTime":{
-                    "$gte":query.s, 
-                    "$lte":query.e, 
-                  }
-              }
-    }
+    var groupid = query.groupid;
+    var itemIds = []
 
-    return this.aggregate()
-      .match(
-            {'$and': [
-              {"voteId":query.voteId},
-              writeQ
-            ]}
-        )
-      .group( {
-            '_id' : "$userId",
-            'supportCount' : { $sum : 1 },
-        })
-      .sort({
-        'supportCount':-1
-      })
-      .limit(limit)
-      .exec(function(err,list){
-        if(err || list.length == 0){
-          cb(err,list)
-          return;
+
+    var aggregateUserJoinDeal = function(){
+        if(!query.s || !query.e){
+           var writeQ = {}
+        }
+        else{
+          var writeQ = {
+                    "writeTime":{
+                        "$gte":query.s, 
+                        "$lte":query.e, 
+                      }
+                  }
+        }
+        if(itemIds.length>0){
+              writeQ['itemId'] = { '$in' : itemIds}
         }
 
-        return cb(null, list)
+        return that.aggregate()
+          .match(
+                {'$and': [
+                  {"voteId":query.voteId},
+                  writeQ
+                ]}
+            )
+          .group( {
+                '_id' : "$userId",
+                'supportCount' : { $sum : 1 },
+            })
+          .sort({
+            'supportCount':-1
+          })
+          .limit(limit)
+          .exec(function(err,list){
+            if(err || list.length == 0){
+              cb(err,list)
+              return;
+            }
 
-      })
+            return cb(null, list)
+
+          })
+      }//end define function
+
+    if(!groupid){//如果参数有groupid
+      //根据分区id查找所有item
+        voteItemDl.findByObj({
+          groupId:groupid,
+          isShow:1
+        }, function(err, itemList){
+          if(err) return cb(err)
+          itemList.forEach(function(iObj){
+              itemIds.push(iObj._id.toString())
+          })//生成id数组
+
+          aggregateUserJoinDeal()
+
+        })
+    }
+    else{
+        aggregateUserJoinDeal()
+    }
 }
 
 //分组itemid，获取用户投票记录

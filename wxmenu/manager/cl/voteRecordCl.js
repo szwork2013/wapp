@@ -61,12 +61,24 @@ obj.aggressive = function(req, res){
 		}
 		req.voteTitle = voteObj.title;
 
-			dl.aggregateOrder({
+		var queryObj = {
 				voteId:voteId,
 				s:new Date(moment(s).format('YYYY/MM/DD HH:mm:ss')),
 				e:new Date(moment(e).format('YYYY/MM/DD HH:mm:ss')),
 				groupId:groupId
-			},function(err, orderList){
+			}
+
+		dl.aggregateUserJoin(queryObj, function(err, joinUserList){
+			if(err){
+					if(req.downloadCallback){
+						return req.downloadCallback(err)
+					}
+					return res.json({error:1, data:err})
+			}
+
+			var userJoinNumber = joinUserList.length;
+
+			dl.aggregateOrder(queryObj,function(err, orderList){
 				//console.log(err, orderList)
 				if(err){
 						if(req.downloadCallback){
@@ -104,6 +116,7 @@ obj.aggressive = function(req, res){
 
 					
 					var pos = 1;
+					var totalVoteNumber = 0;
 					//console.log(orderList)
 					orderList.forEach(function(orderObj){
 						list.forEach(function(lo){
@@ -116,6 +129,7 @@ obj.aggressive = function(req, res){
 									groupId:orderObj.groupId,
 									groupName:orderObj.groupName,
 								})
+								totalVoteNumber += orderObj.supportCount
 							}
 
 						})
@@ -123,7 +137,15 @@ obj.aggressive = function(req, res){
 					if(req.downloadCallback){
 						return req.downloadCallback(0, tempList)
 					}
-					return res.json({error:0, data:tempList})
+					
+			
+
+
+					return res.json({error:0, data:{
+						totalVoteNumber:totalVoteNumber,
+						userJoinNumber:userJoinNumber,
+						data:tempList}
+					})
 
 				})//end dl3.getByIds
 
@@ -132,10 +154,10 @@ obj.aggressive = function(req, res){
 
 			})//dl.aggregateOrder
 
+		})//end dl.aggregateUserJoin
+
 	})
-
-
-	//res.render('lottery_list', {session:req.session});
+//res.render('lottery_list', {session:req.session});
 }
 
 
