@@ -1,4 +1,5 @@
 try{
+
 var share_score = 2000;
 var _host = "http://" + window.location.host;
 
@@ -7,7 +8,6 @@ WeixinJSBridge.call('hideToolbar');
 });
 function attention_wx()
 {
-    window.forwardingCallback && window.forwardingCallback();
     //$.cookie('isforward', '1', { expires: 365, path: '/' });
 }
 function is_zero()
@@ -47,8 +47,7 @@ var dataForWeixin = {
             });
         });
         WeixinJSBridge.on('menu:share:timeline',
-        function(argv) { 
-            (dataForWeixin.callback)();
+        function(argv) { (dataForWeixin.callback)();
         is_zero();
             WeixinJSBridge.invoke('shareTimeline', {
                 "img_url": dataForWeixin.TLImg,
@@ -70,7 +69,7 @@ var dataForWeixin = {
             });
         });
         WeixinJSBridge.on('menu:share:facebook',
-        function(argv) { 
+        function(argv) { (dataForWeixin.callback)();
             WeixinJSBridge.invoke('shareFB', {
                 "img_url": dataForWeixin.TLImg,
                 "img_width": "120",
@@ -79,7 +78,7 @@ var dataForWeixin = {
                 "desc": dataForWeixin.desc,
                 "title": dataForWeixin.title
             },
-            function(res) {(dataForWeixin.callback)();});
+            function(res) {});
         });
     };
     if (document.addEventListener) {
@@ -115,13 +114,13 @@ var WeixinApi = (function () {
 })();
 // 所有功能必须包含在 WeixinApi.ready 中进行
 WeixinApi.ready(function(Api){
-    alert(111)
+    
     // 微信分享的数据
     var wxData = {
-        "imgUrl":'http://www.baidufe.com/fe/blog/static/img/weixin-qrcode-2.jpg',
-        "link":'http://www.baidufe.com',
-        "desc":'大家好，我是Alien，Web前端&Android客户端码农，喜欢技术上的瞎倒腾！欢迎多交流',
-        "title":"大家好，我是赵先烈"
+        "imgUrl":'',
+        "link":'',
+        "desc":'',
+        "title":""
     };
  
     // 分享的回调
@@ -159,8 +158,6 @@ WeixinApi.ready(function(Api){
     // 点击分享到腾讯微博，会执行下面这个代码
     Api.shareToWeibo(wxData, wxCallbacks);
 })
-
-
 }catch(e){
     console.log(e)
 }
