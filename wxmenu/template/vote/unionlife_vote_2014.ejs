@@ -401,7 +401,7 @@
 	</div>
 
 	<div id="shake_info" style="display:none;">
-		<img id="shake_face" src="" class="shake_face" />
+		<img groupid="" itemid="" name="group_item_more" id="shake_face" src="" class="shake_face" />
 		<button id="shake_info_btn" name="group_item_more" groupid="" itemid="" class="btn btn-default yh shake_btn2">
 	      详细信息
 	    </button>
@@ -724,6 +724,9 @@ $(function(){
 
 	var putShakeObj = function(itemobj){
 			$('#shake_face').attr('src', itemobj.pictureThumb)
+							.attr('itemid', itemobj._id)
+							.attr('groupid', itemobj.groupId)
+
 			$('#shake_info_btn').attr('itemid', itemobj._id)
 								.attr('groupid', itemobj.groupId)
 
@@ -853,7 +856,7 @@ $(function(){
 					
 					//拼接模版
 					blk_s += '<div class="group_blk">'+
-					'<img src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
+					'<img itemid="'+itemid+'" name="group_item_more" src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
 					'<a name="group_item_more" href="javascript:;" class="btn btn-default yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+
 	    			'<div class="group_info yh">'+
 	    			'No.'+numberPos+' '+itemObj.title+'<br/>'+
@@ -1015,7 +1018,7 @@ $(function(){
 	})
 
 	//点击更多详细信息
-	$('#group_list_box').delegate('a[name="group_item_more"]','click',function(e){
+	$('#group_list_box').delegate('*[name="group_item_more"]','click',function(e){
 		var that = $(this)
 		var itemid = that.attr('itemid')
 		getItemInfo(itemid)
@@ -1030,7 +1033,7 @@ $(function(){
 	})
 
 	//在摇一摇详细信息里面的按钮
-	$('#shake_info_btn').click(function(){
+	$('#shake_info_btn, #shake_face').click(function(){
 		var that = $(this)
 		var itemid = that.attr('itemid')
 		getItemInfo(itemid, window.itemShakeList)
