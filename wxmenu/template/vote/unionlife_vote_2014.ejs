@@ -1043,12 +1043,7 @@ $(function(){
 				$('#item_success_modal').modal({})
 				window.isAjaxIng = false;
 				updateVoteInfo()
-				if($.cookie('todayHasVote') != '1'){
-					mask()
-					$.cookie('todayHasVote', '1', { expires: window.isforward_today, path: location.pathname });
-				}
-
-				
+							
 			})
 		})
 	}
@@ -1151,6 +1146,15 @@ $(function(){
 	//shake_init(function(){ 
 	//	start_shake();
 	//})
+	
+	$('#item_success_modal').on('hidden.bs.modal', function (e) {
+	  		
+	  		if($.cookie('todayHasVote') != '1'){
+					mask()
+					$.cookie('todayHasVote', '1', { expires: window.isforward_today, path: location.pathname });
+				}
+	})
+
 
 })
 
