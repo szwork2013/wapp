@@ -222,18 +222,20 @@ obj.oauthJumpBack = function(app,applist){
 			req.session['oauth_jump'] = null;
 
 			if(state != oauth_state){
-			
+				//记录日志
+				logger.error('state error, (state)%s != (oauth_state)%s, req url: %s', state, oauth_state, req.originalUrl);
 				return res.send(403,'state error')
 			}
 			if(!code || code == 'authdeny'){
-				
+				//微信验证无效
+				logger.error('authdeny, req url: %s', req.originalUrl);
 				return res.send(403,'user not authorize')
 			}
 
 			//获取access token
 			appObj.api.getAccessToken(code, function(err,result){
 				if(err){
-				
+					logger.error('access token get error, error is: %s; req url: %s', err, req.originalUrl);
 					return res.send(403,err)
 				}
 

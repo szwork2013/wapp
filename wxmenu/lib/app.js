@@ -42,4 +42,4 @@ addRoute(app);//增加路由配置
 
 app.listen(config.listenPort);
 
-logger.info('server start on ' + config.listenPort);
+logger.info('server start on %s', config.listenPort);
