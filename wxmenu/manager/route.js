@@ -144,6 +144,7 @@ var addroute = function(app){
 	app.post('/manger/active/update', checkLogin, activeCl.update)
 	app.post('/manger/active/destroy', checkLogin, activeCl.destroy)
 	app.post('/manger/active/create', checkLogin, activeCl.create)
+	app.post('/manger/active/getList', checkLogin, activeCl.getList)
 
 
     //active log
@@ -159,6 +160,7 @@ var addroute = function(app){
 	app.post('/manger/activePrize/update', checkLogin, activePrizeCl.update)
 	app.post('/manger/activePrize/destroy', checkLogin, activePrizeCl.destroy)
 	app.post('/manger/activePrize/create', checkLogin, activePrizeCl.create)
+	app.post('/manger/activePrize/getList', checkLogin, activePrizeCl.getList)
 
 	//active prize record list
 	app.get('/manger/activePrizeRecord/list', checkLogin, activePrizeRecordCl.list)
@@ -166,7 +168,7 @@ var addroute = function(app){
 	app.post('/manger/activePrizeRecord/update', checkLogin, activePrizeRecordCl.update)
 	app.post('/manger/activePrizeRecord/destroy', checkLogin, activePrizeRecordCl.destroy)
 	app.post('/manger/activePrizeRecord/create', checkLogin, activePrizeRecordCl.create)
-
+	app.get('/manger/activePrizeRecord/download', checkLogin, activePrizeRecordCl.download) //下载列表
 
 	//active other
 	app.get('/manger/activelog/ranklist', checkLogin, activeLogCl.ranklist)

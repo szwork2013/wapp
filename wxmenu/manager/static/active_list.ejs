@@ -40,7 +40,7 @@
                 <label for="isPrize" >能否兑奖</label>
             </div>
             <div data-container-for="isPrize" class="k-edit-field w-800-r">
-               <input type="number" class="k-input k-textbox w-50-inp" name="isPrize" data-bind="value:isPrize" required="required">
+               <input type="number" id="isPrize" class="k-input k-textbox w-50-inp" name="isPrize" data-bind="value:isPrize" required="required">
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -171,8 +171,8 @@
                                     "title": { editable: true },
                                     "ename":{ editable: true },
 
-                                    "isPrize":{ editable: true },
-                                    "prizeAmount":{ editable: true },
+                                    "isPrize":{ editable: true,type:'number' },
+                                    "prizeAmount":{ editable: true,type:'number' },
 
                                     "intro": { editable: true },
                                     "picture": { editable: true}, 
@@ -181,7 +181,7 @@
                                     "code1": { editable: true},
                                     "code2": { editable: true},
 
-                                    "isShow": { editable: true, type:'number'},                                    
+                                    "isShow": { editable: true, type:'number'},    
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -290,6 +290,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                         $("#intro").kendoEditor(window.kendo_edit_option);  
                     
                         window.dropdown_init($('#appId_inp'),d)
+                        window.dropdown_init($('#isPrize'),window.isPrize)
                         window.dropdown_init()
 
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 1)

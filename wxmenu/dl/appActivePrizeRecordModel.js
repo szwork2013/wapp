@@ -13,7 +13,7 @@ var obj = { //定义结构
     code2:{type:String,default: ''}, //备用字段
     code3:{type:String,default: ''}, //备用字段
     code4:{type:String,default: ''}, //备用字段
-    writeTime:{ type: Date, default: function(){return Date.now()}}, //用户抽奖的时间
+    writeTime:{ type: Date, default: function(){return Date.now()}}, //用户兑奖的时间
 }
 
 

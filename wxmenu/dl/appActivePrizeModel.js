@@ -4,12 +4,13 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构
   activeId: { type: String, required:true}, //此奖品所属活动id
   name:{ type: String, required:true},      //奖品的名称
-  desc:{ type: String, default: ''},        //奖品描述
+ 
   imgUrl:{ type: String, default: ''},      //奖品的图片名称
   price:{type:Number,default: 0},           //奖品的价格
   
   totalNumber:{type: Number, default:0},  //奖品数量，本次活动总共设定此类奖品数量，对完为止
   countNum:{type: Number, default:0},      //此奖品次数，计数用
+  desc:{ type: String, default: ''},        //奖品描述
   isShow:{ type: Number, default:1},        //0表示此奖品下架不能被查询和使用，1表示此奖品正常使用
   code1:{type: String, default: ''},      //备用字段1
   code2:{type: String, default: ''},      //备用字段2

@@ -14,10 +14,10 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="lotteryId" >所属抽奖活动</label>
+                <label for="activeId" >所属抽奖活动</label>
             </div>
-            <div data-container-for="lotteryId" class="k-edit-field w-800-r">
-               <input type="text" id="lottery_inp" class="k-input k-textbox w-50-inp" name="lotteryId" data-bind="value:lotteryId" data-required-msg="请填写奖品名称" aria-invalid="true">
+            <div data-container-for="activeId" class="k-edit-field w-800-r">
+               <input type="text" id="lottery_inp" class="k-input k-textbox w-50-inp" name="activeId" data-bind="value:activeId" >
             </div>
 
 
@@ -30,7 +30,7 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="price">奖品显示价格</label>
+                <label for="price">所需支持数量</label>
             </div>
             <div data-container-for="price" class="k-edit-field w-800-r">
                <input type="number" class="k-input k-textbox w-50-inp" name="price" data-bind="value:price" required="required" data-required-msg="请填写奖品显示价格" aria-invalid="true">
@@ -48,39 +48,6 @@
                </span>
             </div>
 
-           <div class="k-edit-label  w-800-l">
-                <label for="prizeLotteryType">抽奖方式</label>
-            </div>
-            <div data-container-for="prizeLotteryType" class="k-edit-field w-800-r">
-               <input type="number" class="k-input k-textbox w-50-inp" id="prize_type_inp" name="prizeLotteryType" data-bind="value:prizeLotteryType" required="required" data-required-msg="请填写抽奖间隔" aria-invalid="true">
-               <br/>
-               <span>
-                表示此奖品中奖的方式，概率方式，表示此奖品每次抽奖的中奖概率，次数方式，表示此奖品大约根据每隔XX次会被用户抽中一次，如果中奖概率和间隔同时中奖2个奖品，以概率方式优先
-               </span>
-            </div>
-
-            <div class="k-edit-label  w-800-l rate_box">
-                <label for="rate">中奖概率</label>
-            </div>
-            <div data-container-for="rate" class="k-edit-field w-800-r rate_box">
-               <input type="number"  class="k-input k-textbox " name="rate" data-bind="value:rate" 
-               min="0.01" max="99.99">
-               <br/>
-               <span>
-                单位百分比，例如10%，此处填入10即可,可以是小数后面2位，如果是万分之一，则为 0.01。区间 0.01 - 99.99
-               </span>
-            </div>
-
-            <div class="k-edit-label  w-800-l num_box">
-                <label for="priceNum">下次中奖次数</label>
-            </div>
-            <div data-container-for="priceNum" class="k-edit-field w-800-r num_box">
-               <input type="number"  class="k-input k-textbox " name="priceNum" data-bind="value:priceNum" >
-                <br/>
-               <span>
-                此数值表示此活动下次抽奖数者中奖，注意：此数值不能与同抽奖活动中其他奖品的数值相同
-               </span>
-            </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="countNum">抽中次数</label>
@@ -118,7 +85,22 @@
             <div data-container-for="writeTime" class="k-edit-field w-800-r">
                <input type="text" id="writeTime_inp" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
             </div>
+<div style="display:none">
+            
+            <div class="k-edit-label  w-800-l">
+                <label for="code1" >备用1</label>
+            </div>
+            <div data-container-for="code1" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
+            </div>
 
+            <div class="k-edit-label  w-800-l">
+                <label for="code2" >备用2</label>
+            </div>
+            <div data-container-for="code2" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+            </div>
+</div> 
            
 
         </script>
@@ -139,22 +121,22 @@
                         serverFiltering:true,
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/lotteryPrize/read",
+                                url: DataHost + "/manger/activePrize/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/lotteryPrize/update",
+                                url: DataHost + "/manger/activePrize/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/lotteryPrize/destroy",
+                                url: DataHost + "/manger/activePrize/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/lotteryPrize/create",
+                                url:DataHost + "/manger/activePrize/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
@@ -168,17 +150,16 @@
                                 id:"_id",
                                 fields: {
                                     "_id": { editable: false },
-                                    "lotteryId": { editable: true },
+                                    "activeId": { editable: true },
                                     "name": { editable: true },
                                     "desc": { editable: true },
                                     "imgUrl":{editable: true},
                                     "price":{editable: true},
                                     "totalNumber":{editable: true},
-                                    "prizeLotteryType":{editable: true},
-                                    "rate":{editable: true},
-                                    "priceNum":{editable: true},
                                     "countNum":{editable: true},
-                                    "isShow": { editable: true},                                    
+                                    "isShow": { editable: true},
+                                    "code1": { editable: true},
+                                    "code2": { editable: true},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -190,7 +171,7 @@
                 var commandAry = [];
  
                     var toolbarAry = [
-                                { name: "create", text: "添加抽奖奖品" }
+                                { name: "create", text: "添加活动奖品" }
                               ]
 
         
@@ -206,7 +187,7 @@ dataSource.bind("error", function(err){
     return false;
 });
 
-$.post('/manger/lottery/getList',{},function(data_ary){
+$.post('/manger/active/getList',{},function(data_ary){
     var d = []
     data_ary.forEach(function(v){
         d.push({
@@ -230,7 +211,7 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                             hidden:true
                         },
                          { 
-                            field: "lotteryId",
+                            field: "activeId",
                             title: "所属活动",
                             values:window.lotteryData
                         },
@@ -250,28 +231,12 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                         },
                         { 
                             field: "price",
-                            title: "奖品价格",
+                            title: "所需支持数量",
                             hidden:true
                         },
                         { 
                             field: "totalNumber",
                             title: "奖品总数",
-                        },
-                        { 
-                            field: "prizeLotteryType",
-                            title: "抽取方式",
-                            values:window.prize_type,
-            
-                        },
-                        { 
-                            field: "rate",
-                            title: "概率",
-                            hidden:true
-                        },
-                        { 
-                            field: "priceNum",
-                            title: "下次中奖数",
-                            hidden:true
                         },
                         { 
                             field: "countNum",
@@ -281,7 +246,17 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                             field: "isShow",
                             title: "是否启用", 
                             values:window.is_show_array
+                        },
+                        { 
+                            field: "code1",
+                            title: "备用1", 
+                            hidden:true
                         },                   
+                        { 
+                            field: "code2",
+                            title: "备用2", 
+                            hidden:true
+                        },
                         { 
                             field: "writeTime",
                             title: "创建日期",
@@ -314,36 +289,13 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                          });  
 
                          
-                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 1)
 
 
 
                          window.dropdown_init($("#lottery_inp"), window.lotteryData)
 
-                         var switch_type = function(v){
-                            if(v == 1){
-                                $('.rate_box').show();
-                                $('.num_box').hide();
-                            }
-                            else{
-                                $('.rate_box').hide();
-                                $('.num_box').show();
-                            }
-                         }
-
-                         window.dropdown_init($("#prize_type_inp"), window.prize_type,function(e){
-                            var dataItem = this.dataItem(e.item.index());
-                            var v = dataItem.value
-                            switch_type(v)
-                         })
-
-                         //window.dropdown_init($('#isShow_inp'),window.is_show_array)
-
-                         var vkind = $("#prize_type_inp").data("kendoDropDownList").value()
-                         switch_type(vkind)
-
-                         
-                    }
+                  }
                     
                 });
 

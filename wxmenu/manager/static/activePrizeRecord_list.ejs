@@ -11,27 +11,26 @@
     <button  id="down" class="k-primary sync_button k-primary k-button">
         <span class="k-sprite k-icon k-i-refresh">Refresh</span>
         导出获奖名单</button>
-
 </div>
 
 
 <script type="text/javascript">
 //导出获奖名单
-    var lotteryList = <%- lotteryList%>
-    var lotteryKV = []
-    lotteryList.forEach(function(lo){
-        lotteryKV.push(
+    var List = <%- List%>
+    var listKV = []
+    List.forEach(function(lo){
+        listKV.push(
              { text: lo.title, value: lo._id+'|'+lo.title }
         )
     })
-    window.dropdown_init($("#app_sel_inp"), lotteryKV)
+    window.dropdown_init($("#app_sel_inp"), listKV)
 
     $('#down').click(function(){
         var v = $("#app_sel_inp").val();
-        var lotteryid = v.split('|')[0];
-        var lotteryename = v.split('|')[1];
+        var id = v.split('|')[0];
+        var ename = v.split('|')[1];
 
-        location.href = '/manger/lotteryRec/download?lotteryid='+lotteryid+'&lotteryename='+lotteryename
+        location.href = '/manger/activePrizeRecord/download?id='+id+'&ename='+ename
         return false;
     })
 
@@ -50,10 +49,10 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="lotteryId" >所属抽奖活动</label>
+                <label for="activeId" >所属活动</label>
             </div>
-            <div data-container-for="lotteryId" class="k-edit-field w-800-r">
-               <input type="text" id="lottery_inp" class="k-input k-textbox w-50-inp" name="lotteryId" data-bind="value:lotteryId" data-required-msg="请填写奖品名称" aria-invalid="true">
+            <div data-container-for="activeId" class="k-edit-field w-800-r">
+               <input type="text" id="lottery_inp" class="k-input k-textbox w-50-inp" name="activeId" data-bind="value:activeId" data-required-msg="请填写奖品名称" aria-invalid="true">
             </div>
 
 
@@ -97,15 +96,6 @@
             </div>
             <div data-container-for="giftId" class="k-edit-field w-800-r">
                <input type="text"  class="k-input k-textbox " name="giftId" data-bind="value:giftId" >
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="isForward">转发额外抽奖记录</label>
-            </div>
-            <div data-container-for="isForward" class="k-edit-field w-800-r">
-               <input type="number"  class="k-input k-textbox " name="isForward" data-bind="value:isForward" >
-               <br/>
-               不是转发额外记录填入0，是转发额外记录填入1
             </div>
 
       
@@ -163,22 +153,22 @@
                         serverFiltering:true,
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/lotteryRec/read",
+                                url: DataHost + "/manger/activePrizeRecord/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/lotteryRec/update",
+                                url: DataHost + "/manger/activePrizeRecord/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/lotteryRec/destroy",
+                                url: DataHost + "/manger/activePrizeRecord/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/lotteryRec/create",
+                                url:DataHost + "/manger/activePrizeRecord/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
@@ -192,14 +182,13 @@
                                 id:"_id",
                                 fields: {
                                     "_id": { editable: false },
-                                    "lotteryId": { editable: true },
+                                    "activeId": { editable: true },
                                     "prizeId": { editable: true },
                                     "userId": { editable: true },
                                     "truename":{editable: true},
                                     "mobile":{editable: true},
                                     "recordIp":{editable: true},
                                     "giftId":{editable: true},
-                                    "isForward":{editable: true , type: "number"},
                                     "writeTime": {editable: true, type: "date" },
                                     "code1":{editable: true},
                                     "code2":{editable: true},
@@ -215,7 +204,7 @@
                 var commandAry = [];
  
                     var toolbarAry = [
-                                { name: "create", text: "添加抽奖流水" }
+                                { name: "create", text: "添加兑奖流水" }
                               ]
 
         
@@ -227,7 +216,7 @@
 
 
 
-$.post('/manger/lottery/getList',{},function(data_ary){
+$.post('/manger/active/getList',{},function(data_ary){
     var d = []
     data_ary.forEach(function(v){
         d.push({
@@ -237,11 +226,8 @@ $.post('/manger/lottery/getList',{},function(data_ary){
     })
     window.lotteryData = d;
 
-        $.post('/manger/lotteryPrize/getList',{},function(data_ary){
-        var d = [{
-            text:'未中奖',
-            value:'0',
-        }]
+        $.post('/manger/activePrize/getList',{},function(data_ary){
+        var d = []
 
         data_ary.forEach(function(v){
             d.push({
@@ -266,7 +252,7 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                             hidden:true
                         },
                          { 
-                            field: "lotteryId",
+                            field: "activeId",
                             title: "所属活动",
                             values:window.lotteryData
                         },
@@ -295,11 +281,7 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                         { 
                             field: "giftId",
                             title: "兑奖码",
-                        },
-                        {
-                            field: "isForward",
-                            title: "转发额外记录",    
-                        },           
+                        },  
                         { 
                             field: "writeTime",
                             title: "创建日期",
