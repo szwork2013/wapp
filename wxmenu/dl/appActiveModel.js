@@ -8,7 +8,9 @@ var obj = { //定义结构
       intro:{type:String,required:true},              //简介
       picture:{type:String,required:true},            //缩略图
       url:{type:String,required:true},                //模版地址
-      ename:{type:String,required:true,unique:true},   //唯一的英文名
+      ename:{type:String,required:true,unique:true},  //唯一的英文名
+      isPrize:{type:Number,required:true},            //0表示本活动不能兑奖，1表示本活动可以兑奖
+      prizeAmount:{type:Number,required:true},        //每个用户可兑奖次数
       code1:{type:String,default:''},                 //备用字段1
       code2:{type:String,default:''},                 //备用字段2
       isShow:{type:Number,default:1},             

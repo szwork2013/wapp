@@ -1,4 +1,4 @@
-var dl = require('../../dl/appActiveModel.js');
+var dl = require('../../dl/appActivePrizeModel.js');
 
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
@@ -7,8 +7,10 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('active_list', {session:req.session});
+	res.render('activePrize_list', {session:req.session});
 }
+
+
 
 
 obj.read = function(req, res){
@@ -17,15 +19,17 @@ obj.read = function(req, res){
 	var pageSize = req.body.pageSize || 20;
 	var resObj = {"Data":[],"Total":0};
 
+
+
 	dl.findAll(filter, skip, pageSize, function(err,doc){
 		if(err) return res.send(500,err);
-		if(!doc || doc.length==0) return res.json(doc);
+		if(!doc) return res.json(resObj);
+		resObj["Data"] = doc;
+		var ids = []
+		doc.forEach(function(v){
+			ids.push(v.userId)
+		})
 
-		var templist = doc
-
-
-		resObj["Data"] = templist;
-		
 		dl.countAll(filter,function(err,count){
 			if(err) return res.send(500,err);
 
@@ -50,20 +54,12 @@ obj.update = obj.create = function(req, res){
 	delete req.models[0]["_id"];
 	delete req.models[0]["__v"];
 
-	var tempjson = req.models[0]["comments"] || '[]';
-	try{
-		req.models[0]["comments"] = JSON.parse(tempjson)
-	}
-	catch(e){
-		res.send(500,e)
-	}
-
-
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
 		res.json(doc);
 	})
+
 }
 
 
@@ -76,16 +72,6 @@ obj.destroy = function(req, res){
 	})
 }
 
-
-
-obj.getList = function(req, res){
-
-	dl.findAll({}, 0, 100000, function(err,doc){
-		if(err) return res.send(500,err);
-		if(!doc) return res.json([])
-		res.json(doc);
-	})
-}
 
 
 

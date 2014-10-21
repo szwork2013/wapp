@@ -16,6 +16,8 @@ var menuCl = require('./cl/menuCl.js')
 
 var activeCl = require('./cl/activeCl.js');
 var activeLogCl = require('./cl/activeLogCl.js');
+var activePrizeCl = require('./cl/activePrizeCl.js');
+var activePrizeRecordCl = require('./cl/activePrizeRecordCl.js');
 
 
 var lotteryCl = require('./cl/lotteryCl.js');
@@ -118,11 +120,6 @@ var addroute = function(app){
 	app.post('/manger/userapp/fail', checkLogin, userappCl.fail)
 
 
-
-
-
-	
-
 	//reply
 	app.get('/manger/reply/list', checkLogin, replyCl.list)
 	app.post('/manger/reply/read', checkLogin, replyCl.read)
@@ -155,6 +152,21 @@ var addroute = function(app){
 	app.post('/manger/activelog/update', checkLogin, activeLogCl.update)
 	app.post('/manger/activelog/destroy', checkLogin, activeLogCl.destroy)
 	app.post('/manger/activelog/create', checkLogin, activeLogCl.create)
+
+	//active prize list
+	app.get('/manger/activePrize/list', checkLogin, activePrizeCl.list)
+	app.post('/manger/activePrize/read', checkLogin, activePrizeCl.read)
+	app.post('/manger/activePrize/update', checkLogin, activePrizeCl.update)
+	app.post('/manger/activePrize/destroy', checkLogin, activePrizeCl.destroy)
+	app.post('/manger/activePrize/create', checkLogin, activePrizeCl.create)
+
+	//active prize record list
+	app.get('/manger/activePrizeRecord/list', checkLogin, activePrizeRecordCl.list)
+	app.post('/manger/activePrizeRecord/read', checkLogin, activePrizeRecordCl.read)
+	app.post('/manger/activePrizeRecord/update', checkLogin, activePrizeRecordCl.update)
+	app.post('/manger/activePrizeRecord/destroy', checkLogin, activePrizeRecordCl.destroy)
+	app.post('/manger/activePrizeRecord/create', checkLogin, activePrizeRecordCl.create)
+
 
 	//active other
 	app.get('/manger/activelog/ranklist', checkLogin, activeLogCl.ranklist)

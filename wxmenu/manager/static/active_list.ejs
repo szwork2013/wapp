@@ -36,6 +36,20 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" required="required">
             </div>
 
+            <div class="k-edit-label  w-800-l">
+                <label for="isPrize" >能否兑奖</label>
+            </div>
+            <div data-container-for="isPrize" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="isPrize" data-bind="value:isPrize" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="prizeAmount" >可兑奖次数</label>
+            </div>
+            <div data-container-for="prizeAmount" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="prizeAmount" data-bind="value:prizeAmount" required="required">
+            </div>
+
 
             
 
@@ -157,6 +171,8 @@
                                     "title": { editable: true },
                                     "ename":{ editable: true },
 
+                                    "isPrize":{ editable: true },
+                                    "prizeAmount":{ editable: true },
 
                                     "intro": { editable: true },
                                     "picture": { editable: true}, 
@@ -207,6 +223,16 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "title",
                             title: "活动标题",
+                        },
+                        { 
+                            field: "isPrize",
+                            title: "可否兑奖",
+                            values:window.isPrize,
+                        },
+                        { 
+                            field: "prizeAmount",
+                            title: "可兑奖次数",
+                            hidden:true
                         },
                         { 
                             field: "intro",

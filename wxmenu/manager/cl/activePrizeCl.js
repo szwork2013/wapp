@@ -1,4 +1,4 @@
-var dl = require('../../dl/lotteryPrizeModel.js');
+var dl = require('../../dl/appActivePrizeModel.js');
 
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
@@ -7,7 +7,7 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('lotteryPrize_list', {session:req.session});
+	res.render('activePrize_list', {session:req.session});
 }
 
 
@@ -51,55 +51,15 @@ obj.update = obj.create = function(req, res){
 		query = {'writeTime':new Date('1970/1/1')}
 	}
 	
-	
+	delete req.models[0]["_id"];
+	delete req.models[0]["__v"];
 
-	var createAndUpdate = function(){
-		
-		delete req.models[0]["_id"];
-		delete req.models[0]["__v"];
+	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
+		if(err) return res.send(500,err);
+		if(!doc) return res.json([])
+		res.json(doc);
+	})
 
-		dl.createOneOrUpdate(query, req.models[0], function(err, doc){
-			if(err) return res.send(500,err);
-			if(!doc) return res.json([])
-			res.json(doc);
-		})
-	}
-
-	if(req.models[0]["prizeLotteryType"] == 1){ //如果设定为概率，则把次数调整为0
-		req.models[0]["priceNum"] = 0
-	}
-
-	if('undefined' != typeof req.models[0]["lotteryId"] && 'undefined' != typeof req.models[0]["priceNum"] && 2 == req.models[0]["prizeLotteryType"]){
-		dl.findByObj({
-			lotteryId:req.models[0]["lotteryId"],
-			prizeLotteryType:2
-		},function(err,prList){
-			if(err) return res.send(500,err);
-			if(prList.length == 0) return createAndUpdate();
-
-			var hasEq = 0;
-			prList.forEach(function(p){
-				if(p._id ==  req.models[0]["_id"]) return;
-				if(p.priceNum == 0) return;
-				if(p.priceNum == req.models[0]["priceNum"]){
-
-					console.log(p._id)
-					console.log(req.models[0]["_id"])
-					hasEq++
-				}
-			})
-
-			if(hasEq>0){
-				return res.send(500,'计次抽奖时，计次数不能重复');
-			}
-			else{
-				return createAndUpdate();
-			}
-		})
-	}
-	else{
-		return createAndUpdate()
-	}
 }
 
 

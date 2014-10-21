@@ -341,6 +341,12 @@ window.not_sel = [
 ]
 
 
+window.isPrize = [
+  { text: "不能兑奖", value: 0 },
+  { text: "可以兑奖", value: 1 }
+]
+
+
 window.kendo_edit_option = {
     tools: window.editor_tools,
     messages: window.editor_messages,
