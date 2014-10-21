@@ -1,6 +1,10 @@
 var userBl = require('./wxUser.js');
 var activeModel = require('../dl/appActiveModel.js');
 var activeLogModel = require('../dl/appActiveLogModel.js');
+
+var appActivePrizeModel = require('../dl/appActivePrizeModel.js');
+var appActivePrizeRecordModel = require('../dl/appActivePrizeRecordModel.js');
+
 var guidModel = require('../dl/guidModel.js');
 var moment = require('moment');
 var utils = require('../lib/utils.js');
@@ -103,6 +107,27 @@ obj.getCountByActiveIdAndToUserId = function(activeId, toUserId,cb){ //计算当
 
 }
 
+var checkActiveTime = function(activeObj){
+	var s = moment(activeObj.startTime)
+	var e = moment(activeObj.endTime)
+	var n = moment();
+
+	if(s>n){
+		return '活动还未开始'
+	}
+	if(e<n){
+		return '活动已经结束'
+	}
+
+	return true
+}
+
+
+
+
+
+
+
 var overActiveList = ['wzzy_2014']
 //添加一条记录
 obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
@@ -116,6 +141,9 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 	if(!toUserId || toUserId.length != 24){
 		return cb('toUserId 错误')
 	}
+	if(!fromOpenId){
+		return cb('用户身份丢失,请重新进入')
+	}
 
 	activeModel.findOneByObj({
 		_id:activeId,
@@ -124,9 +152,13 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 		if(err) return cb(err);
 		if(!doc) return cb('没找到活动')
 
-		if(overActiveList.indexOf(doc.ename||'') != -1 ){
-			return cb('活动已经结束了')
+		var ckTime = checkActiveTime(doc)
+		if(ckTime != true){
+			return cb(ckTime)
 		}
+		//if(overActiveList.indexOf(doc.ename||'') != -1 ){
+		//	return cb('活动已经结束了')
+		//}
 
 		userBl.getUserByOpenid(fromOpenId,function(err, uobj1){
 			if(err) return cb(err);
@@ -155,6 +187,7 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 						fromUserId:fromUserId,
 						toUserId:toUserId,
 						activeId:activeId,
+						writeTime:new Date()
 					},function(err,doc){
 						cb(err,doc)
 					})
@@ -168,6 +201,154 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 	})//end findOneByObj
 	
 }
+
+
+
+
+//获取奖品列表页我的兑奖记录
+obj.getActivePrizeInfo = function(activeId, userId, cb){
+
+	//查找奖品
+	appActivePrizeModel.findByObj({
+		activeId:activeId,
+		isShow:isShow,
+	},function(err, prizeList){
+		if(err) return cb(err)
+			//查找记录
+		appActivePrizeRecordModel.findByObj({
+			activeId:activeId,
+			userId:userId,
+		},function(err,recordList){
+			if(err) return cb(err)
+				//返回数据
+			cb(null,{
+				prizeList:prizeList,
+				myPrizeList:recordList
+			})
+		})//end appActivePrizeRecordModel
+	})//end appActivePrizeModel
+
+}
+
+//执行兑奖流程
+obj.exchangePrize = function(qobj,cb){
+	var prizeId = qobj.prizeId
+	var userId = qobj.userId
+	var truename = qobj.truename
+	var mobile = qobj.mobile
+
+	if(!prizeId || prizeId.length !=24){
+		return cb('prizeId 有误')
+	}
+	if(!userId || userId.length !=24){
+		return cb('prizeId 有误')
+	}
+	if(!truename || truename.length >50){
+		return cb('姓名输入有误')
+	}
+	if(!mobile || !/^[0-9]{11}$/.test(mobile)){
+      return cb('手机号码输入有误')
+    }
+
+	//获取奖品对象
+	appActivePrizeModel.findOneByObj({
+		_id:prizeId,
+		isShow:1
+	},function(err, prizeObj){
+		if(err) return cb(err)
+		if(!prizeObj) return cb('未找到奖品')
+		var activeId = prizeObj.activeId;
+		//将activeId写入qobj
+		qobj.activeId = activeId;
+
+		//获取活动对象
+		activeModel.findOneByObj({
+			_id:activeId,
+			isShow:1
+		},function(err, activeObj){
+			if(err) return cb(err)
+			if(!activeObj) return cb('未找到活动')
+
+			//检查活动是否未开始或已经结束
+			var ckTime = checkActiveTime(activeObj)
+			if(ckTime != true){
+				return cb(ckTime)
+			}
+
+			//获取兑奖记录
+			appActivePrizeRecordModel.findByObj({
+				activeId:activeId,
+				userId:userId,
+			},function(err,recordList){
+				if(err) return cb(err)
+				
+				//获取支持数
+				obj.getCountByActiveIdAndToUserId(activeId, userId, function(err, userCount){
+						if(err) return cb(err)
+
+						//如果活动不能兑奖
+						if(activeObj.isPrize == 0){
+							return cb('此活动无法兑奖')
+						}
+						//如果没有奖品库存
+						if(prizeObj.totalNumber <= prizeObj.countNum){
+							return cb('此奖品已经兑换完毕')
+						}
+						//如果用户超过了兑奖次数限制
+						if(recordList.length >= activeObj.prizeAmount){
+							return cb('超过兑奖次数')
+						}
+						//如果未达到兑奖奖品的支持数
+						if(userCount < prizeObj.price){
+							return cb('支持数不够，无法兑换本奖品')
+						}
+
+						//达成条件去兑换奖品
+						obj.savePrize(qobj, cb)
+
+				})//end obj.getCountByActiveIdAndToUserId
+			})//end appActivePrizeRecordModel
+		})//end activeModel.findOneByObj
+	})//end appActivePrizeModel.findOneByObj
+
+}
+
+
+//保存兑奖信息
+obj.savePrize = function(qobj, cb){
+	//第一步，更新奖品数量
+	appActivePrizeModel.createOneOrUpdate({
+		_id:qobj.prizeId
+	},{
+		$inc:{countNum:1},
+	},function(err){
+		if(err) return cb(err)
+		//第二部，更新获奖记录
+		//获取兑奖流水号
+		guidModel.getGuid(function(err,guid){
+			if(err) return cb(err)
+
+			//写入兑奖记录
+			appActivePrizeRecordModel.insertOneByObj({
+				activeId:qobj.activeId,
+				prizeId:qobj.prizeId,
+				userId:qobj.userId,
+				truename:qobj.truename,
+				mobile:qobj.mobile,
+				recordIp:qobj.recordIp,
+				giftId:guid,
+				writeTime:new Date()
+			},function(err,record){
+				//写入成功回调
+				if(err) return cb(err)
+				cb(null, record)
+
+			})//end appActivePrizeRecordModel
+		})//end guidModel.getGuid
+	})//end appActivePrizeModel.createOneOrUpdate
+}
+
+
 
 
 module.exports = obj;

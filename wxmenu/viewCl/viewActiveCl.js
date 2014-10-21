@@ -111,6 +111,7 @@ obj.activePage = function(req,res){ //活动页面展示
 		var fromUserId = req.fromUserObj._id
 		var templateName = req.activeObj.activeObj.ename
 		var acitveId = req.activeObj.activeObj._id
+		var activeObj = req.activeObj;
 /*
 		if(!toUserId){//重新加载本页
 			res.redirect(req.originalUrl+'&touserid='+fromUserId)
@@ -142,9 +143,7 @@ obj.activePage = function(req,res){ //活动页面展示
 
 			activeBl.getCountByActiveIdAndToUserId(acitveId, toUserId, function(err,count){
 				if(err) return res.send(500,err)
-
-
-				res.render('active/'+templateName+'.ejs',{
+				var tempObj = {
 						'appId':req.appId,
 						'appEname':req.appEname,
 						'toUserObj':toUserObj,           //是否是自己的活动页面
@@ -154,8 +153,22 @@ obj.activePage = function(req,res){ //活动页面展示
 						'fromOpenId':openId,    //来源用户的openid
 						'activeId':acitveId,   //活动id
 						'supportCount':count,  //目前这个用户，这个互动支持的数量
-						'hasAdd':hasAdd 	//是否已经支持过
-					})
+						'hasAdd':hasAdd, 	//是否已经支持过
+						'prizeList':[],    //奖品数组
+						'myPrizeList':[]
+					}
+
+				if(activeObj.isPrize == 0){ //没有兑奖功能
+					return res.render('active/'+templateName+'.ejs', tempObj)
+				}
+				else{//有兑奖功能，并且要去获取兑奖信息和此用户兑奖记录
+					activeBl.getActivePrizeInfo(acitveId, toUserId, function(err, infoObj){
+						if(err) return res.send(500,err)
+						tempObj.prizeList = infoObj.prizeList
+						tempObj.myPrizeList = infoObj.myPrizeList
+						return res.render('active/'+templateName+'.ejs', tempObj)
+					})//end activeBl.getActiveInfo
+				}
 
 			})//end getCountByActiveIdAndToUserId
 
@@ -180,31 +193,6 @@ obj.activeRank = function(req,res){
 }
 
 
-obj.addSupport = function(req,res){
 
-	var pathname = url.parse(req.originalUrl).pathname || ''
-	try{
-      var appEname = pathname.split('/')[2] || ''
-      //console.log(appEname)
-    }
-    catch(e){
-      return res.json({error:1,data:e})
-    }
-
-    //req.session[appEname+'_oauth_openid'] = 'qwe'
-
-	var activeId = req.body.activeId;
-	var fromOpenId = req.session[appEname+'_oauth_openid']
-	var fromUserId = req.body.fromUserId;
-	var toUserId = req.body.toUserId;
-
-
-	activeBl.addSupport(activeId, fromOpenId, fromUserId, toUserId, function(err,doc){
-		if(err) return res.json({error:1,data:err})
-		res.json({error:0,data:doc})
-	})
-
-	
-}
 
 module.exports = obj;

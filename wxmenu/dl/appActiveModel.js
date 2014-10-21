@@ -11,6 +11,8 @@ var obj = { //定义结构
       ename:{type:String,required:true,unique:true},  //唯一的英文名
       isPrize:{type:Number,default:0},            //0表示本活动不能兑奖，1表示本活动可以兑奖
       prizeAmount:{type:Number,default:0},        //每个用户可兑奖次数
+      startTime: { type: Date},    //活动开始时间
+      endTime: { type: Date},      //活动结束时间 
       code1:{type:String,default:''},                 //备用字段1
       code2:{type:String,default:''},                 //备用字段2
       isShow:{type:Number,default:1},             

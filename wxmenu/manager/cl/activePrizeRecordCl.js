@@ -2,6 +2,7 @@ var dl = require('../../dl/appActivePrizeRecordModel.js');
 var dl3 = require('../../dl/appActivePrizeModel.js');
 var dl4 = require('../../dl/appActiveModel.js');
 var dl2 = require('../../dl/userModel.js');
+
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');

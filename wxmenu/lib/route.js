@@ -13,6 +13,9 @@ var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
 var voteBl = require('../bl/wxVote.js')
 
+
+//api active
+var apiActive = require('../apiCl/apiActive.js');
 //lottery
 var apiLottery = require('../apiCl/apiLottery.js');
 //vote
@@ -237,10 +240,16 @@ var addroute = function(app){
 		//active活动页面，需要oauth支持
 		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
 		//app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
-		app.post('/active_data/:appename/addsupport', activeCl.addSupport)
+		app.post('/active_data/:appename/addsupport', apiActive.addSupport)
 		app.get('/active_data/getrank', activeCl.activeRank)
+		//active exchange prize
+		app.post('/active_data/:appename/exchangeprize', apiActive.startExchangePrize);
+
+		
 		//end active
 		app.post('/api/user/modify',getUserMid, userCl.modify);
+
+
 
 		//lottery
 		app.get('/lottery/:appename', getUserMid, lotteryCl.lotteryPage)

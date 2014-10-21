@@ -51,7 +51,19 @@
             </div>
 
 
-            
+             <div class="k-edit-label  w-800-l">
+                <label for="startTime">开始时间</label>
+            </div>
+            <div data-container-for="startTime" class="k-edit-field w-800-r">
+               <input type="text" id="stime" class="k-input k-textbox " name="startTime" data-bind="value:startTime" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="endTime">结束时间</label>
+            </div>
+            <div data-container-for="endTime" class="k-edit-field w-800-r">
+               <input type="text" id="etime" class="k-input k-textbox " name="endTime" data-bind="value:endTime" >
+            </div>
 
             
             
@@ -178,6 +190,9 @@
                                     "picture": { editable: true}, 
                                     "url": { editable: true},
 
+                                    "startTime":{editable: true, type: "date"},
+                                    "endTime":{editable: true, type: "date"},
+
                                     "code1": { editable: true},
                                     "code2": { editable: true},
 
@@ -228,6 +243,16 @@ $.post('/manger/app/getList',{},function(data_ary){
                             field: "isPrize",
                             title: "可否兑奖",
                             values:window.isPrize,
+                        },
+                        { 
+                            field: "startTime",
+                            title: "开始时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { 
+                            field: "endTime",
+                            title: "结束时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
                         },
                         { 
                             field: "prizeAmount",
@@ -288,7 +313,10 @@ $.post('/manger/app/getList',{},function(data_ary){
 
                         $('#writeTime').kendoDateTimePicker();
                         $("#intro").kendoEditor(window.kendo_edit_option);  
-                    
+                        
+                        $('#stime').kendoDateTimePicker();
+                        $('#etime').kendoDateTimePicker();
+
                         window.dropdown_init($('#appId_inp'),d)
                         window.dropdown_init($('#isPrize'),window.isPrize)
                         window.dropdown_init()

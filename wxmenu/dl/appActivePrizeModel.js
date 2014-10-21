@@ -6,7 +6,7 @@ var obj = { //定义结构
   name:{ type: String, required:true},      //奖品的名称
  
   imgUrl:{ type: String, default: ''},      //奖品的图片名称
-  price:{type:Number,default: 0},           //奖品的价格
+  price:{type:Number,default: 0},           //兑换奖品所需支持数
   
   totalNumber:{type: Number, default:0},  //奖品数量，本次活动总共设定此类奖品数量，对完为止
   countNum:{type: Number, default:0},      //此奖品次数，计数用
