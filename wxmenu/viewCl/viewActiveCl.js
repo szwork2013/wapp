@@ -22,7 +22,8 @@ obj.activeMiddle = function(req,res,next){
       return res.send(500,e)
     }
 
-    //req.session[appEname+'_oauth_openid'] = '123'
+    //真实情况需要注释掉
+    //req.session[appEname+'_oauth_openid'] = 'asd'
 
 	var openId = req.session[appEname+'_oauth_openid'] 
 
@@ -144,6 +145,7 @@ obj.activePage = function(req,res){ //活动页面展示
 			activeBl.getCountByActiveIdAndToUserId(acitveId, toUserId, function(err,count){
 				if(err) return res.send(500,err)
 				var tempObj = {
+						'activeObj':activeObj,
 						'appId':req.appId,
 						'appEname':req.appEname,
 						'toUserObj':toUserObj,           //是否是自己的活动页面
@@ -164,7 +166,59 @@ obj.activePage = function(req,res){ //活动页面展示
 				else{//有兑奖功能，并且要去获取兑奖信息和此用户兑奖记录
 					activeBl.getActivePrizeInfo(acitveId, toUserId, function(err, infoObj){
 						if(err) return res.send(500,err)
-						tempObj.prizeList = infoObj.prizeList
+
+						//将奖品由易到难排序
+						var prizeList = infoObj.prizeList.sort(function(a,b){
+							if(a.price > b.price){
+								return 1
+							}
+							return -1
+						})
+
+						//循环看是否可以
+						var tempPrizeList = []
+						prizeList.forEach(function(prizeObj){
+							var tempPrizeObj = {
+								_id:prizeObj._id.toString(),
+								name:prizeObj.name,
+								imgUrl:prizeObj.imgUrl,
+								price:prizeObj.price,
+								totalNumber:prizeObj.totalNumber,
+								countNum:prizeObj.countNum,
+								desc:prizeObj.desc,
+								code1:prizeObj.code1,
+								code2:prizeObj.code2,
+								writeTime:prizeObj.writeTime,
+								lastPrizeNumber:prizeObj.totalNumber - prizeObj.countNum,
+								canSelect:true,
+								hasSelect:false,
+							}
+							var prizeId = prizeObj._id.toString()
+				
+							//如果不是我自己的页面，则全部不能选择
+							if(!tempObj.isMyPage){
+								tempPrizeObj.canSelect = false;
+							}
+							//如果没有库存了
+							if(tempPrizeObj.lastPrizeNumber<=0){
+								tempPrizeObj.lastPrizeNumber = 0;
+								tempPrizeObj.canSelect = false;
+							}
+							if(tempObj.supportCount < tempPrizeObj.price){
+								tempPrizeObj.canSelect = false;
+							}
+							//循环我的记录，如果已经领取过了
+							infoObj.myPrizeList.forEach(function(myObj){
+									if(myObj.prizeId == prizeId){
+										tempPrizeObj.hasSelect = true;
+									}
+							})
+							tempPrizeList.push(tempPrizeObj)
+						})
+
+
+
+						tempObj.prizeList = tempPrizeList
 						tempObj.myPrizeList = infoObj.myPrizeList
 						return res.render('active/'+templateName+'.ejs', tempObj)
 					})//end activeBl.getActiveInfo

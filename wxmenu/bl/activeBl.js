@@ -211,7 +211,7 @@ obj.getActivePrizeInfo = function(activeId, userId, cb){
 	//查找奖品
 	appActivePrizeModel.findByObj({
 		activeId:activeId,
-		isShow:isShow,
+		isShow:1,
 	},function(err, prizeList){
 		if(err) return cb(err)
 			//查找记录
