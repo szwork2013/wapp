@@ -582,11 +582,7 @@ var forwardingTitle ='合众人寿微信投票'
 var forwardingDesc ='合众人寿微信投票'
 
 
-var forwardingCallback = function(){
-	mask()
-	//alert(111)
-	//$.cookie('isForward', '1', { expires: window.isforward_today, path: location.pathname });
-}
+
 
 
 var maskObj = $('#mask');
@@ -597,6 +593,12 @@ var mask = function () {
 		else{
 			maskObj.show();
 		}
+}
+
+var forwardingCallback = function(){
+	maskObj.hide();
+	//alert(111)
+	//$.cookie('isForward', '1', { expires: window.isforward_today, path: location.pathname });
 }
 
 
@@ -1151,9 +1153,9 @@ $(function(){
 	$('#item_success_modal').on('hidden.bs.modal', function (e) {
 	  		
 	  		if($.cookie('todayHasVote') != '1'){
-					mask()
-					$.cookie('todayHasVote', '1', { expires: window.isforward_today, path: location.pathname });
-				}
+				mask()
+				$.cookie('todayHasVote', '1', { expires: window.isforward_today, path: location.pathname });
+			}
 	})
 
 
