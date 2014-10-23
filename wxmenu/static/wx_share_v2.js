@@ -7,10 +7,10 @@ WeixinApi.ready(function (Api) {
     // 微信分享的数据
     var wxDataToFriend = {
         "appId": "", // 服务号可以填写appId
-        "imgUrl": window.forwardingImg_friend || window.forwardingImg,
-        "link": window.forwardingUrl_friend || window.forwardingUrl,
-        "desc": window.forwardingDesc_friend || window.forwardingDesc,
-        "title": window.forwardingTitle_friend || window.forwardingTitle
+        "imgUrl": 'http://piccvote.qiniudn.com/unipay_logo2.png',//window.forwardingImg_friend || window.forwardingImg,
+        "link": window.forwardingUrl,//window.forwardingUrl_friend || window.forwardingUrl,
+        "desc": '11111',//window.forwardingDesc_friend || window.forwardingDesc,
+        "title": '1111111',//window.forwardingTitle_friend || window.forwardingTitle
     };
 
     var wxDataToTimeline = {
@@ -25,17 +25,17 @@ WeixinApi.ready(function (Api) {
     var wxCallbacks_friend = {
         // 分享操作开始之前
         ready: function () {
-            alert('1')
+            $('#title').html('1')
             // 你可以在这里对分享的数据进行重组
         },
         // 分享被用户自动取消
         cancel: function (resp) {
-            alert('2')
+            $('#title').html('2')
             // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
         },
         // 分享失败了
         fail: function (resp) {
-            alert('3')
+            $('#title').html('3')
             // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
         },
         // 分享成功
@@ -43,7 +43,7 @@ WeixinApi.ready(function (Api) {
             // 分享成功了，我们是不是可以做一些分享统计呢？
             //window.location.replace("guaguaka.aspx");
 
-            alert('3')
+            $('#title').html('4')
             if(window.forwardingCallback_friend){
                 window.forwardingCallback_friend()
             }
