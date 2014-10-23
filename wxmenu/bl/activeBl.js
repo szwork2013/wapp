@@ -345,7 +345,7 @@ obj.savePrize = function(qobj, cb){
 
 				//然后去修改用户的资料
 				userModel.createOneOrUpdate({
-					_id:userId,
+					_id:qobj.userId,
 				},{
 					appUserName:qobj.truename,
 					appUserMobile:qobj.mobile
