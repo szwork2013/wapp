@@ -19,7 +19,8 @@
 </title>
 <style type="text/css">
     .container{
-        background:#FFFFFF
+        background:#FFFFFF;
+        padding-bottom: 20px;
     }
 </style>
 
@@ -209,10 +210,11 @@ var forwardingCallback = function(){
                 }
                 return false;
             } 
+            location.href = location.href;
             //alert('恭喜您，支持成功')
-            var n = $('#supportCount').html()-0+1
-            $('#supportCount').html(n)
-            window.hasAdd = true;
+            //var n = $('#supportCount').html()-0+1
+            //$('#supportCount').html(n)
+            //window.hasAdd = true;
 
         },'json')
 }
