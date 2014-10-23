@@ -305,6 +305,8 @@ z-index: 99999;
 }
 .front_img_box{
 	width: 100%;
+	min-height: 100%;
+	background-color:#7c0000;
 	height: auto;
 }
 .front_img{
@@ -655,6 +657,9 @@ $(function(){
 
 	$('#front_img').click(function(){
 		goToDiv('main')
+		setTimeout(function(){
+			$('#myVoteList').fadeIn()
+		},500)
 		return false;
 	})
 
@@ -1158,9 +1163,7 @@ $(function(){
 		return false;
 	})
 	
-	setTimeout(function(){
-		$('#myVoteList').fadeIn()
-	},1500)
+	
 		
 	//监听摇一摇事件
 	window.addEventListener('shake', function(){
