@@ -8,7 +8,8 @@ UserLogin.Login = function(req,res){
 }
 
 UserLogin.Login2 = function(req,res){
-	if(req.originalUrl.indexOf('http://menuadmin.xy-tang.com/') != -1){
+	//console.log(req.headers.host)
+	if(req.headers.host.indexOf('xy-tang.com') != -1){
 		res.render('login', {error:''});
 	}
 	else{
