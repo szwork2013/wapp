@@ -80,7 +80,7 @@
                     prizeList.forEach(function(priceObj, i){ 
                 %>
                     <% if(priceObj.hasSelect) {%>
-                        <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix selected">
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix selected">
                             <li class="v-prize-select-iconcontainer">
                                 <span class="v-prize-select-icon"></span>
                             </li>
@@ -90,7 +90,7 @@
                                 <span class="v-prize-select-icon"></span>
                             </li>
                     <% } else { %>
-                          <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix">
+                          <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix">
                             <li class="v-prize-select-iconcontainer">
                                 <span class="v-prize-select-icon"></span>
                             </li>
