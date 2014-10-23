@@ -390,6 +390,7 @@ var wxData = {
 WeixinAPI.ready(wxData);
 WeixinAPI.on('ok', function() { 
     alert(1111111)
+    alert(33333333333)
     alert(typeof window.forwardingCallback)
     if(window.forwardingCallback){
         alert(22222222)
