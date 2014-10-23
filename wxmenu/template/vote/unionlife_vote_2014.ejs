@@ -303,14 +303,29 @@ z-index: 99999;
 #group_sel_box .col-xs-4{
 	margin-bottom: 10px;
 }
+.front_img_box{
+	width: 100%;
+	height: auto;
+}
+.front_img{
+	width: 100%;
+	height: auto;
+	display: block;
+}
 </style>
 
 <%- newrelic.getBrowserTimingHeader() %>
 
 </head>
 <body>
+
+
+<div id="front" class="front_img_box">
+	<img id="front_img" src="http://piccvote.qiniudn.com/unionlife_front_pic2.jpg" class="front_img" />
+</div>
+
 <!-- 主页面 -->
-<div id="main" class="container-fluid over_hidden" >
+<div id="main" class="container-fluid over_hidden" style="display:none;">
 	<img id="main_pic" src="<%= voteObj.picture %>" class="img-rounded img-responsive" />
 	<div class="rule-title clear">
 		<h5>活动规则：</h5>
@@ -625,6 +640,7 @@ $(function(){
 		$('#list').hide()
 		$('#shake').hide()
 		$('#votebox').hide()
+		$('#front').hide()
 		$('#'+domid).show()
 		if(domid == 'list'){
 			window.backDiv = 'main'
@@ -636,6 +652,11 @@ $(function(){
 			$('#myVoteList').show()
 		}
 	}
+
+	$('#front_img').click(function(){
+		goToDiv('main')
+		return false;
+	})
 
 	var shake_init = function(){
 		$('#shake_start').show();
