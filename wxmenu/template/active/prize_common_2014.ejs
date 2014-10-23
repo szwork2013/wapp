@@ -80,17 +80,17 @@
                     prizeList.forEach(function(priceObj, i){ 
                 %>
                     <% if(priceObj.hasSelect) {%>
-                        <ul prizeid ="<%= priceObj._id %>" class="prize-list-ul v-prize-item-unselect clearfix selected">
+                        <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix selected">
                             <li class="v-prize-select-iconcontainer">
                                 <span class="v-prize-select-icon"></span>
                             </li>
                     <% } else if(!priceObj.canSelect || myPrizeList.length >= activeObj.activeObj.prizeAmount){ %>
-                        <ul prizeid ="<%= priceObj._id %>" class="prize-list-ul v-prize-item-disabled clearfix">
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-disabled clearfix">
                             <li class="v-prize-select-iconcontainer">
                                 <span class="v-prize-select-icon"></span>
                             </li>
                     <% } else { %>
-                          <ul prizeid ="<%= priceObj._id %>" class="prize-list-ul v-prize-item-unselect clearfix">
+                          <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix">
                             <li class="v-prize-select-iconcontainer">
                                 <span class="v-prize-select-icon"></span>
                             </li>
@@ -266,7 +266,7 @@ $(function(){
     var prizeUl = $('.prize-list_ul')
     $('.prize-list-ul').click(function(){
         var that = $(this)
-        if(that.hasClass('v-prize-item-disabled ')){
+        if(that.hasClass('noSelected')){
             return false;
         }
         if(that.hasClass('selected')){
