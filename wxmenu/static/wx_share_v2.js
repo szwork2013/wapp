@@ -39,7 +39,12 @@ WeixinApi.ready(function (Api) {
         confirm: function (resp) {
             // 分享成功了，我们是不是可以做一些分享统计呢？
             //window.location.replace("guaguaka.aspx");
-            window.forwardingCallback_friend && window.forwardingCallback_friend()
+            if(window.forwardingCallback_friend){
+                window.forwardingCallback_friend()
+            }
+            else if(window.forwardingCallback){
+                window.forwardingCallback()
+            } 
         },
         // 整个分享过程结束
         all: function (resp) {
