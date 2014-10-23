@@ -1,4 +1,6 @@
 var userBl = require('./wxUser.js');
+var userModel = require('../dl/userModel.js'); //加载用户模型
+
 var activeModel = require('../dl/appActiveModel.js');
 var activeLogModel = require('../dl/appActiveLogModel.js');
 
@@ -340,9 +342,19 @@ obj.savePrize = function(qobj, cb){
 				writeTime:new Date()
 			},function(err,record){
 				//写入成功回调
-				if(err) return cb(err)
-				cb(null, record)
 
+				//然后去修改用户的资料
+				userModel.createOneOrUpdate({
+					_id:userId,
+				},{
+					appUserName:qobj.truename,
+					appUserMobile:qobj.mobile
+				},function(err,obj){
+
+					if(err) return cb(err)
+					cb(null, record)
+
+				})//end userModel.createOneOrUpdate
 			})//end appActivePrizeRecordModel
 		})//end guidModel.getGuid
 	})//end appActivePrizeModel.createOneOrUpdate

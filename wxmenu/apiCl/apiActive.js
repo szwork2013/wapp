@@ -51,13 +51,13 @@ obj.startExchangePrize = function(req,res){
     //真实需注释
     //req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
 
-    var fromOpenId = req.session[appEname+'_userid'];
+    var fromUserId = req.session[appEname+'_userid'];
 
-    if(!fromOpenId){
+    if(!fromUserId){
     	return res.send({error:1, data:'身份丢失，请重新进入'})
     }
     var toUserId = req.body.toUserId;
-    if(fromOpenId !== toUserId){
+    if(fromUserId !== toUserId){
     	return res.send({error:1, data:'必须在自己的主页才能兑换奖品'})
     }
 
