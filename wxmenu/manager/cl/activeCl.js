@@ -71,8 +71,11 @@ obj.destroy = function(req, res){
 
 
 obj.getList = function(req, res){
-
-	dl.findAll({}, 0, 100000, function(err,doc){
+	var q = {}
+	if(req.query.isprize == '1'){
+		q.isPrize = 1
+	}
+	dl.findAll(q, 0, 100000, function(err,doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
 		res.json(doc);

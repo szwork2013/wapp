@@ -187,7 +187,7 @@ dataSource.bind("error", function(err){
     return false;
 });
 
-$.post('/manger/active/getList',{},function(data_ary){
+$.post('/manger/active/getList?isprize=1',{},function(data_ary){
     var d = []
     data_ary.forEach(function(v){
         d.push({
