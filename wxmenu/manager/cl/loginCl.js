@@ -8,7 +8,12 @@ UserLogin.Login = function(req,res){
 }
 
 UserLogin.Login2 = function(req,res){
-	res.render('login2', {error:''});
+	if(req.originalUrl.indexOf('http://menuadmin.xy-tang.com/') != -1){
+		res.render('login', {error:''});
+	}
+	else{
+		res.render('login2', {error:''});
+	}	
 }
 
 UserLogin.UserLogin = function(req,res){
