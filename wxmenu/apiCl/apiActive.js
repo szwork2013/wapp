@@ -66,6 +66,7 @@ obj.startExchangePrize = function(req,res){
 	qobj.userId = req.body.toUserId
 	qobj.truename = req.body.truename
 	qobj.mobile = req.body.mobile 
+  qobj.recordIp = req.ips[0] || '127.0.0.1'
 
 	//开始兑换
 	activeBl.exchangePrize(qobj, function(err, recobj){
