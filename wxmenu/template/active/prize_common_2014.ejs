@@ -198,11 +198,15 @@ var forwardingDesc ='活动抽奖'
 var forwardingCallback = function(){
     if(window.hasAdd) return false;
     //发送请求支持
+    alert('完成分享')
+
    $.post('/active_data/'+appEname+'/addsupport',{
             activeId:activeId, 
             fromUserId:fromUserId,
             toUserId:toUserId,
         },function(d){
+             alert('ajax返回')
+             
             if(d.error == 1){
                 if(d.data == 'no openid'){
                     alert('身份过期，刷新页面重新支持')
@@ -210,7 +214,7 @@ var forwardingCallback = function(){
                 }
                 return false;
             } 
-            alert('完成分享')
+
             location.href = location.href;
             //alert('恭喜您，支持成功')
             //var n = $('#supportCount').html()-0+1
