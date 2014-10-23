@@ -7,7 +7,7 @@ WeixinApi.ready(function (Api) {
     // 微信分享的数据
     var wxDataToFriend = {
         "appId": "", // 服务号可以填写appId
-        "imgUrl": window.forwardingUrl_friend || window.forwardingUrl,
+        "imgUrl": window.forwardingImg_friend || window.forwardingImg,
         "link": window.forwardingUrl_friend || window.forwardingUrl,
         "desc": window.forwardingDesc_friend || window.forwardingDesc,
         "title": window.forwardingTitle_friend || window.forwardingTitle
@@ -15,7 +15,7 @@ WeixinApi.ready(function (Api) {
 
     var wxDataToTimeline = {
         "appId": "", // 服务号可以填写appId
-        "imgUrl": window.forwardingUrl,
+        "imgUrl": window.forwardingImg,
         "link": window.forwardingUrl,
         "desc": window.forwardingDesc,
         "title": window.forwardingTitle
@@ -25,20 +25,25 @@ WeixinApi.ready(function (Api) {
     var wxCallbacks_friend = {
         // 分享操作开始之前
         ready: function () {
+            alert('1')
             // 你可以在这里对分享的数据进行重组
         },
         // 分享被用户自动取消
         cancel: function (resp) {
+            alert('2')
             // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
         },
         // 分享失败了
         fail: function (resp) {
+            alert('3')
             // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
         },
         // 分享成功
         confirm: function (resp) {
             // 分享成功了，我们是不是可以做一些分享统计呢？
             //window.location.replace("guaguaka.aspx");
+
+            alert('3')
             if(window.forwardingCallback_friend){
                 window.forwardingCallback_friend()
             }
@@ -48,6 +53,7 @@ WeixinApi.ready(function (Api) {
         },
         // 整个分享过程结束
         all: function (resp) {
+            alert('4')
             // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
         }
     };
