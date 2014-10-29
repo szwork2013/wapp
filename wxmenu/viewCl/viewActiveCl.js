@@ -74,26 +74,33 @@ obj.activeMiddle = function(req,res,next){
 					}
 
 
-					userBl.getUserByUserId(toUserId,function(err,toUserObj){
+					userBl.getUserByUserId(toUserId,function(err,fromUserObj){
 						if(err) return res.send(500,err) 
-						if(!toUserObj) return res.send(500,'not found toUserObj')
-						//console.log(toUserObj)
-						//console.log(uobj)
-						//console.log(aObj)
-						req.toUserObj = toUserObj.uobj;
-						req.appId = appObj._id;
-						req.appEname = appEname;
-						req.fromUserObj = uobj.uobj;
-						req.activeObj = {
-							appEname:appEname,
-							openId:openId,
-							activeObj:aObj
-						}
-						return next()
+						if(!fromUserObj) return res.send(500,'not found fromUserObj')
 
+						//获取访问的用户对象
+						req.fromUserObj = fromUserObj.uobj;
 
+						userBl.getUserByUserId(toUserId,function(err,toUserObj){
+							if(err) return res.send(500,err) 
+							if(!toUserObj) return res.send(500,'not found toUserObj')
+							//console.log(toUserObj)
+							//console.log(uobj)
+							//console.log(aObj)
+							req.toUserObj = toUserObj.uobj;
+							req.appId = appObj._id;
+							req.appEname = appEname;
+							
+							req.activeObj = {
+								appEname:appEname,
+								openId:openId,
+								activeObj:aObj
+							}
+							return next()
 
-					})
+						})//end userBl.getUserByUserId
+
+					})//end userBl.getUserByUserId
 
 				})//end getActiveByEname
 				
@@ -149,6 +156,7 @@ obj.activePage = function(req,res){ //活动页面展示
 						'appId':req.appId,
 						'appEname':req.appEname,
 						'toUserObj':toUserObj,           //是否是自己的活动页面
+						'fromUserObj':req.fromUserObj,	//访问的用户对象
 						'isMyPage':isMyPage,
 						'toUserId':toUserId,     //目标用户的用户id
 						'fromUserId':fromUserId, //来源用户的用户id
@@ -217,10 +225,16 @@ obj.activePage = function(req,res){ //活动页面展示
 						})
 
 
-
-						tempObj.prizeList = tempPrizeList
-						tempObj.myPrizeList = infoObj.myPrizeList
-						return res.render('active/'+templateName+'.ejs', tempObj)
+						//获取排名
+						activeBl.getRankByEname(templateName, 100, function(err, rankList){
+							if(err) return res.send(500,err)
+							//获取排名返回给前端
+							tempObj.rankList = rankList
+							tempObj.prizeList = tempPrizeList
+							tempObj.myPrizeList = infoObj.myPrizeList
+							return res.render('active/'+templateName+'.ejs', tempObj)
+						})//end activeBl.getRankByEname				
+						
 					})//end activeBl.getActiveInfo
 				}
 
