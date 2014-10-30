@@ -398,7 +398,7 @@ $(function(){
             appUserName:appUserName, 
             appUserMobile:appUserMobile,
             wxuserid:fromUserId,
-            wxappid:appId,
+            wxappid:appId
         }
 
         $.post('/api/user/modify', q, function(d){
@@ -409,6 +409,8 @@ $(function(){
             location.href = location.href
 
         },'json')
+
+        return false;
 
     })
     //保存按钮
