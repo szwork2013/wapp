@@ -241,7 +241,9 @@ var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
 var endTime = moment(new Date(activeObj.endTime))
 var fromUserObj = <%- JSON.stringify(fromUserObj) %>
 
-
+alert(isMyPage)
+alert(toUserId)
+alert(fromUserId)
 
 
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= fromUserId %>'
