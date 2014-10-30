@@ -128,8 +128,7 @@ obj.activePage = function(req,res){ //活动页面展示
 		}
 */
 
-		var toUserObj = {}
-		var fromUserObj = {}
+		var toUserObj = {}		
 		var isMyPage = false
 		if(toUserId == fromUserId){//如果是自己的页面
 			isMyPage = true;
@@ -145,15 +144,20 @@ obj.activePage = function(req,res){ //活动页面展示
 		if(toUserObj.appUserMobile.length != 11){
 				toUserObj.appUserMobile = ''
 		}
-		toUserObj._id = toUserId
 
+
+
+		var fromUserObj = {
+			_id:req.fromUserObj._id,
+			appUserName:req.fromUserObj.appUserName,
+			appUserMobile:req.fromUserObj.appUserMobile
+		}
 		if(req.fromUserObj.appUserName == '未认证会员'){
 				fromUserObj.appUserName = ''
 		}
 		if(req.fromUserObj.appUserMobile.length != 11){
 				fromUserObj.appUserMobile = ''
 		}
-		fromUserObj._id = req.fromUserObj._id
 
 		activeBl.getIfHasAdd(acitveId, openId, toUserId, function(err, hasObj){
 			if(err) return res.send(500,err)
