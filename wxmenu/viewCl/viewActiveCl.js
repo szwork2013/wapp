@@ -26,6 +26,7 @@ obj.activeMiddle = function(req,res,next){
     //req.session[appEname+'_oauth_openid'] = 'asd'
 
 	var openId = req.session[appEname+'_oauth_openid'] 
+	var userid = req.session[appEname+'_userid']; 
 
 
 	if(!openId){
@@ -74,7 +75,7 @@ obj.activeMiddle = function(req,res,next){
 					}
 
 
-					userBl.getUserByUserId(toUserId,function(err,fromUserObj){
+					userBl.getUserByUserId(userid,function(err,fromUserObj){
 						if(err) return res.send(500,err) 
 						if(!fromUserObj) return res.send(500,'not found fromUserObj')
 
