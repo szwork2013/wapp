@@ -41,12 +41,12 @@ obj.activeMiddle = function(req,res,next){
 			return res.send(500,'not found user')
 		}
 
-			userBl.getUserByOpenid(openId,function(err,uobj){
+			userBl.getUserByUserId(userid,function(err,fromUserObj){
 				if(err){
 					return res.send(500,err)
 				}
-				if(!uobj){
-					return res.send(500,'not found user')
+				if(!fromUserObj){
+					return res.send(500,'not found from user')
 				}
 				
 
@@ -56,7 +56,7 @@ obj.activeMiddle = function(req,res,next){
 					if(!aObj) return res.send(500,'not found active')
 
 					if(!toUserId){//重新加载本页
-						res.redirect(req.originalUrl+'&touserid='+uobj.uobj._id)
+						res.redirect(req.originalUrl+'&touserid='+fromUserObj.uobj._id)
 						return;
 					}
 					//如果定义了跳转，则直接跳转到指定页面
@@ -80,7 +80,7 @@ obj.activeMiddle = function(req,res,next){
 					//	if(!fromUserObj) return res.send(500,'not found fromUserObj')
 
 						//获取访问的用户对象
-						req.fromUserObj = uobj.uobj;
+						req.fromUserObj = fromUserObj.uobj;
 
 						userBl.getUserByUserId(toUserId,function(err,toUserObj){
 							if(err) return res.send(500,err) 
@@ -129,6 +129,7 @@ obj.activePage = function(req,res){ //活动页面展示
 */
 
 		var toUserObj = {}
+		var fromUserObj = {}
 		var isMyPage = false
 		if(toUserId == fromUserId){//如果是自己的页面
 			isMyPage = true;
@@ -142,8 +143,17 @@ obj.activePage = function(req,res){ //活动页面展示
 				toUserObj.appUserName = ''
 		}
 		if(toUserObj.appUserMobile.length != 11){
-			toUserObj.appUserMobile = ''
+				toUserObj.appUserMobile = ''
 		}
+		toUserObj._id = toUserId
+
+		if(req.fromUserObj.appUserName == '未认证会员'){
+				fromUserObj.appUserName = ''
+		}
+		if(req.fromUserObj.appUserMobile.length != 11){
+				fromUserObj.appUserMobile = ''
+		}
+		fromUserObj._id = req.fromUserObj._id
 
 		activeBl.getIfHasAdd(acitveId, openId, toUserId, function(err, hasObj){
 			if(err) return res.send(500,err)
@@ -157,7 +167,7 @@ obj.activePage = function(req,res){ //活动页面展示
 						'appId':req.appId,
 						'appEname':req.appEname,
 						'toUserObj':toUserObj,           //是否是自己的活动页面
-						'fromUserObj':req.fromUserObj,	//访问的用户对象
+						'fromUserObj':fromUserObj,	//访问的用户对象
 						'isMyPage':isMyPage,
 						'toUserId':toUserId,     //目标用户的用户id
 						'fromUserId':fromUserId, //来源用户的用户id
