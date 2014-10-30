@@ -75,12 +75,12 @@ obj.activeMiddle = function(req,res,next){
 					}
 
 
-					userBl.getUserByUserId(userid,function(err,fromUserObj){
-						if(err) return res.send(500,err) 
-						if(!fromUserObj) return res.send(500,'not found fromUserObj')
+					//userBl.getUserByUserId(userid,function(err,fromUserObj){
+					//	if(err) return res.send(500,err) 
+					//	if(!fromUserObj) return res.send(500,'not found fromUserObj')
 
 						//获取访问的用户对象
-						req.fromUserObj = fromUserObj.uobj;
+						req.fromUserObj = uobj.uobj;
 
 						userBl.getUserByUserId(toUserId,function(err,toUserObj){
 							if(err) return res.send(500,err) 
@@ -101,7 +101,7 @@ obj.activeMiddle = function(req,res,next){
 
 						})//end userBl.getUserByUserId
 
-					})//end userBl.getUserByUserId
+					//})//end userBl.getUserByUserId
 
 				})//end getActiveByEname
 				
