@@ -54,6 +54,84 @@ obj.getVoteInfo = function(req,res){
 }
 
 
+//web页面用，获取投票信息
+obj.getVoteInfo2 = function(req,res){
+
+	var voteEname = req.query.voteename
+	var lastTimeStamp = req.query.timestamp
+	
+	if(parseInt(lastTimeStamp) != req.query.timestamp){
+		return res.send({error:1, data:'timestamp error'})
+	}
+	lastTimeStamp = parseInt(lastTimeStamp)
+	
+	if(!voteEname){
+		return res.send({error:1, data:'voteEname error'})
+	}
+
+	voteBl.getVoteByEname(voteEname,function(err,voteObj){
+		if(err){
+			return res.send({error:1, data:err})
+		}
+		if(!voteObj){
+			return res.send({error:1, data:err})
+		}
+
+
+		var voteid = voteObj._id.toString()
+
+		voteBl.getGroupByVoteId(voteid, function(err, groupList){
+			if(err){
+				return res.send({error:1, data:err})
+			}
+
+
+			voteBl.getGroupCountByVoteId(voteid, lastTimeStamp, function(err, groupCountList){
+					if(err){
+						return res.send({error:1, data:err})
+					}
+					//拼接投票分组count数组
+					var tempGroupList = [];
+					groupList.forEach(function(groupObj){
+						groupCountList.forEach(function(groupCountObj){
+							if(groupObj._id.toString() == groupCountObj.groupid){
+								tempGroupList.push({
+									_id:groupCountObj.groupid,
+									count:groupCountObj.count,
+									ename:groupObj.ename,
+									title:groupObj.title,
+									isFreez:groupObj.isFreez,
+									code1:groupObj.code1,
+									code2:groupObj.code2,
+									code3:groupObj.code3,
+									code4:groupObj.code4
+								})
+							}
+						})
+					})
+
+					tempGroupList = tempGroupList.sort(function(a,b){
+						if(a.count < b.count) return true;
+						return false;
+					})
+				
+					
+					res.send({error:0,data:{
+							group:tempGroupList,
+							vote:voteObj
+						}
+					})
+
+			})//end voteBl.getGroupCountByVoteId
+
+		})//end voteBl.getGroupByVoteId
+
+	})//end voteBl.getVoteByEname
+
+
+}
+
+
 //用户点击了投票按钮
 obj.startVote = function(req,res){ //用户进入抽奖页面点击抽奖程序
 	var appobj = utils.getAppEname(req.originalUrl)

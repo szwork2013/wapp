@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link rel="shortcut icon" href="/static/unionlife_vote_skin/startup/flat-ui/images/favicon.ico">
+        
+        <link rel="stylesheet" href="/static/unionlife_vote_skin/startup/flat-ui/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/unionlife_vote_skin/startup/flat-ui/css/flat-ui.css">
+        <!-- Using only with Flat-UI (free)-->
+        <link rel="stylesheet" href="/static/unionlife_vote_skin/startup/common-files/css/icon-font.css">
+        <!-- end -->
+        <link rel="stylesheet" href="/static/unionlife_vote_skin/startup/common-files/css/animations.css">
+        <link rel="stylesheet" href="/static/unionlife_vote_skin/static/css/style.css">
+        
+        <title>合众人寿十周年榜样人物评选活动</title>
+    </head>
+
+    <body>
+        <div class="page-wrapper"><header class="header-3">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar col-sm-12" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"></button>
+                    <a class="brand" href="#"><img src="/static/unionlife_vote_skin/startup/common-files/icons/logo.png" width="320" height="60" alt=""></a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="header-background"></div>
+</header>
+<section class="content-21 bg-midnight-blue">
+    <div class="container">
+        <div class="section-header row">
+        </div>
+        <h3>合众人寿十周年榜样人物评选活动</h3>
+        <div class="row">
+            <div class="col-sm-12 col-sm-offset-0">
+                <div class="features features-tabs">
+                    <div class="features-header">
+                        <div class="box active">
+                            <div class="fui-star-2"></div>
+                            热点地区
+                        </div>
+                        <div class="box">
+                            <div class="fui-mic"></div>
+                            活动规则
+                        </div>
+                        <div class="box">
+                            <div class="fui-user"></div>
+                            参与方式
+                        </div>
+                    </div>
+                    <div class="features-bodies">
+                        <div class="features-body active hotmap" style="padding: 40px 400px; ">
+                            <div id="map"></div>
+                            <div class="map_list">
+                                <ul id="map_list_ul">
+                                    
+                                </ul>
+                            </div>
+                             <div class="ToolTip" style="right:50px;">
+                                <div id="topList" style="width:130px;float:left"></div>
+                                <div id="cityList" style="display:none;float:left"></div>
+                            </div>   
+                        </div>
+                        <div class="features-body rule" style="padding: 120px 50px 120px 50%;">
+                            <h4>投票规则</h4>
+                            <hr>
+                            <p>1、关注合众官方微信公众号才能参与，你懂的。</p>
+                            <p>2、小伙伴们每天投票数不限定，可选择N个地区的N个人投票，选到手抽筋！</p>
+                            <p>3、小伙伴们每天给你“心仪”的ta投票只有一次机会呦。</p>
+                            <p>4、不知道给谁投票，那就“摇一摇”吧，次数不限哦。</p>
+                            <p>5、本次活动投票解释权归合众人寿十周年榜样人物评选组所有。</p>
+                            <hr>
+                        </div>
+                        <div class="features-body join">
+                            <h4>参与方式</h4>
+                            <hr>
+                            <p>1、请使用微信扫描左侧二维码关注合众人寿</p>
+                            <p>2、步骤二</p>
+                            <p>3、步骤三</p>
+                            <p>4、步骤四</p>
+                            <p>本次活动投票解释权归合众人寿十周年榜样人物评选组所有。</p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer-7 ">
+    <div class="container">
+        版权所有 2014 合众人寿保险股份有限公司 Copyright &copy; Unionlife Insurance Company,Ltd.All Rights Reserved.</br>
+鄂ICP备12017196号
+    </div>
+</footer>         
+ </div>
+
+
+<!-- 列表页弹窗 modal -->
+<div class="modal" id="item_info_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h6 class="modal-title" id="list_title"></h6>
+      </div>
+
+      <div class="modal-body" id="">
+            <ul id="modal_item_box" class="member_list">
+
+
+            </ul>
+      </div>
+
+      <div class="modal-footer">
+        <a href="javascript:;" data-dismiss="modal" aria-hidden="true" class="btn btn-primary btn-wide">关闭</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 列表页弹窗 modal -->
+
+
+
+
+
+
+
+   <!-- Placed at the end of the document so the pages load faster -->
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/jquery-1.10.2.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/jquery.bxslider.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/jquery.sharrre.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/flat-ui/js/bootstrap.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/masonry.pkgd.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/modernizr.custom.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/page-transitions.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/easing.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/jquery.svg.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/jquery.svganim.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/jquery.backgroundvideo.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/froogaloop.min.js"></script>
+            <script src="/static/unionlife_vote_skin/startup/common-files/js/startup-kit.js"></script>
+            <script src="/static/unionlife_vote_skin/static/js/chinamap.js"></script>
+            <script src="/static/unionlife_vote_skin/static/js/chinamapPath.js"></script>
+            <script src="/static/unionlife_vote_skin/static/js/raphael.js"></script>
+            <script type="text/javascript">
+                
+                $(function(){
+                    window.province = []
+                    window.voteObj = {}
+                    window.chinaKeys = Object.keys(china)
+                    //获取省份的列表
+                    var getAndPutProvince = function(){
+                        $.get('/vote/<%= appEname %>/getvoteinfo2',{
+                            r:Date.now(),
+                            voteename:'<%= voteEname %>',
+                            timestamp:'1356969600000'
+                        },function(d){
+                            if(d.error) return alert(d.data)
+                            window.province = d.data.group
+                            window.voteObj = d.data.vote
+                            putProvinceData()
+                        },'json')
+                    }
+
+                    //放置省份数据
+                    var putProvinceData = function(){
+                        var tempStr = ''
+                        window.province.forEach(function(pObj){
+                            var pName = pObj.title
+                            window.chinaKeys.forEach(function(chinaKey){
+                                if(pName == chinaKey){
+                                    tempStr += '<li grouptitle="'+pName+'" groupid="'+pObj._id+'"><span style="background-color:'+window.china[chinaKey].bgColor+'"></span>'+pName+'（'+pObj.count+' 票）</li>'
+                                }
+                            })
+                        })
+
+                        $('#map_list_ul').html(tempStr)
+                    }
+
+                    //绑定点击事件
+                    $('#map_list_ul').delegate('li','click',function(){
+                        var that =$(this)
+                        var groupId = that.attr('groupid')
+                        var pname = that.attr('grouptitle')
+                        window.openProvinceMember(pname)
+
+                        return false;
+
+                    })
+                    //打开省份候选人列表页弹窗
+                    window.openProvinceMember = function(groupTitle){
+                        if(!groupTitle) return alert('no groupTitle')
+                        var groupId = false
+                        window.province.forEach(function(po){
+                            if(po.title == groupTitle){
+                                groupId = po._id
+                            }
+                        })
+                        if(!groupId) return false
+                        $('#list_title').html(groupTitle+' 列表')
+
+                        $.get('/vote/<%= appEname %>/items', {
+                            r:Date.now(),
+                            ename:'<%= voteEname %>',
+                            groupid:groupId
+                        }, function(d){
+                            if(d.error) return alert(d.data)
+                            var tempStr = ''
+                            d.data.forEach(function(obj){
+                                tempStr += '<li><img src="'+obj.pictureThumb+'" class="face" />'+
+                                           '<p class="info">'+
+                                           '<span>姓名：'+obj.title+'</span><span>票数：'+obj.totalNumber+'</span><br/>'+
+                                           '<span>部门：'+obj.code2+'</span><span>职务：'+obj.code3+'</span>'+
+                                           '</p></li>'
+
+                            })
+
+                            $('#modal_item_box').html(tempStr)
+                            $('#item_info_modal').modal()
+
+                        })
+                    }
+
+
+
+                    $('#item_info_modal').on('hidden.bs.modal', function (e) {
+                        $('#modal_item_box, #list_title').empty()
+                    })
+
+                    //start
+                    getAndPutProvince()
+
+                })
+
+            </script>
+       
+    </body>
+</html>

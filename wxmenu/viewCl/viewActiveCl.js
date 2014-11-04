@@ -260,6 +260,25 @@ obj.activePage = function(req,res){ //活动页面展示
 }
 
 
+//直接显示web页面
+obj.voteWebPage = function(req,res){
+	var pathname = url.parse(req.originalUrl).pathname || ''
+	try{
+      var appEname = pathname.split('/')[2] || ''
+      var voteEname = pathname.split('/')[3] || ''
+    }
+    catch(e){
+      return next(e)
+    }
+    return res.render('vote/'+voteEname+'_web.ejs', {
+    	appEname:appEname,
+    	voteEname:voteEname
+    })
+
+
+}
+
+
 
 obj.activeRank = function(req,res){
 

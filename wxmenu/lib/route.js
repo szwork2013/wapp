@@ -240,7 +240,8 @@ var addroute = function(app){
 		//active活动页面，需要oauth支持
 		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
 		//app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
-		
+		app.get('/votepage/:appename/:voteename', activeCl.voteWebPage)
+
 		app.post('/active_data/:appename/addsupport', apiActive.addSupport)
 		app.get('/active_data/getrank', activeCl.activeRank)
 		//active exchange prize
@@ -265,6 +266,7 @@ var addroute = function(app){
 		app.get('/vote/:appename/items', apiVote.getItemsInfo)//根据分组查询所有投票项信息列表
 		app.get('/vote/:appename/rank', apiVote.getRank)//根据分组或不分组，查询排名
 		app.post('/vote/:appename/myrecord', apiVote.getMyRecord) //获取用户的记录
+		app.get('/vote/:appename/getvoteinfo2', apiVote.getVoteInfo2) //给web投票用的获取投票信息
 
 
 
