@@ -174,7 +174,7 @@
                             window.province = d.data.group
                             window.voteObj = d.data.vote
 
-                            var R = paintMapBefore
+                            var R = paintMapBefore()
 
                             //根据投票热度显示省份背景色
                             window.chinaKeys.forEach(function(chinaKey){
