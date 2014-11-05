@@ -173,6 +173,26 @@
                             if(d.error) return alert(d.data)
                             window.province = d.data.group
                             window.voteObj = d.data.vote
+
+                            var R = paintMapBefore
+
+                            //根据投票热度显示省份背景色
+                            window.chinaKeys.forEach(function(chinaKey){
+                                var chinaObj = window.china[chinaKey]
+                                var hasFound = false
+                                window.province.forEach(function(po, j){
+                                    if(po.title == chinaObj.name){
+                                        hasFound = true
+                                        chinaObj.bgColor = window.redColor[j] || window.defaultColor
+                                    }
+                                })
+                                if(!hasFound){
+                                    chinaObj.bgColor = '#fff'
+                                }
+                            })
+
+                            Map(R)
+
                             putProvinceData()
                         },'json')
                     }
@@ -229,24 +249,8 @@
                                            '</p></li>'
 
                             })
+ 
 
-                            //根据投票热度显示省份背景色
-                            window.chinaKeys.forEach(function(chinaKey){
-                                var chinaObj = window.china[chinaKey]
-                                var hasFound = false
-                                window.province.forEach(function(po, j){
-                                    if(po.title == chinaObj.name){
-                                        hasFound = true
-                                        chinaObj.bgColor = window.redColor[j] || window.defaultColor
-                                    }
-                                })
-                                if(!hasFound){
-                                    chinaObj.bgColor = '#fff'
-                                }
-                            })
-
-
-                            Map()                           
                             $('#modal_item_box').html(tempStr)
                             $('#item_info_modal').modal()
 

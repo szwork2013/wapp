@@ -7,13 +7,21 @@ $(document).ready(function () {
 	//Bind();	
 });
 
-function Map() {
-    /*
-    * 配置Raphael生成svg的属性
-    */
+function paintMapBefore(){
     $("#map").html("");
     Raphael.getColor.reset();
     var R = Raphael("map", 650, 500); //大小与矢量图形文件图形对应；
+    paintMap(R);
+    return R
+}
+
+function Map(R) {
+    /*
+    * 配置Raphael生成svg的属性
+    */
+    //$("#map").html("");
+    //Raphael.getColor.reset();
+    //var R = Raphael("map", 650, 500); //大小与矢量图形文件图形对应；
 
     var current = null;
 
@@ -24,7 +32,7 @@ function Map() {
     };
 
     //调用绘制地图方法
-    paintMap(R);
+    //paintMap(R);
 
     var ToolTip = $('#ToolTip');
     ToolTip.html('请选择省市').delay(1500).fadeOut('slow');
