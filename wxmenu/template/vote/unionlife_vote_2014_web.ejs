@@ -159,6 +159,9 @@
                 $(function(){
                     window.province = []
                     window.voteObj = {}
+                    window.redColor = ['#ff0000', '#ff3d3d', '#e76767' ,'#ef4618', '#ea6c4a']
+                    window.defaultColor = '#f39b84'
+
                     window.chinaKeys = Object.keys(china)
                     //获取省份的列表
                     var getAndPutProvince = function(){
@@ -197,8 +200,8 @@
                         window.openProvinceMember(pname)
 
                         return false;
-
                     })
+
                     //打开省份候选人列表页弹窗
                     window.openProvinceMember = function(groupTitle){
                         if(!groupTitle) return alert('no groupTitle')
@@ -227,6 +230,23 @@
 
                             })
 
+                            //根据投票热度显示省份背景色
+                            window.chinaKeys.forEach(function(chinaKey){
+                                var chinaObj = window.china[chinaKey]
+                                var hasFound = false
+                                window.province.forEach(function(po, j){
+                                    if(po.title == chinaObj.name){
+                                        hasFound = true
+                                        chinaObj.bgColor = window.redColor[j] || window.defaultColor
+                                    }
+                                })
+                                if(!hasFound){
+                                    chinaObj.bgColor = '#fff'
+                                }
+                            })
+
+
+                            Map()                           
                             $('#modal_item_box').html(tempStr)
                             $('#item_info_modal').modal()
 

@@ -3,7 +3,7 @@
 * 修改时间: 2013/06/12
 */
 $(document).ready(function () {
-	Map();
+	//Map();
 	//Bind();	
 });
 
