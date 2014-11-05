@@ -42,7 +42,7 @@ function Map(R) {
         //分省区域着色
         //china[state]['path'].color = Raphael.getColor(0.9);
         china[state]['path'].color = china[state].bgColor;
-        china[state]['path'].animate({fill: china[state]['path'].color, stroke: "#eee" }, 500);
+        china[state]['path'].animate({fill: china[state]['path'].color, stroke: "#999" }, 500);
         china[state]['path'].transform("t30,0");
 
         (function (st, state) {
