@@ -159,8 +159,8 @@
                 $(function(){
                     window.province = []
                     window.voteObj = {}
-                    window.redColor = ['#ff0000', '#ff3d3d', '#e76767' ,'#ef4618', '#ea6c4a']
-                    window.defaultColor = '#f39b84'
+                    window.redColor = ['#ff0000', '#ff3d3d', '#ef4618', '#e76767', '#ffb7b7']
+                    window.defaultColor = '#fddddd'
 
                     
                     //获取省份的列表
@@ -176,7 +176,7 @@
 
                             var R = paintMapBefore()
                             window.chinaKeys = Object.keys(china)
-                            
+
                             //根据投票热度显示省份背景色
                             window.chinaKeys.forEach(function(chinaKey){
                                 var chinaObj = window.china[chinaKey]
