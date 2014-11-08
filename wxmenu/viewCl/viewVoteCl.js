@@ -77,8 +77,7 @@ obj.votePage = function(req,res){ //活动页面展示
 						})
 
 						tempGroupList = tempGroupList.sort(function(a,b){
-							if(a.count < b.count) return true;
-							return false;
+							return b.count - a.count
 						})
 
 						

@@ -178,7 +178,7 @@
                             if(d.error) return alert(d.data)
                             window.province = d.data.group
                             window.province = window.province.sort(function(a,b){
-                                return a.count-b.count
+                                return b.count - a.count
                             })
                             window.voteObj = d.data.vote
 
