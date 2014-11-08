@@ -14,6 +14,14 @@ var appEname = 'unionlife'
 
 var appId, voteId, groupList
 
+
+
+memberJson.forEach(function(memObj){
+	memObj[4] = memObj[4].replace(/\s+/g, '<br/>')
+	memObj[5] = memObj[5].replace(/\s+/g, '<br/>')
+})
+
+
 console.log('start parse')
 async.series([
 	//查询app
