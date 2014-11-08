@@ -356,7 +356,8 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                         { 
                             field: "pictureThumb",
                             title: "缩略图",
-                            hidden:true
+                            template: "<img src='#=imgUrl#' width=50 height=50/>",
+                            //hidden:true
                         },
                         { 
                             field: "picture",
