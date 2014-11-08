@@ -19,6 +19,11 @@
         <link rel="stylesheet" href="/static/unionlife_vote_skin/static/css/style.css">
         
         <title>合众人寿十周年榜样人物评选活动</title>
+        <style type="text/css">
+            .hotmap{
+                height: 740px !important;
+            }
+        </style>
     </head>
 
     <body>
@@ -172,6 +177,9 @@
                         },function(d){
                             if(d.error) return alert(d.data)
                             window.province = d.data.group
+                            window.province = window.province.sort(function(a,b){
+                                return a.count-b.count
+                            })
                             window.voteObj = d.data.vote
 
                             var R = paintMapBefore()
@@ -181,6 +189,8 @@
                             window.chinaKeys.forEach(function(chinaKey){
                                 var chinaObj = window.china[chinaKey]
                                 var hasFound = false
+
+
                                 window.province.forEach(function(po, j){
                                     if(po.title == chinaObj.name){
                                         hasFound = true
