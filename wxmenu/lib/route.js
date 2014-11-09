@@ -13,7 +13,8 @@ var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
 var voteBl = require('../bl/wxVote.js')
 
-
+//api wx
+var apiWx = require('../apiCl/apiWeixin.js');
 //api active
 var apiActive = require('../apiCl/apiActive.js');
 //lottery
@@ -236,6 +237,10 @@ var addroute = function(app){
 			//3、排行榜页面
 			//4、拍卖页面
 		*/
+
+		//api 微信查找此appEname下是否存在这个openid
+		app.get('/api/wx/checkopenid/:appename', apiWx.checkOpenId)
+
 
 		//active活动页面，需要oauth支持
 		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
