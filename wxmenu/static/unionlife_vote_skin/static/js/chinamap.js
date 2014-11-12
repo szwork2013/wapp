@@ -39,13 +39,20 @@ function Map(R) {
     $('body').append("<div id='tiplayer' style='display:none'></div>");
     var tiplayer = $('#tiplayer');
     for (var state in china) {
-        //分省区域着色
-        //china[state]['path'].color = Raphael.getColor(0.9);
-        china[state]['path'].color = china[state].bgColor;
-        china[state]['path'].animate({fill: china[state]['path'].color, stroke: "#999" }, 500);
-        china[state]['path'].transform("t30,0");
+        try{
+            //分省区域着色
+            //china[state]['path'].color = Raphael.getColor(0.9);
+            if(china[state] && china[state]['path']){
+                china[state]['path'].color = china[state].bgColor;
+                china[state]['path'].animate({fill: china[state]['path'].color, stroke: "#999" }, 500);
+                china[state]['path'].transform("t30,0");
+            }
+        }
+        catch(e){
 
+        }
         (function (st, state) {
+            if(!st) return;
             //***获取当前图形的中心坐标
             var xx = st.getBBox().x + (st.getBBox().width / 2);
             var yy = st.getBBox().y + (st.getBBox().height / 2);

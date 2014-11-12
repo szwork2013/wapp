@@ -27,21 +27,45 @@
                 height: 740px !important;
             }
                 .loading_box{
-        width: 100%;
-        height: 100%;
-        background: url(http://piccvote.qiniudn.com/loading.gif) center center no-repeat;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 999;
-        opacity: 0.6;
-        background-color: #fff;
-    }
+                    width: 100%;
+                    height: 100%;
+                    background: url(http://piccvote.qiniudn.com/loading.gif) center center no-repeat;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    z-index: 999;
+                    opacity: 0.6;
+                    background-color: #fff;
+                }
+            .header-background{
+                height: 130px;
+                width: 100%;
+            }
+            .container{
+                width: 1170px\9;
+            }
+            .navbar-toggle{
+                display: none;
+            }
+            #item_info_modal{
+                width: 920px\9 !important;
+                left:50%\9;
+                margin-left: -475px\9;
+            }
+            .member_list li{
+                width: 420px;
+            }
+            .content-21 .features.features-tabs .features-header .box{
+                *width: 32%;
+            }
+            .footer-7{
+                *margin-top: -10px;
+            }
         </style>
     </head>
 
     <body>
-        <div class="page-wrapper"><header class="header-3">
+        <div class="page-wrapper"><div class="header-3">
     <div class="container">
         <div class="row">
             <nav class="navbar col-sm-12" role="navigation">
@@ -53,8 +77,8 @@
         </div>
     </div>
     <div class="header-background"></div>
-</header>
-<section class="content-21 bg-midnight-blue">
+</div>
+<div class="content-21 bg-midnight-blue">
     <div class="container">
         <div class="section-header row">
         </div>
@@ -102,9 +126,10 @@
                         <div class="features-body join">
                             <h4>亲，十周年榜样人物评选活动中所有投票数据与合众人寿官方微信同步，扫码就能参与，快来体验吧。</h4>
                             <hr>
-                            <p>1、请使用微信扫描左侧二维码关注合众人寿</p>
-                            <p>2、回复“投票”关键字，参与十周年榜样人物评选</p>
-                            <p>本次活动投票解释权归合众人寿十周年榜样人物评选组所有。</p>
+                            <p>1、扫描关注合众人寿官方微信。</p>
+                            <p>2、在右下角菜单栏里点击“十周年人物评选”。</p>
+                            <p>3、点击推送消息按照操作提示即可参与活动。</p>
+                            <p>重点提示：亲，十周年榜样人物评选活动中所有投票数据与合众人寿官方微信同步，扫码就能参与，快来体验吧。</p>
                             <hr>
                         </div>
                     </div>
@@ -112,14 +137,14 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<footer class="footer-7 ">
+<div class="footer-7 ">
     <div class="container">
         版权所有 2014 合众人寿保险股份有限公司 Copyright &copy; Unionlife Insurance Company,Ltd.All Rights Reserved.</br>
 鄂ICP备12017196号
     </div>
-</footer>         
+</div>         
  </div>
 
 
@@ -178,14 +203,16 @@
 
 
    <!-- Placed at the end of the document so the pages load faster -->
-            <script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
+            <script src="http://wzhfile.qiniudn.com/jquery-1.9.1.min.js" type="text/javascript"></script>
 
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.bxslider.min.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.scrollTo-1.4.3.1-min.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.sharrre.min.js"></script>
             <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
 
+
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/masonry.pkgd.min.js"></script>
+           
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/modernizr.custom.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/page-transitions.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/easing.min.js"></script>
@@ -194,7 +221,7 @@
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.backgroundvideo.min.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/froogaloop.min.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/startup-kit.js"></script>
-            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/static/js/chinamap.js"></script>
+            <script src="/static/unionlife_vote_skin/static/js/chinamap.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/static/js/chinamapPath.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/static/js/raphael.js"></script>
              <!--[if lte IE 8]> 
@@ -205,7 +232,22 @@
             <![endif] -->
 
             <script type="text/javascript">
+                if (!Array.prototype.forEach)
+                {
+                  Array.prototype.forEach = function(fun /*, thisp*/)
+                  {
+                    var len = this.length;
+                    if (typeof fun != "function")
+                      throw new TypeError();
 
+                    var thisp = arguments[1];
+                    for (var i = 0; i < len; i++)
+                    {
+                      if (i in this)
+                        fun.call(thisp, this[i], i, this);
+                    }
+                  };
+                }
 
                 $(function(){
                     window.province = []

@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE>
 <html>
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 <link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
 <link href="http://piccvote.qiniudn.com/dist/css/flat-ui-pro.css" rel="stylesheet">
@@ -12,6 +13,11 @@
 	height: 200px !important;
 	border-radius: 200px !important;
 }
+.my_list_empty{
+	text-align: center;
+	font-size: 14px;
+	padding: 30px 0 0 0;
+}
 </STYLE>
 <%- newrelic.getBrowserTimingHeader() %>
 
@@ -19,12 +25,12 @@
 <body>
 
 
-<div id="front" class="front_img_box">
-	<img id="front_img" src="http://piccvote.qiniudn.com/unionlife_front_pic4.jpg" class="front_img" />
+<div id="front" class="front_img_box" style="display:none;">
+	<!-- <img id="front_img" src="http://piccvote.qiniudn.com/unionlife_front_pic4.jpg" class="front_img" /> -->
 </div>
 
 <!-- 主页面 -->
-<div id="main" class="container-fluid over_hidden" style="display:none;">
+<div id="main" class="container-fluid over_hidden" >
 	<img id="main_pic" src="<%= voteObj.picture %>" class="img-rounded img-responsive" />
 	<div class="rule-title clear">
 		<h5>活动规则：</h5>
@@ -43,18 +49,23 @@
     </div>
     <div id="group_sel_box" class="demo-content-wide row show-grid">
 
-    	<% groupList.forEach(function(groupObj){ %>
+    	<% groupList.forEach(function(groupObj){
+    		if(groupObj.title == '不动产投资事业部'){
+    			groupObj.title = '投资事业部'
+    		}
+    	 %>
     		<div class="col-xs-4 col-sm-4 txt_c">
     			<% 
 	    			if(groupObj.count >=500){
 	    				var btnClass = 'btn-danger'
 	    			}
 		    		else{
-		    			var btnClass = 'btn-default'
+		    			var btnClass = 'btn-inverse'
 		    		}
     			%>
 	    		<a href="javascript:;" name="group_more_info" class="btn btn-md <%= btnClass %>" groupid="<%= groupObj._id %>">
-	    		<%= groupObj.title %></a>
+	    		<%= groupObj.title %>
+	    	</a>
 	    		
 	   		</div>
     	<% }) %>
@@ -138,7 +149,7 @@
 
 	<div id="shake_info" style="display:none;">
 		<img groupid="" itemid="" name="group_item_more" id="shake_face" src="" class="shake_face" />
-		<button id="shake_info_btn" name="group_item_more" groupid="" itemid="" class="btn btn-default yh shake_btn2">
+		<button id="shake_info_btn" name="group_item_more" groupid="" itemid="" class="btn btn-warning yh shake_btn2">
 	      详细信息
 	    </button>
 	    <div id="shake_info_box" class="shake_info_box yh">
@@ -146,7 +157,7 @@
 	    </div>
 		<button name="shake_start" class="btn btn-primary yh shake_btn2">
 	      <span class="fui-resize"></span>
-	      和<font id="shake_ta">他</font>不来电？再摇一次吧！
+	      和<font id="shake_ta">TA</font>不来电？再摇一次吧！
 	    </button>
 	</div>
 
@@ -353,6 +364,9 @@ $(function(){
 		},500)
 		return false;
 	})
+	setTimeout(function(){
+		$('#myVoteList').fadeIn()
+	},200)
 
 	var shake_init = function(){
 		$('#shake_start').show();
@@ -385,6 +399,9 @@ $(function(){
 					  voteStr+'</div>'
 
 		})//end list.forEach
+		if(tmpstr == ''){
+			tmpstr = '<h4 class="my_list_empty">您还没有做任何投票，请返回进行投票</h4>'
+		}
 		$('#my_vote_list_box').html(tmpstr)
 	}
 
@@ -533,8 +550,8 @@ $(function(){
 		var voteType = 1; //可投票状态，1表示可投票，2表示不可投票，3表示转发后可投票
 		//var btnClass = useSm ? 'btn-sm' : 'btn-lg'
 		var btnClass ='btn-sm'
-		var ta = '他'
-		if(itemobj.sex == 0) ta = '她'
+		var ta = 'TA'
+		if(itemobj.sex == 0) ta = 'TA'
 
 		window.recordList.forEach(function(recObj){
 			if(recObj.isForward == 1 && itemid == recObj.itemId){
@@ -619,7 +636,7 @@ $(function(){
 					//拼接模版
 					blk_s += '<div class="group_blk">'+
 					'<img itemid="'+itemid+'" name="group_item_more" src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
-					'<a name="group_item_more" href="javascript:;" class="btn btn-default yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+
+					'<a name="group_item_more" href="javascript:;" class="btn btn-warning yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+
 	    			'<div class="group_info yh">'+
 	    			'No.'+numberPos+' '+itemObj.title+'<br/>'+
 	    			'票数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</div>'+voteStr+'</div>'
@@ -886,7 +903,7 @@ $(function(){
 </script>
 
 
-<script src="http://piccvote.qiniudn.com/shake_v2.js"></script>
+<script src="http://wzhfile.qiniudn.com/wx_share_v3.js"></script> 
 
 
 <div style="display:none;">
