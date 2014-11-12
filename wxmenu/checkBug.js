@@ -32,6 +32,7 @@ prizeDl.checkRepeatUser(activeId, function(err,list){
 	//查看每个用户的流水记录，是否都是至少n次
 	var dealFunc = []
 	var countList = []
+	
 	commonUserIds.forEach(function(uid){
 		dealFunc.push(function(callback){
 			var uid = uid;
@@ -51,16 +52,23 @@ prizeDl.checkRepeatUser(activeId, function(err,list){
 
 	})//end for each
 
-	countList.forEach(function(countObj){
-		if(countObj.count < needSupport){
-			console.log('************')
-			console.log('found cheat user')
-			console.log(countObj)
-			console.log('************')
-		}
-	})
 
-	console.log('check not need support end')
+	async.series(dealFunc, function(err){
+		if(err) return console.log(err)
+
+		countList.forEach(function(countObj){
+			if(countObj.count < needSupport){
+				console.log('************')
+				console.log('found cheat user')
+				console.log(countObj)
+				console.log('************')
+			}
+		})
+
+		console.log('check not need support end')
+
+
+	})
 
 
 })

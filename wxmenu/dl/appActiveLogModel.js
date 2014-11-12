@@ -67,4 +67,6 @@ objSchema.statics.getRankByActive = function(activeId, limit, cb){
   }
 
 
+
+
 module.exports = mongoose.model('wxActiveLog', objSchema);
