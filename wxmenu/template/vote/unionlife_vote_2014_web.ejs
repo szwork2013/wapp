@@ -314,6 +314,7 @@
                         var tempStr = ''
                         window.province.forEach(function(pObj){
                             var pName = pObj.title
+                            var curColor = '#efefef'
                             hasFound = false
                             if(pName == '总公司' || pName == '不动产投资事业部'){
                                     hasFound = true
@@ -321,11 +322,12 @@
                             window.chinaKeys.forEach(function(chinaKey){
                                 if(pName == chinaKey){
                                     hasFound = true
+                                      curColor  = window.china[chinaKey].bgColor
                                     return;
                                 }
                             })
                             if(hasFound){
-                                 tempStr += '<li grouptitle="'+pName+'" groupid="'+pObj._id+'"><span style="background-color:'+window.china[chinaKey].bgColor+'"></span>'+pName+'（'+pObj.count+' 票）</li>'
+                                 tempStr += '<li grouptitle="'+pName+'" groupid="'+pObj._id+'"><span style="background-color:'+curColor+'"></span>'+pName+'（'+pObj.count+' 票）</li>'
                              }
                         })
 
