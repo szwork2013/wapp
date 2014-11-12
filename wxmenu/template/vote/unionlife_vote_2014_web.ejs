@@ -315,7 +315,7 @@
                         window.province.forEach(function(pObj){
                             var pName = pObj.title
                             window.chinaKeys.forEach(function(chinaKey){
-                                if(pName == chinaKey){
+                                if(pName == chinaKey || pName == '总公司' || pName == '不动产投资事业部'){
                                     tempStr += '<li grouptitle="'+pName+'" groupid="'+pObj._id+'"><span style="background-color:'+window.china[chinaKey].bgColor+'"></span>'+pName+'（'+pObj.count+' 票）</li>'
                                 }
                             })
