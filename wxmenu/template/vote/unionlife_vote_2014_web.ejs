@@ -26,6 +26,17 @@
             .hotmap{
                 height: 740px !important;
             }
+                .loading_box{
+        width: 100%;
+        height: 100%;
+        background: url(http://piccvote.qiniudn.com/loading.gif) center center no-repeat;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        opacity: 0.6;
+        background-color: #fff;
+    }
         </style>
     </head>
 
@@ -160,7 +171,9 @@
   </div>
 </div>
 
-
+<!-- loading modal div -->
+<div id="loading_box" class="loading_box" style="display:none"></div>
+<!-- loading modal div -->
 
 
 
@@ -271,6 +284,8 @@
 
                     //绑定点击事件
                     $('#map_list_ul').delegate('li','click',function(){
+                        if(window.ajaxing) return false;
+
                         var that =$(this)
                         var groupId = that.attr('groupid')
                         var pname = that.attr('grouptitle')
@@ -279,6 +294,8 @@
                         return false;
                     })
 
+
+                    window.ajaxing = false
                     //打开省份候选人列表页弹窗
                     window.openProvinceMember = function(groupTitle){
                         if(!groupTitle) return alert('no groupTitle')
@@ -291,11 +308,17 @@
                         if(!groupId) return false
                         $('#list_title').html(groupTitle+' 列表')
 
+
+                        
+                        $('#loading_box').show()
+                        window.ajaxing = true;
                         $.get('/vote/<%= appEname %>/items', {
                             r:Date.now(),
                             ename:'<%= voteEname %>',
                             groupid:groupId
                         }, function(d){
+                            $('#loading_box').hide()
+                            window.ajaxing = false;
                             if(d.error) return alert(d.data)
                             var tempStr = ''
                             d.data.forEach(function(obj){
