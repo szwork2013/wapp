@@ -74,7 +74,7 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 		"_id":{
 			"$in":ids
 		}
-	}).limit(1000).exec(function(err,docs){
+	}).limit(100000).exec(function(err,docs){
 		if(err) return cb(err);
 		if(!docs || docs.length == 0) return cb(null,[]);
 		var idsary=[]

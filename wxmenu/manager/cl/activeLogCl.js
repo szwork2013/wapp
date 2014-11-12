@@ -89,7 +89,7 @@ obj.getrank =  function(req, res){
 
 	var ename = req.body.activeEname;
 
-	bl.getRankByEname(ename, 100000, function(err,list){
+	bl.getRankByEname(ename, 10000, function(err,list){
 		if(err) return res.json({error:1,data:err})
 		return res.json({error:0,data:list})
 	})
