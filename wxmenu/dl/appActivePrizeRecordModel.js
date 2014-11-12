@@ -60,7 +60,7 @@ objSchema.statics.checkRepeatUser = function (activeId, cb) {
             '_id' : "$userId",
             'supportCount' : { $sum : 1 },
         })
-      .limit(limit||1000)
+      .limit(1000)
       .exec(cb)
 
 
