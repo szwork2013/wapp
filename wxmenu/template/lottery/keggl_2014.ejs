@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>房价点评网接力双十一，超级刮刮乐，大奖拿不停</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no;"/>
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no">
+<link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
+<script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
+<script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<%- newrelic.getBrowserTimingHeader() %>
+
+
+<style type="text/css">
+*{ margin:0; padding:0;}
+body{ color:#fff; background:#c0c0c0; font-size:14px; font-family:"微软雅黑"; line-height:20px;}
+a{ color:#fff; text-decoration:none;}
+img{ border:none; vertical-align:middle;}
+ul{ overflow:hidden;}
+ul li{ list-style:none; float:left;}
+.wrapper{ width:320px; margin:0 auto; background:#fff;}
+.header{ background:url('http://bcs.duapp.com/xytimg/ggl%2Fke.jpg') no-repeat;background-size: 320px 1150px; width:320px;height:1150px; position:relative;}
+.luck {
+width: 301px;
+height: 121px;
+line-height: 53px;
+cursor: pointer;
+position: absolute;
+right: 11px;
+top: 647px;
+font-size: 14px;
+letter-spacing: 1px;
+text-align: center;
+color: #000;
+z-index: 3;
+background-color: #d3d3d3;
+overflow: hidden;
+}
+.myCanvas {
+width: 301px;
+height: 121px;
+cursor: pointer;
+position: absolute;
+right: 11px;
+top: 647px;
+z-index: 5;
+}
+
+.content ul{ padding:40px;}
+.content ul li{ margin-top:-0px;}
+.lottery_again {
+position: absolute;
+top: 770px;
+left: 10px;
+display: block;
+width: 90px;
+height: 41px;
+}
+.lottery_again2{
+  top: 860px;
+  width: 290px;
+height: 60px;
+}
+.prize_list{
+  width: 280px;
+  height: 80px;
+
+  display: block;
+  position: absolute;
+  top: 965px;
+  left: 20px;
+}
+.get_prize_tip{
+  width: 200px;
+  height: 20px;
+  color:#000;
+  display: block;
+  position: absolute;
+top: 611px;
+left: 68px;
+text-align: left;
+}
+.get_prize_tip2{
+  top: 581px;
+  background-color: #fae7bf;
+}
+.prize_list li{
+  display: block;
+  width: 280px;
+  text-align: left;
+  line-height: 25px;
+  color: #c00;
+}
+.start {
+width: 300px;
+height: 207px;
+display: block;
+z-index: 99;
+position: absolute;
+font-size: 22px;
+color: #777;
+line-height: 200px;
+top: 608px;
+left: 10px;
+}
+.start:hover{
+  text-decoration: none;
+  color: #777;
+}
+.last_time {
+width: 15px;
+height: 15px;
+display: block;
+z-index: 2;
+position: absolute;
+font-size: 12px;
+color: #000;
+line-height: 16px;
+top: 551px;
+left: 153px;
+background-color: #d10738;
+}
+.modal-title, .modal-body{
+  color: #000;
+}
+.modal-body{
+  line-height: 24px;
+}
+.modify_info{
+width: 280px;
+height: 38px;
+line-height: 38px;
+display: block;
+position: absolute;
+top: 1085px;
+left: 20px;
+color: #fff;
+font-size: 18px;
+}
+</style>
+<script type="text/javascript">
+  window.isTouch = false
+
+  var hasTouch = 'ontouchstart' in window;
+  var canvas;
+  var ctx;
+  var color = "#fff";
+  var lines = [];
+  var points = [];
+  $(document).ready(function () {
+      var offset = $("#myCanvas").offset();
+      var canvas_left = offset.left;
+      var canvas_top = offset.top;
+
+      canvas = document.getElementById('myCanvas');
+      ctx = canvas.getContext('2d');
+      ctx.fillStyle = "#999";
+      ctx.fillRect(0, 0, 535, 315);
+      //移动
+      var START_EV = hasTouch ? 'touchstart' : 'mousedown';
+      var MOVE_EV = hasTouch ? 'touchmove' : 'mousemove';
+      var END_EV = hasTouch ? 'touchend' : 'mouseup';
+      document.getElementById("myCanvas").addEventListener(START_EV, touchCheck, false);
+      document.getElementById("myCanvas").addEventListener(MOVE_EV, touchCheck, false);
+      document.getElementById("myCanvas").addEventListener(END_EV, touchCheck, false);
+      var startTouch;
+      var isDrag = false;
+      var lastPoint;
+      function touchCheck(evt) {
+          
+          if(!window.isTouch){
+             setTimeout(function(){
+
+                $('#myCanvas').hide()
+             },2500)
+          }
+          window.isTouch = true;
+
+
+          evt.preventDefault();
+          var touchX;
+          var touchY;
+          if (hasTouch) {
+              if (evt.touches.length > 0) {
+                  touchX = evt.touches[0].pageX - canvas_left;
+                  touchY = evt.touches[0].pageY - canvas_top;
+              }
+              else {
+                  if (lastPoint) {
+                      touchX = lastPoint.x;
+                      touchY = lastPoint.y;
+                  }
+              }
+          }
+          else {
+              touchX = evt.pageX - canvas_left;
+              touchY = evt.pageY - canvas_top;
+          }
+          
+          switch (evt.type) {
+              case START_EV:
+                  DrawLine();
+                  points = [];
+                  points.push({ x: touchX, y: touchY });
+                  isDrag = true;
+                  lastPoint = { x: touchX, y: touchY };
+                  break;
+              case MOVE_EV:
+                  if (isDrag) {
+                      points.push({ x: touchX, y: touchY });
+                      lastPoint = { x: touchX, y: touchY };
+                      DrawLine();
+                  }
+                  break;
+              case END_EV:
+                  isDrag = false;
+                  if (points.length > 0) {
+                      points.push({ x: touchX, y: touchY });
+                      lines.push(points);
+                      DrawLine();
+                  }
+                  break;
+          }
+      }
+      function DrawSingleLine(ctx, line) {
+          for (var j = 0; j < line.length; j++) {
+              var point = line[j];
+              if (j == 0)
+                  ctx.moveTo(point.x, point.y);
+              else
+                  ctx.lineTo(point.x, point.y);
+          }
+      }
+      function DrawLine() {
+          ctx.clearRect(0, 0, 535, 315);
+          ctx.globalCompositeOperation = "source-over";
+          ctx.fillStyle = "#999";
+          /*
+          var img = new Image();
+          img.src = "images/luck.png";
+          ctx.drawImage(img, 0, 0);*/
+          ctx.fillRect(0, 0, 535, 315);
+          ctx.globalCompositeOperation = "destination-out";
+          ctx.beginPath();
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 30;
+          var tempLines = lines;
+          if (tempLines.length == 0) {
+              tempLines.push(points);
+          }
+          for (var i = 0; i < tempLines.length; i++) {
+              var line = tempLines[i];
+              DrawSingleLine(ctx, line);
+          }
+          if (isDrag && points.length > 0)
+              DrawSingleLine(ctx, points);
+          ctx.stroke();
+          ctx.closePath();
+      }
+  });
+
+</script>
+</head>
+<body>
+<div class="wrapper">
+  <input type="hidden" id='openid' value=""/>
+  <div class="header">
+    <div class="last_time" id="last_time"></div>
+    <a href="javascript:;" title="再刮一次" id="lottery_again" class="lottery_again"></a>
+    <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>
+
+   
+    <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a>
+        <div class="luck" id="lottery_result" style="display:;"></div>
+        <canvas id="myCanvas" class="myCanvas" width="267px" height="157px" style="display:;">
+                your browser does not support the canvas element
+      </canvas>
+      <ul id="prize_list" class="prize_list">
+
+      </ul>
+      <a href="javascript:;" id="modify_info" class="modify_info">变更联系资料</a>
+    </div>
+    
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
+        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，当您刮中奖品后方便我们联系您</h4>
+      </div>
+    <form class="bs-example bs-example-form" role="form">
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="<%= wxuobj.appUserName %>" maxlength="20">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" style="padding:0 10px;">
+            <span class="glyphicon glyphicon-phone" ></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="<%= wxuobj.appUserMobile %>" maxlength="11">
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <button type="button" class="btn btn-primary" id="save_change">保存</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">抽奖规则和奖品列表</h4>
+      </div>
+      <div class="modal-body"> 
+抽奖规则：<br/>
+1、活动时间11月12日23日，送完为止；<br/>
+2、每人每天可参与3次刮奖机会，转发到朋友圈可以额外获得3次刮奖机会。注：同一微信号、手机号、QQ号视为同一用户<br/>
+3、本活动所发的礼包为合作商家直接提供<br/>
+4、领取方式：中奖者于11月12日-11月29日（10:30~20:00）内凭手机号至中奖券所显示的地址领取礼包。例如，“一等奖价值300元的挂烫机（绿城玉兰花园）”，则表示领奖地址为绿城玉兰花园售楼处，售楼处地址将在下面标注；<br/>
+5、个人领奖日期截止11月23日，若在此期间没有时间前往领取，可报名参加房价点评网于11月29日组织的看房团，跟随班车前往售楼处统一领奖，过期不候；<br/>
+6、如果出现违规行为（如作弊领取，恶意套取等），房价点评网将根据自身合理判断取消用户获奖资格；<br/>
+7、查询奖品数量及更多礼包详情，请在微信公众号“cric无锡房价”的菜单栏“我的礼券”内查询；<br/>
+8、本次活动的最终解释权为房价点评网所有。<br/>
+领奖地址：<br/>
+<span style="color:#c00; font-weight:bolder">绿城玉兰花园：</span><br/>滨湖区高浪路与立德路交汇处<br/>
+<span style="color:#c00; font-weight:bolder">华润橡树湾：</span><br/>惠山区政和大道与锡澄路交叉口西南侧<br/>
+<span style="color:#c00; font-weight:bolder">协信未来城：</span><br/>江海西路888号金山北工业园<br/>
+<span style="color:#c00; font-weight:bolder">金科中心：</span><br/>太湖大道与长江北路交汇处（新区欧尚对面）<br/>
+<span style="color:#c00; font-weight:bolder">新加坡尚锦城：</span><br/>高浪路与南湖大道（中南路延伸段）交汇处<br/>
+部分奖品：<br>
+挂烫机(绿城玉兰花园)<br>
+200元购物卡(新加坡尚锦城)<br>
+克里斯汀蛋糕50元券(华润橡树湾)<br>
+电磁炉(协信未来城)<br>
+飞科吹风机(金科中心)<br>
+等25种奖品<br>
+<span style="color:#c00; font-weight:bolder">奖品仅限本人领取，不得代领</span><br/>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+</div>
+
+<script type="text/javascript">
+
+
+var forwardingUrl = 'http://menu.xy-tang.com/active/xinyutang?ename=keggl_2014';
+var forwardingImg = 'http://bcs.duapp.com/xytimg/ggl%2Fkelogo.jpg'
+var forwardingTitle ='房价点评网接力双十一，超级刮刮乐，大奖拿不停'
+var forwardingDesc ='25种，数百件奖品等你来赢'
+
+
+
+
+
+var userid = '<%= userid%>'
+var appId = '<%= appId%>'
+var u_username = '<%= wxuobj.appUserName %>'
+var u_mobile = '<%= wxuobj.appUserMobile %>'
+$(function(){
+  $('#lottery_again').click(function(){
+    location.href = location.href;
+  })
+
+  $('#lottery_rule').click(function(){
+       $('#myModal2').modal({
+            backdrop:false
+          })
+  })
+
+  //check username mobile
+  var user_v = $('#appUserName').val();
+  var mobile_v = $('#appUserMobile').val();
+  if(user_v == '未认证会员'){
+      $('#appUserName').val('');
+  }
+  if(mobile_v.length != 11){
+      $('#appUserMobile').val('');
+  }
+
+  //end check
+
+
+  $('#save_change').click(function(){
+    var appUserName = $('#appUserName').val().trim();
+    var appUserMobile = $('#appUserMobile').val().trim();
+    if(!appUserName || appUserName == '未认证会员'){
+      alert('请填写真实姓名')
+      return false;
+    }
+    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+      alert('请输入正确的手机号码')
+      return false;
+    }
+    $.post('/api/user/modify',{
+    appUserName:appUserName, 
+    appUserMobile:appUserMobile,
+    wxuserid:userid,
+    wxappid:appId,
+    },function(d){
+      if(d.error == 1) return alert(d.data);
+      alert('资料完善成功，赶快去刮奖吧')
+      $('#myModal').modal('hide')
+      $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
+      //window.localStorage['has_modify'] = '1';
+      //$('#p2').html(appUserName)
+    },'json')
+    return false;
+  })
+
+  window.lotteryData = {};
+
+   $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+    if(d.error == 1){
+      return alert(d.data)
+    }
+        window.lotteryData = d.data;
+        work(d.data)
+
+    },'json')
+
+  var work = function(data){
+
+     $('#modify_info').click(function(){
+        $('#myModal').modal({
+            backdrop:false
+          })
+     })
+
+     if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
+      ||
+      ( u_username == '未认证会员' || u_mobile.length != 11)
+      ){
+        $('#myModal').modal({
+            backdrop:false
+          })
+     }
+
+     //put my prize
+     var tmp_s = ''
+     data.record.forEach(function(ro){
+      if(ro.prizeId != '0' && ro.prizeObj){
+        
+        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+      }
+     })
+     $('#prize_list').html(tmp_s)
+     //end pu prize
+
+     //last times
+     if($.cookie('isforward') == '1'){
+          var times = 6 - window.lotteryData.record.length  
+     }
+     else if(window.lotteryData.record.length>3){
+          var times = 6 - window.lotteryData.record.length  
+     }
+     else if(window.lotteryData.record.length<=3){
+          var times = 3 - window.lotteryData.record.length  
+     }
+     
+     times = times < 0 ? 0 : times;
+     $('#last_time').html(times)
+     //end last times
+
+
+        $('#start').click(function(){
+            
+            
+            if(window.lotteryData.record.length>=6){
+               alert('谢谢参与')
+               return false;
+            }
+
+              if(window.lotteryData.record.length>=3 && $.cookie('isforward') != '1'){
+                  alert('您已经刮过3次了，转发本页面到朋友圈可再次获得3次刮奖机会')
+                  return false;
+              }
+
+            var forword = 0;
+            if(window.lotteryData.record.length>=3){
+                forword = 1;
+            }
+
+            //var count = parseInt($.cookie('count') || 0) + 1;
+            //$.cookie('count', count, { expires: 365, path: '/' });
+            //alert($.cookie('count'))
+
+            $(this).hide().css('z-index','-1');
+
+            $.post('/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>',{
+                lotteryId:data.lottery._id,
+                isforward:forword
+            },function(d2){
+                if(d2.error){
+                  return alert(d2.data)
+                }
+                if(d2.data.prizeId == '0'){
+                  $('#lottery_result').html('谢谢参与')
+                }
+                if(d2.data.prizeId != '0' && d2.data.prizeObj){
+                  $('#lottery_result').html(d2.data.prizeObj.name)
+                }           
+
+                //$('#myCanvas, #lottery_result').show();
+
+                $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+                    if(d.error) return;
+                    window.lotteryData = d.data;
+                },'json')
+
+            },'json')
+
+            return false;
+        })
+
+
+  
+     }
+
+
+
+
+
+
+//forward
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var share_score = 2000;
+var _host = "http://" + window.location.host;
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+function attention_wx()
+{
+    $.cookie('isforward', '1', { expires: 365, path: '/' });
+}
+function is_zero()
+{
+    if(share_score == 0)
+    {
+        share_score = 2000;
+    }
+}
+var dataForWeixin = {
+    appId: "",
+    MsgImg: window.forwardingImg,
+    TLImg: window.forwardingImg,
+    url:  window.forwardingUrl,
+    title: window.forwardingTitle,
+    desc: window.forwardingDesc,
+    fakeid: "",
+    callback: function() {
+        setTimeout(function(){
+          attention_wx();
+         },2000);       }
+}; (function() {
+    var onBridgeReady = function() {
+        WeixinJSBridge.on('menu:share:appmessage',
+        function(argv) {
+            is_zero();
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "appid": dataForWeixin.appId,
+                "img_url": dataForWeixin.MsgImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:timeline',
+        function(argv) { (dataForWeixin.callback)();
+        is_zero();
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) {});
+        });
+        WeixinJSBridge.on('menu:share:weibo',
+        function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": dataForWeixin.title,
+                "url": dataForWeixin.url
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:facebook',
+        function(argv) { (dataForWeixin.callback)();
+            WeixinJSBridge.invoke('shareFB', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) {});
+        });
+    };
+    if (document.addEventListener) {
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    } else if (document.attachEvent) {
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+})();
+
+
+
+
+
+
+
+var WeixinApi = (function () { 
+ 
+    /* 这里省略了一堆代码……下面直接看调用接口 */ 
+    return {
+        ready           :wxJsBridgeReady,
+        shareToTimeline :weixinShareTimeline,
+        shareToWeibo    :weixinShareWeibo,
+        shareToFriend   :weixinSendAppMessage,
+        showOptionMenu  :showOptionMenu,
+        hideOptionMenu  :hideOptionMenu,
+        showToolbar     :showToolbar,
+        hideToolbar     :hideToolbar,
+        getNetworkType  :getNetworkType,
+        imagePreview    :imagePreview
+    };    
+ 
+})();
+// 所有功能必须包含在 WeixinApi.ready 中进行
+WeixinApi.ready(function(Api){
+    alert(111)
+    // 微信分享的数据
+    var wxData = {
+        "imgUrl":'http://www.baidufe.com/fe/blog/static/img/weixin-qrcode-2.jpg',
+        "link":'http://www.baidufe.com',
+        "desc":'大家好，我是Alien，Web前端&Android客户端码农，喜欢技术上的瞎倒腾！欢迎多交流',
+        "title":"大家好，我是赵先烈"
+    };
+ 
+    // 分享的回调
+    var wxCallbacks = {
+        // 分享操作开始之前
+        ready:function () {
+            alert('ready')
+            // 你可以在这里对分享的数据进行重组
+        },
+        // 分享被用户自动取消
+        cancel:function (resp) {
+            alert('cancel')
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+        },
+        // 分享失败了
+        fail:function (resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+        },
+        // 分享成功
+        confirm:function (resp) {
+                
+        },
+        // 整个分享过程结束
+        all:function (resp) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+        }
+    };
+ 
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+ 
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+ 
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+})
+
+})
+</script>
+
+
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4d70084ab8a23d1e8e76861a9553677d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>
