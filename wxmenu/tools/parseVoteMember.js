@@ -17,8 +17,13 @@ var appId, voteId, groupList
 
 
 memberJson.forEach(function(memObj){
-	memObj[4] = memObj[4].replace(/\s+/g, '<br/>')
-	memObj[5] = memObj[5].replace(/\s+/g, '<br/>')
+	memObj[4] = memObj[4].split('\n').map(function(text){
+		return '<p>'+text.trim()+'<p>'
+	}).join('')
+
+	memObj[5] = memObj[5].split('\n').map(function(text){
+		return '<p>'+text.trim()+'<p>'
+	}).join('')
 })
 
 
