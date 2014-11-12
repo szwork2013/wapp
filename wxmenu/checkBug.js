@@ -12,8 +12,7 @@ prizeDl.checkRepeatUser(activeId, function(err,list){
 	if(list.length == 0) return console.log('empty list')
 	var warnUserIds = []
 	var commonUserIds = []
-	console.log(list)
-	return;
+
 	console.log('get prize user list length: '+list.length)
 	//找到有问题用户id数组
 	list.forEach(function(o){
@@ -21,10 +20,10 @@ prizeDl.checkRepeatUser(activeId, function(err,list){
 			console.log('************')
 			console.log('find more than one times get prize user')
 			console.log(o)
-			warnUserIds.push(o._id.toString())
+			warnUserIds.push(o._id)
 			console.log('************')
 		}
-		commonUserIds.push(o._id.toString())
+		commonUserIds.push(o._id)
 	})
 	console.log('end check repeat get prize user')
 
@@ -36,8 +35,8 @@ prizeDl.checkRepeatUser(activeId, function(err,list){
 	var countList = []
 	
 	commonUserIds.forEach(function(uid){
+		var uid = uid;
 		dealFunc.push(function(callback){
-			var uid = uid;
 			recordDl.countAll({
 				activeId:activeId,
 				toUserId:uid
