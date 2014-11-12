@@ -49,4 +49,25 @@ objSchema.statics.destroy = function (query, cb) {
     return this.remove(query, cb); 
 }
 
+
+objSchema.statics.checkRepeatUser = function (activeId, cb) { 
+    
+      this.aggregate()
+      .match({
+            "activeId":activeId, 
+        })
+      .group( {
+            '_id' : "$userId",
+            'supportCount' : { $sum : 1 },
+        })
+      .limit(limit||1000)
+      .exec(cb)
+
+
+}
+
+
+
+
+
 module.exports = mongoose.model('wxActivePrizeRecord', objSchema);
