@@ -177,6 +177,7 @@
     </div>
 
 	 <div id="my_vote_list_box" class="my_vote_list_box demo-content-wide row show-grid">
+	 <div  class="txt_c yh" id="no_support" style="display:none;"><h4 class="my_list_empty">您还没有做任何投票，请返回进行投票</h4></div>
 	</div>
 	
 
@@ -399,8 +400,8 @@ $(function(){
 					  voteStr+'</div>'
 
 		})//end list.forEach
-		if(tmpstr == ''){
-			tmpstr = '<div  class="txt_c voteBlk yh"><h4 class="my_list_empty">您还没有做任何投票，请返回进行投票</h4></div>'
+		if(tmpstr == '' || list.length == 0){
+			return $('#no_support').show()
 		}
 		$('#my_vote_list_box').html(tmpstr)
 	}
