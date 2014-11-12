@@ -400,12 +400,6 @@ $(function(){
 					  voteStr+'</div>'
 
 		})//end list.forEach
-		alert(tmpstr)
-		alert(list.length)
-		alert(JSON.stringify(list))
-		if(tmpstr == '' || list.length == 0){
-			return $('#no_support').show()
-		}
 		$('#my_vote_list_box').html(tmpstr)
 	}
 
@@ -424,6 +418,9 @@ $(function(){
 			if(d3.data.length > 0){
 				putMyRecord(d3.data)
 				window.myItemList = d3.data
+			}
+			else{
+				$('#no_support').show()
 			}
 		},'json')
 	}
