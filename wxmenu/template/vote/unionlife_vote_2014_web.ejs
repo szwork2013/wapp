@@ -314,11 +314,19 @@
                         var tempStr = ''
                         window.province.forEach(function(pObj){
                             var pName = pObj.title
+                            hasFound = false
+                            if(pName == '总公司' || pName == '不动产投资事业部'){
+                                    hasFound = true
+                            }
                             window.chinaKeys.forEach(function(chinaKey){
-                                if(pName == chinaKey || pName == '总公司' || pName == '不动产投资事业部'){
-                                    tempStr += '<li grouptitle="'+pName+'" groupid="'+pObj._id+'"><span style="background-color:'+window.china[chinaKey].bgColor+'"></span>'+pName+'（'+pObj.count+' 票）</li>'
+                                if(pName == chinaKey){
+                                    hasFound = true
+                                    return;
                                 }
                             })
+                            if(hasFound){
+                                 tempStr += '<li grouptitle="'+pName+'" groupid="'+pObj._id+'"><span style="background-color:'+window.china[chinaKey].bgColor+'"></span>'+pName+'（'+pObj.count+' 票）</li>'
+                             }
                         })
 
                         $('#map_list_ul').html(tempStr)
