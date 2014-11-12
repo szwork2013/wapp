@@ -12,6 +12,8 @@ prizeDl.checkRepeatUser(activeId, function(err,list){
 	if(list.length == 0) return console.log('empty list')
 	var warnUserIds = []
 	var commonUserIds = []
+	console.log(list)
+	return;
 	console.log('get prize user list length: '+list.length)
 	//找到有问题用户id数组
 	list.forEach(function(o){
