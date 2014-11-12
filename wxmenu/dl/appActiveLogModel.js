@@ -61,7 +61,7 @@ objSchema.statics.getRankByActive = function(activeId, limit, cb){
       .sort({
         'supportCount':-1
       })
-      .limit(limit||1000)
+      .limit(limit||10000)
       .exec(cb)
 
   }
