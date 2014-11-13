@@ -23,6 +23,10 @@
 	padding: 0;
 	margin: 1px 0;
 }
+.group_tip{
+	padding-top: 10px;
+	color: #999;
+}
 </STYLE>
 <%- newrelic.getBrowserTimingHeader() %>
 
@@ -54,11 +58,13 @@
     </div>
     <div id="group_sel_box" class="demo-content-wide row show-grid">
 
-    	<% groupList.forEach(function(groupObj){
-    		if(groupObj.title == '不动产投资事业部'){
-    			groupObj.title = '投资事业部'
-    		}
-    	 %>
+    	<% 
+    		groupList = groupList.sort(function(a, b){
+    				if(a.ename > b.ename) return 1
+    				else return -1
+    		})
+
+    		groupList.forEach(function(groupObj){ %>
     		<div class="col-xs-4 col-sm-4 txt_c">
     			<% 
 	    			if(groupObj.count >=500){
@@ -68,12 +74,14 @@
 		    			var btnClass = 'btn-inverse'
 		    		}
     			%>
-	    		<a href="javascript:;" name="group_more_info" class="btn btn-md <%= btnClass %>" groupid="<%= groupObj._id %>">
+	    	<a href="javascript:;" name="group_more_info" class="btn btn-md <%= btnClass %>" groupid="<%= groupObj._id %>">
 	    		<%= groupObj.title %>
-	    	</a>
-	    		
+	    	</a>	    		
 	   		</div>
     	<% }) %>
+    	<p class="group_tip txt_c">
+    		分公司列表以音序排名
+    	</p>
 	</div>
 </div>
 <!-- 主页面 -->
@@ -92,7 +100,10 @@
         选择其它地区 <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu" id="dropdown-menu-box">
-      	<% groupList.forEach(function(groupObj){ %>
+      	<% 
+
+
+      		groupList.forEach(function(groupObj){ %>
     			<li>
 	    		<a href="javascript:;" name="group_more_info" groupid="<%= groupObj._id %>">
 	    		<%= groupObj.title %></a>
@@ -306,8 +317,8 @@ window.myItemList = []
 
 var forwardingUrl = 'http://mp.weixin.qq.com/s?__biz=MzA4NzExMTkxOA==&mid=200779727&idx=1&sn=2f03ebf1ee5bc963f08ecfa4e2a55279#rd'
 var forwardingImg = 'http://piccvote.qiniudn.com/unipay_logo2.png'
-var forwardingTitle ='合众人寿微信投票'
-var forwardingDesc ='合众人寿微信投票'
+var forwardingTitle ='合众人寿十周年榜样人物评选活动'
+var forwardingDesc ='有榜样的地方，就有进步的力量。为你心中的“合众榜样人物”投上珍贵的选票，猛戳这里选到手抽筋'
 
 
 

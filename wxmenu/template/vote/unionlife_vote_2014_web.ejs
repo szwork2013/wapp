@@ -62,7 +62,7 @@
                 *margin-top: -10px;
             }
             .map_list{
-                top: 495px;
+                top: 475px;
             }
         </style>
     </head>
@@ -96,7 +96,7 @@
                         </div>
                         <div class="box">
                             <div class="fui-mic"></div>
-                            活动规则
+                            投票规则
                         </div>
                         <div class="box">
                             <div class="fui-user"></div>
@@ -110,6 +110,7 @@
                                 <ul id="map_list_ul">
                                     
                                 </ul>
+                                <p style="text-align: center;clear: both;font-size: 13px;">分公司列表以音序排名</p>
                             </div>
                              <div class="ToolTip" style="right:50px;">
                                 <div id="topList" style="width:130px;float:left"></div>
@@ -129,10 +130,9 @@
                         <div class="features-body join">
                             <h4>亲，十周年榜样人物评选活动中所有投票数据与合众人寿官方微信同步，扫码就能参与，快来体验吧。</h4>
                             <hr>
-                            <p>1、扫描关注合众人寿官方微信。</p>
-                            <p>2、在右下角菜单栏里点击“十周年人物评选”。</p>
-                            <p>3、点击推送消息按照操作提示即可参与活动。</p>
-                            <p>重点提示：亲，十周年榜样人物评选活动中所有投票数据与合众人寿官方微信同步，扫码就能参与，快来体验吧。</p>
+                            <p>1、扫描二维码关注合众人寿官方微信</p>
+                            <p>2、回复“榜样”，点击推送消息按照提示即可参与投票</p>
+                            
                             <hr>
                         </div>
                     </div>
@@ -315,11 +315,19 @@
                     //放置省份数据
                     var putProvinceData = function(){
                         var tempStr = ''
-                        window.province.forEach(function(pObj){
+                        window.sortProvince = window.province.sort(function(a,b){
+                                if(a.ename > b.ename) return 1
+                                else return -1
+                        })
+
+                        window.sortProvince.forEach(function(pObj){
                             var pName = pObj.title
                             var curColor = '#fddddd'
                             hasFound = false
-                            if(pName == '总公司' || pName == '不动产投资事业部'){
+                            if(pName == '总公司' || pName == '合众资产'){
+                                    if(pObj.count>=500){
+                                        curColor = '#ff0000'
+                                    }
                                     hasFound = true
                             }
                             window.chinaKeys.forEach(function(chinaKey){
