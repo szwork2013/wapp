@@ -153,7 +153,8 @@ obj.countUserJoinByGroupIds = function(groupids, cb){
 					dealFunc2.push(function(callback2){
 
 						voteRecord.aggregateUserJoin({
-							voteId:itemo.voteId
+							voteId:itemo.voteId,
+							itemIds:[itemo._id.toString()]
 						},function(err,list){
 							if(err) callback2(err)
 							groupJoinCount += list.length  //累计增加分组计数

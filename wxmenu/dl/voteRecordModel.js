@@ -102,7 +102,7 @@ objSchema.statics.aggregateUserJoin = function(query,cb){
     var limit = query.limit || 10000000;
     var that = this;
     var groupid = query.groupid;
-    var itemIds = []
+    var itemIds = query.itemIds || []
 
 
     var aggregateUserJoinDeal = function(){
