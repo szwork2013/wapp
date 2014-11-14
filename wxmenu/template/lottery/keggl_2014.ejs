@@ -395,6 +395,24 @@ var forwardingDesc ='25种，数百件奖品等你来赢'
 
 
 
+window.isforward_today = moment().hour(23).minute(59).second(59)
+window.isforward_today = new Date(window.isforward_today)
+
+if($.cookie('isforward') == '1'){
+  $.removeCookie('isforward');
+  $.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+}
+if($.cookie('has_modify_info') == '1'){
+  $.removeCookie('has_modify_info');
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: '/' });
+}
+
+
+//alert(window.isforward_today)
+//$.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+//alert($.cookie('isforward'))
+
+
 
 
 var userid = '<%= userid%>'
@@ -452,7 +470,7 @@ $(function(){
     return false;
   })
 
-  window.lotteryData = {};
+ window.lotteryData = {};
 
    $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
     if(d.error == 1){
@@ -464,6 +482,24 @@ $(function(){
     },'json')
 
   var work = function(data){
+
+         //put my prize
+     var tmp_s = ''
+     data.record.forEach(function(ro){
+      if(ro.prizeId != '0' && ro.prizeObj){
+        
+        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+      }
+     })
+     $('#prize_list').html(tmp_s)
+     //end pu prize
+
+    
+    window.lotteryData.record = window.lotteryData.record.filter(function(ro){
+        return moment(ro.writeTime) >= (moment().hour(0).minute(0).second(0))
+    })
+
+
 
      $('#modify_info').click(function(){
         $('#myModal').modal({
@@ -480,16 +516,7 @@ $(function(){
           })
      }
 
-     //put my prize
-     var tmp_s = ''
-     data.record.forEach(function(ro){
-      if(ro.prizeId != '0' && ro.prizeObj){
-        
-        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
-      }
-     })
-     $('#prize_list').html(tmp_s)
-     //end pu prize
+
 
      //last times
      if($.cookie('isforward') == '1'){
@@ -511,7 +538,7 @@ $(function(){
             
             
             if(window.lotteryData.record.length>=6){
-               alert('谢谢参与')
+               alert('您的6次刮奖机会已经用完，明天再来吧')
                return false;
             }
 
