@@ -383,9 +383,9 @@ obj.getItemByGroupId = function(voteid, groupid, cb){
 				//排序
 				list = tempList.sort(function(a,b){
 					if(a.totalNumber > b.totalNumber){
-						return false;
+						return -1;
 					}
-					return true;
+					return 1;
 				})
 				cb(null,list)
 
