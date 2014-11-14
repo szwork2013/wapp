@@ -486,11 +486,9 @@ $(function(){
          //put my prize
      var tmp_s = ''
 	// window.hasvote=false
-	var window.hasVote = false
      data.record.forEach(function(ro){
       if(ro.prizeId != '0' && ro.prizeObj){
-     //   window.hasvote=ture
-	 window.hasVote = true
+     //   window.hasvote=true
         tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
       }
      })
