@@ -486,9 +486,11 @@ $(function(){
          //put my prize
      var tmp_s = ''
 	// window.hasvote=false
+	var window.hasVote = false
      data.record.forEach(function(ro){
       if(ro.prizeId != '0' && ro.prizeObj){
      //   window.hasvote=ture
+	 window.hasVote = true
         tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
       }
      })
@@ -537,10 +539,10 @@ $(function(){
 
         $('#start').click(function(){
           
-		/*	if(window.hasvote){
+			if(window.hasVote){
 			alert('您已经抽中过奖品了，一个用户只能领取一个奖品')
                  return false;
-            }*/
+            }
 			
             if(window.lotteryData.record.length>=6){
                alert('您的6次刮奖机会已经用完，明天再来吧')
