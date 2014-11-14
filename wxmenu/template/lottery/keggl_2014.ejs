@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,7 +14,9 @@
 <script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
 <script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
 <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 <%- newrelic.getBrowserTimingHeader() %>
+
 
 
 <style type="text/css">
@@ -291,7 +293,6 @@ font-size: 18px;
 
 
 
-
 <!-- Modal -->
 <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
@@ -385,6 +386,7 @@ font-size: 18px;
 
 </div>
 
+
 <script type="text/javascript">
 
 
@@ -392,8 +394,6 @@ var forwardingUrl = 'http://menu.xy-tang.com/active/xinyutang?ename=keggl_2014';
 var forwardingImg = 'http://bcs.duapp.com/xytimg/ggl%2Fkelogo.jpg'
 var forwardingTitle ='先买房，再脱光！房价点评网接力双十一，好礼刮不停'
 var forwardingDesc ='25种，数百件奖品等你来赢'
-
-
 
 window.isforward_today = moment().hour(23).minute(59).second(59)
 window.isforward_today = new Date(window.isforward_today)
@@ -463,14 +463,14 @@ $(function(){
       if(d.error == 1) return alert(d.data);
       alert('资料完善成功，赶快去刮奖吧')
       $('#myModal').modal('hide')
-      $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
+      $.cookie('has_modify_info', 1, { expires: window.isforward_today, path: '/' })
       //window.localStorage['has_modify'] = '1';
       //$('#p2').html(appUserName)
     },'json')
     return false;
   })
 
- window.lotteryData = {};
+  window.lotteryData = {};
 
    $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
     if(d.error == 1){
@@ -607,10 +607,6 @@ $(function(){
 
 
 
-
-
-
-
 var share_score = 2000;
 var _host = "http://" + window.location.host;
 
@@ -619,7 +615,7 @@ WeixinJSBridge.call('hideToolbar');
 });
 function attention_wx()
 {
-    $.cookie('isforward', '1', { expires: 365, path: '/' });
+    $.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
 }
 function is_zero()
 {
@@ -725,7 +721,7 @@ var WeixinApi = (function () {
 })();
 // 所有功能必须包含在 WeixinApi.ready 中进行
 WeixinApi.ready(function(Api){
-    alert(111)
+    
     // 微信分享的数据
     var wxData = {
         "imgUrl":'http://www.baidufe.com/fe/blog/static/img/weixin-qrcode-2.jpg',
