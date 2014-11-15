@@ -574,6 +574,7 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 					voteId:voteid
 				},0,limit,function(err,recList){
 					if(err) return cb(err)
+
 					//如果记录为0，则表示此用户从未投票过，则直接进入投票成功函数
 					if(recList.length == 0) return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb)
 
@@ -601,18 +602,40 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 
 
 					//2、判断是否对某一个人在间隔时间次数投票过多
-					var count = 0;
-					recList.forEach(function(recobj){
-						if(isforward && recobj.itemId == itemid && recobj.isForward == 1){
-							 count++
+					if(voteobj.intervalPerUserTimes > 0){
+						//如果后台对此投票设置了对每个用户进行限制的功能
+						var count = 0;
+						var now = Date.now()
+						//循环处理最近的limit条记录，可能是999
+						recList.forEach(function(recobj){
+							//如果是天来划分的
+							if(isDay){
+								//天来划分的，就需要将当前时间设置为今天的最后
+								now = moment().hour(23).minute(59).second(59).unix()*1000
+							}
+							//如果是以小时来划分的
+							//直接是当前时间
+							else{
+								now = Date.now()
+							}
+							//转换记录的录入时间
+							var recordTime = Date.parse(recobj.writeTime)
+							//当前时间减去录入时间，在间隔内的记录，才作为判断的依据
+							if(now - recordTime <= interval){
+								if(isforward && recobj.itemId == itemid && recobj.isForward == 1){
+									//当时转发记录时，只增加转发的次数
+									 count++
+								}
+								else if(!isforward && recobj.itemId == itemid){
+									//当不是转发的，记录全部次数，因为必须先投票，再转发
+									 count++
+								} 
+							}
+						})
+						//如果记录条数超过限制，报错
+						if(count >= voteobj.intervalPerUserTimes){
+							return cb('不能重复投票')
 						}
-						else if(!isforward && recobj.itemId == itemid){
-							 count++
-						} 
-					})
-
-					if(voteobj.intervalPerUserTimes > 0 && now - olderTimestamp <= interval && count >= voteobj.intervalPerUserTimes){
-						return cb('不能重复投票')
 					}
 					//end 2 判断
 
