@@ -89,8 +89,8 @@ obj.delCheck = function(voteObj){
 		console.log(templist)
 		console.log('************')
 		console.log(delIds.length)
-		return
-		
+		//return
+		console.log('start delete')
 		voteRecordModel.destroy({
 			_id:{$in:delIds}
 		}, function(err){
