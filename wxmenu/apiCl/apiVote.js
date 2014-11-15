@@ -215,6 +215,14 @@ obj.getItemsInfo = function(req,res){
 		return res.send({error:1,data:'groupid有误'})
 	}
 
+	//先读取缓存
+	var cacheKey = voteEname+groupid
+	var now = Date.now()
+	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*10){		
+		res.send({error:0,data:global[cacheKey].data}) 
+		return;
+	} 
+
 	voteBl.getVoteByEname(voteEname,function(err,voteObj){
 		if(err){
 	        return res.send({error:1,data:err}) 
@@ -228,6 +236,11 @@ obj.getItemsInfo = function(req,res){
 		        return res.send({error:1,data:err}) 
 	     	}
 
+	     	//写入缓存
+	     	global[cacheKey] = {
+	     		data:itemlist,
+	     		timestamp:Date.now(),
+	     	}
 
 	     	return res.send({error:0,data:itemlist})
      	})
