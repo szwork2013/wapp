@@ -30,7 +30,10 @@ obj.getVoteInfo = function(req,res){
 	//先读取缓存
 	var cacheKey = appEname+'_'+voteEname
 	var now = Date.now()
+	console.log(global[cacheKey])
+	console.log(now - global[cacheKey].timestamp)
 	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*1000){
+		
 		res.send({error:0,data:global[cacheKey].data}) 
 		return;
 	}
