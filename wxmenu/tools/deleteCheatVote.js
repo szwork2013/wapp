@@ -62,7 +62,7 @@ obj.delCheck = function(voteObj){
 			else{
 				if(!countUserId[lo.userId]){
 					countUserId[lo.userId] = {
-						count:0
+						count:0,
 						userid:lo.userId
 					}
 				}
