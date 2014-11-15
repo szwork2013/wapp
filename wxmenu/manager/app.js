@@ -55,7 +55,7 @@ app.use(express.bodyParser(
 	{ keepExtensions: true, uploadDir: path.join(__dirname,'..','/upload/')}
 ));
 app.use(express.cookieParser());
-app.use(express.cookieSession({key:"manager", secret: 'widgetManager', cookie: { maxAge: 60 * 60 * 1000 * 365 }}));
+app.use(express.cookieSession({path: '/', key:"manager", secret: 'widgetManager', cookie: { maxAge: 60 * 60 * 1000 * 365 }}));
 require('./route.js')(app);
 
 app.listen(config.mangerListenPort);
