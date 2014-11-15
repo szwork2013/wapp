@@ -34,6 +34,8 @@ obj.startDel = function(){
 }
 
 obj.delCheck = function(voteObj){
+	console.log('start deal '+voteObj.ename)
+
 	var voteObj = voteObj;
 	var intervalHour = voteObj.interval*3600
 	var yestodyStart = (moment().hour(0).minute(0).second(0).unix() - intervalHour)*1000;
@@ -47,6 +49,8 @@ obj.delCheck = function(voteObj){
 		writeTime:{'$gte': statTime, '$lt':endTime}
 	}, function(err, list){
 		if(err) return console.log(err)
+		console.log('start anylistic')
+
 		var hasVoteUser = []
 		var delIds = []
 		var countUserId = {}
@@ -57,7 +61,10 @@ obj.delCheck = function(voteObj){
 			}
 			else{
 				if(!countUserId[lo.userId]){
-					countUserId[lo.userId] = { count:0}
+					countUserId[lo.userId] = {
+						count:0
+						userid:lo.userId
+					}
 				}
 				countUserId[lo.userId]['count']++
 				delIds.push(lo._id.toString())
@@ -65,8 +72,21 @@ obj.delCheck = function(voteObj){
 		})
 		if(delIds.length == 0) return console.log('no del record')
 
+		var templist = []
+		Object.keys(countUserId).forEach(function(){
+			templist.push(countUserId[key])
+		})
+
+		templist = templist.sort(function(a,b){
+			if(a-b>=0) return -1
+			return 1
+		})
+
+		templist.length = 100
+
 		console.log(delIds)
-		console.log(countUserId)
+		console.log('************')
+		console.log(templist)
 		console.log('************')
 		console.log(delIds.length)
 		return
