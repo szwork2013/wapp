@@ -27,6 +27,15 @@ obj.getVoteInfo = function(req,res){
 		res.send({error:1,data:'缺少ename参数'})
 		return;
 	}
+	//先读取缓存
+	var cacheKey = appEname+'_'+voteEname
+	var now = Date.now()
+	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*1000){
+		res.send({error:0,data:global[cacheKey].data}) 
+		return;
+	}
+
+
 	//根据ename获取抽奖活动的对象
 	voteBl.getVoteByEname(voteEname,function(err,voteObj){
 		if(err){
@@ -42,6 +51,15 @@ obj.getVoteInfo = function(req,res){
      		if(err){
 		        return res.send({error:1,data:err}) 
 	     	}
+	     	//写入缓存
+	     	global[cacheKey] = {
+	     		data:{
+		     		voteObj:voteObj,
+		     		record:recordList
+	     		},
+	     		timestamp:Date.now(),
+	     	}
+
 	     	//将结果返回给前端
 	     	return res.send({error:0,data:{
 	     		voteObj:voteObj,
