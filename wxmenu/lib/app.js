@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.locals.newrelic = newrelic;
 
 app.use(express.cookieParser());
-app.use(express.session({path: '/', secret: 'wxapp', cookie: {maxAge: 1000*3600*24*30}}));
+app.use(express.session({path: '/', key:'wxsession', secret: 'wxapp', cookie: {maxAge: 1000*3600*24*30}}));
 
 
 /*
