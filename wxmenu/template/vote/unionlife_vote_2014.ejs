@@ -708,9 +708,9 @@ $(function(){
 		return false;
 	}
 
-
+	window.ajaxVote = false
 	var startVoteFn = function(that){
-		if(window.isAjaxIng) return false;
+		if(window.ajaxVote) return false;
 
 		var itemid = that.attr('itemid');
 		var groupid = that.attr('groupid');
@@ -748,10 +748,10 @@ $(function(){
 			}
 		}
 
-				
+		window.ajaxVote = true
 		$.post('/vote/'+appEname+'/start', q, function(d){
 			if(d.error == 1){
-				window.isAjaxIng = false;
+				window.ajaxVote = false;
 				return alert(d.data);
 			} 
 			
@@ -799,7 +799,7 @@ $(function(){
 				$('#item_info_modal').modal('hide')
 				//显示成功模态框
 				$('#item_success_modal').modal({})
-				window.isAjaxIng = false;
+				window.ajaxVote = false;
 				updateVoteInfo()
 							
 			})
