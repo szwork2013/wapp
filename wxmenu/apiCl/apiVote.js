@@ -31,11 +31,12 @@ obj.getVoteInfo = function(req,res){
 	var cacheKey = voteEname
 	var now = Date.now()
 
+	/*
 	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*1000){
 		
 		res.send({error:0,data:global[cacheKey].data}) 
 		return;
-	}
+	}*/
 
 
 	//根据ename获取抽奖活动的对象
@@ -54,13 +55,13 @@ obj.getVoteInfo = function(req,res){
 		        return res.send({error:1,data:err}) 
 	     	}
 	     	//写入缓存
-	     	global[cacheKey] = {
+	     	/*global[cacheKey] = {
 	     		data:{
 		     		voteObj:voteObj,
 		     		record:recordList
 	     		},
 	     		timestamp:Date.now(),
-	     	}
+	     	}*/
 
 	     	//将结果返回给前端
 	     	return res.send({error:0,data:{
