@@ -49,7 +49,7 @@ obj.delCheck = function(voteObj){
 		writeTime:{'$gte': statTime, '$lt':endTime}
 	}, function(err, list){
 		if(err) return console.log(err)
-		console.log('start anylistic')
+		console.log('start anylistic length is: '+list.length)
 
 		var hasVoteUser = []
 		var delIds = []
