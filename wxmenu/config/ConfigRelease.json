@@ -1,5 +1,5 @@
 {
-	"currentSite":"http://wx.mintok.com",
+	"currentSite":"http://menu.xy-tang.com",
 	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/wxmenu",
 	"monoosePool":100,
 	"currentHost":"127.0.0.1",
