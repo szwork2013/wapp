@@ -69,6 +69,7 @@ obj.delCheck = function(voteObj){
 		console.log(countUserId)
 		console.log('************')
 		console.log(delIds.length)
+		return
 		/*
 		voteRecordModel.destroy({
 			_id:{$in:delIds}
