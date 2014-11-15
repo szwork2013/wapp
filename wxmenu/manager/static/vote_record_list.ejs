@@ -260,7 +260,7 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         { 
                             field: "userId",
                             title: "用户id", 
-                            hidden:true
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "recordIp",
