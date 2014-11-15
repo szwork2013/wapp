@@ -28,12 +28,11 @@ obj.getVoteInfo = function(req,res){
 		return;
 	}
 	//先读取缓存
-	var cacheKey = appEname+'_'+voteEname
+	var cacheKey = voteEname
 	var now = Date.now()
-	console.log(global[cacheKey])
+
 	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*1000){
 		
-		console.log(now - global[cacheKey].timestamp)
 		res.send({error:0,data:global[cacheKey].data}) 
 		return;
 	}
@@ -90,6 +89,16 @@ obj.getVoteInfo2 = function(req,res){
 		return res.send({error:1, data:'voteEname error'})
 	}
 
+	//先读取缓存
+	var cacheKey = voteEname+'2'
+	var now = Date.now()
+
+	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*1000){		
+		res.send({error:0,data:global[cacheKey].data}) 
+		return;
+	}
+
+
 	voteBl.getVoteByEname(voteEname,function(err,voteObj){
 		if(err){
 			return res.send({error:1, data:err})
@@ -137,6 +146,15 @@ obj.getVoteInfo2 = function(req,res){
 					})
 				
 					
+					//写入缓存
+			     	global[cacheKey] = {
+			     		data:{
+							group:tempGroupList,
+							vote:voteObj
+						},
+			     		timestamp:Date.now(),
+			     	}
+
 					res.send({error:0,data:{
 							group:tempGroupList,
 							vote:voteObj
