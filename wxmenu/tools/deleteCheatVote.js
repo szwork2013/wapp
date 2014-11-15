@@ -78,13 +78,13 @@ obj.delCheck = function(voteObj){
 		})
 
 		templist = templist.sort(function(a,b){
-			if(a-b>=0) return -1
+			if(a.count-b.count>=0) return -1
 			return 1
 		})
 
 		templist.length = 100
 
-		console.log(delIds)
+		//console.log(delIds)
 		console.log('************')
 		console.log(templist)
 		console.log('************')
