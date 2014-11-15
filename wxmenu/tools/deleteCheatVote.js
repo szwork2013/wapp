@@ -73,7 +73,7 @@ obj.delCheck = function(voteObj){
 		if(delIds.length == 0) return console.log('no del record')
 
 		var templist = []
-		Object.keys(countUserId).forEach(function(){
+		Object.keys(countUserId).forEach(function(key){
 			templist.push(countUserId[key])
 		})
 
