@@ -1,5 +1,5 @@
 var infoBl = require('../bl/wxInfo.js')
-
+var kdBl = require('../bl/wxKd.js')
 var utils = require('../lib/utils.js');
 var obj = {}
 
@@ -56,6 +56,25 @@ obj.sendReCommend = function(req,res){ //发送推荐信息
 
 }
 
+
+obj.kdSearch = function(req,res){ 
+
+	var companyEname = req.query.company
+	var kdNumber = req.query.number
+	if(!companyEname || !kdBl.companyDict[companyEname]){
+		return res.send({error:1, data:'快递公司无效'})
+	}
+	if(!kdNumber){
+		return res.send({error:1, data:'快递单号无效'})
+	}
+
+	
+	kdBl.startKd(companyEname, kdNumber, function(err, result){
+		if(err) return res.send({error:1, data:err})
+		return res.send({error:0, data:result})
+	})
+
+}
 
 
 module.exports = obj;

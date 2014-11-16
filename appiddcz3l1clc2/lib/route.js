@@ -21,6 +21,7 @@ var viewSuggest = require('../viewCl/viewSuggestCl.js');
 var viewInfo = require('../viewCl/viewInfo.js');
 
 
+
 //console.log(global.config)
 wxAppBl.getByEname(config.appEname,function(err,appObj){
       if(err){
@@ -145,8 +146,9 @@ var addroute = function(app){
 		})
 	})
 
-	app.post('/api/info/sendrecommend',getUserMid, apiInfo.sendReCommend);
-	
+	app.post('/api/info/sendrecommend', getUserMid, apiInfo.sendReCommend);
+	app.get('/api/info/startkd', getUserMid, apiInfo.kdSearch);
+
 	app.post('/api/lottery/startlottery',getUserMid, apiLottery.startLottery);
 	app.post('/api/lottery/improveinfo',getUserMid, apiLottery.improveInfo);
 
@@ -161,6 +163,8 @@ var addroute = function(app){
 
 	app.post('/api/user/binder',getUserMid, apiUser.binder);
 	app.post('/api/user/modify',getUserMid, apiUser.modify);
+
+
 	//view router
 	//user center
 	//用户绑定和会员卡
