@@ -250,7 +250,7 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         { 
                             field: "itemId",
                             title: "投票项id", 
-                            hidden:true
+                            hidden:window.vote_hide||false
                         },
                         { 
                             field: "itemTitle",
