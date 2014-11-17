@@ -37,7 +37,7 @@ obj.delCheck = function(voteObj){
 	console.log('start deal '+voteObj.ename)
 
 	var voteObj = voteObj;
-	var intervalHour = voteObj.interval*3600*3
+	var intervalHour = voteObj.interval*3600
 	var yestodyStart = (moment().hour(0).minute(0).second(0).unix() - intervalHour)*1000;
 	var yestodyEnd = (moment().hour(23).minute(59).second(59).unix() - intervalHour)*1000;
 
@@ -89,16 +89,16 @@ obj.delCheck = function(voteObj){
 		console.log(templist)
 		console.log('************')
 		console.log(delIds.length)
-		//return
+		return
 
 		console.log('start delete')
-		voteRecordModel.destroy({
+		/*voteRecordModel.destroy({
 			_id:{$in:delIds}
 		}, function(err){
 			if(err) return console.log(err)
 			console.log('success del number :'+delIds.length)
 
-		})
+		})*/
 		
 	})
 
