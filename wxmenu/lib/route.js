@@ -279,7 +279,7 @@ var addroute = function(app){
 			var count = req.session['count'];
 			if(!count) count = 1;
 			else count++;
-			
+			req.session['count'] = count
 			res.send('welcome count: '+count.toString());
 		})
 	})

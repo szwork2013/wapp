@@ -6,7 +6,7 @@ var express = require('express');
 var app = express();
 var config = require('../config/config.js');
 var addRoute = require('./route.js');
-
+var MongoStore = require('connect-mongo')(express);
 
 
 app.enable('trust proxy');
@@ -16,8 +16,16 @@ app.set('view engine', 'ejs');
 app.locals.newrelic = newrelic;
 
 app.use(express.cookieParser());
-app.use(express.session({path: '/', key:'wx_session', secret: 'wxapp', cookie: {maxAge: 1000*60*10}}));
-
+//app.use(express.session({path: '/', key:'wx_session', secret: 'wxapp', cookie: {maxAge: 1000*60*10}}));
+app.use(express.session(
+	{
+		path: '/', 
+		key:'wx_session', 
+		secret: 'wxapp', 
+		cookie: {maxAge: 1000*60*10},
+		store:new MongoStore({url:config.mongodbConnStr})
+	}
+	));
 
 /*
 app.use(ifile.connect(

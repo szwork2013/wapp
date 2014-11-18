@@ -432,6 +432,7 @@ obj.getRankByVoteIdGroupId=  function(voteid, groupid, cb){
 }
 
 
+var voteCountDict = {}
 
 //根据voteid查找所有分组在 lastTimeStamp 之后的投票数量
 obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
@@ -444,6 +445,18 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 		return cb('lastTimeStamp error')
 	}
 	var lastTime = new Date(moment(lastTimeStamp).format('YYYY/MM/DD HH:mm:ss'));
+
+
+
+	//先读取缓存
+	var cacheKey = voteid+'wxIndex'
+	var now = Date.now()
+
+	if(voteCountDict[cacheKey] && now - voteCountDict[cacheKey].timestamp < 3600*1000*4){		
+		cb(null, voteCountDict[cacheKey].data)
+		return;
+	}
+	
 
 	obj.getGroupByVoteId(voteid, function(err, grouplist){
 		if(err) return cb(err);
@@ -486,6 +499,10 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 		//利用异步库
 		async.series(fnList, function(err){
 			if(err) return cb(err)
+			voteCountDict[cacheKey] = {
+				timestamp:Date.now(),
+				data:groupCountArray,
+			}
 			cb(null, groupCountArray)
 		})
 
