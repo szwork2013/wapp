@@ -879,7 +879,7 @@ obj.setSchedule = function(){
 		   obj.scheduleJob()
 	});
 	//马上执行一次
-	obj.scheduleJob()
+	//obj.scheduleJob()
 }
 
 
