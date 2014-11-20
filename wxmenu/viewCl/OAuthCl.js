@@ -174,11 +174,12 @@ obj.oauthJumpBack = function(app,applist){
 				  			logger.error('obj.oauthJumpBack read empty openid: %s', openid);
 				  			return callback('empty token or empty doc')
 				  		}
+
 				  		try{
 				  			var tokenObj = JSON.parse(obj.token)
 				  		}
 				  		catch(e){
-				  			logger.error('obj.oauthJumpBack parse error openid: %s', openid);
+				  			logger.error('obj.oauthJumpBack parse error openid: %s, err is:%s', openid, e);
 				  			return callback(e)
 				  		}
 				  		callback(null, tokenObj);
@@ -194,7 +195,6 @@ obj.oauthJumpBack = function(app,applist){
 				  oauthModel.createOneOrUpdate({
 				  	openid:openid
 				  }, {
-				  	openid:openid,
 				  	token:tokenStr,
 				  }, function(err, obj){
 				  		if(err){
