@@ -16,7 +16,10 @@ obj.votePage = function(req,res){ //活动页面展示
 	var appEname = appobj.data;
 
 	//测试用，正式环境需注释
-	//req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
+	if(req.query.jkbuserid && req.query.jkbuserid.length == 24){
+		req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+	}
+	
 
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
