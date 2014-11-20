@@ -1,7 +1,7 @@
 var OAuth = require('wechat').OAuth;
 var url = require('url')
 var userModel = require('../dl/userModel.js'); //加载用户模型
-
+var oauthModel = require('../dl/oauthModel.js')
 var userBl = require('../bl/wxUser.js');
 var appBl = require('../bl/wxApp.js');
 var utils = require('../lib/utils.js');
@@ -160,7 +160,50 @@ obj.oauthJumpBack = function(app,applist){
 	//赋值api
 	applist.forEach(function(appObj){
 		//生成多个api实例
-		appObj.api = new OAuth(appObj.wxAppId.trim(), appObj.wxAppSecret.trim());
+		appObj.api = new OAuth(appObj.wxAppId.trim(), appObj.wxAppSecret.trim(), 
+			function (openid, callback) {
+
+				  oauthModel.findOneByObj({
+				  	openid:openid,
+				  },function(err, obj){
+				  		if(err){
+				  			logger.error('obj.oauthJumpBack read error: %s', err);
+				  			return callback(err)
+				  		}
+				  		if(!obj || !obj.token){
+				  			logger.error('obj.oauthJumpBack read empty openid: %s', openid);
+				  			return callback('empty token or empty doc')
+				  		}
+				  		try{
+				  			var tokenObj = JSON.parse(obj.token)
+				  		}
+				  		catch(e){
+				  			logger.error('obj.oauthJumpBack parse error openid: %s', openid);
+				  			return callback(e)
+				  		}
+				  		callback(null, tokenObj);
+
+				  })
+
+				}, function (openid, token, callback) {
+				  // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
+				  // 这样才能在cluster模式及多机情况下使用，以下为写入到文件的示例
+				  // 持久化时请注意，每个openid都对应一个唯一的token!
+				  var tokenStr = JSON.stringify(token);
+
+				  oauthModel.createOneOrUpdate({
+				  	openid:openid
+				  }, {
+				  	openid:openid,
+				  	token:tokenStr,
+				  }, function(err, obj){
+				  		if(err){
+				  			logger.error('obj.oauthJumpBack save error: %s', err);
+				  		}
+				  		return callback(err,obj)
+				  })
+				}
+			);
 		var oauthScope = appObj.oauthScope;
 		var appEname = appObj.appEname
 
