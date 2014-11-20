@@ -9,6 +9,9 @@
 <link href="http://piccvote.qiniudn.com/assets/css/docs.css" rel="stylesheet">
 <link href="http://piccvote.qiniudn.com/base.css" rel="stylesheet">
 <STYLE TYPE="text/css">
+.greent{
+	color: #1abc9c
+}
 .shake_face{
 	width: 200px !important;
 	height: 200px !important;
@@ -34,6 +37,10 @@
 	display:inline-block;
 }
 .group_blk .group_info{
+	left: 0;
+	width: 350px;
+}
+.group_blk .group_vote{
 	left: 0;
 }
 </STYLE>
@@ -488,8 +495,8 @@ $(function(){
 					/*'<img itemid="'+itemid+'" name="group_item_more" src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
 					'<a name="group_item_more" href="javascript:;" class="btn btn-inverse yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+*/
 	    			'<div class="group_info yh">'+
-	    			'No.'+numberPos+' '+itemObj.title+'<b class="group_gap"></b>'+
-	    			'支持数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'<br/>'+
+	    			'<span class="greent">No.'+numberPos+' '+itemObj.title+'</span><b class="group_gap"></b>'+
+	    			'<span class="greent">支持数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</span><br/>'+
 	    			'部门：'+itemObj.code2+'<br/>'+
 	    			'职务：'+itemObj.code3+
 	    			'</div>'+voteStr+'</div>'
