@@ -164,7 +164,7 @@ obj.oauthJumpBack = function(app,applist){
 			function (openid, callback) {
 
 				  oauthModel.findOneByObj({
-				  	openid:openid,
+				  	openid:appObj.appEname+'_'+openid,
 				  },function(err, obj){
 				  		if(err){
 				  			logger.error('obj.oauthJumpBack read error: %s', err);
@@ -193,7 +193,7 @@ obj.oauthJumpBack = function(app,applist){
 				  var tokenStr = JSON.stringify(token);
 
 				  oauthModel.createOneOrUpdate({
-				  	openid:openid
+				  	openid: appObj.appEname+'_'+openid
 				  }, {
 				  	token:tokenStr,
 				  }, function(err, obj){
