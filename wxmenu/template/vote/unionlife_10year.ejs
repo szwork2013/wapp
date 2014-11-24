@@ -492,16 +492,16 @@ $(function(){
 					if(itemObj.lastdayVoteOrder != 0){
 						//表示上升
 						if(itemObj.lastdayVoteOrder - numberPos >0){
-							posStr = '<span class="group_rank group_up yh">'+
-	    								 '<span class="fui-triangle-up"></span>'+''
-	    								 //'今日上升 '+(itemObj.lastdayVoteOrder - numberPos)+' 位</span>'
+							posStr = ''//'<span class="group_rank group_up yh">'+
+	    								 '<span class="fui-triangle-up"></span>'+
+	    								 '今日上升 '+(itemObj.lastdayVoteOrder - numberPos)+' 位</span>'
 
 						}
 						//表示下降
 						else if(numberPos - itemObj.lastdayVoteOrder > 0){
-							posStr = '<span class="group_rank group_down yh">'+
-	    								 '<span class="fui-triangle-down"></span>'+''
-	    								 //'今日下降 '+(numberPos - itemObj.lastdayVoteOrder)+' 位</span>'
+							posStr = ''//'<span class="group_rank group_down yh">'+
+	    								 '<span class="fui-triangle-down"></span>'+
+	    								 '今日下降 '+(numberPos - itemObj.lastdayVoteOrder)+' 位</span>'
 
 						}
 					}
