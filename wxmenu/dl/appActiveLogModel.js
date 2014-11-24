@@ -7,6 +7,7 @@ var obj = { //定义结构
       fromUserId:{type:String,required:true,index:true},  //用户id，表示这个票是谁投的
       toUserId:{type:String,required:true,index:true},   //用户id，就是这个投票是投给谁的
       activeId:{type:String,required:true,index:true},   //活动的Id
+      supportScore:{ type: Number, default:0}, //获取的积分，只有在活动支持积分的情况下才会有大于0的数
       code1:{type:String,default:''},                    //备用1
       code2:{type:String,default:''},                    //备用2
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
@@ -57,6 +58,7 @@ objSchema.statics.getRankByActive = function(activeId, limit, cb){
       .group( {
             '_id' : "$toUserId",
             'supportCount' : { $sum : 1 },
+            'supportScore':{ $sum: '$supportScore'}
         })
       .sort({
         'supportCount':-1

@@ -92,6 +92,51 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="url" data-bind="value:url" >
             </div>
 
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="useScore" >是否启用分数</label>
+            </div>
+            <div data-container-for="useScore" class="k-edit-field w-800-r">
+               <input type="number" id="useScore_inp" class="k-input k-textbox w-50-inp" name="useScore" data-bind="value:useScore" >
+               <br/>如果：是，则用户每次支持一次，将随机获取分数数组中的积分，否的话表示一次支持，算一次count次数
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="minSupportScore" >初始化分数</label>
+            </div>
+            <div data-container-for="minSupportScore" class="k-edit-field w-800-r">
+               <input type="number" id="minSupportScore_inp" class="k-input k-textbox w-50-inp" name="minSupportScore" data-bind="value:minSupportScore" >
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="maxSupportScore" >最多获取分数</label>
+            </div>
+            <div data-container-for="maxSupportScore" class="k-edit-field w-800-r">
+               <input type="number" id="maxSupportScore_inp" class="k-input k-textbox w-50-inp" name="maxSupportScore" data-bind="value:maxSupportScore" >
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreList" >获取分数数组</label>
+            </div>
+            <div data-container-for="scoreList" class="k-edit-field w-800-r">
+               <input type="text" id="maxSupportScore_inp" class="k-input k-textbox w-50-inp" name="scoreList" data-bind="value:scoreList" >
+               <br/>获取分数列表用英文逗号分割，如：0.1,0.5,0.8,1,1.2 这样
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="withDay" >是否按天</label>
+            </div>
+            <div data-container-for="withDay" class="k-edit-field w-800-r">
+               <input type="number" id="withDay_inp" class="k-input k-textbox w-50-inp" name="withDay" data-bind="value:withDay" >
+               <br/>如果：是，则表示每天可以来支持一次，让页面拥有者获取分数，如果：否，则说明整个活动期间只能支持一次
+            </div>
+
+
+
 <div style="display:none">
             <div class="k-edit-label  w-800-l">
                 <label for="recCode1" >备用1</label>
@@ -193,6 +238,12 @@
                                     "startTime":{editable: true, type: "date"},
                                     "endTime":{editable: true, type: "date"},
 
+                                    'useScore':{ editable: true, type:'number'},
+                                    'minSupportScore':{ editable: true, type:'number'},
+                                    'maxSupportScore':{ editable: true, type:'number'},
+                                    'scoreList':{editable: true},
+                                    'withDay':{ editable: true, type:'number'},
+
                                     "code1": { editable: true},
                                     "code2": { editable: true},
 
@@ -255,6 +306,32 @@ $.post('/manger/app/getList',{},function(data_ary){
                             format: "{0: yyyy-MM-dd HH:mm:ss}"
                         },
                         { 
+                            field: "useScore",
+                            title: "是否启用分数",
+                            values:window.is_show_array,
+                        },
+                        { 
+                            field: "minSupportScore",
+                            title: "默认分数",
+                            hidden:true
+                        },
+                        { 
+                            field: "maxSupportScore",
+                            title: "最发分数",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreList",
+                            title: "获取分数列表",
+                            hidden:true
+                        },
+                        { 
+                            field: "withDay",
+                            title: "是否按天",
+                            hidden:window.is_show_array,
+                            hidden:true
+                        },
+                        { 
                             field: "prizeAmount",
                             title: "可兑奖次数",
                             hidden:true
@@ -287,10 +364,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "isShow",
                             title: "是否启用", 
-                            values:[
-                              { text: "启用", value: 1 },
-                              { text: "不启用", value: 0 }
-                            ]
+                            values:window.is_show_array 
                         }, 
                         { 
                             field: "writeTime",
@@ -319,6 +393,10 @@ $.post('/manger/app/getList',{},function(data_ary){
 
                         window.dropdown_init($('#appId_inp'),d)
                         window.dropdown_init($('#isPrize'),window.isPrize)
+                        window.dropdown_init($('#useScore_inp'),window.is_show_array)
+                        window.dropdown_init($('#withDay_inp'),window.is_show_array)
+
+                        
                         window.dropdown_init()
 
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 1)

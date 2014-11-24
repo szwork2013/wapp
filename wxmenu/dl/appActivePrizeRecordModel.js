@@ -9,6 +9,7 @@ var obj = { //定义结构
     mobile:{ type: String, required:true, index:true},      //联系电话
     recordIp:{type:String,default: '127.0.0.1'},           //用户抽奖时的ip地址
     giftId:{ type: Number, default:0, unique:true, index:true},        //用户领奖的6位id号码,0表示未中奖
+    
     code1:{type:String,default: ''}, //是否手工已经发奖，1表示发奖，0表示未发奖
     code2:{type:String,default: ''}, //备用字段
     code3:{type:String,default: ''}, //备用字段

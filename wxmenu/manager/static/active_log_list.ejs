@@ -42,8 +42,12 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="activeId" data-bind="value:activeId" required="required">
             </div>
 
-
-
+            <div class="k-edit-label  w-800-l">
+                <label for="supportScore" >支持分数</label>
+            </div>
+            <div data-container-for="supportScore" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="supportScore" data-bind="value:supportScore" required="required">
+            </div>
 
 
 <div style="display:none">
@@ -131,6 +135,7 @@
                                     "fromUserId": { editable: true },
                                     "toUserId": { editable: true}, 
                                     "activeId": { editable: true},
+                                    "supportScore":{editable: true, type:'number'},
 
                                     "code1": { editable: true},
                                     "code2": { editable: true},
@@ -179,6 +184,10 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "activeId",
                             title: "所属活动Id",
+                        },
+                        { 
+                            field: "supportScore",
+                            title: "支持分数",
                         },
                         { 
                             field: "code1",

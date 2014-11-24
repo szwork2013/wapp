@@ -23,6 +23,7 @@
       <th>姓名</th>
       <th>联系电话</th>
       <th>支持数目</th>
+      <th>支持分数</th>
     </tr>
   </thead>
   <tbody id="tbody">
@@ -61,6 +62,7 @@ $(function(){
                          '<td>'+o.userName+'</td>'+
                          '<td>'+o.userMobile+'</td>'+
                          '<td>'+o.supportCount+'</td>'+
+                         '<td>'+(o.supportScore||0)+'</td>'+
                          '</tr>'
                 })
 

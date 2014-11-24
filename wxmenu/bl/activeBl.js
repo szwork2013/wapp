@@ -71,6 +71,7 @@ obj.getRankByActiveId = function(activeId, limit, cb){ //排名
 						tempList.push({
 							userId:oUser.value,
 							supportCount:oActive.supportCount,
+							supportScore:oActive.supportScore,
 							userName:oUser.name,
 							userMobile:oUser.mobile
 						})
@@ -97,15 +98,41 @@ obj.getRankByEname = function(ename, limit, cb){ //排名,根据ename找
 
 	}
 
-obj.getCountByActiveIdAndToUserId = function(activeId, toUserId,cb){ //计算当前用户所有支持数
+obj.getCountByActiveIdAndToUserId = function(activeId, toUserId, cb){ //计算当前用户所有支持数
 	
-	activeLogModel.countAll({
-		toUserId:toUserId,
-		activeId:activeId
-	},function(err,count){
-		cb(err,count)
-	})
+	//先查找活动id
+	activeModel.findOneByObj({
+		_id:activeId,
+		isShow:1
+	},function(err,doc){
+		if(err) return cb(err);
+		if(!doc) return cb('not found active')
+		
+		if(doc.useScore){//如果使用支持分数功能
+			var supportCount = 0
+			activeLogModel.findByObj({
+				toUserId:toUserId,
+				activeId:activeId
+			},function(err,list){
+				list.forEach(function(item){
+					supportCount += (item.supportScore || 0)
+				})
+				cb(err,list.length, supportCount)
 
+			})
+		}
+		else{
+			//如果不使用支持分数
+			activeLogModel.countAll({
+				toUserId:toUserId,
+				activeId:activeId
+			},function(err,count){
+				cb(err, count, 0)
+
+			})
+		}
+
+	})//end activeModel.findOneByObj
 
 }
 
@@ -150,9 +177,9 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 	activeModel.findOneByObj({
 		_id:activeId,
 		isShow:1
-	},function(err,doc){
+	},function(err,actdoc){
 		if(err) return cb(err);
-		if(!doc) return cb('没找到活动')
+		if(!actdoc) return cb('没找到活动')
 
 		var ckTime = checkActiveTime(doc)
 		if(ckTime != true){
@@ -173,28 +200,63 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 				if(err) return cb(err);
 				if(!uobj2) return cb('没找到目标用户')
 
-				obj.getIfHasAdd(activeId, fromOpenId, toUserId, function(err,doc){
-					if(err) return cb(err)
-					if(doc) return cb('不能重复支持')
 
-					//审核通过，添加支持记录
+					obj.getIfHasAdd(activeId, fromOpenId, toUserId, function(err,doc){
+						if(err) return cb(err)		
 
-					activeLogModel.createOneOrUpdate({
-						fromOpenId:fromOpenId,
-						fromUserId:fromUserId,
-						toUserId:toUserId,
-						activeId:activeId,
-					},{
-						fromOpenId:fromOpenId,
-						fromUserId:fromUserId,
-						toUserId:toUserId,
-						activeId:activeId,
-						writeTime:new Date()
-					},function(err,doc){
-						cb(err,doc)
-					})
+						if(actdoc.withDay == 1){//如果可以每天来支持一次的话
+							var todayZero = moment().hour(0).minute(0).second(0)
+							var lastWriteTime = moment(doc.writeTime)
+							//审核通过，添加支持记录
+							if(lastWriteTime>=todayZero){//如果最新一个支持记录在一天以内的
+								return cb('不能重复支持，一天只能一次哦')
+							}
 
-				})//end getIfHasAdd
+						}
+						else{
+							//如果不是每天，则表示从头到位只能支持一次
+							if(doc) return cb('不能重复支持')
+
+						}
+
+						var supportScore = 0
+						if(actdoc.useScore == 1){//如果是以积分的形式支持
+							try{
+								var scoreList = doc.scoreList.split(',')
+							}
+							catch(e){
+								logger.error('actdoc.useScore split error:%s, scorelist: %s', e, scoreList)
+								return cb('获取积分错误')
+							}
+							var pos = Math.floor(Math.random()*scoreList.length)
+							
+							if('undefined' == typeof scoreList[pos]){
+								logger.error('actdoc.useScore get error, pos:%s, scorelist: %s', pos, scoreList)
+								return cb('获取积分失败')
+							}
+							supportScore = scoreList[pos]
+						}
+
+
+						activeLogModel.createOneOrUpdate({
+							fromOpenId:fromOpenId,
+							fromUserId:fromUserId,
+							toUserId:toUserId,
+							activeId:activeId,
+						},{
+							fromOpenId:fromOpenId,
+							fromUserId:fromUserId,
+							toUserId:toUserId,
+							activeId:activeId,
+							supportScore:supportScore,
+							writeTime:new Date()
+						},function(err,doc){
+							cb(err,{
+								supportScore:supportScore
+							})
+						})
+
+					})//end getIfHasAdd
 
 			})//end getUserByUserId
 
@@ -285,7 +347,7 @@ obj.exchangePrize = function(qobj,cb){
 				if(err) return cb(err)
 				
 				//获取支持数
-				obj.getCountByActiveIdAndToUserId(activeId, userId, function(err, userCount){
+				obj.getCountByActiveIdAndToUserId(activeId, userId, function(err, userCount, supportScore){
 						if(err) return cb(err)
 
 						//如果活动不能兑奖
@@ -300,10 +362,20 @@ obj.exchangePrize = function(qobj,cb){
 						if(recordList.length >= activeObj.prizeAmount){
 							return cb('超过兑奖次数')
 						}
-						//如果未达到兑奖奖品的支持数
-						if(userCount < prizeObj.price){
-							return cb('支持数不够，无法兑换本奖品')
+
+						if(activeObj.useScore == 1){//如果使用积分
+							var userScore = supportScore + activeObj.minSupportScore
+							if(userScore < prizeObj.price){
+								return cb('支持不够，无法兑换本奖品')
+							}
 						}
+						else{//不使用积分，常规支持一条算一次
+							//如果未达到兑奖奖品的支持数
+							if(userCount < prizeObj.price){
+								return cb('支持数不够，无法兑换本奖品')
+							}
+						}
+						
 
 						//达成条件去兑换奖品
 						obj.savePrize(qobj, cb)

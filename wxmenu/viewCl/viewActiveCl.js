@@ -23,7 +23,8 @@ obj.activeMiddle = function(req,res,next){
     }
 
     //真实情况需要注释掉
-    //req.session[appEname+'_oauth_openid'] = 'asd'
+    //req.session[appEname+'_oauth_openid'] = 'qwe'
+    //req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
 
 	var openId = req.session[appEname+'_oauth_openid'] 
 	var userid = req.session[appEname+'_userid']; 
@@ -164,7 +165,7 @@ obj.activePage = function(req,res){ //活动页面展示
 			var  hasAdd = false
 			if(hasObj) hasAdd = true
 
-			activeBl.getCountByActiveIdAndToUserId(acitveId, toUserId, function(err,count){
+			activeBl.getCountByActiveIdAndToUserId(acitveId, toUserId, function(err,count,supportScore){
 				if(err) return res.send(500,err)
 				var tempObj = {
 						'activeObj':activeObj,
@@ -178,6 +179,7 @@ obj.activePage = function(req,res){ //活动页面展示
 						'fromOpenId':openId,    //来源用户的openid
 						'activeId':acitveId,   //活动id
 						'supportCount':count,  //目前这个用户，这个互动支持的数量
+						'supportScore':supportScore||0, //支持的分数
 						'hasAdd':hasAdd, 	//是否已经支持过
 						'prizeList':[],    //奖品数组
 						'myPrizeList':[]
