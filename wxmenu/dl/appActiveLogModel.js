@@ -25,6 +25,10 @@ objSchema.statics.findOneByObj = function(obj,cb){
       return this.findOne(obj, cb);
 }
 
+objSchema.statics.insertOneByObj = function (obj,cb) {
+  var obj = obj || {};
+  return this.create(obj,cb)
+}
 
 objSchema.statics.findAll = function (obj,skip,pagesize,cb) { 
        return this.find(obj)

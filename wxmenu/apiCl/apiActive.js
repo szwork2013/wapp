@@ -31,6 +31,7 @@ obj.addSupport = function(req,res){
 
 	activeBl.addSupport(activeId, fromOpenId, fromUserId, toUserId, function(err,doc){
 		if(err) return res.json({error:1,data:err})
+    
 		res.json({error:0,data:doc})
 	})
 

@@ -112,7 +112,7 @@
       </div>
 
       <div class="modal-body" >
-        	<h5 class="modal_suc_box ft16">您支持成功，谢谢参与！</h5>
+        	<h5 class="modal_suc_box ft16">您点赞成功，谢谢参与！</h5>
       </div>
     </div>
   </div>
@@ -256,7 +256,7 @@ $(function(){
 			tmpstr += '<div class="col-xs-6 col-sm-6 txt_c voteBlk yh">'+
 					  '<img src="'+listObj.pictureThumb+'" class="votePic"/>'+
 					  '<span class="voteMyText ft15">'+
-					  listObj.title+'<br/>已支持 <font itemid="'+listObj._id+'">'+listObj.myNumber+'</font> 票</span>'+
+					  listObj.title+'<br/>已点赞 <font itemid="'+listObj._id+'">'+listObj.myNumber+'</font> 票</span>'+
 					  voteStr+'</div>'
 
 		})//end list.forEach
@@ -446,10 +446,10 @@ $(function(){
 				'<span class="fui-heart"></span> 点赞</a>'
 		}
 		else if(voteType == 2){
-			var voteStr = '<span class="group_vote group_vote_has yh">已经支持过啦</span>'
+			var voteStr = '<span class="group_vote group_vote_has yh">已经点赞过啦</span>'
 		}
 		else if(voteType == 3){
-			var voteStr = '<span class="group_vote group_vote_has yh">转发可再次支持哦</span>'
+			var voteStr = '<span class="group_vote group_vote_has yh">转发可再次点赞哦</span>'
 		}
 		return voteStr
 	}
@@ -464,9 +464,21 @@ $(function(){
 			if(d.error == 1) return alert(d.data);
 			updateVoteInfo(groupid, function(d2){
 				var itemList = d.data;
-				window.itemList = itemList;
+				
 				var todayRecordList = window.recordList
 				
+				itemList = itemList.sort(function(a,b){
+					var momenta = moment(a.desc2)
+					var momentb = moment(b.desc2)
+					if(momenta>=momentb){
+						return 1
+					}
+					else{
+						return -1
+					}
+				})
+
+				window.itemList = itemList;
 
 				var blk_s = ''
 				itemList.forEach(function(itemObj,pos){
@@ -481,15 +493,15 @@ $(function(){
 						//表示上升
 						if(itemObj.lastdayVoteOrder - numberPos >0){
 							posStr = '<span class="group_rank group_up yh">'+
-	    								 '<span class="fui-triangle-up"></span>'+
-	    								 '今日上升 '+(itemObj.lastdayVoteOrder - numberPos)+' 位</span>'
+	    								 '<span class="fui-triangle-up"></span>'+''
+	    								 //'今日上升 '+(itemObj.lastdayVoteOrder - numberPos)+' 位</span>'
 
 						}
 						//表示下降
 						else if(numberPos - itemObj.lastdayVoteOrder > 0){
 							posStr = '<span class="group_rank group_down yh">'+
-	    								 '<span class="fui-triangle-down"></span>'+
-	    								 '今日下降 '+(numberPos - itemObj.lastdayVoteOrder)+' 位</span>'
+	    								 '<span class="fui-triangle-down"></span>'+''
+	    								 //'今日下降 '+(numberPos - itemObj.lastdayVoteOrder)+' 位</span>'
 
 						}
 					}
@@ -500,7 +512,7 @@ $(function(){
 					'<a name="group_item_more" href="javascript:;" class="btn btn-inverse yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+*/
 	    			'<div class="group_info yh">'+
 	    			'<span class="greent">No.'+numberPos+' '+itemObj.title+'</span><b class="group_gap"></b>'+
-	    			'<span class="greent">支持数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</span><br/>'+
+	    			'<span class="greent">点赞数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</span><br/>'+
 	    			'部门：'+itemObj.code2+'<br/>'+
 	    			'职务：'+itemObj.code3+
 	    			'</div>'+voteStr+'</div>'

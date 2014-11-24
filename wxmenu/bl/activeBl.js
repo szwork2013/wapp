@@ -181,7 +181,7 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 		if(err) return cb(err);
 		if(!actdoc) return cb('没找到活动')
 
-		var ckTime = checkActiveTime(doc)
+		var ckTime = checkActiveTime(actdoc)
 		if(ckTime != true){
 			return cb(ckTime)
 		}
@@ -199,62 +199,81 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 			userBl.getUserByUserId(toUserId,function(err, uobj2){
 				if(err) return cb(err);
 				if(!uobj2) return cb('没找到目标用户')
-
-
+	
 					obj.getIfHasAdd(activeId, fromOpenId, toUserId, function(err,doc){
-						if(err) return cb(err)		
+						if(err) return cb(err)
 
-						if(actdoc.withDay == 1){//如果可以每天来支持一次的话
-							var todayZero = moment().hour(0).minute(0).second(0)
-							var lastWriteTime = moment(doc.writeTime)
-							//审核通过，添加支持记录
-							if(lastWriteTime>=todayZero){//如果最新一个支持记录在一天以内的
-								return cb('不能重复支持，一天只能一次哦')
+						if(doc){
+							if(actdoc.withDay == 1){//如果可以每天来支持一次的话
+								var todayZero = moment().hour(0).minute(0).second(0)
+								var lastWriteTime = moment(doc.writeTime)
+								//审核通过，添加支持记录
+								if(lastWriteTime>=todayZero){//如果最新一个支持记录在一天以内的
+									return cb('不能重复支持，一天只能一次哦')
+								}
+			
 							}
-
+							else{
+								//如果不是每天，则表示从头到位只能支持一次
+								 return cb('不能重复支持')
+							}
 						}
-						else{
-							//如果不是每天，则表示从头到位只能支持一次
-							if(doc) return cb('不能重复支持')
-
-						}
-
+						
 						var supportScore = 0
 						if(actdoc.useScore == 1){//如果是以积分的形式支持
 							try{
-								var scoreList = doc.scoreList.split(',')
+								var scoreList = actdoc.scoreList.split(',')
 							}
 							catch(e){
 								logger.error('actdoc.useScore split error:%s, scorelist: %s', e, scoreList)
 								return cb('获取积分错误')
 							}
+				
 							var pos = Math.floor(Math.random()*scoreList.length)
 							
 							if('undefined' == typeof scoreList[pos]){
 								logger.error('actdoc.useScore get error, pos:%s, scorelist: %s', pos, scoreList)
 								return cb('获取积分失败')
 							}
+			
 							supportScore = scoreList[pos]
 						}
 
 
-						activeLogModel.createOneOrUpdate({
-							fromOpenId:fromOpenId,
-							fromUserId:fromUserId,
-							toUserId:toUserId,
-							activeId:activeId,
-						},{
-							fromOpenId:fromOpenId,
-							fromUserId:fromUserId,
-							toUserId:toUserId,
-							activeId:activeId,
-							supportScore:supportScore,
-							writeTime:new Date()
-						},function(err,doc){
-							cb(err,{
-								supportScore:supportScore
+						if(actdoc.withDay == 1){
+							activeLogModel.insertOneByObj({
+								fromOpenId:fromOpenId,
+								fromUserId:fromUserId,
+								toUserId:toUserId,
+								activeId:activeId,
+								supportScore:supportScore,
+								writeTime:new Date()
+							},function(err,doc){
+								cb(err,{
+									supportScore:supportScore
+								})
 							})
-						})
+						}
+						else{
+							activeLogModel.createOneOrUpdate({
+								fromOpenId:fromOpenId,
+								fromUserId:fromUserId,
+								toUserId:toUserId,
+								activeId:activeId,
+							},{
+								fromOpenId:fromOpenId,
+								fromUserId:fromUserId,
+								toUserId:toUserId,
+								activeId:activeId,
+								supportScore:supportScore,
+								writeTime:new Date()
+							},function(err,doc){
+								cb(err,{
+									supportScore:supportScore
+								})
+							})			
+						}
+						//end if else
 
 					})//end getIfHasAdd
 
