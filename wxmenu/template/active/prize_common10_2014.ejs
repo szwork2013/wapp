@@ -54,7 +54,9 @@ padding-left: 2px;
                     他/她已经集了
                 <%}%>
                 <span class="v-share-count" id="supportCount"><%= supportCount %></span>
-                个分享
+                个分享<br>
+				当前褚橙价格为 <span class="v-share-count" id="supportCount"><%= 86-supportCount %></span>元
+				
                 </div>
 
                 <div class="v-share-icon">
@@ -63,7 +65,7 @@ padding-left: 2px;
                         loopNumer修改风车总个数
                         -->
                         <% 
-                            var loopNumer = 30;
+                            var loopNumer = 86;
                             for(var i=0; i<loopNumer; i++){
                          %>
                             <% if(i<supportCount) {%>
@@ -82,7 +84,7 @@ padding-left: 2px;
                     <span class="visitor_over_time" id="last_minute"></span>分钟 
 
                 </div>
-                <div class="v-prize-get clearfix">
+            <!--   <div class="v-prize-get clearfix">
                     <span class="v-prize-get-tip">奖品列表：
 
                     </span>
@@ -114,17 +116,19 @@ padding-left: 2px;
                             (已兑)
                         <% } %>
                     </li>
-                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*3 %>份</li>
+                   <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*3 %>份</li>  -->
                 </ul>
                 <%
                     })
                 %>           
             </div>
            
-		   
+		  <!-- 
 		    <button id="startExchange" class="share_timeline btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
-            </button>
+            </button>-->
+			
+			
         </div>
 
 
