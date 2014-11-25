@@ -37,15 +37,17 @@
 	display:inline-block;
 }
 .group_blk .group_info{
-	left: 0;
 	width: 350px;
 }
 .group_blk .group_vote{
-	left: 0;
+	left: 40px;
 }
 .group_rank{
 	display: inline-block;
 	padding-left: 15px;
+}
+.group_blk .group_info{
+	height: 140px;
 }
 </STYLE>
 <%- newrelic.getBrowserTimingHeader() %>
@@ -508,8 +510,8 @@ $(function(){
 					
 					//拼接模版
 					blk_s += '<div class="group_blk">'+
-					/*'<img itemid="'+itemid+'" name="group_item_more" src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
-					'<a name="group_item_more" href="javascript:;" class="btn btn-inverse yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+*/
+					'<img itemid="'+itemid+'" name="group_item_more" src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
+					/*'<a name="group_item_more" href="javascript:;" class="btn btn-inverse yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+*/
 	    			'<div class="group_info yh">'+
 	    			'<span class="greent">No.'+numberPos+' '+itemObj.title+'</span><b class="group_gap"></b>'+
 	    			'<span class="greent">点赞数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</span><br/>'+
