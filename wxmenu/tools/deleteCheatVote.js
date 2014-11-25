@@ -38,8 +38,8 @@ obj.delCheck = function(voteObj){
 
 	var voteObj = voteObj;
 	var intervalHour = voteObj.interval*3600*0
-	var yestodyStart = new Date('2014/11/25 00:00:00') //(moment().hour(0).minute(0).second(0).unix() - intervalHour)*1000;
-	var yestodyEnd = new Date('2014/11/25 23:59:59')//(moment().hour(23).minute(59).second(59).unix() - intervalHour)*1000;
+	var yestodyStart = new Date('2014/11/24 00:00:00') //(moment().hour(0).minute(0).second(0).unix() - intervalHour)*1000;
+	var yestodyEnd = new Date('2014/11/24 23:59:59')//(moment().hour(23).minute(59).second(59).unix() - intervalHour)*1000;
 
 	var statTime = new Date(yestodyStart)
 	var endTime = new Date(yestodyEnd)
@@ -47,7 +47,7 @@ obj.delCheck = function(voteObj){
 	voteRecordModel.findByObj({
 		voteId:voteObj._id.toString(),
 		//只查此人
-		itemId:'546367be4819e3406f6db5e0',
+		itemId:'546367bd4819e3406f6db5d4',
 		writeTime:{'$gte': statTime, '$lt':endTime}
 	}, function(err, list){
 		if(err) return console.log(err)
