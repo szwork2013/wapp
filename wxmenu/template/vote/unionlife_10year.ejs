@@ -38,7 +38,8 @@
 }
 .group_blk .group_info{
 	left: 120px !important;
-	width: 200px !important;
+	width: 185px !important;
+	line-height: 28px;
 }
 .group_blk .group_vote{
 	left: 20px !important;
@@ -519,7 +520,7 @@ $(function(){
 					'<img itemid="'+itemid+'" name="group_item_more" src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
 					/*'<a name="group_item_more" href="javascript:;" class="btn btn-inverse yh btn-sm group_more" itemid="'+itemid+'">详细资料</a>'+*/
 	    			'<div class="group_info yh">'+
-	    			'<span class="greent">No.'+numberPos+' '+itemObj.title+'</span><b class="group_gap"></b>'+
+	    			'<span class="greent">No.'+numberPos+' '+itemObj.title+'</span><br/>'+
 	    			'<span class="greent">点赞数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</span><br/>'+
 	    			bumen+
 	    			'职务：'+itemObj.code3+
