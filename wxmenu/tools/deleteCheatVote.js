@@ -38,8 +38,8 @@ obj.delCheck = function(voteObj){
 
 	var voteObj = voteObj;
 	var intervalHour = voteObj.interval*3600*0
-	var yestodyStart = new Date('2014/11/24 00:00:00') //(moment().hour(0).minute(0).second(0).unix() - intervalHour)*1000;
-	var yestodyEnd = new Date('2014/11/24 23:59:59')//(moment().hour(23).minute(59).second(59).unix() - intervalHour)*1000;
+	var yestodyStart = new Date('2014/11/23 00:00:00') //(moment().hour(0).minute(0).second(0).unix() - intervalHour)*1000;
+	var yestodyEnd = new Date('2014/11/23 23:59:59')//(moment().hour(23).minute(59).second(59).unix() - intervalHour)*1000;
 
 	var statTime = new Date(yestodyStart)
 	var endTime = new Date(yestodyEnd)
