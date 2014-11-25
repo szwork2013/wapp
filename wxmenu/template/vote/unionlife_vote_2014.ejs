@@ -28,6 +28,14 @@
 	padding-top: 10px;
 	color: #999;
 }
+.ty_banner{
+	display: none;
+}
+.ty_banner img{
+	display: block;
+	margin: 10px auto;
+	max-width: 100%;
+}
 </STYLE>
 <%- newrelic.getBrowserTimingHeader() %>
 
@@ -50,6 +58,11 @@
 	    </button>
 	</div>
 		<%- voteObj.descShort %>
+
+	<a href="/active/unionlife?ename=unionlife_10year" class="ty_banner">
+		<img src="http://piccvote.qiniudn.com/banner_ten_year2.jpg" />
+	</a>
+
 	<div class="rule-title clear">
       <h5>请选择地区：</h5>
         <button name="shake_btn_main" class="btn btn-primary yh shake_btn">

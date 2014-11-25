@@ -88,7 +88,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h6 class="modal-title">投票人信息</h6>
+        <h6 class="modal-title">入司十年人物榜信息</h6>
       </div>
 
       <div class="modal-body" id="modal_item_box">
@@ -509,6 +509,8 @@ $(function(){
 						}
 					}
 					
+
+				var bumen = itemObj.code2 == '董事长'? '' : '部门：'+itemObj.code2+'<br/>'
 					//拼接模版
 					blk_s += '<div class="group_blk">'+
 					'<img itemid="'+itemid+'" name="group_item_more" src="'+itemObj.pictureThumb+'" class="group_blk_face" />'+
@@ -516,7 +518,7 @@ $(function(){
 	    			'<div class="group_info yh">'+
 	    			'<span class="greent">No.'+numberPos+' '+itemObj.title+'</span><b class="group_gap"></b>'+
 	    			'<span class="greent">点赞数：<font itemid="'+itemid+'">'+itemObj.totalNumber+'</font>'+posStr+'</span><br/>'+
-	    			'部门：'+itemObj.code2+'<br/>'+
+	    			bumen+
 	    			'职务：'+itemObj.code3+
 	    			'</div>'+voteStr+'</div>'
 
@@ -550,19 +552,23 @@ $(function(){
 		var voteStr = getVoteType(itemObj,true)
 		var sex = itemObj.sex == 0 ? '女' : '男'
 
+		var bumeng = itemObj.code2 == '董事长' ? '' :'<div class="ft18"><font class="info_title">部门：</font>'+itemObj.code2+'</div>'
+
 		var modal_str = '<div class="modal_face_line">'+
 						'<img src="'+itemObj.pictureThumb+'" class="modal_face"/>'+
 						'<span class="modal_item_info yh">'+
-        				'No.'+pos+' '+itemObj.title+'<br/><font class="info_title">票数：</font><font itemid="'+itemid+'">'+itemObj.totalNumber+'</font></span>'+voteStr+
+        				'No.'+pos+' '+itemObj.title+'<br/><font class="info_title">点赞数量：</font><font itemid="'+itemid+'">'+itemObj.totalNumber+'</font></span>'+voteStr+
         				'</div><div  class="yh">'+
-		        		'<div class="ft18"><font class="info_title">部门：</font>'+itemObj.code2+'</div>'+
+        				bumeng+
 		        		'<div class="ft18"><font class="info_title">职务：</font>'+itemObj.code3+'</div>'+
 /*		        		'<div class="col-xs-6 col-sm-6 ft18">性别：'+sex+'</div>'+
 		        		'<div class="col-xs-6 col-sm-6 ft18">工号：'+itemObj.number+'</div>'+
 */
 		        		'</div>'+
         				'<div class="desc_wrap yh ft18">'+
-			        	'<h6 class="ft18"><font class="info_title">简介：</font></h6>'+itemObj.desc+'<h6 class="ft18"><font class="info_title">优秀事迹：</font></h6>'+itemObj.desc2+'</div>'
+			        	//'<h6 class="ft18"><font class="info_title">简介：</font></h6>'+itemObj.desc+
+			        	'<h6 class="ft18"><font class="info_title">入司时间：</font></h6>'+
+			        	(itemObj.code2 == '董事长' ? '2014/8/25' : itemObj.desc2)+'</div>'
 
 		$('#modal_item_box').html(modal_str)
 		$('#item_info_modal').modal()
