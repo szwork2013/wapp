@@ -54,8 +54,8 @@ padding-left: 2px;
                     他/她已经集了
                 <%}%>
                 <span class="v-share-count" id="supportCount"><%= supportCount %></span>
-                个分享<br>
-				当前褚橙价格为 <span class="v-share-count" id="supportCount1"><%= 86-supportCount*5 %></span>元
+                个分享<br><% var a=86-supportCount*5;if(a<0){a=0;} %>
+				当前褚橙价格为 <span class="v-share-count" id="supportCount1"><%= a %></span>元
 				
                 </div>
 
