@@ -55,7 +55,7 @@ padding-left: 2px;
                 <%}%>
                 <span class="v-share-count" id="supportCount"><%= supportCount %></span>
                 个分享<br>
-				当前褚橙价格为 <span class="v-share-count" id="supportCount1"><%= 86-supportCount %></span>元
+				当前褚橙价格为 <span class="v-share-count" id="supportCount1"><%= 86-supportCount*5 %></span>元
 				
                 </div>
 
@@ -65,7 +65,7 @@ padding-left: 2px;
                         loopNumer修改风车总个数
                         -->
                         <% 
-                            var loopNumer = 86;
+                            var loopNumer = 25;
                             for(var i=0; i<loopNumer; i++){
                          %>
                             <% if(i<supportCount) {%>
