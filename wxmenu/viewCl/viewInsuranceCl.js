@@ -108,8 +108,6 @@ obj.page = function(req,res){ //用户认证绑定
 	//req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
 	
 
-
-	var ename = req.query.ename;
 	var appobj = utils.getAppEname(req.originalUrl)
 	if(appobj.error){
 		return res.send(appobj)
@@ -131,7 +129,6 @@ obj.page = function(req,res){ //用户认证绑定
 				return res.send(404)
 			}
 			res.render('game/insurance.ejs', {
-							ename:ename,
 							appEname:appEname,
 							appId:appObj._id,
 							userid:userid,
