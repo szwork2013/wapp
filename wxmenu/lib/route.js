@@ -8,6 +8,7 @@ var activeCl = require('../viewCl/viewActiveCl.js')
 var userCl = require('../viewCl/viewUserCl.js')
 var lotteryCl = require('../viewCl/viewLotteryCl.js')
 var voteCl = require('../viewCl/viewVoteCl.js')
+var insuranceCl = require('../viewCl/viewInsuranceCl.js')
 
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
@@ -274,6 +275,9 @@ var addroute = function(app){
 		app.get('/vote/:appename/getvoteinfo2', apiVote.getVoteInfo2) //给web投票用的获取投票信息
 
 
+		//game insurance
+		app.get('/insurance/:appename', getUserMid, insuranceCl.page)
+		app.get('/insurance/:appename/getbonus', insuranceCl.getBonus)
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];
