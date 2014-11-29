@@ -171,6 +171,10 @@ obj.getBonus = function(req,res){
 		return res.send({error:1, data:'资金分配有误'})
 	}
 
+	if( age>55 && alloc == 3){
+		return res.send({error:1, data:result||'10年缴费年限，年龄不能超过55岁'}) 
+	}
+
 	var result = obj.calBonus(cash, sexList[sex], age, allocList[alloc])
 	if(typeof result != "object"){
 		return res.send({error:1, data:result||'计算红利失败'}) 
