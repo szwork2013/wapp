@@ -300,11 +300,15 @@ var wxFunction = function(app, applist){
             // MediaId: 'media_id',
             // MsgId: '5837397301622104395' }
             
+
+            //修改这里可以增加抽奖码规则
+            /*
             if( appEname =='szlonghu'){
               wxpic_20140921_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
                   res.reply(util.format('您的抽奖码为：%d', guid));
               })
             }
+            */
 
 
           })
