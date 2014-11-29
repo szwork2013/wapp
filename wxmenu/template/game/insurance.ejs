@@ -221,9 +221,12 @@ var forwardingTitle ='合众人寿十周年羊年活动'
 var forwardingDesc ='合众人寿十周年羊年理财游戏活动'
 var forwardingCallback = function(){
 	$.cookie('gameIns', '1')
-	setTimeout(function(){
-		location.href = location.href
-	}, 1000)
+
+	if(window.clickReplay){
+		setTimeout(function(){
+			location.href = location.href
+		}, 1000)
+	}
 }
 
 
@@ -388,6 +391,9 @@ var resultDiv = function(score){
 	})
 }
 
+
+window.clickReplay = false
+
 var bindClickEvent = function(){
 
 	$('#startLicai').click(function(){
@@ -407,6 +413,7 @@ var bindClickEvent = function(){
 	$('#rePlayBtn').click(function(){
 		//$('#successBox, #showBonusBox, #selectBox').hide()
 		//$('#item_success_modal').modal('hide')
+		window.clickReplay = true
 		if($.cookie('gameIns') == '1'){
 			location.href = location.href
 		}
