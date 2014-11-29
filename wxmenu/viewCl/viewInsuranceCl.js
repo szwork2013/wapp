@@ -106,7 +106,7 @@ obj.page = function(req,res){ //用户认证绑定
 	var wxuobj = req.wxuobj;
 	
 	//req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
-	var userid = req.session[appEname+'_userid'];
+	
 
 
 	var ename = req.query.ename;
@@ -115,6 +115,7 @@ obj.page = function(req,res){ //用户认证绑定
 		return res.send(appobj)
 	}
 	var appEname = appobj.data;
+	var userid = req.session[appEname+'_userid'];
 	if(!userid){
 		return res.send('用户身份丢失，请重新进入')
 	}
