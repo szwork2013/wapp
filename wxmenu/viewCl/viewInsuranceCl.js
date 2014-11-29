@@ -105,7 +105,7 @@ obj.page = function(req,res){ //用户认证绑定
 
 	var wxuobj = req.wxuobj;
 	
-	req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+	//req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
 	var userid = req.session[appEname+'_userid'];
 
 
@@ -163,7 +163,7 @@ obj.getBonus = function(req,res){
 	if(!cash || cash <=0 || cash >= 1000000){
 		return res.send({error:1, data:'金额输入有误'})
 	}
-	if(!age || age < 0 || age > 60 ){
+	if(typeof age != 'number' || age < 0 || age > 60 ){
 		return res.send({error:1, data:'年龄输入有误'})
 	}
 	if(!sex || !sexList[sex]){
