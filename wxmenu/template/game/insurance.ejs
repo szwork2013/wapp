@@ -27,8 +27,6 @@
 				line-height: 24px;
 			}
 			.startLicai{
-				display: block;
-				margin: 20px auto;
 				padding: 10px 50px;
 
 			}
@@ -66,6 +64,18 @@
 			.btn-toolbar a{
 				padding: 3px;
 			}
+			#selectBox .input-group-addon-left{
+				width: 80px;
+				display: block;
+				text-align: right;
+			}
+			.getBonusBox{
+				padding: 10px;
+				text-align: center;
+			}
+			.form-control{
+				margin-left: -2px !important;
+			}
 		</style>
 	</head>
 	<body>
@@ -98,13 +108,15 @@
         	<h6 class="modal_suc_box ft16">您抢到了<font id="score_font"></font>万的金币，
         		击败了全国<font id="rate_font"></font>的用户，
         		被封为<font id="title_font"></font></h6>
+        <div class="form-group getBonusBox">
         	<button id="startLicai" type="button" class="startLicai btn btn-danger btn-lg">开始理财</button>
+        </div>
       </div>
 
       <div class="modal-body" id="selectBox" style="display:none">
         		<div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon" style="padding-left:2em;">投保金额</div>
+				      <div class="input-group-addon"><span class="input-group-addon-left">投保金额</span></div>
 				      <input id="cashInput" class="form-control jineinput" type="number" placeholder="投保金额（万元）">
 				      <div class="jineDanwei">万元</div>
 				    </div>
@@ -112,7 +124,7 @@
 
 				<div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon">投保人性别</div>
+				      <div class="input-group-addon"><span class="input-group-addon-left">投保人性别</span></div>
 				      <select class="form-control jineinput" id="sexSelect">
 				      		<option value="1" selected="selected">男</option>
 				      		<option value="2">女</option>
@@ -122,7 +134,7 @@
 
 				<div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon">投保人年龄</div>
+				      <div class="input-group-addon"><span class="input-group-addon-left">投保人年龄</span></div>
 				      <select class="form-control jineinput" id="ageSelect">
 		
 				      </select>
@@ -131,7 +143,7 @@
 				
 				<div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon" style="padding-left:2em;">缴费年限</div>
+				      <div class="input-group-addon"><span class="input-group-addon-left">缴费年限</span></div>
 				      <select class="form-control" id="allocSelect">
 				      		<option value="1" selected="selected">1:2（缴费年限3年）</option>
 				      		<option value="2">1:4（缴费年限5年）</option>
@@ -139,7 +151,7 @@
 				      </select>
 				    </div>
 				</div>
-				<div class="form-group">
+				<div class="form-group getBonusBox">
 					<button id="getBonus" type="button" class="startLicai btn btn-danger btn-lg">查看收益</button>
 				</div>
 
