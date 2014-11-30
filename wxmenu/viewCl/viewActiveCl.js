@@ -24,7 +24,7 @@ obj.activeMiddle = function(req,res,next){
 
     //真实情况需要注释掉
     //req.session[appEname+'_oauth_openid'] = 'qwe'
-    //req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+    //req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
 
 	var openId = req.session[appEname+'_oauth_openid'] 
 	var userid = req.session[appEname+'_userid']; 
@@ -249,6 +249,7 @@ obj.activePage = function(req,res){ //活动页面展示
 							tempObj.rankList = rankList
 							tempObj.prizeList = tempPrizeList
 							tempObj.myPrizeList = infoObj.myPrizeList
+							tempObj.now = Date.now()
 							return res.render('active/'+templateName+'.ejs', tempObj)
 						})//end activeBl.getRankByEname				
 						

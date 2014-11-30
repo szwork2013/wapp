@@ -78,6 +78,9 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 	var userid = req.param('wxuserid');
 	var appid =  req.param('wxappid');
 
+	//去掉缓存
+	res.set({'ETag':Date.now().toString()})
+
 	var genReqUserObj = function(uobj){
 		if(!uobj){
 				return res.send(404, { error: 1,data:'未找到用户' })
@@ -246,6 +249,7 @@ var addroute = function(app){
 		//active活动页面，需要oauth支持
 		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
 		//app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
+
 		app.get('/votepage/:appename/:voteename', activeCl.voteWebPage)
 
 		app.post('/active_data/:appename/addsupport', apiActive.addSupport)

@@ -38,8 +38,44 @@ obj.getIfHasAdd = function(activeId, fromOpenid, toUserId, cb){ //根据openid�
 		fromOpenId:fromOpenid,
 		toUserId:toUserId,
 		activeId:activeId
-	},function(err,doc){
-		cb(err,doc)
+	},function(err,docRecord){
+		if(err) return cb(err);
+
+		if(!docRecord){
+			return cb(null, docRecord)
+		}
+
+		activeModel.findOneByObj({
+			_id:activeId,
+			isShow:1
+		},function(err,docActive){
+
+			if(err) return cb(err);
+
+
+			if(!docActive) return cb('not found active')
+			//如果是正常的
+			if(docActive.withDay == 0){
+				cb(null, docRecord);
+			}
+			//每天来一发的
+			else{
+				
+				//console.log(docRecord)
+				var recordWriteTime = moment(docRecord.writeTime)
+				var todayZero = moment().hour(0).minute(0).second(0)
+				
+
+				//如果今天投过票了
+				if(recordWriteTime >= todayZero){
+					cb(null, docRecord);
+				}
+				else{
+					cb(null, null);
+				}
+			}
+		})
+			
 	})
 
 }

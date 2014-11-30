@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="telephone=no" name="format-detection"></meta>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"></meta>
+<meta content="no-cache" http-equiv="Pragma"></meta>
+<meta content="no-cache" http-equiv="Cache-Control"></meta>
+<meta content="0" http-equiv="Expires"></meta>
+<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/active_prize_2014/css/active.css"></link>
+<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
+
+<script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+
+
+<link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
+
+
+<%- newrelic.getBrowserTimingHeader() %>
+<title>
+      [集分享]搜房15年最大的改变，千元红包大派送！
+</title>
+
+<style type="text/css">
+    .container{
+        background:#FFFFFF;
+        padding-bottom: 20px;
+    }
+	.container {
+width: 100%;
+padding-right: 2px;
+padding-left: 2px;
+}
+
+
+.button1 {
+display: inline-block;
+letter-spacing: 0;
+font-size: 20px;
+padding: 5px 0 0 45px;
+height: 35px;
+
+margin: 0;
+font-weight: bold;
+}
+
+#round {padding:10px; width:100%; height:50px;border: 1px solid #dedede;-moz-border-radius: 15px; 
+-webkit-border-radius: 15px; 
+border-radius:5px;
+ }
+
+.lottery_again {
+position: absolute;
+display: block;
+font-size:20px;
+background-color:#ffe400;
+padding:10px; width:99%; height:50px;border: 1px solid #dedede;-moz-border-radius: 15px; 
+-webkit-border-radius: 15px; 
+border-radius:5px;
+}
+a {
+color: #000;
+text-decoration: none;
+}
+.share_timeline1 {
+border-radius: 4px;
+border: 0;
+height: 50px;
+color: #000000;
+text-align: center;
+background-color:#ffe400;
+}
+</style>
+
+
+
+</head>
+    <body>
+        <div class="container">
+         <!--   <h3 id="title">拼人品，赢褚橙</h3>-->
+           
+          <img src="<%= activeObj.activeObj.picture%>" width=100%>
+		   <br/>  <br/>
+<%
+    var reduceVal = 0
+    if(supportScore < 86){
+        reduceVal = (86-supportScore).toFixed(1)
+    }
+
+%>
+
+	<div id="round"><center>
+         <% if(isMyPage) { %>
+            你已经减少至
+        <% }else{ %>
+            他/她已经减少至
+        <%}%>
+        <b style="color:#c00; font-size:20px;"><%= reduceVal %></b> 元获得褚橙</center></div> 
+
+
+<br>
+		   
+		   
+            
+			<button  class="share_timeline1 btn-block" id="goSupport">
+                <span class="button1" >点击帮助他/她免费获得褚橙</span>
+            </button>
+			<br>
+			
+			<button  class="share_timeline1 btn-block">
+               <a href="http://www.baidu.com"> <span class="button1" >我也要抢褚橙</span></a>
+            </button>
+			<br> 
+			
+
+            <button  class="share_timeline1 btn-block" id="lottery_rule">
+               <a href="#"> <span class="button1" >活动规则</span></a>
+            </button>
+<br> <br> 
+         <!--   <button id="btnShare" class="share_timeline btn-block" onclick="mask()">
+                <span class="share_timeline_button" >点击分享到朋友圈</span>
+            </button>-->
+
+            <div id="divVisitor" class="visitor">
+<!--                 <div class="v-share">
+                <% if(isMyPage) { %>
+                    你已经集了
+                <% }else{ %>
+                    他/她已经集了
+                <%}%>
+                <%  
+                    var supportCount2 = supportScore
+                    if(supportCount2 >= 86){
+                        supportCount2 = 86
+                    }
+                %>
+                <span class="v-share-count" id="supportCount"><%= supportCount2 %></span>
+                个分享
+                </div> -->
+
+                 <!-- <div class="v-share-icon">
+                    <div class="v-share-icon-container">
+                        
+                        loopNumer修改风车总个数
+                       
+                        <% 
+                            var loopNumer = 86;
+                            for(var i=0; i<loopNumer; i++){
+                         %>
+                            <% if(i<supportCount2) {%>
+                                <span class="color"></span>
+                            <% }else{ %>
+                                <span class="gray"></span>
+                            <%}%>
+
+                         <%}%>
+                        
+                   </div>
+                </div> -->
+
+
+                <div class="v-share-surplus">活动剩余时间：
+                    <span class="visitor_over_time" id="last_day"></span>天 
+                    <span class="visitor_over_time" id="last_hour"></span>小时 
+                    <span class="visitor_over_time" id="last_minute"></span>分钟 
+
+                </div>
+                <div class="v-prize-get clearfix">
+                    <span class="v-prize-get-tip">奖品列表：
+
+                    </span>
+                </div>
+				
+
+                <% 
+                    prizeList.forEach(function(priceObj, i){ 
+                %>
+                    <% if(priceObj.hasSelect) {%>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix selected">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else if(!priceObj.canSelect || myPrizeList.length >= activeObj.activeObj.prizeAmount){ %>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-disabled clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else { %>
+                          <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } %>
+                    <li class="v-prize-item-name">
+                        <%= priceObj.name %>
+                        <% if(priceObj.hasSelect) {%>
+                            (已兑)
+                        <% } %>
+                    </li>
+                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*3 %>份</li>
+                </ul>
+                <%
+                    })
+                %>           
+            </div>
+           
+		   
+		    <button id="startExchange" class="share_timeline btn-block">
+                <span class="duijiang_button" >选择奖品，确定兑奖</span>
+            </button>
+        </div>
+
+
+
+
+
+<!-- mask div -->
+<div id="mask" class="mask_box" onclick="mask();">
+    <img src="http://wzhfile.qiniudn.com/guide5.png"/>
+</div> 
+<!-- mask div -->
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:320px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">活动规则</h4>
+      </div>
+      <div class="modal-body"> 
+            <%- activeObj.activeObj.intro %>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
+        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，方便我们把奖品发放给您</h4>
+      </div>
+    <form class="bs-example bs-example-form" role="form">
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="" maxlength="20">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" style="padding:0 10px;">
+            <span class="glyphicon glyphicon-phone" ></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <button type="button" class="btn btn-primary" id="save_change">保存</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+
+var appId = '<%= appId %>'
+var appEname = '<%= appEname %>'
+var isMyPage = <%= isMyPage %>;
+var toUserId = '<%= toUserId %>'
+var fromUserId = '<%= fromUserId %>'
+var activeId = '<%= activeId %>'
+var supportCount = <%= supportCount %>
+var supportScore = <%= supportScore %>
+var hasAdd = <%= hasAdd %>
+var prizeList = <%- JSON.stringify(prizeList) %>
+var myPrizeList = <%- JSON.stringify(myPrizeList) %>
+var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
+var endTime = moment(new Date(activeObj.endTime))
+var now = <%= now %>
+
+
+
+<% if (isMyPage){ %>
+    var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
+<%} else{ %>
+     var forwardingUrl ='http://www.baidu.com'
+<% } %>
+    
+
+var forwardingImg = 'http://bcs.duapp.com/xytimg/jifenxiang%2Ffang3.jpg'
+var forwardingTitle ='[集分享]搜房15年最大的改变，千元红包大派送'
+var forwardingDesc ='千元红包大派送'
+
+var forwardingCallback = function(){
+    if(window.hasAdd) return false;
+    //发送请求支持  
+}
+
+//遮照功能
+var maskObj = $('#mask');
+var mask = function () {        
+        if(maskObj.is(':visible')){
+            maskObj.hide();
+        }
+        else{
+            maskObj.show();
+        }
+}
+//遮照功能
+
+
+
+$(function(){
+
+    //定时器更新时间
+    var updateLastTime = function(){
+        var now = moment()
+        var days = endTime.diff(now, 'days')
+        var hours = endTime.diff(now, 'hours') - days*24
+        var minutes = endTime.diff(now, 'minutes') - days*24*60 - hours*60
+        if(minutes<0){
+            $('#last_day').html(0)
+            $('#last_hour').html(0)
+            $('#last_minute').html(0)
+        }
+        else{
+             $('#last_day').html(days)
+            $('#last_hour').html(hours)
+            $('#last_minute').html(minutes)
+        }
+       
+        return arguments.callee;
+    }()
+
+    setInterval(function(){
+        updateLastTime()
+    },1000*60)
+    //定时器更新时间
+
+
+    //绑定点击事件
+    window.selPrizeId = false
+    var prizeUl = $('.prize-list-ul')
+    $('.prize-list-ul').click(function(){
+        var that = $(this)
+        if(that.hasClass('noSelected')){
+            return false;
+        }
+        if(that.hasClass('selected')){
+            //如果已经领过奖了
+            if(myPrizeList.length >= activeObj.prizeAmount){
+                return false;
+            }
+            else{
+                window.selPrizeId = false
+                that.removeClass('selected')
+                return false;
+            }
+        }
+
+        prizeUl.removeClass('selected')
+        that.addClass('selected')
+        window.selPrizeId = that.attr('prizeid')
+
+        return false;
+    })
+
+    //绑定兑换奖品事件，弹出完善资料对话框
+    $('#startExchange').click(function(){
+        if(!window.selPrizeId){
+            return false;
+        }
+        if(!isMyPage){
+            return false;
+        }
+        //弹出完善资料框
+        $('#myModal').modal({
+            backdrop:true
+          })
+    })
+
+    //保存按钮
+    $('#save_change').click(function(){
+
+        var appUserName = $('#appUserName').val().trim();
+        var appUserMobile = $('#appUserMobile').val().trim();
+        if(!appUserName || appUserName == '未认证会员'){
+          alert('请填写真实姓名')
+          return false;
+        }
+        if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+          alert('请输入正确的手机号码')
+          return false;
+        }
+
+        var q = {
+            toUserId:toUserId,
+            prizeId:window.selPrizeId,
+            truename:appUserName,
+            mobile:appUserMobile
+        }
+
+        $.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
+            if(d.error == 1){
+                return alert(d.data)
+            }
+            alert('奖品兑换成功')
+            location.reload()
+
+        },'json')
+
+    })
+    //保存按钮
+
+
+    $('#goSupport').click(function(){
+
+        if(window.hasAdd){
+            alert('你已经支持过Ta了')
+            return false
+        }
+
+         $.post('/active_data/'+appEname+'/addsupport',{
+            activeId:activeId, 
+            fromUserId:fromUserId,
+            toUserId:toUserId,
+        },function(d){
+    
+            if(d.error == 1){
+                if(d.data == 'no openid'){
+                    alert('身份过期，刷新页面重新支持')
+                    return location.reload();
+                }
+                else{
+                    alert(d.data)
+                }
+                return false;
+            } 
+
+            alert('恭喜您，支持成功')
+
+            location.reload()
+            //alert('恭喜您，支持成功')
+            //var n = $('#supportCount').html()-0+1
+            //$('#supportCount').html(n)
+            //window.hasAdd = true;
+
+        },'json')
+
+    })
+
+
+
+
+    $('#lottery_again').click(function(){
+        location.reload()
+    })
+
+    $('#lottery_rule').click(function(){
+        $('#myModal2').modal({
+            backdrop:false
+          })
+    })
+
+
+})
+
+
+
+
+
+</script>		
+
+      
+<script src="http://wzhfile.qiniudn.com/wx_share_v3.js"></script>       
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</div>  
+
+    </body>
+</html>
+

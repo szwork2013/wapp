@@ -18,11 +18,11 @@ var objSchema = new Schema(obj);
 
 objSchema.statics.findByObj = function(obj,cb){
       var obj = obj || {};
-      return this.find(obj, cb);
+      return this.find(obj).sort({"_id":-1}).exec(cb);
 }
 objSchema.statics.findOneByObj = function(obj,cb){
       var obj = obj || {};
-      return this.findOne(obj, cb);
+      return this.findOne(obj).sort({"_id":-1}).exec(cb);
 }
 
 objSchema.statics.insertOneByObj = function (obj,cb) {
