@@ -1,6 +1,8 @@
 var utils = require('../lib/utils.js');
 var lotteryBl = require('../bl/wxLottery.js');
 var appBl = require('../bl/wxApp.js');
+var os = require('os')
+var platForm = os.platform()
 var obj = {}
 
 
@@ -14,8 +16,10 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 	}
 
 	var appEname = appobj.data;
-
-	//req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+	//如果是本地开发环境
+    if(platForm == 'win32'){
+		req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+	}
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
 		return res.send('用户身份丢失，请重新进入')
@@ -42,6 +46,13 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 				return res.send(404)
 			}
 
+			var timeError = 0
+			var now = moment()
+			var startTime = moment(lotteryObj.startTime)
+			var endTime = moment(lotteryObj.endTime)
+			if(now<startTime || now>endTime){
+				timeError = 1
+			}
 
 			res.render('lottery/'+lotteryEname+'.ejs', {
 				lotteryObj:lotteryObj,
@@ -49,7 +60,8 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 				appEname:appEname,
 				appId:appObj._id,
 				userid:userid,
-				wxuobj:wxuobj
+				wxuobj:wxuobj,
+				timeError:timeError
 			});
 
 		})

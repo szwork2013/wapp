@@ -1,5 +1,4 @@
 <!DOCTYPE>
-<!DOCTYPE>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
@@ -9,6 +8,12 @@
 <link href="http://piccvote.qiniudn.com/assets/css/docs.css" rel="stylesheet">
 <link href="http://piccvote.qiniudn.com/base.css" rel="stylesheet">
 <STYLE TYPE="text/css">
+<% if(timeError==1){%>
+	.timeErrorHide{
+		display: none !important;
+	}
+<%}%>
+
 .greent{
 	color: #1abc9c
 }
@@ -449,7 +454,7 @@ $(function(){
 			}
 		}
 		if(voteType == 1){
-			var voteStr = '<a name="start_vote" href="javascript:;" class="btn btn-info yh '+btnClass+' group_vote yh" groupid="'+itemobj.groupId+'" itemid="'+itemid+'">'+
+			var voteStr = '<a name="start_vote" href="javascript:;" class="timeErrorHide btn btn-info yh '+btnClass+' group_vote yh" groupid="'+itemobj.groupId+'" itemid="'+itemid+'">'+
 				'<span class="fui-heart"></span> 点赞</a>'
 		}
 		else if(voteType == 2){
@@ -701,8 +706,7 @@ $(function(){
 		var groupid = that.attr('groupid')
 		updateVoteInfo(groupid, function(){
 			startVoteFn(that)
-		})
-		
+		})	
 	})
 
 	//在摇一摇详细信息里面的按钮

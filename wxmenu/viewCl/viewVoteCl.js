@@ -1,6 +1,8 @@
 var utils = require('../lib/utils.js');
 var voteBl = require('../bl/wxVote.js');
 var appBl = require('../bl/wxApp.js');
+var os = require('os')
+var platForm = os.platform()
 var obj = {}
 
 
@@ -16,8 +18,8 @@ obj.votePage = function(req,res){ //活动页面展示
 	var appEname = appobj.data;
 
 	//测试用，正式环境需注释
-	if(req.query.jkbuserid && req.query.jkbuserid.length == 24){
-		req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+	if(platForm == 'win32' || req.query.jkbuserid && req.query.jkbuserid.length == 24){
+		req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
 	}
 	
 
@@ -84,6 +86,13 @@ obj.votePage = function(req,res){ //活动页面展示
 						})
 
 						
+						var timeError = 0
+						var now = moment()
+						var startTime = moment(voteObj.startTime)
+						var endTime = moment(voteObj.endTime)
+						if(now<startTime || now>endTime){
+							timeError = 1
+						}
 						
 						res.render('vote/'+ename+'.ejs', {
 							voteObj:voteObj,
@@ -92,7 +101,8 @@ obj.votePage = function(req,res){ //活动页面展示
 							appId:appObj._id,
 							userid:userid,
 							groupList:tempGroupList,
-							wxuobj:wxuobj
+							wxuobj:wxuobj,
+							timeError:timeError
 						});
 
 				})//end voteBl.getGroupCountByVoteId

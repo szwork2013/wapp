@@ -26,6 +26,11 @@
 </title>
 
 <style type="text/css">
+<% if(timeError==1){%>
+    .timeErrorHide{
+        display:none !important;
+    }
+<%}%>
     .container{
         background:#FFFFFF;
         padding-bottom: 20px;
@@ -318,6 +323,7 @@ var myPrizeList = <%- JSON.stringify(myPrizeList) %>
 var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
 var endTime = moment(new Date(activeObj.endTime))
 var now = <%= now %>
+var timeError = '<%= timeError %>'
 
 
 

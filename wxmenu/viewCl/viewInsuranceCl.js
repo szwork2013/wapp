@@ -1,6 +1,8 @@
 var utils = require('../lib/utils.js');
 var appBl = require('../bl/wxApp.js')
 var moment = require('moment')
+var os = require('os')
+var platForm = os.platform()
 var obj = {}
 
 var bonusJson = require('../tools/hongli.json')
@@ -104,8 +106,11 @@ obj.dealBonusJson = function(){
 obj.page = function(req,res){ //用户认证绑定
 
 	var wxuobj = req.wxuobj;
-	
-	//req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+
+	//测试用，正式环境需注释
+	if(platForm == 'win32'){
+		req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+	}
 	
 
 	var appobj = utils.getAppEname(req.originalUrl)

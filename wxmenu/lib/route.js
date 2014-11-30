@@ -2,6 +2,9 @@ var utils = require('../lib/utils.js');
 var moment = require('moment');
 var path = require('path');
 var fs = require('fs');
+var os = require('os')
+var platForm = os.platform()
+
 var wxRoute = require('../weixCl/wCl.js');
 var oauthCl = require('../viewCl/OAuthCl.js')
 var activeCl = require('../viewCl/viewActiveCl.js')
@@ -247,9 +250,14 @@ var addroute = function(app){
 
 
 		//active活动页面，需要oauth支持
-		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
-		//app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
-
+		//如果是本地开发环境
+    	if(platForm == 'win32'){
+    		app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
+    	}
+    	else{
+    		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
+    	}
+		
 		app.get('/votepage/:appename/:voteename', activeCl.voteWebPage)
 
 		app.post('/active_data/:appename/addsupport', apiActive.addSupport)

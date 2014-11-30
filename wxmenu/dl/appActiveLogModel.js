@@ -27,6 +27,9 @@ objSchema.statics.findOneByObj = function(obj,cb){
 
 objSchema.statics.insertOneByObj = function (obj,cb) {
   var obj = obj || {};
+  if(!obj.writeTime){
+      obj.writeTime = new Date()
+  }
   return this.create(obj,cb)
 }
 

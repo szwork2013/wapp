@@ -1,3 +1,4 @@
+
 var userBl = require('../bl/wxUser.js');
 var appBl = require('../bl/wxApp.js');
 var activeBl = require('../bl/activeBl.js');
@@ -7,6 +8,8 @@ var utils = require('../lib/utils.js');
 var moment = require('moment')
 var obj = {}
 
+var os = require('os')
+var platForm = os.platform()
 
 //互动的中间件
 obj.activeMiddle = function(req,res,next){
@@ -22,9 +25,12 @@ obj.activeMiddle = function(req,res,next){
       return res.send(500,e)
     }
 
-    //真实情况需要注释掉
-    //req.session[appEname+'_oauth_openid'] = 'qwe'
-    //req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+    //如果是本地开发环境
+    if(platForm == 'win32'){
+	    //真实情况需要注释掉
+	    req.session[appEname+'_oauth_openid'] = 'qwe'
+	    req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+    }
 
 	var openId = req.session[appEname+'_oauth_openid'] 
 	var userid = req.session[appEname+'_userid']; 
@@ -229,9 +235,17 @@ obj.activePage = function(req,res){ //活动页面展示
 								tempPrizeObj.lastPrizeNumber = 0;
 								tempPrizeObj.canSelect = false;
 							}
-							if(tempObj.supportCount < tempPrizeObj.price){
+
+							//如果不启用分数，那么奖品是支持数价格
+							if(activeObj.useScore == 0 && tempObj.supportCount < tempPrizeObj.price){
 								tempPrizeObj.canSelect = false;
 							}
+							//如果启用分数，那么奖品也是分数价格
+							if(activeObj.useScore != 0 && tempObj.supportScore < tempPrizeObj.price){
+								tempPrizeObj.canSelect = false;
+							}
+
+
 							//循环我的记录，如果已经领取过了
 							infoObj.myPrizeList.forEach(function(myObj){
 									if(myObj.prizeId == prizeId){
@@ -240,7 +254,15 @@ obj.activePage = function(req,res){ //活动页面展示
 							})
 							tempPrizeList.push(tempPrizeObj)
 						})
+						
 
+						tempObj.timeError = 0
+						var now = moment()
+						var startTime = moment(activeObj.activeObj.startTime)
+						var endTime = moment(activeObj.activeObj.endTime)
+						if(now<startTime || now>endTime){
+							tempObj.timeError = 1
+						}
 
 						//获取排名
 						activeBl.getRankByEname(templateName, 100, function(err, rankList){

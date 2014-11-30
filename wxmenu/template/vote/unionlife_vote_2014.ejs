@@ -8,6 +8,12 @@
 <link href="http://piccvote.qiniudn.com/assets/css/docs.css" rel="stylesheet">
 <link href="http://piccvote.qiniudn.com/base.css" rel="stylesheet">
 <STYLE TYPE="text/css">
+<% if(timeError==1){%>
+	.timeErrorHide{
+		display: none !important;
+	}
+<%}%>
+
 .shake_face{
 	width: 200px !important;
 	height: 200px !important;
@@ -613,7 +619,7 @@ $(function(){
 			}
 		}
 		if(voteType == 1){
-			var voteStr = '<a name="start_vote" href="javascript:;" class="btn btn-info yh '+btnClass+' group_vote yh" groupid="'+itemobj.groupId+'" itemid="'+itemid+'">'+
+			var voteStr = '<a name="start_vote" href="javascript:;" class="timeErrorHide btn btn-info yh '+btnClass+' group_vote yh" groupid="'+itemobj.groupId+'" itemid="'+itemid+'">'+
 				'<span class="fui-heart"></span> 给'+ta+'投票</a>'
 		}
 		else if(voteType == 2){
