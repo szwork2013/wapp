@@ -81,13 +81,13 @@ var provinceDeal = function(groupObj, callback2){
 											return callback3()
 										}
 										csvList.push({
-												'recordId':recordDoc._id.toString(),
-												'province':groupDoc.title,
-												'member':itemDoc.title,
-												'voteUserId':recordDoc.userId,
-												'voteOpenId':userDoc.openId,
-												'voteIp':recordDoc.recordIp,
-												'voteTime':moment(recordDoc.writeTime).format('YYYY-MM-DD HH:mm:ss')
+												'投票Id':recordDoc._id.toString(),
+												'所属省份':groupDoc.title,
+												'候选人名字':itemDoc.title,
+												'投票人Id':recordDoc.userId,
+												'投票人微信Id':userDoc.openId,
+												'投票人Ip':recordDoc.recordIp,
+												'投票时间':moment(recordDoc.writeTime).format('YYYY-MM-DD HH:mm:ss')
 											})
 										callback3()
 									})
