@@ -252,6 +252,23 @@ background-color:#ffe400;
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:320px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">支持成功</h4>
+      </div>
+      <div class="modal-body"> 
+            <h4>成功减少 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font> 元</h4>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
 
 
 
@@ -484,9 +501,17 @@ $(function(){
                 return false;
             } 
 
-            alert('恭喜您，支持成功')
+            $('#reduceNumber').html(d.data.supportScore)
 
-            location.reload()
+            $('#myModal3').on('hidden.bs.modal', function (e) {
+                  location.reload()
+                }).modal({
+                    backdrop:false
+              })
+
+            //alert('恭喜您，支持成功')
+
+            
             //alert('恭喜您，支持成功')
             //var n = $('#supportCount').html()-0+1
             //$('#supportCount').html(n)

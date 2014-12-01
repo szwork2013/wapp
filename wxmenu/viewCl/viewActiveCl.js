@@ -29,7 +29,7 @@ obj.activeMiddle = function(req,res,next){
     if(platForm == 'win32'){
 	    //真实情况需要注释掉
 	    req.session[appEname+'_oauth_openid'] = 'qwe'
-	    req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+	    req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
     }
 
 	var openId = req.session[appEname+'_oauth_openid'] 
