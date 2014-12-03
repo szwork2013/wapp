@@ -6,6 +6,11 @@
               <% if(session.admin.indexOf('lottery') != -1){ %>
                   <li class="nav-header">抽奖管理</li>
                   <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
+              <%} else if(session.admin.indexOf('active') != -1){ %>
+
+                  <li class="nav-header">活动管理</li>
+                  <li><a href="/manger/activePrizeRecord/list">活动兑奖流水</a></li>
+
               <%}else if(session.admin.indexOf('vote') != -1){%>
 
                   <li class="nav-header">投票管理</li>

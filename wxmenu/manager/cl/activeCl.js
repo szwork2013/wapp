@@ -78,7 +78,19 @@ obj.getList = function(req, res){
 	dl.findAll(q, 0, 100000, function(err,doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
-		res.json(doc);
+		
+		if(req.session.adminAppId == '1'){
+			return res.json(doc);
+		}
+		else{
+			var appId = req.session.adminAppId 
+		}
+
+		doc = doc.filter(function(item){
+			return item.appId == appId? true:false
+		})
+		return res.json(doc);
+		
 	})
 }
 
