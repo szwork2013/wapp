@@ -208,9 +208,11 @@ obj.calBonus = function(cash, sex, age, allocLv){
 		var jiBenBaoEValue = obj.getJiBenBaoE(cash, sex, age, allocLv, bonusKey)
 		if(!jiBenBaoEValue) return error++
 
+
 		//2.获取有效保额的数组
 		var youXiaoBaoEList = obj.getYouXiaoBaoE(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue)
 		if(!youXiaoBaoEList) return error++
+
 
 		//3.计算生存金的数组
 		var shengCunJinList = obj.getshengCunJin(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue, youXiaoBaoEList)
@@ -238,7 +240,27 @@ obj.calBonus = function(cash, sex, age, allocLv){
 
 	if(error > 0) return false
 
-	//console.log(bonusResultDict)
+	if(platForm == 'win32'){
+		console.log('20 year')
+		console.log(bonusResultDict.lower['20'])
+		console.log(bonusResultDict.middle['20'])
+		console.log(bonusResultDict.high['20'])
+		console.log('60 year')
+		console.log(bonusResultDict.lower['60'])
+		console.log(bonusResultDict.middle['60'])
+		console.log(bonusResultDict.high['60'])
+		console.log('70 year')
+		console.log(bonusResultDict.lower['70'])
+		console.log(bonusResultDict.middle['70'])
+		console.log(bonusResultDict.high['70'])
+		console.log('80 year')
+		console.log(bonusResultDict.lower['80'])
+		console.log(bonusResultDict.middle['80'])
+		console.log(bonusResultDict.high['80'])
+		console.log('lower all')
+		console.log(bonusResultDict.lower)
+	}
+	
 	return bonusResultDict
 }
 
@@ -444,7 +466,7 @@ obj.getWanNengJiaZhi = function(cash, sex, age, allocLv, bonusKey, jiBenBaoEValu
 		if(i<yearJiaoFeiLimit){
 			//第一年
 			if(i == 0){
-				var curCash = cash - yearPay
+				var curCash = yearPay * yearJiaoFeiLimit
 			}
 			else{
 				var curCash = wanNengJiaZhiList[i-1] - yearPay
@@ -493,7 +515,7 @@ obj.getWanNengJiaZhi = function(cash, sex, age, allocLv, bonusKey, jiBenBaoEValu
 
 
 obj.dealBonusJson()
-
-//obj.calBonus(300000, 'male', 50, '1:2')
-
+if(platForm == 'win32'){
+	obj.calBonus(125422, 'male', 0, '1:2')
+}
 module.exports = obj;
