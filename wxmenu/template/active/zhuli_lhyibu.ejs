@@ -89,12 +89,21 @@ background-color:#ffe400;
          <!--   <h3 id="title">拼人品，赢褚橙</h3>-->
            
 		   
-		   <img src="http://bcs.duapp.com/xytimg/zhuli%2Fyibu1.jpg" width=100%>
-       <!--   <img src="<%= activeObj.activeObj.picture%>" width=100%>-->
+		<!--   <img src="http://bcs.duapp.com/xytimg/zhuli%2Fyibu1.jpg" width=100%>
+          <img src="<%= activeObj.activeObj.picture%>" width=100%>
 		   <br/>  
 
 		   <%
     var reduceVal = 0
+    }
+%>-->
+
+<img src="<%= activeObj.activeObj.picture%>" width=100%>
+		   <br/>  <br/>
+<%
+    var reduceVal = 0
+    if(supportScore < 86){
+        reduceVal = (86-supportScore).toFixed(1)
     }
 
 %>
