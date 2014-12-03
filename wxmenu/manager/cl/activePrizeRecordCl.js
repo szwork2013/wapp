@@ -25,26 +25,33 @@ obj.list = function(req, res){
 
 
 obj.read = function(req, res){
+
 	var filter =  utils.kendoToMongoose(req.body.filter,req.session.clientId);
 	var skip = req.body.skip || 0;
 	var pageSize = req.body.pageSize || 20;
 	var resObj = {"Data":[],"Total":0};
 
+	
 
 	dl4.findAll({},0,100000, function(err,activeList){
 		if(err) return res.send(500,err);
 		if(req.session.adminAppId != '1'){
 			var activeIds = [];
 			activeList.forEach(function(lo){
+
 				if(lo.appId.toString() == req.session.adminAppId){
 					activeIds.push(lo._id.toString())
+					//console.log(lo.appId.toString(), req.session.adminAppId)
 				}
 			})
-			if(filter.lotteryId && activeIds.indexOf(filter.lotteryId) == -1){
+
+
+
+			if(filter.activeId && activeIds.indexOf(filter.activeId) == -1){
 				return res.send({"Data":[],"Total":0});
 			}
-			if(!filter.lotteryId){
-				filter.lotteryId = {'$in': activeIds}
+			if(!filter.activeId){
+				filter.activeId = {'$in': activeIds}
 			}
 		}
 
