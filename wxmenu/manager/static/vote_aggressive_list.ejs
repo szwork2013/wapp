@@ -136,10 +136,11 @@ var hasInit = false;
         $('#down2').click(function(){
             $('#kendo_mask').show()
             $.post('/manger/voteRec/aggressive', getDataToQuery(), function(d){
+                $('#kendo_mask').hide()
                 if(d.error){
                     return alert(d.data)
                 }
-                $('#kendo_mask').hide()
+                
 
 
                 $('#resultVoteCount').html(d.data.totalVoteNumber||0)
