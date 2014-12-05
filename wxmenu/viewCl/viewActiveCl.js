@@ -239,7 +239,7 @@ obj.activePage = function(req,res){ //活动页面展示
 							
 				
 							//如果启用分数，那么奖品也是分数价格
-							if(activeObj.useScore != 0 && tempObj.supportScore < tempPrizeObj.price){
+							if(activeObj.useScore  && activeObj.useScore > 0 && tempObj.supportScore < tempPrizeObj.price){
 								tempPrizeObj.canSelect = false;
 							}
 							//如果不启用分数，那么奖品是支持数价格
