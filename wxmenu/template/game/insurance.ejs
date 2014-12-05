@@ -388,7 +388,8 @@ var resultDiv = function(score){
 	$('#score_font').html(fontRes[0])
 	$('#rate_font').html(fontRes[1])
 	$('#title_font').html(fontRes[2])
-	$('#cashInput').val(parseInt(score/10000))
+	//保留两位小数
+	$('#cashInput').val((score/10000).toFixed(2))
 	$('#modalTitle').html('闯关成功')
 
 	$('#selectBox, #showBonusBox').hide()
