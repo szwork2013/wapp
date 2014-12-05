@@ -105,6 +105,7 @@ obj.dealBonusJson = function(){
 //展示页面接口
 obj.page = function(req,res){ //用户认证绑定
 
+	/*
 	var wxuobj = req.wxuobj;
 
 	//测试用，正式环境需注释
@@ -125,7 +126,7 @@ obj.page = function(req,res){ //用户认证绑定
 	if(!appEname){
 		return res.send(404)
 	}
-
+	
 	appBl.getByEname(appEname,function(err,appObj){
 			if(err){
 				return res.send(500, err)
@@ -133,13 +134,14 @@ obj.page = function(req,res){ //用户认证绑定
 			if(!appObj){
 				return res.send(404)
 			}
+	*/
 			res.render('game/insurance.ejs', {
-							appEname:appEname,
-							appId:appObj._id,
-							userid:userid,
-							wxuobj:wxuobj
+							//appEname:appEname,
+							//appId:appObj._id,
+							//userid:userid,
+							//wxuobj:wxuobj
 						});
-	})
+	//})
 
 }
 
@@ -208,16 +210,13 @@ obj.calBonus = function(cash, sex, age, allocLv){
 		var jiBenBaoEValue = obj.getJiBenBaoE(cash, sex, age, allocLv, bonusKey)
 		if(!jiBenBaoEValue) return error++
 
-
 		//2.获取有效保额的数组
 		var youXiaoBaoEList = obj.getYouXiaoBaoE(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue)
 		if(!youXiaoBaoEList) return error++
-			//console.log(youXiaoBaoEList); return;
 
 		//3.计算生存金的数组
 		var shengCunJinList = obj.getshengCunJin(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue, youXiaoBaoEList)
 		if(!shengCunJinList) return error++
-
 
 		//4.计算终了红利
 		var zhongLiaoHongLiValue = obj.getZhongLiaoHongLi(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue, youXiaoBaoEList, shengCunJinList)
@@ -227,7 +226,8 @@ obj.calBonus = function(cash, sex, age, allocLv){
 		//5.计算万能价值数组
 		var wanNengJiaZhiList = obj.getWanNengJiaZhi(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue, youXiaoBaoEList, shengCunJinList, zhongLiaoHongLiValue)
 		if(!wanNengJiaZhiList) return error++
-
+		//console.log(youXiaoBaoEList)
+		//console.log(wanNengJiaZhiList)
 
 		var tempList = {}
 		wanNengJiaZhiList.forEach(function(wanVal,i){
@@ -238,36 +238,9 @@ obj.calBonus = function(cash, sex, age, allocLv){
 
 	})	
 
-	if(error > 0){
-		if(platForm == 'win32'){
-			console.log('got error')
-		}
-		return false
-	} 
+	if(error > 0) return false
 
-	if(platForm == 'win32'){
-		console.log('20 year')
-		console.log(bonusResultDict.lower['20'])
-		console.log(bonusResultDict.middle['20'])
-		console.log(bonusResultDict.high['20'])
-		console.log('60 year')
-		console.log(bonusResultDict.lower['60'])
-		console.log(bonusResultDict.middle['60'])
-		console.log(bonusResultDict.high['60'])
-		console.log('70 year')
-		console.log(bonusResultDict.lower['70'])
-		console.log(bonusResultDict.middle['70'])
-		console.log(bonusResultDict.high['70'])
-		console.log('88 year')
-		console.log(bonusResultDict.lower['88'])
-		console.log(bonusResultDict.middle['88'])
-		console.log(bonusResultDict.high['88'])
-		// console.log('lower all')
-		 // console.log(bonusResultDict.lower)
-		 // console.log(bonusResultDict.middle)
-		 // console.log(bonusResultDict.high)
-	}
-	
+	//console.log(bonusResultDict)
 	return bonusResultDict
 }
 
@@ -276,7 +249,7 @@ obj.calBonus = function(cash, sex, age, allocLv){
 obj.getJiBenBaoE = function(cash, sex, age, allocLv, bonusKey){
 
 	var yearLimit = allocDict[allocLv]
-	var yearPay = cash/yearLimit
+	var yearPay = Math.round(cash/yearLimit)
 	//设定投保年度为1
 	var yearCur = 1
 	var baofeilie;
@@ -311,11 +284,8 @@ obj.getYouXiaoBaoE = function(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue)
 			//如果匹配条件，保险年度==i，年龄也匹配
 			if(obj.toubaoniandu == i && age == obj.toubaonianling){
 				//当前年度的有效保额
-				//console.log(obj.youxiaobaoxjine)
-				//console.log(jiBenBaoEValue)
 				var curYouXiaoBaoEVal = Math.round(jiBenBaoEValue * obj.youxiaobaoxjine / 1000)
 				youXiaoBaoEList.push(curYouXiaoBaoEVal)
-				return;
 			}
 
 		})
@@ -344,23 +314,12 @@ obj.getshengCunJin = function(cash, sex, age, allocLv, bonusKey, jiBenBaoEValue,
 	shengCunJinList = []
 	for(var i=1;i<=yearLimit;i++){
 		//第1 ~ 第 N-1 年 生存金 = 0
-		if(i<3){
+		if(i<yearJiaoFei){
 			shengCunJinList.push(0)
-		}
-		else if( i == 3){
-			var curShenCunVal = Math.round(youXiaoBaoEList[i-1] * yearJiaoFei * 0.03)
-			if( i == yearJiaoFei){
-				var curShenCunVal = Math.round(youXiaoBaoEList[i-1] * yearJiaoFei * 0.04)
-			}
-			shengCunJinList.push(curShenCunVal)
-		}
-		else if(i>3 && i<yearJiaoFei){
-			var curShenCunVal = Math.round(youXiaoBaoEList[i-1] * yearJiaoFei * 0.01)
-			shengCunJinList.push(curShenCunVal)
 		}
 		//第N 年 生存金 = 第N年有效保额 * N * 0.04
 		else if(i == yearJiaoFei){
-			var curShenCunVal = Math.round(youXiaoBaoEList[i-1] * yearJiaoFei * 0.02)
+			var curShenCunVal = Math.round(youXiaoBaoEList[i-1] * yearJiaoFei * 0.04)
 			shengCunJinList.push(curShenCunVal)
 		}
 		//第N +1年 to 第N+9 年 生存金 = 第N+1年 to 第N+9年 的 有效保额 * N * 0.01
@@ -422,14 +381,14 @@ obj.getWanNengJiaZhi = function(cash, sex, age, allocLv, bonusKey, jiBenBaoEValu
 	var listLenth = 88 - age
 	//交费年限
 	var yearJiaoFei = allocDict[allocLv]
-	var yearPay = cash/yearJiaoFei
+	var yearPay = Math.round(cash/yearJiaoFei)
 	
 	//红利因子数组
 	var wanNengHongLiYinZi = []
 	if(bonusKey == 'lower'){
 		for(var i=0; i<listLenth; i++){
 			//低：缴费期限=0.025,缴费期后=0.0175
-			if(i<3){
+			if(i<yearJiaoFei){
 				wanNengHongLiYinZi.push(0.025)
 			}
 			else{
@@ -487,17 +446,12 @@ obj.getWanNengJiaZhi = function(cash, sex, age, allocLv, bonusKey, jiBenBaoEValu
 		if(i<yearJiaoFeiLimit){
 			//第一年
 			if(i == 0){
-				var curCash = Math.round(yearPay * yearJiaoFeiLimit)
+				var curCash = cash - yearPay
 			}
 			else{
-				var curCash = wanNengJiaZhiList[i-1] - Math.round(yearPay)
+				var curCash = wanNengJiaZhiList[i-1] - yearPay
 			}
-
 			var wanNengJiaZhiVal = curCash * (1 + wanNengHongLiYinZi[i])
-			if(i>=2){
-				//console.log(shengCunJinList[i])
-				wanNengJiaZhiVal += shengCunJinList[i]
-			}
 			wanNengJiaZhiList.push(wanNengJiaZhiVal)
 		}
 		//缴费期满
@@ -541,7 +495,7 @@ obj.getWanNengJiaZhi = function(cash, sex, age, allocLv, bonusKey, jiBenBaoEValu
 
 
 obj.dealBonusJson()
-if(platForm == 'win32'){
-	obj.calBonus(545458, 'female', 45, '1:4')
-}
+
+//obj.calBonus(300000, 'male', 50, '1:2')
+
 module.exports = obj;

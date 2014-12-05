@@ -288,8 +288,8 @@ var addroute = function(app){
 
 
 		//game insurance
-		app.get('/insurance/:appename', getUserMid, insuranceCl.page)
-		app.get('/insurance/:appename/getbonus', insuranceCl.getBonus)
+		app.get('/insurance/unionlife', insuranceCl.page)
+		app.get('/insurance/unionlife/getbonus', insuranceCl.getBonus)
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];

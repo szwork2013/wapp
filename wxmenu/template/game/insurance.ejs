@@ -27,7 +27,7 @@
 				line-height: 24px;
 			}
 			.startLicai{
-				padding: 10px 50px;
+				padding: 10px 30px;
 
 			}
 			.rePlayBox{
@@ -82,6 +82,14 @@
 				position: relative;
 				z-index: 10;
 			}
+			#qiangHb{
+				background-color:#ccc !important;
+				border-color:#ccc !important;
+				margin-left: 15px;
+			}
+			.modal_suc_box{
+				line-height: 30px;
+			}
 		</style>
 	</head>
 	<body>
@@ -112,11 +120,11 @@
 
       <div class="modal-body" id="successBox">
         	<h6 class="modal_suc_box ft16">亲，你已经抢到<font id="score_font"></font>万的金币，手气不错哟，快来理财吧！
-        		<br/>您击败了全国<font id="rate_font"></font>的用户，
+        		<br/>您击败了全国<font id="rate_font"></font>的用户<br/>
         		被封为<font id="title_font"></font></h6>
         <div class="form-group getBonusBox">
         	<button id="startLicai" type="button" class="startLicai btn btn-danger btn-lg">开始理财</button>
-        	<button type="button" class="startLicai btn btn-danger btn-lg">抢红包</button>
+        	<button id="qiangHb" type="button" class="startLicai btn btn-lg">抢红包</button>
         </div>
       </div>
 
@@ -209,10 +217,7 @@
 <script src="http://piccvote.qiniudn.com/assets/js/application.js"></script>
 
 <script type="text/javascript">
-var appId = '<%= appId %>'
-var appEname = '<%= appEname %>'
-var userid = '<%=  userid %>'
-var wxuobj = <%- JSON.stringify(wxuobj) %>
+
 
 
 
@@ -268,7 +273,7 @@ var getBonusAjax = function(cash, sex, age, alloc){
 	}
 	loading()
 	window.isAjax = true
-	$.get('/insurance/<%= appEname %>/getbonus', {
+	$.get('/insurance/unionlife/getbonus', {
 		cash:cash,
 		sex:sex,
 		age:age,
@@ -469,7 +474,7 @@ function gameOverCallBack(score){
 }
 
 
-//resultDiv(300000)
+resultDiv(300000)
 
 </script>
 
