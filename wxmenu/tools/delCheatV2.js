@@ -86,18 +86,22 @@ async.series([
 var perItemDealCheat = function(callback1, voteItem, gourpTitle){
 
 	var itemRecordList = []
+	var ipDelCount = 0;
+	var DayHourDelCount = 0;
+	var oldCount = 0;
 
 	console.log('start deal member: '+voteItem.title)
 
 	voteRecord.find({
 		itemId:voteItem._id.toString()
 	}, function(err, recodlist){
+
 		if(err) return callback1(err)
 		if(recodlist.length == 0){
 			console.log('empty vote member: '+voteItem.title)
 			return callback1()
 		}
-
+		oldCount = recodlist.length
 
 
 		
@@ -139,7 +143,10 @@ var perItemDealCheat = function(callback1, voteItem, gourpTitle){
 				itemIpKeys[ikey].forEach(function(o,i){
 					if(i<16){
 						ipDealRecordList.push(o)
-					}	
+					}
+					else{
+						ipDelCount++
+					}
 				})
 				return
 			}
@@ -198,8 +205,9 @@ var perItemDealCheat = function(callback1, voteItem, gourpTitle){
 					perDayObj[dkey].forEach(function(o,i){
 						var oMoment = moment(o.writeTime)
 						//取这个小时的前30个数据
-						if(oMoment>=curMoment && oMoment<nextHour && i<30){
-							dayDealList.push(o)
+						if(oMoment>=curMoment && oMoment<nextHour){
+							if(i<30) dayDealList.push(o)
+							else DayHourDelCount++
 						}
 					})
 					curMoment.add(1, 'h')
@@ -217,7 +225,10 @@ var perItemDealCheat = function(callback1, voteItem, gourpTitle){
 		var tmp = {
 			'被投票人': voteItem.title,
 			'所在省份': gourpTitle,
-			'有效票数': itemCount
+			'有效票数': itemCount,
+			'IP删票数': ipDelCount,
+			'时间删票数': DayHourDelCount,
+			'原有票数':oldCount
 		}
 
 		csvList.push(tmp)
@@ -264,7 +275,7 @@ var appVoteBack = function(){
 		console.log('start gen csv')
 		//排序
 		csvList = csvList.sort(function(a,b){
-			if(a.itemCount >= b.itemCount){
+			if(a['有效票数'] >= b['有效票数']){
 				return -1
 			}
 			return 1
