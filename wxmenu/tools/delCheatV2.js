@@ -20,7 +20,7 @@ var startTime = moment("2014/11/13 00:00:00");
 var endTime = moment("2014/12/1 00:00:00");
 //var groupEname = 'tenyear'
 
-var appId, voteId, groupList, itemList, csvList
+var appId, voteId, groupList, itemList, csvList = []
 
 
 console.log('start parse')
@@ -73,7 +73,7 @@ async.series([
 	if(err) throw err
 	console.log('get complete')
 	console.log(appId, voteId)
-	console.log('item length is :' + itemList.length)
+	console.log('member count is :' + itemList.length)
 	appVoteBack()
 })
 
@@ -83,7 +83,7 @@ async.series([
 
 
 
-var perItemDealCheat(callback1, voteItem, gourpTitle){
+var perItemDealCheat = function(callback1, voteItem, gourpTitle){
 
 	var itemRecordList = []
 
@@ -98,8 +98,11 @@ var perItemDealCheat(callback1, voteItem, gourpTitle){
 			return callback1()
 		}
 
-		console.log('start deal ip: ' + voteItem.title)
+
+
+		
 		//开始处理,先处理IP
+		console.log('start deal ip: ' + voteItem.title)
 		var itemIpKeys = {
 			'127.0.0.1':[]
 		}
@@ -122,18 +125,18 @@ var perItemDealCheat(callback1, voteItem, gourpTitle){
 		//循环处理
 		var ipDealRecordList= []//ip处理结束的数组
 		var iKeys = Object.keys(itemIpKeys)
-
+		//循环ip数组
 		iKeys.forEach(function(ikey){
-			if(iKeys == '127.0.0.1' || itemIpKeys[iKeys].length <= 16){
-				itemIpKeys[iKeys].forEach(function(o){
+			if(iKeys == '127.0.0.1' || itemIpKeys[ikey].length <= 16){
+				itemIpKeys[ikey].forEach(function(o){
 					ipDealRecordList.push(o)
 				})
 				return
 			}
-			if(itemIpKeys[iKeys].length > 16){
-				console.log('find ip upper 16 length:'+ itemIpKeys[iKeys].length +'  ' + voteItem.title)
+			if(itemIpKeys[ikey].length > 16){
+				console.log('find ip upper 16 length:'+ itemIpKeys[ikey].length +'  ' + voteItem.title)
 
-				itemIpKeys[iKeys].forEach(function(o,i){
+				itemIpKeys[ikey].forEach(function(o,i){
 					if(i<16){
 						ipDealRecordList.push(o)
 					}	
@@ -142,61 +145,67 @@ var perItemDealCheat(callback1, voteItem, gourpTitle){
 			}
 		})
 
+		//console.log(ipDealRecordList.length)
 
 		//开始处理当日票数，当日投票量超过1000票的，则分析每小时投票量，若某小时投票量超过30票，则记为30票。
 		//将 ipDealRecordList 根据每日分组
 		console.log('start deal day: ' + voteItem.title)
 
+		var curMoment = moment(startTime) 
 		var perDayObj = {}
-		ipDealRecordList.forEach(function(obj){
-			var curMoment = startTime 
 
-			while( curMoment < endTime){
-				var key = curMoment.toString()
-				perDayObj[key] = []
+		while( curMoment < endTime){
+			var nextDay = moment(curMoment).add(1, 'd')
+			var key = curMoment.toString()
+			perDayObj[key] = []
 
-				var nextDay = curMoment.add(1, 'day')
+			ipDealRecordList.forEach(function(obj){						
+				
 				var objMoment = moment(obj.writeTime)
-
+				
 				if(objMoment >= curMoment && objMoment < nextDay){
+					
 					perDayObj[key].push(obj)
 				}
-				
-				curMoment = nextDay
 
-			}
-		})
+			})
+
+			curMoment.add(1, 'day')
+		}
+
+		//console.log(perDayObj);return;
 
 		//循环判断当天是否超过1000票，如果超过则按小时算，是否超过30
 		var dayDealList = []
 		var dKeys = Object.keys(perDayObj)
 		dKeys.forEach(function(dkey){
-			if(perDayObj[dKeys].length <= 1000){
-				perDayObj[dKeys].forEach(function(o){
+			if(perDayObj[dkey].length <= 1000){
+				perDayObj[dkey].forEach(function(o){
 					dayDealList.push(o)
 				})
 				return
 			}
 			else{
 
-				console.log('find day upper 1000 length:'+ perDayObj[dKeys].length +'  ' + voteItem.title)
+				console.log('find day upper 1000 length:'+ perDayObj[dkey].length +'  ' + voteItem.title)
 
-				var curMoment = moment(dKeys)
-				var nextDay = curMoment.add(1, 'd')
+				var curMoment = moment(dkey)
+				var nextDay = moment(curMoment).add(1, 'd')
 
 				while(curMoment<nextDay){
-					var nextHour = curMoment.add(1, 'h')
+					var nextHour = moment(curMoment).add(1, 'h')
 					var curHourList = []
-					perDayObj[dKeys].forEach(function(o,i){
+					perDayObj[dkey].forEach(function(o,i){
 						var oMoment = moment(o.writeTime)
 						//取这个小时的前30个数据
 						if(oMoment>=curMoment && oMoment<nextHour && i<30){
 							dayDealList.push(o)
 						}
 					})
+					curMoment.add(1, 'h')
 
 				}
-
+				return
 			}
 
 
