@@ -236,13 +236,12 @@ obj.activePage = function(req,res){ //活动页面展示
 								tempPrizeObj.canSelect = false;
 							}
 
-							
-							//如果启用分数，那么奖品也是分数价格
-							if(activeObj.useScore != 0 && tempObj.supportScore < tempPrizeObj.price){
+							//如果不启用分数，那么奖品是支持数价格
+							if(activeObj.useScore == 0 && tempObj.supportCount < tempPrizeObj.price){
 								tempPrizeObj.canSelect = false;
 							}
-							//如果不启用分数，那么奖品是支持数价格
-							else(tempObj.supportCount < tempPrizeObj.price){
+							//如果启用分数，那么奖品也是分数价格
+							if(activeObj.useScore != 0 && tempObj.supportScore < tempPrizeObj.price){
 								tempPrizeObj.canSelect = false;
 							}
 
