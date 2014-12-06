@@ -526,10 +526,12 @@ $(function(){
                   return alert(d2.data)
                 }
                 if(d2.data.prizeId == '0'){
-                  $('#lottery_result').html('谢谢参与')
+                //  $('#lottery_result').html('谢谢参与')
+				 alert('谢谢参与');
                 }
                 if(d2.data.prizeId != '0' && d2.data.prizeObj){
-                  $('#lottery_result').html(d2.data.prizeObj.name)
+                //  $('#lottery_result').html(d2.data.prizeObj.name)
+				alert(d2.data.prizeObj.name)
                 }           
 
                 //$('#myCanvas, #lottery_result').show();
