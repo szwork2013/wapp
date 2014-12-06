@@ -164,7 +164,7 @@ obj.getBonus = function(req,res){
 	var alloc = parseInt(req.query.alloc)
 
 	//验证参数
-	if(!cash || cash <=0 || cash >= 1000000){
+	if(!cash || cash <=0 || cash >= 10000000){
 		return res.send({error:1, data:'金额输入有误'})
 	}
 	if(typeof age != 'number' || age < 0 || age > 60 ){

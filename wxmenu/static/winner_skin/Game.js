@@ -1,3 +1,6 @@
+var finalScore = 0;
+var gameObj = null;
+
 Winner.Game = function(game){
 		
 	this._candyGroup = null;
@@ -11,13 +14,16 @@ Winner.Game = function(game){
 	Winner._deltaScore = null;
 	Winner._time = 60;
 	Winner._score = 0;
+
+	Winner._gravityValue = 500;
 };
 Winner.Game.prototype = {
 	create: function(){		
+		gameObj = this;
 		this.physics.startSystem(Phaser.Physics.ARCADE);		
-		this.physics.arcade.gravity.y = 200;
+		this.physics.arcade.gravity.y = Winner._gravityValue;
 		
-		this.add.sprite(0, 0, 'background');
+		this.add.sprite(0, 0, 'background2');
 		this.add.sprite(-30, Winner.GAME_HEIGHT-166, 'floor');
 		this.add.sprite(10, 5, 'score-bg');		
 		this.add.button(Winner.GAME_WIDTH-96-10, 5, 'button-pause', this.managePause, this, 1, 0, 2);					
@@ -40,7 +46,7 @@ Winner.Game.prototype = {
 		Winner._player.checkWorldBounds = true; 
 		this.physics.enable(Winner._player, Phaser.Physics.ARCADE);
 
-		Winner._player.body.gravity.y = -200;
+		Winner._player.body.gravity.y = -Winner._gravityValue;
 		// Winner._player.body.velocity.x = 500;
 		
 		Winner._player.animations.add('right', [0, 1, 2, 3, 4, 5], 10, true);
@@ -84,11 +90,11 @@ Winner.Game.prototype = {
 		}, this);
 	},
 	moveLeft:function(){
-		Winner._player.body.velocity.x = -500;
+		Winner._player.body.velocity.x = -700;
 		Winner._player.animations.play('left');
 	},
 	moveRight:function(){
-		Winner._player.body.velocity.x = 500;
+		Winner._player.body.velocity.x = 700;
 		Winner._player.animations.play('right');
 	},
 	stopPlayer:function(){
@@ -100,6 +106,7 @@ Winner.Game.prototype = {
 		Winner._player.body.velocity.x = 0;
 	},
 	update: function(){
+		//设置人物左右不出界面
 		if(Winner._player.body.x<=0){
 			Winner._player.body.x=0;
 			// Winner._player.body.velocity.x = 500;
@@ -111,8 +118,10 @@ Winner.Game.prototype = {
 		this._spawnCandyTimer += this.time.elapsed;
 		this._deltaScoreTimer += this.time.elapsed;
 		
-		if(this._spawnCandyTimer > 800) {			
-			this._spawnCandyTimer = 0;			
+		if(this._spawnCandyTimer > 500) {			
+			this._spawnCandyTimer = 0;		
+			//掉落2个金币	
+			Winner.item.spawnCandy(this);
 			Winner.item.spawnCandy(this);
 		}
 
@@ -124,7 +133,7 @@ Winner.Game.prototype = {
 		this._candyGroup.forEachExists(function(candy){			
 			candy.angle += candy.rotateMe;
 			if(candy.overlap(Winner._player)){	
-				Winner._scoreText.setText(Winner._score += parseInt(candy.name));	
+				Winner._scoreText.setText(finalScore += parseInt(candy.name));	
 				Winner._deltaScore.setText("+ " + candy.name);			
 				candy.kill();
 			}
@@ -133,21 +142,21 @@ Winner.Game.prototype = {
 		Winner._time.setText("剩余时间: " + (60-Math.floor(this._timer.seconds)) + " 秒");
 
 		if(this._timer.seconds>=15) {
-			this.physics.arcade.gravity.y = 500;
-			Winner._player.body.gravity.y = -500;
+			this.physics.arcade.gravity.y = Winner._gravityValue + 400;
+			Winner._player.body.gravity.y = -Winner._gravityValue - 400;
 		}
 		if(this._timer.seconds>=30) {
-			this.physics.arcade.gravity.y = 800;
-			Winner._player.body.gravity.y = -800;
+			this.physics.arcade.gravity.y = Winner._gravityValue + 800;
+			Winner._player.body.gravity.y = -Winner._gravityValue - 800;
 		}
 		if(this._timer.seconds>=45) {
-			this.physics.arcade.gravity.y = 1100;
-			Winner._player.body.gravity.y = -1100;
+			this.physics.arcade.gravity.y = Winner._gravityValue + 1200;
+			Winner._player.body.gravity.y = -Winner._gravityValue - 1200;
 		}
 		if(this._timer.seconds>60) {			
 			this.add.sprite((Winner.GAME_WIDTH-493)/2, (Winner.GAME_HEIGHT-271)/2, 'gameover');			
 			this.game.paused = true;
-			gameOver(Winner._score);
+			gameOver(finalScore)
 		}
 	}
 };
@@ -163,7 +172,16 @@ Winner.item = {
 		}
 		
 		var dropOffset = [-27,-36,-48];		
-		var candyType = Math.floor(Math.random()*3);		
+		
+		//设置0、1的概率为40%，2的概率为20%
+		var randomNum = Math.floor(Math.random()*10);
+		var candyType = 0;
+		if(randomNum>3 && randomNum<8){
+			candyType = 1;
+		} else if(randomNum>=8){
+			candyType = 2;
+		}
+
 		var candy = game.add.sprite(dropPos, dropOffset[candyType], 'candy');
 
 		if(candyType == 0){
@@ -193,4 +211,8 @@ Winner.item = {
 function gameOver(score){
 
 	gameOverCallBack && gameOverCallBack(score)
+}
+
+function restartGame(){
+	gameObj.state.start('Game');
 }

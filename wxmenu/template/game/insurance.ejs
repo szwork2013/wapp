@@ -21,14 +21,21 @@
 			button{
 				font-family: '微软雅黑'
 			}
+			.btn span{
+				margin-right: 5px;
+			}
 			.modal_suc_box font {
 				color: #c00;
 				padding: 0 2px;
 				line-height: 24px;
 			}
 			.startLicai{
-				padding: 10px 30px;
+				font-size: 17px;
+				padding: 10px 20px;
 
+			}
+			.startLicai span{
+				margin-right: 5px;
 			}
 			.rePlayBox{
 				width: 100%;
@@ -36,12 +43,13 @@
 				border-top: #ccc 1px solid;
 				padding: 10px 20px;
 				text-align: right;
+				position: relative;
 			}
 			.rePlayBtn{
 				display: inline-block;
 			}
 			.jineinput{
-				width: 50% !important;
+				width: 70% !important;
 			}
 			.jineDanwei{
 				padding-left: 10px;
@@ -62,12 +70,20 @@
 				text-align: center;
 			}
 			.btn-toolbar a{
-				padding: 3px;
+				display: block;
 			}
+			.btn-toolbar .btn{
+				display: block;
+				width: 200px;
+				font-size: 16px;
+				margin: 10px auto;
+			}
+
 			#selectBox .input-group-addon-left{
 				width: 72px;
 				display: block;
-				text-align: right;
+				text-align: left;
+				font-weight: bolder;
 			}
 			.getBonusBox{
 				padding: 10px;
@@ -88,7 +104,31 @@
 				margin-left: 15px;
 			}
 			.modal_suc_box{
+				font-size: 15px;
 				line-height: 30px;
+				text-align: left;
+			}
+			.modal_suc_box span{
+				font-family: "微软雅黑";
+				text-indent: 2em;
+				display: block;
+			}
+			.modal_suc_box font{
+				font-size: 20px;
+				padding: 0 2px;
+			}
+			h6.ft15{
+				font-size:18px !important;
+				color: #c00;
+				font-weight: bold;
+			}
+			.table td, .table th{
+				font-size: 13px;
+			}
+			#reSelectBtn{
+				position: absolute;
+				top: 10px;
+				left: 20px;
 			}
 		</style>
 	</head>
@@ -119,11 +159,11 @@
       </div>
 
       <div class="modal-body" id="successBox">
-        	<h6 class="modal_suc_box ft16">亲，你已经抢到<font id="score_font"></font>万的金币，手气不错哟，快来理财吧！
-        		<br/>您击败了全国<font id="rate_font"></font>的用户<br/>
-        		被封为<font id="title_font"></font></h6>
+        	<div class="modal_suc_box ft16">
+        		<span>亲，你已经抢到<font id="score_font"></font>万的金币，手气不错哟，快来理财吧！</span>
+        		<span>您击败了全国<font id="rate_font"></font>的用户被封为<font id="title_font"></font></span></div>
         <div class="form-group getBonusBox">
-        	<button id="startLicai" type="button" class="startLicai btn btn-danger btn-lg">开始理财</button>
+        	<button id="startLicai" type="button" class="startLicai btn btn-danger btn-lg"><span class="glyphicon glyphicon-calendar"></span>开始理财</button>
         	<button id="qiangHb" type="button" class="startLicai btn btn-lg">抢红包</button>
         </div>
       </div>
@@ -140,7 +180,7 @@
 				<div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon"><span class="input-group-addon-left">投保人性别</span></div>
-				      <select class="form-control jineinput" id="sexSelect">
+				      <select class="form-control " id="sexSelect">
 				      		<option value="1" selected="selected">男</option>
 				      		<option value="2">女</option>
 				      </select>
@@ -150,7 +190,7 @@
 				<div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon"><span class="input-group-addon-left">投保人年龄</span></div>
-				      <select class="form-control jineinput" id="ageSelect">
+				      <select class="form-control " id="ageSelect">
 		
 				      </select>
 				    </div>
@@ -160,9 +200,9 @@
 				    <div class="input-group">
 				      <div class="input-group-addon"><span class="input-group-addon-left">缴费年限</span></div>
 				      <select class="form-control" id="allocSelect">
-				      		<option value="1" selected="selected">1:2（缴费年限3年）</option>
-				      		<option value="2">1:4（缴费年限5年）</option>
-				      		<option value="3">1:9（缴费年限10年）</option>
+				      		<option value="1" selected="selected">1:2 (缴费3年)</option>
+				      		<option value="2">1:4 (缴费5年)</option>
+				      		<option value="3">1:9 (缴费10年)</option>
 				      </select>
 				    </div>
 				</div>
@@ -173,22 +213,21 @@
       </div>
 
       <div class="modal-body" id="showBonusBox" style="display:none">
-      	<div class="backSelectBox">
-        	<button id="reSelectBtn" type="button" class="btn btn-info">返回重新选择</button>
-        </div>	
+
         <div  class="tableBox" id="tableBox"></div>
         <div class="btn-toolbar" role="toolbar">
-		  		<a href="" target="_blank"><button type="button" class="btn btn-success">关于合众人寿</button></a>
+		  		<a href="" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>关于合众人寿</button></a>
 
-		  		<a href="" target="_blank"><button type="button" class="btn btn-default">风险提示</button></a>
+		  		<a href="" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-warning-sign"></span>风险提示</button></a>
 
-		  		<a href="" target="_blank"><button type="button" class="btn btn-default">产品说明</button></a>
+		  		<a href="" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-list"></span>产品说明</button></a>
 
 		</div>
       </div>
 
       <div class="rePlayBox">
-      		<button id="rePlayBtn" type="button" class="rePlayBtn btn btn-default">再玩一次</button>
+      		<button id="reSelectBtn" type="button" class="btn btn-info" style="display:none;">重选计划</button>
+      		<button id="rePlayBtn" type="button" class="rePlayBtn btn btn-danger"><span class="glyphicon glyphicon-repeat"></span>再玩一次</button>
       </div>
 
     </div>
@@ -218,9 +257,6 @@
 
 <script type="text/javascript">
 
-
-
-
 //http://wx.mintok.com/active/unionlife?ename=unionlife_game
 var forwardingUrl = 'http://wx.mintok.com/active/unionlife?ename=unionlife_game'
 var forwardingImg = 'http://piccvote.qiniudn.com/unipay_logo2.png'
@@ -231,6 +267,9 @@ var forwardingCallback = function(){
 
 	if(window.clickReplay){
 		setTimeout(function(){
+			$('#successBox, #showBonusBox, #selectBox').hide()
+			$('#item_success_modal').modal('hide')
+			//restartGame()
 			location.href = location.href
 		}, 1000)
 	}
@@ -305,9 +344,9 @@ var genZeroTo60Option = function(){
 var tableStr ='<table class="table table-hover">'+
 	      	  '<thead><tr>'+
 	          '<th>年龄</th>'+
-	          '<th>低档红利</th>'+
-	          '<th>中档红利</th>'+
-	          '<th>高档红利</th></tr></thead>'+
+	          '<th>低红利</th>'+
+	          '<th>中红利</th>'+
+	          '<th>高红利</th></tr></thead>'+
       		  '<tbody>{content}</tbody></table>';
 var putBonusData = function(bonusData, age, alloc){
 	var age = parseInt(age)
@@ -334,9 +373,9 @@ var putBonusData = function(bonusData, age, alloc){
     checkList.forEach(function(key){
     	tempStr += '<tr>'
     	tempStr += '<td>'+key.toString()+'岁</td>'
-    	tempStr += '<td>'+bonusData.lower[key.toString()]+'</td>'
-    	tempStr += '<td>'+bonusData.middle[key.toString()]+'</td>'
-    	tempStr += '<td>'+bonusData.high[key.toString()]+'</td>'
+    	tempStr += '<td>'+(bonusData.lower[key.toString()]/10000).toFixed(2)+'万</td>'
+    	tempStr += '<td>'+(bonusData.middle[key.toString()]/10000).toFixed(2)+'万</td>'
+    	tempStr += '<td>'+(bonusData.high[key.toString()]/10000).toFixed(2)+'万</td>'
     	tempStr += '</tr>'
     })
 
@@ -347,34 +386,34 @@ var putBonusData = function(bonusData, age, alloc){
 
 
 var getResultInfo = function(score){
-	if(score<= 100000){
+	if(score<= 100*10000){
 		return [Math.floor(score/10000), '10%', '小财神']
 	}
-	else if(score<= 140000){
+	else if(score<= 110*10000){
 		return [Math.floor(score/10000), '20%', '小财神']
 	}
-	else if(score<= 180000){
+	else if(score<= 120* 10000){
 		return [Math.floor(score/10000), '30%', '小财神']
 	}
-	else if(score<= 220000){
+	else if(score<= 130*10000){
 		return [Math.floor(score/10000), '40%', '小财神']
 	}
-	else if(score<= 260000){
+	else if(score<= 140*10000){
 		return [Math.floor(score/10000), '50%', '小财神']
 	}
-	else if(score<= 300000){
+	else if(score<= 150*10000){
 		return [Math.floor(score/10000), '60%', '大财神']
 	}
-	else if(score<= 340000){
+	else if(score<= 160*10000){
 		return [Math.floor(score/10000), '70%', '大财神']
 	}
-	else if(score<= 380000){
+	else if(score<= 170*10000){
 		return [Math.floor(score/10000), '80%', '大财神']
 	}
-	else if(score<= 400000){
+	else if(score<= 180*10000){
 		return [Math.floor(score/10000), '90%', '大财神']
 	}
-	else if(score> 420000){
+	else if(score> 190*10000){
 		return [Math.floor(score/10000), '99%', '大财神']
 	}
 
@@ -412,6 +451,8 @@ var bindClickEvent = function(){
 	})
 
 	$('#reSelectBtn').click(function(){
+		$('#modalTitle').html('理财计划')
+		$('#reSelectBtn').hide()
 		$('#successBox, #showBonusBox').hide()
 		$('#selectBox').show()
 		return false;
@@ -419,8 +460,7 @@ var bindClickEvent = function(){
 
 
 	$('#rePlayBtn').click(function(){
-		//$('#successBox, #showBonusBox, #selectBox').hide()
-		//$('#item_success_modal').modal('hide')
+
 		window.clickReplay = true
 		if($.cookie('gameIns') == '1'){
 			location.href = location.href
@@ -431,13 +471,19 @@ var bindClickEvent = function(){
 		return false;
 	})
 	
+	$('#qiangHb').click(function(){
+		alert('抢红包活动近期推出, 敬请期待…')
+	})
 
 	$('#getBonus').click(function(){
 		var cash = ($('#cashInput').val() - 0)*10000
 		var sex =$('#sexSelect').val()
 		var age =$('#ageSelect').val()
 		var alloc =$('#allocSelect').val()
+		$('#modalTitle').html('收益计算结果')
+		$('#reSelectBtn').show()
 		getBonusAjax(cash, sex, age, alloc)
+
 		return false;		
 	})
 
@@ -453,6 +499,7 @@ var bindClickEvent = function(){
 			$('#ageSelect').find('option').each(function(){
 				var selfVal = $(this).val()				
 				if(selAge>55 && selfVal == 55){
+					alert('10年交费年龄不能超过55岁')
 					$(this).attr('selected', 'selected')
 				}
 				if(selfVal >55){
