@@ -300,7 +300,7 @@ var addroute = function(app){
 		})
 
 		app.get('/clear', function(req,res){
-			res.render('clear/clearcookie.ejs')
+			res.render('clear/clearCookie.ejs')
 		})
 	})
 }
