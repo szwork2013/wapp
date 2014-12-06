@@ -4,15 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 <script type="text/javascript">
-	function clearCookie(){ 
-		var keys=document.cookie.match(/[^ =;]+(?=\=)/g); 
-		if (keys) { 
-			for (var i = keys.length; i--;){ 
-				document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString() 
-			} 
-		}
+	var cookies = document.cookie.split(";");
+	for(var i=0; i < cookies.length; i++) {
+	    var equals = cookies[i].indexOf("=");
+	    var name = equals > -1 ? cookies[i].substr(0, equals) : cookies[i];
+	    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
 	}
-	clearCookie()
 	alert('cookie 清除成功')
 </script>
 </head>
