@@ -149,7 +149,7 @@ font-size: 18px;
 </style>
 
 </head>
-<body>
+<body onload="loadf()">
 <div class="wrapper">
   <input type="hidden" id='openid' value=""/>
   <div class="header">
@@ -371,8 +371,8 @@ $(function(){
      //end last times
 
 
-        $('#start').click(function(){
-            
+        //$('#start').click(function(){
+            function loadf(){
             
             if(window.lotteryData.record.length>=6){
                alert('您的6次刮奖机会已经用完，明天再来吧')
