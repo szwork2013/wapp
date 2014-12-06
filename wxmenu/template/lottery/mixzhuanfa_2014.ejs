@@ -311,7 +311,7 @@ $(function(){
     wxappid:appId,
     },function(d){
       if(d.error == 1) return alert(d.data);
-      alert('资料完善成功，赶快去刮奖吧')
+      alert('资料完善成功，刷新页面即可看到奖品')
       $('#myModal').modal('hide')
       $.cookie('has_modify_info', 1, { expires: window.isforward_today, path: '/' })
       //window.localStorage['has_modify'] = '1';
