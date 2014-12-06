@@ -147,128 +147,7 @@ color: #555;
 font-size: 18px;
 }
 </style>
-<script type="text/javascript">
-  window.isTouch = false
 
-  var hasTouch = 'ontouchstart' in window;
-  var canvas;
-  var ctx;
-  var color = "#fff";
-  var lines = [];
-  var points = [];
-  $(document).ready(function () {
-      var offset = $("#myCanvas").offset();
-      var canvas_left = offset.left;
-      var canvas_top = offset.top;
-
-      canvas = document.getElementById('myCanvas');
-      ctx = canvas.getContext('2d');
-      ctx.fillStyle = "#999";
-      ctx.fillRect(0, 0, 535, 115);
-      //移动
-      var START_EV = hasTouch ? 'touchstart' : 'mousedown';
-      var MOVE_EV = hasTouch ? 'touchmove' : 'mousemove';
-      var END_EV = hasTouch ? 'touchend' : 'mouseup';
-      document.getElementById("myCanvas").addEventListener(START_EV, touchCheck, false);
-      document.getElementById("myCanvas").addEventListener(MOVE_EV, touchCheck, false);
-      document.getElementById("myCanvas").addEventListener(END_EV, touchCheck, false);
-      var startTouch;
-      var isDrag = false;
-      var lastPoint;
-      function touchCheck(evt) {
-          
-          if(!window.isTouch){
-             setTimeout(function(){
-
-                $('#myCanvas').hide()
-             },2500)
-          }
-          window.isTouch = true;
-
-
-          evt.preventDefault();
-          var touchX;
-          var touchY;
-          if (hasTouch) {
-              if (evt.touches.length > 0) {
-                  touchX = evt.touches[0].pageX - canvas_left;
-                  touchY = evt.touches[0].pageY - canvas_top;
-              }
-              else {
-                  if (lastPoint) {
-                      touchX = lastPoint.x;
-                      touchY = lastPoint.y;
-                  }
-              }
-          }
-          else {
-              touchX = evt.pageX - canvas_left;
-              touchY = evt.pageY - canvas_top;
-          }
-          
-          switch (evt.type) {
-              case START_EV:
-                  DrawLine();
-                  points = [];
-                  points.push({ x: touchX, y: touchY });
-                  isDrag = true;
-                  lastPoint = { x: touchX, y: touchY };
-                  break;
-              case MOVE_EV:
-                  if (isDrag) {
-                      points.push({ x: touchX, y: touchY });
-                      lastPoint = { x: touchX, y: touchY };
-                      DrawLine();
-                  }
-                  break;
-              case END_EV:
-                  isDrag = false;
-                  if (points.length > 0) {
-                      points.push({ x: touchX, y: touchY });
-                      lines.push(points);
-                      DrawLine();
-                  }
-                  break;
-          }
-      }
-      function DrawSingleLine(ctx, line) {
-          for (var j = 0; j < line.length; j++) {
-              var point = line[j];
-              if (j == 0)
-                  ctx.moveTo(point.x, point.y);
-              else
-                  ctx.lineTo(point.x, point.y);
-          }
-      }
-      function DrawLine() {
-          ctx.clearRect(0, 0, 535, 115);
-          ctx.globalCompositeOperation = "source-over";
-          ctx.fillStyle = "#999";
-          /*
-          var img = new Image();
-          img.src = "images/luck.png";
-          ctx.drawImage(img, 0, 0);*/
-          ctx.fillRect(0, 0, 535, 115);
-          ctx.globalCompositeOperation = "destination-out";
-          ctx.beginPath();
-          ctx.strokeStyle = color;
-          ctx.lineWidth = 30;
-          var tempLines = lines;
-          if (tempLines.length == 0) {
-              tempLines.push(points);
-          }
-          for (var i = 0; i < tempLines.length; i++) {
-              var line = tempLines[i];
-              DrawSingleLine(ctx, line);
-          }
-          if (isDrag && points.length > 0)
-              DrawSingleLine(ctx, points);
-          ctx.stroke();
-          ctx.closePath();
-      }
-  });
-
-</script>
 </head>
 <body>
 <div class="wrapper">
@@ -281,9 +160,7 @@ font-size: 18px;
     <p class="get_prize_tip get_prize_tip2">2014年9月13日-9月23日</p>-->
     <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a>
         <div class="luck" id="lottery_result" style="display:;"></div>
-       <canvas id="myCanvas" class="myCanvas" width="267px" height="157px" style="display:;">
-                your browser does not support the canvas element
-      </canvas>
+       
       <ul id="prize_list" class="prize_list">
 
       </ul>
