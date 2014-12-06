@@ -275,7 +275,8 @@ font-size: 18px;
  </script>-->
 
 
-<body onload="loadf()" >
+<!--<body onload="loadf()" >-->
+<body>
 <div class="wrapper">
   <input type="hidden" id='openid' value=""/>
   <div class="header">
@@ -286,9 +287,9 @@ font-size: 18px;
    
     <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a>
         <div class="luck" id="lottery_result" style="display:;"></div>
-        <canvas id="myCanvas" class="myCanvas" width="267px" height="157px" style="display:;">
+       <!-- <canvas id="myCanvas" class="myCanvas" width="267px" height="157px" style="display:;">
                 your browser does not support the canvas element
-      </canvas>
+      </canvas>-->
       <ul id="prize_list" class="prize_list">
 
       </ul>
@@ -511,11 +512,11 @@ $(function(){
      //end last times
 
 
-        function loadf(){
+        $('#start').click(function(){
             
             
             if(window.lotteryData.record.length>=6){
-               alert('谢谢参与')
+               alert('您的6次刮奖机会已经用完，明天再来吧')
                return false;
             }
 
@@ -543,10 +544,10 @@ $(function(){
                   return alert(d2.data)
                 }
                 if(d2.data.prizeId == '0'){
-                  alert('谢谢参与')
+                  $('#lottery_result').html('谢谢参与')
                 }
                 if(d2.data.prizeId != '0' && d2.data.prizeObj){
-                  alert(d2.data.prizeObj.name)
+                  $('#lottery_result').html(d2.data.prizeObj.name)
                 }           
 
                 //$('#myCanvas, #lottery_result').show();
@@ -559,11 +560,12 @@ $(function(){
             },'json')
 
             return false;
-        }
+        })
 
 
   
      }
+
 
 
 
