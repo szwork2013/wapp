@@ -298,6 +298,10 @@ var addroute = function(app){
 			req.session['count'] = count
 			res.send('welcome count: '+count.toString());
 		})
+
+		app.get('/clear', function(req,res){
+			res.render('clear/clearcookie.ejs')
+		})
 	})
 }
 

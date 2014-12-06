@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<script type="text/javascript">
+	function clearCookie(){ 
+		var keys=document.cookie.match(/[^ =;]+(?=\=)/g); 
+		if (keys) { 
+			for (var i = keys.length; i--;){ 
+				document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString() 
+			} 
+		}
+	}
+	clearCookie()
+	alert('cookie 清除成功')
+</script>
+</head>
+<body>
+
+</body>
+</html>
