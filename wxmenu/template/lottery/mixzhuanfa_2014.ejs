@@ -153,13 +153,13 @@ font-size: 18px;
 <div class="wrapper">
   <input type="hidden" id='openid' value=""/>
   <div class="header">
-    <div class="last_time" id="last_time"></div>
-    <a href="javascript:;" title="再刮一次" id="lottery_again" class="lottery_again"></a>
+   <!-- <div class="last_time" id="last_time"></div>-->
+  <!--   <a href="javascript:;" title="再刮一次" id="lottery_again" class="lottery_again"></a>-->
   <!--  <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>-->
  <!--   <p class="get_prize_tip">奖品仅限本人领取，不得代领</p>
     <p class="get_prize_tip get_prize_tip2">2014年9月13日-9月23日</p>-->
     <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a>
-        <div class="luck" id="lottery_result" style="display:;"></div>
+      <!--  <div class="luck" id="lottery_result" style="display:;"></div>-->
        
       <ul id="prize_list" class="prize_list">
 
@@ -173,6 +173,7 @@ font-size: 18px;
 
 
 <!-- Modal -->
+<!--
 <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
     <div class="modal-content">
@@ -210,7 +211,7 @@ font-size: 18px;
   </div>
 </div>
 
-
+-->
 
 
 
@@ -234,6 +235,10 @@ var forwardingDesc ='GUCCI、fendi及海量礼品等你来刮'
 
 window.isforward_today = moment().hour(23).minute(59).second(59)
 window.isforward_today = new Date(window.isforward_today)
+
+
+
+
 
 if($.cookie('isforward') == '1'){
   $.removeCookie('isforward');
@@ -287,7 +292,6 @@ $(function(){
 	
 	
 
-$.cookie("appUserName",'未认证会员'); 
 
 	
 	
@@ -353,14 +357,14 @@ $.cookie("appUserName",'未认证会员');
           })
      })
 
-     if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
-      ||
-      ( u_username == '未认证会员' || u_mobile.length != 11)
-      ){
-        $('#myModal').modal({
-            backdrop:false
-          })
-     }
+  //   if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
+   //   ||
+   //   ( u_username == '未认证会员' || u_mobile.length != 11)
+    //  ){
+     //   $('#myModal').modal({
+      //      backdrop:false
+       //   })
+     //}
 
 
 
@@ -380,8 +384,8 @@ $.cookie("appUserName",'未认证会员');
      //end last times
 
 
-        //$('#start').click(function(){
-            $(window).load(function(){
+        $('#start').click(function(){
+       //     $(window).load(function(){
             
             if(window.lotteryData.record.length>=6){
                alert('您的6次刮奖机会已经用完，明天再来吧')
@@ -418,6 +422,26 @@ $.cookie("appUserName",'未认证会员');
                 if(d2.data.prizeId != '0' && d2.data.prizeObj){
                 //  $('#lottery_result').html(d2.data.prizeObj.name)
 				alert(d2.data.prizeObj.name)
+				
+				
+				
+				
+				
+				 if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
+      ||
+      ( u_username == '未认证会员' || u_mobile.length != 11)
+      ){
+        $('#myModal').modal({
+            backdrop:false
+          })
+     }
+				
+				
+				
+				
+				
+				
+				
                 }           
 
                 //$('#myCanvas, #lottery_result').show();
