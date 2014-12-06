@@ -372,7 +372,7 @@ $(function(){
 
 
         //$('#start').click(function(){
-            window.onload = function(){
+            $(window).load(function(){
             
             if(window.lotteryData.record.length>=6){
                alert('您的6次刮奖机会已经用完，明天再来吧')
@@ -421,7 +421,7 @@ $(function(){
             },'json')
 
             return false;
-        }
+        })
 
 
   
