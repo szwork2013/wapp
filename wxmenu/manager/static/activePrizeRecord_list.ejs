@@ -71,18 +71,37 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="truename">真实姓名</label>
+                <label for="truename">抽奖姓名</label>
             </div>
             <div data-container-for="truename" class="k-edit-field w-800-r">
                <input type="text"  class="k-input k-textbox " name="truename" data-bind="value:truename" >
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="mobile">联系电话</label>
+                <label for="mobile">抽奖电话</label>
             </div>
             <div data-container-for="mobile" class="k-edit-field w-800-r">
                <input type="text"  class="k-input k-textbox " name="mobile" data-bind="value:mobile" >
             </div>
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserName">真实姓名</label>
+            </div>
+            <div data-container-for="appUserName" class="k-edit-field w-800-r">
+               <input type="text"  class="k-input k-textbox " name="appUserName" data-bind="value:appUserName" readonly="readonly" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserMobile">联系电话</label>
+            </div>
+            <div data-container-for="appUserMobile" class="k-edit-field w-800-r">
+               <input type="text"  class="k-input k-textbox " name="appUserMobile" data-bind="value:appUserMobile" readonly="readonly">
+            </div>
+
+
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="recordIp">抽奖IP</label>
@@ -194,6 +213,8 @@
                                     "code2":{editable: true},
                                     "code3":{editable: true},
                                     "code4":{editable: true},
+                                    "appUserName":{editable: false},
+                                    "appUserMobile":{editable: false},
                                 }
                             }
                         }
@@ -268,15 +289,24 @@ $.post('/manger/active/getList',{},function(data_ary){
                         },
                         { 
                             field: "truename",
-                            title: "真实姓名",
+                            title: "抽奖姓名",
                         },
                         { 
                             field: "mobile",
-                            title: "手机号码",
+                            title: "抽奖号码",
+                        },
+                        { 
+                            field: "appUserName",
+                            title: "姓名",
+                        },
+                        { 
+                            field: "appUserMobile",
+                            title: "手机",
                         },
                         { 
                             field: "recordIp",
                             title: "抽奖IP",
+                            hidden:true
                         },
                         { 
                             field: "giftId",
