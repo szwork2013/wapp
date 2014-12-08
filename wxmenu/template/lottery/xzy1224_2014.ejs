@@ -1,0 +1,651 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>香樟园圣诞好礼大抽奖</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no;"/>
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no">
+<link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
+<script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
+<script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+<%- newrelic.getBrowserTimingHeader() %>
+
+
+<style type="text/css">
+*{ margin:0; padding:0;}
+body{ color:#fff; background:#c0c0c0; font-size:14px; font-family:"微软雅黑"; line-height:20px;}
+a{ color:#fff; text-decoration:none;}
+img{ border:none; vertical-align:middle;}
+ul{ overflow:hidden;}
+ul li{ list-style:none; float:left;}
+.wrapper{ width:320px; margin:0 auto; background:#fff;}
+.header{ background:url('http://bcs.duapp.com/xytimg/choujiang%2Fxzy1224.jpg') no-repeat;background-size: 320px 540px; width:320px;height:540px; position:relative;}
+.luck {
+width: 251px;
+height: 52px;
+line-height: 53px;
+cursor: pointer;
+position: absolute;
+right: 34px;
+top: 506px;
+font-size: 14px;
+letter-spacing: 1px;
+text-align: center;
+color: #fff;
+z-index: 3;
+background-color: #494949;
+overflow: hidden;
+}
+.myCanvas {
+width: 251px;
+height: 52px;
+cursor: pointer;
+position: absolute;
+right: 34px;
+top: 506px;
+z-index: 5;
+}
+
+.content ul{ padding:40px;}
+.content ul li{ margin-top:-0px;}
+.lottery_again {
+position: absolute;
+top: 565px;
+left: 38px;
+display: block;
+width: 247px;
+height: 29px;
+}
+.lottery_again2{
+  top: 680px;
+    position: absolute;
+  left:10px;
+  display: block;
+  width: 300px;
+  height: 71px;
+}
+.prize_list {
+width: 280px;
+height: 80px;
+display: block;
+position: absolute;
+top: 420px;
+left: 20px;
+}
+.get_prize_tip{
+  width: 200px;
+  height: 20px;
+  color:#000;
+  display: block;
+  position: absolute;
+top: 611px;
+left: 68px;
+text-align: left;
+}
+.get_prize_tip2{
+  top: 581px;
+  background-color: #fae7bf;
+}
+.prize_list li{
+  display: block;
+  width: 280px;
+  text-align: left;
+  line-height: 25px;
+  color: #c00;
+}
+.start {
+width: 220px;
+height: 100px;
+display: block;
+z-index: 99;
+position: absolute;
+font-size: 22px;
+color: #000;
+line-height: 50px;
+top: 290px;
+left: 52px;
+}
+.start:hover{
+  text-decoration: none;
+  color: #777;
+}
+.last_time {
+width: 35px;
+height: 35px;
+display: block;
+z-index: 2;
+position: absolute;
+font-size: 22px;
+color: #FFF;
+line-height: 30px;
+top: 451px;
+left: 208px;
+background-color: transparent;
+}
+.modal-title, .modal-body{
+  color: #000;
+}
+.modal-body{
+  line-height: 24px;
+}
+.modify_info{
+width: 280px;
+height: 38px;
+line-height: 38px;
+display: block;
+position: absolute;
+top: 709px;
+left: 20px;
+color: #555;
+font-size: 18px;
+}
+</style>
+
+</head>
+<body>
+
+
+
+
+
+
+<div class="wrapper">
+  <input type="hidden" id='openid' value=""/>
+  <div class="header">
+   
+    <a href="javascript:;" id="start" class="start" title=""> </a>
+      <!--  <div class="luck" id="lottery_result" style="display:;"></div>-->
+       
+      <ul id="prize_list" class="prize_list">
+
+      </ul>
+   <!--   <a href="javascript:;" id="modify_info" class="modify_info">变更联系资料</a>  -->
+    </div>
+    
+
+
+
+<!-- Modal -->
+
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+       
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     
+        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，当您刮中奖品后方便我们联系您</h4>
+      </div> 
+    <form class="bs-example bs-example-form" role="form">
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="<%= wxuobj.appUserName %>" maxlength="20">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" style="padding:0 10px;">
+            <span class="glyphicon glyphicon-phone" ></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="<%= wxuobj.appUserMobile %>" maxlength="11">
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <button type="button" class="btn btn-primary" id="save_change">保存</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+<script type="text/javascript">
+
+
+var forwardingUrl = 'http://mp.weixin.qq.com/s?__biz=MjM5Njg1MTAyMg==&mid=201189558&idx=1&sn=1cdb4c8073ddc36f9ec8275e9e467052#rd';
+var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuanfa%2Fmix12062.jpg'
+var forwardingTitle ='香樟园圣诞好礼大抽奖'
+var forwardingDesc ='香樟园圣诞好礼大抽奖'
+
+
+window.isforward_today = moment().hour(23).minute(59).second(59)
+window.isforward_today = new Date(window.isforward_today)
+
+
+
+
+
+if($.cookie('isforward') == '1'){
+  $.removeCookie('isforward');
+  $.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+}
+if($.cookie('has_modify_info') == '1'){
+  $.removeCookie('has_modify_info');
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: '/' });
+}
+
+
+//alert(window.isforward_today)
+//$.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+//alert($.cookie('isforward'))
+
+
+
+
+var userid = '<%= userid%>'
+var appId = '<%= appId%>'
+var u_username = '<%= wxuobj.appUserName %>'
+var u_mobile = '<%= wxuobj.appUserMobile %>'
+$(function(){
+  $('#lottery_again').click(function(){
+    location.href = location.href;
+  })
+
+  $('#lottery_rule').click(function(){
+       $('#myModal2').modal({
+            backdrop:false
+          })
+  })
+
+  //check username mobile
+  var user_v = $('#appUserName').val();
+  var mobile_v = $('#appUserMobile').val();
+  if(user_v == '未认证会员'){
+      $('#appUserName').val('');
+  }
+  if(mobile_v.length != 11){
+      $('#appUserMobile').val('');
+  }
+
+  //end check
+
+
+  $('#save_change').click(function(){
+    var appUserName = $('#appUserName').val().trim();
+    var appUserMobile = $('#appUserMobile').val().trim();
+	
+	
+	
+
+
+	
+	
+	
+    if(!appUserName || appUserName == '未认证会员'){
+      alert('请填写真实姓名')
+      return false;
+    }
+    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+      alert('请输入正确的手机号码')
+      return false;
+    }
+    $.post('/api/user/modify',{
+    appUserName:appUserName, 
+    appUserMobile:appUserMobile,
+    wxuserid:userid,
+    wxappid:appId,
+    },function(d){
+      if(d.error == 1) return alert(d.data);
+      alert('资料完善成功，刷新页面即可看到奖品')
+      $('#myModal').modal('hide')
+      $.cookie('has_modify_info', 1, { expires: window.isforward_today, path: '/' })
+      //window.localStorage['has_modify'] = '1';
+      //$('#p2').html(appUserName)
+    },'json')
+    return false;
+  })
+
+  window.lotteryData = {};
+
+   $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+    if(d.error == 1){
+      return alert(d.data)
+    }
+        window.lotteryData = d.data;
+        work(d.data)
+
+    },'json')
+
+  var work = function(data){
+
+         //put my prize
+     var tmp_s = ''
+     data.record.forEach(function(ro){
+      if(ro.prizeId != '0' && ro.prizeObj){
+        
+        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+      }
+     })
+     $('#prize_list').html(tmp_s)
+     //end pu prize
+
+    
+    window.lotteryData.record = window.lotteryData.record.filter(function(ro){
+        return moment(ro.writeTime) >= (moment().hour(0).minute(0).second(0))
+    })
+
+
+
+     $('#modify_info').click(function(){
+        $('#myModal').modal({
+            backdrop:false
+          })
+     })
+
+  //   if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
+   //   ||
+   //   ( u_username == '未认证会员' || u_mobile.length != 11)
+    //  ){
+     //   $('#myModal').modal({
+      //      backdrop:false
+       //   })
+     //}
+
+
+
+     //last times
+     if($.cookie('isforward') == '1'){
+          var times = 6 - window.lotteryData.record.length  
+     }
+     else if(window.lotteryData.record.length>3){
+          var times = 6 - window.lotteryData.record.length  
+     }
+     else if(window.lotteryData.record.length<=3){
+          var times = 3 - window.lotteryData.record.length  
+     }
+     
+     times = times < 0 ? 0 : times;
+     $('#last_time').html(times)
+     //end last times
+
+
+        $('#start').click(function(){
+       //     $(window).load(function(){
+            
+            if(window.lotteryData.record.length>=6){
+               alert('您的6次刮奖机会已经用完，明天再来吧')
+               return false;
+            }
+
+              if(window.lotteryData.record.length>=3 && $.cookie('isforward') != '1'){
+                  alert('您已经刮过3次了，转发本页面到朋友圈可再次获得3次刮奖机会')
+                  return false;
+              }
+
+            var forword = 0;
+            if(window.lotteryData.record.length>=3){
+                forword = 1;
+            }
+
+            //var count = parseInt($.cookie('count') || 0) + 1;
+            //$.cookie('count', count, { expires: 365, path: '/' });
+            //alert($.cookie('count'))
+
+            $(this).hide().css('z-index','-1');
+
+            $.post('/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>',{
+                lotteryId:data.lottery._id,
+                isforward:forword
+            },function(d2){
+                if(d2.error){
+                  return alert(d2.data)
+                }
+                if(d2.data.prizeId == '0'){
+                //  $('#lottery_result').html('谢谢参与')
+				 alert('谢谢参与');
+                }
+                if(d2.data.prizeId != '0' && d2.data.prizeObj){
+                //  $('#lottery_result').html(d2.data.prizeObj.name)
+				alert('您获得了'+d2.data.prizeObj.name)
+				
+				
+				
+				
+				
+				 if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
+      ||
+      ( u_username == '未认证会员' || u_mobile.length != 11)
+      ){
+        $('#myModal').modal({
+            backdrop:false
+          })
+     }
+				
+				
+				
+				
+				
+				
+				
+                }           
+
+                //$('#myCanvas, #lottery_result').show();
+
+                $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+                    if(d.error) return;
+                    window.lotteryData = d.data;
+                },'json')
+
+            },'json')
+
+            return false;
+        })
+
+
+  
+     }
+
+
+
+
+
+
+//forward
+
+
+
+
+
+
+
+
+
+
+
+
+var share_score = 2000;
+var _host = "http://" + window.location.host;
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+function attention_wx()
+{
+    $.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+}
+function is_zero()
+{
+    if(share_score == 0)
+    {
+        share_score = 2000;
+    }
+}
+var dataForWeixin = {
+    appId: "",
+    MsgImg: window.forwardingImg,
+    TLImg: window.forwardingImg,
+    url:  window.forwardingUrl,
+    title: window.forwardingTitle,
+    desc: window.forwardingDesc,
+    fakeid: "",
+    callback: function() {
+        setTimeout(function(){
+          attention_wx();
+         },2000);       }
+}; (function() {
+    var onBridgeReady = function() {
+        WeixinJSBridge.on('menu:share:appmessage',
+        function(argv) {
+            is_zero();
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "appid": dataForWeixin.appId,
+                "img_url": dataForWeixin.MsgImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:timeline',
+        function(argv) { (dataForWeixin.callback)();
+        is_zero();
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) {});
+        });
+        WeixinJSBridge.on('menu:share:weibo',
+        function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": dataForWeixin.title,
+                "url": dataForWeixin.url
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:facebook',
+        function(argv) { (dataForWeixin.callback)();
+            WeixinJSBridge.invoke('shareFB', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) {});
+        });
+    };
+    if (document.addEventListener) {
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    } else if (document.attachEvent) {
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+})();
+
+
+
+
+
+
+
+var WeixinApi = (function () { 
+ 
+    /* 这里省略了一堆代码……下面直接看调用接口 */ 
+    return {
+        ready           :wxJsBridgeReady,
+        shareToTimeline :weixinShareTimeline,
+        shareToWeibo    :weixinShareWeibo,
+        shareToFriend   :weixinSendAppMessage,
+        showOptionMenu  :showOptionMenu,
+        hideOptionMenu  :hideOptionMenu,
+        showToolbar     :showToolbar,
+        hideToolbar     :hideToolbar,
+        getNetworkType  :getNetworkType,
+        imagePreview    :imagePreview
+    };    
+ 
+})();
+// 所有功能必须包含在 WeixinApi.ready 中进行
+WeixinApi.ready(function(Api){
+    
+    // 微信分享的数据
+    var wxData = {
+        "imgUrl":'http://www.baidufe.com/fe/blog/static/img/weixin-qrcode-2.jpg',
+        "link":'http://www.baidufe.com',
+        "desc":'大家好，我是Alien，Web前端&Android客户端码农，喜欢技术上的瞎倒腾！欢迎多交流',
+        "title":"大家好，我是赵先烈"
+    };
+ 
+    // 分享的回调
+    var wxCallbacks = {
+        // 分享操作开始之前
+        ready:function () {
+            alert('ready')
+            // 你可以在这里对分享的数据进行重组
+        },
+        // 分享被用户自动取消
+        cancel:function (resp) {
+            alert('cancel')
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+        },
+        // 分享失败了
+        fail:function (resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+        },
+        // 分享成功
+        confirm:function (resp) {
+                
+        },
+        // 整个分享过程结束
+        all:function (resp) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+        }
+    };
+ 
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+ 
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+ 
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+})
+
+})
+</script>
+
+
+<div style="display:none;">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4d70084ab8a23d1e8e76861a9553677d' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>
+</body>
+</html>
