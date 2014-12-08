@@ -3,6 +3,7 @@ var dl3 = require('../../dl/lotteryPrizeModel.js');
 var dl4 = require('../../dl/lotteryModel.js');
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
+var async = require('async')
 var obj = {}
 var salt = global.app.get('salt');
 var json2csv = require('json2csv')
@@ -30,43 +31,105 @@ obj.read = function(req, res){
 	var resObj = {"Data":[],"Total":0};
 
 
-	dl4.findAll({},0,100000, function(err,lotteryList){
-		if(err) return res.send(500,err);
-		if(req.session.adminAppId != '1'){
-			var lotteryIds = [];
-			lotteryList.forEach(function(lo){
-				if(lo.appId.toString() == req.session.adminAppId){
-					lotteryIds.push(lo._id.toString())
+
+	async.series([
+		function(callback){
+			if(filter.appUserMobile || filter.appUserName){
+				var userFilter = {}
+				if(filter.appUserMobile){
+					userFilter.appUserMobile = filter.appUserMobile
 				}
-			})
-			if(filter.lotteryId && lotteryIds.indexOf(filter.lotteryId) == -1){
-				return res.send({"Data":[],"Total":0});
-			}
-			if(!filter.lotteryId){
-				filter.lotteryId = {'$in': lotteryIds}
-			}
-		}
+				if(filter.appUserName){
+					userFilter.appUserName = filter.appUserName
+				}
+				dl2.find(userFilter, function(err, list){
+					if(err) return res.send(500,err);
+					if(list.length == 0) return callback()
+					var ids = []
+					list.forEach(function(uo){
+						ids.push(uo._id.toString())
+					})
+					//将查出用户列表
 
-		dl.findAll(filter, skip, pageSize, function(err,doc){
+					filter['userId'] = {"$in":ids}
+					delete filter['appUserMobile']
+					delete filter['appUserName']
+					callback()
+				})
+			}
+			else{
+				callback()
+			}
+	}], function(){
+
+		dl4.findAll({},0,100000, function(err,lotteryList){
 			if(err) return res.send(500,err);
-			if(doc.length == 0) return res.send({"Data":[],"Total":0});
-			resObj["Data"] = doc;
-			var ids = []
-			doc.forEach(function(v){
-				ids.push(v.userId)
-			})
+			if(req.session.adminAppId != '1'){
+				var lotteryIds = [];
+				lotteryList.forEach(function(lo){
+					if(lo.appId.toString() == req.session.adminAppId){
+						lotteryIds.push(lo._id.toString())
+					}
+				})
+				if(filter.lotteryId && lotteryIds.indexOf(filter.lotteryId) == -1){
+					return res.send({"Data":[],"Total":0});
+				}
+				if(!filter.lotteryId){
+					filter.lotteryId = {'$in': lotteryIds}
+				}
+			}
 
-			dl.countAll(filter,function(err,count){
+			dl.findAll(filter, skip, pageSize, function(err,doc){
 				if(err) return res.send(500,err);
+				if(doc.length == 0) return res.send({"Data":[],"Total":0});
+				resObj["Data"] = doc;
+				var ids = []
+				doc.forEach(function(v){
+					ids.push(v.userId)
+				})
 
-					resObj["Total"] = count
-					
-					res.json(resObj);
+				dl2.getUserByIds(ids, function(err, userlist){
+					if(err) return res.send(500,err);
+					dl.countAll(filter,function(err,count){
+						if(err) return res.send(500,err);
+
+							resObj["Total"] = count
+							var tmpList = []
+							resObj["Data"].forEach(function(obj){
+								var tmpObj = {
+										"_id": obj._id,
+		                                "lotteryId": obj.lotteryId,
+		                                "prizeId": obj.prizeId,
+		                                "userId": obj.userId,
+		                                "truename":obj.truename,
+		                                "mobile":obj.mobile,
+		                                "recordIp":obj.recordIp,
+		                                "giftId":obj.giftId,
+		                                "isForward":obj.isForward,
+		                                "writeTime": obj.writeTime,
+		                                "appUserName":'未找到用户',
+		                                'appUserMobile':'未找到用户',
+		                                "code1":obj.code1,
+		                                "code2":obj.code2,
+		                                "code3":obj.code3,
+		                                "code4":obj.code4,
+									}
+								userlist.forEach(function(uobj){
+									if(uobj.value.toString() == tmpObj.userId){
+											tmpObj['appUserName'] = uobj.text
+											tmpObj['appUserMobile'] = uobj.mobile
+									}
+								})
+								tmpList.push(tmpObj)					
+							})
+							resObj["Data"] = tmpList
+							res.json(resObj);
+						})
+					})//dl2 find ids
 				
 			})
-			
 		})
-	})
+	})//end async
 
 }
 obj.update = obj.create = function(req, res){

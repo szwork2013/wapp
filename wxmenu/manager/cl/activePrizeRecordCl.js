@@ -130,8 +130,9 @@ obj.read = function(req, res){
 							resObj["Data"] = tmpList
 							res.json(resObj);
 						})
-					})
-				})
+					})//dl2 find ids
+
+				})//end find all
 		})
 
 	})//end async

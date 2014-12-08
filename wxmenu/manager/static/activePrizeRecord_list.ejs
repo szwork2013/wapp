@@ -71,14 +71,14 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="truename">抽奖姓名</label>
+                <label for="truename">兑奖姓名</label>
             </div>
             <div data-container-for="truename" class="k-edit-field w-800-r">
                <input type="text"  class="k-input k-textbox " name="truename" data-bind="value:truename" >
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="mobile">抽奖电话</label>
+                <label for="mobile">兑奖电话</label>
             </div>
             <div data-container-for="mobile" class="k-edit-field w-800-r">
                <input type="text"  class="k-input k-textbox " name="mobile" data-bind="value:mobile" >
@@ -289,19 +289,21 @@ $.post('/manger/active/getList',{},function(data_ary){
                         },
                         { 
                             field: "truename",
-                            title: "抽奖姓名",
+                            title: "兑奖姓名",
                         },
                         { 
                             field: "mobile",
-                            title: "抽奖号码",
+                            title: "兑奖号码",
                         },
                         { 
                             field: "appUserName",
                             title: "姓名",
+                            hidden:true
                         },
                         { 
                             field: "appUserMobile",
                             title: "手机",
+                            hidden:true
                         },
                         { 
                             field: "recordIp",
