@@ -5,6 +5,8 @@ Winner.Boot.prototype = {
 		// preload the loading indicator first before anything else
 		this.load.image('preloaderBar', '/static/winner_skin/imgs/loading-bar.png');
 		this.load.image('preloaderBarBg', '/static/winner_skin/imgs/loading-bar-bg.png');
+		this.load.image('background', '/static/winner_skin/imgs/background.png');
+		this.load.image('title', '/static/winner_skin/imgs/title.png');
 	},
 	create: function(){
 		// set scale options

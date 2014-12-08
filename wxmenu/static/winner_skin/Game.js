@@ -23,7 +23,7 @@ Winner.Game.prototype = {
 		this.physics.startSystem(Phaser.Physics.ARCADE);		
 		this.physics.arcade.gravity.y = Winner._gravityValue;
 		
-		this.add.sprite(0, 0, 'background2');
+		this.add.sprite(0, 0, 'background');
 		this.add.sprite(-30, Winner.GAME_HEIGHT-166, 'floor');
 		this.add.sprite(10, 5, 'score-bg');		
 		this.add.button(Winner.GAME_WIDTH-96-10, 5, 'button-pause', this.managePause, this, 1, 0, 2);					
@@ -118,10 +118,8 @@ Winner.Game.prototype = {
 		this._spawnCandyTimer += this.time.elapsed;
 		this._deltaScoreTimer += this.time.elapsed;
 		
-		if(this._spawnCandyTimer > 500) {			
+		if(this._spawnCandyTimer > 300) {			
 			this._spawnCandyTimer = 0;		
-			//掉落2个金币	
-			Winner.item.spawnCandy(this);
 			Winner.item.spawnCandy(this);
 		}
 
@@ -139,21 +137,14 @@ Winner.Game.prototype = {
 			}
 		});
 		
-		Winner._time.setText("剩余时间: " + (60-Math.floor(this._timer.seconds)) + " 秒");
+		Winner._time.setText("剩余时间: " + (30-Math.floor(this._timer.seconds)) + " 秒");		
 
-		if(this._timer.seconds>=15) {
-			this.physics.arcade.gravity.y = Winner._gravityValue + 400;
-			Winner._player.body.gravity.y = -Winner._gravityValue - 400;
-		}
-		if(this._timer.seconds>=30) {
-			this.physics.arcade.gravity.y = Winner._gravityValue + 800;
-			Winner._player.body.gravity.y = -Winner._gravityValue - 800;
-		}
-		if(this._timer.seconds>=45) {
-			this.physics.arcade.gravity.y = Winner._gravityValue + 1200;
-			Winner._player.body.gravity.y = -Winner._gravityValue - 1200;
-		}
-		if(this._timer.seconds>60) {			
+		//每5秒重力提升一次
+		var nowGravity = (Math.floor(this._timer.seconds/5) + 1) * Winner._gravityValue;
+		this.physics.arcade.gravity.y = nowGravity;
+		Winner._player.body.gravity.y = -nowGravity;
+
+		if(this._timer.seconds>30) {			
 			this.add.sprite((Winner.GAME_WIDTH-493)/2, (Winner.GAME_HEIGHT-271)/2, 'gameover');			
 			this.game.paused = true;
 			gameOver(finalScore)
@@ -174,11 +165,13 @@ Winner.item = {
 		var dropOffset = [-27,-36,-48];		
 		
 		//设置0、1的概率为40%，2的概率为20%
-		var randomNum = Math.floor(Math.random()*10);
+		var randomNum = Math.floor(Math.random()*100);
 		var candyType = 0;
-		if(randomNum>3 && randomNum<8){
+		if(randomNum<=10){
+			candyType = 0;
+		} else if(randomNum>10 && randomNum<30){
 			candyType = 1;
-		} else if(randomNum>=8){
+		} else if(randomNum>=30){
 			candyType = 2;
 		}
 
@@ -209,7 +202,6 @@ Winner.item = {
 };
 
 function gameOver(score){
-
 	gameOverCallBack && gameOverCallBack(score)
 }
 

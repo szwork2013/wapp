@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+<meta charset="utf-8">
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="viewport" content="width=device-width, initial-scale=0.67,maximum-scale=0.67,user-scalable=no;"/>
 
 		<link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
 		<link href="http://piccvote.qiniudn.com/base.css" rel="stylesheet">
@@ -37,12 +39,14 @@
 				margin-right: 5px;
 			}
 			.rePlayBox{
-				width: 100%;
+				width: 275px;
 				height: auto;
-				border-top: #ccc 1px solid;
-				padding: 10px 20px;
+				padding: 10px 0;
 				text-align: right;
-				position: relative;
+				position: absolute;
+				left: 25px;
+				height: 54px;
+				bottom: 5px;
 			}
 			.rePlayBtn{
 				display: inline-block;
@@ -75,7 +79,7 @@
 				display: block;
 				width: 200px;
 				font-size: 16px;
-				margin: 10px auto;
+				margin: 9px auto;
 			}
 
 			#selectBox .input-group-addon-left{
@@ -103,9 +107,10 @@
 				margin-left: 15px;
 			}
 			.modal_suc_box{
-				font-size: 15px;
-				line-height: 30px;
+				font-size: 16px;
+				line-height: 32px;
 				text-align: left;
+				color: #ccc;
 			}
 			.modal_suc_box span{
 				font-family: "微软雅黑";
@@ -115,6 +120,7 @@
 			.modal_suc_box font{
 				font-size: 20px;
 				padding: 0 2px;
+				color:#fffa50;
 			}
 			h6.ft15{
 				font-size:18px !important;
@@ -123,11 +129,64 @@
 			}
 			.table td, .table th{
 				font-size: 13px;
+				color:#ccc;
+				font-weight: normal;;
 			}
 			#reSelectBtn{
 				position: absolute;
 				top: 10px;
 				left: 20px;
+			}
+			.androidArrow{
+				position: absolute;
+				display: block;
+				top: 11px;
+				right: 10px;
+				z-index: 3;
+				background-color: #fff;
+			}
+			.modal-content{
+				width: 326px;
+				height: 440px;
+				padding:50px 35px;
+				background: url(http://piccvote.qiniudn.com/insGame/insGameOpenDiv3.png) 0 0 no-repeat !important;
+				display: block;
+				position: relative;
+				background-color:inherit;
+				box-shadow:none;
+				border: none;
+			}
+			.modal-dialog{
+				width: 326px;
+				overflow: hidden;
+				position: absolute;
+				left: 50%;
+				margin:30px 0 0 -163px !important;
+			}
+			#modalTitle{
+				position: absolute;
+				top: 4px;
+				left: 82px;
+				color:#fffa50;
+				width: 182px;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+			}
+			.modal-header{
+				border: none;
+			}
+			.modal-body{
+				padding: 0
+			}
+			#showBonusBox{
+				padding: 0;
+			}
+			.jineDanwei{
+				color:#ccc;
+			}
+			#selectBox, #successBox{
+				padding-top: 30px;
 			}
 		</style>
 	</head>
@@ -145,66 +204,68 @@
 			game.state.start('Boot');
 		})();
 		</script>
-
-
-
 <!-- 投票成功 modal-->
 <div class="modal " id="item_success_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h6 class="modal-title ft15" id="modalTitle">闯关成功</h6>
-      </div>
+    	<h6 class="modal-title ft15" id="modalTitle">闯关成功</h6>
+
 
       <div class="modal-body" id="successBox">
         	<div class="modal_suc_box ft16">
-        		<span>亲，你已经抢到<font id="score_font"></font>万的金币，手气不错哟，快来理财吧！</span>
-        		<span>您击败了全国<font id="rate_font"></font>的用户被封为<font id="title_font"></font></span></div>
+
+
+
+        		<span>亲，你抢到<font id="score_font"></font>万金币，运势不错哦！同时击败了全国<font id="rate_font"></font>的用户，被封为<font id="title_font"></font>！</span>
+        		<span>快来使用虚拟金币参与大盈家保险理财计划吧！</span></div>
         <div class="form-group getBonusBox">
         	<button id="startLicai" type="button" class="startLicai btn btn-danger btn-lg"><span class="glyphicon glyphicon-calendar"></span>开始理财</button>
-        	<button id="qiangHb" type="button" class="startLicai btn btn-lg">抢红包</button>
+        	<!-- <button id="qiangHb" type="button" class="startLicai btn btn-lg">抢红包</button> -->
         </div>
       </div>
 
       <div class="modal-body" id="selectBox" style="display:none">
-        		<div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon"><span class="input-group-addon-left">投保金额</span></div>
-				      <input id="cashInput" maxlength="5" max="99999" class="form-control jineinput" type="number" placeholder="投保金额1-1000（万元）">
-				      <div class="jineDanwei">万元</div>
-				    </div>
-				</div>
+        		
 
 				<div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon"><span class="input-group-addon-left">投保人性别</span></div>
+				      <div class="input-group-addon"><span class="input-group-addon-left">性别：</span></div>
 				      <select class="form-control " id="sexSelect">
 				      		<option value="1" selected="selected">男</option>
 				      		<option value="2">女</option>
 				      </select>
+				      <span class="androidArrow glyphicon glyphicon-chevron-down" style="display:none"></span>
 				    </div>
 				</div>
 
 				<div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon"><span class="input-group-addon-left">投保人年龄</span></div>
-				      <select class="form-control " id="ageSelect">
-		
-				      </select>
+				      <div class="input-group-addon"><span class="input-group-addon-left">年龄：</span></div>
+				      <select class="form-control " id="ageSelect"></select>
+				      <span class="androidArrow glyphicon glyphicon-chevron-down" style="display:none"></span>
 				    </div>
 				</div>
 				
 				<div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon"><span class="input-group-addon-left">缴费年限</span></div>
+				      <div class="input-group-addon"><span class="input-group-addon-left">交费年限：</span></div>
 				      <select class="form-control" id="allocSelect">
-				      		<option value="1" selected="selected">1:2 (缴费3年)</option>
-				      		<option value="2">1:4 (缴费5年)</option>
-				      		<option value="3">1:9 (缴费10年)</option>
+				      		<option value="1" selected="selected">3年</option>
+				      		<option value="2">5年</option>
+				      		<option value="3">10年</option>
 				      </select>
+				      <span class="androidArrow glyphicon glyphicon-chevron-down" style="display:none"></span>
 				    </div>
 				</div>
+
+				<div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon"><span class="input-group-addon-left">总金额：</span></div>
+				      <input id="cashInput" maxlength="5" max="99999" class="form-control jineinput" type="number" placeholder="投保金额1-1000（万元）">
+				      <div class="jineDanwei">万元</div>
+				    </div>
+				</div>
+
 				<div class="form-group getBonusBox">
 					<button id="getBonus" type="button" class="startLicai btn btn-danger btn-lg">查看收益</button>
 				</div>
@@ -215,11 +276,11 @@
 
         <div  class="tableBox" id="tableBox"></div>
         <div class="btn-toolbar" role="toolbar">
-		  		<a href="" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>关于合众人寿</button></a>
+		  		<a href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=1&sn=0f2d529201c756cbc867ebcef249ab1a#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>关于合众人寿</button></a>
 
-		  		<a href="" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-warning-sign"></span>风险提示</button></a>
+		  		<a href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=3&sn=b23813c1e6059ab55fa539cc6e2ac72b#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-warning-sign"></span>风险提示</button></a>
 
-		  		<a href="" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-list"></span>产品说明</button></a>
+		  		<a href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=2&sn=30d71d98dd95b596231b28ab303ec492#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-list"></span>产品说明</button></a>
 
 		</div>
       </div>
@@ -255,12 +316,36 @@
 <script src="http://piccvote.qiniudn.com/assets/js/application.js"></script>
 
 <script type="text/javascript">
+var browser={
+    versions:function(){
+            var u = navigator.userAgent, app = navigator.appVersion;
+            return {         //移动终端浏览器版本信息
+                 trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+
+if(browser.versions.android){
+	$('.androidArrow').show()
+}
+
+
 
 //http://wx.mintok.com/active/unionlife?ename=unionlife_game
 var forwardingUrl = 'http://wx.mintok.com/active/unionlife?ename=unionlife_game'
-var forwardingImg = 'http://piccvote.qiniudn.com/unipay_logo2.png'
-var forwardingTitle ='合众人寿十周年羊年活动'
-var forwardingDesc ='合众人寿十周年羊年理财游戏活动'
+var forwardingImg = 'http://piccvote.qiniudn.com/insGame/insGameLogo.png'
+var forwardingTitle ='合众大赢家，理财计划隆重上市'
+var forwardingDesc ='合众大赢家，理财计划隆重上市'
 var forwardingCallback = function(){
 	$.cookie('gameIns', '1')
 
@@ -343,9 +428,9 @@ var genZeroTo60Option = function(){
 var tableStr ='<table class="table table-hover">'+
 	      	  '<thead><tr>'+
 	          '<th>年龄</th>'+
-	          '<th>低红利</th>'+
-	          '<th>中红利</th>'+
-	          '<th>高红利</th></tr></thead>'+
+	          '<th>低档演示</th>'+
+	          '<th>中档演示</th>'+
+	          '<th>高档演示</th></tr></thead>'+
       		  '<tbody>{content}</tbody></table>';
 var putBonusData = function(bonusData, age, alloc){
 	var age = parseInt(age)
@@ -369,12 +454,18 @@ var putBonusData = function(bonusData, age, alloc){
     	return true
     })
     var tempStr = ''
+
+
     checkList.forEach(function(key){
+    	var lowerVal = (Math.round(bonusData.lower[key.toString()]/1000)/10).toFixed(1)
+    	var midVal = (Math.round(bonusData.middle[key.toString()]/1000)/10).toFixed(1)
+    	var highVal = (Math.round(bonusData.high[key.toString()]/1000)/10).toFixed(1)
+
     	tempStr += '<tr>'
     	tempStr += '<td>'+key.toString()+'岁</td>'
-    	tempStr += '<td>'+(bonusData.lower[key.toString()]/10000).toFixed(2)+'万</td>'
-    	tempStr += '<td>'+(bonusData.middle[key.toString()]/10000).toFixed(2)+'万</td>'
-    	tempStr += '<td>'+(bonusData.high[key.toString()]/10000).toFixed(2)+'万</td>'
+    	tempStr += '<td>'+lowerVal+'万</td>'
+    	tempStr += '<td>'+midVal+'万</td>'
+    	tempStr += '<td>'+highVal+'万</td>'
     	tempStr += '</tr>'
     })
 
@@ -446,6 +537,7 @@ var bindClickEvent = function(){
 		$('#successBox, #showBonusBox').hide()
 		$('#selectBox').show()
 		$('#modalTitle').html('理财计划')
+		$('#rePlayBtn').hide()
 		return false;
 	})
 
@@ -454,6 +546,7 @@ var bindClickEvent = function(){
 		$('#reSelectBtn').hide()
 		$('#successBox, #showBonusBox').hide()
 		$('#selectBox').show()
+		$('#rePlayBtn').hide()
 		return false;
 	})
 
@@ -479,7 +572,7 @@ var bindClickEvent = function(){
 		var sex =$('#sexSelect').val()
 		var age =$('#ageSelect').val()
 		var alloc =$('#allocSelect').val()
-		$('#modalTitle').html('收益计算结果')
+		$('#modalTitle').html('累计账户价值演示')
 		$('#reSelectBtn').show()
 		getBonusAjax(cash, sex, age, alloc)
 
@@ -520,7 +613,7 @@ function gameOverCallBack(score){
 	resultDiv(score)
 }
 
-
+//Winner.Game.managePause()
 //resultDiv(300000)
 
 </script>
