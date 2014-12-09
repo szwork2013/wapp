@@ -207,6 +207,12 @@
 			#selectBox, #successBox{
 				padding-top: 30px;
 			}
+			.modal{
+				max-width: 320px;
+				max-height: 480px;
+				overflow:hidden;
+			}
+
 
 		</style>
 	</head>
@@ -587,7 +593,7 @@ var resultDiv = function(score, isjump){
 window.clickReplay = false
 
 var bindClickEvent = function(){
-	$('.modal').width(640).height(960).css('overflow','hidden')
+	
 
 	$('#startLicai').click(function(){
 		$('#successBox, #showBonusBox').hide()
