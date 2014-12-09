@@ -3,7 +3,7 @@
 	<head>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 <meta charset="utf-8">
-	<meta name="viewport" content = "width=640; user-scalable=no" />
+
 
 		<link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
 		<link href="http://piccvote.qiniudn.com/base.css" rel="stylesheet">
@@ -19,41 +19,17 @@
 				    var viewportChanged = false;
 				    var scale = 0;
 
-				    if (ua.indexOf("Android") >= 0 && ua.indexOf("AppleWebKit") >= 0) {
-				        var webkitVersion = parseFloat(ua.slice(ua.indexOf("AppleWebKit") + 12));
-				        // targets android browser, not chrome browser (http://jimbergman.net/webkit-version-in-android-version/)
-				        if (webkitVersion < 535) {
-				            viewportChanged = true;
-				            scale = getScaleWithScreenwidth();
-				            document.write('<meta name="viewport" content="width=640, initial-scale=' + scale + ', minimum-scale=' + scale + ', maximum-scale=' + scale + '" />');
-				        }
+				    if (ua.indexOf("Android") >= 0) {
+				        document.write('<meta name="viewport" content = "width=640; user-scalable=no" />');
 				    }
-
-				    if (ua.indexOf("Firefox") >= 0) {
-				        viewportChanged = true;
-				        scale = (getScaleWithScreenwidth() / 2);
-				        document.write('<meta name="viewport" content="width=640, user-scalable=false, initial-scale=' + scale + '" />');
+				    else{
+				    	document.write('<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />')
 				    }
-
-				    if (!viewportChanged) {
-				        document.write('<meta name="viewport" content="width=640, user-scalable=false" />');
-				    }
-
-				    if (ua.indexOf("IEMobile") >= 0) {
-				        document.write('<meta name="MobileOptimized" content="640" />');
-				    }
-
-				    document.write('<meta name="HandheldFriendly" content="true"/>');
-				}
-
-				function getScaleWithScreenwidth() {
-				    var viewportWidth = 640;
-				    var screenWidth = window.innerWidth;
-				    return (screenWidth / viewportWidth);
+				   
 
 				}
 
-				//writeViewPort();
+				writeViewPort();
 		</script>
 		<style>
 
@@ -611,6 +587,7 @@ var resultDiv = function(score, isjump){
 window.clickReplay = false
 
 var bindClickEvent = function(){
+	$('.modal').width($(window).width()).height($(window).height())
 
 	$('#startLicai').click(function(){
 		$('#successBox, #showBonusBox').hide()
