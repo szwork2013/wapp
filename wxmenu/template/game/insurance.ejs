@@ -697,7 +697,7 @@ var bindClickEvent = function(){
 	},500)
 
 	$('.androidArrow').click(function(){
-		$(this).parent().find('select').click()
+		$(this).parent().find('select').click().focus()
 	})
 
 	$('#ageSelect').html(genZeroTo60Option())
