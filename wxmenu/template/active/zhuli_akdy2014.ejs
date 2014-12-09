@@ -116,7 +116,7 @@ background-color:#ffe400;
             </a>
 			<br>
 			
-			<a href="http://www.baidu.com" class="share_timeline1 btn-block">
+			<a href="http://mp.weixin.qq.com/s?__biz=MjM5MjkzNTI3Ng==&mid=202917841&idx=1&sn=9a05e94b9ce3701de3c39037a212580d#rd" class="share_timeline1 btn-block">
               <span class="button1" >我也要抢健康水果</span>
             </a>
 			<br> 
@@ -139,8 +139,8 @@ background-color:#ffe400;
                 <%}%>
                 <%  
                     var supportCount2 = supportScore
-                    if(supportCount2 >= 86){
-                        supportCount2 = 86
+                    if(supportCount2 >= 100){
+                        supportCount2 = 100
                     }
                 %>
                 <span class="v-share-count" id="supportCount"><%= supportCount2 %></span>
@@ -346,14 +346,19 @@ var timeError = '<%= timeError %>'
 
 <% if (isMyPage){ %>
     var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
+	var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Fakdy12092.jpg'
+var forwardingTitle ='[好友助力]大家来帮我免费拿水果！'
+var forwardingDesc ='我参加了阿卡迪亚冬季水果大作战，快来帮我抢水果'
 <%} else{ %>
-     var forwardingUrl ='http://www.baidu.com'
+     var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MjM5MjkzNTI3Ng==&mid=202917841&idx=1&sn=9a05e94b9ce3701de3c39037a212580d#rd'
+	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Fakdy12092.jpg'
+var forwardingTitle ='阿卡迪亚冬季水果大作战，我的健康我做主！'
+var forwardingDesc ='拼人气，喊好友，本来生活网直购水果免费水果领回家！
+'
 <% } %>
     
 
-var forwardingImg = 'http://bcs.duapp.com/xytimg/jifenxiang%2Ffang3.jpg'
-var forwardingTitle ='[好友助力]我的健康我做主！'
-var forwardingDesc ='快来帮我免费拿水果，一盒水果你都不给我？'
+
 
 var forwardingCallback = function(){
     if(window.hasAdd) return false;
