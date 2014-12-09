@@ -23,7 +23,7 @@ Winner.Game.prototype = {
 		this.physics.startSystem(Phaser.Physics.ARCADE);		
 		this.physics.arcade.gravity.y = Winner._gravityValue;
 		
-		this.add.sprite(0, 0, 'background');
+		this.add.sprite(0, 0, 'background1');
 		this.add.sprite(-30, Winner.GAME_HEIGHT-166, 'floor');
 		this.add.sprite(10, 5, 'score-bg');		
 		this.add.button(Winner.GAME_WIDTH-96-10, 5, 'button-pause', this.managePause, this, 1, 0, 2);					
