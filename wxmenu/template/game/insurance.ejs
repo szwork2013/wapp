@@ -207,10 +207,18 @@
 			#selectBox, #successBox{
 				padding-top: 30px;
 			}
-			.modal{
-				max-width: 320px;
-				max-height: 480px;
-				overflow:hidden;
+			canvas{
+				position: relative;
+				z-index: 5;
+			}
+			.wrap_box{
+				width: 640px;
+				height: 960px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin: -480px auto auto -320px;
+				overflow: hidden;
 			}
 
 
@@ -218,29 +226,34 @@
 	</head>
 	
 	<body scroll=no style="overflow:hidden">
-		<script>
+		<div class="wrap_box">
+			<script>
 
-		$(function() {
-			var W = $(window).width()
-			var H = $(window).height()
-			if(W > H){
-				var W = parseInt((H/960)*640)
-			}
-			else{
-				var H = parseInt((W/640)*960)
-			}
-			
-			// initialize the framework
-			var game = new Phaser.Game(640, 960, Phaser.AUTO, 'game');
-			// add game states
-			game.state.add('Boot', Winner.Boot);
-			game.state.add('Preloader', Winner.Preloader);
-			game.state.add('MainMenu', Winner.MainMenu);
-			game.state.add('Game', Winner.Game);
-			// start the Boot state
-			game.state.start('Boot');
-		});
-		</script>
+			$(function() {
+				var W = $(window).width()
+				var H = $(window).height()
+				if(W > H){
+					var W = parseInt((H/960)*640)
+				}
+				else{
+					var H = parseInt((W/640)*960)
+				}
+				
+				// initialize the framework
+				var game = new Phaser.Game(640, 960, Phaser.AUTO, 'game');
+				// add game states
+				game.state.add('Boot', Winner.Boot);
+				game.state.add('Preloader', Winner.Preloader);
+				game.state.add('MainMenu', Winner.MainMenu);
+				game.state.add('Game', Winner.Game);
+				// start the Boot state
+				game.state.start('Boot');
+			});
+
+
+			</script>
+
+		
 <!-- 投票成功 modal-->
 <div class="modal " id="item_success_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -709,6 +722,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 
 
-
+</div>
 	</body>
 </html>
