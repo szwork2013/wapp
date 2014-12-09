@@ -613,6 +613,10 @@ var bindClickEvent = function(){
 
 	})
 
+	$('.androidArrow').click(function(){
+		$(this).parent().find('select').click()
+	})
+
 	$('#ageSelect').html(genZeroTo60Option())
 
 }()
