@@ -587,7 +587,7 @@ var resultDiv = function(score, isjump){
 window.clickReplay = false
 
 var bindClickEvent = function(){
-	$('.modal').width($(window).width()).height($(window).height())
+	$('.modal').width(640).height(960).css('overflow','hidden')
 
 	$('#startLicai').click(function(){
 		$('#successBox, #showBonusBox').hide()
