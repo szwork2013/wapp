@@ -465,10 +465,13 @@ var getBonusAjax = function(cash, sex, age, alloc){
 	},'json')
 }
 
-var genZeroTo60Option = function(){
+var genZeroTo60Option = function(num, cur){
 	var temps = ''
-	for(var i=0; i<61; i++){
-		if(i==30){
+	var num = num || 66
+	var cyr = cur || 30
+
+	for(var i=0; i<num; i++){
+		if(i==cur){
 			var selStr = 'selected="selected"'
 		}
 		else{
@@ -480,6 +483,13 @@ var genZeroTo60Option = function(){
 	return temps
 }
 
+var putOption = function(num, cur){
+	var s = genZeroTo60Option(num,cur)
+
+	$('#ageSelect').html(s)
+}
+
+
 var tableStr ='<table class="table table-hover">'+
 	      	  '<thead><tr>'+
 	          '<th>年龄</th>'+
@@ -487,6 +497,10 @@ var tableStr ='<table class="table table-hover">'+
 	          '<th>中档演示</th>'+
 	          '<th>高档演示</th></tr></thead>'+
       		  '<tbody>{content}</tbody></table>';
+
+
+
+
 var putBonusData = function(bonusData, age, alloc){
 	var age = parseInt(age)
 	var tableBox = $('#tableBox')
@@ -647,26 +661,33 @@ var bindClickEvent = function(){
 
 	$('#allocSelect').change(function(){
 		var v = $(this).val()
-		if(v != 3){
-			$('#ageSelect').find('option').show()
+		var selAge = $('#ageSelect').val()
+
+		//3年
+		if(v == '1'){
+			putOption(66, selAge)
+		}
+		//5年交只能60
+		else if( v == '2'){
+			if(selAge>60){
+				selAge = 60
+			}
+			putOption(61, selAge)
 		}
 		else{
 			//10年交费只能55岁及以下
-			var selAge = $('#ageSelect').val()
-			$('#ageSelect').find('option').each(function(){
-				var selfVal = $(this).val()				
-				if(selAge>55 && selfVal == 55){
-					alert('10年交费年龄不能超过55岁')
-					$(this).attr('selected', 'selected')
-				}
-				if(selfVal >55){
-					$(this).hide()
-				}
-			})					
+			if(selAge>55){
+				selAge = 55
+			}
+			putOption(56, selAge)
 		}
 		
 
 	})
+
+	setTimeout(function(){
+		$('#allocSelect').change()
+	},500)
 
 	$('.androidArrow').click(function(){
 		$(this).parent().find('select').click()
