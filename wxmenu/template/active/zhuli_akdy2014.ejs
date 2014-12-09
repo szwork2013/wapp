@@ -92,8 +92,8 @@ background-color:#ffe400;
 		   <br/>  <br/>
 <%
     var reduceVal = 0
-    if(supportScore < 86){
-        reduceVal = (86-supportScore).toFixed(1)
+    if(supportScore < 100){
+        reduceVal = (100-supportScore).toFixed(1)
     }
 
 %>
@@ -153,7 +153,7 @@ background-color:#ffe400;
                         loopNumer修改风车总个数
                        
                         <% 
-                            var loopNumer = 86;
+                            var loopNumer = 100;
                             for(var i=0; i<loopNumer; i++){
                          %>
                             <% if(i<supportCount2) {%>
