@@ -167,7 +167,7 @@ obj.getBonus = function(req,res){
 	if(!cash || cash <=0 || cash >= 10000000){
 		return res.send({error:1, data:'金额输入有误'})
 	}
-	if(typeof age != 'number' || age < 0 || age > 60 ){
+	if(typeof age != 'number' || age < 0 || age > 65 ){
 		return res.send({error:1, data:'年龄输入有误'})
 	}
 	if(!sex || !sexList[sex]){
@@ -179,6 +179,10 @@ obj.getBonus = function(req,res){
 
 	if( age > 55 && alloc == 3){
 		return res.send({error:1, data:'10年缴费年限，年龄不能超过55岁'}) 
+	}
+
+	if( age > 60 && alloc == 2){
+		return res.send({error:1, data:'5年缴费年限，年龄不能超过60岁'}) 
 	}
 
 	var result = obj.calBonus(cash, sexList[sex], age, allocList[alloc])
