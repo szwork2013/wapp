@@ -90,21 +90,21 @@ background-color:#ffe400;
            
           <img src="<%= activeObj.activeObj.picture%>" width=100%>
 		   <br/>  <br/>
-<%
+<!--<%
     var reduceVal = 0
     if(supportScore < 100){
         reduceVal = (100-supportScore).toFixed(1)
     }
 
-%>
+%>-->
 
 	<div id="round"><center>
          <% if(isMyPage) { %>
-            你已经减少至
+            你已经增加至
         <% }else{ %>
-            他/她已经减少至
+            他/她已经增加至
         <%}%>
-        <b style="color:#c00; font-size:20px;"><%= reduceVal %></b> 元获得健康水果</center></div> 
+        <b style="color:#c00; font-size:20px;"><%= supportScore %></b> 人气值获得健康水果</center></div> 
 
 
 <br>
@@ -137,14 +137,14 @@ background-color:#ffe400;
                 <% }else{ %>
                     他/她已经集了
                 <%}%>
-                <%  
+          <!--      <%  
                     var supportCount2 = supportScore
                     if(supportCount2 >= 100){
                         supportCount2 = 100
                     }
-                %>
-                <span class="v-share-count" id="supportCount"><%= supportCount2 %></span>
-                个分享
+                %>-->
+                <span class="v-share-count" id="supportCount"><%= supportScore %></span>
+                个人气值
                 </div> -->
 
                  <!-- <div class="v-share-icon">
@@ -260,7 +260,7 @@ background-color:#ffe400;
         <h4 class="modal-title" id="myModalLabel">支持成功</h4>
       </div>
       <div class="modal-body"> 
-            <h4>成功减少 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font> 元</h4>
+            <h4>成功增加 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font> 个人气值</h4>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
