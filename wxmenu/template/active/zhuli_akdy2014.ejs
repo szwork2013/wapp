@@ -79,12 +79,28 @@ color: #000000;
 text-align: center;
 background-color:#ffe400;
 }
+
+
+
+.main{
+		width: 100%;
+		position: absolute;
+		margin-top:500px;
+		display: none;
+		background: rgba(0,0,0,.7);
+		z-index: 100000;
+	}
 </style>
 
 
 
 </head>
     <body>
+	<div class="main">
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2F1.png" width='100%' alt="">
+	</div>
+	
+	
         <div class="container">
  
            
@@ -112,14 +128,27 @@ background-color:#ffe400;
 			
 		
  <% if(isMyPage) { %>
-            <a class="share_timeline1 btn-block"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>
+            <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>
         <% }else{ %>
            <a href="http://mp.weixin.qq.com/s?__biz=MjM5MjkzNTI3Ng==&mid=202917841&idx=1&sn=9a05e94b9ce3701de3c39037a212580d#rd" class="share_timeline1 btn-block">
               <span class="button1" >我也要抢健康水果</span>
             </a>
 			
         <%}%>
-
+		
+<script>
+				$(function(){
+					var height=$(window).height();
+					$('.main').css('height',height);
+					$('#share').click(function(event) {
+						$('.main').show();
+						setTimeout(function(){
+							$('.main').hide();
+						},5000)
+						
+					});
+				})
+			</script>
 		
 			<br> 
 
