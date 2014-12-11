@@ -86,17 +86,11 @@ background-color:#ffe400;
 </head>
     <body>
         <div class="container">
-         <!--   <h3 id="title">拼人品，赢褚橙</h3>-->
+ 
            
           <img src="<%= activeObj.activeObj.picture%>" width=100%>
 		   <br/>  <br/>
-<!--<%
-    var reduceVal = 0
-    if(supportScore < 100){
-        reduceVal = (100-supportScore).toFixed(1)
-    }
 
-%>-->
 
 	<div id="round"><center>
          <% if(isMyPage) { %>
@@ -126,46 +120,12 @@ background-color:#ffe400;
                <span class="button1" >活动规则</span>
             </a>
 <br> <br> 
-         <!--   <button id="btnShare" class="share_timeline btn-block" onclick="mask()">
-                <span class="share_timeline_button" >点击分享到朋友圈</span>
-            </button>-->
+        
 
             <div id="divVisitor" class="visitor">
-<!--                 <div class="v-share">
-                <% if(isMyPage) { %>
-                    你已经集了
-                <% }else{ %>
-                    他/她已经集了
-                <%}%>
-          <!--      <%  
-                    var supportCount2 = supportScore
-                    if(supportCount2 >= 100){
-                        supportCount2 = 100
-                    }
-                %>-->
-                <span class="v-share-count" id="supportCount"><%= supportScore %></span>
-                个人气值
-                </div> -->
 
-                 <!-- <div class="v-share-icon">
-                    <div class="v-share-icon-container">
-                        
-                        loopNumer修改风车总个数
-                       
-                        <% 
-                            var loopNumer = 100;
-                            for(var i=0; i<loopNumer; i++){
-                         %>
-                            <% if(i<supportCount2) {%>
-                                <span class="color"></span>
-                            <% }else{ %>
-                                <span class="gray"></span>
-                            <%}%>
 
-                         <%}%>
-                        
-                   </div>
-                </div> -->
+                
 
 
                 <div class="v-share-surplus">活动剩余时间：
