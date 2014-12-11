@@ -110,11 +110,18 @@ background-color:#ffe400;
             </a>
 			<br>
 			
-			<a href="http://mp.weixin.qq.com/s?__biz=MjM5MjkzNTI3Ng==&mid=202917841&idx=1&sn=9a05e94b9ce3701de3c39037a212580d#rd" class="share_timeline1 btn-block">
+		
+ <% if(isMyPage) { %>
+            <a class="share_timeline1 btn-block"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>
+        <% }else{ %>
+           <a href="http://mp.weixin.qq.com/s?__biz=MjM5MjkzNTI3Ng==&mid=202917841&idx=1&sn=9a05e94b9ce3701de3c39037a212580d#rd" class="share_timeline1 btn-block">
               <span class="button1" >我也要抢健康水果</span>
             </a>
-			<br> 
 			
+        <%}%>
+
+		
+			<br> 
 
             <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
                <span class="button1" >活动规则</span>
