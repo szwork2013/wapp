@@ -116,9 +116,9 @@
 			}
 			.btn-toolbar .btn{
 				display: block;
-				width: 200px;
+				width: 240px;
 				font-size: 16px;
-				margin: 9px auto;
+				margin: 3px auto;
 			}
 
 			#selectBox .input-group-addon-left{
@@ -220,6 +220,7 @@
 			}
 			#showBonusBox{
 				padding: 0;
+				margin-top: -10px;
 			}
 			.jineDanwei{
 				color:#ccc;
@@ -240,8 +241,30 @@
 				margin: -480px auto auto -320px;
 				overflow: hidden;
 			}
-
-
+			.btn_line{
+				overflow: hidden;
+				clear: both;
+				height: 46px;
+				width: 240px;
+				margin: 0 auto;
+			}
+			.btnfl{
+				float: left;
+				display: block;
+				width: 105px;
+				margin: 5px 0;
+			}
+			.btnfr{
+				float: right;
+				margin: 5px;
+			}
+			 .btn-toolbar .btnfl .btn{
+			 	width: auto;
+			 	margin: 0;
+			 }
+			 .table{
+			 	margin-bottom: 0px;
+			 }
 		</style>
 	</head>
 	
@@ -347,11 +370,11 @@
         <div  class="tableBox" id="tableBox"></div>
         <div class="btn-toolbar" role="toolbar">
 		  		<a href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=1&sn=0f2d529201c756cbc867ebcef249ab1a#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>关于合众人寿</button></a>
+		  	<div class="btn_line">
+		  		<a class="btnfl" href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=3&sn=b23813c1e6059ab55fa539cc6e2ac72b#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-warning-sign"></span>风险提示</button></a>
 
-		  		<a href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=3&sn=b23813c1e6059ab55fa539cc6e2ac72b#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-warning-sign"></span>风险提示</button></a>
-
-		  		<a href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=2&sn=30d71d98dd95b596231b28ab303ec492#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-list"></span>产品说明</button></a>
-
+		  		<a class="btnfl btnfr" href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=2&sn=30d71d98dd95b596231b28ab303ec492#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-list"></span>产品说明</button></a>
+		  	</div>
 		</div>
       </div>
 
@@ -521,7 +544,7 @@ var putBonusData = function(bonusData, age, alloc){
 	var tableBox = $('#tableBox')
 	
 	
-	var checkList = [60, 70, 88]
+	var checkList = [30, 40, 50, 60, 70, 88]
     if(alloc == 1){
     	var jiaofei = 3
     }
