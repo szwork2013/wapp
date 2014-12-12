@@ -15,7 +15,7 @@ Winner.Game = function(game){
 	Winner._time = 60;
 	Winner._score = 0;
 
-	Winner._gravityValue = 700;
+	Winner._gravityValue = 800;
 };
 Winner.Game.prototype = {
 	create: function(){		
@@ -140,7 +140,7 @@ Winner.Game.prototype = {
 		Winner._time.setText("剩余时间: " + (30-Math.floor(this._timer.seconds)) + " 秒");		
 
 		//每5秒重力提升一次
-		var nowGravity = (Math.floor(this._timer.seconds/5) + 2) * Winner._gravityValue;
+		var nowGravity = (Math.floor(this._timer.seconds/5) + 3) * Winner._gravityValue;
 		this.physics.arcade.gravity.y = nowGravity;
 		Winner._player.body.gravity.y = -nowGravity;
 
@@ -169,9 +169,9 @@ Winner.item = {
 		var candyType = 0;
 		if(randomNum<=10){
 			candyType = 0;
-		} else if(randomNum>10 && randomNum<30){
+		} else if(randomNum>10 && randomNum<35){
 			candyType = 1;
-		} else if(randomNum>=30){
+		} else if(randomNum>=35){
 			candyType = 2;
 		}
 
