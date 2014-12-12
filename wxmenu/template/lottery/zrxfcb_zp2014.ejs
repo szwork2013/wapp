@@ -166,15 +166,24 @@ var mask = function () {
 		}
 }
 
+window.isforward_today = moment().hour(23).minute(59).second(59)
+window.isforward_today = new Date(window.isforward_today)
+
 var forwardingUrl = 'http://menu.xy-tang.com/lottery/xinyutang?ename=zrxfcb_zp2014';
 var forwardingImg = 'http://bcs.duapp.com/xytimg/zp%2Flogo.jpg'
 var forwardingTitle ='舌尖上的诱惑，美食券发到手软！'
 var forwardingDesc ='12月13-14日正荣幸福城邦缤纷美食嘉年华'
+var forwardingCallback = function(){
+	//10表示cookie设置有效期10天
+	$.cookie('isForward', '1', { expires: 10, path: location.pathname });
+	//location.href = location.href
+}
 
 $(function() {
 
 
 
+var lotteryObj =  <%- JSON.stringify(lotteryObj) %>
 var lotteryid = '<%= lotteryObj._id %>'
 var userid = '<%= userid%>'
 var appId = '<%= appId%>'
@@ -182,29 +191,68 @@ var u_username = '<%= wxuobj.appUserName %>'
 var u_mobile = '<%= wxuobj.appUserMobile %>'
 var appUserName = u_username
 var appUserMobile = u_mobile 
-
+var timeError = '<%= timeError %>'
 
 
 window.hasPlay = false;
+window.hasForwardPlay = false;
+
+
+window.getIsForward = function(){
+		var is_f = $.cookie('isForward')
+		if(is_f == '0' || !is_f) return false
+		return is_f
+}
+
+
 $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
     if(d.error == 1){
       return alert(d.data)
     }
         window.lotteryData = d.data;
-        
+
+        //总限制数
+        if(lotteryObj.forwardTimes>=0){
+        	 var totalLimit = lotteryObj.intervalTimes + lotteryObj.forwardTimes
+        }
+        else{
+        	var totalLimit = lotteryObj.intervalTimes
+        }
+
         if(d.data.record && d.data.record.length > 0){
-        	var now = moment();
-       		var lastRecordTime = moment(d.data.record[d.data.record.length-1].writeTime);
-       		if(now.dayOfYear() == lastRecordTime.dayOfYear()){
-       			window.hasPlay = true;
-       		}
-        	if(d.data.record.length>=4){
+        	//获取当天的抽奖记录
+        	var todayMoment = moment().hour(0).minute(0).second(0).millisecond(0);
+        	var count = 0;
+        	var countF = 0;
+        	window.todayRecordList = d.data.record.filter(function(rObj){
+        		//var rObjMoment = moment(rObj.writeTime)
+        		//if(rObjMoment>=todayMoment){
+        			if(rObj.isForward == 0){
+        				count++
+        			}
+        			else if(rObj.isForward == 1){
+        				countF++
+        			}
+        			return true;
+        		//}
+        		//return false;
+        	})
+        	if(window.todayRecordList.length>=totalLimit){
         		window.hasPlay = true;
+        		window.hasForwardPlay = true;
         	}
+        	else if(count<lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
+        		window.hasPlay = false;
+        		window.hasForwardPlay = false
+        	}
+        	else if(count>=lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
+        		window.hasPlay = true;
+        		window.hasForwardPlay = false;
+        	}
+
         }
 
     },'json')
-
 
 
 	var boxObjs = $('#mobile, #prizebox, #noprize, #main')
@@ -219,6 +267,7 @@ window.requestAnimFrame = (function() {
 			window.setTimeout(callback, 1000 / 60)
 		}
 	})();
+
 
 
 	var totalDeg = 360 * 3 + 0;
@@ -273,8 +322,7 @@ window.requestAnimFrame = (function() {
 		}
 	}
 
-
-	function start(deg,haserror) {
+function start(deg,haserror) {
 		deg = deg || lostDeg[parseInt(lostDeg.length * Math.random())];
 		running = true;
 		clearInterval(timer);
@@ -294,9 +342,13 @@ window.requestAnimFrame = (function() {
 	i = 10;
 	$("#inner").click(function() {
 		if (running) return;
-		if (window.hasPlay) {
-			alert('你已经玩过了，每人每天只能转一次哦');
+		if (window.hasPlay && window.hasForwardPlay){
+			alert('你已经玩过了，每人只能转一次哦');
 			return
+		}
+		else if(window.hasPlay && !window.hasForwardPlay && !getIsForward()){
+			alert('你已经玩过了，转发到朋友圈可以再玩一次哦');
+			return			
 		}
 
 
@@ -594,7 +646,8 @@ WeixinApi.ready(function(Api){
 
 
 </script>
-
+</script>
+<script src="/static/wx_share.js"></script>
 
 
 <div style="display:none;">
