@@ -167,7 +167,7 @@
 				font-weight: bold;
 			}
 			.table td, .table th{
-				font-size: 12px;
+				font-size: 13px;
 				color:#ccc;
 				font-weight: normal;;
 			}
@@ -268,6 +268,9 @@
 			 .jine_tips{
 			 	padding: 5px 0 0 100px;
 			 	color: #d9534f;
+			 }
+			 .table>tbody>tr>td{
+			 	padding: 8px  5px;
 			 }
 		</style>
 	</head>
@@ -573,7 +576,7 @@ var putBonusData = function(bonusData, age, alloc){
     	var highVal = (Math.round(bonusData.high[key.toString()]/1000)/10).toFixed(1)
 
     	tempStr += '<tr>'
-    	tempStr += '<td>'+key.toString()+'</td>'
+    	tempStr += '<td>'+key.toString()+'岁</td>'
     	tempStr += '<td>'+lowerVal+'万</td>'
     	tempStr += '<td>'+midVal+'万</td>'
     	tempStr += '<td>'+highVal+'万</td>'
