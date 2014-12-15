@@ -167,7 +167,7 @@
 				font-weight: bold;
 			}
 			.table td, .table th{
-				font-size: 13px;
+				font-size: 12px;
 				color:#ccc;
 				font-weight: normal;;
 			}
@@ -520,7 +520,7 @@ var genZeroTo60Option = function(num, cur){
 		else{
 			var selStr = ''
 		}
-		temps += '<option value="'+i+'" '+selStr+'>'+i+'</option>'
+		temps += '<option value="'+i+'" '+selStr+'>'+i+' 岁</option>'
 	}
 
 	return temps
@@ -548,7 +548,6 @@ var putBonusData = function(bonusData, age, alloc){
 	var age = parseInt(age)
 	var tableBox = $('#tableBox')
 	
-	
 	var checkList = [30, 40, 50, 60, 70, 88]
     if(alloc == 1){
     	var jiaofei = 3
@@ -574,7 +573,7 @@ var putBonusData = function(bonusData, age, alloc){
     	var highVal = (Math.round(bonusData.high[key.toString()]/1000)/10).toFixed(1)
 
     	tempStr += '<tr>'
-    	tempStr += '<td>'+key.toString()+'岁</td>'
+    	tempStr += '<td>'+key.toString()+'</td>'
     	tempStr += '<td>'+lowerVal+'万</td>'
     	tempStr += '<td>'+midVal+'万</td>'
     	tempStr += '<td>'+highVal+'万</td>'
