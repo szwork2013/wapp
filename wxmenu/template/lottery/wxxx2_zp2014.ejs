@@ -458,9 +458,9 @@ $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
         if(d.data.record && d.data.record.length > 0){
         	var now = moment();
        		var lastRecordTime = moment(d.data.record[d.data.record.length-1].writeTime);
-       		if(now.dayOfYear() == lastRecordTime.dayOfYear()){
-       			window.hasPlay = true;
-       		}
+       	//	if(now.dayOfYear() == lastRecordTime.dayOfYear()){
+       	//		window.hasPlay = true;
+       	//	}
         	if(d.data.record.length>=3){
         		window.hasPlay = true;
         	}
