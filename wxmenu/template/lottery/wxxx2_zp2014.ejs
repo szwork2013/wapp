@@ -311,6 +311,9 @@ var forwardingImg = 'http://bcs.duapp.com/xytimg/yjszp/logo.jpg'
 var forwardingTitle ='御江山全城送红包，赶紧来领一个'
 var forwardingDesc ='御江山全城送红包，赶紧来领一个'
 
+
+
+
 $(function() {
 
 
@@ -375,16 +378,7 @@ var appUserMobile = u_mobile
     return false;
   })
 
-  window.lotteryData = {};
 
-   $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
-    if(d.error == 1){
-      return alert(d.data)
-    }
-        window.lotteryData = d.data;
-        work(d.data)
-
-    },'json')
 
   var work = function(data){
 
@@ -414,71 +408,7 @@ var appUserMobile = u_mobile
      $('#prize_list').html(tmp_s)
      //end pu prize
 
-     //last times
-     if($.cookie('isforward') == '1'){
-          var times = 6 - window.lotteryData.record.length  
-     }
-     else if(window.lotteryData.record.length>3){
-          var times = 6 - window.lotteryData.record.length  
-     }
-     else if(window.lotteryData.record.length<=3){
-          var times = 3 - window.lotteryData.record.length  
-     }
-     
-     times = times < 0 ? 0 : times;
-     $('#last_time').html(times)
-     //end last times
-
-
-        $('#start').click(function(){
-            
-            
-            if(window.lotteryData.record.length>=6){
-               alert('谢谢参与，你已刮过奖了，如中奖您可以在10.1-10.7来绿地中心领取，详请请查看本活动规则')
-               return false;
-            }
-
-              if(window.lotteryData.record.length>=3 && $.cookie('isforward') != '1'){
-                  alert('您已经刮过3次了，转发本页面到朋友圈可再次获得3次刮奖机会')
-                  return false;
-              }
-
-            var forword = 0;
-            if(window.lotteryData.record.length>=3){
-                forword = 1;
-            }
-
-            //var count = parseInt($.cookie('count') || 0) + 1;
-            //$.cookie('count', count, { expires: 365, path: '/' });
-            //alert($.cookie('count'))
-
-            $(this).hide().css('z-index','-1');
-
-            $.post('/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>',{
-                lotteryId:data.lottery._id,
-                isforward:forword
-            },function(d2){
-                if(d2.error){
-                  return alert(d2.data)
-                }
-                if(d2.data.prizeId == '0'){
-                  $('#lottery_result').html('谢谢参与')
-                }
-                if(d2.data.prizeId != '0' && d2.data.prizeObj){
-                  $('#lottery_result').html(d2.data.prizeObj.name)
-                }           
-
-                //$('#myCanvas, #lottery_result').show();
-
-                $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
-                    if(d.error) return;
-                    window.lotteryData = d.data;
-                },'json')
-
-            },'json')
-
-            return false;
-        })
+    
 
 
   
@@ -490,164 +420,6 @@ var appUserMobile = u_mobile
 
 
 //forward
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-$(function(){
-  $('#lottery_again').click(function(){
-    location.href = location.href;
-  })
-
-  $('#lottery_rule').click(function(){
-       $('#myModal2').modal({
-            backdrop:false
-          })
-  })
-
-  //check username mobile
-  var user_v = $('#appUserName').val();
-  var mobile_v = $('#appUserMobile').val();
-  if(user_v == '未认证会员'){
-      $('#appUserName').val('');
-  }
-  if(mobile_v.length != 11){
-      $('#appUserMobile').val('');
-  }
-
-  //end check
-
-
-  $('#save_change').click(function(){
-    var appUserName = $('#appUserName').val().trim();
-    var appUserMobile = $('#appUserMobile').val().trim();
-    if(!appUserName || appUserName == '未认证会员'){
-      alert('请填写真实姓名')
-      return false;
-    }
-    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
-      alert('请输入正确的手机号码')
-      return false;
-    }
-    $.post('/api/user/modify',{
-    appUserName:appUserName, 
-    appUserMobile:appUserMobile,
-    wxuserid:userid,
-    wxappid:appId,
-    },function(d){
-      if(d.error == 1) return alert(d.data);
-      alert('资料完善成功，赶快去刮奖吧')
-      $('#myModal').modal('hide')
-      $.cookie('has_modify_info', 1, { expires: window.isforward_today, path: '/' })
-      //window.localStorage['has_modify'] = '1';
-      //$('#p2').html(appUserName)
-    },'json')
-    return false;
-  })
-
-  window.lotteryData = {};
-
-   $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
-    if(d.error == 1){
-      return alert(d.data)
-    }
-        window.lotteryData = d.data;
-        work(d.data)
-
-    },'json')
-
-  var work = function(data){
-
-         //put my prize
-     var tmp_s = ''
-	window.hv=false
-     data.record.forEach(function(ro){
-      if(ro.prizeId != '0' && ro.prizeObj){
-     window.hv=true
-        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
-      }
-     })
-     $('#prize_list').html(tmp_s)
-     //end pu prize
-
-    
-    window.lotteryData.record = window.lotteryData.record.filter(function(ro){
-        return moment(ro.writeTime) >= (moment().hour(0).minute(0).second(0))
-    })
-
-
-
-     $('#modify_info').click(function(){
-        $('#myModal').modal({
-            backdrop:false
-          })
-     })
-
-     if((window.lotteryData.record.length<6 && $.cookie('has_modify_info') != '1') 
-      ||
-      ( u_username == '未认证会员' || u_mobile.length != 11)
-      ){
-        $('#myModal').modal({
-            backdrop:false
-          })
-     }
-
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
