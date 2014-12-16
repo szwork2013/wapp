@@ -10,6 +10,12 @@
 
 
 <title>舌尖上的诱惑，美食券发到手软</title>
+<link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
+<script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+
+
 <link href="http://bcs.duapp.com/xytimg/yjszp/activity-style.css" rel="stylesheet" type="text/css">
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
@@ -446,8 +452,6 @@ $(function(){
 
 
 
-
-
 window.hasPlay = false;
 $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
     if(d.error == 1){
@@ -558,7 +562,7 @@ window.requestAnimFrame = (function() {
 	$("#inner").click(function() {
 		if (running) return;
 		if (window.hasPlay) {
-			alert('你已经玩过了，每人只能转一次哦');
+			alert('你已经玩过了，每个微信号只能转三次哦');
 			return
 		}
 
