@@ -557,9 +557,9 @@ window.requestAnimFrame = (function() {
 	i = 10;
 	$("#inner").click(function() {
 		if (running) return;
-	//	if (window.hasPlay) {
-	//		alert('你已经玩过了，每人只能转一次哦');
-	//		return
+		if (window.hasPlay) {
+			alert('你已经玩过了，每人只能转一次哦');
+			return
 		}
 
 
