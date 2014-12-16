@@ -461,7 +461,7 @@ $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
        		if(now.dayOfYear() == lastRecordTime.dayOfYear()){
        			window.hasPlay = true;
        		}
-        	if(d.data.record.length>=2){
+        	if(d.data.record.length>=3){
         		window.hasPlay = true;
         	}
         }
