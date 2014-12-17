@@ -667,6 +667,25 @@ $(function(){
 		$.get('/vote/'+appEname+'/items', {groupid:groupid, ename:voteEname}, function(d){
 			hideLoding();
 			if(d.error == 1) return alert(d.data);
+
+
+			d.data.forEach(function(dObj){
+                window.voteRecordList.forEach(function(recObj){
+                    if(dObj.title == recObj.name){
+                        dObj.totalNumber = recObj.vote
+                    }
+                })
+            })
+
+
+            d.data = d.data.sort(function(a,b){
+                if(a.totalNumber > b.totalNumber){
+                    return -1
+                }
+                return 1
+            })
+
+			
 			updateVoteInfo(groupid, function(d2){
 				var itemList = d.data;
 				window.itemList = itemList;
