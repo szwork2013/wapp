@@ -213,6 +213,7 @@
 
    <!-- Placed at the end of the document so the pages load faster -->
             <script src="http://wzhfile.qiniudn.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+            <script src="/static/unionlife_vote_skin/voteRecord.js" type="text/javascript"></script>
 
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.bxslider.min.js"></script>
             <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.scrollTo-1.4.3.1-min.js"></script>
@@ -256,6 +257,16 @@
                         fun.call(thisp, this[i], i, this);
                     }
                   };
+                }
+
+                var getFinalRecord = function(obj){
+                    var num = obj.totalNumber;
+                    window.voteRecordList.forEach(function(o){
+                            if(o.name == obj.title){
+                                num = o.vote
+                            }
+                    })
+                    return num
                 }
 
                 $(function(){
@@ -393,7 +404,10 @@
                             d.data.forEach(function(obj){
                                 tempStr += '<li><img src="'+obj.pictureThumb+'" class="face" />'+
                                            '<p class="info">'+
-                                           '<span>姓名：'+obj.title+'</span><span class="redt">票数：'+obj.totalNumber+'</span><br/>'+
+                                           
+                                           //'<span>姓名：'+obj.title+'</span><span class="redt">票数：'+obj.totalNumber+
+                                           '<span>姓名：'+obj.title+'</span><span class="redt">票数：'+ getFinalRecord(obj) +
+                                           '</span><br/>'+
                                            '<span>部门：'+obj.code2+'</span><span>职务：'+obj.code3+'</span>'+
                                            '</p></li>'
 
