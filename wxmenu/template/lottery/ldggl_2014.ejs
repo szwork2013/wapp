@@ -258,50 +258,79 @@ font-size: 18px;
 
 </head>
 <body>
-<div class="wrapper">
-  <input type="hidden" id='openid' value=""/>
-  
+<div class="body_wrap ">
+<input type="hidden" id='openid' value=""/>
 
 
+<p class="bottom_tip">
+<a href="http://xy-tang.com/index.html" target="_blank">
+	信玉堂技术支持
+</a>
+</p>
 
-
-<!-- Modal -->
-<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!--
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      -->
-        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，当您刮中奖品后方便我们联系您</h4>
-      </div>
-    <form class="bs-example bs-example-form" role="form">
-      <div class="modal-body">      
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"  style="padding:0 10px;">
-            <span class="glyphicon glyphicon-user"></span>
-          </span>
-          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="<%= wxuobj.appUserName %>" maxlength="20">
-        </div>
-        <br/>
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon" style="padding:0 10px;">
-            <span class="glyphicon glyphicon-phone" ></span>
-          </span>
-          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="<%= wxuobj.appUserMobile %>" maxlength="11">
-        </div>
-      
-      </div>
-      <div class="modal-footer">
-        <!--
-      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-      -->
-      <button type="button" class="btn btn-primary" id="save_change">保存</button>
-      </div>
-    </form>
-    </div>
-  </div>
+<div class="main activity-lottery-winning" id="main" style="display:none;">
+<div id="outercont">
+<div id="outer-cont">
+<div id="outer" style="-webkit-transform: rotate(2136deg);">
+	<img src="http://bcs.duapp.com/xytimg/zp%2Factivity-lottery-12171.png" width="432px"></div>
 </div>
+<div id="inner-cont">
+<div id="inner">
+	<img src="http://bcs.duapp.com/xytimg/zp%2Factivity-lottery-12172.png">
+</div>
+</div>
+</div>
+<div class="content">
+</div>
+
+</div>
+
+
+
+<div id="noprize" class="question" style="display:none;">
+	<div class="question-title"></div>
+	<div class="options button">
+	    <ul></ul>
+	  </div>
+	<div class="share tools-button" onclick="mask();"></div>
+
+</div> 
+  
+<div id="prizebox" class="question" style="display:none;">
+	<div class="question-title"></div>
+	<div class="options button">
+	    <ul></ul>
+	  </div>
+	<div class="share tools-button" onclick="mask();"></div>
+	
+</div>
+  
+  
+<div id="mobile" class="question"  style="display:none;">
+	<div class="question-title"></div>
+	<div class="options button">
+	    <ul></ul>
+	  </div>
+	<div id="prize_num" class="prize_num"></div>
+	<div id="modify_info_btn" class="share tools-button openBtn" ></div>
+	<input id="mobile_inp" class="mobile_inp" placeholder="请输入领奖手机号码" value="" maxlength="11">
+</div>  
+  
+  
+<div id="mask" class="mask_box" onclick="mask();"><img src="http://wzzy2014skin.qiniudn.com/wk_zp2014/guide.png"/></div> 
+  
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
 
 
 
