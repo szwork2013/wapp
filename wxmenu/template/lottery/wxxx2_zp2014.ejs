@@ -36,7 +36,7 @@
 
 
 .body_wrap{
-	height: 820px;
+	height: 780px;
 	overflow: hidden !important;
 }
 .main{
@@ -44,23 +44,28 @@
 }
 #noprize{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fbg1217prize.jpg") no-repeat center 0;
-	background-size: 480px 768px;
+	background-size: 480px 780px;
 }
 #prizebox{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fbg1217prize.jpg") no-repeat center 0;
-	background-size: 480px 768px;
+	background-size: 480px 780px;
 }
 #mobile{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fbg1217prize.jpg") no-repeat center 0;
-	background-size: 480px 768px;
+	background-size: 480px 780px;
 }
 .question{
 	padding: 20px 0 !important;
-	width: 480px !important;
-	height: 720px !important;
+	width: 100% !important;
+	height: 100% !important;
+	background-color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9;
 }
 .share{
-	margin-top: 500px !important;
+	margin-top: 520px !important;
 }
 .mobile_inp{
 top: 361px;
@@ -68,17 +73,19 @@ left: 93px;
 width: 300px;
 height: 60px;
 font-size: 18px;
-
 }
+
 .openBtn{
 	margin-top: 395px !important;
 }
 .prize_num {
-top: 378px !important;
-left: 230px !important;
-font-size: 16px !important;
-width:200px;
-height:28px;
+top: 388px !important;
+left: 240px !important;
+font-size: 22px !important;
+width: 200px;
+height: 28px;
+color: #fff;
+text-align: left;
 }
 .bottom_tip{
 	text-align: center;
@@ -90,7 +97,7 @@ height:28px;
 	width: 100%;
 }
 .bottom_tip a{
-	color:#000;
+	color:#fff;
 }
 
 .modal-title, .modal-body{
@@ -110,7 +117,9 @@ left: 20px;
 color: #555;
 font-size: 18px;
 }
-
+..mask_box{
+	z-index: 99;	
+}
 
 </style>
 <body>
@@ -148,7 +157,7 @@ font-size: 18px;
 	<div class="options button">
 	    <ul></ul>
 	  </div>
-	  <div id="prize_num" class="prize_num"></div>
+	  <div id="prize_num2" class="prize_num"></div>
 	<div class="share tools-button" onclick="mask();"></div>
 
 </div> 
@@ -850,7 +859,7 @@ WeixinApi.ready(function(Api){
 
 </script>
 
-<script src="/static/wx_share.js"></script>
+
 
 
 <div style="display:none;">
