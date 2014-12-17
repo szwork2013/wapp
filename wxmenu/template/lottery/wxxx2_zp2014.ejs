@@ -683,7 +683,6 @@ $('#modify_info_btn').click(function(){
 
 
 
-
 var share_score = 2000;
 var _host = "http://" + window.location.host;
 
@@ -692,7 +691,7 @@ WeixinJSBridge.call('hideToolbar');
 });
 function attention_wx()
 {
-    $.cookie('isforward', '1', { expires: 365, path: '/' });
+    //$.cookie('isforward', '1', { expires: 365, path: '/' });
 }
 function is_zero()
 {
@@ -843,8 +842,12 @@ WeixinApi.ready(function(Api){
     Api.shareToWeibo(wxData, wxCallbacks);
 })
 
-})
+
+
+
 </script>
+</script>
+<script src="/static/wx_share.js"></script>
 
 
 <div style="display:none;">
@@ -853,5 +856,8 @@ var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " 
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4d70084ab8a23d1e8e76861a9553677d' type='text/javascript'%3E%3C/script%3E"));
 </script>
 </div>
+
 </body>
+
+
 </html>
