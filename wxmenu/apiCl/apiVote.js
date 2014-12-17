@@ -94,7 +94,7 @@ obj.getVoteInfo2 = function(req,res){
 	var cacheKey = voteEname+'2'
 	var now = Date.now()
 
-	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*1000){		
+	if(global[cacheKey] /*&& now - global[cacheKey].timestamp < 3600*1000*/){		
 		res.send({error:0,data:global[cacheKey].data}) 
 		return;
 	}
@@ -219,7 +219,7 @@ obj.getItemsInfo = function(req,res){
 	//先读取缓存
 	var cacheKey = voteEname+groupid
 	var now = Date.now()
-	if(global[cacheKey] && now - global[cacheKey].timestamp < 3600*10){		
+	if(global[cacheKey] /*&& now - global[cacheKey].timestamp < 3600*10*/){		
 		res.send({error:0,data:global[cacheKey].data}) 
 		return;
 	} 

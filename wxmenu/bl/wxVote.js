@@ -452,7 +452,7 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 	var cacheKey = voteid+'wxIndex'
 	var now = Date.now()
 
-	if(voteCountDict[cacheKey] && now - voteCountDict[cacheKey].timestamp < 3600*1000*4){		
+	if(voteCountDict[cacheKey] /*&& now - voteCountDict[cacheKey].timestamp < 3600*1000*4*/){		
 		cb(null, voteCountDict[cacheKey].data)
 		return;
 	}
