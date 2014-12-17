@@ -230,9 +230,9 @@ obj.getGroupByVoteId = function(voteid, cb){
 		//排序
 		list = list.sort(function(a,b){
 			if(a.todayVoteNumber > b.todayVoteNumber){
-				return false;
+				return -1;
 			}
-			return true;
+			return 1;
 		})
 		cb(err,list)
 	})

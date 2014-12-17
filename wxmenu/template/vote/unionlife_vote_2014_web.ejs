@@ -400,6 +400,22 @@
                             $('#loading_box').hide()
                             window.ajaxing = false;
                             if(d.error) return alert(d.data)
+
+                            d.data.forEach(function(dObj){
+                                window.voteRecordList.forEach(function(recObj){
+                                    if(dObj.title == recObj.name){
+                                        dObj.totalNumber = recObj.vote
+                                    }
+                                })
+                            })
+
+                            d.data = d.data.sort(function(a,b){
+                                if(a.totalNumber > b.totalNumber){
+                                    return -1
+                                }
+                                return 1
+                            })
+
                             var tempStr = ''
                             d.data.forEach(function(obj){
                                 tempStr += '<li><img src="'+obj.pictureThumb+'" class="face" />'+

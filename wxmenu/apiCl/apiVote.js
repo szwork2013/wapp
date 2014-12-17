@@ -142,8 +142,8 @@ obj.getVoteInfo2 = function(req,res){
 					})
 
 					tempGroupList = tempGroupList.sort(function(a,b){
-						if(a.count < b.count) return true;
-						return false;
+						if(a.count < b.count) return 1;
+						return -1;
 					})
 				
 					

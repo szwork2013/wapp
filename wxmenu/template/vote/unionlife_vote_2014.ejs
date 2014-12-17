@@ -486,6 +486,24 @@ $(function(){
 			}, 
 			function(d){
 			if(d.error == 1) return alert(d.data);
+
+			d.data.forEach(function(dObj){
+                window.voteRecordList.forEach(function(recObj){
+                    if(dObj.title == recObj.name){
+                        dObj.totalNumber = recObj.vote
+                    }
+                })
+            })
+
+
+            d.data = d.data.sort(function(a,b){
+                if(a.totalNumber > b.totalNumber){
+                    return -1
+                }
+                return 1
+            })
+
+
 			window.itemShakeList = d.data;
 			var goodList = [] //随机可投票数组，优先使用可投票数组
 			var badList = []  //随机不可投票数组
