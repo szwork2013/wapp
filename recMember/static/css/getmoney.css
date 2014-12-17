@@ -1,0 +1,60 @@
+.get_money_role{
+	background: url('../images/get_money_0.jpg') top center no-repeat;
+	background-size: 320px 525px;
+	width: 320px;
+	height: 525px;
+	position: relative;
+	padding-top: 20px;	
+}
+.get_money_get{
+	background: url('../images/get_money_1.jpg') top center no-repeat;
+	background-size: 320px 525px;
+}
+.get_money_result{
+	background: url('../images/get_money_2.jpg') top center no-repeat;
+	background-size: 320px 525px;
+}
+
+.gm_role_box{
+	background:#fff; 
+	background:rgba(255,255,255,0.6); filter:alpha(opacity=60);
+	line-height: 25px;
+	font-size: 14px;
+	border-radius: 10px;
+	display: block;
+	padding: 10px;
+	width: 280px;
+	margin: 0 auto;
+}
+.gm_has_get_box{
+	text-align: center;
+	font-size: 16px;
+	margin: 15px auto;
+}
+.gm_has_get_box font{
+	font-size: 22px;
+	color: #c00;
+}
+.gm_get_btn{
+	color:#fff;
+	font-size: 18px;
+	text-align: center;
+	line-height: 40px;
+	width: 200px;
+	height: 40px;
+	background-color: #dd4949;
+	border-radius: 10px;
+	margin: 20px auto;
+	display: block;
+	cursor: pointer;
+	font-family: '微软雅黑'
+}
+.gm_open_btn{
+	position: absolute;
+	top: 269px;
+	left: 60px;
+	background-color: #ccc;
+}
+.gm_go_to_btn{
+	margin: 0 auto;
+}

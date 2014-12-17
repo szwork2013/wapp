@@ -10,7 +10,7 @@
         <img src="http://wkmixtown.qiniudn.com/wanke_skin/img/card2.png" class="card_img" />
         <span class="card_num">NO. <%= binderObj.appCardNumber %></span>
     </div>
-    <section class="info-my">
+    <section class="info-my" style="padding-bottom:15px;">
       <header>
         <h1><%= userObj.appUserName %></h1>
         <div>
@@ -29,10 +29,13 @@
         <li>
              <h2>房号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
               <p><%= binderObj.appUserRoom %> 室</p>
-        </li>                               
+        </li>                              
       </ul>
+
+       <!-- <a class="gm_get_btn gm_go_to_btn" href="/view/user/getmoney">开红包拉</a>  -->
     </section>
-          <!--<a class="icon level" href="tel:057187971125">升级会员</a>   -->
+         
+
   </section>
 <% include inc/rule %>
 <script type="text/javascript">

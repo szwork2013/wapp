@@ -1,24 +1,60 @@
 <% include inc/head %>
 <%
-  var title = '新闻公告'
+  var title = '领取红包'
 %>
 <% include inc/top %>
 
 <section class="page-content container content-interests content-item">
-    <ul>
-       <% 
-         list.forEach(function(obj,i){ 
-       %>
-        <li>
-          <a class="lista" href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank">
-            <img src="<%= obj.picture[0] %>">
-            <h1><%= obj.title %></h1>
-            <p><span>时 间</span><%= obj.writeTime %></p>
-          </a>
-        </li>
-      <% }) %>
-      
-    </ul>
-  </section>
+  <div id="get_money_role" class="get_money_role">
+      <div class="gm_role_box">
+          我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则
+      </div>
+
+      <% if(userObj.moneyCode && userObj.moneyCode != ''){ %>
+          <p class="gm_role_box gm_has_get_box">
+              您的兑奖码：<font><%= userObj.moneyCode %></font>
+          </p>
+      <% } else{%>
+
+        <a class="gm_get_btn" type="button" id="gm_get_btn">立即领取</a>
+
+      <% } %>
+
+  </div>
+  <div id="get_money_get" class="get_money_role get_money_get" style="display:none;">
+      <a class="gm_get_btn gm_open_btn" type="button" id="gm_open_btn">打开红包</a>
+  </div>
+  <div id="get_money_result" class="get_money_role get_money_result" style="display:none;">
+
+  </div>
+
+
+</section>
+
+<script type="text/javascript">
+$(function(){
+    $('#gm_get_btn').click(function(){
+        $('#get_money_role, #get_money_get, #get_money_result').hide()
+        $('#get_money_get').show()
+    })
+
+    window.isajax = false
+    $('#gm_open_btn').click(function(){
+        if(window.isajax) return
+
+        window.isajax = true
+        $.post('/api/user/getmoney?wxuserid=<%= userObj._id%>',{r:Date.now()}, function(d){
+            window.isajax = false
+            if(d.error == '1'){
+              return alert(d.data)
+            }
+            $('#get_money_role, #get_money_get, #get_money_result').hide()
+            $('#get_money_result').show()
+        })        
+    })
+})
+
+</script>
+
 
 <% include inc/foot %>

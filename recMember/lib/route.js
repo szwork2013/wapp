@@ -42,7 +42,7 @@ wxAppBl.getByEname(config.appEname,function(err,appObj){
 		wxAppSecret:appObj.wxAppSecret,
 		writeTime:  moment(appObj.writeTime).format('YYYY-MM-DD hh:mm:ss'),  
       }
-
+    
       global.wxAppObj = appObj2;
 })
 
@@ -81,6 +81,9 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 			  appUserSex:uobj.uobj.appUserSex, //0表示女性，1表示男性
 			  appUserBirth: moment(uobj.uobj.appUserBirth).format('YYYY-MM-DD'), //会员生日
 			  appUserScore:uobj.uobj.appUserScore,
+			  moneyCode:uobj.uobj.moneyCode,
+			  moneyUsed:uobj.uobj.moneyUsed,
+		   	  moneyWriteTime:uobj.uobj.moneyWriteTime,
 			  isShow:uobj.uobj.isShow, //是否启用这个用户,1表示启用，0表示未启用
 			  writeTime: moment(uobj.uobj.writeTime).format('YYYY-MM-DD hh:mm:ss'),   //写入时间
 		};
@@ -205,8 +208,8 @@ var addroute = function(app){
 	app.get('/view/user/regist',getUserMid, viewUser.regist);
 	//用户中心
 	app.get('/view/user/modify',getUserMid, viewUser.modify);
-	//ajax获取兑奖码
-	app.post('/view/user/getmoney',getUserMid, viewUser.getMoney);
+	//领奖礼包页面
+	app.get('/view/user/getmoney',getUserMid, viewUser.getMoney);
 
 	//增加页面接口
 	//1、兑换商品页面
