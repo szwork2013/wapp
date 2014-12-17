@@ -310,7 +310,18 @@ font-size: 18px;
 
 
 <script type="text/javascript">
-
+var mask = function () {
+		var maskObj = $('#mask');
+		var tip = $('#tip');
+		if(maskObj.is(':visible')){
+			maskObj.hide();
+			tip.hide();
+		}
+		else{
+			maskObj.show();
+			tip.show();
+		}
+}
 
 var forwardingUrl = 'http://menu.xy-tang.com/active/xinyutang?ename=ldggl_2014';
 var forwardingImg = 'http://bcs.duapp.com/xytimg/ldlogo928.jpg'
@@ -369,7 +380,7 @@ $(function(){
     wxappid:appId,
     },function(d){
       if(d.error == 1) return alert(d.data);
-      alert('资料完善成功，赶快去刮奖吧')
+      alert('资料完善成功，赶快去玩大转盘吧')
       $('#myModal').modal('hide')
       $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
       //window.localStorage['has_modify'] = '1';
