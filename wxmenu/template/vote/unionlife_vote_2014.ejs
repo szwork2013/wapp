@@ -685,7 +685,7 @@ $(function(){
                 return 1
             })
 
-			
+
 			updateVoteInfo(groupid, function(d2){
 				var itemList = d.data;
 				window.itemList = itemList;
@@ -701,7 +701,7 @@ $(function(){
 
 					//当有昨天的排名数据，进行判断上升还是下降
 					var posStr = ''
-					if(itemObj.lastdayVoteOrder != 0){
+					/*if(itemObj.lastdayVoteOrder != 0){
 						//表示上升
 						if(itemObj.lastdayVoteOrder - numberPos >0){
 							posStr = '<span class="group_rank group_up yh">'+
@@ -716,7 +716,7 @@ $(function(){
 	    								 '今日下降 '+(numberPos - itemObj.lastdayVoteOrder)+' 位</span>'
 
 						}
-					}
+					}*/
 					
 					//拼接模版
 					blk_s += '<div class="group_blk">'+
