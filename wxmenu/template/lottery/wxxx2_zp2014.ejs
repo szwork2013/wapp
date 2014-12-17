@@ -307,8 +307,6 @@ font-size: 18px;
 
 
 
-
-
 <script type="text/javascript">
 var mask = function () {
 		var maskObj = $('#mask');
@@ -323,22 +321,26 @@ var mask = function () {
 		}
 }
 
-var forwardingUrl = 'http://menu.xy-tang.com/active/xinyutang?ename=ldggl_2014';
-var forwardingImg = 'http://bcs.duapp.com/xytimg/ldlogo928.jpg'
-var forwardingTitle ='绿巨人全球送礼，iphone6，品牌自行车任你抽'
-var forwardingDesc ='绿巨人全球送礼，iphone6，品牌自行车任你抽'
+var forwardingUrl = 'http://menu.xy-tang.com/lottery/xinyutang?ename=yjs_zp2014';
+var forwardingImg = 'http://bcs.duapp.com/xytimg/yjszp/logo.jpg'
+var forwardingTitle ='御江山全城送红包，赶紧来领一个'
+var forwardingDesc ='御江山全城送红包，赶紧来领一个'
 
 
 
 
-var lotteryObj =  <%- JSON.stringify(lotteryObj) %>
 var lotteryid = '<%= lotteryObj._id %>'
 var userid = '<%= userid%>'
 var appId = '<%= appId%>'
 var u_username = '<%= wxuobj.appUserName %>'
 var u_mobile = '<%= wxuobj.appUserMobile %>'
+var appUserName = u_username
+var appUserMobile = u_mobile 
 
-$(function(){
+
+
+$(function() {
+
   $('#lottery_again').click(function(){
     location.href = location.href;
   })
@@ -380,7 +382,7 @@ $(function(){
     wxappid:appId,
     },function(d){
       if(d.error == 1) return alert(d.data);
-      alert('资料完善成功，赶快去玩大转盘吧')
+      alert('资料完善成功，赶快去刮奖吧')
       $('#myModal').modal('hide')
       $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
       //window.localStorage['has_modify'] = '1';
@@ -389,16 +391,7 @@ $(function(){
     return false;
   })
 
-  window.lotteryData = {};
 
-   $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
-    if(d.error == 1){
-      return alert(d.data)
-    }
-        window.lotteryData = d.data;
-        work(d.data)
-
-    },'json')
 
   var work = function(data){
 
@@ -417,9 +410,18 @@ $(function(){
           })
      }
 
-     
+     //put my prize
+     var tmp_s = ''
+     data.record.forEach(function(ro){
+      if(ro.prizeId != '0' && ro.prizeObj){
+        
+        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+      }
+     })
+     $('#prize_list').html(tmp_s)
+     //end pu prize
 
-   
+    
 
 
   
