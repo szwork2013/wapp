@@ -317,6 +317,11 @@ window.bank_status = [
               { text: "已发放", value: 4 },
               ]
 
+window.get_money = [
+              { text: "未领奖", value: 0 },
+              { text: "已领奖", value: 1 },
+              ]
+
 
 window.kendo_edit_option = {
     tools: window.editor_tools,

@@ -179,6 +179,8 @@ var addroute = function(app){
 	app.post('/api/user/createtransac',getUserMid, apiUser.createtransac);
 	//ajax检查是否有推荐状态消息
 	app.post('/api/user/getrecnews',getUserMid, apiUser.getrecnews);
+	//ajax获取兑奖码
+	app.post('/api/user/getmoney',getUserMid, apiUser.getMoney);
 	
 	//下面是页面控制器
 
@@ -203,7 +205,8 @@ var addroute = function(app){
 	app.get('/view/user/regist',getUserMid, viewUser.regist);
 	//用户中心
 	app.get('/view/user/modify',getUserMid, viewUser.modify);
-	
+	//ajax获取兑奖码
+	app.post('/view/user/getmoney',getUserMid, viewUser.getMoney);
 
 	//增加页面接口
 	//1、兑换商品页面

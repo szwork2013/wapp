@@ -177,5 +177,16 @@ obj.getrecnews = function(req,res){
 
 }
 
+obj.getMoney = function(req,res){
+	var userId = req.wxuobj._id;
+
+	userBl.getMoneyCode(userId,, function(err,recdoc){
+		if(err) return res.json({'error':1,'data':err});
+		res.json({'error':0,'data':recdoc})
+	})
+
+}
+
+
 
 module.exports = obj;

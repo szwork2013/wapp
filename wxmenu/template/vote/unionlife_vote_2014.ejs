@@ -57,24 +57,24 @@
 <!-- 主页面 -->
 <div id="main" class="container-fluid over_hidden" >
 	<img id="main_pic" src="<%= voteObj.picture %>" class="img-rounded img-responsive" />
-	<div class="rule-title clear">
+	<!-- <div class="rule-title clear">
 		<h5>活动规则：</h5>
 		<button id="rules_btn" class="btn btn-primary yh btn-info" data-toggle="modal" data-target="#rules">
 	      <span class="fui-list-columned"></span>
 	      详细规则
 	    </button>
-	</div>
+	</div> -->
 		<%- voteObj.descShort %>
 
 
 
-	<div class="rule-title clear">
+	<!-- <div class="rule-title clear">
       <h5>请选择地区：</h5>
         <button name="shake_btn_main" class="btn btn-primary yh shake_btn">
 	      <span class="fui-resize"></span>
 	      不知道选谁？摇一摇
 	    </button>
-    </div>
+    </div> -->
     	<a href="/active/unionlife?ename=unionlife_10year" class="ty_banner">
 		<img src="http://piccvote.qiniudn.com/banner_ten_year3.png" />
 	</a>
@@ -136,10 +136,10 @@
 
 	<div class="rule-title clear">
       <h5>投票人：</h5>
-      <button name="shake_btn_list" class="btn btn-primary yh shake_btn">
+      <!-- <button name="shake_btn_list" class="btn btn-primary yh shake_btn">
 	      <span class="fui-resize"></span>
 	      不知道选谁？摇一摇
-	  </button>
+	  </button> -->
     </div>
     <div id="group_list_box" class="demo-content-wide row show-grid">
 
@@ -964,7 +964,7 @@ $(function(){
 		
 	//监听摇一摇事件
 	window.addEventListener('shake', function(){
-		start_shake();
+		//start_shake();
 	}, false);
 
 	$('.dropdown-toggle').dropdown()

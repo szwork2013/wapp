@@ -17,6 +17,9 @@ var obj = { //定义结构
 	  appUserScore:{type:Number,default:0,index:true},
 	  isShow:{ type:Number, default:1}, //是否启用这个用户,1表示启用，0表示未启用
 	  userFrom:{type:String, default:'其它'}, //用户来源
+	  moneyCode:{type:String, default:''},									//礼包编码
+	  moneyUsed:{ type:Number, default:0},									//是否已经使用
+	  moneyWriteTime:{ type: Date, default: function(){return Date.now()} },//礼包使用时间
 	  code1:{type:String, default:''},//备用1
 	  code2:{type:String, default:''},//备用2
 	  writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间

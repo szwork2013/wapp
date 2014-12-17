@@ -638,4 +638,45 @@ obj.getRecNews = function(appId, userId, lastActiveTime,cb){
 
 }
 
+
+obj.getMoneyCode = function(userId, cb){
+
+	obj.getUserByUserId(userId, function(err, userObj){
+		if(err) return cb(err);
+		if(userObj.moneyCode && userObj.moneyCode != ''){//已经有兑奖码了
+			return cb(null, {
+				moneyCode:userObj.moneyCode,
+				moneyUsed:userObj.moneyUsed,
+				moneyWriteTime:userObj.moneyWriteTime,
+			})
+		}
+		//如果没有兑奖码
+
+		guidModel.getGuid(function(err,code){
+			if(err) return cb(err);
+
+			userModel.createOneOrUpdate({
+				'_id':userId
+			},{
+				moneyCode:code,
+				moneyUsed:0,
+				moneyWriteTime:new Date(),
+			},function(err,uobj){
+				if(err) return cb(err)
+				cb(null, {
+					moneyCode:uobj.moneyCode,
+					moneyUsed:uobj.moneyUsed,
+					moneyWriteTime:uobj.moneyWriteTime,
+				})
+			})
+		})
+	})
+}
+
+
+
+
+
+
+
 module.exports = obj;

@@ -115,6 +115,19 @@ obj.recommend = function(req,res){
 
 
 
+obj.getMoney = function(req,res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId
+
+	//req.wxBinder.appCardNumber = userBl.genCardNumber(req.wxBinder.appCardNumber)
+	//console.log(req.wxBinder)
+	res.render('user_getmoney.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+	})
+}
+
 
 
 
