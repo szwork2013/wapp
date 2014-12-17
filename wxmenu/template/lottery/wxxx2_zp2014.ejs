@@ -437,6 +437,231 @@ $(function(){
 
 
 
+window.hasPlay = false;
+$.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
+    if(d.error == 1){
+      return alert(d.data)
+    }
+        window.lotteryData = d.data;
+        
+        if(d.data.record && d.data.record.length > 0){
+        	var now = moment();
+       		var lastRecordTime = moment(d.data.record[d.data.record.length-1].writeTime);
+       	//	if(now.dayOfYear() == lastRecordTime.dayOfYear()){
+       	//		window.hasPlay = true;
+       	//	}
+        	if(d.data.record.length>=3){
+        		window.hasPlay = true;
+        	}
+        }
+
+    },'json')
+
+
+
+	var boxObjs = $('#mobile, #prizebox, #noprize, #main')
+
+
+
+
+
+window.requestAnimFrame = (function() {
+		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+		function(callback) {
+			window.setTimeout(callback, 1000 / 60)
+		}
+	})();
+
+
+	var totalDeg = 360 * 3 + 0;
+	var steps = [];
+	var lostDeg = [260];
+	var prizeDeg = [300, 240, 180, 120, 60, 30, 10, -30];
+	//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
+	var prize, sncode;
+	var count = 0;
+	var now = 0;
+	var a = 0.01;
+	var outter, inner, timer, running = false;
+	function countSteps() {
+		var t = Math.sqrt(2 * totalDeg / a);
+		var v = a * t;
+		for (var i = 0; i < t; i++) {
+			steps.push((2 * v * i - a * i * i) / 2)
+		}
+		steps.push(totalDeg)
+	}
+
+	function step() {
+		outter.style.webkitTransform = 'rotate(' + steps[now++] + 'deg)';
+		outter.style.MozTransform = 'rotate(' + steps[now++] + 'deg)';
+		if (now < steps.length) {
+			requestAnimFrame(step)
+		} else {
+			running = false;
+			setTimeout(function() {
+							
+					if(!window.prizeTitle){//没中奖
+						alert(window.result)
+						setTimeout(function(){
+							boxObjs.hide();
+							$('#noprize').show();
+						},1000)
+						
+					}
+					else{
+						alert(window.result)
+						
+						setTimeout(function(){
+							boxObjs.hide();
+							$('#prize_num').html(prizeTitle.slice(0,-1))
+							$('#mobile').show();
+						},1000)
+						
+					}
+
+			},
+			200)
+		}
+	}
+
+
+	function start(deg,haserror) {
+		deg = deg || lostDeg[parseInt(lostDeg.length * Math.random())];
+		running = true;
+		clearInterval(timer);
+		totalDeg = 360 * 5 + deg;
+		steps = [];
+		now = 0;
+		countSteps();
+		if(haserror){
+			alert(window.result)
+			return;
+		}
+		requestAnimFrame(step)
+	}
+	window.start = start;
+	outter = document.getElementById('outer');
+	inner = document.getElementById('inner');
+	i = 10;
+	$("#inner").click(function() {
+		if (running) return;
+		if (window.hasPlay) {
+			alert('你已经玩过了，每个微信号只能转三次哦');
+			return
+		}
+
+
+	//	start(prizeDeg[5])
+	//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
+
+	//	return;
+		
+		$.ajax({
+			url: "/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>",
+			dataType: "json",
+			type:'POST',
+			data: {
+				 lotteryId:lotteryid
+			},
+			beforeSend: function() {
+				running = true;
+				timer = setInterval(function() {
+					i += 5;
+					outter.style.webkitTransform = 'rotate(' + i + 'deg)';
+					outter.style.MozTransform = 'rotate(' + i + 'deg)'
+				},
+				1)
+			},
+			success: function(d) {
+
+					var prizeObj = {
+						'雷厉风行风扇':prizeDeg[0],
+						'乐扣乐扣':prizeDeg[1],
+						'雷迪森住房券':prizeDeg[2],
+						'星巴克杯':prizeDeg[3],
+						'雷迪森中餐厅':prizeDeg[4],
+						'可口可乐':prizeDeg[5],
+						'海鲜小火锅':prizeDeg[6],
+						'谢谢':prizeDeg[7]
+					}
+						//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
+
+					if(d.error == 1){						
+						window.prizeTitle = false;
+						window.result = d.data;
+						start(lostDeg[0],true);
+						return;
+					}  
+					var prizeId = d.data.prizeId;
+					if(prizeId == '0'){ //没有中奖
+						window.prizeTitle = false;
+						window.result = '很遗憾没有中奖哦';
+						return start(lostDeg[0]);
+					}
+
+					var prizeTitle = d.data.prizeObj.name;
+								//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
+					var pos = prizeObj[prizeTitle]
+					if(typeof pos == 'undefined'){
+						window.prizeTitle = false;
+						window.result = '您没有中奖哦';
+						return start(lostDeg[0]);
+					}
+					
+					window.prizeTitle = d.data.prizeObj.name;
+					window.result = '恭喜您抽中'+window.prizeTitle
+					window.lastRecordId = d.data.recordId.toString();
+					start(pos);
+					//console.log(window.prizeTitle)
+				
+			},
+			error: function() {
+				start(lostDeg[0]);
+			},
+			timeout: 5000
+		})
+	})
+
+	
+
+var mobile_num = ['139','138','137','136','135','134','159','150','151','158','157','188','187','152','182','147','183','184','170','178']
+$('#modify_info_btn').click(function(){
+
+    var appUserMobile = $('#mobile_inp').val().trim();
+
+    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+      alert('请输入正确的手机号码')
+      return false;
+    }
+    //var front3 = appUserMobile.slice(0,3);
+    //if(mobile_num.indexOf(front3) == -1){
+    //	alert('请输入移动号码')
+    //  	return false;
+    //}
+
+    $.post('/lottery/<%= appEname%>/complete',{
+	    truename:u_username, 
+	    mobile:appUserMobile,
+	    recordId:window.lastRecordId,
+    },function(d){
+      if(d.error == 1) return alert(d.data);
+      boxObjs.hide();
+      $('#prizebox').show();
+     
+    },'json')
+    return false;
+	
+})
+
+
+
+	$('#main').show();
+});
+
+
+
+
 
 
 
