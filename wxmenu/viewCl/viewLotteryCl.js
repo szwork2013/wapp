@@ -18,7 +18,7 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 	var appEname = appobj.data;
 	//如果是本地开发环境
     if(platForm == 'win32'){
-		req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+		req.session[appEname+'_userid'] = '53ecc71816eafb68369b4920'
 	}
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
