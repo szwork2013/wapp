@@ -450,11 +450,41 @@ window.isforward_today = moment().hour(23).minute(59).second(59)
 window.isforward_today = new Date(window.isforward_today)
 
 
-var forwardingCallback = function(){
+//var forwardingCallback = function(){
 	//10表示cookie设置有效期10天
-	$.cookie('isForward', '1', { expires: 10, path: location.pathname });
+	//$.cookie('isForward', '1', { expires: 10, path: location.pathname });
 	//location.href = location.href
+//}
+
+
+
+
+
+if($.cookie('isforward') == '1'){
+  $.removeCookie('isforward');
+  $.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
 }
+if($.cookie('has_modify_info') == '1'){
+  $.removeCookie('has_modify_info');
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: '/' });
+}
+
+
+//alert(window.isforward_today)
+//$.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+//alert($.cookie('isforward'))
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
