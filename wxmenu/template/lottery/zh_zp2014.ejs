@@ -468,7 +468,7 @@ if($.cookie('isforward') == '1'){
 }
 if($.cookie('has_modify_info') == '1'){
   $.removeCookie('has_modify_info');
-   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: 'location.pathname' });
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: location.pathname });
 }
 
 
@@ -611,7 +611,7 @@ window.hasPlay = false;
 window.hasForwardPlay = false;
 
 window.getIsForward = function(){
-		var is_f = $.cookie('isForward')
+		var is_f = $.cookie('isforward')
 		if(is_f == '0' || !is_f) return false
 		return is_f
 }
@@ -918,7 +918,7 @@ WeixinJSBridge.call('hideToolbar');
 });
 function attention_wx()
 {
-    //$.cookie('isforward', '1', { expires: 365, path: '/' });
+    $.cookie('isforward', '1', { expires: window.isforward_today, path:location.pathname});
 }
 function is_zero()
 {
