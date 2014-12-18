@@ -632,7 +632,7 @@ window.requestAnimFrame = (function() {
 
 	var totalDeg = 360 * 3 + 0;
 	var steps = [];
-	var lostDeg = [290];
+	var lostDeg = [300];
 	var prizeDeg = [330, 260, 225, 190, 120, 121, 122, 119];
 	//[童趣大奖，心跳大奖，暖心大奖，惊喜大奖，不会中，不会中1，不会中2，谢谢]
 	var prize, sncode;
@@ -661,26 +661,26 @@ window.requestAnimFrame = (function() {
 					if(window.prizeTitle=='童趣大奖'){
 						alert(window.result)
 					setTimeout(function(){
-							boxObjs.hide();
+					//		boxObjs.hide();
 						$('#tongqu').show();
 					},1000)
 						
 					}
 					
 					
-					else if(window.prizeTitle=='心跳大奖'){//没中奖
+					else if(window.prizeTitle=='心跳大奖'){
 						alert(window.result)
 					setTimeout(function(){
-							boxObjs.hide();
+					//		boxObjs.hide();
 						$('#tongqu').show();
 					},1000)
 						
 					}
 					
-					else if(window.prizeTitle=='暖心大奖'){//没中奖
+					else if(window.prizeTitle=='暖心大奖'){
 						alert(window.result)
 					setTimeout(function(){
-							boxObjs.hide();
+					//		boxObjs.hide();
 						$('#tongqu').show();
 					},1000)
 						
@@ -688,10 +688,10 @@ window.requestAnimFrame = (function() {
 					
 					
 					
-					else if(window.prizeTitle=='惊喜大奖'){//没中奖
+					else if(window.prizeTitle=='惊喜大奖'){
 						alert(window.result)
 					setTimeout(function(){
-							boxObjs.hide();
+					//		boxObjs.hide();
 						$('#tongqu').show();
 					},1000)
 						
@@ -703,9 +703,9 @@ window.requestAnimFrame = (function() {
 						alert(window.result)
 						
 						setTimeout(function(){
-							boxObjs.hide();
+					//		boxObjs.hide();
 							$('#prize_num').html(prizeTitle.slice(0,-1))
-							$('#noprize').show();
+							$('#nuli').show();
 						},1000)
 						
 					}
