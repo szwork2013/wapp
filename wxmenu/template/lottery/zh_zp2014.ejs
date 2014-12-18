@@ -45,6 +45,7 @@
 #noprize{
 	background: url("http://bcs.duapp.com/xytimg/yjszp/3.jpg") no-repeat center 0;
 	background-size: 480px 720px;
+	
 }
 #prizebox{
 	background: url("http://bcs.duapp.com/xytimg/yjszp/2.jpg") no-repeat center 0;
@@ -57,22 +58,38 @@
 #tongqu{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fb1218.jpg") no-repeat center 0;
 	background-size: 480px 720px;
+	position:absolute;
+	z-index:99999;
+	top:0px;
+	left:0px;
 }
 
 #xintiao{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fd1218.jpg") no-repeat center 0;
 	background-size: 480px 720px;
+	position:absolute;
+	z-index:99999;
+	top:0px;
+	left:0px;
 }
 
 #nuanxin{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fc1218.jpg") no-repeat center 0;
 	background-size: 480px 720px;
+	position:absolute;
+	z-index:99999;
+	top:0px;
+	left:0px;
 }
 
 
 #jingxi{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fa1218.jpg") no-repeat center 0;
 	background-size: 480px 720px;
+	position:absolute;
+	z-index:99999;
+	top:0px;
+	left:0px;
 }
 
 
@@ -80,6 +97,10 @@
 #nuli{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fe1218.jpg") no-repeat center 0;
 	background-size: 480px 720px;
+	position:absolute;
+	z-index:99999;
+	top:0px;
+	left:0px;
 }
 
 .question{
@@ -155,7 +176,13 @@ height: 90px;
 }
 
 .lottery_again2 {
-top: 800px;
+top: 600px;
+
+}
+
+.lottery_again3 {
+top: 40px;
+
 }
 </style>
 <body>
@@ -203,56 +230,48 @@ top: 800px;
 
 
 <div id="tongqu" class="question" style="display:none;">
-	
-<div class="question-title"></div>
-	<div class="options button">
-	    <ul></ul>
-	  </div>
 
-	<div class="share tools-button" onclick="mask();"></div>
+
+	   <a onclick="javascript:location.href = location.href;" class="lottery_again lottery_again3"></a>
+	
+
+	
 </div>
 
 
 
 <div id="xintiao" class="question" style="display:none;">
 
-<div class="question-title"></div>
-	<div class="options button">
-	    <ul></ul>
-	  </div>
 
-	<div class="share tools-button" onclick="mask();"></div>
+	 <a onclick="javascript:location.href = location.href;" class="lottery_again lottery_again3"></a>
+	
+
 	</div>
 
 
 <div id="nuanxin" class="question" style="display:none;">
 
-<div class="question-title"></div>
-	<div class="options button">
-	    <ul></ul>
-	  </div>
+   	   <a onclick="javascript:location.href = location.href;" class="lottery_again lottery_again3"></a>
+	
 
-	<div class="share tools-button" onclick="mask();"></div>
 	</div>
+	
+	
 	
 	<div id="jingxi" class="question" style="display:none;">
 	
-	<div class="question-title"></div>
-	<div class="options button">
-	    <ul></ul>
-	  </div>
+	 	 <a onclick="javascript:location.href = location.href;" class="lottery_again lottery_again3"></a>
 	
-	<div class="share tools-button" onclick="mask();"></div>
+
 	</div>
+	
+	
 	
 	<div id="nuli" class="question" style="display:none;">
 	
-	<div class="question-title"></div>
-	<div class="options button">
-	    <ul></ul>
-	  </div>
+	  	  <a onclick="javascript:location.href = location.href;" class="lottery_again lottery_again3"></a>
+	
 
-	<div class="share tools-button" onclick="mask();"></div>
 	</div>
 
 
@@ -460,7 +479,7 @@ var timeError = '<%= timeError %>'
 
  $(function(){
   $('#lottery_again').click(function(){
-    location.href = location.href;
+      window.location.href = window.location.href;
   })
 
   $('#lottery_rule').click(function(){
