@@ -1,6 +1,6 @@
 {
 	"currentSite":"http://menu.xy-tang.com",
-	"mongodbConnStr":"mongodb://dbuser:Spout20090910@127.0.0.1:27017/wxmenu",
+	"mongodbConnStr":"mongodb://dbuser:Spout20090910@121.199.41.177:27017/wxmenu",
 	"monoosePool":20,
 	"currentHost":"127.0.0.1",
 	"currentVersion":"v1",
