@@ -464,11 +464,11 @@ window.isforward_today = new Date(window.isforward_today)
 
 if($.cookie('isforward') == '1'){
   $.removeCookie('isforward');
-  $.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+  $.cookie('isforward', '1', { expires: window.isforward_today, path:location.pathname});
 }
 if($.cookie('has_modify_info') == '1'){
   $.removeCookie('has_modify_info');
-   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: '/' });
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: 'location.pathname' });
 }
 
 
@@ -491,9 +491,9 @@ if($.cookie('has_modify_info') == '1'){
 
 
 
-var forwardingUrl = 'http://114.215.183.41/2014/wxxx2/wxxx2_zp2014jia.html';
-var forwardingImg = 'http://bcs.duapp.com/xytimg/zp%2Flogo1217.jpg'
-var forwardingTitle ='中航樾公馆幸运大转盘'
+var forwardingUrl = 'http://114.215.183.41/2014/zhygg/index.html';
+var forwardingImg = 'http://114.215.183.41/2014/zhygg/1-1.png'
+var forwardingTitle ='中航樾公馆圣诞大礼全城派送'
 var forwardingDesc ='中航樾公馆幸运大转盘'
 
 
