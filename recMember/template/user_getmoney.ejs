@@ -7,7 +7,15 @@
 <section class="page-content container content-interests content-item">
   <div id="get_money_role" class="get_money_role">
       <div class="gm_role_box">
-          我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则我是规则
+     <center>    本次活动仅限<br>
+万科MIXTOWN注册业主参加<br>
+
+注册业主通过蜜糖V灵通平台<br>
+点击抽取线上红包<br>
+凭中奖页面截图（或V灵通号码）<br>
+至万科售楼处“红包墙”抽取红包<br>
+现场打开红包<br>
+显示的金额即为业主本次活动所得奖金。<br></center>
       </div>
 
       <% if(userObj.moneyCode && userObj.moneyCode != ''){ %>
@@ -38,8 +46,8 @@ $(function(){
             if(d.error == '1'){
               return alert(d.data)
             }
-            if(parseInt(d.data) >=141){
-              return alert('你晚来了一步，141个红包已经被领完')
+            if(parseInt(d.data) >=145){
+              return alert('你晚来了一步，红包已经被领完')
             }
 
             $('#get_money_role, #get_money_get, #get_money_result').hide()
