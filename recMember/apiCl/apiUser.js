@@ -179,6 +179,9 @@ obj.getrecnews = function(req,res){
 
 obj.getMoney = function(req,res){
 	var userId = req.wxuobj._id;
+	if(req.wxBinder.appUserType<1){
+		return res.json({'error':0,'data':'您还不是认证业主，无法参加活动'})
+	}
 
 	userBl.getMoneyCode(userId, function(err,recdoc){
 		if(err) return res.json({'error':1,'data':err});
