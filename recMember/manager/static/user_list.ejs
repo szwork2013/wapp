@@ -67,7 +67,7 @@
                 <label for="moneyCode">兑奖码</label>
             </div>
             <div data-container-for="moneyCode" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="moneyCode" data-bind="value:moneyCode" >
+               <input type="number" class="k-input k-textbox w-50-inp" name="moneyCode" data-bind="value:moneyCode" >
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -155,7 +155,7 @@
                                     "appUserScore":{editable: true},
                                     "isShow": { editable: true,type:"number" },
                                     "userFrom":{editable: true},
-                                    "moneyCode":{editable: true},                    //礼包编码
+                                    "moneyCode":{editable: true,type:"number" },                    //礼包编码
                                     "moneyUsed":{ editable: true,type:"number" },   //是否已经使用
                                     "moneyWriteTime":{editable: true, type: "date" },
                                     "code1":{editable: true},
