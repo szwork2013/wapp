@@ -34,8 +34,18 @@
 <script type="text/javascript">
 $(function(){
     $('#gm_get_btn').click(function(){
-        $('#get_money_role, #get_money_get, #get_money_result').hide()
-        $('#get_money_get').show()
+        $.get('/api/user/getmoneycount', {r:Date.now()}, function(d){
+            if(d.error == '1'){
+              return alert(d.data)
+            }
+            if(parseInt(d.data) >=141){
+              return alert('你晚来了一步，141个红包已经被领完')
+            }
+
+            $('#get_money_role, #get_money_get, #get_money_result').hide()
+            $('#get_money_get').show()
+        }, 'json')
+        
     })
 
     window.isajax = false

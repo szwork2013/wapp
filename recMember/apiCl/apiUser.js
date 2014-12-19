@@ -187,6 +187,16 @@ obj.getMoney = function(req,res){
 
 }
 
+obj.getMoneycount= function(req,res){
+
+
+	userBl.getMoneyCount(function(err,count){
+		if(err) return res.json({'error':1,'data':err});
+		res.json({'error':0,'data':count})
+	})
+
+}
+
 
 
 module.exports = obj;

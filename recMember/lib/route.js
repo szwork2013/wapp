@@ -184,6 +184,8 @@ var addroute = function(app){
 	app.post('/api/user/getrecnews',getUserMid, apiUser.getrecnews);
 	//ajax获取兑奖码
 	app.post('/api/user/getmoney',getUserMid, apiUser.getMoney);
+	//ajax获取兑奖码
+	app.get('/api/user/getmoneycount', apiUser.getMoneycount);
 	
 	//下面是页面控制器
 

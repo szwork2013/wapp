@@ -651,26 +651,42 @@ obj.getMoneyCode = function(userId, cb){
 			})
 		}
 		//如果没有兑奖码
-
-		guidModel.getGuid(function(err,code){
+		obj.getMoneyCount(function(err,count){
 			if(err) return cb(err);
+			if(count >= 141){
+				return cb('你晚来了一步，141个红包已经被领完')
+			}
+			guidModel.getGuid(function(err,code){
+				if(err) return cb(err);
 
-			userModel.createOneOrUpdate({
-				'_id':userId
-			},{
-				moneyCode:code,
-				moneyUsed:0,
-				moneyWriteTime:new Date(),
-			},function(err,uobj){
-				if(err) return cb(err)
-				cb(null, {
-					moneyCode:uobj.moneyCode,
-					moneyUsed:uobj.moneyUsed,
-					moneyWriteTime:uobj.moneyWriteTime,
+				userModel.createOneOrUpdate({
+					'_id':userId
+				},{
+					moneyCode:code,
+					moneyUsed:0,
+					moneyWriteTime:new Date(),
+				},function(err,uobj){
+					if(err) return cb(err)
+					cb(null, {
+						moneyCode:uobj.moneyCode,
+						moneyUsed:uobj.moneyUsed,
+						moneyWriteTime:uobj.moneyWriteTime,
+					})
 				})
 			})
 		})
 	})
+}
+
+obj.getMoneyCount = function(cb){
+
+
+	userModel.count({'moneyCode':{$gt:0}}, function(err,count){
+		//console.log(count)
+		if(err) return cb(err)
+		cb(null, count)
+	})
+	
 }
 
 
