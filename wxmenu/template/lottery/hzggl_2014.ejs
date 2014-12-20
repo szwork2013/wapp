@@ -277,7 +277,7 @@ font-size: 18px;
 
 <!-- Modal -->
 
-<!--
+
 <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
     <div class="modal-content">
@@ -310,7 +310,7 @@ font-size: 18px;
     </div>
   </div>
 </div>
--->
+
 
 
 
@@ -402,7 +402,7 @@ $(function(){
   //end check
 
 
-  $('#save_change').click(function(){
+  $(function(){
     var appUserName = $('#appUserName').val().trim();
     var appUserMobile = $('#appUserMobile').val().trim();
     if(!appUserName || appUserName == '未认证会员'){
@@ -423,8 +423,7 @@ $(function(){
       alert('资料完善成功，赶快去刮奖吧')
       $('#myModal').modal('hide')
       $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
-      //window.localStorage['has_modify'] = '1';
-      //$('#p2').html(appUserName)
+    
     },'json')
     return false;
   })
