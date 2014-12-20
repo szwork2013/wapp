@@ -17,22 +17,22 @@ Winner.Preloader.prototype = {
 
 		// load images
 		//this.load.image('background', '/static/winner_skin/imgs/background.png');
-		this.load.image('background1', '/static/winner_skin/imgs/background1.png');
+		this.load.image('background1', 'http://piccvote.qiniudn.com/winner_skin/imgs/background1.png');
 		//this.load.image('intro', '/static/winner_skin/imgs/intro.png');
-		this.load.image('floor', '/static/winner_skin/imgs/floor.png');
+		this.load.image('floor', 'http://piccvote.qiniudn.com/winner_skin/imgs/floor.png');
 		//this.load.image('title', '/static/winner_skin/imgs/title.png');
-		this.load.image('gameover', '/static/winner_skin/imgs/gameover.png');
-		this.load.image('score-bg', '/static/winner_skin/imgs/score-bg.png');
+		this.load.image('gameover', 'http://piccvote.qiniudn.com/winner_skin/imgs/gameover.png');
+		this.load.image('score-bg', 'http://piccvote.qiniudn.com/winner_skin/imgs/score-bg.png');
 		// this.load.image('monster-idle', 'imgs/monster-cover.png');
 		
 		// load spritesheets
-		this.load.spritesheet('candy', '/static/winner_skin/imgs/candy.png', 135, 109);
-		this.load.spritesheet('monster-idle', '/static/winner_skin/imgs/monster-cover.png', 229, 304);
-		this.load.spritesheet('button-start', '/static/winner_skin/imgs/button-start.png', 342, 115);
-		this.load.spritesheet('skipBtn', '/static/winner_skin/imgs/skipBtn.png?1',114, 35);
-		this.load.spritesheet('button-pause', '/static/winner_skin/imgs/button-pause.png',104,92);
-		this.load.spritesheet('arrow-left', '/static/winner_skin/imgs/arrowL.png',119,78);
-		this.load.spritesheet('arrow-right', '/static/winner_skin/imgs/arrowR.png',119,78);
+		this.load.spritesheet('candy', 'http://piccvote.qiniudn.com/winner_skin/imgs/candy.png', 135, 109);
+		this.load.spritesheet('monster-idle', 'http://piccvote.qiniudn.com/winner_skin/imgs/monster-cover.png', 229, 304);
+		this.load.spritesheet('button-start', 'http://piccvote.qiniudn.com/winner_skin/imgs/button-start.png', 342, 115);
+		this.load.spritesheet('skipBtn', 'http://piccvote.qiniudn.com/winner_skin/imgs/skipBtn.png?1',114, 35);
+		this.load.spritesheet('button-pause', 'http://piccvote.qiniudn.com/winner_skin/imgs/button-pause.png',104,92);
+		this.load.spritesheet('arrow-left', 'http://piccvote.qiniudn.com/winner_skin/imgs/arrowL.png',119,78);
+		this.load.spritesheet('arrow-right', 'http://piccvote.qiniudn.com/winner_skin/imgs/arrowR.png',119,78);
 	},
 	create: function(){
 		// start the MainMenu state
