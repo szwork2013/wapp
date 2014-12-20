@@ -162,7 +162,7 @@ font-size: 18px;
              setTimeout(function(){
 
                 $('#myCanvas').hide()
-             },2500)
+             },6000)
           }
           window.isTouch = true;
 
@@ -233,7 +233,7 @@ font-size: 18px;
           ctx.globalCompositeOperation = "destination-out";
           ctx.beginPath();
           ctx.strokeStyle = color;
-          ctx.lineWidth = 30;
+          ctx.lineWidth = 25;
           var tempLines = lines;
           if (tempLines.length == 0) {
               tempLines.push(points);
@@ -276,13 +276,12 @@ font-size: 18px;
 
 
 <!-- Modal -->
+<!--
 <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
     <div class="modal-content">
       <div class="modal-header">
-        <!--
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      -->
+      
         <h4 class="modal-title" id="myModalLabel">请先完善您的资料，当您刮中奖品后方便我们联系您</h4>
       </div>
     <form class="bs-example bs-example-form" role="form">
@@ -303,16 +302,14 @@ font-size: 18px;
       
       </div>
       <div class="modal-footer">
-        <!--
-      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-      -->
+      
       <button type="button" class="btn btn-primary" id="save_change">保存</button>
       </div>
     </form>
     </div>
   </div>
 </div>
-
+-->
 
 
 
@@ -392,7 +389,7 @@ $(function(){
   })
 
   //check username mobile
-  var user_v = $('#appUserName').val();
+ /* var user_v = $('#appUserName').val();
   var mobile_v = $('#appUserMobile').val();
   if(user_v == '未认证会员'){
       $('#appUserName').val('');
@@ -400,7 +397,7 @@ $(function(){
   if(mobile_v.length != 11){
       $('#appUserMobile').val('');
   }
-
+*/
   //end check
 
 
