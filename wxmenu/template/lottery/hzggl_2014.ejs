@@ -276,13 +276,13 @@ font-size: 18px;
 
 
 <!-- Modal -->
-
-<!--
 <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
     <div class="modal-content">
       <div class="modal-header">
-      
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
         <h4 class="modal-title" id="myModalLabel">请先完善您的资料，当您刮中奖品后方便我们联系您</h4>
       </div>
     <form class="bs-example bs-example-form" role="form">
@@ -303,7 +303,9 @@ font-size: 18px;
       
       </div>
       <div class="modal-footer">
-      
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
       <button type="button" class="btn btn-primary" id="save_change">保存</button>
       </div>
     </form>
@@ -311,7 +313,7 @@ font-size: 18px;
   </div>
 </div>
 
--->
+
 
 
 
@@ -371,7 +373,7 @@ var forwardingTitle ='南方新世界，iphone6 plus免费抽'
 var forwardingDesc ='今年圣诞和南方新世界有约'
 
 
-
+$.cookie('has_modify_info', 1, { expires: 365, path: '/' })
 
 
 var userid = '<%= userid%>'
@@ -402,7 +404,7 @@ $(function(){
   //end check
 
 
-  $(function(){
+  $('#save_change').click(function(){
     var appUserName = $('#appUserName').val().trim();
     var appUserMobile = $('#appUserMobile').val().trim();
     if(!appUserName || appUserName == '未认证会员'){
@@ -422,8 +424,9 @@ $(function(){
       if(d.error == 1) return alert(d.data);
       alert('资料完善成功，赶快去刮奖吧')
       $('#myModal').modal('hide')
-      $.cookie('has_modify_info', 1, { expires: 365, path: '/' })
-    
+  //    $.cookie('has_modify_info', 1, { expires: 365, path: '/' })将这条cookies移至条件之外
+      //window.localStorage['has_modify'] = '1';
+      //$('#p2').html(appUserName)
     },'json')
     return false;
   })
