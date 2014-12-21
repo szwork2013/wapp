@@ -3,10 +3,10 @@ Winner.Boot = function(game){};
 Winner.Boot.prototype = {
 	preload: function(){
 		// preload the loading indicator first before anything else
-		this.load.image('preloaderBar', 'http://piccvote.qiniudn.com/winner_skin/imgs/loading-bar.png');
-		this.load.image('preloaderBarBg', 'http://piccvote.qiniudn.com/winner_skin/imgs/loading-bar-bg.png');
-		this.load.image('background', 'http://piccvote.qiniudn.com/winner_skin/imgs/background.png');
-		this.load.image('title', 'http://piccvote.qiniudn.com/winner_skin/imgs/title.png');
+		this.load.image('preloaderBar', '/static/winner_skin/imgs/loading-bar.png');
+		this.load.image('preloaderBarBg', '/static/winner_skin/imgs/loading-bar-bg.png');
+		this.load.image('background', '/static/winner_skin/imgs/background.png');
+		this.load.image('title', '/static/winner_skin/imgs/title.png');
 	},
 	create: function(){
 		// set scale options
