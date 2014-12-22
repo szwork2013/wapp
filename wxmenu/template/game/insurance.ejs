@@ -497,12 +497,14 @@ var getBonusAjax = function(cash, sex, age, alloc){
 	}
 	loading()
 	window.isAjax = true
-	$.get('/insurance/unionlife/getbonus', {
+	var qobj = {
 		cash:cash,
 		sex:sex,
 		age:age,
 		alloc:alloc
-	}, function(d){
+	}
+	_hmt.push(['_trackEvent', 'get bonus', 'ajax', JSON.stringify(qobj)])
+	$.get('/insurance/unionlife/getbonus', qobj, function(d){
 		window.isAjax = false
 		hideLoding()
 		if(d.error) return alert(d.data)
@@ -746,6 +748,7 @@ var bindClickEvent = function(){
 
 function gameOverCallBack(score){
 
+	_hmt.push(['_trackEvent', 'game over', 'game', score])
 	resultDiv(score)
 }
 
