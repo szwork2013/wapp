@@ -36,7 +36,7 @@
 
 
 .body_wrap{
-	height: 780px;
+	height: 800px;
 	overflow: hidden !important;
 }
 .main{
@@ -131,12 +131,30 @@ top: 358px;
 }
 
 
+.lottery_again {
+position: absolute;
+top: 460px;
+left: 10px;
+display: block;
+width: 450px;
+height: 90px;
+}
+
+.lottery_again2 {
+top: 700px;
+
+}
+
+.lottery_again3 {
+top: 40px;
+
+}
 </style>
 <body>
 <div class="body_wrap ">
 <input type="hidden" id='openid' value=""/>
 
-
+<a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>
 <p class="bottom_tip">
 <a href="http://xy-tang.com/index.html" target="_blank">
 	信玉堂技术支持
@@ -217,7 +235,7 @@ top: 358px;
 
 <!-- Modal -->
 <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+  <div class="modal-dialog" style="width:400px;margin: 30px auto; overflow: hidden;">
     <div class="modal-content">
       <div class="modal-header">
         <!--
@@ -259,38 +277,44 @@ top: 358px;
 
 <!-- Modal -->
 <div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:300px;margin: 30px auto;">
+  <div class="modal-dialog" style="width:400px;margin: 30px auto;">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myModalLabel">抽奖规则和奖品列表</h4>
       </div>
       <div class="modal-body"> 
-抽奖规则：<br/>
-1、活动时间11月13日-11月23日，奖品送完为止。<br/>
-2、进入活动页面，点击抢礼包，有机会抢到1个礼包；<br/>
-3、每人每天可参与3次刮奖机会，转发到朋友圈可以额外获得3次刮奖机会。注：同一微信号、手机号、QQ号视为同一用户
-礼包使用规则<br/>
-1、本活动所发的礼包为合作商家直接提供<br/>
-2、使用范围：合作商家直接使用<br/>
-3、领取方式：中奖者于11月14日-11月30日（10:30~20:00）内凭手机号至中奖券所显示的地址领取礼包。例如，“挂烫机（绿城玉兰花园）”，则表示领奖地址为绿城玉兰花园售楼处，售楼处地址将在下面标注；<br/>
-4、一旦个人中奖后，请于中奖的第二天10：30分后前往领奖地址领奖；例如，用户于11月13日中奖，显示为“挂烫机（绿城玉兰花园）”，则应于11月14日10：30之后前往绿城玉兰花园售楼处领奖；<br/>
-4、个人领奖日期截止11月23日，若在此期间没有时间前往领取，可报名参加房价点评网于11月29日组织的看房团，跟随班车前往售楼处领奖，过期不候；<br/>
-6、在获取和使用礼包过程中，如果出现违规行为（如作弊领取，恶意套取等），房价点评网将根据自身合理判断取消用户获得礼包的资格；<br/>
-7、查询礼包的数量及更多礼包详情，请在微信公众号“CRIC无锡房价”的菜单栏“我的礼券”内查询；<br/>
-8、本次活动的最终解释权为无锡房价点评网所有。<br/>
-领奖地址：<br/>
-<span style="color:#c00; font-weight:bolder">绿城玉兰花园：</span><br/>滨湖区高浪路与立德路交汇处<br/>
-<span style="color:#c00; font-weight:bolder">华润橡树湾：</span><br/>惠山区政和大道与锡澄路交叉口西南侧<br/>
-<span style="color:#c00; font-weight:bolder">协信未来城：</span><br/>江海西路888号金山北工业园<br/>
-<span style="color:#c00; font-weight:bolder">金科中心：</span><br/>太湖大道与长江北路交汇处（新区欧尚对面）<br/>
-<span style="color:#c00; font-weight:bolder">新加坡尚锦城：</span><br/>高浪路与南湖大道（中南路延伸段）交汇处<br/>
-部分奖品：<br>
-挂烫机(绿城玉兰花园)<br>
-200元购物卡(新加坡尚锦城)<br>
-克里斯汀蛋糕50元券(华润橡树湾)<br>
-电磁炉(协信未来城)<br>
-飞科吹风机(金科中心)<br>
-等25种奖品<br>
+奖品设置：<br/>
+
+特等奖1名：iPad mini <br/>
+
+一等奖2名：千元品牌金饰<br/>
+
+二等奖4名：价值138元美食餐券<br/>
+
+三等奖20名：精美电子体重计<br/>
+
+四等奖30名：16G数码U盘<br/>
+
+五等奖40名：10元话费<br/>
+
+活动时间：12月29日—1月4日<br/>
+
+游戏规则：<br/>
+
+1.每人每天可参与大转盘3次，活动持续7天，共21次；<br/>
+
+2.除二等奖、五等奖外，其余奖项获得者必须带上本人身份证、中奖证明至本公司领奖；<br/>
+
+3.凡是参与游戏并分享游戏链接至朋友圈者，均可获得房价点评网定制的精美礼品一份。<br/>
+
+4.中奖者没有按照提示留下联系方式的，视为中奖无效。<br/>
+
+5.本活动最终解释权归房价点评网所有。<br/>
+
+领奖时间：1月15日-1月16日，上午9：00-下午5：00<br/>
+
+领奖地点：常州市天宁区文化宫嘉宏世纪大厦1120室克而瑞常州机构<br/>
+
 <span style="color:#c00; font-weight:bolder">奖品仅限本人领取，不得代领</span><br/>
       </div>
       <div class="modal-footer">
