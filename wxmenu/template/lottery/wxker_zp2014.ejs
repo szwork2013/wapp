@@ -36,11 +36,11 @@
 
 
 .body_wrap{
-	height: 850px;
+	height: 1000px;
 	overflow: hidden !important;
 }
 .main{
-	height: 850px !important;
+	height: 1000px !important;
 }
 #noprize{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fbg1217prize.jpg") no-repeat center 0;
@@ -87,6 +87,25 @@ height: 28px;
 color: #fff;
 text-align: left;
 }
+
+
+
+
+
+.prize_list{
+  width: 400px;
+  height: 150px;
+
+  display: block;
+  position: absolute;
+  top: 760px;
+  left: 20px;
+}
+
+
+
+
+
 .bottom_tip{
 	text-align: center;
 	font-size: 13px;
@@ -141,7 +160,7 @@ height: 90px;
 }
 
 .lottery_again2 {
-top: 700px;
+top: 650px;
 
 }
 
@@ -151,11 +170,21 @@ top: 40px;
 }
 </style>
 <body>
+<!--规则，每天3次,转发没有额外次数,带中奖列表-->
+
 <div class="body_wrap ">
 <input type="hidden" id='openid' value=""/>
+  <ul id="prize_list" class="prize_list">
 
+      </ul>
 <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>
 <p class="bottom_tip">
+
+
+
+
+
+
 <a href="http://xy-tang.com/index.html" target="_blank">
 	信玉堂技术支持
 </a>
@@ -367,7 +396,65 @@ var mask = function () {
 		}
 }
 
-var forwardingUrl = 'http://menu.xy-tang.com/lottery/xinyutang?ename=wxker_zp2014';
+
+
+
+
+
+
+
+
+window.isforward_today = moment().hour(23).minute(59).second(59)
+window.isforward_today = new Date(window.isforward_today)
+
+
+//var forwardingCallback = function(){
+	//10表示cookie设置有效期10天
+	//$.cookie('isForward', '1', { expires: 10, path: location.pathname });
+	//location.href = location.href
+//}
+
+
+
+
+
+if($.cookie('isforward') == '1'){
+  $.removeCookie('isforward');
+  $.cookie('isforward', '1', { expires: window.isforward_today, path:location.pathname});
+}
+if($.cookie('has_modify_info') == '1'){
+  $.removeCookie('has_modify_info');
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: location.pathname });
+}
+
+
+//alert(window.isforward_today)
+//$.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+//alert($.cookie('isforward'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var forwardingUrl = 'http://mp.weixin.qq.com/s?__biz=MjM5MDAyMjYzNg==&mid=202488753&idx=2&sn=cb533895d9f8f6e961e7573d4468b990#rd';
 var forwardingImg = 'http://bcs.duapp.com/xytimg/zp%2Fbg12282.jpg'
 var forwardingTitle ='房价点评网，给你发年终奖啦'
 var forwardingDesc ='房价点评网，给你发年终奖啦'
@@ -382,7 +469,7 @@ var u_username = '<%= wxuobj.appUserName %>'
 var u_mobile = '<%= wxuobj.appUserMobile %>'
 var appUserName = u_username
 var appUserMobile = u_mobile 
-
+var timeError = '<%= timeError %>'
 
 
  $(function(){
@@ -407,6 +494,30 @@ var appUserMobile = u_mobile
   }
 
   //end check
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
   $('#save_change').click(function(){
@@ -484,22 +595,61 @@ var appUserMobile = u_mobile
 
 
 
+
 window.hasPlay = false;
+window.hasForwardPlay = false;
+
+window.getIsForward = function(){
+		var is_f = $.cookie('isforward')
+		if(is_f == '0' || !is_f) return false
+		return is_f
+}
+
 $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
     if(d.error == 1){
       return alert(d.data)
     }
         window.lotteryData = d.data;
-        
+
+        //总限制数
+        if(lotteryObj.forwardTimes>=0){
+        	 var totalLimit = lotteryObj.intervalTimes + lotteryObj.forwardTimes
+        }
+        else{
+        	var totalLimit = lotteryObj.intervalTimes
+        }
+
         if(d.data.record && d.data.record.length > 0){
-        	var now = moment();
-       		var lastRecordTime = moment(d.data.record[d.data.record.length-1].writeTime);
-       	//	if(now.dayOfYear() == lastRecordTime.dayOfYear()){
-       	//		window.hasPlay = true;
-       	//	}
-        	if(d.data.record.length>=3){
+        	//获取当天的抽奖记录
+        	var todayMoment = moment().hour(0).minute(0).second(0).millisecond(0);
+        	var count = 0;
+        	var countF = 0;
+        	window.todayRecordList = d.data.record.filter(function(rObj){
+        		//var rObjMoment = moment(rObj.writeTime)
+        		//if(rObjMoment>=todayMoment){
+        			if(rObj.isForward == 0){
+        				count++
+        			}
+        			else if(rObj.isForward == 1){
+        				countF++
+        			}
+        			return true;
+        		//}
+        		//return false;
+        	})
+        	if(window.todayRecordList.length>=totalLimit){
         		window.hasPlay = true;
+        		window.hasForwardPlay = true;
         	}
+        	else if(count<lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
+        		window.hasPlay = false;
+        		window.hasForwardPlay = false
+        	}
+        	else if(count>=lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
+        		window.hasPlay = true;
+        		window.hasForwardPlay = false;
+        	}
+
         }
 
     },'json')
@@ -715,8 +865,19 @@ $('#modify_info_btn').click(function(){
 
 
 
-
-
+   //put my prize
+     var tmp_s = ''
+	 
+	 
+     data.record.forEach(function(ro){
+	 
+      if(ro.prizeId != '0' && ro.prizeObj){
+        
+        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+      }
+     })
+     $('#prize_list').html(tmp_s)
+     //end pu prize
 
 
 
