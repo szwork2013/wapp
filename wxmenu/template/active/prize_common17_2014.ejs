@@ -16,7 +16,7 @@
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-      [集分享]澳海胥江湾，年终大回馈，全橙大派送
+      [集分享]搜房请吃新年大餐
 </title>
 <style type="text/css">
     .container{
@@ -28,7 +28,10 @@ width: 100%;
 padding-right: 1px;
 padding-left: 1px;
 }
+.share_timeline {
+background:#2b675f;
 
+}
 
 
 
@@ -41,7 +44,7 @@ padding-left: 1px;
         <div class="container">
       
            
-          <img src="http://bcs.duapp.com/xytimg/jifenxiang%2Faohai1229jfx.jpg" width=100%>
+          <img src="http://bcs.duapp.com/xytimg/jifenxiang%2Fzzcbg1.jpg" width=100%>
 	
 
 		   <br/>  <br/>
@@ -68,7 +71,7 @@ padding-left: 1px;
                         loopNumer修改风车总个数
                         -->
                         <% 
-                            var loopNumer = 25;
+                            var loopNumer = 100;
                             for(var i=0; i<loopNumer; i++){
                          %>
                             <% if(i<supportCount) {%>
@@ -209,9 +212,9 @@ var endTime = moment(new Date(activeObj.endTime))
 
 
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= fromUserId %>'
-var forwardingImg = 'http://bcs.duapp.com/xytimg/jifenxiang%2Faohai1229jfx2.jpg'
-var forwardingTitle =' [集分享]澳海胥江湾，年终大回馈，全橙大派送'
-var forwardingDesc ='主人，带上你的小伙伴，一起来把我带回家吧。让我给你带去新鲜、甜蜜！'
+var forwardingImg = 'http://bcs.duapp.com/xytimg/jifenxiang%2Fzzclogo.jpg'
+var forwardingTitle =' [集分享]搜房请吃新年大餐'
+var forwardingDesc ='331元尼盛万丽海鲜自助餐，赶紧帮我来拿'
 
 var forwardingCallback = function(){
     if(window.hasAdd) return false;

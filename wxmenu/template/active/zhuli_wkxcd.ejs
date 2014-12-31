@@ -118,7 +118,7 @@ background:url(http://bcs.duapp.com/xytimg/jifenxiang%2F1229an.jpg) repeat 0 cen
             </a>
 			<br>
 			
-			<a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_wkxcd" class="share_timeline1 btn-block">
+			<a href="http://mp.weixin.qq.com/s?__biz=MjM5ODA2NzA4OQ==&mid=203212746&idx=1&sn=e9839aa0edc4e88abd13fedee23e19f9#rd" class="share_timeline1 btn-block">
               <span class="button1" >我也要抢万科信成道暖手礼</span>
             </a>
 			<br> 
@@ -364,14 +364,13 @@ var timeError = '<%= timeError %>'
 <% if (isMyPage){ %>
     var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
 <%} else{ %>
-	 var forwardingUrl ='http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= fromUserId %>'
+	 var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MjM5ODA2NzA4OQ==&mid=203212746&idx=1&sn=e9839aa0edc4e88abd13fedee23e19f9#rd'
 <% } %>
     
 
 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Fbg12312.jpg'
 var forwardingTitle ='无锡万科信成道元旦暖手里大放送'
 var forwardingDesc ='我正在信成道赢取元旦大礼，赶紧来帮我抢'
-
 var forwardingCallback = function(){
     if(window.hasAdd) return false;
     //发送请求支持  
