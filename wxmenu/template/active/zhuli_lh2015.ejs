@@ -20,6 +20,22 @@
 <link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
 
 
+
+
+
+        <link href="http://114.215.183.41/2015/wdj/css/styles.css" rel="stylesheet" type="text/css" />
+        
+
+        <link href="http://114.215.183.41/2015/wdj/css/goal-thermometer.css" rel="stylesheet" type="text/css" />
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript" src="http://114.215.183.41/2015/wdj/js/goal-thermometer.js"></script>
+
+
+
+
+
+
+
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
       [好友助力]龙湖加温
@@ -119,15 +135,106 @@ background-color:#ffe400;
 
 <br>
 
- <% if(supportScore==1) { %>
-            1分啊
-        <% }else if(supportScore==2){ %>
-             2分啊
-			  <% }else if(supportScore==3){ %>
-             3分啊
+ <% if(supportScore==0) { %>
+            <script type="text/javascript">
+            var currentAmount = 0;
+        </script>
+        <% }else if(supportScore==2.5){ %>
+              <script type="text/javascript">
+            var currentAmount = 2.5;
+        </script>
+			  <% }else if(supportScore==5){ %>
+              <script type="text/javascript">
+            var currentAmount = 5;
+        </script>
+		
+		
+		<% }else if(supportScore==7.5){ %>
+              <script type="text/javascript">
+            var currentAmount = 7.5;
+        </script>
+		
+		
+		
+		<% }else if(supportScore==10){ %>
+              <script type="text/javascript">
+            var currentAmount = 10;
+        </script>
+		
+		
+		<% }else if(supportScore==12.5){ %>
+              <script type="text/javascript">
+            var currentAmount = 12.5;
+        </script>
+		
+		
+		<% }else if(supportScore==15){ %>
+              <script type="text/javascript">
+            var currentAmount = 15;
+        </script>
+		
+		
+		<% }else if(supportScore==17.5){ %>
+              <script type="text/javascript">
+            var currentAmount = 17.5;
+        </script>
+		
+		
+		<% }else if(supportScore==20){ %>
+              <script type="text/javascript">
+            var currentAmount = 20;
+        </script>
+		
+		
+		<% }else if(supportScore==22.5){ %>
+              <script type="text/javascript">
+            var currentAmount = 22.5;
+        </script>
+		
+		
+		<% }else if(supportScore==25){ %>
+              <script type="text/javascript">
+            var currentAmount = 25;
+        </script>
+		
+		<% }else if(supportScore==27.5){ %>
+              <script type="text/javascript">
+            var currentAmount = 27.5;
+        </script>
+		
+		<% }else if(supportScore==30){ %>
+              <script type="text/javascript">
+            var currentAmount = 30;
+        </script>
+		
+		<% }else if(supportScore==32.5){ %>
+              <script type="text/javascript">
+            var currentAmount = 32.5;
+        </script>
+		
+		<% }else if(supportScore==35){ %>
+              <script type="text/javascript">
+            var currentAmount = 35;
+        </script>
+		
+		<% }else { %>
+              <script type="text/javascript">
+            var currentAmount = 37;
+        </script>
+		
+		
+		
+		
+		
+		
         <%}%>
 
-		   
+		
+
+    
+    		<div id="goal-thermometer"></div>
+	
+	
 		   
             
 			<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
