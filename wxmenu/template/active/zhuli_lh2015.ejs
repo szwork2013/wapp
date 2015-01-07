@@ -23,12 +23,10 @@
 
 
 
-        <link href="http://114.215.183.41/2015/wdj/css/styles.css" rel="stylesheet" type="text/css" />
-        
-
-        <link href="http://114.215.183.41/2015/wdj/css/goal-thermometer.css" rel="stylesheet" type="text/css" />
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script type="text/javascript" src="http://114.215.183.41/2015/wdj/js/goal-thermometer.js"></script>
+ <link href="http://114.215.183.41/2015/wdj/css/styles.css" rel="stylesheet" type="text/css" />
+ <link href="http://114.215.183.41/2015/wdj/css/goal-thermometer.css" rel="stylesheet" type="text/css" />
+ <!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
+<script type="text/javascript" src="http://114.215.183.41/2015/wdj/js/goal-thermometer.js"></script>
 
 
 
@@ -38,7 +36,7 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-      [好友助力]龙湖加温
+      [好友助力]千条羊羔绒毛毯召唤暖男暖女
 </title>
 
 <style type="text/css">
@@ -69,7 +67,7 @@ margin: 0;
 font-weight: bold;
 }
 
-#round {padding:10px; width:100%; height:50px;border: 1px solid #dedede;-moz-border-radius: 15px; 
+#round {padding:10px; width:100%; height:70px;border: 1px solid #dedede;-moz-border-radius: 15px; 
 -webkit-border-radius: 15px; 
 border-radius:5px;
  }
@@ -126,11 +124,11 @@ background-color:#ffe400;
 
 	<div id="round"><center>
          <% if(isMyPage) { %>
-            你已经增加至
+            你已经升温至
         <% }else{ %>
-            他/她已经增加至
+            他/她已经升温至
         <%}%>
-        <b style="color:#c00; font-size:20px;"><%= supportScore %></b> 人气值获得健康水果</center></div> 
+        <b style="color:#c00; font-size:20px;"><%= supportScore %></b>℃,<br>达到37℃就能获得羊羔毯</center></div> 
 
 
 <br>
@@ -224,9 +222,6 @@ background-color:#ffe400;
 		
 		
 		
-		
-		
-		
         <%}%>
 
 		
@@ -237,15 +232,25 @@ background-color:#ffe400;
 	
 		   
             
-			<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击帮助他/她获得健康水果</span>
-            </a>
-			<br>
+			
 			
 		
  <% if(isMyPage) { %>
-            <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>
+           <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
+			
+			
+			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
+                <span class="share_timeline_button" >让朋友来帮助你升温</span>
+            </button>
         <% }else{ %>
+		
+		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
+                <span class="button1" >点击为他/她升温</span>
+            </a>
+			<br>
+		
+		
+		
            <a href="http://mp.weixin.qq.com/s?__biz=MjM5MjkzNTI3Ng==&mid=202917841&idx=1&sn=9a05e94b9ce3701de3c39037a212580d#rd" class="share_timeline1 btn-block">
               <span class="button1" >我也要抢健康水果</span>
             </a>
@@ -271,7 +276,7 @@ background-color:#ffe400;
             <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
                <span class="button1" >活动规则</span>
             </a>
-<br> <br> 
+<br> 
         
 
             <div id="divVisitor" class="visitor">
@@ -372,7 +377,7 @@ background-color:#ffe400;
         <h4 class="modal-title" id="myModalLabel">支持成功</h4>
       </div>
       <div class="modal-body"> 
-            <h4>成功增加 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font> 个人气值</h4>
+            <h4>成功帮TA升温 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font>℃</h4>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -459,13 +464,13 @@ var timeError = '<%= timeError %>'
 <% if (isMyPage){ %>
     var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
 	var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Fakdy12092.jpg'
-var forwardingTitle ='[好友助力]大家来帮我抢水果！'
-var forwardingDesc ='我参加了阿卡迪亚冬季水果大作战，快来帮我抢水果'
+var forwardingTitle ='[好友助力]千条羊羔绒毛毯召唤暖男暖女'
+var forwardingDesc ='当你的温度达到37度时，即可在本页面兑换羊羔绒毯一条'
 <%} else{ %>
      var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MjM5MjkzNTI3Ng==&mid=202917841&idx=1&sn=9a05e94b9ce3701de3c39037a212580d#rd'
 	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Fakdy12092.jpg'
-var forwardingTitle ='阿卡迪亚冬季水果大作战，我的健康我做主！'
-var forwardingDesc ='拼人气，喊好友，本来生活网直购水果免费水果领回家！'
+var forwardingTitle ='取暖神器来了，千条羊羔绒毛毯召唤暖男暖女'
+var forwardingDesc ='当你的温度达到37度时，即可在本页面兑换羊羔绒毯一条'
 <% } %>
     
 
