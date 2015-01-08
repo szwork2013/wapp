@@ -73,6 +73,20 @@
           "NODE_ENV": "production"
         }
       }
+      {
+        "name"      : "nodxg",
+        "script"    : "/var/nodejs/wapp/nodxg/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "nodxgadmin",
+        "script"    : "/var/nodejs/wapp/nodxg/manager/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      }
 
 
   ]

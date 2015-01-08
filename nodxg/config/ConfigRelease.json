@@ -1,12 +1,12 @@
 {
-	"currentSite":"http://broker.xy-tang.com",
-	"appEname":"broker",
-	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/boker",
+	"currentSite":"http://nodxg.xy-tang.com",
+	"appEname":"nodxg",
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/nodxg",
 	"monoosePool":10,
 	"currentHost":"127.0.0.1",
 	"currentVersion":"v1",
-	"listenPort":7006,
-	"mangerListenPort":7007,
+	"listenPort":7010,
+	"mangerListenPort":7011,
 	"wxAppId":"123",
 	"wxAppSecret":"123",
 	"wxAppToken":"weixin"
