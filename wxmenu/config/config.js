@@ -6,8 +6,11 @@ if(process.execArgv.indexOf('--dev') !== -1 || process.execArgv.indexOf('-D') !=
 	console.log('server run in dev env')
 	module.exports = configDev;
 	global.config = configDev;
+	global.env = 'debug'
 }
 else{
+	console.log('server run in production')
 	module.exports = configRelease;
 	global.config = configRelease;
+	global.env = 'production'
 }

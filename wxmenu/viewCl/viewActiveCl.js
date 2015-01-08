@@ -27,10 +27,19 @@ obj.activeMiddle = function(req,res,next){
 
     //如果是本地开发环境
     if(platForm == 'win32'){
-	    //真实情况需要注释掉
-	    req.session[appEname+'_oauth_openid'] = 'oINOHjmRX93qnSoVjN3s9UTZT2x0'
-	    req.session[appEname+'_userid'] = '53ecc71816eafb68369b4920'
+
+    	if(global.env == 'debug'){
+    		req.session[appEname+'_oauth_openid'] = 'qwe'
+		    req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+    	}
+    	else{
+    		//真实情况需要注释掉
+		    req.session[appEname+'_oauth_openid'] = 'oINOHjmRX93qnSoVjN3s9UTZT2x0'
+		    req.session[appEname+'_userid'] = '53ecc71816eafb68369b4920'
+    	}
+	    
     }
+
 
 	var openId = req.session[appEname+'_oauth_openid'] 
 	var userid = req.session[appEname+'_userid']; 
@@ -190,7 +199,7 @@ obj.activePage = function(req,res){ //活动页面展示
 						'prizeList':[],    //奖品数组
 						'myPrizeList':[]
 					}
-
+				activeObj = activeObj.activeObj
 				if(activeObj.isPrize == 0){ //没有兑奖功能
 					return res.render('active/'+templateName+'.ejs', tempObj)
 				}
@@ -235,15 +244,15 @@ obj.activePage = function(req,res){ //活动页面展示
 								tempPrizeObj.lastPrizeNumber = 0;
 								tempPrizeObj.canSelect = false;
 							}
-
-							
 				
 							//如果启用分数，那么奖品也是分数价格
 							if(activeObj.useScore  && activeObj.useScore > 0 && tempObj.supportScore < tempPrizeObj.price){
+								
 								tempPrizeObj.canSelect = false;
 							}
 							//如果不启用分数，那么奖品是支持数价格
-							else if(tempObj.supportCount < tempPrizeObj.price){
+							else if((activeObj.useScore == 0 || !activeObj.useScore) && tempObj.supportCount < tempPrizeObj.price){
+								
 								tempPrizeObj.canSelect = false;
 							}
 
@@ -260,8 +269,8 @@ obj.activePage = function(req,res){ //活动页面展示
 
 						tempObj.timeError = 0
 						var now = moment()
-						var startTime = moment(activeObj.activeObj.startTime)
-						var endTime = moment(activeObj.activeObj.endTime)
+						var startTime = moment(activeObj.startTime)
+						var endTime = moment(activeObj.endTime)
 						if(now<startTime || now>endTime){
 							tempObj.timeError = 1
 						}
