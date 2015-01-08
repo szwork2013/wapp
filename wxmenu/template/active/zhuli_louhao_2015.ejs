@@ -126,118 +126,16 @@ background-color:#ffe400;
 
 	<div id="round"><center>
          <% if(isMyPage) { %>
-            你已经升温至
+            你已经收集了
         <% }else{ %>
-            他/她已经升温至
+            他/她已经收集了
         <%}%>
-        <b style="color:#c00; font-size:20px;">
-		
-		 <% if(supportScore>37) { %>
-		 37
-		 <% }else { %>
-		 <%= supportScore %>
-		   <%}%>
-		
-		</b>℃,<br>达到37℃就能获得羊羔绒毛毯一套</center></div> 
+        <b style="color:#c00; font-size:20px;"><% supportScore %>
+		</b>个助力,<br>达到5个助力并带着新朋友至售楼处即可领取奖品</center></div> 
 
 
 <br>
 
- <% if(supportScore==0) { %>
-            <script type="text/javascript">
-            var currentAmount = 0;
-        </script>
-        <% }else if(supportScore==2.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 2.5;
-        </script>
-			  <% }else if(supportScore==5){ %>
-              <script type="text/javascript">
-            var currentAmount = 5;
-        </script>
-		
-		
-		<% }else if(supportScore==7.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 7.5;
-        </script>
-		
-		
-		
-		<% }else if(supportScore==10){ %>
-              <script type="text/javascript">
-            var currentAmount = 10;
-        </script>
-		
-		
-		<% }else if(supportScore==12.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 12.5;
-        </script>
-		
-		
-		<% }else if(supportScore==15){ %>
-              <script type="text/javascript">
-            var currentAmount = 15;
-        </script>
-		
-		
-		<% }else if(supportScore==17.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 17.5;
-        </script>
-		
-		
-		<% }else if(supportScore==20){ %>
-              <script type="text/javascript">
-            var currentAmount = 20;
-        </script>
-		
-		
-		<% }else if(supportScore==22.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 22.5;
-        </script>
-		
-		
-		<% }else if(supportScore==25){ %>
-              <script type="text/javascript">
-            var currentAmount = 25;
-        </script>
-		
-		<% }else if(supportScore==27.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 27.5;
-        </script>
-		
-		<% }else if(supportScore==30){ %>
-              <script type="text/javascript">
-            var currentAmount = 30;
-        </script>
-		
-		<% }else if(supportScore==32.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 32.5;
-        </script>
-		
-		<% }else if(supportScore==35){ %>
-              <script type="text/javascript">
-            var currentAmount = 35;
-        </script>
-		
-		<% }else { %>
-              <script type="text/javascript">
-            var currentAmount = 37;
-        </script>
-		
-		
-		
-        <%}%>
-
-		
-
-    
-    		<div id="goal-thermometer"></div>
 	
 	
 		   
