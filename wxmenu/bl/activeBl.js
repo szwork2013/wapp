@@ -355,6 +355,7 @@ obj.exchangePrize = function(qobj,cb){
 	var userId = qobj.userId
 	var truename = qobj.truename
 	var mobile = qobj.mobile
+	var appHome =qobj.appHome || ''
 
 	if(!prizeId || prizeId.length !=24){
 		return cb('prizeId 有误')
@@ -367,6 +368,10 @@ obj.exchangePrize = function(qobj,cb){
 	}
 	if(!mobile || !/^[0-9]{11}$/.test(mobile)){
       return cb('手机号码输入有误')
+    }
+
+    if(appHome && appHome != '' && !/^(\w+)#(\w+)$/.test(appHome)){
+      return cb('房号楼号输入有误')
     }
 
 	//获取奖品对象
@@ -465,6 +470,7 @@ obj.savePrize = function(qobj, cb){
 				truename:qobj.truename,
 				mobile:qobj.mobile,
 				recordIp:qobj.recordIp,
+				code2:qobj.appHome,
 				giftId:guid,
 				writeTime:new Date()
 			},function(err,record){

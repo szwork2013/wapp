@@ -11,7 +11,7 @@ var obj = { //定义结构
     giftId:{ type: Number, default:0, unique:true, index:true},        //用户领奖的6位id号码,0表示未中奖
     
     code1:{type:String,default: ''}, //是否手工已经发奖，1表示发奖，0表示未发奖
-    code2:{type:String,default: ''}, //备用字段
+    code2:{type:String,default: ''}, //获奖用户房号楼号
     code3:{type:String,default: ''}, //备用字段
     code4:{type:String,default: ''}, //备用字段
     writeTime:{ type: Date, default: function(){return Date.now()}}, //用户兑奖的时间

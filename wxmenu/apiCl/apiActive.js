@@ -62,10 +62,13 @@ obj.startExchangePrize = function(req,res){
     	return res.send({error:1, data:'必须在自己的主页才能兑换奖品'})
     }
 
-    qobj = {}
+   
+
+  qobj = {}
 	qobj.prizeId = req.body.prizeId
 	qobj.userId = req.body.toUserId
 	qobj.truename = req.body.truename
+  qobj.appHome = req.body.appHome
 	qobj.mobile = req.body.mobile 
   qobj.recordIp = req.ips[0] || '127.0.0.1'
 
