@@ -18,7 +18,7 @@ var menuCl = require('./cl/menuCl.js')
 
 var transacCl = require('./cl/transacCl.js');
 var recRecordCl = require('./cl/recRecordCl.js');
-
+var communityCl = require('./cl/communityCl.js');
 
 
 
@@ -163,6 +163,13 @@ var addroute = function(app){
 	app.get('/manger/recrecord/rec.csv', checkLogin, recRecordCl.csv)
 
 
+	//community
+	app.get('/manger/community/list', checkLogin, communityCl.list)
+	app.post('/manger/community/read', checkLogin, communityCl.read)
+	app.post('/manger/community/update', checkLogin, communityCl.update)
+	app.post('/manger/community/destroy', checkLogin, communityCl.destroy)
+	app.post('/manger/community/create', checkLogin, communityCl.create)
+	app.post('/manger/community/getList', checkLogin, communityCl.getList)
 
 
 

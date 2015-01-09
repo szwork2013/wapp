@@ -1,0 +1,209 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">楼盘id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="communityName" >楼盘名称</label>
+            </div>
+            <div data-container-for="communityName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="communityName" data-bind="value:communityName" required="required" data-required-msg="请填写楼盘名称" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="sortNum" >排序(越大靠前)</label>
+            </div>
+            <div data-container-for="sortNum" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="sortNum" data-bind="value:sortNum" required="required" data-required-msg="请填写排序" aria-invalid="true">
+            </div>
+
+<div style="display:none;">
+            <div class="k-edit-label  w-800-l">
+                <label for="code1" >备用1</label>
+            </div>
+            <div data-container-for="code1" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="code2" >备用2</label>
+            </div>
+            <div data-container-for="code2" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+            </div>
+</div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="isShow">是否启用</label>
+            </div>
+            <div data-container-for="isShow" class="k-edit-field w-800-r">
+               <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/community/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/community/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/community/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/community/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "communityName": { editable: true, type:'string'},
+                                    "sortNum": { editable: true, type:'number'},
+                                    "code1": { editable: true, type:'string'},
+                                    "code2": { editable: true, type:'string'},
+                                    "isShow":{editable: true, type:"number"},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加楼盘" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+
+
+
+
+
+
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'楼盘Id'
+                        },
+                        { 
+                            field: "communityName",
+                            title: "楼盘名称", 
+                        },
+                        { 
+                            field: "sortNum",
+                            title: "排序(越大靠前)", 
+                        },
+                        { 
+                            field: "code1",
+                            title: "备用1",
+                            hidden:true
+                        },
+                         { 
+                            field: "code2",
+                            title: "备用2", 
+                            hidden:true
+                        },
+                        { 
+                            field: "isShow",
+                            title: "是否启用",
+                            values:window.is_show_array
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "写入日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                         $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+
+                        window.dropdown_init($('input[name="isShow"]'), window.is_show_array)
+                        
+                        $('#writeTime').kendoDateTimePicker();
+
+                    },
+                    //filterable:true         
+                });
+
+
+
+
+
+                                    
+});
+
+</script>
+<% include inc/foot %>

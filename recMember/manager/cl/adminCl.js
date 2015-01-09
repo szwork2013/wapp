@@ -36,14 +36,24 @@ obj.update = obj.create = function(req, res){
 	else{
 		query = {'writeTime':new Date('1970/1/1')}
 	}
+	//console.log(req.models[0]["password"].length)
+	if(req.models[0]["password"].length == 32){
+		delete req.models[0]["password"]
+	}
+	else{
+		req.models[0].password = utils.md5(req.models[0].password+salt)
+	}
 	
 	delete req.models[0]["_id"];
+	delete req.models[0]["__v"];
 
-	req.models[0].password = utils.md5(req.models[0].password+salt)
-
+	
+	//console.log(req.models[0].password)
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
+			//console.log(doc.appId)
+		req.session.adminAppId = doc.appId;
 		res.json([doc]);
 	})
 }

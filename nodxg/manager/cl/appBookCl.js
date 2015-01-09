@@ -55,6 +55,7 @@ obj.update = obj.create = function(req, res){
 
 	
 	delete req.models[0]["_id"];
+	delete req.models[0]["__v"];
 
 	
 

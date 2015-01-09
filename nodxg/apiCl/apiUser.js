@@ -122,7 +122,7 @@ obj.recommend = function(req,res){ //推荐人
 	var recSex = req.body.recSex || 1;
 
 	var recRoom = req.body.recRoom;
-	var recArea = req.body.recArea;
+	var recCode2 = req.body.recCode2;
 
 	var recPrice = req.body.recPrice || 0;
 
@@ -141,10 +141,10 @@ obj.recommend = function(req,res){ //推荐人
 		recName:recName,
 		recSex:recSex,
 		recTel:recTel,
-		recArea:recArea,
 		recPrice:recPrice,
 		recRoom:recRoom,
-		recCode1:recCode1
+		recCode1:recCode1,
+		recCode2:recCode2,
 	}, function(err,doc){
 		if(err) return res.json({'error':1,'data':err})
 		res.json({'error':0,'data':doc})

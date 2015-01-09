@@ -34,7 +34,7 @@ var obj = { //定义结构
 
       recCode1:{type:String,default:''},              //预留字段1,代理公司名称
 
-      recCode2:{type:String,default:''},              //预留字段2
+      recCode2:{type:String,default:''},              //所属楼盘id
       recCode3:{type:String,default:''},              //预留字段3
       recCode4:{type:String,default:''},              //预留字段4
       updateTime:{ type: Date, default: function(){return Date.now()} },    //更新时间

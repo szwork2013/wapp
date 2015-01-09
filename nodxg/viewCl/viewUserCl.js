@@ -17,18 +17,29 @@ obj.regist = function(req,res){ //用户注册
 		obj.modify(req,res);
 		return;
 	}
-	if(req.is_v2){
-		res.render('user_regist_v2.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-		})
-	}
-	else{
-		res.render('user_regist.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-		})
-	}
+
+	infoBl.getAllCommunity(function(err, communityList){
+		if(err){
+			return res.send(500,'页面加载失败')
+		}
+		if(req.is_v2){
+				res.render('user_regist_v2.ejs',{
+					'userObj':req.wxuobj,
+					'binderObj':req.wxBinder,
+					'communityList':communityList
+					})
+		}
+		else{
+			res.render('user_regist.ejs',{
+				'userObj':req.wxuobj,
+				'binderObj':req.wxBinder,
+			})
+		}
+
+
+	})
+
+	
 
 }
 
@@ -62,27 +73,38 @@ obj.recrecord = function(req,res){
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
+	var communityId = req.query.communityid || ''
 
 	userBl.getRecrecordByUserId(appId, userId, {}, function(err,list){
 		if(err){
 			return res.send(500,'我的推荐记录加载失败')
 		}
-		if(req.is_v2){
-			res.render('recrecord_list_v2.ejs',{
-				'userObj':req.wxuobj,
-				'binderObj':req.wxBinder,
-				'list':list,
-				'count':list.length
-			})
-		}
-		else{
-			res.render('recrecord_list.ejs',{
-				'userObj':req.wxuobj,
-				'binderObj':req.wxBinder,
-				'list':list,
-				'count':list.length
-			})
-		}
+
+		infoBl.getAllCommunity(function(err, communityList){
+					if(err){
+						return res.send(500,'页面加载失败')
+					}
+
+
+					if(req.is_v2){
+						res.render('recrecord_list_v2.ejs',{
+							'userObj':req.wxuobj,
+							'binderObj':req.wxBinder,
+							'list':list,
+							'count':list.length,
+							'communityList':communityList,
+							'communityId':communityId
+						})
+					}
+					else{
+						res.render('recrecord_list.ejs',{
+							'userObj':req.wxuobj,
+							'binderObj':req.wxBinder,
+							'list':list,
+							'count':list.length
+						})
+					}
+		})
 			
 	})
 
@@ -120,6 +142,8 @@ obj.recommend = function(req,res){
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
+	var communityid = req.query.communityid || ''
+
 
 	//如果是已经认证用户
 	if(req.wxBinder.appUserType < 1){
@@ -127,18 +151,28 @@ obj.recommend = function(req,res){
 		return;
 	}
 
-	if(req.is_v2){
-		res.render('user_recommend_v2.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-		})
-	}
-	else{
-		res.render('user_recommend.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-		})	
-	}
+
+
+	infoBl.getAllCommunity(function(err, communityList){
+				if(err){
+					return res.send(500,'页面加载失败')
+				}
+
+				if(req.is_v2){
+					res.render('user_recommend_v2.ejs',{
+						'userObj':req.wxuobj,
+						'binderObj':req.wxBinder,
+						'communityList':communityList,
+						'communityid':communityid
+					})
+				}
+				else{
+					res.render('user_recommend.ejs',{
+						'userObj':req.wxuobj,
+						'binderObj':req.wxBinder,
+					})	
+				}
+	})
 }
 
 
@@ -175,9 +209,22 @@ obj.index_nologin_v2 = function(req,res){
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	
-	res.render('index_nologin_v2.ejs',{
-		'userObj':req.wxuobj,
-		'binderObj':req.wxBinder,
+	infoBl.getAllCommunity(function(err, communityList){
+			if(err){
+				return res.send(500,'页面加载失败')
+			}
+			infoBl.getNewsByTypePage(appId, 1, 1, 100, function(err, newsList){
+					console.log(err)
+					if(err){
+						return res.send(500,'页面加载失败')
+					}
+				res.render('index_nologin_v2.ejs',{
+					'userObj':req.wxuobj,
+					'binderObj':req.wxBinder,
+					'communityList':communityList,
+					'newsList':newsList
+				})
+			})
 	})
 
 }
@@ -192,12 +239,31 @@ obj.index_login_v2 = function(req,res){
 		if(err){
 			return res.send(500,'个人主页加载失败')
 		}
+		infoBl.getAllCommunity(function(err, communityList){
+			if(err){
+				return res.send(500,'页面加载失败')
+			}
 
-		res.render('index_login_v2.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-			'list':list,
-			'count':list.length
+			infoBl.getNewsByTypePage(appId, 1, 0, 100, function(err, newsList){
+				if(err){
+					return res.send(500,'页面加载失败')
+				}
+				res.render('index_login_v2.ejs',{
+						'userObj':req.wxuobj,
+						'binderObj':req.wxBinder,
+						'list':list,
+						'count':list.length,
+						'communityList':communityList,
+						'newsList':newsList
+					})
+
+
+			})
+
+			
+
+
+
 		})
 
 	})

@@ -3,6 +3,7 @@ var recRecordModel = require('../dl/recRecordModel.js'); //加载推荐模型
 var recBankTransac = require('../dl/recBankTransac.js'); //加载结佣模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
+
 var moment = require('moment');
 var utils = require('../lib/utils.js');
 //加载老用户信息
@@ -340,7 +341,7 @@ obj.recommend = function(appId, userId, qobj, cb){
 	var recName = qobj.recName;
 	var recSex = qobj.recSex || 1;
 	var recTel = qobj.recTel;
-	var recArea = qobj.recArea;
+	var recCode2 = qobj.recCode2;
 	var recPrice = qobj.recPrice;
 	var recRoom = qobj.recRoom;
 	var recCode1 = qobj.recCode1 || '';
@@ -355,8 +356,8 @@ obj.recommend = function(appId, userId, qobj, cb){
 	if(!recTel || recTel.length != 11 || recTel != recTel -0){
 		cb('手机号输入有误')
 	}
-	if(recArea == ''){
-		cb('面积输入有误')
+	if(recCode2 == ''){
+		cb('推荐楼盘输入有误')
 	}
 	if(recPrice != '' && recPrice != recPrice - 0){
 		cb('价格输入有误')
@@ -388,7 +389,7 @@ obj.recommend = function(appId, userId, qobj, cb){
 			recName:recName,
 			recSex:recSex,
 			recTel:recTel,
-			recArea:recArea,
+			recCode2:recCode2,
 			recPrice:recPrice,
 			recRoom:recRoom,
 			recStatus:1,
@@ -424,75 +425,88 @@ obj.getRecrecordByUserId = function(appId, userId, qobj, cb){
 	qobj.appId = appId;
 	qobj.userId = userId;
 
-	recRecordModel.findAll(qobj,0,500,function(err,list){
+	var infoBl = require('./wxInfo.js')
+	infoBl.getAllCommunity(function(err, communityList){
 		if(err){
 			return cb(err)
 		}
-		var tempary = []
-		var ids = []
-		list.forEach(function(o){
-			o.comments = o.comments.sort(function(a,b){return 1})
 
-			tempary.push({
-				_id:o._id,
-				appId:o.appId,
-				userId:o.userId,
-				recName:o.recName,
-				recSex:o.recSex,
-				recTel:o.recTel,
-				recArea:o.recArea,
-				recPrice:o.recPrice,
-				recRoom:o.recRoom,
-				recCode1:o.recCode1,
-				recCode2:o.recCode2,
-				recStatus:o.recStatus-0,
-				Status:record_status[o.recStatus-0],
-				comments:o.comments,
-				isCash:o.isCash,
-				cashStatus:0, //表示结佣状态，0表示不能结佣
-				cashTransacId:'0',//表示结佣id
-				writeTime:moment(o.writeTime).format('YYYY-MM-DD HH:mm:ss')
+
+		recRecordModel.findAll(qobj,0,500,function(err,list){
+			if(err){
+				return cb(err)
+			}
+			var tempary = []
+			var ids = []
+			list.forEach(function(o){
+				o.comments = o.comments.sort(function(a,b){return 1})
+
+				communityList.forEach(function(comObj){
+					if(comObj._id.toString() == o.recCode2){
+						tempary.push({
+							_id:o._id,
+							appId:o.appId,
+							userId:o.userId,
+							recName:o.recName,
+							recSex:o.recSex,
+							recTel:o.recTel,
+							recArea:o.recArea,
+							recPrice:o.recPrice,
+							recRoom:o.recRoom,
+							recCode1:o.recCode1,
+							recCode2:o.recCode2,
+							communityName:comObj.communityName,
+							recStatus:o.recStatus-0,
+							Status:record_status[o.recStatus-0],
+							comments:o.comments,
+							isCash:o.isCash,
+							cashStatus:0, //表示结佣状态，0表示不能结佣
+							cashTransacId:'0',//表示结佣id
+							writeTime:moment(o.writeTime).format('YYYY-MM-DD HH:mm:ss')
+						})
+
+						if(o.recStatus=='6'){
+							ids.push(o._id);
+						}
+					}
+				})
 			})
 
-			if(o.recStatus=='6'){
-				ids.push(o._id);
+
+			if(ids.length == 0){
+				return cb(null, tempary)
 			}
+			//console.log(ids)
+			recBankTransac.findByObj({
+				"recRecords":{
+					"$in":ids
+				}
+			},function(err,list2){
+				if(err) return cb(err);
+				if(list2.length == 0) return cb(null,tempary)			
+					//console.log(list2)
 
-		})
+					tempary.forEach(function(tempo){
 
+						list2.forEach(function(listo2){
 
-		if(ids.length == 0){
-			return cb(null, tempary)
-		}
-		//console.log(ids)
-		recBankTransac.findByObj({
-			"recRecords":{
-				"$in":ids
-			}
-		},function(err,list2){
-			if(err) return cb(err);
-			if(list2.length == 0) return cb(null,tempary)			
-				//console.log(list2)
+							if(tempo._id == listo2.recRecords){
+								tempo.cashStatus = listo2.status
+								tempo.cashTransacId = listo2._id						
+							}
 
-				tempary.forEach(function(tempo){
+						})//end list2
 
-					list2.forEach(function(listo2){
+					})//end tempary
 
-						if(tempo._id == listo2.recRecords){
-							tempo.cashStatus = listo2.status
-							tempo.cashTransacId = listo2._id						
-						}
+					return cb(null,tempary)
 
-					})//end list2
-
-				})//end tempary
-
-				return cb(null,tempary)
-
-		})//end recBankTransac
+			})//end recBankTransac
 
 
-	})//end recRecordModel.findAll
+		})//end recRecordModel.findAll
+	
+	})
 
 }
 

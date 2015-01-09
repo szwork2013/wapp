@@ -155,6 +155,15 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
             </div>
 
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="recCode2" >所属楼盘</label>
+            </div>
+            <div data-container-for="recCode2" class="k-edit-field w-800-r">
+               <input type="text" id="recCode2" class="k-input k-textbox w-50-inp" name="recCode2" data-bind="value:recCode2" >
+            </div>
+
 <div style="display:none">
 
             <div class="k-edit-label  w-800-l">
@@ -165,12 +174,7 @@
             </div>
 
 
-            <div class="k-edit-label  w-800-l">
-                <label for="recCode2" >备用2</label>
-            </div>
-            <div data-container-for="recCode2" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="recCode2" data-bind="value:recCode2" >
-            </div>
+            
             <div class="k-edit-label  w-800-l">
                 <label for="recCode3" >备用3</label>
             </div>
@@ -387,6 +391,16 @@ $.post('/manger/app/getList',{},function(data_ary){
                     })
                 })
 
+$.post('/manger/community/getList',{},function(data_ary2){
+                var d2 = []
+                data_ary2.forEach(function(v){
+                    d2.push({
+                        text: v.communityName, 
+                        value:v._id
+                    })
+                })
+
+
 
                 $("#grid").kendoGrid({
                     dataSource: dataSource,
@@ -423,7 +437,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "appUserBuildingRoom",
                             title: "推荐人楼房",
-                            filterable:false
+                            filterable:false,
+                            hidden:true
                         },
                         { 
                             field: "buyHouse",
@@ -489,12 +504,13 @@ $.post('/manger/app/getList',{},function(data_ary){
                         { 
                             field: "recCode1",
                             title: "指定接待",
-                            hidden:false
+                            hidden:false,
+                            hidden:true
                         },
                         { 
                             field: "recCode2",
-                            title: "备用2",
-                            hidden:true
+                            title: "所属楼盘",
+                            values:d2
                         },
                         { 
                             field: "recCode3",
@@ -560,6 +576,7 @@ $.post('/manger/app/getList',{},function(data_ary){
                         
                     
                         window.dropdown_init($('#appId_inp'),d)
+                        window.dropdown_init($('#recCode2'), d2)
                         window.dropdown_init($('#isCash_inp'),window.isCash_type)
                         window.dropdown_init($('#recStatus_inp'),window.recStatus_type)
                         window.dropdown_init($('#recSex_inp'),window.sex_ary)
@@ -568,7 +585,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                     },
                     filterable:window.filter_obj         
                 });
-      })                              
+      })  
+    })                              
 });
 
 </script>

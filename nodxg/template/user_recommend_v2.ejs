@@ -14,6 +14,38 @@
                 	<input class="input" type="text" name="proxy"  placeholder="请输入代理公司，可不填" id="proxy"  maxlength="20">
 
                 </p>
+
+      <div class="rem-p1" style="display:;">
+      <label>推荐项目：</label>
+      <select name="bhtype" id="recArea" class="input" style="height:40px; -webkit-appearance:">
+
+        <% communityList.forEach(function(obj, i){%>
+          <% if(communityid){ %>
+
+              <% if(communityid == obj._id){ %>
+        <option value="<%= obj._id %>" selected="selected"><%= obj.communityName %></option>
+              <% } else { %>
+        <option value="<%= obj._id %>"><%= obj.communityName %></option>        
+              <% }%>
+
+          <% } else { %>
+          
+              <% if(i == 0){ %>
+        <option value="<%= obj._id %>" selected="selected"><%= obj.communityName %></option>
+              <% } else { %>
+        <option value="<%= obj._id %>"><%= obj.communityName %></option>
+              <% }%>
+
+          <% }%>
+        <% })  %>
+
+
+      </select>
+    </div>
+
+
+
+
 				
 				<div class="recommend-tips">
 					<h6>提示</h6>
@@ -34,12 +66,7 @@
         <option value="四房">四房</option>
       </select>
     </div>
-    <div class="rem-p1" style="display:none;">
-      <label>推荐项目：</label>
-      <select name="bharea" id="recArea">
-        <option value="常州万科城">常州万科城</option>
-      </select>
-    </div>
+  
 
 		</section>
 		
@@ -77,7 +104,7 @@
             'recTel':recTel,
             'recName':recName,
             'recRoom':recRoom,
-            'recArea':recArea,
+            'recCode2':recArea,
             'recCode1':recCode1,
             'wxuserid':window.userid
           },function(d){

@@ -9,8 +9,12 @@
           <img src="<%= path %>" class="contentImg" /><br>
         <% }) %>
         <%- doc.content %>
-	        </div>
+	        </div>            
         </div>
+        <br/>
+         <a class="btn" href="/view/user/recommend_v2?wxuserid=<%= userObj._id %>&communityid=<%= doc.code2%>">
+                我要推荐此楼盘
+            </a>
     </div>
 </section>
 

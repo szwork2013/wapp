@@ -1,5 +1,6 @@
 //新闻模型
 var newsModel = require('../dl/appNewsModel.js');
+var communityModel = require('../dl/communityModel.js');
 var moment = require('moment');
 var utils = require('../lib/utils.js');
 var obj = {}
@@ -16,24 +17,38 @@ obj.getNewsByTypePage = function(appId,type,page,size,cb){ //某一类型公告�
 		if(!doc) return cb(null, doc);
 
 		var tempary = []
+		obj.getAllCommunity(function(err, comList){
 
-		doc.forEach(function(obj){
-			tempary.push({
-				_id:obj._id,
-				title:obj.title,
-				//content:obj.content,
-				picture:obj.picture.split(',') || '',
-				url:obj.url,
-				type:obj.type,
-				code1:obj.code1,
-				code2:obj.code2,
-				writeTime:moment(obj.writeTime).format('YYYY-MM-DD')
-			})
+				if(err) return cb(err)
+
+				doc.forEach(function(obj){
+					comList.forEach(function(comObj){
+
+						if(comObj._id.toString() == obj.code2){
+							tempary.push({
+								_id:obj._id,
+								title:obj.title,
+								//content:obj.content,
+								picture:obj.picture.split(',') || '',
+								url:obj.url,
+								type:obj.type,
+								code1:obj.code1,
+								code2:obj.code2,
+								writeTime:moment(obj.writeTime).format('YYYY-MM-DD')
+							})
+						}
+					})
+				})
+
+				return cb(err,tempary)
 		})
 
-		return cb(err,tempary)
+		
 	})
 }
+
+
+
 
 
 obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
@@ -47,22 +62,34 @@ obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 
 		var tempary = []
 
-		doc.forEach(function(obj){
-			var tempurl = obj.url;
+		obj.getAllCommunity(function(err, comList){
+			if(err) return cb(err)
 
-			tempary.push({
-				_id:obj._id,
-				title:obj.title,
-				content:obj.content,
-				picture:obj.picture.split(','),
-				url:tempurl,
-				type:obj.type,
-				code1:obj.code1,
-				code2:obj.code2,
-				writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+			doc.forEach(function(obj){
+				var tempurl = obj.url;
+				comList.forEach(function(comObj){
+						if(comObj._id.toString() == obj.code2){
+							tempary.push({
+								_id:obj._id,
+								title:obj.title,
+								content:obj.content,
+								picture:obj.picture.split(','),
+								url:tempurl,
+								type:obj.type,
+								code1:obj.code1,
+								code2:obj.code2,
+								writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
+							})
+						}
+				})
 			})
+
+			return cb(err,tempary[0])
+
 		})
-		return cb(err,tempary[0])
+
+		
+		
 	})
 }
 
@@ -97,5 +124,21 @@ obj.getNewsByType = function(appId,type,cb){ //某一类型公告的详细内容
 		return cb(err,tempary[0])
 	})
 }
+
+
+obj.getAllCommunity = function(cb){
+
+	communityModel.findAll({isShow:1},0,1000,function(err, list){
+		if(err) return cb(err)
+		if(!list || list.length == 0) return cb(null, list)
+		list = list.sort(function(a,b){
+			return a.sortNum - b.sortNum > 0 ? -1 : 1
+		})
+		cb(err, list)
+	})
+
+
+}
+
 
 module.exports = obj;

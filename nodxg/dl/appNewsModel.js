@@ -7,10 +7,10 @@ var obj = { //定义结构
       title:{type:String,required:true},           //标题
       content:{type:String,required:true},           //内容
       picture:{type:String,required:true},           //缩略图
-      url:{type:String,default:''},               //跳转地址，投票金数据用
-      type:{type:Number,default:1},    //1乐活空间公告(投票)，2表示乐活空间公告，3表示物语空间活动
-      code1:{type:String,default:''},                 //初始参与活动人数
-      code2:{type:String,default:''},                 //备用字段2
+      url:{type:String,default:''},                   //跳转地址，投票金数据用
+      type:{type:Number,default:1},                   //1新闻公告, 2推荐说明
+      code1:{type:String,default:''},                 //副标题
+      code2:{type:String,default:''},                 //用于记录房地产开发商的类型Id
       isShow:{type:Number,default:1},             
 	writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }

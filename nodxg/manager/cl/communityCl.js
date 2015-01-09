@@ -1,12 +1,13 @@
-var dl = require('../../dl/adminModel.js');
+var dl = require('../../dl/communityModel.js');
 var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('admin_list', {session:req.session});
+	res.render('community_list', {session:req.session});
 }
+
 
 obj.read = function(req, res){
 	var filter =  utils.kendoToMongoose(req.body.filter,req.session.clientId);
@@ -36,25 +37,14 @@ obj.update = obj.create = function(req, res){
 	else{
 		query = {'writeTime':new Date('1970/1/1')}
 	}
-	//console.log(req.models[0]["password"].length)
-	if(req.models[0]["password"].length == 32){
-		delete req.models[0]["password"]
-	}
-	else{
-		req.models[0].password = utils.md5(req.models[0].password+salt)
-	}
 	
 	delete req.models[0]["_id"];
 	delete req.models[0]["__v"];
 
-	
-	//console.log(req.models[0].password)
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);
 		if(!doc) return res.json([])
-			//console.log(doc.appId)
-		req.session.adminAppId = doc.appId;
-		res.json([doc]);
+		res.json(doc);
 	})
 }
 obj.destroy = function(req, res){
@@ -67,25 +57,14 @@ obj.destroy = function(req, res){
 }
 
 
+obj.getList = function(req, res){
 
-var init_admin = function(){
-
-	dl.findAll({}, 0, 100, function(err,doc){
-		if(err) return console.log('init error %s',err);
-		if(doc.length>0) return console.log('has init ready');
-
-		dl.createOneOrUpdate({'admin':'admin'}, {
-			admin:'admin',
-			password:utils.md5('admin'+salt)
-		}, function(err, doc){
-			if(err || !doc) return console.log('init error %s',err);
-			console.log('init success u:admin p:admin has create')
-		})
-		
+	dl.findAll({}, 0, 1000, function(err,doc){
+		if(err) return res.send(500,err);
+		if(!doc) return res.json([])
+		res.json(doc);
 	})
-
 }
 
-init_admin();
 
 module.exports = obj;

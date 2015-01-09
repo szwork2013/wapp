@@ -27,6 +27,16 @@
             <div data-container-for="title" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" required="required">
             </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="code1" >副标题</label>
+            </div>
+            <div data-container-for="code1" class="k-edit-field w-800-r">
+               <input type="text" id="" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
+               <br/>
+               例如：最高奖金6000元/套（税前）
+            </div>
             
             <div class="k-edit-label  w-800-l">
                 <label for="picture">图片</label>
@@ -36,7 +46,7 @@
                  <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
             </div>
 
-            <div class="k-edit-label  w-800-l">
+            <div class="k-edit-label  w-800-l"  style="display:;">
                 <label for="type" >类型</label>
             </div>
             <div data-container-for="type" class="k-edit-field w-800-r">
@@ -53,14 +63,7 @@
                如果是新闻，或者公告，此处留空
             </div>
             
-           <div class="k-edit-label  w-800-l">
-                <label for="code1" >初始参与人数</label>
-            </div>
-            <div data-container-for="code1" class="k-edit-field w-800-r">
-               <input type="text" id="" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
-               <br/>
-               请填入整数，初始参与人的数量
-            </div>
+           
 </div>
 
             <div class="k-edit-label  w-800-l">
@@ -73,12 +76,12 @@
         
 
 
-            <div style="display:none;">
+            <div style="display:;">
                 <div class="k-edit-label  w-800-l">
-                    <label for="code2" >备用2</label>
+                    <label for="code2" >所属楼盘</label>
                 </div>
                 <div data-container-for="code2" class="k-edit-field w-800-r">
-                   <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+                   <input type="text" id="code2" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
                 </div>
             </div>
 
@@ -182,6 +185,16 @@ $.post('/manger/app/getList',{},function(data_ary){
                 })
 
 
+$.post('/manger/community/getList',{},function(data_ary2){
+                var d2 = []
+                data_ary2.forEach(function(v){
+                    d2.push({
+                        text: v.communityName, 
+                        value:v._id
+                    })
+                })
+
+
                 $("#grid").kendoGrid({
                     dataSource: dataSource,
                     pageable: true,
@@ -231,8 +244,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                          { 
                             field: "code2",
-                            title: "备用2",                           
-                             hidden:true
+                            title: "所属楼盘",                           
+                            values:d2
                         },
                         { 
                             field: "isShow",
@@ -263,12 +276,16 @@ $.post('/manger/app/getList',{},function(data_ary){
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
                          $("#intro").kendoEditor(window.kendo_edit_option);  
                         window.dropdown_init($('#appId_inp'),d)
+                        window.dropdown_init($('#code2'),d2)
+
+                        
                         window.dropdown_init()  
                         window.dropdown_init($('#newsType'),window.news_type2)                       
 
                     },
                     filterable:window.filter_obj         
                 });
+            })
       })                              
 });
 

@@ -4,10 +4,16 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
 
-<% if(session.admin != 'menuadmin'){ %>
+<% if(session.admin.indexOf('community') >0){ %>
+                  <li class="nav-header">结佣管理</li>
+                  <li><a href="/manger/recrecord/list">推荐信息</a></li>
+                  <li><a href="/manger/transac/list">申请结佣</a></li>
+
+<%} else if(session.admin != 'menuadmin'){ %>
                   <li class="nav-header">系统设置</li>
                   <li><a href="/manger/admin/list">管理员</a></li>
                   <li><a href="/manger/app/list">应用管理</a></li>
+                  <li><a href="/manger/community/list">楼盘管理</a></li>
 
                   <li class="nav-header">用户管理</li>
                   <li><a href="/manger/user/list">用户信息</a></li>
