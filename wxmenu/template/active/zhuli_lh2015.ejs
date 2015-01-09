@@ -452,7 +452,6 @@ background-color:#ffe400;
 
 
 
-
 var appId = '<%= appId %>'
 var appEname = '<%= appEname %>'
 var isMyPage = <%= isMyPage %>;
@@ -469,6 +468,7 @@ var endTime = moment(new Date(activeObj.endTime))
 var now = <%= now %>
 var timeError = '<%= timeError %>'
 
+window.isAjax = false
 
 
 <% if (isMyPage){ %>
@@ -595,7 +595,9 @@ $(function(){
             mobile:appUserMobile
         }
 
+          window.isAjax = true
         $.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
+          window.isAjax = false
             if(d.error == 1){
                 return alert(d.data)
             }
@@ -609,18 +611,19 @@ $(function(){
 
 
     $('#goSupport').click(function(){
+        if(window.isAjax) return false
 
         if(window.hasAdd){
             alert('你已经支持过Ta了')
             return false
         }
-
+        window.isAjax = true
          $.post('/active_data/'+appEname+'/addsupport',{
             activeId:activeId, 
             fromUserId:fromUserId,
             toUserId:toUserId,
         },function(d){
-    
+            window.isAjax = false
             if(d.error == 1){
                 if(d.data == 'no openid'){
                     alert('身份过期，刷新页面重新支持')
@@ -673,6 +676,7 @@ $(function(){
 
 
 </script>		
+
 
       
 <script src="http://wzhfile.qiniudn.com/wx_share_v3.js"></script>       
