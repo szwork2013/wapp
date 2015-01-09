@@ -36,7 +36,7 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-      取暖神器来了，千套羊羔绒毛毯召唤暖男暖女
+      好友助力，赢取米油大礼包
 </title>
 
 <style type="text/css">
@@ -117,9 +117,9 @@ background-color:#ffe400;
 	
         <div class="container">
  
-           <img src="http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg1.jpg" width='100%' alt=""><br>
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg2.jpg" width='100%' alt="">
-				<img src="http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg22.jpg" width='100%' alt="">
+           <img src="http://bcs.duapp.com/xytimg/zhuli%2F20150109bg1.jpg" width='100%' alt=""><br>
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2F20150109bg2.jpg" width='100%' alt="">
+
           <img src="<%= activeObj.activeObj.picture%>" width=100%>
 		   <br/>  <br/>
 
@@ -148,19 +148,19 @@ background-color:#ffe400;
 			
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友助你升温</span>
+                <span class="share_timeline_button" >邀请好友助你拿米油礼包</span>
             </button>
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为他/她升温</span>
+                <span class="button1" >点击助他一臂之力</span>
             </a>
 			<br>
 		
 		
 		
-           <a href="http://mp.weixin.qq.com/s?__biz=MzA3NzE0MjgzNg==&mid=205106958&idx=1&sn=9159c5c94e88e9acfe3c53c8b174452f#rd" class="share_timeline1 btn-block">
-              <span class="button1" >我也要抢取暖神器</span>
+           <a href="http://mp.weixin.qq.com/s?__biz=MjM5ODA2NzA4OQ==&mid=203485355&idx=1&sn=31c246080d7d45207762f7f87a9da85d#rd" class="share_timeline1 btn-block">
+              <span class="button1" >我也是万科业主，我也要米油礼包</span>
             </a>
 			
         <%}%>
@@ -285,7 +285,7 @@ background-color:#ffe400;
         <h4 class="modal-title" id="myModalLabel">支持成功</h4>
       </div>
       <div class="modal-body"> 
-            <h4>成功帮TA升温 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font>℃</h4>
+            <h4>成功帮TA增加 <font id="reduceNumber" style="color:#c00; font-size:18px;">1</font>个助力</h4>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -334,7 +334,7 @@ background-color:#ffe400;
           <span class="input-group-addon" style="padding:0 10px;">
             <span class="glyphicon glyphicon-home" ></span>
           </span>
-          <input type="text" class="form-control" placeholder="输入楼号房号,例如:12#1201" id="appHome" value="" maxlength="11">
+          <input type="text" class="form-control" placeholder="房号:例信成道12#1201" id="appHome" value="" maxlength="11">
         </div>
       
       </div>
@@ -379,13 +379,13 @@ window.isAjax = false
 <% if (isMyPage){ %>
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg3.jpg'
-var forwardingTitle ='取暖神器来了，千套羊羔绒毛毯召唤暖男暖女'
-var forwardingDesc ='当你的温度达到37度时，即可在本页面兑换羊羔绒毯一套'
+var forwardingTitle ='万科信成道好朋友'
+var forwardingDesc ='快来帮我赢取我的米油大礼包'
 <%} else{ %>
-     var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MzA3NzE0MjgzNg==&mid=205106958&idx=1&sn=9159c5c94e88e9acfe3c53c8b174452f#rd'
+     var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MjM5ODA2NzA4OQ==&mid=203485355&idx=1&sn=31c246080d7d45207762f7f87a9da85d#rd'
 	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg3.jpg'
-var forwardingTitle ='取暖神器来了，千套羊羔绒毛毯召唤暖男暖女'
-var forwardingDesc ='当你的温度达到37度时，即可在本页面兑换羊羔绒毯一套'
+var forwardingTitle ='万科信成道好朋友'
+var forwardingDesc ='有机会获得万科信成道米油大礼包哦'
 <% } %>
     
 
