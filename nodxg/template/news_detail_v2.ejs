@@ -12,9 +12,15 @@
 	        </div>            
         </div>
         <br/>
+        <% if(doc.type == 1){%>
          <a class="btn" href="/view/user/recommend_v2?wxuserid=<%= userObj._id %>&communityid=<%= doc.code2%>">
                 我要推荐此楼盘
             </a>
+        <% }else { %>
+            <a class="btn" href="/view/user/recommend_v2?wxuserid=<%= userObj._id %>">
+                我要推荐
+            </a>
+        <%}%>
     </div>
 </section>
 
