@@ -370,9 +370,9 @@ obj.exchangePrize = function(qobj,cb){
       return cb('手机号码输入有误')
     }
 
-    if(appHome && appHome != '' && !/^(\w+)#(\w+)$/.test(appHome)){
-      return cb('房号楼号输入有误')
-    }
+   // if(appHome && appHome != '' && !/^(\w+)#(\w+)$/.test(appHome)){
+     // return cb('房号楼号输入有误')
+    //}
 
 	//获取奖品对象
 	appActivePrizeModel.findOneByObj({

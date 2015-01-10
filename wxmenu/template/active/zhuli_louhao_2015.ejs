@@ -519,7 +519,9 @@ $(function(){
           alert('请输入正确的手机号码')
           return false;
         }
-        if(!appHome || appHome.indexOf('#') == -1 || !/^(\w+)#(\w+)$/.test(appHome)){
+      //  if(!appHome || appHome.indexOf('#') == -1 || !/^(\w+)#(\w+)$/.test(appHome)){
+	  if(appHome==""){
+	  
           alert('请输入正确的楼号')
           return false
         }
