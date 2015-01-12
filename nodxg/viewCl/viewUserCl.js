@@ -237,15 +237,18 @@ obj.index_login_v2 = function(req,res){
 	
 	userBl.getRecrecordByUserId(appId, userId, {}, function(err,list){
 		if(err){
+			console.log(err)
 			return res.send(500,'个人主页加载失败')
 		}
 		infoBl.getAllCommunity(function(err, communityList){
 			if(err){
+				console.log(err)
 				return res.send(500,'页面加载失败')
 			}
 
-			infoBl.getNewsByTypePage(appId, 1, 0, 100, function(err, newsList){
+			infoBl.getNewsByTypePage(appId, 1, 1, 100, function(err, newsList){
 				if(err){
+					console.log(err)
 					return res.send(500,'页面加载失败')
 				}
 				res.render('index_login_v2.ejs',{
