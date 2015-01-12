@@ -25,7 +25,9 @@
                         </figure>
                     </div>
 
-                    <% newsList.forEach(function(obj){ %>
+                    <% newsList.forEach(function(obj){ 
+                        if(obj.type == 2) return
+                    %>
                         <a target="_blank" href="/view/service/newsdetail_v2?newsId=<%=obj._id%>&wxuserid=<%= userObj._id %>" class="floor-detail">
                                 <div class="floor">
                                     <h5><%=obj.title%></h5>
