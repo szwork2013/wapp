@@ -72,7 +72,7 @@
         "env_production" : {
           "NODE_ENV": "production"
         }
-      }
+      },
       {
         "name"      : "nodxg",
         "script"    : "/var/nodejs/wapp/nodxg/app.js",
