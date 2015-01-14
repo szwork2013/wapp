@@ -19,32 +19,45 @@
         <div class="sale-box">
 			<h6>在售项目</h6>
 			<div class="floor-box">
-				    <div class="floor-detail">
+				    <!-- <div class="floor-detail">
                         <figure class="floor-img">
                             <img src="http://wkmixtown.qiniudn.com/broke%2Fwanke_proj.jpg" alt="">
                         </figure>
-                    </div>
+                    </div> -->
 
                     <% newsList.forEach(function(obj){ 
                         if(obj.type == 2) return
                     %>
-                        <a target="_blank" href="/view/service/newsdetail_v2?newsId=<%=obj._id%>&wxuserid=<%= userObj._id %>" class="floor-detail">
+                            <div class="floor-detail">
                                 <div class="floor">
-                                    <h5><%=obj.title%></h5>
+                                    <h5><a target="_blank" href="/view/service/newsdetail_v2?newsId=<%=obj._id%>&wxuserid=<%= userObj._id %>" >
+                                        <%=obj.title%>
+                                    </a></h5>
                                         <div class="award fn-clear">
                                             <!-- <label class="award-title">佣金</label> -->
                                             <div class="award-list">
                                                 <span><%=obj.code1%></span><br />
                                             </div>
                                         </div>
+                                        <div class="floor-detail">
+                                             <a target="_blank" href="/view/service/newsdetail_v2?newsId=<%=obj._id%>&wxuserid=<%= userObj._id %>" >
+                                            <figure class="floor-img">
+                                                <img src="<%= obj.picture[0] %>" alt="" />
+                                            </figure>
+                                            </a>
+                                        </div>
+                                        <h3>
+                                            售楼处地址：<%=obj.code3%>
+                                        </h3>
+                                        <h3>
+                                            咨询热线：<a href="tel:<%=obj.url%>"><%=obj.url%></a></h3>
                                         <!--激励部分-->
                                         <div class="award fn-clear">
-                                            <div class="award-list">
-                                            </div>
-                                        <!--备注部分-->
-                                    </div>
+                                            <div class="award-list"></div>
+                                            <!--备注部分-->
+                                        </div>
                                 </div>
-                        </a>
+                            </div>
                     <% })%>
 		  </div>
 	   </div>

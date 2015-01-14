@@ -39,7 +39,7 @@
             </div>
             
             <div class="k-edit-label  w-800-l">
-                <label for="picture">图片</label>
+                <label for="picture">图片(120x240</label>
             </div>
             <div data-container-for="picture" class="k-edit-field w-800-r">
                 <input type="file" name="upload_file" id="upload_file">
@@ -53,18 +53,37 @@
                <input type="number" id="newsType" class="k-input k-textbox w-50-inp" name="type" data-bind="value:type" required="required">
             </div>
 
-<div style="display:none;">
+            <div style="display:;">
+                <div class="k-edit-label  w-800-l">
+                    <label for="code3" >售楼处地址</label>
+                </div>
+                <div data-container-for="code3" class="k-edit-field w-800-r">
+                   <input type="text" id="code3" class="k-input k-textbox w-50-inp" name="code3" data-bind="value:code3" >
+                </div>
+            </div>
+
             <div class="k-edit-label  w-800-l">
-                <label for="url" >跳转地址</label>
+                <label for="url" >咨询热线</label>
             </div>
             <div data-container-for="url" class="k-edit-field w-800-r">
                <input type="text" id="" class="k-input k-textbox w-50-inp" name="url" data-bind="value:url" >
-               <br/>
-               如果是新闻，或者公告，此处留空
             </div>
-            
-           
-</div>
+
+            <div style="display:;">
+                <div class="k-edit-label  w-800-l">
+                    <label for="code2" >所属楼盘</label>
+                </div>
+                <div data-container-for="code2" class="k-edit-field w-800-r">
+                   <input type="text" id="code2" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+                </div>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="sort" >排序(大靠前)</label>
+            </div>
+            <div data-container-for="sort" class="k-edit-field w-800-r">
+               <input type="number" id="" class="k-input k-textbox w-50-inp" name="sort" data-bind="value:sort" >
+            </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="content" >内容</label>
@@ -76,14 +95,7 @@
         
 
 
-            <div style="display:;">
-                <div class="k-edit-label  w-800-l">
-                    <label for="code2" >所属楼盘</label>
-                </div>
-                <div data-container-for="code2" class="k-edit-field w-800-r">
-                   <input type="text" id="code2" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
-                </div>
-            </div>
+            
 
             <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
@@ -163,7 +175,8 @@
                                     "content": { editable: true},
                                     "picture": { editable: true },
                                     "url": { editable: true},
-                                    "type": { editable: true, type:'number'},                                   
+                                    "type": { editable: true, type:'number'},
+                                    "sort": { editable: true, type:'number'},
                                     "code1": { editable: true},
                                     "code2": { editable: true},
                                     "isShow": { editable: true, type:'number' },
@@ -224,11 +237,11 @@ $.post('/manger/community/getList',{},function(data_ary2){
                         { 
                             field: "picture",
                             title: "图片",
-                            hidden:true
+                            template: "<img src='#=picture#' width=50 height=50/>",
                         },
                         { 
                             field: "url",
-                            title: "跳转地址",
+                            title: "咨询热线",
                             hidden:true
                         },
                         { 
@@ -239,13 +252,23 @@ $.post('/manger/community/getList',{},function(data_ary2){
                         },
                          { 
                             field: "code1",
-                            title: "备用1",                           
-                             hidden:true
+                            title: "副标题",                           
+                            hidden:true
                         },
-                         { 
+                        { 
                             field: "code2",
                             title: "所属楼盘",                           
                             values:d2
+                        },
+                        { 
+                            field: "code3",
+                            title: "售楼处地址",                           
+                            hidden:true
+                        },
+                        { 
+                            field: "sort",
+                            title: "排序",                           
+                            hidden:true
                         },
                         { 
                             field: "isShow",
@@ -279,7 +302,7 @@ $.post('/manger/community/getList',{},function(data_ary2){
                         window.dropdown_init($('#code2'),d2)
 
                         
-                        window.dropdown_init()  
+                        window.dropdown_init()
                         window.dropdown_init($('#newsType'),window.news_type2)                       
 
                     },

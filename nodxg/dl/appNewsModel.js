@@ -7,10 +7,12 @@ var obj = { //定义结构
       title:{type:String,required:true},           //标题
       content:{type:String,required:true},           //内容
       picture:{type:String,required:true},           //缩略图
-      url:{type:String,default:''},                   //跳转地址，投票金数据用
+      url:{type:String,default:''},                   //咨询热线
       type:{type:Number,default:1},                   //1新闻公告, 2推荐说明
       code1:{type:String,default:''},                 //副标题
       code2:{type:String,default:''},                 //用于记录房地产开发商的类型Id
+      code3:{type:String,default:''},                 //售楼处地址
+      sort:{type:Number,default:1},                  //排序
       isShow:{type:Number,default:1},             
 	writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }

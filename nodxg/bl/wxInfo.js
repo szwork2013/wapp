@@ -34,10 +34,17 @@ obj.getNewsByTypePage = function(appId,type,page,size,cb){ //某一类型公告�
 								type:obj.type,
 								code1:obj.code1,
 								code2:obj.code2,
+								code3:obj.code3,
+								sort:obj.sort,
 								writeTime:moment(obj.writeTime).format('YYYY-MM-DD')
 							})
 						}
 					})
+				})
+
+				tempary = tempary.sort(function(a,b){
+						if(a.sort > b.sort) return -1
+						return 1
 				})
 
 				return cb(err,tempary)
@@ -78,6 +85,7 @@ obj.getNewsById = function(id,uid,cb){ //某一类型公告的详细内容
 								type:obj.type,
 								code1:obj.code1,
 								code2:obj.code2,
+								code3:obj.code3,
 								writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
 							})
 						}
@@ -118,9 +126,13 @@ obj.getNewsByType = function(appId,type,cb){ //某一类型公告的详细内容
 				type:obj.type,
 				code1:obj.code1,
 				code2:obj.code2,
+				code3:obj.code3,
 				writeTime:moment(obj.writeTime).format('YYYY-MM-DD hh:mm:ss')
 			})
 		})
+
+
+
 		return cb(err,tempary[0])
 	})
 }
