@@ -330,7 +330,8 @@ background-color:#ffe400;
                     <li class="v-prize-item-name">
                         <%= priceObj.name %>
                         <% if(priceObj.hasSelect) {%>
-                            (已兑)兑奖码：<%= priceObj.giftId %>
+                            (已兑)
+							<!--兑奖码：<%= priceObj.giftId %>-->
                         <% } %>
                     </li>
                     <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*2 %>份</li>
