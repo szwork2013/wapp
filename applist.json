@@ -18,6 +18,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/app.js",
+        "instances":4,
         "env_production" : {
           "NODE_ENV": "production"
         }
