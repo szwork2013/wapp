@@ -261,6 +261,7 @@ obj.activePage = function(req,res){ //活动页面展示
 							infoObj.myPrizeList.forEach(function(myObj){
 									if(myObj.prizeId == prizeId){
 										tempPrizeObj.hasSelect = true;
+										tempPrizeObj.giftId = myObj.giftId
 									}
 							})
 							tempPrizeList.push(tempPrizeObj)
