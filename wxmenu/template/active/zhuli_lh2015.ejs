@@ -577,7 +577,8 @@ $(function(){
 
     //保存按钮
     $('#save_change').click(function(){
-
+        if(window.isAjax) return false
+          
         var appUserName = $('#appUserName').val().trim();
         var appUserMobile = $('#appUserMobile').val().trim();
         if(!appUserName || appUserName == '未认证会员'){
