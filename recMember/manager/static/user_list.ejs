@@ -84,6 +84,14 @@
                <input type="text" id="moneyWriteTime" class="k-input k-textbox w-50-inp" name="moneyWriteTime" data-bind="value:moneyWriteTime" >
             </div>
 
+
+            <div class="k-edit-label  w-800-l">
+                <label for="code1">是否经纪人</label>
+            </div>
+            <div data-container-for="code1" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code1" id="code1" data-bind="value:code1" >
+            </div>
+
            <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
             </div>
@@ -158,7 +166,7 @@
                                     "moneyCode":{editable: true,type:"number" },                    //礼包编码
                                     "moneyUsed":{ editable: true,type:"number" },   //是否已经使用
                                     "moneyWriteTime":{editable: true, type: "date" },
-                                    "code1":{editable: true},
+                                    "code1":{editable: true}, //用户类别是否是经纪人
                                     "code2":{editable: true},
                                     "writeTime": {editable: true, type: "date" },
                                 }
@@ -249,6 +257,11 @@
                             field: "moneyUsed",
                             title: "是否领奖",
                             values:window.get_money
+                        },
+                        { 
+                            field: "code1",
+                            title: "是否经纪人",
+                            values:window.is_broker_type
                         },
                         { 
                             field: "moneyWriteTime",

@@ -174,6 +174,10 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 							var type = 2
 							var fromStr = isOldMember; //获取
 						}
+						else if(qobj.code1 == '1'){ //如果是经纪人，则直接自动认证
+							var type = 2
+							var fromStr = "经纪人"; //获取
+						}
 						else{
 							var type = 0
 							var fromStr = "其它"; //获取
@@ -188,6 +192,7 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 							appUserMobile:qobj.appUserMobile,
 							appUserSex:qobj.appUserSex || 1,
 							appUserBirth:qobj.appUserBirth || '1970/1/1',
+							code1:qobj.code1,
 							userFrom:fromStr //获取用户来源
 						},function(err,doc){
 							if(err) return cb(err);						
@@ -219,11 +224,17 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 									isNewSubmit:isNewSubmit
 								},function(err,doc2){
 
+									//console.log(doc2)
+
 									if(err) return cb(err);
 
 									//obj.checkRecommend(appId, udoc.uobj._id, qobj.appUserMobile);
 
-									cb(null,doc2)
+									cb(null,{
+										appUserType:doc2.appUserType,
+										code1:qobj.code1,
+										isNewSubmit:doc2.isNewSubmit
+									})
 
 								})//end userAppModel.createOneOrUpdate
 
@@ -335,6 +346,7 @@ obj.recommend = function(appId, userId, qobj, cb){
 	var recArea = qobj.recArea;
 	var recPrice = qobj.recPrice;
 	var recRoom = qobj.recRoom;
+	var recCode1 = qobj.recCode1;
 	var recStatus = 1;
 
 	if(!recName || recName.length>50){
@@ -382,6 +394,7 @@ obj.recommend = function(appId, userId, qobj, cb){
 			recArea:recArea,
 			recPrice:recPrice,
 			recRoom:recRoom,
+			recCode1:recCode1,
 			recStatus:1,
 			updateTime:new Date(),
 			writeTime:new Date()

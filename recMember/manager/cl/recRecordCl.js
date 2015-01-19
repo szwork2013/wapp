@@ -9,8 +9,15 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('rec_record_list', {session:req.session});
+	res.render('rec_record_list', {session:req.session, isBroker:0});
 }
+
+obj.list2 = function(req, res){
+	res.render('rec_record_list', {session:req.session, isBroker:1});
+}
+
+
+
 
 obj.success = function(req, res){
 	dl.createOneOrUpdate({

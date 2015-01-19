@@ -84,6 +84,8 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 			  moneyCode:uobj.uobj.moneyCode,
 			  moneyUsed:uobj.uobj.moneyUsed,
 		   	  moneyWriteTime:uobj.uobj.moneyWriteTime,
+		   	  code1:uobj.uobj.code1,
+		   	  code2:uobj.uobj.code2,
 			  isShow:uobj.uobj.isShow, //是否启用这个用户,1表示启用，0表示未启用
 			  writeTime: moment(uobj.uobj.writeTime).format('YYYY-MM-DD hh:mm:ss'),   //写入时间
 		};
@@ -208,6 +210,8 @@ var addroute = function(app){
 	app.get('/view/user/transacdetail',getUserMid, viewUser.transacDetail);
 	//用户注册
 	app.get('/view/user/regist',getUserMid, viewUser.regist);
+	//用户注册，经纪人
+	app.get('/view/user/registbroker',getUserMid, viewUser.regist2);
 	//用户中心
 	app.get('/view/user/modify',getUserMid, viewUser.modify);
 	//领奖礼包页面

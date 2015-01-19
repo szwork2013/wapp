@@ -32,7 +32,7 @@ var obj = { //定义结构
 
       isCash:{type:Number,default:0},                 //是否已经结佣金, 0表示没有结佣金，1表示已经结佣金
 
-      recCode1:{type:String,default:''},              //预留字段1
+      recCode1:{type:String,default:'0'},              //推荐类别，0表示非经纪人，1表示经纪人
       recCode2:{type:String,default:''},              //预留字段2
       recCode3:{type:String,default:''},              //预留字段3
       recCode4:{type:String,default:''},              //预留字段4

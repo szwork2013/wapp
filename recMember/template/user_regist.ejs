@@ -5,8 +5,12 @@
 <% include inc/top %>
 
 <section class="page-content container content-index">
-    <h1 class="icon">会员中心</h1>
-
+    <% if(isBroker){ %>
+      <h1 class="icon">经纪人注册</h1>
+    <% } else { %>
+      <h1 class="icon">会员中心</h1>
+    <% } %>
+    
       <fieldset class="info">
 
 <% if(binderObj.isNewSubmit == 1){ %>
@@ -27,14 +31,26 @@
           <label class="icon">姓名</label>
           <input type="text" placeholder="请输入真实姓名" id="appUserName" name="appUserName" maxlength="20" />
         </div>
+
+
+
         <div class="info-phone">
           <label class="icon">手机</label>
           <input type="text" placeholder="请输入手机号" id="mobile" name="mobile" maxlength="11" />
         </div>
-        <div class="info-type">
+
+
+<% if(isBroker){ %>
+
+        <input type="hidden" value="1" name="code1" id="code1" />
+        <input type="hidden" placeholder="例如: 10-2101" id="house" name="house" maxlength="50" />
+
+<% } else{ %>
+
+        <input type="hidden" value="0" name="code1" id="code1" />
+         <div class="info-type">
           <label class="icon">房号</label>
           <input type="text" placeholder="例如: 10-2101" id="house" name="house" maxlength="50" />
-          
         </div>
 
         <h3 class="true_input">请如实填写购房合同上的姓名及电话</h3>
@@ -44,6 +60,9 @@
           <input type="text" placeholder="证件号码" name="card_no">
         </div>
         -->
+<% } %>
+
+
       </fieldset>
       <fieldset class="icon protocol">
         <a class="tick icon" href="javascript:;">勾选</a>
@@ -55,7 +74,12 @@
    
   </section>
 
-<% include inc/rule %>
+<% if(isBroker){ %>
+  <% include inc/ruleBroker %>
+<% } else{ %>
+  <% include inc/rule %>
+  
+<% } %>
 
 <script type="text/javascript">
   $(function(){
@@ -69,6 +93,7 @@
 
           var mobile = $('#mobile').val();
           var appUserName = $.trim($('#appUserName').val());
+          var code1 = $.trim($('#code1').val());
           var house = $.trim($('#house').val());
           var appUserBuilding = ''
           var appUserRoom = ''
@@ -81,7 +106,7 @@
               $('#errtip').html(errimg+'请输入真实姓名').show()
               return false;
           } 
-          if(!house){
+          if(code1 == '0' && !house){
               $('#errtip').html('请输入楼房号').show()
               return false;
           }
@@ -104,12 +129,16 @@
             'appUserBuilding':appUserBuilding,
             'appUserRoom':appUserRoom,
             'appUserMobile':mobile,
+            "code1":code1,
             'wxuserid':window.userid
           },function(d){
               window.isajax = false;
               if(d.error) return $('#errtip').html(errimg+d.data).show();
 
-              if(d.data.appUserType == 2){
+              if(d.data.code1 == '1'){
+                alert('经纪人注册成功');
+              }
+              else if(d.data.appUserType == 2){
                 alert('您是老业主，认证成功');
               }
               else{

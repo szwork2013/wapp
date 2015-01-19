@@ -151,13 +151,15 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="appUserBuildingRoom" data-bind="value:appUserBuildingRoom"  readonly="readonly">
             </div>
 
-<div style="display:none">
+
             <div class="k-edit-label  w-800-l">
-                <label for="recCode1" >备用1</label>
+                <label for="recCode1" >是否经纪人</label>
             </div>
             <div data-container-for="recCode1" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
             </div>
+
+<div style="display:none">
             <div class="k-edit-label  w-800-l">
                 <label for="recCode2" >备用2</label>
             </div>
@@ -297,7 +299,11 @@ function req_fail(e) {
                         batch: true,
                         pageSize: 15,
                         serverFiltering:true,
-                       
+                        <% if(isBroker == 1){ %>
+                            filter: { field: "recCode1", operator: "eq", value:'1'  },
+                        <% }else { %>
+                            filter: { field: "recCode1", operator: "neq", value:'1'  },
+                        <% } %>
                         transport: {
                             read:  {
                                 url: DataHost + "/manger/recrecord/read",
@@ -475,8 +481,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                         { 
                             field: "recCode1",
-                            title: "备用1",
-                            hidden:true
+                            title: "是否经纪人",
+                            values:window.is_broker_type
                         },
                         { 
                             field: "recCode2",

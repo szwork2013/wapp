@@ -154,6 +154,7 @@ var addroute = function(app){
 
 	//recrecord
 	app.get('/manger/recrecord/list', checkLogin, recRecordCl.list)
+	app.get('/manger/recrecord/brokelist', checkLogin, recRecordCl.list2)
 	app.post('/manger/recrecord/read', checkLogin, recRecordCl.read)
 	app.post('/manger/recrecord/update', checkLogin, recRecordCl.update)
 	app.post('/manger/recrecord/destroy', checkLogin, recRecordCl.destroy)

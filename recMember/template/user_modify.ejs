@@ -18,18 +18,28 @@
         </div>
       </header>
       <ul>
-        <li>
-          <h2>联系电话</h2>
-          <p><%= userObj.appUserMobile %></p>
-        </li>
-        <li>
-            <h2>楼号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-            <p><%= binderObj.appUserBuilding %> 栋</p>
-        </li>
-        <li>
-             <h2>房号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-              <p><%= binderObj.appUserRoom %> 室</p>
-        </li>                              
+      <li>
+        <h2>联系电话</h2>
+        <p><%= userObj.appUserMobile %></p>
+      </li>
+<% if(userObj.code1 == '1'){ %>
+      <li>
+       <h2>帐号类型</h2>
+        <p>经纪人</p>
+    </li>
+<% } else { %>  
+  <li>
+      <h2>楼号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+      <p><%= binderObj.appUserBuilding %> 栋</p>
+  </li>
+  <li>
+       <h2>房号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+        <p><%= binderObj.appUserRoom %> 室</p>
+  </li>
+  
+<% } %>
+
+                                      
       </ul>
 
      <a class="gm_get_btn gm_go_to_btn" href="/view/user/getmoney?wxuserid=<%= userObj._id%>">开红包拉</a>
@@ -37,7 +47,14 @@
          
 
   </section>
-<% include inc/rule %>
+<% if(userObj.code1 == '1'){ %>
+  <% include inc/ruleBroker %>
+<% } else { %>  
+  <% include inc/rule %>
+<% } %>
+
+
+
 <script type="text/javascript">
   $(function(){
     $('#rule_div_box').show()

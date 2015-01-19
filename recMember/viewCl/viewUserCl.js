@@ -18,12 +18,36 @@ obj.regist = function(req,res){ //用户注册
 		return;
 	}
 
+
 	res.render('user_regist.ejs',{
 		'userObj':req.wxuobj,
 		'binderObj':req.wxBinder,
+		'isBroker':false
 	})
 
 }
+
+
+obj.regist2 = function(req,res){ //用户注册,经纪人注册
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxBinder.openId
+
+	//如果是已经认证用户
+	if(req.wxBinder.appUserType >= 1){
+		obj.modify(req,res);
+		return;
+	}
+
+	res.render('user_regist.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+		'isBroker':true
+	})
+
+}
+
+
 
 
 obj.modify = function(req,res){ //用户修改资料

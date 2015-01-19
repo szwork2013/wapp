@@ -157,6 +157,11 @@ window.sex_ary=[
               { text: "男", value: 1 },
               { text: "女", value: 0 }
             ]
+
+window.is_broker_type=[
+              { text: "非经纪人", value: "0" },
+              { text: "经纪人", value: "1" }
+            ]
             
 window.news_type = [
               { text: "新闻", value: 1 },

@@ -25,6 +25,7 @@ obj.binder = function(req,res){ //用户认证绑定
 		appUserRoom:req.body.appUserRoom || '',
 		//不填项
 		appUserCity:req.body.appUserCity || '',
+		code1:req.body.code1 || '0',
 
 	}
 	if(!qobj.appUserName || qobj.appUserName.length>20){
@@ -138,6 +139,7 @@ obj.recommend = function(req,res){ //推荐人
 		recArea:recArea,
 		recPrice:recPrice,
 		recRoom:recRoom,
+		recCode1:req.wxuobj.code1
 	}, function(err,doc){
 		if(err) return res.json({'error':1,'data':err})
 		res.json({'error':0,'data':doc})

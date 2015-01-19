@@ -20,7 +20,7 @@ var obj = { //定义结构
 	  moneyCode:{type:Number, default:0},									//礼包编码
 	  moneyUsed:{ type:Number, default:0},									//是否已经使用
 	  moneyWriteTime:{ type: Date, default: function(){return Date.now()} },//礼包使用时间
-	  code1:{type:String, default:''},//备用1
+	  code1:{type:String, default:'0'},//用户类型，是否是经纪人类型,1表示经纪人，0表示不是
 	  code2:{type:String, default:''},//备用2
 	  writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
