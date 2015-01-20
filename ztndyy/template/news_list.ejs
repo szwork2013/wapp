@@ -1,0 +1,24 @@
+<% include inc/head %>
+<%
+  var title = '新闻公告'
+%>
+<% include inc/top %>
+
+<section class="page-content container content-interests content-item">
+    <ul>
+       <% 
+         list.forEach(function(obj,i){ 
+       %>
+        <li>
+          <a class="lista" href="/view/service/newsdetail?newsId=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank">
+            <img src="<%= obj.picture[0] %>">
+            <h1><%= obj.title %></h1>
+            <p><span>时 间</span><%= obj.writeTime %></p>
+          </a>
+        </li>
+      <% }) %>
+      
+    </ul>
+  </section>
+
+<% include inc/foot %>

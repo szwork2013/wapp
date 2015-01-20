@@ -1,0 +1,34 @@
+<% include inc/headfile_v2 %>
+		
+		<section class="main animated">
+			<div class="main-box">
+								<div class="home-info border-box fn-clear">
+					<figure class="figure-box">
+						<img src="http://wkmixtown.qiniudn.com/broke%2Fheader.png" alt="">
+					</figure>
+					<h5><%= userObj.appUserName %></h5>
+                    <!--
+					<div class="user-info">
+						<label>总佣金</label>
+								<p><i class="icon icon-money"></i><span>0</span></p>
+					</div>
+					<div class="info-border"></div>
+                    -->
+					<div class="user-info">
+						<label>推荐人数</label>
+						<p><i class="icon icon-users"></i><span><%= count %></span></p>
+					</div>
+                    <a target="_blank" href="/view/user/modify_v2?wxuserid=<%= userObj._id %>" class="jjr-setting"><i class="icon-setting"></i></a>
+				</div>		
+
+                <% include inc/body_v2 %>
+
+			</div>
+
+		</section>
+
+
+
+
+
+<% include inc/foot_v2 %>
