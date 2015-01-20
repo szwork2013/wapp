@@ -87,6 +87,20 @@
         "env_production" : {
           "NODE_ENV": "production"
         }
+      },
+      {
+        "name"      : "ztndyy",
+        "script"    : "/var/nodejs/wapp/ztndyy/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "ztndyyadmin",
+        "script"    : "/var/nodejs/wapp/ztndyy/manager/app.js",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
       }
 
 
