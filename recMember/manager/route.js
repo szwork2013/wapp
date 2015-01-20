@@ -91,6 +91,7 @@ var addroute = function(app){
 
 	//user
 	app.get('/manger/user/list', checkLogin, userCl.list)
+	app.get('/manger/user/brokelist', checkLogin, userCl.list2)
 	app.post('/manger/user/read', checkLogin, userCl.read)
 	app.post('/manger/user/update', checkLogin, userCl.update)
 	app.post('/manger/user/destroy', checkLogin, userCl.destroy)
@@ -112,6 +113,8 @@ var addroute = function(app){
 
 
 	app.get('/manger/userbind/list', checkLogin, userappCl.bindlist)
+	app.get('/manger/userbind/brokelist', checkLogin, userappCl.bindlist2)
+	app.get('/manger/userbindcheck/brokelist', checkLogin, userappCl.bindcheck2)
 	app.get('/manger/userbindcheck/list', checkLogin, userappCl.bindcheck)
 
 

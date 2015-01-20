@@ -105,7 +105,9 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 					sex:v.appUserSex,
 					mobile:v.appUserMobile,
 					userFrom:v.userFrom,
-					appUserMobile:v.appUserMobile
+					appUserMobile:v.appUserMobile,
+					code1:v.code1,
+					code2:v.code2
 				}
 				useApps.forEach(function(userAppObj){
 					 if(userAppObj.appUserId != v._id) return;

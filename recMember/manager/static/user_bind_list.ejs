@@ -22,6 +22,12 @@
                         requestEnd: function(e) {
                            
                         },
+                        <% if(isBroker){ %>
+                            filter: { field: "code1", operator: "eq", value:'1'  },
+                        <% }else { %>
+                            filter: { field: "code1", operator: "neq", value:'1'  },
+                        <% } %>
+                        
                         transport: {
                             read:  {
                                 url: DataHost + "/manger/userapp/read",

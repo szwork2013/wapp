@@ -54,6 +54,8 @@
         </div>
 
         <h3 class="true_input">请如实填写购房合同上的姓名及电话</h3>
+
+        <h3 class="true_input"><a href="/view/user/registbroker?wxuserid=<%= userObj._id %>">经纪人注册点击这里</a></h3>
         <!--
         <div class="info-numb">
           <label class="icon">证件号码</label>
@@ -136,7 +138,7 @@
               if(d.error) return $('#errtip').html(errimg+d.data).show();
 
               if(d.data.code1 == '1'){
-                alert('经纪人注册成功');
+                alert('经纪人注册成功,请等待审核');
               }
               else if(d.data.appUserType == 2){
                 alert('您是老业主，认证成功');

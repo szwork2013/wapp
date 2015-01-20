@@ -175,7 +175,7 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 							var fromStr = isOldMember; //获取
 						}
 						else if(qobj.code1 == '1'){ //如果是经纪人，则直接自动认证
-							var type = 2
+							var type = 0
 							var fromStr = "经纪人"; //获取
 						}
 						else{

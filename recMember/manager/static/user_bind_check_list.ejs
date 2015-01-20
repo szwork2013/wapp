@@ -18,6 +18,15 @@ function req_success2(e) {
             req_success(dataItem._id,'中原')
             
     }
+function req_success3(e) {
+            e.preventDefault();
+            var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+            req_success(dataItem._id,'经纪人')
+            
+    }
+
+
 
 function req_success(_id,fromStr) {
 
@@ -57,9 +66,7 @@ function req_fail(e) {
                         batch: true,
                         pageSize: 15,
                         serverFiltering:true,
-                        requestEnd: function(e) {
-                           
-                        },
+                        requestEnd: function(e) {},
                         transport: {
                             read:  {
                                 url: DataHost + "/manger/userapp/read",
@@ -67,6 +74,11 @@ function req_fail(e) {
                             },
                         },
                         filter: [
+                            <% if(isBroker){ %>
+                                { field: "code1", operator: "eq", value:'1'  },
+                            <% }else { %>
+                                { field: "code1", operator: "neq", value:'1'  },
+                            <% } %>
                             { field: "isNewSubmit", operator: "eq", value: 1 },
                             { field: "appUserType", operator: "neq", value: 2 }
                         ],
@@ -100,8 +112,12 @@ function req_fail(e) {
                 var commandAry = [];
          
                 var commandAry = [
-                                { name: "success1", text: "易居通过" , click:req_success1},
-                                { name: "success2", text: "中原通过" , click:req_success2},
+                                <% if(isBroker){ %>
+                                    { name: "success3", text: "经纪人通过" , click:req_success3},
+                                <% }else { %>
+                                    { name: "success1", text: "易居通过" , click:req_success1},
+                                    { name: "success2", text: "中原通过" , click:req_success2},
+                                <% } %>
                                 { name: "fail", text: "不通过", click:req_fail},
                               ]
 

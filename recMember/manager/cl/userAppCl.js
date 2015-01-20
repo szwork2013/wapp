@@ -10,11 +10,21 @@ obj.list = function(req, res){
 }
 
 obj.bindlist = function(req, res){
-	res.render('user_bind_list', {session:req.session});
+	res.render('user_bind_list', {session:req.session, isBroker:false});
+}
+
+obj.bindlist2 = function(req, res){
+	res.render('user_bind_list', {session:req.session, isBroker:true});
+}
+
+
+
+obj.bindcheck2 = function(req, res){
+	res.render('user_bind_check_list', {session:req.session, isBroker:true});
 }
 
 obj.bindcheck = function(req, res){
-	res.render('user_bind_check_list', {session:req.session});
+	res.render('user_bind_check_list', {session:req.session, isBroker:false});
 }
 
 
@@ -26,6 +36,16 @@ obj.read = function(req, res){
 	var pageSize = req.body.pageSize || 20;
 	var resObj = {"Data":[],"Total":0};
 	
+	var isBroker = false
+	if(filter.code1 && filter.code1 == '1'){
+		isBroker = true
+	}
+	else{
+		isBroker = false
+	}
+	delete filter.code1
+
+	console.log(filter)
 
 	dl.findAll(filter, skip, pageSize, function(err,doc){
 		if(err) return res.send(500,err);
@@ -36,14 +56,32 @@ obj.read = function(req, res){
 			ids.push(v.userId)
 		})
 
+
 		dl.countAll(filter,function(err,count){
 			if(err) return res.send(500,err);
 
 			dl2.getUserByIds(ids,function(err,idsary){ //获得用户id和用户名对应关系
 				if(err) return res.json(err)
 				var dary=[]
-
+				console.log(isBroker, idsary)
+				idsary = idsary.filter(function(idObj){
+					if(isBroker && idObj.code1 == '1'){
+						return true
+					}
+					else if(!isBroker && idObj.code1 != '1'){
+						return true
+					}
+					return false
+				})
+				console.log(idsary)
 				//console.log(resObj["Data"])
+				if(idsary.length == 0){
+					resObj["Total"] = 0
+					resObj["Data"] = []
+					res.json(resObj);
+					return
+				}
+
 
 				resObj["Data"].forEach(function(v){
 
@@ -56,26 +94,27 @@ obj.read = function(req, res){
 					  	  	sex = v2.sex
 					  	  	mobile = v2.mobile
 					  	  	userFrom = v2.userFrom
+					  	  	 dary.push({
+							  		  _id:v._id.toString(),	 
+									  userId:uname, 				   //此用户在数据库中的_id
+									  userMobile:mobile,
+									  userSex:sex,
+									  userFrom:userFrom,
+								      openId:v.openId,
+								      appId:v.appId,
+								      appUserCity:v.appUserCity,
+								      appUserCommunity:v.appUserCommunity,
+								      appUserBuilding:v.appUserBuilding,
+								      appUserRoom:v.appUserRoom,
+								      appCardNumber:v.appCardNumber,
+								      appUserType:v.appUserType,
+								      isNewSubmit:v.isNewSubmit,
+								      lastActiveTime:v.lastActiveTime,
+									  writeTime: v.writeTime,
+							  })
 					  	  }
 					  }) 
-					  dary.push({
-					  		  _id:v._id.toString(),	 
-							  userId:uname, 				   //此用户在数据库中的_id
-							  userMobile:mobile,
-							  userSex:sex,
-							  userFrom:userFrom,
-						      openId:v.openId,
-						      appId:v.appId,
-						      appUserCity:v.appUserCity,
-						      appUserCommunity:v.appUserCommunity,
-						      appUserBuilding:v.appUserBuilding,
-						      appUserRoom:v.appUserRoom,
-						      appCardNumber:v.appCardNumber,
-						      appUserType:v.appUserType,
-						      isNewSubmit:v.isNewSubmit,
-						      lastActiveTime:v.lastActiveTime,
-							  writeTime: v.writeTime,
-					  })
+					 
 				})
 
 				resObj["Total"] = count

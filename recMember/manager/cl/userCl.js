@@ -5,7 +5,11 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('user_list', {session:req.session});
+	res.render('user_list', {session:req.session, isBroker:false});
+}
+
+obj.list2 = function(req, res){
+	res.render('user_list', {session:req.session, isBroker:true});
 }
 
 
