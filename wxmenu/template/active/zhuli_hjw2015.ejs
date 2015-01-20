@@ -28,7 +28,7 @@
 
  <link href="http://114.215.183.41/2015/wdj/css/styles.css" rel="stylesheet" type="text/css" />
  <link href="http://114.215.183.41/2015/wdj/css/goal-thermometer.css" rel="stylesheet" type="text/css" />
-<script src="http://code.jquery.com/jquery-latest.js"></script>-->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="http://114.215.183.41/2015/wdj/js/goal-thermometer.js"></script>
 
 
@@ -113,16 +113,14 @@ background-color:#ffe400;
 
 </head>
     <body>
-	<!--<div class="main">
 	
-	</div>-->
 	
 	
         <div class="container">
  
-           <img src="http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg1.jpg" width='100%' alt=""><br>
+          <!--  <img src="http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg1.jpg" width='100%' alt=""><br>
 		
-         <!-- <img src="<%= activeObj.activeObj.picture%>" width=100%>
+         <img src="<%= activeObj.activeObj.picture%>" width=100%>
 		   <br/>  <br/>-->
 
 
@@ -263,19 +261,19 @@ background-color:#ffe400;
 			
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友助你升温</span>
+                <span class="share_timeline_button" >邀请好友为你加水</span>
             </button>
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为他/她升温</span>
+                <span class="button1" >点击为他/她注水</span>
             </a>
 			<br>
 		
 		
 		
            <a href="http://mp.weixin.qq.com/s?__biz=MzA3NzE0MjgzNg==&mid=205106958&idx=1&sn=9159c5c94e88e9acfe3c53c8b174452f#rd" class="share_timeline1 btn-block">
-              <span class="button1" >我也要抢取暖神器</span>
+              <span class="button1" >我也要泡温泉</span>
             </a>
 			
         <%}%>
@@ -347,7 +345,7 @@ background-color:#ffe400;
                             <!-- 兑奖码：<%= priceObj.giftId %> -->
                         <% } %>
                     </li>
-                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*2 %>份</li>
+                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*3 %>份</li>
                 </ul>
                 <%
                     })
@@ -401,7 +399,9 @@ background-color:#ffe400;
         <h4 class="modal-title" id="myModalLabel">支持成功</h4>
       </div>
       <div class="modal-body"> 
-            <h4>成功帮TA升温 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font>℃</h4>
+            <h4>成功帮TA加了10L水 
+			<!--<font id="reduceNumber" style="color:#c00; font-size:18px;"></font>-->
+			</h4>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -487,14 +487,14 @@ window.isAjax = false
 
 <% if (isMyPage){ %>
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
-var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg3.jpg'
-var forwardingTitle ='最后一波取暖神器来了，再不快就没了'
-var forwardingDesc ='当你的温度达到37度时，即可在本页面兑换羊羔绒毯一套'
+var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Ftreelogo.jpg'
+var forwardingTitle ='不要等，马上去约起泡温泉'
+var forwardingDesc ='大家快来帮我加一点水，免费泡温泉马上约起来'
 <%} else{ %>
      var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MzA3NzE0MjgzNg==&mid=205106958&idx=1&sn=9159c5c94e88e9acfe3c53c8b174452f#rd'
-	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Flh2015bg3.jpg'
-var forwardingTitle ='最后一波取暖神器来了，再不快就没了'
-var forwardingDesc ='当你的温度达到37度时，即可在本页面兑换羊羔绒毯一套'
+	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Ftreelogo.jpg'
+var forwardingTitle ='不要等，马上去约起泡温泉'
+var forwardingDesc ='免费泡温泉，600张温泉票马上约起'
 <% } %>
     
 
