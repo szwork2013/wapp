@@ -7,7 +7,12 @@
 
 <section class="page-content container content-info  info-blue">
     <div class="card_wrap">
+      <% if(userObj.code1 == '1'){ %>
+        <img src="http://wkmixtown.qiniudn.com/wanke_skin/img/card3.png" class="card_img" />
+      <% } else { %> 
         <img src="http://wkmixtown.qiniudn.com/wanke_skin/img/card2.png" class="card_img" />
+      <% } %>
+
         <span class="card_num">NO. <%= binderObj.appCardNumber %></span>
     </div>
     <section class="info-my" style="padding-bottom:15px;">
@@ -41,8 +46,12 @@
 
                                       
       </ul>
+<% if(userObj.code1 == '1'){ %>
+     
+<% } else { %>
+    <a class="gm_get_btn gm_go_to_btn" href="/view/user/getmoney?wxuserid=<%= userObj._id%>">开红包拉</a>
+<% } %>    
 
-     <a class="gm_get_btn gm_go_to_btn" href="/view/user/getmoney?wxuserid=<%= userObj._id%>">开红包拉</a>
     </section>
          
 
