@@ -24,7 +24,7 @@ obj.addSupport = function(req,res){
     //req.session[appEname+'_oauth_openid'] = 'qwe'
 
 	var activeId = req.body.activeId;
-	var fromOpenId = req.session[appEname+'_oauth_openid']
+	var fromUserId = req.session[appEname+'_userid']
 
   if(!fromUserId){
       logger.error('apiActive.addSupport: session lost, fromUserId: %s, appEname: %s, process.id: %s', (fromUserId||'undefined'), appEname, process.pid.toString())
