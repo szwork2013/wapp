@@ -39,7 +39,7 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-     [虹锦湾]不要等，马上去约起泡温泉！
+     [虹锦湾]约吗，2015年第一泡
 </title>
 
 <style type="text/css">
@@ -107,6 +107,23 @@ background-color:#ffe400;
 		background: rgba(0,0,0,.7);
 		z-index: 100000;
 	}
+	
+	
+	.bottom_tip{
+	text-align: center;
+	font-size: 13px;
+	display: block;
+	position relative;
+	left: 0;
+	
+	width: 100%;
+}
+.bottom_tip a{
+	color:#000;
+}
+	
+	
+	
 </style>
 
 
@@ -243,7 +260,7 @@ background-color:#ffe400;
             
 		  <img src="http://bcs.duapp.com/xytimg/zhuli%2Ftree3.jpg" width='100%' alt="">
 		
-		<% }else if(29>=supportScore>=15&&supportScore<=29){ %>
+		<% }else if(supportScore>=15&&supportScore<=29){ %>
               
 		  <img src="hhttp://bcs.duapp.com/xytimg/zhuli%2Ftree2.jpg" width='100%' alt="">
 		
@@ -403,7 +420,7 @@ background-color:#ffe400;
   <div class="modal-dialog" style="width:320px;margin: 30px auto;">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">支持成功</h4>
+        <h4 class="modal-title" id="myModalLabel">加水成功</h4>
       </div>
       <div class="modal-body"> 
             <h4>成功帮TA加了10L水 
@@ -495,12 +512,12 @@ window.isAjax = false
 <% if (isMyPage){ %>
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Ftreelogo.jpg'
-var forwardingTitle ='不要等，马上去约起泡温泉'
+var forwardingTitle ='约吗，2015年第一泡'
 var forwardingDesc ='大家快来帮我加一点水，免费泡温泉马上约起来'
 <%} else{ %>
      var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MjM5NTg2NTY3Mw==&mid=202945002&idx=1&sn=5a7b427081364e37a2b39059d5b2f3d0#rd'
 	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2Ftreelogo.jpg'
-var forwardingTitle ='不要等，马上去约起泡温泉'
+var forwardingTitle ='约吗，2015年第一泡'
 var forwardingDesc ='免费泡温泉，600张温泉票马上约起'
 <% } %>
     
@@ -636,7 +653,7 @@ $(function(){
         if(window.isAjax) return false
 
         if(window.hasAdd){
-            alert('你已经支持过Ta了')
+            alert('你已经帮过Ta了')
             return false
         }
         window.isAjax = true
@@ -698,6 +715,14 @@ $(function(){
 
 
 </script>		
+
+<p class="bottom_tip">
+<a href="#" target="_blank">
+	信玉堂技术支持
+</a>
+</p>
+
+
 
 
       
