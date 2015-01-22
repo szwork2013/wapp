@@ -296,7 +296,7 @@ var addroute = function(app){
 			if(!count) count = 1;
 			else count++;
 			req.session['count'] = count
-			res.send('welcome count: '+count.toString());
+			res.send('welcome count: '+count.toString()+'pid id: '+ process.pid.toString());
 		})
 
 		app.get('/clear', function(req,res){
