@@ -25,6 +25,12 @@ obj.addSupport = function(req,res){
 
 	var activeId = req.body.activeId;
 	var fromOpenId = req.session[appEname+'_oauth_openid']
+
+  if(!fromUserId){
+      logger.error('apiActive.addSupport: session lost, fromUserId: %s, appEname: %s, process.id: %s', (fromUserId||'undefined'), appEname, process.pid.toString())
+      return res.send({error:1, data:'身份丢失，请重新进入'})
+    }
+  
 	var fromUserId = req.body.fromUserId;
 	var toUserId = req.body.toUserId;
 
@@ -55,6 +61,7 @@ obj.startExchangePrize = function(req,res){
     var fromUserId = req.session[appEname+'_userid'];
 
     if(!fromUserId){
+      logger.error('apiActive.startExchangePrize: session lost, fromUserId: %s, appEname: %s, process.id: %s', (fromUserId||'undefined'), appEname, process.pid.toString())
     	return res.send({error:1, data:'身份丢失，请重新进入'})
     }
     var toUserId = req.body.toUserId;

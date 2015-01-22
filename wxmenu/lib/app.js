@@ -22,7 +22,7 @@ app.use(express.session(
 		path: '/', 
 		key:'wx_session', 
 		secret: 'wxapp', 
-		cookie: {maxAge: 1000*60},
+		cookie: {maxAge: 1000*60*60},
 		store:new MongoStore({url:config.mongodbConnStr})
 	}
 	));
