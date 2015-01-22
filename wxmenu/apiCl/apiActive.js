@@ -26,20 +26,35 @@ obj.addSupport = function(req,res){
 	var activeId = req.body.activeId;
 	var fromUserId = req.session[appEname+'_userid']
 
+
   if(!fromUserId){
       logger.error('apiActive.addSupport: session lost, fromUserId: %s, appEname: %s, process.id: %s', (fromUserId||'undefined'), appEname, process.pid.toString())
       return res.send({error:1, data:'身份丢失，请重新进入'})
     }
-  
+
 	var fromUserId = req.body.fromUserId;
 	var toUserId = req.body.toUserId;
 
 
-	activeBl.addSupport(activeId, fromOpenId, fromUserId, toUserId, function(err,doc){
-		if(err) return res.json({error:1,data:err})
-    
-		res.json({error:0,data:doc})
-	})
+  userBl.getUser({'_id':fromUserId}, function(err, doc){
+    if(err){
+      return res.send({error:1, data:'内部错误，请重试'})
+    }
+    if(doc.bind.length == 0){
+      logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', fromUserId)
+      return res.send({error:1, data:'出错啦，请关闭重试'})
+    }
+    var fromOpenId = doc.bind[0].openId
+
+    activeBl.addSupport(activeId, fromOpenId, fromUserId, toUserId, function(err,doc){
+      if(err) return res.json({error:1,data:err})
+      
+      res.json({error:0,data:doc})
+    })
+  })
+
+
+	
 
 	
 }
