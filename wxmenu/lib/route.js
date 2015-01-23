@@ -320,6 +320,8 @@ var addroute = function(app){
 		})
 
 		app.get('/clear', function(req,res){
+			req.session.destroy()
+			req.session = null
 			res.render('clear/clearCookie.ejs')
 		})
 	})
