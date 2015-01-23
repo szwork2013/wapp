@@ -137,13 +137,16 @@
 
 
 
-<div style="display:none">
+
             <div class="k-edit-label  w-800-l">
-                <label for="recCode1" >备用1</label>
+                <label for="code1" >Oauth方式</label>
             </div>
-            <div data-container-for="recCode1" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
+            <div data-container-for="code1" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" id="oauth_code1" name="code1" data-bind="value:code1" >
             </div>
+
+
+<div style="display:none">
             <div class="k-edit-label  w-800-l">
                 <label for="recCode2" >备用2</label>
             </div>
@@ -353,8 +356,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                         { 
                             field: "code1",
-                            title: "备用1",
-                            hidden:true
+                            title: "Oauth方式",
+                            values:window.oauth_scope
                         },
                          { 
                             field: "code2",
@@ -395,6 +398,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         window.dropdown_init($('#isPrize'),window.isPrize)
                         window.dropdown_init($('#useScore_inp'),window.is_show_array)
                         window.dropdown_init($('#withDay_inp'),window.is_show_array)
+                        window.dropdown_init($('#oauth_code1'),window.oauth_scope)
+                        
 
                         
                         window.dropdown_init()

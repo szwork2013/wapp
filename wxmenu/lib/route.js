@@ -16,6 +16,7 @@ var insuranceCl = require('../viewCl/viewInsuranceCl.js')
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
 var voteBl = require('../bl/wxVote.js')
+var activeBl = require('../bl/activeBl.js')
 
 //api wx
 var apiWx = require('../apiCl/apiWeixin.js');
@@ -25,7 +26,6 @@ var apiActive = require('../apiCl/apiActive.js');
 var apiLottery = require('../apiCl/apiLottery.js');
 //vote
 var apiVote = require('../apiCl/apiVote.js');
-
 
 
 //console.log(global.config)
@@ -70,11 +70,31 @@ function getAllApp(callback){
 }
 
 
+
+
 var uploadPath = path.join(__dirname,'..','upload');
 if(!fs.existsSync(uploadPath)){
 	fs.mkdirSync(uploadPath);
 	console.log('success create log folder: %s',uploadPath)
 }
+
+
+var activeFrontMid = function(req, res, next){ //中间件，获取活动的信息，用以oauth认证
+	var activeEname = req.param('ename');
+	if(!activeEname){
+		return res.send(404, 'not found ename param')
+	}
+
+	activeBl.getActiveByEname(activeEname, function(err, activeObj){
+		if(err) return res.send(500, err)
+		if(!activeObj) return res.send(404, 'not found active')
+		req.activeObj = activeObj
+		req.activeMid = true
+		next()
+	})
+
+}
+
 
 var getUserMid = function(req, res, next){ //中间件，获取用户信息
 	var openid = req.param('wxopenid') || req.param('openid');
@@ -255,7 +275,7 @@ var addroute = function(app){
     		app.get('/active/:appename', activeCl.activeMiddle, activeCl.activePage)
     	}
     	else{
-    		app.get('/active/:appename', oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
+    		app.get('/active/:appename', activeFrontMid, oauthCl.OAuthMiddle, activeCl.activeMiddle, activeCl.activePage)
     	}
 		
 		app.get('/votepage/:appename/:voteename', activeCl.voteWebPage)

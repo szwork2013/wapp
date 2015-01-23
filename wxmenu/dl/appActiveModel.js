@@ -20,7 +20,10 @@ var obj = { //定义结构
       scoreList:{type:String, default:'1'},      //用户每次点赞获取的支持数，数组：1,0.8,0.6,0.7 这样以英文逗号分割的数字
       withDay:{type:Number,default:0},           //用户支持，是否按天算，每天一次，0表示不按天，活动总共1次，1表示按天算
       //新增功能
-      code1:{type:String,default:''},                 //备用字段1
+      code1:{type:String, default:'snsapi_base'},                 //Oauth方式
+      //snsapi_base 自动跳转，只获取opendi
+      //snsapi_userinfo 用户授权，获取用户昵称，头像，位置等信息
+
       code2:{type:String,default:''},                 //备用字段2
       isShow:{type:Number,default:1},             
 	writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间

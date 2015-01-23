@@ -58,6 +58,15 @@ obj.OAuthMiddle = function(req,res,next){
 
 obj.jumpOAuthUrl = function(req,res){
 
+	var oauthScope = req.wxAppObj.oauthScope
+	if(req.activeMid && req.activeObj){
+		if(req.activeObj.code1 && req.activeObj.code1 != ''){
+			oauthScope = req.activeObj.code1
+		}
+		else{
+			oauthScope = req.wxAppObj.oauthScope
+		}
+	}
 	
 	var oauth_jump_back = global.config.currentSite + oauth_back_url+'/'+req.wxAppObj.appEname;
 
@@ -70,7 +79,7 @@ obj.jumpOAuthUrl = function(req,res){
 	req.session['oauth_jump'] = oauth_jump;
 
 	//生成跳转到腾讯微信的授权url地址
-	var url = req.wxAppObj.api.getAuthorizeURL(oauth_jump_back, oauth_state, req.wxAppObj.oauthScope);
+	var url = req.wxAppObj.api.getAuthorizeURL(oauth_jump_back, oauth_state, oauthScope);
 
 
 	res.redirect(url)
