@@ -230,7 +230,7 @@ obj.oauthJumpBack = function(app,applist){
 			if(!count2) count2 = 1;
 			else count2++;
 			req.session['count'] = count2;
-			var oauthType = req.param('oauthtype') || ''
+			
 
 			//拼接用户数据，全部打印出来
 			var sendObj = {
@@ -256,7 +256,7 @@ obj.oauthJumpBack = function(app,applist){
 			var code = req.query.code;
 			var state = req.query.state;
 			var oauth_jump = req.session['oauth_jump'] || ('/oauth/'+appEname+'/'+oauth_oob)
-
+			var oauthType = req.param('oauthtype') || ''
 
 			var pathname = url.parse(req.originalUrl).pathname || ''
 
