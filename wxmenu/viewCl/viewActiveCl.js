@@ -166,6 +166,9 @@ obj.activePage = function(req,res){ //活动页面展示
 		var fromUserObj = {
 			_id:req.fromUserObj._id,
 			appUserName:req.fromUserObj.appUserName,
+			wxName:req.fromUserObj.wxName,
+			wxAvatar:req.fromUserObj.wxAvatar,
+			wxAddress:req.fromUserObj.wxAddress,
 			appUserMobile:req.fromUserObj.appUserMobile
 		}
 		if(req.fromUserObj.appUserName == '未认证会员'){

@@ -1,7 +1,11 @@
-<p>myObj: <%= myObj%></p>
-<p>toUserId: <%= toUserId%></p>
-<p>fromUserId: <%= fromUserId%></p>
-<p>fromOpenId: <%= fromOpenId%></p>
-<p>activeId: <%= activeId%></p>
-<p>supportCount: <%= supportCount%></p>
-<p>hasAdd: <%= hasAdd%></p>
+<p>
+	<%- JSON.stringify(activeObj.activeObj) %>
+</p>
+<p>
+	<%- JSON.stringify(fromUserObj) %>
+</p>
+
+<p>用户昵称: <%= fromUserObj.wxName %></p>
+<p>用户头像: <imt src="<%= fromUserObj.wxAvatar %>" /></p>
+<p>地址: <imt src="<%= fromUserObj.wxAddress %>" /></p>
+
