@@ -59,16 +59,19 @@ obj.OAuthMiddle = function(req,res,next){
 obj.jumpOAuthUrl = function(req,res){
 
 	var oauthScope = req.wxAppObj.oauthScope
+	var oauthType = ''
 	if(req.activeMid && req.activeObj){
 		if(req.activeObj.code1 && req.activeObj.code1 != ''){
 			oauthScope = req.activeObj.code1
+			oauthType = '?oauthtype=1'
 		}
 		else{
 			oauthScope = req.wxAppObj.oauthScope
+			oauthType = '?oauthtype=2'
 		}
 	}
 	
-	var oauth_jump_back = global.config.currentSite + oauth_back_url+'/'+req.wxAppObj.appEname;
+	var oauth_jump_back = global.config.currentSite + oauth_back_url+'/'+req.wxAppObj.appEname+oauthType;
 
 	try{
 		var oauth_jump = decodeURIComponent(global.config.currentSite+req.originalUrl);
@@ -227,6 +230,7 @@ obj.oauthJumpBack = function(app,applist){
 			if(!count2) count2 = 1;
 			else count2++;
 			req.session['count'] = count2;
+			var oauthType = req.param('oauthtype') || ''
 
 			//拼接用户数据，全部打印出来
 			var sendObj = {
@@ -252,6 +256,7 @@ obj.oauthJumpBack = function(app,applist){
 			var code = req.query.code;
 			var state = req.query.state;
 			var oauth_jump = req.session['oauth_jump'] || ('/oauth/'+appEname+'/'+oauth_oob)
+
 
 			var pathname = url.parse(req.originalUrl).pathname || ''
 
@@ -316,7 +321,7 @@ obj.oauthJumpBack = function(app,applist){
 						oauth_jump = r.data;
 
 						//如果是仅获取openid，自动跳转的
-						if(appObj.oauthScope == 'snsapi_base'){
+						if(oauthType == '2' || (oauthType == '' && appObj.oauthScope == 'snsapi_base')){
 							req.session[appEname+'_oauth_openid'] = result.openid
 							req.session[appEname+'_userid'] = userid;
 							return res.redirect(oauth_jump);
