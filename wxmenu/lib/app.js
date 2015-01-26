@@ -1,6 +1,4 @@
-console.log('123123123')
-console.log(process.argv)
-console.log('123123123')
+
 
 
 
@@ -57,11 +55,17 @@ addRoute(app);//增加路由配置
 
 
 
+
+logger.info('123123123')
+logger.info(process.argv)
+logger.info('123123123')
+
+
 var portPos = process.argv.indexOf('-p')
 if(portPos>=0){
 	var argsListenPort = process.execArgv[portPos+1] - 0
 	if(!argsListenPort){
-		console.log('args argsListenPort is not defined')
+		logger.info('args argsListenPort is not defined')
 		return
 	}
 	else{
