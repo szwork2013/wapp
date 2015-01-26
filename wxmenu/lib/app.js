@@ -56,10 +56,13 @@ addRoute(app);//增加路由配置
 
 
 
-logger.info('123123123')
+logger.info('********')
 logger.info(process.argv)
-logger.info('123123123')
+logger.error(process.argv)
+console.error(process.argv)
+logger.info('***********')
 
+return
 
 var portPos = process.argv.indexOf('-p')
 if(portPos>=0){
