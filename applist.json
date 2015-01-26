@@ -16,28 +16,28 @@
       },
       {
         "name"      : "wxmenu",
-        "script"    : "/var/nodejs/wapp/wxmenu/app_7900.js",
+        "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7900.js",
         "env_production" : {
           "NODE_ENV": "production"
         }
       },
       {
         "name"      : "wxmenu",
-        "script"    : "/var/nodejs/wapp/wxmenu/app_7901.js",
+        "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7901.js",
         "env_production" : {
           "NODE_ENV": "production"
         }
       },
       {
         "name"      : "wxmenu",
-        "script"    : "/var/nodejs/wapp/wxmenu/app_7902.js",
+        "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7902.js",
         "env_production" : {
           "NODE_ENV": "production"
         }
       },
       {
         "name"      : "wxmenu",
-        "script"    : "/var/nodejs/wapp/wxmenu/app_7903.js",
+        "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7903.js",
         "env_production" : {
           "NODE_ENV": "production"
         }
