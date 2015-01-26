@@ -54,30 +54,8 @@ app.use(express.query());
 addRoute(app);//增加路由配置
 
 
+app.listen(global.listenPort || config.listenPort);
 
-
-logger.info('********')
-logger.info(process.argv)
-logger.error(process.argv)
-console.error(process.argv)
-logger.info('***********')
-
-return
-
-var portPos = process.argv.indexOf('-p')
-if(portPos>=0){
-	var argsListenPort = process.execArgv[portPos+1] - 0
-	if(!argsListenPort){
-		logger.info('args argsListenPort is not defined')
-		return
-	}
-	else{
-		app.listen(argsListenPort);
-	}
-}
-else{
-	app.listen(config.listenPort);
-}
 
 
 logger.info('server start on %s', config.listenPort);
