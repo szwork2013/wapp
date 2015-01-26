@@ -15,7 +15,7 @@
         }
       },
       {
-        "name"      : "wxmenu",
+        "name"      : "wxmenu7900",
         "script"    : "/var/nodejs/wapp/wxmenu/app.js",
         "args"      : ["-p", 7900],
         "node_args"   : "-p 7900",
@@ -24,7 +24,7 @@
         }
       },
       {
-        "name"      : "wxmenu",
+        "name"      : "wxmenu7901",
         "script"    : "/var/nodejs/wapp/wxmenu/app.js",
         "args"      : ["-p", 7901],
         "node_args"   : "-p 7901",
@@ -33,7 +33,7 @@
         }
       },
       {
-        "name"      : "wxmenu",
+        "name"      : "wxmenu7902",
         "script"    : "/var/nodejs/wapp/wxmenu/app.js",
         "args"      : ["-p", 7902],
         "node_args"   : "-p 7902",
@@ -42,7 +42,7 @@
         }
       },
       {
-        "name"      : "wxmenu",
+        "name"      : "wxmenu7903",
         "script"    : "/var/nodejs/wapp/wxmenu/app.js",
         "args"      : ["-p", 7903],
         "node_args"   : "-p 7903",

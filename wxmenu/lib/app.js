@@ -48,8 +48,10 @@ app.use(express.query());
 
 addRoute(app);//增加路由配置
 
-console.log(process.execArgv)
-var portPos = process.execArgv.indexOf('-p')
+console.log('**********')
+console.log(process.argv)
+console.log('**********')
+var portPos = process.argv.indexOf('-p')
 if(portPos>=0){
 	var argsListenPort = process.execArgv[portPos+1] - 0
 	if(!argsListenPort){
