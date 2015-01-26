@@ -48,6 +48,20 @@ app.use(express.query());
 
 addRoute(app);//增加路由配置
 
-app.listen(config.listenPort);
+var portPos = process.execArgv.indexOf('-p')
+if(portPos>=0){
+	var argsListenPort = process.execArgv[portPos+1] - 0
+	if(!argsListenPort){
+		console.log('args argsListenPort is not defined')
+		return
+	}
+	else{
+		app.listen(argsListenPort);
+	}
+}
+else{
+	app.listen(config.listenPort);
+}
+
 
 logger.info('server start on %s', config.listenPort);

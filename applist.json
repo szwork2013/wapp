@@ -14,11 +14,34 @@
           "NODE_ENV": "production"
         }
       },
-
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/app.js",
-        "instances":4,
+        "args"      : ['-p', 7900],
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "wxmenu",
+        "script"    : "/var/nodejs/wapp/wxmenu/app.js",
+        "args"      : ['-p', 7901],
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "wxmenu",
+        "script"    : "/var/nodejs/wapp/wxmenu/app.js",
+        "args"      : ['-p', 7902],
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "wxmenu",
+        "script"    : "/var/nodejs/wapp/wxmenu/app.js",
+        "args"      : ['-p', 7903],
         "env_production" : {
           "NODE_ENV": "production"
         }
