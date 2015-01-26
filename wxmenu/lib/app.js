@@ -1,3 +1,10 @@
+console.log('123123123')
+console.log(process.argv)
+console.log('123123123')
+
+
+
+
 var widget = {};
 var newrelic = require('newrelic');
 var logger = require('./log.js');
@@ -48,9 +55,8 @@ app.use(express.query());
 
 addRoute(app);//增加路由配置
 
-console.log('**********')
-console.log(process.argv)
-console.log('**********')
+
+
 var portPos = process.argv.indexOf('-p')
 if(portPos>=0){
 	var argsListenPort = process.execArgv[portPos+1] - 0
