@@ -43,7 +43,7 @@ obj.OAuthMiddle = function(req,res,next){
 	if(wxopenid && wxopenid.length > 0){
 		obj.getUserByOpenId(req,res,wxopenid,function(err,userObj){
 			if(err){
-		
+				logger.error('obj.OAuthMiddle -> obj.getUserByOpenId,err is %s', err);
 				return	res.send(500,err);
 			}
 			if(!userObj) return obj.jumpOAuthUrl(req,res);
@@ -83,7 +83,6 @@ obj.jumpOAuthUrl = function(req,res){
 
 	//生成跳转到腾讯微信的授权url地址
 	var url = req.wxAppObj.api.getAuthorizeURL(oauth_jump_back, oauth_state, oauthScope);
-
 
 	res.redirect(url)
 
@@ -153,6 +152,7 @@ obj.createJumpPath = function(path,openid){
 		path = decodeURIComponent(path)
 	} 
 	catch(e){
+
 		return {error:1,data:e}
 	}
 
@@ -179,11 +179,11 @@ obj.oauthJumpBack = function(app,applist){
 				  	openid:appObj.appEname+'_'+openid,
 				  },function(err, obj){
 				  		if(err){
-				  			logger.error('obj.oauthJumpBack read error: %s', err);
+				  			logger.error('obj.oauthJumpBack -> new OAuth, read error: %s', err);
 				  			return callback(err)
 				  		}
 				  		if(!obj || !obj.token){
-				  			logger.error('obj.oauthJumpBack read empty openid: %s', openid);
+				  			logger.error('obj.oauthJumpBack -> new OAuth, read empty openid: %s', openid);
 				  			return callback('empty token or empty doc')
 				  		}
 
@@ -210,7 +210,7 @@ obj.oauthJumpBack = function(app,applist){
 				  	token:tokenStr,
 				  }, function(err, obj){
 				  		if(err){
-				  			logger.error('obj.oauthJumpBack save error: %s', err);
+				  			logger.error('obj.oauthJumpBack -> oauthModel.createOneOrUpdate, save error: %s', err);
 				  		}
 				  		return callback(err,obj)
 				  })
@@ -295,8 +295,10 @@ obj.oauthJumpBack = function(app,applist){
 					try{
 						logger.error('access token get error json: %s', JSON.stringify(err))
 					}
-					catch(e){}
-					logger.error('access token get error, error is: %s; code is %s; req url: %s', err, (result||''), req.originalUrl);
+					catch(e){
+						logger.error('err not JSON.stringify: %s', err)
+					}
+					logger.error('access token get error, error is: %s; result is %s; req url: %s', err, (result||''), req.originalUrl);
 					return res.send(403,err)
 				}
 
@@ -306,7 +308,8 @@ obj.oauthJumpBack = function(app,applist){
 
 				obj.getUserByOpenId(req, res, result.openid, function(err,doc){
 
-						if(err){				
+						if(err){
+							logger.error('appObj.api.getAccessToken -> obj.getUserByOpenId error,err is %s', err)		
 							return	res.send(500,err);
 						}
 						if(!doc){				
@@ -337,7 +340,8 @@ obj.oauthJumpBack = function(app,applist){
 						//如果是oauth获取用户详细信息的
 						appObj.api.getUser(result.openid, function(err,userinfo){
 							
-							if(err){	
+							if(err){
+								logger.error('appObj.api.getUser error,err is %s', err)
 								return	res.send(500,err);
 							}
 
