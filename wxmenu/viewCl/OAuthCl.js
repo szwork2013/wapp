@@ -292,7 +292,11 @@ obj.oauthJumpBack = function(app,applist){
 			//获取access token
 			appObj.api.getAccessToken(code, function(err,result){
 				if(err){
-					logger.error('access token get error, error is: %s; req url: %s', err, req.originalUrl);
+					try{
+						logger.error('access token get error json: %s', JSON.stringify(err))
+					}
+					catch(e){}
+					logger.error('access token get error, error is: %s; code is %s; req url: %s', err, (result||''), req.originalUrl);
 					return res.send(403,err)
 				}
 
