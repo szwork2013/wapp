@@ -29,7 +29,7 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-     羊年发洋财，红包拿起来
+     羊年发洋财，拜年求红包
 </title>
 
 <style type="text/css">
@@ -112,7 +112,9 @@ background-color:#ffe400;
 	color:#000;
 }
 	
-	
+.none {
+display:none;
+}
 	
 </style>
 
@@ -120,7 +122,9 @@ background-color:#ffe400;
 
 </head>
     <body>
-	
+	<div class="none" >
+    <img src="http://bcs.duapp.com/xytimg/zhuli%2F201501282.jpg" width="150px" height="150px" alt="" /> 
+</div>
 	
 	
         <div class="container">
@@ -229,12 +233,12 @@ background-color:#ffe400;
 			
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友帮你攒钱</span>
+                <span class="share_timeline_button" >向好友拜年求压岁红包</span>
             </button>
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为他/她攒压岁钱</span>
+                <span class="button1" >点击为<%= toUserObj.wxName %>攒压岁钱</span>
             </a>
 			<br>
 		
@@ -455,12 +459,12 @@ window.isAjax = false
 
 <% if (isMyPage){ %>
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
-var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F20150128.jpg'
+var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F201501282.jpg'
 var forwardingTitle ='羊年发洋财，红包拿起来'
 var forwardingDesc ='大家快来帮我攒压岁钱'
 <%} else{ %>
      var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MzA3NzE0MjgzNg==&mid=205703216&idx=1&sn=980db1590070c8b21482d5b3e6c85338#rd'
-	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F20150128.jpg'
+	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F201501282.jpg'
 var forwardingTitle ='羊年发洋财，红包拿起来'
 var forwardingDesc ='羊年发洋财，红包拿起来'
 <% } %>
