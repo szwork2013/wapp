@@ -63,10 +63,15 @@ obj.jumpOAuthUrl = function(req,res){
 	if(req.activeMid && req.activeObj){
 		if(req.activeObj.code1 && req.activeObj.code1 != ''){
 			oauthScope = req.activeObj.code1
-			oauthType = '?oauthtype=1'
 		}
 		else{
 			oauthScope = req.wxAppObj.oauthScope
+		}
+		//如果code1是获取详细信息的
+		if(oauthScope == 'snsapi_userinfo'){
+			oauthType = '?oauthtype=1'
+		}
+		else{
 			oauthType = '?oauthtype=2'
 		}
 	}
