@@ -89,9 +89,9 @@ text-decoration: none;
 border-radius: 4px;
 border: 0;
 height: 50px;
-color: #000000;
+color: #ca0915;
 text-align: center;
-background-color:#ffe400;
+background-color:#ffedc0;
 }
 
 
@@ -140,115 +140,110 @@ display:none;
 
 
 	<div id="round"><center>
-         <% if(isMyPage) { %>
-            你已经升温至
-        <% }else{ %>
-            他/她已经升温至
-        <%}%>
+         
+              <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto">  “<%= toUserObj.wxName %>”的礼盒已经完成了
+       
         <b style="color:#c00; font-size:20px;">
+		<% if(supportScore==0) { %>
+            <script type="text/javascript">
+            var currentAmount = 0;
+        </script>
+		0%
+        <% }else if(supportScore==1){ %>
+              <script type="text/javascript">
+            var currentAmount = 20;
+        </script>
+		20%
+			  <% }else if(supportScore==2){ %>
+              <script type="text/javascript">
+            var currentAmount = 40;
+        </script>
 		
-		 <% if(supportScore>37) { %>
-		 37
-		 <% }else { %>
-		 <%= supportScore %>
-		   <%}%>
+		40%
+		<% }else if(supportScore==3){ %>
+              <script type="text/javascript">
+            var currentAmount = 50;
+        </script>
 		
-		</b>℃,<br>达到100℃就能获得精美毛毯一条</center></div> 
+		50%
+		
+		<% }else if(supportScore==4){ %>
+              <script type="text/javascript">
+            var currentAmount = 60;
+        </script>
+		60%
+		
+		<% }else if(supportScore==5){ %>
+              <script type="text/javascript">
+            var currentAmount = 65;
+        </script>
+		65%
+		
+		<% }else if(supportScore==6){ %>
+              <script type="text/javascript">
+            var currentAmount = 70;
+        </script>
+		70%
+		
+		<% }else if(supportScore==7){ %>
+              <script type="text/javascript">
+            var currentAmount = 75;
+        </script>
+		75%
+		
+		<% }else if(supportScore==8){ %>
+              <script type="text/javascript">
+            var currentAmount = 80;
+        </script>
+		80%
+		
+		<% }else if(supportScore==9){ %>
+              <script type="text/javascript">
+            var currentAmount = 85;
+        </script>
+		85%
+		
+		<% }else if(supportScore==10){ %>
+              <script type="text/javascript">
+            var currentAmount = 88;
+        </script>
+		88%
+		<% }else if(supportScore==11){ %>
+              <script type="text/javascript">
+            var currentAmount = 91;
+        </script>
+		91%
+		<% }else if(supportScore==12){ %>
+              <script type="text/javascript">
+            var currentAmount = 94;
+        </script>
+		94%
+		<% }else if(supportScore==13){ %>
+              <script type="text/javascript">
+            var currentAmount = 96;
+        </script>
+		96%
+		<% }else if(supportScore==14){ %>
+              <script type="text/javascript">
+            var currentAmount = 99;
+        </script>
+		99%
+		<% }else { %>
+              <script type="text/javascript">
+            var currentAmount = 100;
+        </script>
+		
+		100%
+		
+        <%}%>
+
+		
+		</b><br>填满礼盒，达到100%就能获得雨润定制礼盒</center></div> 
 
 
 <br>
 
- <% if(supportScore==0) { %>
-            <script type="text/javascript">
-            var currentAmount = 0;
-        </script>
-        <% }else if(supportScore==2.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 2.5;
-        </script>
-			  <% }else if(supportScore==5){ %>
-              <script type="text/javascript">
-            var currentAmount = 5;
-        </script>
-		
-		
-		<% }else if(supportScore==7.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 7.5;
-        </script>
-		
-		
-		
-		<% }else if(supportScore==10){ %>
-              <script type="text/javascript">
-            var currentAmount = 10;
-        </script>
-		
-		
-		<% }else if(supportScore==12.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 12.5;
-        </script>
-		
-		
-		<% }else if(supportScore==15){ %>
-              <script type="text/javascript">
-            var currentAmount = 15;
-        </script>
-		
-		
-		<% }else if(supportScore==17.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 17.5;
-        </script>
-		
-		
-		<% }else if(supportScore==20){ %>
-              <script type="text/javascript">
-            var currentAmount = 20;
-        </script>
-		
-		
-		<% }else if(supportScore==22.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 22.5;
-        </script>
-		
-		
-		<% }else if(supportScore==25){ %>
-              <script type="text/javascript">
-            var currentAmount = 25;
-        </script>
-		
-		<% }else if(supportScore==27.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 27.5;
-        </script>
-		
-		<% }else if(supportScore==30){ %>
-              <script type="text/javascript">
-            var currentAmount = 30;
-        </script>
-		
-		<% }else if(supportScore==32.5){ %>
-              <script type="text/javascript">
-            var currentAmount = 32.5;
-        </script>
-		
-		<% }else if(supportScore==35){ %>
-              <script type="text/javascript">
-            var currentAmount = 35;
-        </script>
-		
-		<% }else { %>
-              <script type="text/javascript">
-            var currentAmount = 37;
-        </script>
-		
-		
-		
-        <%}%>
-
+ 
 		
 
     
@@ -273,14 +268,14 @@ display:none;
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为他/她升温</span>
+                <span class="button1" >点击为<%= toUserObj.wxName %>填充礼盒</span>
             </a>
 			<br>
 		
 		
 		
-           <a href="http://mp.weixin.qq.com/s?__biz=MzA5NTU4NzkzNA==&mid=204591810&idx=1&sn=6accf368fd7ff4d12596da60f9c9935d#rd" class="share_timeline1 btn-block">
-              <span class="button1" >我也要抢精美毛毯</span>
+           <a href="http://mp.weixin.qq.com/s?__biz=MzA5MjA0NDIyNg==&mid=202629066&idx=1&sn=59419c77e3c9a3f31ba6c4ce40d92bb3#rd" class="share_timeline1 btn-block">
+              <span class="button1" >我也要抢雨润定制礼盒</span>
             </a>
 			
         <%}%>
@@ -354,7 +349,7 @@ display:none;
                             <!-- 兑奖码：<%= priceObj.giftId %> -->
                         <% } %>
                     </li>
-                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber %>份</li>
+                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*2 %>份</li>
                 </ul>
                 <%
                     })
@@ -362,7 +357,7 @@ display:none;
             </div>
            
 		   
-		    <button id="startExchange" class="share_timeline btn-block">
+		    <button id="startExchange" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
         </div>
@@ -408,7 +403,7 @@ display:none;
         <h4 class="modal-title" id="myModalLabel">支持成功</h4>
       </div>
       <div class="modal-body"> 
-             <h4>成功帮TA升温 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font>℃</h4>
+             <h4>成功帮TA填充了礼盒 <font id="reduceNumber" style="color:#c00; font-size:18px;"></font>℃</h4>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -498,7 +493,7 @@ var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F20150131czyrc.png'
 var forwardingTitle ='雨润喊你免费来领肉啦'
 var forwardingDesc ='雨润喊你免费来领肉啦'
 <%} else{ %>
-     var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MzA5NTU4NzkzNA==&mid=204591810&idx=1&sn=6accf368fd7ff4d12596da60f9c9935d#rd'
+     var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MzA5MjA0NDIyNg==&mid=202629066&idx=1&sn=59419c77e3c9a3f31ba6c4ce40d92bb3#rd'
 	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F20150131czyrc.png'
 var forwardingTitle ='雨润喊你免费来领肉啦'
 var forwardingDesc ='雨润喊你免费来领肉啦'
