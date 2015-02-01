@@ -14,7 +14,7 @@ obj.regist = function(req,res){ //用户注册
 
 	//如果是已经认证用户
 	if(req.wxBinder.appUserType >= 1){
-		obj.modify(req,res);
+		obj.cover_v2(req,res);
 		return;
 	}
 
