@@ -52,10 +52,15 @@
 					<p>请务必提交真实的客户信息，若多次提交错误信息，您的账号将被禁用。指定接待可填代理公司或置业顾问姓名</p>
 				</div>
 				<p class="rb-submit"><input type="button" value="推荐" class="btn" id="submitBtn"/></p>
-				
+				<br>
+				<p class="rb-submit"><input type="button" value="返回首页" class="btn" id="mm"/></p>
 			</div>
 
-
+<script>
+$('#mm').click(function() {
+           location.href = '/view/user/cover_v2?wxuserid='+window.userid  
+        });
+</script>
 
 <div class="rem-p1" style="display:none;">
       <label>意向户型：</label>
