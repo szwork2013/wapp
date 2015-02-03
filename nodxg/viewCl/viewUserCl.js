@@ -209,6 +209,12 @@ obj.index_nologin_v2 = function(req,res){
 	var userId = req.wxuobj._id;
 	var appId = global.wxAppObj._id;
 	
+	//如果是已经认证用户
+	if(req.wxBinder.appUserType >= 1){
+		obj.index_login_v2(req,res);
+		return;
+	}
+	
 	infoBl.getAllCommunity(function(err, communityList){
 			if(err){
 				return res.send(500,'页面加载失败')
