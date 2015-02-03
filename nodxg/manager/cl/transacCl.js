@@ -8,7 +8,26 @@ var salt = global.app.get('salt');
 
 
 obj.list = function(req, res){
-	res.render('rec_bank_transac_list', {session:req.session});
+	var userId = req.query.userid || '';
+	var recordId = req.query.recordid || '';
+
+	if(recordId && recordId.length == 24){
+		dl.findOneByObj({'recRecords':recordId}, function(err, doc){
+				if(err){
+					return res.send(err)
+				}
+				if(!doc){
+					var transacId = false
+				}
+				else{
+					var transacId = doc._id.toString()
+				}
+				res.render('rec_bank_transac_list', {session:req.session, userId:userId, recordId:recordId, autoOpen:true, transacId:transacId});
+		})
+	}
+	else{
+		res.render('rec_bank_transac_list', {session:req.session, userId:userId, recordId:recordId, autoOpen:false, transacId:false});
+	}	
 }
 
 

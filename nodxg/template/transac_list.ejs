@@ -1,0 +1,59 @@
+<% include inc/headfile_v2 %>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+				
+				<h1 class="jjr-register"></h1>
+				
+				
+
+<section class="page-content container content-interests content-item">
+    <h2 class="transacH1">总结佣金额：<%= totalCash %> 元</h2>
+    <ul>
+
+
+
+<% if(list.length > 0){%>   
+<% 
+ list.forEach(function(obj,i){ 
+%>
+
+<li class="recrecord_list_box">
+
+
+            <p><span>结佣金额</span><%= obj.cash %> 元</p>
+            <p><span>结佣时间</span><%= obj.transacWriteTime %></p>
+            <p><span>推荐人</span><%= obj.recName %></p>
+            <p><span>所属楼盘</span><%= obj.communityName %></p>
+
+</li>
+
+<% }) %>
+
+<%}else{%>
+
+
+<li class="recrecord_list_box">
+
+  <h1 class="no_record_h1">暂无结佣记录</h1>
+
+</li>
+
+
+
+<%}%>
+
+
+    </ul>
+  </section>
+				
+				
+				
+				
+				
+				<div class="recommend-tips">
+					<h6>提示</h6>
+					<p>具体判客规则以“活动细则”里的相关说明为准！</p>
+				</div>
+			</div>
+		</section>
+<% include inc/foot_v2 %>

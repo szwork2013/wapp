@@ -229,6 +229,9 @@ var addroute = function(app){
 	app.get('/view/user/cover_v2', v2_mid, getUserMid, viewUser.cover_v2);
 	//入口页
 	app.get('/view/enter_v2', v2_mid, getUserMid, viewUser.enter_v2);
+	//我的佣金列表
+	app.get('/view/user/transac', v2_mid, getUserMid, viewUser.transacList)
+
 
 	//增加页面接口
 	//1、兑换商品页面

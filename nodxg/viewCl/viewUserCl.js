@@ -274,7 +274,26 @@ obj.index_login_v2 = function(req,res){
 
 
 
+obj.transacList = function(req,res){
 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+
+	userBl.getTransacList(userId, function(err, list, totalCash){
+		if(err){
+				console.log(err)
+				return res.send(500,'页面加载失败')
+		}
+		res.render('transac_list.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+			'totalCash':totalCash,
+			'list':list
+		})
+
+
+	})
+}
 
 
 module.exports = obj;

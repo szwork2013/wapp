@@ -18,7 +18,7 @@
                 <label for="userId" >用户Id</label>
             </div>
             <div data-container-for="userId" class="k-edit-field w-800-r">
-               <input type="text" id="user_name_inp" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+               <input type="text" id="user_name_inp" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" id="" required="required">
                <br/>
                <span id="user_name"></span>
             </div>
@@ -27,7 +27,7 @@
                 <label for="recRecords" >推荐id</label>
             </div>
             <div data-container-for="recRecords" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="recRecords" data-bind="value:recRecords" required="required">
+               <input type="text" class="k-input k-textbox w-50-inp" name="recRecords" data-bind="value:recRecords" id="recRecords" required="required">
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -117,7 +117,7 @@
                               ]
                 var commandAry = [
                                 { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
-                                { name: "destroy", text: "删除"},
+                                { name: "destroy", text: "删除"}
                               ]
                                            
                 var DataHost = window.DataHost,
@@ -128,17 +128,31 @@
                         batch: true,
                         pageSize: 15,
                         serverFiltering:true,
-                       
+                        <% if(transacId){ %>
+                    filter: { field: "recRecords", operator: "eq", value: "<%= recordId%>" },
+                        <% } %>
                         transport: {
                             read:  {
                                 url: DataHost + "/manger/transac/read",
-                                type: "post"
+                                type: "post",
+                                complete:function(e){
+                                    <% if(autoOpen){ %>
+                                        <% if(transacId){ %>
+                                            setTimeout(function(){
+                                $("#grid").data("kendoGrid").editRow($("#grid").find("tr:eq(1)"));
+                                           },10)
+                                        <% } else{ %>
+                                            $('.k-grid-add').click()
+                                        <% } %>
+                                    <% }%>
+                                }
                             },
                             update: {
                                 url: DataHost + "/manger/transac/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
+                                            location.href = location.pathname
                                     }
                             },
                              destroy: {
@@ -149,7 +163,8 @@
                                 url:DataHost + "/manger/transac/create",
                                 type: "post",
                                 complete: function(e) {
-                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                            //$("#grid").data("kendoGrid").dataSource.read();
+                                            location.href = location.pathname
                                     }
                             }
                         },
@@ -187,6 +202,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         value:v._id
                     })
                 })
+
+
 
 
                 $("#grid").kendoGrid({
@@ -293,6 +310,12 @@ $.post('/manger/app/getList',{},function(data_ary){
                                 uid = $('#user_name_inp').val()
                                 getname()
                             })
+
+                            if(!$('#user_name_inp').val() || $('#user_name_inp').val() == ''){
+                                $('#user_name_inp').val("<%= userId%>").change()
+                                $('#recRecords').val("<%= recordId%>").change()
+                            }
+                            
 
                             getname()
 

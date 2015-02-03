@@ -4,6 +4,7 @@ var recBankTransac = require('../dl/recBankTransac.js'); //加载结佣模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
 
+var infoBl = require('./wxInfo.js')
 var moment = require('moment');
 var utils = require('../lib/utils.js');
 //加载老用户信息
@@ -663,5 +664,97 @@ obj.getRecNews = function(appId, userId, lastActiveTime,cb){
 
 
 }
+
+
+
+
+
+
+obj.getTransacList = function(userid, cb){
+
+
+	var result = []
+	var totalCash = 0
+
+	infoBl.getAllCommunity(function(err, communityList){
+		if(err){
+			return cb(err)
+		}
+
+		recBankTransac.findByObj({userId:userid}, function(err, transacList){
+				if(err){
+					return cb(err)
+				}
+				if(transacList.length == 0){
+					return cb(null, [], totalCash)
+				}
+
+				var recordIds = []
+				transacList.forEach(function(item){
+					recordIds.push(item.recRecords)
+				})
+
+				recRecordModel.findByObj({
+					"_id":{
+						"$in":recordIds
+					}
+				}, function(err, recordList){
+					if(err){
+						return cb(err)
+					}
+					
+					transacList.forEach(function(tranItem){
+						recordList.forEach(function(recItem){
+							if(tranItem.recRecords == recItem._id.toString()){
+
+								var commName = ''
+								for(var i=0; i<communityList.length; i++){
+									if(communityList[i]._id.toString() == recItem.recCode2){
+										commName = communityList[i].communityName
+										break;
+									}								
+								}
+								totalCash += tranItem.cash
+								result.push({
+									userId:tranItem.userId,
+									recRecords:tranItem.recRecords,
+									cardNo:tranItem.cardNo,
+									bankName:tranItem.bankName,
+									trueName:tranItem.trueName,
+									idNumber:tranItem.idNumber,
+									cash:tranItem.cash,
+									status:tranItem.status,
+									comment:tranItem.comment,
+									transacWriteTime:moment(tranItem.writeTime).format('YYYY-MM-DD HH:mm:ss'),
+
+									buyHouse:recItem.buyHouse,
+									buyRoom:recItem.buyRoom,
+									recName:recItem.recName,
+									recSex:recItem.recSex,
+									recTel:recItem.recTel,
+									recArea:recItem.recArea,
+									recPrice:recItem.recPrice,
+									recRoom:recItem.recRoom,
+									recStatus:recItem.recRoom,
+									comments:recItem.comments,
+									recCode1:recItem.recCode1,
+									recCode2:recItem.recCode2,
+
+									communityName:commName
+								})
+							}
+						})
+					})
+					
+					return cb(null, result, totalCash)
+
+
+				})
+		})
+
+
+	})
+}
+
 
 module.exports = obj;

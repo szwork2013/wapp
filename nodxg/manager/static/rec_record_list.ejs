@@ -220,6 +220,18 @@ function downFunc(e){
     location.href = '/manger/recrecord/rec.csv'
 }
 
+function addBank(e){
+    e.preventDefault();
+    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    var userId = dataItem.userId
+    var recordId = dataItem._id
+
+    if(confirm('确定进入结佣页面吗？')){
+        location.href = '/manger/transac/list?userid='+userId+'&recordid='+recordId
+    }
+
+}
+
 
 function req_success(e) {
             e.preventDefault();
@@ -302,6 +314,8 @@ function req_fail(e) {
                                 //{ name: "fail", text: "不通过", click:req_fail},
                                 { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
                                 { name: "destroy", text: "删除"},
+                                
+                                {name:"bank", text:'结佣', click:addBank}
 
                               ]
                                            
@@ -399,7 +413,6 @@ $.post('/manger/community/getList',{},function(data_ary2){
                         value:v._id
                     })
                 })
-
 
 
                 $("#grid").kendoGrid({
