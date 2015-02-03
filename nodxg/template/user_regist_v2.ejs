@@ -45,7 +45,7 @@
       var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
       $('#submitBtn').click(function(){
         if(window.isajax) return false;
-		location.href = "/view/user/index_login_v2?wxuserid=<%= userObj._id %>"
+		    //location.href = "/view/user/index_login_v2?wxuserid=<%= userObj._id %>"
           $('#errtip').hide();
 
           var mobile = $('#mobile').val();
