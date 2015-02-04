@@ -27,7 +27,7 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-    雷锋行动，新春年货大放送
+    年货特卖周，年货大派送
 </title>
 
 <style type="text/css">
@@ -147,8 +147,8 @@ left: 20%;
 	
         <div class="container">
 		
-		 <img src="http://bcs.duapp.com/xytimg/zhuli%2F201502041.png" width='100%' alt=""><br>
-		 <img src="http://bcs.duapp.com/xytimg/zhuli%2F201502042.png" width='100%' alt=""><br>
+		 <img src="http://bcs.duapp.com/xytimg/zhuli%2F2015nian1.jpg" width='100%' alt=""><br>
+		 <img src="http://bcs.duapp.com/xytimg/zhuli%2F2015nian2.jpg" width='100%' alt=""><br>
 		
 	
 
@@ -180,13 +180,13 @@ left: 20%;
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为<%= toUserObj.wxName %>增加助力</span>
+                <span class="button1" >点击为<%= toUserObj.wxName %>助力拿年货</span>
             </a>
 			<br>
 		
 		
 		
-           <a href="http://mp.weixin.qq.com/s?__biz=MjM5ODU2MDA3MA==&mid=204557753&idx=1&sn=8b05789b80440f7de542e8357983beac#rd" class="share_timeline1 btn-block">
+           <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_nian2015" class="share_timeline1 btn-block">
               <span class="button1" >我也要领取年货</span>
             </a>
 			
@@ -315,7 +315,7 @@ left: 20%;
         <h4 class="modal-title" id="myModalLabel">支持成功</h4>
       </div>
       <div class="modal-body"> 
-             <h4>成功帮TA助力了1次</h4>
+             <h4>成功帮TA增加了1次助力</h4>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -401,14 +401,14 @@ window.isAjax = false
 
 <% if (isMyPage){ %>
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
-var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F201502041.png'
-var forwardingTitle ='雷锋行动，新春年货大放送'
-var forwardingDesc ='雷锋行动，新春年货大放送'
+var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F2015nian2.jpg'
+var forwardingTitle ='年货特卖周，年货大派送'
+var forwardingDesc ='年货特卖周，年货大派送'
 <%} else{ %>
      var forwardingUrl ='http://mp.weixin.qq.com/s?__biz=MjM5ODU2MDA3MA==&mid=204557753&idx=1&sn=8b05789b80440f7de542e8357983beac#rd'
-	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F201502041.png'
-var forwardingTitle ='雷锋行动，新春年货大放送'
-var forwardingDesc ='雷锋行动，新春年货大放送'
+	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F2015nian2.jpg'
+var forwardingTitle ='年货特卖周，年货大派送'
+var forwardingDesc ='年货特卖周，年货大派送'
 <% } %>
     
 
