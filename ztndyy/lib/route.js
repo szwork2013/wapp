@@ -83,6 +83,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 			  appUserScore:uobj.uobj.appUserScore,
 			  isShow:uobj.uobj.isShow, //是否启用这个用户,1表示启用，0表示未启用
 			  code1:uobj.uobj.code1,
+			  code2:uobj.uobj.code2,
 			  writeTime: moment(uobj.uobj.writeTime).format('YYYY-MM-DD hh:mm:ss'),   //写入时间
 		};
 		next();
@@ -229,6 +230,9 @@ var addroute = function(app){
 	app.get('/view/user/cover_v2', v2_mid, getUserMid, viewUser.cover_v2);
 	//入口页
 	app.get('/view/enter_v2', v2_mid, getUserMid, viewUser.enter_v2);
+
+	//我的经纪人
+	app.get('/view/user/myagent', v2_mid, getUserMid, viewUser.myagent)
 
 	//增加页面接口
 	//1、兑换商品页面

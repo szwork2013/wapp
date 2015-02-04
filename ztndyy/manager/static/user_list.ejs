@@ -70,6 +70,13 @@
                <input type="number" id="code1" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
             </div>
 
+            <div class="k-edit-label  w-800-l">
+                <label for="code2">是否接待</label>
+            </div>
+            <div data-container-for="code2" class="k-edit-field w-800-r">
+               <input type="number" id="code2" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+            </div>
+
            <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
             </div>
@@ -236,6 +243,11 @@ function downFunc(e){
                             values:window.user_identity
                         },
                         { 
+                            field: "code2",
+                            title: "是否接待",
+                            values:window.is_jiedai
+                        },
+                        { 
                             field: "isShow",
                             title: "是否启用", 
                             values:[
@@ -274,6 +286,8 @@ function downFunc(e){
 
                          window.dropdown_init($("#sex_inp"), window.sex_ary)
                          window.dropdown_init($("#code1"), window.user_identity)
+                         window.dropdown_init($('#code2'), window.is_jiedai)
+
                          
                          window.dropdown_init()
 

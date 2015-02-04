@@ -67,22 +67,31 @@ obj.recrecord = function(req,res){
 		if(err){
 			return res.send(500,'我的推荐记录加载失败')
 		}
-		if(req.is_v2){
-			res.render('recrecord_list_v2.ejs',{
-				'userObj':req.wxuobj,
-				'binderObj':req.wxBinder,
-				'list':list,
-				'count':list.length
-			})
-		}
-		else{
-			res.render('recrecord_list.ejs',{
-				'userObj':req.wxuobj,
-				'binderObj':req.wxBinder,
-				'list':list,
-				'count':list.length
-			})
-		}
+
+		userBl.getJieDaiUsers(function(err, jieDaiList){
+				console.log(jieDaiList)
+				console.log(list)
+				if(req.is_v2){
+					res.render('recrecord_list_v2.ejs',{
+						'userObj':req.wxuobj,
+						'binderObj':req.wxBinder,
+						'list':list,
+						'count':list.length,
+						'jieDaiList':jieDaiList
+					})
+				}
+				else{
+					res.render('recrecord_list.ejs',{
+						'userObj':req.wxuobj,
+						'binderObj':req.wxBinder,
+						'list':list,
+						'count':list.length,
+						'jieDaiList':jieDaiList
+					})
+				}
+		})
+
+		
 			
 	})
 
@@ -121,24 +130,33 @@ obj.recommend = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
 
-	//如果是已经认证用户
+	//如果是不是认证用户
 	if(req.wxBinder.appUserType < 1){
 		obj.regist(req,res);
 		return;
 	}
 
-	if(req.is_v2){
-		res.render('user_recommend_v2.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-		})
-	}
-	else{
-		res.render('user_recommend.ejs',{
-			'userObj':req.wxuobj,
-			'binderObj':req.wxBinder,
-		})	
-	}
+	userBl.getJieDaiUsers(function(err, jieDaiList){
+			if(err){
+				return res.send(500,'结佣记录加载失败')
+			}
+			if(req.is_v2){
+			res.render('user_recommend_v2.ejs',{
+					'userObj':req.wxuobj,
+					'binderObj':req.wxBinder,
+					'jieDaiList':jieDaiList
+				})
+			}
+			else{
+				res.render('user_recommend.ejs',{
+					'userObj':req.wxuobj,
+					'binderObj':req.wxBinder,
+					'jieDaiList':jieDaiList
+				})	
+			}
+	})
+
+	
 }
 
 
@@ -210,6 +228,24 @@ obj.index_login_v2 = function(req,res){
 }
 
 
+//我的经纪人
+obj.myagent = function(req, res){
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+
+	userBl.getMyAgents(userId, function(err, list){
+		if(err){
+			return res.send(500,'我的经纪人加载失败')
+		}
+		res.render('myagent_list.ejs',{
+			'userObj':req.wxuobj,
+			'binderObj':req.wxBinder,
+			'list':list,
+			'count':list.length
+		})
+	})
+
+}
 
 
 

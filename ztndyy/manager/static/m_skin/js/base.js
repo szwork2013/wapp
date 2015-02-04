@@ -327,6 +327,11 @@ window.user_identity = [
   ]
 
 
+window.is_jiedai = [
+                            { text: "一般用户", value: '' },
+                            { text: "指定接待", value: '1' },
+                            ]
+
 window.kendo_edit_option = {
     tools: window.editor_tools,
     messages: window.editor_messages,

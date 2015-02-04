@@ -11,7 +11,7 @@ var obj = { //定义结构
       recName:{type:String,required:true},            //被推荐人姓名
       recSex:{type:Number,default:1},                 //被推荐人性别 0表示女性，1表示男性
       recTel:{type:String,required:true},             //被推荐人电话
-      recArea:{type:String,default:''},             //被推荐人意向面积
+      recArea:{type:String,default:''},             ////指定接待
       recPrice:{type:Number,default:0},             //被推荐人意向总价单位万
       recRoom:{type:String,default:''},             //被推荐人意向户型
 
@@ -32,7 +32,7 @@ var obj = { //定义结构
 
       isCash:{type:Number,default:0},                 //是否已经结佣金, 0表示没有结佣金，1表示已经结佣金
 
-      recCode1:{type:String,default:''},              //预留字段1,代理公司名称
+      recCode1:{type:String,default:''},              //预计看房日期
 
       recCode2:{type:String,default:''},              //预留字段2
       recCode3:{type:String,default:''},              //预留字段3

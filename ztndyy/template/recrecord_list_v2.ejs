@@ -41,7 +41,7 @@
 <% if(obj.recStatus==2){%>
   <p>
     <font>
-    您好！您推荐的客户已来过案场或客户资料不准确，审核未能通过，详询案场 0519-83612999
+    您好！您推荐的客户已来过案场或客户资料不准确，审核未能通过，详询案场电话。
     </font>
   </p>
 
@@ -53,9 +53,18 @@
             <p><span>状 态</span><%= obj.Status %></p>
             <p><span>时 间</span><%= obj.writeTime %></p>
             <p><span>电 话</span><%= obj.recTel %></p>
-            <p><span>指定接待</span><%= obj.recCode1 %></p>
+
+            <% for(var i=0; i<jieDaiList.length; i++){ %>
+                <% if(obj.recRoom == jieDaiList[i]._id.toString()){ %>
+                        <p><span>指定接待</span><%=  jieDaiList[i].appUserName %></p>
+                        <% break; %>
+                <% } %>
+            <% } %>
+
+            
+            <p><span>预约时间</span><%= obj.recCode1 %></p>
             <!--
-            <p><span>房 型</span><%= obj.recRoom %></p>
+            
             <p><span>面 积</span><%= obj.recArea %></p>
             -->
 <!--

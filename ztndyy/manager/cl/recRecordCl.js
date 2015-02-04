@@ -5,11 +5,24 @@ var utils = require('../../lib/utils.js');
 var obj = {}
 var salt = global.app.get('salt');
 var json2csv = require('json2csv');
-
+var userBl = require('../../bl/wxUser.js')
 
 
 obj.list = function(req, res){
-	res.render('rec_record_list', {session:req.session});
+
+	userBl.getJieDaiUsers(function(err, list){
+		if(err){
+			return res.send(err)
+		}
+		var jieDaiList = []
+		list.forEach(function(item){
+			jieDaiList.push(
+				{ text: item.appUserName, value: item._id.toString() }
+			)
+		})
+		res.render('rec_record_list', {session:req.session, jieDaiList:jieDaiList});
+	})
+	
 }
 
 

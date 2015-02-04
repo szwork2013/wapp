@@ -17,6 +17,22 @@ var utils = require('../lib/utils.js');
 var obj = {}
 var recommendScore = 20;
 
+
+obj.getJieDaiUsers = function(cb){ //根据openid查找用户信息
+	var cb = cb || function(){}
+	userModel.findByObj({code2:'1'}, function(err, list){
+			cb(err, list)
+	})
+}
+
+obj.getMyAgents = function(userid, cb){
+	recRecordModel.findByObj({
+		recRoom:userid
+	}, function(err, list){
+		cb(err, list)
+	})
+}
+
 obj.getUserByOpenid = function(openId,cb){ //根据openid查找用户信息
 	var cb = cb || function(){}
 	if(!openId) return cb('no openid');
@@ -347,22 +363,22 @@ obj.recommend = function(appId, userId, qobj, cb){
 	var recStatus = 1;
 
 	if(!recName || recName.length>50){
-		cb('推荐人姓名有误')
+		return cb('推荐人姓名有误')
 	}
 	if(recSex != 0 && recSex != 1){
-		cb('推荐人性别有误')
+		return cb('推荐人性别有误')
 	}
 	if(!recTel || recTel.length != 11 || recTel != recTel -0){
-		cb('手机号输入有误')
+		return cb('手机号输入有误')
 	}
 	if(recArea == ''){
-		cb('面积输入有误')
+		return cb('面积输入有误')
 	}
 	if(recPrice != '' && recPrice != recPrice - 0){
-		cb('价格输入有误')
+		return cb('价格输入有误')
 	}
 	if(recRoom != '' && recRoom.length>50){
-		cb('房型输入有误')
+		return cb('房型输入有误')
 	}
 
 	recRecordModel.findByObj({

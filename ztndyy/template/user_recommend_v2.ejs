@@ -10,10 +10,22 @@
 				<p class="rb-row">
 					<input type="text" name="btel"  placeholder="请输入购房人手机号码" class="input" id="recTel"  maxlength="11">
 				</p>
-                <p class="rb-row" style="display:none;">
-                	<input class="input" type="text" name="proxy"  placeholder="请输入代理公司，可不填" id="proxy"  maxlength="20">
+        <p class="rb-row" style="">
+          <select id="recRoom" name="recRoom" class="select">
+              <option value="1" selected="selected">请选择指定接待</option>
+              <% jieDaiList.forEach(function(item){ %>
+                  <option value="<%= item._id%>"><%= item.appUserName%></option>
+              <%  }) %>
+          </select>
+        </p>
 
-                </p>
+        <p class="rb-row">
+          <div>
+          <input type="text" name="proxy"  placeholder="预计看房时间" class="input" id="proxy"  maxlength="11">
+        </div>
+        </p>
+
+
 				
 				<div class="recommend-tips">
 					<h6>提示</h6>
@@ -25,26 +37,17 @@
 
 
 
-<div class="rem-p1" style="display:none;">
-      <label>意向户型：</label>
-      <select name="bhtype" id="recRoom">
-        <option value="一房">一房</option>
-        <option value="两房">两房</option>
-        <option value="三房">三房</option>
-        <option value="四房">四房</option>
-      </select>
-    </div>
-    <div class="rem-p1" style="display:none;">
-      <label>推荐项目：</label>
-      <select name="bharea" id="recArea">
-        <option value="常州万科城">常州万科城</option>
-      </select>
-    </div>
+
 
 		</section>
-		
+	
+
+<div id="datePlugin"></div>
+
 <script type="text/javascript">
   $(function(){
+
+      $('#proxy').date({theme:"datetime"});
 
       $('body').addClass('index')
 
@@ -55,9 +58,35 @@
 
           var recTel = $.trim($('#recTel').val());
           var recName = $.trim($('#recName').val());
-          var recRoom = $.trim($('#recRoom').val());
-          var recArea = $.trim($('#recArea').val());
-          var recCode1 = $.trim($('#proxy').val());
+          var recRoom = $.trim($('#recRoom').val()); //指定接待
+          var recArea = '0'
+          var recCode1 = $.trim($('#proxy').val()); //预计看房日期
+
+          if($('#recRoom').val() == '1'){
+              $('#errtip').html(errimg+'请选择制定接待').show()
+              return false;
+          }
+
+          if(recCode1 == ''){
+              $('#errtip').html(errimg+'请输入预约时间').show()
+              return false;
+          }
+
+          try{
+              recCode1 = moment(recCode1).format('YYYY-MM-DD hh:mm:ss')
+              if(moment(recCode1) <= moment()){
+                    $('#errtip').html(errimg+'请输入大于当前时间').show()
+                    return false;
+              }
+              if(recCode1=='Invalid date'){
+                $('#errtip').html(errimg+'请输入时间无效').show()
+                return false;
+              }
+          }
+          catch(e){
+              $('#errtip').html(errimg+'请输入时间无效').show()
+              return false;
+          }
 
           if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
               $('#errtip').html(errimg+'手机号输入有误').show()

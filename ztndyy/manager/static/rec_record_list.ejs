@@ -78,10 +78,10 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="recRoom" >意向户型</label>
+                <label for="recRoom" >指定接待</label>
             </div>
             <div data-container-for="recRoom" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="recRoom" data-bind="value:recRoom" >
+               <input type="text" id="recRoom" class="k-input k-textbox w-50-inp" name="recRoom" data-bind="value:recRoom" >
             </div>
 
 
@@ -149,10 +149,10 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="recCode1" >指定接待</label>
+                <label for="recCode1" >预约看房日期</label>
             </div>
             <div data-container-for="recCode1" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
+               <input type="text" id="recCode1" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
             </div>
 
 <div style="display:none">
@@ -211,6 +211,7 @@
 <script>
 
 window.news_type = [window.news_type[0]];
+window.jieDaiList = <%- JSON.stringify(jieDaiList) %>
 
 function downFunc(e){
     location.href = '/manger/recrecord/rec.csv'
@@ -359,7 +360,7 @@ function req_fail(e) {
 
                                     "isCash": { editable: true, type:'number'},
                                     
-                                    "recCode1": { editable: true},
+                                    "recCode1": { editable: true, type: "date"},
                                     "recCode2": { editable: true},
                                     "recCode3": { editable: true},
                                     "recCode4": { editable: true},
@@ -461,8 +462,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                         { 
                             field: "recRoom",
-                            title: "意向户型",
-                            hidden:true
+                            title: "指定接待",
+                            values:window.jieDaiList,
                         },
                         { 
                             field: "userFrom",
@@ -488,8 +489,8 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
                         { 
                             field: "recCode1",
-                            title: "指定接待",
-                            hidden:false
+                            title: "预约日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
                         },
                         { 
                             field: "recCode2",
@@ -557,12 +558,15 @@ $.post('/manger/app/getList',{},function(data_ary){
 
                         $('#writeTime').kendoDateTimePicker();
                         $('#updateTime').kendoDateTimePicker();
-                        
+                        $('#recCode1').kendoDateTimePicker();
+
                     
                         window.dropdown_init($('#appId_inp'),d)
                         window.dropdown_init($('#isCash_inp'),window.isCash_type)
                         window.dropdown_init($('#recStatus_inp'),window.recStatus_type)
                         window.dropdown_init($('#recSex_inp'),window.sex_ary)
+                        window.dropdown_init($('#recRoom'),window.jieDaiList)
+
 
 
                     },
