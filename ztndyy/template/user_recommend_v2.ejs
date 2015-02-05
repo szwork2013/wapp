@@ -46,13 +46,16 @@
 
 <script type="text/javascript">
   $(function(){
-
+      var nowMoment = moment()
       $('#proxy').date({
         theme:"datetime",
         endhour:23,
         curdate:true,
         beginyear:2015,
-        endyear:2050
+        endyear:2050,
+        curYear:nowMoment.date(),
+        curMonth:nowMoment.month(),
+        curDay:nowMoment.year(),
       });
 
       $('body').addClass('index')
@@ -66,7 +69,7 @@
           var recName = $.trim($('#recName').val());
           var recRoom = $.trim($('#recRoom').val()); //指定接待
           var recArea = '0'
-          var recCode1 = $.trim($('#proxy').val()); //预计看房日期
+          var recCode1 = $.trim($('#proxy').blur().change().val()); //预计看房日期
 
           if($('#recRoom').val() == '1'){
               $('#errtip').html(errimg+'请选择制定接待').show()
@@ -79,13 +82,13 @@
           }
 
           try{
-              recCode1 = moment(recCode1).format('YYYY-MM-DD hh:mm:ss')
+              recCode1 = moment(recCode1).format('YYYY-MM-DD HH:mm:ss')
               if(moment(recCode1) <= moment()){
                     $('#errtip').html(errimg+'请输入大于当前时间').show()
                     return false;
               }
               if(recCode1=='Invalid date'){
-                $('#errtip').html(errimg+'输入时间无效').show()
+                $('#errtip').html(errimg+'输入的时间无效').show()
                 return false;
               }
           }
