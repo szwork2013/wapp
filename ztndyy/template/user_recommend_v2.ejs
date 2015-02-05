@@ -47,7 +47,13 @@
 <script type="text/javascript">
   $(function(){
 
-      $('#proxy').date({theme:"datetime"});
+      $('#proxy').date({
+        theme:"datetime",
+        endhour:23,
+        curdate:true,
+        beginyear:2015,
+        endyear:2050
+      });
 
       $('body').addClass('index')
 
@@ -79,12 +85,12 @@
                     return false;
               }
               if(recCode1=='Invalid date'){
-                $('#errtip').html(errimg+'请输入时间无效').show()
+                $('#errtip').html(errimg+'输入时间无效').show()
                 return false;
               }
           }
           catch(e){
-              $('#errtip').html(errimg+'请输入时间无效').show()
+              $('#errtip').html(errimg+'输入时间无效').show()
               return false;
           }
 
