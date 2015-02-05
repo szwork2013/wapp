@@ -26,10 +26,35 @@ obj.getJieDaiUsers = function(cb){ //根据openid查找用户信息
 }
 
 obj.getMyAgents = function(userid, cb){
-	recRecordModel.findByObj({
+	recRecordModel.findAll({
 		recRoom:userid
-	}, function(err, list){
-		cb(err, list)
+	}, 0, 10000, function(err, list){
+		if(err) return cb(err)
+		var userIds = []
+		if(list.length == 0) return cb(err, list)
+		list.forEach(function(item){
+				userIds.push(item.userId)
+		})
+		var result = []
+		userModel.getUserByIds(userIds, function(err, userList){
+			if(err) return cb(err)
+			list.forEach(function(itemRec){
+				for(var i=0; i<userList.length; i++){
+					if(userList[i].value.toString() == itemRec.userId){
+						result.push({
+							name:userList[i].appUserName,
+							tel:userList[i].appUserMobile,
+							recName:itemRec.recName,
+							recTel:itemRec.recTel,
+							recCode1:itemRec.recCode1,
+							writeTime:moment(itemRec.writeTime).format('YYYY-MM-DD HH:mm:ss')
+						})
+					}
+					break;
+				}
+			})
+			cb(err, result)
+		})	
 	})
 }
 
