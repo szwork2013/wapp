@@ -154,8 +154,11 @@ left: 20%;
 
 
 	<div id="round"><center>
-         
-              <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto">  “<%= toUserObj.wxName %>”的被爱指数已经达
+         <% if(isMyPage) { %>
+            你的被爱指数已经达
+        <% }else{ %>
+            他/她的被爱指数已经达
+        <%}%>
        
         <b style="color:#c00; font-size:20px;">
 		
@@ -180,7 +183,7 @@ left: 20%;
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击爱<%= toUserObj.wxName %>一次</span>
+                <span class="button1" >点击爱ta一次</span>
             </a>
 			<br>
 		
