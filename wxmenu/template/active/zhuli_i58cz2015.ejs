@@ -402,6 +402,155 @@ var timeError = '<%= timeError %>'
 window.isAjax = false
 
 
+
+
+
+  
+  wx.config({
+    debug: false,
+    // 必填，公众号的唯一标识
+	appId: 'wx49cebd611fe0d5e4',
+    // 必填，生成签名的时间戳
+	timestamp: 1423233727,
+    // 必填，生成签名的随机串
+	nonceStr: 'Slt4qfkmGVao2WBN',
+    // 必填，签名，见附录1
+	signature: '326e9e081afea5394401483c3b1a3c420587bff1',
+    // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	jsApiList: [
+      // 所有要调用的 API 都要加到这个列表中
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+
+
+    ]
+  });
+  
+  wx.ready(function(){
+  // 在这里调用 API
+		wx.onMenuShareAppMessage({
+		  title: '互联网之子 方倍工作室',
+		  desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
+		  link: 'http://movie.douban.com/subject/25785114/',
+		  imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+		  trigger: function (res) {
+			alert('用户点击发送给朋友');
+		  },
+		  success: function (res) {
+			//alert('已分享');
+		  },
+		  cancel: function (res) {
+			//alert('已取消');
+		  },
+		  fail: function (res) {
+			//alert(JSON.stringify(res));
+		  }
+		});
+	
+		wx.onMenuShareTimeline({
+		  title: '互联网之子 方倍工作室',
+		  link: 'http://movie.douban.com/subject/25785114/',
+		  imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+		  trigger: function (res) {
+			//alert('用户点击分享到朋友圈');
+		  },
+		  success: function (res) {
+			//alert('已分享');
+		  },
+		  cancel: function (res) {
+			//alert('已取消');
+		  },
+		  fail: function (res) {
+			//alert(JSON.stringify(res));
+		  }
+		});
+	
+		wx.onMenuShareQQ({
+		  title: '互联网之子 方倍工作室',
+		  desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
+		  link: 'http://movie.douban.com/subject/25785114/',
+		  imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+		  trigger: function (res) {
+			//alert('用户点击分享到QQ');
+		  },
+		  complete: function (res) {
+			//alert(JSON.stringify(res));
+		  },
+		  success: function (res) {
+			//alert('已分享');
+		  },
+		  cancel: function (res) {
+			//alert('已取消');
+		  },
+		  fail: function (res) {
+			//alert(JSON.stringify(res));
+		  }
+		});
+	
+		wx.onMenuShareWeibo({
+		  title: '互联网之子 方倍工作室',
+		  desc: '在长大的过程中，我才慢慢发现，我身边的所有事，别人跟我说的所有事，那些所谓本来如此，注定如此的事，它们其实没有非得如此，事情是可以改变的。更重要的是，有些事既然错了，那就该做出改变。',
+		  link: 'http://movie.douban.com/subject/25785114/',
+		  imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+		  trigger: function (res) {
+			//alert('用户点击分享到微博');
+		  },
+		  complete: function (res) {
+			//alert(JSON.stringify(res));
+		  },
+		  success: function (res) {
+			//alert('已分享');
+		  },
+		  cancel: function (res) {
+			//alert('已取消');
+		  },
+		  fail: function (res) {
+			//alert(JSON.stringify(res));
+		  }
+		});
+
+	//关闭
+	//	wx.closeWindow();
+
+	
+	//优先级高
+	  var shareData = {
+		title: '福利送不停，2.14快来爱我吧',
+		desc: '情人节浪漫大餐等你来拿哦',
+		link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>',
+		imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F201502051.png'
+	  };
+	  
+	  wx.onMenuShareAppMessage(shareData);
+	  wx.onMenuShareTimeline(shareData);
+	  wx.onMenuShareQQ(shareData);
+  
+    });
+
+	//失败
+	wx.error(function(res){
+	  //alert(res.errMsg);
+	});
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
 <% if (isMyPage){ %>
 var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F201502051.png'
@@ -415,7 +564,7 @@ var forwardingDesc ='福利送不停，2.14快来爱我吧'
 <% } %>
     
 
-
+-->
 
 var forwardingCallback = function(){
     if(window.hasAdd) return false;
@@ -615,8 +764,30 @@ $(function(){
 
 
 
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+ 
 
-      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 <script src="http://wzhfile.qiniudn.com/wx_share_v3.js"></script>       
 <div style="display:none">
 <script type="text/javascript">
