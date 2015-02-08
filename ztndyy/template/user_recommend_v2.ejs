@@ -49,16 +49,15 @@
       var nowMoment = moment()
 
 
-      $('#proxy').val('').date({
-        theme:"datetime",
-        endhour:23,
-        curdate:true,
-        beginyear:2015,
-        endyear:2050,
-        curYear:nowMoment.date(),
-        curMonth:nowMoment.month(),
-        curDay:nowMoment.year(),
-      });
+      $('#proxy').val('').pickadate({
+          monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          weekdaysFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          today: 'Today',
+          clear: 'Clear',
+          format: 'yyyy-mm-d',
+        })
 
       $('body').addClass('index')
 
@@ -67,11 +66,14 @@
         if(window.isajax) return false;
           $('#errtip').hide();
 
+          var $input = $('.datepicker').pickadate()
+
           var recTel = $.trim($('#recTel').val());
           var recName = $.trim($('#recName').val());
           var recRoom = $.trim($('#recRoom').val()); //指定接待
           var recArea = '0'
-          var recCode1 = $.trim($('#proxy').blur().change().val()); //预计看房日期
+          var recCode1 = $.trim($('#proxy').val()); //$input.get(); //预计看房日期
+          //alert(recCode1)
 
           if($('#recRoom').val() == '1'){
               $('#errtip').html(errimg+'请选择制定接待').show()
