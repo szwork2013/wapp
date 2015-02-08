@@ -20,8 +20,8 @@
         </p>
 
         <p class="rb-row">
-          <div>
-          <input type="text" name="proxy"  placeholder="预计看房时间" class="input" id="proxy"  maxlength="11">
+          <div class="proxy_box">
+          <input type="date" name="proxy"  placeholder="预计看房时间" class="input" id="proxy" >
         </div>
         </p>
 
@@ -49,15 +49,16 @@
       var nowMoment = moment()
 
 
-      $('#proxy').val('').pickadate({
-          monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-          monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-          weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-          weekdaysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-          today: '今天',
-          clear: '清除',
-          format: 'yyyy-mm-d',
-        })
+      //$('#proxy').val('').datetimepicker();
+      // {
+      //     monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      //     monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      //     weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+      //     weekdaysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+      //     today: '今天',
+      //     clear: '清除',
+      //     format: 'yyyy-mm-d',
+      //   }
 
       $('body').addClass('index')
 
