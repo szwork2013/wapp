@@ -45,7 +45,7 @@ $(function(){
 				    	alert(JSON.stringify(res))
 				        // 以键值对的形式返回，可用的api值true，不可用为false
 				        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-				    });
+				    }});
 
 			});
 			wx.error(function(res){
@@ -61,6 +61,9 @@ $(function(){
 				    imgUrl: 'http://www.6998.com/Cms_Data/Contents/MainDB/Media/game/nslm2.jpg', // 分享图标
 				    trigger:function(){
 				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成分享到朋友圈</p>')
 				    },
 				    success: function () { 
 				        // 用户确认分享后执行的回调函数
@@ -81,6 +84,9 @@ $(function(){
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				    trigger:function(){
 				    	$('#action').append('<p>成功点击发送给朋友</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成发送给朋友</p>')
 				    },
 				    success: function () { 
 				        // 用户确认分享后执行的回调函数
