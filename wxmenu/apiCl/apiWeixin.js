@@ -54,7 +54,10 @@ obj.getJsConfig = function(req,res){
     res.set('Cache-Control', 'no-cache')
     res.set('ETag', Date.now().toString())
 
-    var meUrl = req.query.url
+    console.log(req.get('Referer'))
+
+    var meUrl = req.get('Referer') || req.query.url;
+
     if(!meUrl){
         return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':'not have url param'}))
     }
