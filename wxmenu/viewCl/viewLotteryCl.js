@@ -7,6 +7,11 @@ var obj = {}
 
 
 obj.lotteryPage = function(req,res){ //活动页面展示
+
+	res.set('Cache-Control', 'no-cache')
+    res.set('ETag', Date.now().toString())
+    var requestedUrl = req.protocol + '://' + req.get('Host') + req.url;
+
 	var wxuobj = req.wxuobj;
 
 	var lotteryEname = req.query.ename;
@@ -61,7 +66,8 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 				appId:appObj._id,
 				userid:userid,
 				wxuobj:wxuobj,
-				timeError:timeError
+				timeError:timeError,
+				jsurl:requestedUrl
 			});
 
 		})

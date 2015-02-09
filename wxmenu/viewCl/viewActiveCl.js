@@ -130,6 +130,10 @@ obj.activeMiddle = function(req,res,next){
 
 obj.activePage = function(req,res){ //活动页面展示
 
+		res.set('Cache-Control', 'no-cache')
+    	res.set('ETag', Date.now().toString())
+    	var requestedUrl = req.protocol + '://' + req.get('Host') + req.url;
+
 		var toUserId = req.query.touserid;
 		var activeEname = req.query.ename;
 		var openId = req.activeObj.openId
@@ -287,6 +291,7 @@ obj.activePage = function(req,res){ //活动页面展示
 							tempObj.prizeList = tempPrizeList
 							tempObj.myPrizeList = infoObj.myPrizeList
 							tempObj.now = Date.now()
+							tempObj.jsurl = requestedUrl
 							return res.render('active/'+templateName+'.ejs', tempObj)
 						})//end activeBl.getRankByEname				
 						
