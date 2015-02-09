@@ -51,7 +51,8 @@
        "client-session":"*",
        "json2csv":"2.2.1",
        "node-schedule":"0.1.13",
-       "connect-mongo":"0.4.1"
+       "connect-mongo":"0.4.1",
+       "wechat-api":"1.6.0"
    },
   "engines": {
     "node": ">=0.10.0"

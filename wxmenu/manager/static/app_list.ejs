@@ -92,6 +92,38 @@
 
 
 
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="accessToken" >accessToken</label>
+            </div>
+            <div data-container-for="accessToken" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="accessToken" data-bind="value:accessToken">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="accessTokenDate">accessTokenDate</label>
+            </div>
+            <div data-container-for="accessTokenDate" class="k-edit-field w-800-r">
+               <input type="text" id="accessTokenDate" class="k-input k-textbox " name="accessTokenDate" data-bind="value:accessTokenDate">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="jsapiTicket" >jsapiTicket</label>
+            </div>
+            <div data-container-for="jsapiTicket" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="jsapiTicket" data-bind="value:jsapiTicket">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="jsapiTicketDate">jsapiTicketDate</label>
+            </div>
+            <div data-container-for="jsapiTicketDate" class="k-edit-field w-800-r">
+               <input type="text" id="jsapiTicketDate" class="k-input k-textbox " name="jsapiTicketDate" data-bind="value:jsapiTicketDate">
+            </div>
+
+
+
+
+
             <div class="k-edit-label  w-800-l">
                 <label for="appIntro" >开发商介绍</label>
             </div>
@@ -162,6 +194,12 @@
                                     "appCustomTel": { editable: true, type:'string', validation: { required: {message: "请填写客服电话"}}},
                                     "appPicture": { editable: true, type:'string', validation: { required: {message: "请上传介绍图片"}}},
                                     "appIntro":{editable: true, type:"string", validation: { required: {message: "请填写介绍"}}},
+
+                                    "accessToken":{ editable: true},
+                                    "accessTokenDate": {editable: true, type: "date" },
+                                    "jsapiTicket":{ editable: true},
+                                    "jsapiTicketDate": {editable: true, type: "date" },
+
                                     "writeTime": {editable: true, type: "date" },
                                     "useOAuth":{ editable: true, type:'number'},
                                     "oauthScope":{ editable: true},
@@ -238,6 +276,29 @@
                             title: "介绍图片", 
                             hidden:true
                         },
+
+                        { 
+                            field: "accessToken",
+                            title: "accessToken", 
+                            hidden:true
+                        },
+                        { 
+                            field: "accessTokenDate",
+                            title: "accessTokenDate",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { 
+                            field: "jsapiTicket",
+                            title: "jsapiTicket", 
+                            hidden:true
+                        },
+                        { 
+                            field: "jsapiTicketDate",
+                            title: "jsapiTicketDate",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+
+
                         { 
                             field: "appIntro",
                             title: "介绍内容", 
@@ -269,6 +330,8 @@
                         window.dropdown_init($("#oauthScope_inp"), window.oauth_scope)
                         
                         $('#writeTime').kendoDateTimePicker();
+                        $('#accessTokenDate').kendoDateTimePicker();
+                        $('#jsapiTicketDate').kendoDateTimePicker();
 
                         multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
 

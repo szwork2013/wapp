@@ -306,6 +306,8 @@ var addroute = function(app){
 		app.post('/vote/:appename/myrecord', apiVote.getMyRecord) //获取用户的记录
 		app.get('/vote/:appename/getvoteinfo2', apiVote.getVoteInfo2) //给web投票用的获取投票信息
 
+		//获取jsapi-ticket
+		app.get('/api/:appename/jsconfig', apiWx.getJsConfig) //给web投票用的获取投票信息
 
 		//game insurance
 		app.get('/insurance/unionlife', insuranceCl.page)
