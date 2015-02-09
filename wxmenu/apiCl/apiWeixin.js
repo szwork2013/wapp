@@ -54,6 +54,18 @@ obj.getJsConfig = function(req,res){
     res.set('Cache-Control', 'no-cache')
     res.set('ETag', Date.now().toString())
 
+    var meUrl = req.query.url
+    if(!meUrl){
+        return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':'not have url param'}))
+    }
+    try{
+        meUrl = decodeURIComponent(meUrl)
+    }
+    catch(e){
+        return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':'invalid url param'}))
+    }
+
+
 
     var appename = req.param('appename')
     appBl.getByEname(appename, function(err, appObj){
@@ -65,7 +77,7 @@ obj.getJsConfig = function(req,res){
         var param = {
              debug: false,
              jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
-             url: 'http://www.xxx.com'
+             url: meUrl
             };
 
         //获取js的config文件
