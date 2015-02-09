@@ -308,6 +308,7 @@ var addroute = function(app){
 
 		//获取jsapi-ticket
 		app.get('/api/:appename/jsconfig', apiWx.getJsConfig) //给web投票用的获取投票信息
+		app.get('/testshare', oauthCl.testShare)
 
 		//game insurance
 		app.get('/insurance/unionlife', insuranceCl.page)

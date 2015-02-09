@@ -48,15 +48,17 @@ obj.createJsStr = function(dict){
 
 
 obj.getJsConfig = function(req,res){
+    
 
+    //console.log(requestedUrl)
     //增加响应头
     res.set('Content-Type', 'text/javascript')
     res.set('Cache-Control', 'no-cache')
     res.set('ETag', Date.now().toString())
 
-    console.log(req.get('Referer'))
+    //console.log(req.get('Referer'))
 
-    var meUrl = req.get('Referer') || req.query.url;
+    var meUrl = req.query.url;
 
     if(!meUrl){
         return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':'not have url param'}))

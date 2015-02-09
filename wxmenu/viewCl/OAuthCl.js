@@ -406,4 +406,15 @@ obj.oauthJumpBack = function(app,applist){
 
 
 
+obj.testShare = function(req, res){
+	res.set('Cache-Control', 'no-cache')
+    res.set('ETag', Date.now().toString())
+    var requestedUrl = req.protocol + '://' + req.get('Host') + req.url;
+
+    res.render('shareTest.ejs', {
+    	'jsurl':encodeURIComponent(requestedUrl)
+    })
+
+}
+
 module.exports = obj;
