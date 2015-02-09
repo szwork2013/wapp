@@ -76,7 +76,7 @@ obj.getJsConfig = function(req,res){
 
         var param = {
              debug: false,
-             jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'],
+             jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'],
              url: meUrl
             };
 
