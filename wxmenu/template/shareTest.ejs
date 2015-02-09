@@ -37,7 +37,7 @@ $(function(){
 	}
 	if(window.jsticket_error=='0'){
 			$('#config').html(JSON.stringify(window.jsconfig))
-			
+
 			wx.config(window.jsconfig);
 			wx.ready(function(){
 
@@ -47,7 +47,7 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				    title: '测试sdk', // 分享标题
-				    link: 'http://menu.xy-tang.com/static/share_test.html', // 分享链接
+				    link: 'http://menu.xy-tang.com/testshare', // 分享链接
 				    imgUrl: 'http://www.6998.com/Cms_Data/Contents/MainDB/Media/game/nslm2.jpg', // 分享图标
 				    trigger:function(){
 				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
@@ -68,7 +68,7 @@ $(function(){
 				wx.onMenuShareAppMessage({
 				    title: '测试sdk', // 分享标题
 				    desc: '测试sdk', // 分享描述
-				    link: 'http://menu.xy-tang.com/static/share_test.html', // 分享链接
+				    link: 'http://menu.xy-tang.com/testshare', // 分享链接
 				    imgUrl: 'http://www.6998.com/Cms_Data/Contents/MainDB/Media/game/nslm2.jpg', // 分享图标
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
