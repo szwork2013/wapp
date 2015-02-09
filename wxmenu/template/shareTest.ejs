@@ -28,7 +28,7 @@
 	
 $(function(){
 
-	$('#config').html(JSON.stringify(window.jsconfig))
+	
 	//部署上生产环境，把alert去掉
 
 	if(window.jsticket_error=='1'){
@@ -36,6 +36,8 @@ $(function(){
 		alert(window.jsconfig)
 	}
 	if(window.jsticket_error=='0'){
+			$('#config').html(JSON.stringify(window.jsconfig))
+			
 			wx.config(window.jsconfig);
 			wx.ready(function(){
 
