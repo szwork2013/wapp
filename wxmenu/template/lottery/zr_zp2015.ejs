@@ -612,6 +612,7 @@ window.requestAnimFrame = (function() {
 							
 					if(!window.prizeTitle){//没中奖
 						alert(window.result)
+						window.location.href=window.location.href
 					//	setTimeout(function(){
 					//		boxObjs.hide();
 					//		$('#noprize').show();
@@ -620,7 +621,7 @@ window.requestAnimFrame = (function() {
 					}
 					else{
 						alert(window.result)
-						
+						window.location.href=window.location.href
 				//		setTimeout(function(){
 				//			boxObjs.hide();
 				//			$('#prize_num').html(prizeTitle.slice(0,-1))
