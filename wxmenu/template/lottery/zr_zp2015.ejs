@@ -8,8 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="format-detection" content="telephone=no">
 
-
-<title>狂欢圣诞，协信中心派大礼</title>
+<!--打开弹出输入框，底部带奖品列表，更新转发接口-->
+<!--规则，每天1次,转发没有额外次数,带中奖列表-->
+<title>正荣幸福城邦，好礼转不停</title>
 <link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
 <script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
 <script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
@@ -19,17 +20,22 @@
 <link href="http://bcs.duapp.com/xytimg/yjszp/activity-style.css" rel="stylesheet" type="text/css">
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 
+
+
+
+
+
 <%- newrelic.getBrowserTimingHeader() %>
 </head>
 <style type="text/css">
 
 .activity-lottery-winning .main{
-	background: url("http://bcs.duapp.com/xytimg/zp%2Fbg1217.jpg") no-repeat top center;
+	background: url("http://bcs.duapp.com/xytimg/zhuli%2F2015zr.jpg") no-repeat top center;
 }
 
 
 
-.activity-lottery-winning{ background: url(http://bcs.duapp.com/xytimg/zp%2Fbg1217.jpg) no-repeat top center;}
+.activity-lottery-winning{ background: url(http://bcs.duapp.com/xytimg/zhuli%2F2015zr.jpg) no-repeat top center;}
 
 
 
@@ -117,15 +123,63 @@ left: 20px;
 color: #555;
 font-size: 18px;
 }
-..mask_box{
+
+
+
+
+.prize_list{
+  width: 400px;
+  height: 150px;
+
+  display: block;
+  position: absolute;
+  top: 690px;
+  left: 30px;
+}
+
+.prize_list li{
+color: #fff;
+}
+
+
+
+
+
+
+.mask_box{
 	z-index: 99;	
+}
+
+
+
+
+#outer-cont {
+	position: relative;
+	width: 100%;
+	top: 240px;
+	margin-bottom: 30px;/* -moz-transform: rotate(-5deg);
+	-webkit-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	transform: rotate(-5deg); */
+}
+#inner-cont {
+	position: absolute;
+	width: 100%;
+	top: 358px;/* -moz-transform: rotate(-5deg);
+	-webkit-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	transform: rotate(-5deg); */
 }
 
 </style>
 <body>
 <div class="body_wrap ">
 <input type="hidden" id='openid' value=""/>
+ <ul id="prize_list" class="prize_list">
 
+      </ul>
 
 <p class="bottom_tip">
 <a href="http://xy-tang.com/index.html" target="_blank">
@@ -137,7 +191,7 @@ font-size: 18px;
 <div id="outercont">
 <div id="outer-cont">
 <div id="outer" style="-webkit-transform: rotate(2136deg);">
-	<img src="http://bcs.duapp.com/xytimg/zp%2Factivity-lottery-12171.png" width="432px"></div>
+	<img src="http://bcs.duapp.com/xytimg/zp%2Factivity-lottery-0210.png" width="432px"></div>
 </div>
 <div id="inner-cont">
 <div id="inner">
@@ -334,6 +388,59 @@ var mask = function () {
 		}
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+window.isforward_today = moment().hour(23).minute(59).second(59)
+window.isforward_today = new Date(window.isforward_today)
+
+
+//var forwardingCallback = function(){
+	//10表示cookie设置有效期10天
+	//$.cookie('isForward', '1', { expires: 10, path: location.pathname });
+	//location.href = location.href
+//}
+
+
+
+
+
+if($.cookie('isforward') == '1'){
+  $.removeCookie('isforward');
+  $.cookie('isforward', '1', { expires: window.isforward_today, path:location.pathname});
+}
+if($.cookie('has_modify_info') == '1'){
+  $.removeCookie('has_modify_info');
+   $.cookie('has_modify_info', '1', { expires: window.isforward_today, path: location.pathname });
+}
+
+
+//alert(window.isforward_today)
+//$.cookie('isforward', '1', { expires: window.isforward_today, path: '/' });
+//alert($.cookie('isforward'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var forwardingUrl = 'http://menu.xy-tang.com/lottery/xinyutang?ename=yjs_zp2014';
 var forwardingImg = 'http://bcs.duapp.com/xytimg/yjszp/logo.jpg'
 var forwardingTitle ='狂欢圣诞，协信中心派大礼'
@@ -432,7 +539,19 @@ var appUserMobile = u_mobile
      }
 
      
-
+ //put my prize
+     var tmp_s = ''
+	 
+	 
+     data.record.forEach(function(ro){
+	 
+      if(ro.prizeId != '0' && ro.prizeObj){
+        
+        tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+      }
+     })
+     $('#prize_list').html(tmp_s)
+     //end pu prize
    
 
 
@@ -589,14 +708,16 @@ window.requestAnimFrame = (function() {
 			},
 			success: function(d) {
 
+		
+			
 					var prizeObj = {
-						'雷厉风行风扇1台':prizeDeg[0],
-						'乐扣乐扣套装':prizeDeg[1],
-						'雷迪森维嘉酒店298元房价优惠券':prizeDeg[2],
-						'星巴克新骨瓷杯1只':prizeDeg[3],
-						'雷迪森中餐厅9折券':prizeDeg[4],
-						'红罐可口可乐1罐':prizeDeg[5],
-						'雷迪森海参小火锅免费券（138元）':prizeDeg[6],
+						'可爱公仔':prizeDeg[0],
+						'太空棉被':prizeDeg[1],
+						'幸运彩票':prizeDeg[2],
+						'精美餐具':prizeDeg[3],
+						'谢谢1':prizeDeg[4],
+						'谢谢2':prizeDeg[5],
+						'谢谢3':prizeDeg[6],
 						'谢谢':prizeDeg[7]
 					}
 						//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
@@ -672,18 +793,6 @@ $('#modify_info_btn').click(function(){
 
 	$('#main').show();
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -858,6 +967,15 @@ WeixinApi.ready(function(Api){
 
 
 </script>
+
+
+
+
+
+
+
+
+
 
 
 
