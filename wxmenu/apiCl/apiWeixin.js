@@ -58,7 +58,8 @@ obj.getJsConfig = function(req,res){
 
     //console.log(req.get('Referer'))
 
-    var meUrl = req.query.url;
+    var meUrl = req.query.url || req.get('Referer')
+
 
     if(!meUrl){
         return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':'not have url param'}))
