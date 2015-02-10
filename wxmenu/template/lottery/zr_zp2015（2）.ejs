@@ -8,8 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="format-detection" content="telephone=no">
 
-
-<title>房价点评网，给你发年终奖啦</title>
+<!--打开弹出输入框，底部带奖品列表，更新转发接口-->
+<!--规则，每天1次,转发没有额外次数,带中奖列表-->
+<title>正荣幸福城邦，好礼转不停</title>
 <link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
 <script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
 <script src="http://www.6998cdn.com/uc55_2014/js/jquery.cookie.js"  type="text/javascript"></script>
@@ -19,28 +20,33 @@
 <link href="http://bcs.duapp.com/xytimg/yjszp/activity-style.css" rel="stylesheet" type="text/css">
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 
+
+
+
+
+
 <%- newrelic.getBrowserTimingHeader() %>
 </head>
 <style type="text/css">
 
 .activity-lottery-winning .main{
-	background: url("http://bcs.duapp.com/xytimg/zp%2Fbg1228.jpg?sign=MBO:609cad96aef414767c5ebb87057488e4:JL6Ho1PzVEJhtJTky4X2mt9hK%2F0%3D") no-repeat top center;
+	background: url("http://bcs.duapp.com/xytimg/zhuli%2F2015zr.jpg") no-repeat top center;
 }
 
 
 
-.activity-lottery-winning{ background: url(http://bcs.duapp.com/xytimg/zp%2Fbg1228.jpg?sign=MBO:609cad96aef414767c5ebb87057488e4:JL6Ho1PzVEJhtJTky4X2mt9hK%2F0%3D) no-repeat top center;}
+.activity-lottery-winning{ background: url(http://bcs.duapp.com/xytimg/zhuli%2F2015zr.jpg) no-repeat top center;}
 
 
 
 
 
 .body_wrap{
-	height: 1000px;
+	height: 780px;
 	overflow: hidden !important;
 }
 .main{
-	height: 1000px !important;
+	height: 780px !important;
 }
 #noprize{
 	background: url("http://bcs.duapp.com/xytimg/zp%2Fbg1217prize.jpg") no-repeat center 0;
@@ -87,28 +93,6 @@ height: 28px;
 color: #fff;
 text-align: left;
 }
-
-
-
-
-
-.prize_list{
-  width: 400px;
-  height: 150px;
-
-  display: block;
-  position: absolute;
-  top: 760px;
-  left: 30px;
-}
-
-.prize_list li{
-color: #fff;
-}
-
-
-
-
 .bottom_tip{
 	text-align: center;
 	font-size: 13px;
@@ -139,55 +123,65 @@ left: 20px;
 color: #555;
 font-size: 18px;
 }
-..mask_box{
+
+
+
+
+.prize_list{
+  width: 400px;
+  height: 150px;
+
+  display: block;
+  position: absolute;
+  top: 690px;
+  left: 30px;
+}
+
+.prize_list li{
+color: #fff;
+}
+
+
+
+
+
+
+.mask_box{
 	z-index: 99;	
 }
 
 
+
+
 #outer-cont {
-top: 240px;
+	position: relative;
+	width: 100%;
+	top: 240px;
+	margin-bottom: 30px;/* -moz-transform: rotate(-5deg);
+	-webkit-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	transform: rotate(-5deg); */
 }
-
 #inner-cont {
-top: 358px;
+	position: absolute;
+	width: 100%;
+	top: 358px;/* -moz-transform: rotate(-5deg);
+	-webkit-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	transform: rotate(-5deg); */
 }
 
-
-.lottery_again {
-position: absolute;
-top: 460px;
-left: 10px;
-display: block;
-width: 450px;
-height: 90px;
-}
-
-.lottery_again2 {
-top: 650px;
-
-}
-
-.lottery_again3 {
-top: 40px;
-
-}
 </style>
 <body>
-<!--规则，每天3次,转发没有额外次数,带中奖列表-->
-
 <div class="body_wrap ">
 <input type="hidden" id='openid' value=""/>
-  <ul id="prize_list" class="prize_list">
+ <ul id="prize_list" class="prize_list">
 
       </ul>
-<a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>
+
 <p class="bottom_tip">
-
-
-
-
-
-
 <a href="http://xy-tang.com/index.html" target="_blank">
 	信玉堂技术支持
 </a>
@@ -197,7 +191,7 @@ top: 40px;
 <div id="outercont">
 <div id="outer-cont">
 <div id="outer" style="-webkit-transform: rotate(2136deg);">
-	<img src="http://bcs.duapp.com/xytimg/zp%2Factivity-lottery-12281.png" width="432px"></div>
+	<img src="http://bcs.duapp.com/xytimg/zp%2Factivity-lottery-0210.png" width="432px"></div>
 </div>
 <div id="inner-cont">
 <div id="inner">
@@ -238,10 +232,11 @@ top: 40px;
 	    <ul></ul>
 	  </div>
 	<div id="prize_num" class="prize_num"></div>
-
+	<!--<div id="modify_info_btn" class="share tools-button openBtn" ></div>-->
+	<!--<input id="mobile_inp" class="mobile_inp" placeholder="请输入领奖手机号码" value="" maxlength="11">-->
 		<div class="share tools-button" onclick="mask();"></div>
 </div>  
-
+  
   
 <div id="mask" class="mask_box" onclick="mask();"><img src="http://wzzy2014skin.qiniudn.com/wk_zp2014/guide.png"/></div> 
   
@@ -267,7 +262,7 @@ top: 40px;
 
 <!-- Modal -->
 <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:400px;margin: 30px auto; overflow: hidden;">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
     <div class="modal-content">
       <div class="modal-header">
         <!--
@@ -309,44 +304,38 @@ top: 40px;
 
 <!-- Modal -->
 <div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:400px;margin: 30px auto;">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto;">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myModalLabel">抽奖规则和奖品列表</h4>
       </div>
       <div class="modal-body"> 
-奖品设置：<br/>
-
-特等奖1名：iPad mini <br/>
-
-一等奖2名：千元品牌金饰<br/>
-
-二等奖4名：价值138元美食餐券<br/>
-
-三等奖20名：精美电子体重计<br/>
-
-四等奖30名：16G数码U盘<br/>
-
-五等奖40名：10元话费<br/>
-
-活动时间：12月29日—1月4日<br/>
-
-游戏规则：<br/>
-
-1.每人每天可参与大转盘3次，活动持续7天，共21次；<br/>
-
-2.除二等奖、五等奖外，其余奖项获得者必须带上本人身份证、中奖证明至本公司领奖；<br/>
-
-3.凡是参与游戏并分享游戏链接至朋友圈者，均可获得房价点评网定制的精美礼品一份（每人限领一份）。<br/>
-
-4.中奖者没有按照提示留下联系方式的，视为中奖无效。<br/>
-
-5.本活动最终解释权归房价点评网所有。<br/>
-
-领奖时间：1月15日-1月16日，上午9：00-下午5：00<br/>
-
-领奖地点：常州市天宁区文化宫嘉宏世纪大厦1120室克而瑞常州机构<br/>
-
+抽奖规则：<br/>
+1、活动时间11月13日-11月23日，奖品送完为止。<br/>
+2、进入活动页面，点击抢礼包，有机会抢到1个礼包；<br/>
+3、每人每天可参与3次刮奖机会，转发到朋友圈可以额外获得3次刮奖机会。注：同一微信号、手机号、QQ号视为同一用户
+礼包使用规则<br/>
+1、本活动所发的礼包为合作商家直接提供<br/>
+2、使用范围：合作商家直接使用<br/>
+3、领取方式：中奖者于11月14日-11月30日（10:30~20:00）内凭手机号至中奖券所显示的地址领取礼包。例如，“挂烫机（绿城玉兰花园）”，则表示领奖地址为绿城玉兰花园售楼处，售楼处地址将在下面标注；<br/>
+4、一旦个人中奖后，请于中奖的第二天10：30分后前往领奖地址领奖；例如，用户于11月13日中奖，显示为“挂烫机（绿城玉兰花园）”，则应于11月14日10：30之后前往绿城玉兰花园售楼处领奖；<br/>
+4、个人领奖日期截止11月23日，若在此期间没有时间前往领取，可报名参加房价点评网于11月29日组织的看房团，跟随班车前往售楼处领奖，过期不候；<br/>
+6、在获取和使用礼包过程中，如果出现违规行为（如作弊领取，恶意套取等），房价点评网将根据自身合理判断取消用户获得礼包的资格；<br/>
+7、查询礼包的数量及更多礼包详情，请在微信公众号“CRIC无锡房价”的菜单栏“我的礼券”内查询；<br/>
+8、本次活动的最终解释权为无锡房价点评网所有。<br/>
+领奖地址：<br/>
+<span style="color:#c00; font-weight:bolder">绿城玉兰花园：</span><br/>滨湖区高浪路与立德路交汇处<br/>
+<span style="color:#c00; font-weight:bolder">华润橡树湾：</span><br/>惠山区政和大道与锡澄路交叉口西南侧<br/>
+<span style="color:#c00; font-weight:bolder">协信未来城：</span><br/>江海西路888号金山北工业园<br/>
+<span style="color:#c00; font-weight:bolder">金科中心：</span><br/>太湖大道与长江北路交汇处（新区欧尚对面）<br/>
+<span style="color:#c00; font-weight:bolder">新加坡尚锦城：</span><br/>高浪路与南湖大道（中南路延伸段）交汇处<br/>
+部分奖品：<br>
+挂烫机(绿城玉兰花园)<br>
+200元购物卡(新加坡尚锦城)<br>
+克里斯汀蛋糕50元券(华润橡树湾)<br>
+电磁炉(协信未来城)<br>
+飞科吹风机(金科中心)<br>
+等25种奖品<br>
 <span style="color:#c00; font-weight:bolder">奖品仅限本人领取，不得代领</span><br/>
       </div>
       <div class="modal-footer">
@@ -407,6 +396,10 @@ var mask = function () {
 
 
 
+
+
+
+
 window.isforward_today = moment().hour(23).minute(59).second(59)
 window.isforward_today = new Date(window.isforward_today)
 
@@ -448,19 +441,10 @@ if($.cookie('has_modify_info') == '1'){
 
 
 
-
-
-
-
-
-
-
-
-
-var forwardingUrl = 'http://mp.weixin.qq.com/s?__biz=MjM5MDAyMjYzNg==&mid=202488753&idx=2&sn=cb533895d9f8f6e961e7573d4468b990#rd';
-var forwardingImg = 'http://bcs.duapp.com/xytimg/zp%2Fbg12282.jpg'
-var forwardingTitle ='房价点评网，给你发年终奖啦'
-var forwardingDesc ='房价点评网，给你发年终奖啦'
+var forwardingUrl = 'http://menu.xy-tang.com/lottery/xinyutang?ename=yjs_zp2014';
+var forwardingImg = 'http://bcs.duapp.com/xytimg/yjszp/logo.jpg'
+var forwardingTitle ='狂欢圣诞，协信中心派大礼'
+var forwardingDesc ='狂欢圣诞，协信中心派大礼'
 
 
 
@@ -472,6 +456,7 @@ var u_username = '<%= wxuobj.appUserName %>'
 var u_mobile = '<%= wxuobj.appUserMobile %>'
 var appUserName = u_username
 var appUserMobile = u_mobile 
+
 
 
  $(function(){
@@ -496,30 +481,6 @@ var appUserMobile = u_mobile
   }
 
   //end check
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 
   $('#save_change').click(function(){
@@ -578,7 +539,7 @@ var appUserMobile = u_mobile
      }
 
      
-     //put my prize
+ //put my prize
      var tmp_s = ''
 	 
 	 
@@ -609,61 +570,22 @@ var appUserMobile = u_mobile
 
 
 
-
 window.hasPlay = false;
-window.hasForwardPlay = false;
-
-window.getIsForward = function(){
-		var is_f = $.cookie('isforward')
-		if(is_f == '0' || !is_f) return false
-		return is_f
-}
-
 $.get('/lottery/<%= appEname%>/info?ename=<%= lotteryEname%>',{},function(d){
     if(d.error == 1){
       return alert(d.data)
     }
         window.lotteryData = d.data;
-
-        //总限制数
-        if(lotteryObj.forwardTimes>=0){
-        	 var totalLimit = lotteryObj.intervalTimes + lotteryObj.forwardTimes
-        }
-        else{
-        	var totalLimit = lotteryObj.intervalTimes
-        }
-
+        
         if(d.data.record && d.data.record.length > 0){
-        	//获取当天的抽奖记录
-        	var todayMoment = moment().hour(0).minute(0).second(0).millisecond(0);
-        	var count = 0;
-        	var countF = 0;
-        	window.todayRecordList = d.data.record.filter(function(rObj){
-        		//var rObjMoment = moment(rObj.writeTime)
-        		//if(rObjMoment>=todayMoment){
-        			if(rObj.isForward == 0){
-        				count++
-        			}
-        			else if(rObj.isForward == 1){
-        				countF++
-        			}
-        			return true;
-        		//}
-        		//return false;
-        	})
-        	if(window.todayRecordList.length>=totalLimit){
+        	var now = moment();
+       		var lastRecordTime = moment(d.data.record[d.data.record.length-1].writeTime);
+       	//	if(now.dayOfYear() == lastRecordTime.dayOfYear()){
+       	//		window.hasPlay = true;
+       	//	}
+        	if(d.data.record.length>=3){
         		window.hasPlay = true;
-        		window.hasForwardPlay = true;
         	}
-        	else if(count<lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
-        		window.hasPlay = false;
-        		window.hasForwardPlay = false
-        	}
-        	else if(count>=lotteryObj.intervalTimes && countF<lotteryObj.forwardTimes){
-        		window.hasPlay = true;
-        		window.hasForwardPlay = false;
-        	}
-
         }
 
     },'json')
@@ -687,8 +609,8 @@ window.requestAnimFrame = (function() {
 	var totalDeg = 360 * 3 + 0;
 	var steps = [];
 	var lostDeg = [260];
-	var prizeDeg = [70, 10, -180, -50, -230, -120, 10, -30];
-	//[iPad mini，千元品牌金饰，价值138元美食餐券，精美电子体重计，16G数码U盘，10元话费，空，谢谢]
+	var prizeDeg = [300, 240, 180, 120, 60, 30, 10, -30];
+	//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
 	var prize, sncode;
 	var count = 0;
 	var now = 0;
@@ -714,10 +636,10 @@ window.requestAnimFrame = (function() {
 							
 					if(!window.prizeTitle){//没中奖
 						alert(window.result)
-					//	setTimeout(function(){
-						//	boxObjs.hide();
-						//	$('#noprize').show();
-					//	},1000)
+						setTimeout(function(){
+							boxObjs.hide();
+							$('#noprize').show();
+						},1000)
 						
 					}
 					else{
@@ -758,15 +680,15 @@ window.requestAnimFrame = (function() {
 	$("#inner").click(function() {
 		if (running) return;
 		if (window.hasPlay) {
-			alert('你已经玩过了，每个微信号每天只能转三次哦');
+			alert('你已经玩过了，每个微信号只能转三次哦');
 			return
 		}
 
 
-		//start(prizeDeg[5])
-//[iPad mini，千元品牌金饰，价值138元美食餐券，精美电子体重计，16G数码U盘，10元话费，空，谢谢]
+	//	start(prizeDeg[5])
+	//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
 
-		//return;
+	//	return;
 		
 		$.ajax({
 			url: "/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>",
@@ -786,17 +708,19 @@ window.requestAnimFrame = (function() {
 			},
 			success: function(d) {
 
+		
+			
 					var prizeObj = {
-						'iPad mini':prizeDeg[0],
-						'千元品牌金饰':prizeDeg[1],
-						'价值138元美食餐券':prizeDeg[2],
-						'精美电子体重计':prizeDeg[3],
-						'16G数码U盘':prizeDeg[4],
-						'10元话费':prizeDeg[5],
-						'空':prizeDeg[6],
+						'可爱公仔':prizeDeg[0],
+						'太空棉被':prizeDeg[1],
+						'幸运彩票':prizeDeg[2],
+						'精美餐具':prizeDeg[3],
+						'谢谢1':prizeDeg[4],
+						'谢谢2':prizeDeg[5],
+						'谢谢3':prizeDeg[6],
 						'谢谢':prizeDeg[7]
 					}
-						//[iPad mini，千元品牌金饰，价值138元美食餐券，精美电子体重计，16G数码U盘，10元话费，空，谢谢]
+						//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
 
 					if(d.error == 1){						
 						window.prizeTitle = false;
@@ -807,16 +731,16 @@ window.requestAnimFrame = (function() {
 					var prizeId = d.data.prizeId;
 					if(prizeId == '0'){ //没有中奖
 						window.prizeTitle = false;
-						window.result = '获得定制礼品一份';
+						window.result = '很遗憾没有中奖哦';
 						return start(lostDeg[0]);
 					}
 
 					var prizeTitle = d.data.prizeObj.name;
-								//[iPad mini，千元品牌金饰，价值138元美食餐券，精美电子体重计，16G数码U盘，10元话费，空，谢谢]
+								//[雷厉风行风扇，乐扣乐扣，雷迪森住房券，星巴克杯，雷迪森中餐厅，可口可乐，海鲜小火锅，谢谢]
 					var pos = prizeObj[prizeTitle]
 					if(typeof pos == 'undefined'){
 						window.prizeTitle = false;
-						window.result = '获得定制礼品一份';
+						window.result = '您没有中奖哦';
 						return start(lostDeg[0]);
 					}
 					
@@ -869,17 +793,6 @@ $('#modify_info_btn').click(function(){
 
 	$('#main').show();
 });
-
-
-
-
-
-
-
-
-
-
-   	 
 
 
 
@@ -1054,6 +967,15 @@ WeixinApi.ready(function(Api){
 
 
 </script>
+
+
+
+
+
+
+
+
+
 
 
 
