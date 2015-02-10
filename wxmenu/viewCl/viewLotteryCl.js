@@ -67,7 +67,7 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 				userid:userid,
 				wxuobj:wxuobj,
 				timeError:timeError,
-				jsurl:requestedUrl
+				jsurl:encodeURIComponent(requestedUrl)
 			});
 
 		})

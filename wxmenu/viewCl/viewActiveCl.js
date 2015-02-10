@@ -291,7 +291,7 @@ obj.activePage = function(req,res){ //活动页面展示
 							tempObj.prizeList = tempPrizeList
 							tempObj.myPrizeList = infoObj.myPrizeList
 							tempObj.now = Date.now()
-							tempObj.jsurl = requestedUrl
+							tempObj.jsurl = encodeURIComponent(requestedUrl)
 							return res.render('active/'+templateName+'.ejs', tempObj)
 						})//end activeBl.getRankByEname				
 						
