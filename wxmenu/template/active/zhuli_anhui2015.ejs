@@ -466,6 +466,34 @@ window.isAjax = false
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+<% if (isMyPage){ %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 $(function(){
 
@@ -488,15 +516,179 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-				<% if (isMyPage){ %>
 	    title: '羊年发大财，奖券领起来1', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
+
+			
+				    trigger:function(){
+				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成分享到朋友圈</p>')
+				    },
+				    success: function () { 
+				        // 用户确认分享后执行的回调函数
+				        $('#action').append('<p>成功分享到朋友圈</p>')
+				    },
+				    cancel: function () { 
+				        // 用户取消分享后执行的回调函数
+				        $('#action').append('<p>用户取消分享到朋友圈</p>')
+				    }
+				});
+
+				wx.onMenuShareAppMessage({
+			
+	    title: '羊年发大财，奖券领起来1', // 分享标题
+				    desc: '羊年发大财，奖券领起来1', // 分享描述
+				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
+					type: 'link', // 分享类型,music、video或link，不填默认为link
+				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				    trigger:function(){
+				    	$('#action').append('<p>成功点击发送给朋友</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成发送给朋友</p>')
+				    },
+				    success: function () { 
+				        // 用户确认分享后执行的回调函数
+				        $('#action').append('<p>成功发送给朋友</p>')
+				    },
+				    cancel: function () { 
+				        // 用户取消分享后执行的回调函数
+				        $('#action').append('<p>取消发送给朋友</p>')
+				    }
+				});
+
+
+
+			    wx.checkJsApi({
+				    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+				    success: function(res) {
+				    	alert(JSON.stringify(res))
+				        // 以键值对的形式返回，可用的api值true，不可用为false
+				        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+				    }});
+
+			});
+			wx.error(function(res){
+
+			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+			    alert('wx.error config出错')
+			    alert(JSON.stringify(res))
+			});
+
+			
+
+	}
+
+
+
+
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <%} else{ %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+$(function(){
+
+	
+	//部署上生产环境，把alert去掉
+
+	if(window.jsticket_error=='1'){
+		alert('微信jsdk config加载出错')
+		alert(window.jsconfig)
+	}
+	if(window.jsticket_error=='0'){
+			$('#config').html(JSON.stringify(window.jsconfig))
+
+			wx.config(window.jsconfig);
+			wx.ready(function(){
+
+			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+			    alert('wx jsdk ready')
+
+
+			    wx.onMenuShareTimeline({
+				
 	    title: '羊年发大财，奖券领起来2', // 分享标题
 				    link: 'http://mp.weixin.qq.com/s?__biz=MzA3NDYyMTkxNw==&mid=209283384&idx=1&sn=921ef4cf31dfc84d555a087ea1814707#rd', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
-<% } %>
+
     
 				
 				
@@ -520,18 +712,12 @@ $(function(){
 				wx.onMenuShareAppMessage({
 				
 				
-						<% if (isMyPage){ %>
-	    title: '羊年发大财，奖券领起来1', // 分享标题
-				    desc: '羊年发大财，奖券领起来1', // 分享描述
-				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
-<%} else{ %>
+			
 	    title: '羊年发大财，奖券领起来2', // 分享标题
 				    desc: '羊年发大财，奖券领起来2', // 分享描述
 				    link: 'http://mp.weixin.qq.com/s?__biz=MzA3NDYyMTkxNw==&mid=209283384&idx=1&sn=921ef4cf31dfc84d555a087ea1814707#rd', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
-<% } %>
-				
+
 				
 				
 				   
@@ -598,22 +784,13 @@ $(function(){
 
 
 
-<!--
 
-<% if (isMyPage){ %>
-var forwardingUrl = 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
-var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F201502051.png'
-var forwardingTitle ='福利送不停，2.14快来爱我吧'
-var forwardingDesc ='福利送不停，2.14快来爱我吧'
-<%} else{ %>
-     var forwardingUrl ='http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>'
-	 var forwardingImg = 'http://bcs.duapp.com/xytimg/zhuli%2F201502051.png'
-var forwardingTitle ='福利送不停，2.14快来爱我吧'
-var forwardingDesc ='福利送不停，2.14快来爱我吧'
+
+
 <% } %>
     
 
--->
+
 
 var forwardingCallback = function(){
     if(window.hasAdd) return false;
