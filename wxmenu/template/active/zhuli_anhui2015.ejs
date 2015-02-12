@@ -371,7 +371,7 @@ left: 20%;
         <h4 class="modal-title" id="myModalLabel">支持成功</h4>
       </div>
       <div class="modal-body"> 
-             <h4>成功帮TA增加了1个被爱指数</h4>
+             <h4>成功帮TA增加了1个人气值</h4>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -501,8 +501,8 @@ $(function(){
 	//部署上生产环境，把alert去掉
 
 	if(window.jsticket_error=='1'){
-		alert('微信jsdk config加载出错')
-		alert(window.jsconfig)
+	//	alert('微信jsdk config加载出错')
+	//	alert(window.jsconfig)
 	}
 	if(window.jsticket_error=='0'){
 			$('#config').html(JSON.stringify(window.jsconfig))
@@ -511,12 +511,12 @@ $(function(){
 			wx.ready(function(){
 
 			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-			    alert('wx jsdk ready')
+			 //   alert('wx jsdk ready')
 
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '羊年发大财，奖券领起来1', // 分享标题
+	    title: '羊年发大财，奖券领起来', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
 
@@ -539,8 +539,8 @@ $(function(){
 
 				wx.onMenuShareAppMessage({
 			
-	    title: '羊年发大财，奖券领起来1', // 分享标题
-				    desc: '羊年发大财，奖券领起来1', // 分享描述
+	    title: '羊年发大财，奖券领起来', // 分享标题
+				    desc: '羊年发大财，奖券领起来', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
 					type: 'link', // 分享类型,music、video或link，不填默认为link
@@ -575,8 +575,8 @@ $(function(){
 			wx.error(function(res){
 
 			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-			    alert('wx.error config出错')
-			    alert(JSON.stringify(res))
+			 //   alert('wx.error config出错')
+			  //  alert(JSON.stringify(res))
 			});
 
 			
@@ -670,8 +670,8 @@ $(function(){
 	//部署上生产环境，把alert去掉
 
 	if(window.jsticket_error=='1'){
-		alert('微信jsdk config加载出错')
-		alert(window.jsconfig)
+	//	alert('微信jsdk config加载出错')
+	//	alert(window.jsconfig)
 	}
 	if(window.jsticket_error=='0'){
 			$('#config').html(JSON.stringify(window.jsconfig))
@@ -680,12 +680,12 @@ $(function(){
 			wx.ready(function(){
 
 			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-			    alert('wx jsdk ready')
+			//    alert('wx jsdk ready')
 
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '羊年发大财，奖券领起来2', // 分享标题
+	    title: '羊年发大财，奖券领起来', // 分享标题
 				    link: 'http://mp.weixin.qq.com/s?__biz=MzA3NDYyMTkxNw==&mid=209283384&idx=1&sn=921ef4cf31dfc84d555a087ea1814707#rd', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
 
@@ -713,8 +713,8 @@ $(function(){
 				
 				
 			
-	    title: '羊年发大财，奖券领起来2', // 分享标题
-				    desc: '羊年发大财，奖券领起来2', // 分享描述
+	    title: '羊年发大财，奖券领起来', // 分享标题
+				    desc: '羊年发大财，奖券领起来', // 分享描述
 				    link: 'http://mp.weixin.qq.com/s?__biz=MzA3NDYyMTkxNw==&mid=209283384&idx=1&sn=921ef4cf31dfc84d555a087ea1814707#rd', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2F20150212bg2.jpg', // 分享图标
 
@@ -753,8 +753,8 @@ $(function(){
 			wx.error(function(res){
 
 			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-			    alert('wx.error config出错')
-			    alert(JSON.stringify(res))
+			 //   alert('wx.error config出错')
+			 //   alert(JSON.stringify(res))
 			});
 
 			
