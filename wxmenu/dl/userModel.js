@@ -91,7 +91,7 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 			})
 		});
 
-		console.log(idsary)
+		//console.log(idsary)
 
 		cb(null,idsary)
 	})
