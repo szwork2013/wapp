@@ -29,8 +29,8 @@ obj.activeMiddle = function(req,res,next){
     if(platForm == 'win32'){
 
     	if(global.env == 'debug'){
-    		req.session[appEname+'_oauth_openid'] = 'qwe'
-		    req.session[appEname+'_userid'] = '53e9b5daab6cc994aa6e7a5e'
+    		req.session[appEname+'_oauth_openid'] = 'asd'
+		    req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
     	}
     	else{
     		//真实情况需要注释掉

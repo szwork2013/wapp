@@ -54,6 +54,33 @@ objSchema.statics.destroy = function (query, cb) {
 }
 
 
+objSchema.statics.getActiveMaxScoreDoc = function (activeId, cb) {
+
+    return this.find({
+                'activeId':activeId
+              })
+             .limit(1)
+             .skip(0)
+             .sort({"supportScore":-1})
+             .exec(function(err, list){
+                if(err) return cb(err, list)
+                if(!list) return cb(null, list)
+                return cb(null, list[0])
+             });
+}
+
+
+objSchema.statics.getRank = function (activeId, lmit, cb) {
+
+    return this.find({
+                'activeId':activeId
+              })
+             .limit(lmit)
+             .skip(0)
+             .sort({"supportScore":-1})
+             .exec(cb);
+}
+
 
 objSchema.statics.getRankByActive = function(activeId, limit, cb){
 

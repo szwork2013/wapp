@@ -102,4 +102,22 @@ obj.startExchangePrize = function(req,res){
 }
 
 
+//获取一次活动只能支持一次获取分数一次的分数排名，前最多100名
+obj.getActiveRangeRank = function(req,res){
+
+    var activeId = req.query.activeid;
+    var limit = (req.query.limit-0) || 10
+    //最多查找100个rank
+    if(limit > 100){
+        limit = 100
+    }
+
+    activeBl.getActiveRangeRank(activeId, limit, function(err,doc){
+        if(err) return res.json({error:1,data:err})
+        res.json({error:0,data:doc})
+    })
+
+}
+
+
 module.exports = obj;

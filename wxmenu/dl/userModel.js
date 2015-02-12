@@ -85,8 +85,13 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 				name:v.appUserName,
 				sex:v.appUserSex,
 				mobile:v.appUserMobile,
+				wxName:v.wxName,
+				wxAvatar:v.wxAvatar,
+				wxAddress:v.wxAddress,
 			})
 		});
+
+		console.log(idsary)
 
 		cb(null,idsary)
 	})

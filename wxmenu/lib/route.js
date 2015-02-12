@@ -281,7 +281,10 @@ var addroute = function(app){
 		app.get('/votepage/:appename/:voteename', activeCl.voteWebPage)
 
 		app.post('/active_data/:appename/addsupport', apiActive.addSupport)
+		//获取排名
 		app.get('/active_data/getrank', activeCl.activeRank)
+		//获取区间活动的排名
+		app.get('/active_data/getrangerank', apiActive.getActiveRangeRank)
 		//active exchange prize
 		app.post('/active_data/:appename/exchangeprize', apiActive.startExchangePrize);
 

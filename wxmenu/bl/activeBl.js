@@ -235,83 +235,126 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 			userBl.getUserByUserId(toUserId,function(err, uobj2){
 				if(err) return cb(err);
 				if(!uobj2) return cb('没找到目标用户')
-	
-					obj.getIfHasAdd(activeId, fromOpenId, toUserId, function(err,doc){
-						if(err) return cb(err)
-
-						if(doc){
-							if(actdoc.withDay == 1){//如果可以每天来支持一次的话
-								var todayZero = moment().hour(0).minute(0).second(0)
-								var lastWriteTime = moment(doc.writeTime)
-								//审核通过，添加支持记录
-								if(lastWriteTime>=todayZero){//如果最新一个支持记录在一天以内的
-									return cb('不能重复支持，一天只能一次哦')
-								}
-			
-							}
-							else{
-								//如果不是每天，则表示从头到位只能支持一次
-								 return cb('不能重复支持')
-							}
-						}
-						
-						var supportScore = 0
-						if(actdoc.useScore == 1){//如果是以积分的形式支持
-							try{
-								var scoreList = actdoc.scoreList.split(',')
-							}
-							catch(e){
-								logger.error('actdoc.useScore split error:%s, scorelist: %s', e, scoreList)
-								return cb('获取积分错误')
-							}
 				
-							var pos = Math.floor(Math.random()*scoreList.length)
-							
-							if('undefined' == typeof scoreList[pos]){
-								logger.error('actdoc.useScore get error, pos:%s, scorelist: %s', pos, scoreList)
-								return cb('获取积分失败')
-							}
-			
-							supportScore = scoreList[pos]
-						}
+				//查找投票给这个用户的本活动的记录条数，如果是区间活动仅有一次机会
+				activeLogModel.countAll({'activeId':activeId, 'toUserId':toUserId}, function(err, count){
+					if(err) return cb(err)
+					var toUserRecordCound = count
 
-
-						if(actdoc.withDay == 1){
-							activeLogModel.insertOneByObj({
-								fromOpenId:fromOpenId,
-								fromUserId:fromUserId,
-								toUserId:toUserId,
-								activeId:activeId,
-								supportScore:supportScore,
-								writeTime:new Date()
-							},function(err,doc){
-								cb(err,{
-									supportScore:supportScore
-								})
-							})
+					//获取目前最高分数
+					activeLogModel.getActiveMaxScoreDoc(activeId, function(err, maxDoc){
+						if(err) return cb(err)
+						if(!maxDoc){
+							var curMax = 0
 						}
 						else{
-							activeLogModel.createOneOrUpdate({
-								fromOpenId:fromOpenId,
-								fromUserId:fromUserId,
-								toUserId:toUserId,
-								activeId:activeId,
-							},{
-								fromOpenId:fromOpenId,
-								fromUserId:fromUserId,
-								toUserId:toUserId,
-								activeId:activeId,
-								supportScore:supportScore,
-								writeTime:new Date()
-							},function(err,doc){
-								cb(err,{
-									supportScore:supportScore
-								})
-							})			
+							var curMax = maxDoc.supportScore - 0
 						}
-						//end if else
 
-					})//end getIfHasAdd
+
+						obj.getIfHasAdd(activeId, fromOpenId, toUserId, function(err,doc){
+							if(err) return cb(err)
+
+							if(doc){
+								if(actdoc.withDay == 1){//如果可以每天来支持一次的话
+									var todayZero = moment().hour(0).minute(0).second(0)
+									var lastWriteTime = moment(doc.writeTime)
+									//审核通过，添加支持记录
+									if(lastWriteTime>=todayZero){//如果最新一个支持记录在一天以内的
+										return cb('不能重复支持，一天只能一次哦')
+									}
+				
+								}
+								else{
+									//如果不是每天，则表示从头到位只能支持一次
+									 return cb('不能重复支持')
+								}
+
+							}
+							
+							var supportScore = 0
+							if(actdoc.useScore == 1){//如果是以积分的形式支持
+								try{
+									var scoreList = actdoc.scoreList.split(',')
+								}
+								catch(e){
+									logger.error('actdoc.useScore split error:%s, scorelist: %s', e, scoreList)
+									return cb('获取积分错误')
+								}
+								//分数计算
+
+								//如果数组长度为2，则表示区间随机获取整数分数
+								if(scoreList.length == 2){ 
+
+									//如果是区间的，则限定一个活动只能支持一次
+									if(toUserRecordCound>0){
+										return cb('本活动仅能支持一次')
+									}
+
+									var min = scoreList[0] - 0
+									var max = scoreList[1] - 0
+									var randomScore = Math.ceil(Math.random()*(max-min+1)+min)
+									//如果随机分数为最高分数，那么随机分数-1
+									if(randomScore == curMax){
+										randomScore -= 1
+									}
+									//支持分数为随机分数
+									supportScore = randomScore
+								}
+								//如果长度不为2，则表示从数组中随机取一个数获得分数
+								else{
+									var pos = Math.floor(Math.random()*scoreList.length)
+								
+									if('undefined' == typeof scoreList[pos]){
+										logger.error('actdoc.useScore get error, pos:%s, scorelist: %s', pos, scoreList)
+										return cb('获取积分失败')
+									}
+									supportScore = scoreList[pos]
+								}
+								
+							}
+
+
+							if(actdoc.withDay == 1){
+								activeLogModel.insertOneByObj({
+									fromOpenId:fromOpenId,
+									fromUserId:fromUserId,
+									toUserId:toUserId,
+									activeId:activeId,
+									supportScore:supportScore,
+									writeTime:new Date()
+								},function(err,doc){
+									cb(err,{
+										supportScore:supportScore
+									})
+								})
+							}
+							else{
+								activeLogModel.createOneOrUpdate({
+									fromOpenId:fromOpenId,
+									fromUserId:fromUserId,
+									toUserId:toUserId,
+									activeId:activeId,
+								},{
+									fromOpenId:fromOpenId,
+									fromUserId:fromUserId,
+									toUserId:toUserId,
+									activeId:activeId,
+									supportScore:supportScore,
+									writeTime:new Date()
+								},function(err,doc){
+									cb(err,{
+										supportScore:supportScore
+									})
+								})			
+							}
+							//end if else
+
+						})//end getIfHasAdd
+
+					})//end getActiveMaxScoreDoc
+
+				})//end 获取用户活动记录条数
 
 			})//end getUserByUserId
 
@@ -493,7 +536,55 @@ obj.savePrize = function(qobj, cb){
 	})//end appActivePrizeModel.createOneOrUpdate
 }
 
+obj.getActiveRangeRank = function(activeId, limit, cb){
+	activeModel.findOneByObj({
+		_id:activeId,
+		isShow:1
+	},function(err,actdoc){
+		if(err) return cb(err);
+		if(!actdoc) return cb('没找到活动')
 
+		activeLogModel.getRank(activeId, limit, function(err, logList){
+			if(err) return cb(err);
+			if(logList.length == 0) return cb(null, logList)
+
+			var toUserIdList = []
+			logList.forEach(function(item){
+				toUserIdList.push(item.toUserId)
+			})
+
+			userModel.getUserByIds(toUserIdList, function(err, userList){
+				if(err) return cb(err);
+				var resultList = []
+				logList.forEach(function(logItem,i){
+					userList.forEach(function(userItem){
+						//匹配到用户
+						if(logItem.toUserId == userItem.value.toString()){
+							resultList.push({
+								appUserName:userItem.name,
+								userId:logItem.toUserId,
+								name:userItem.name,
+								sex:userItem.sex,
+								mobile:userItem.mobile,
+								wxName:userItem.wxName,
+								wxAvatar:userItem.wxAvatar,
+								wxAddress:userItem.wxAddress,
+								supportScore:logItem.supportScore,
+								pos:(i+1),
+							})
+						}
+					})
+				})
+				//console.log(resultList)
+				return cb(null, resultList)
+
+			})
+
+
+		})
+	})
+
+}
 
 
 module.exports = obj;
