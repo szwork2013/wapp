@@ -3,6 +3,7 @@
       {
         "name"      : "ec",
         "script"    : "/var/nodejs/wapp/eastcity/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -10,6 +11,7 @@
       {
         "name"      : "ecadmin",
         "script"    : "/var/nodejs/wapp/eastcity/manager/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -17,6 +19,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7900.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -24,6 +27,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7901.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -31,6 +35,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7902.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -38,6 +43,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7903.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -45,6 +51,7 @@
       {
         "name"      : "wxmenuadmin",
         "script"    : "/var/nodejs/wapp/wxmenu/manager/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -53,6 +60,7 @@
       {
         "name"      : "mix",
         "script"    : "/var/nodejs/wapp/recMember/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -60,6 +68,7 @@
       {
         "name"      : "mixadmin",
         "script"    : "/var/nodejs/wapp/recMember/manager/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -68,6 +77,7 @@
       {
         "name"      : "broker",
         "script"    : "/var/nodejs/wapp/broker/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -75,6 +85,7 @@
       {
         "name"      : "brokeradmin",
         "script"    : "/var/nodejs/wapp/broker/manager/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -82,6 +93,7 @@
       {
         "name"      : "yjs",
         "script"    : "/var/nodejs/wapp/yjs/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -89,6 +101,7 @@
       {
         "name"      : "yjsadmin",
         "script"    : "/var/nodejs/wapp/yjs/manager/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -96,6 +109,7 @@
       {
         "name"      : "nodxg",
         "script"    : "/var/nodejs/wapp/nodxg/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -103,6 +117,7 @@
       {
         "name"      : "nodxgadmin",
         "script"    : "/var/nodejs/wapp/nodxg/manager/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -110,6 +125,7 @@
       {
         "name"      : "ztndyy",
         "script"    : "/var/nodejs/wapp/ztndyy/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -117,6 +133,7 @@
       {
         "name"      : "ztndyyadmin",
         "script"    : "/var/nodejs/wapp/ztndyy/manager/app.js",
+        "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
         }
