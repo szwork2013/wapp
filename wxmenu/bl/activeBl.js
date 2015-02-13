@@ -189,7 +189,27 @@ var checkActiveTime = function(activeObj){
 
 
 
+//删除重复获取range随机数的用户
+obj.deleteRepeatUser = function(activeId, userId){
 
+	activeLogModel.findByObj({
+		'activeId':activeId,
+		'toUserId':userId
+	}, function(err, list){
+		if(err) return;
+		if(list.length == 0 || list.length == 1) return
+		else{
+			//如果有多条，则只留第一条
+			list.forEach(function(item, i){
+				if(i == 0) return
+				activeLogModel.destroy({
+					'_id':item._id
+				},function(){})
+			})
+		}
+	})
+
+}
 
 
 
@@ -242,15 +262,16 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 					var toUserRecordCound = count
 
 					//获取目前最高分数
-					activeLogModel.getActiveMaxScoreDoc(activeId, function(err, maxDoc){
+					activeLogModel.getActiveMaxScoreList(activeId, function(err, maxDocList){
 						if(err) return cb(err)
-						if(!maxDoc){
-							var curMax = 0
+						if(!maxDocList || maxDocList.length == 0){
+							var maxDocList = [0]
 						}
 						else{
-							var curMax = maxDoc.supportScore - 0
+							var maxDocList = maxDocList
 						}
 
+						var checkDeleteLog = false;
 
 						obj.getIfHasAdd(activeId, fromOpenId, toUserId, function(err,doc){
 							if(err) return cb(err)
@@ -269,7 +290,7 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 									//如果不是每天，则表示从头到位只能支持一次
 									 return cb('不能重复支持')
 								}
-
+								
 							}
 							
 							var supportScore = 0
@@ -293,13 +314,19 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 
 									var min = scoreList[0] - 0
 									var max = scoreList[1] - 0
-									var randomScore = Math.ceil(Math.random()*(max-min+1)+min)
-									//如果随机分数为最高分数，那么随机分数-1
-									if(randomScore == curMax){
-										randomScore -= 1
-									}
 									//支持分数为随机分数
+									var randomScore = Math.ceil(Math.random()*(max-min+1)+min)
+									while(true){
+										//如果随机分数重复
+										if(maxDocList.indexOf(randomScore) == -1 || randomScore == 1){
+											break;
+										}
+										else{
+											randomScore--
+										}
+									}		
 									supportScore = randomScore
+									checkDeleteLog = true
 								}
 								//如果长度不为2，则表示从数组中随机取一个数获得分数
 								else{
@@ -327,6 +354,10 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 									cb(err,{
 										supportScore:supportScore
 									})
+									if(checkDeleteLog){
+										//检查是否有重复的条目
+										obj.deleteRepeatUser(activeId, toUserId)
+									}
 								})
 							}
 							else{
@@ -346,6 +377,10 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 									cb(err,{
 										supportScore:supportScore
 									})
+									if(checkDeleteLog){
+										//检查是否有重复的条目
+										obj.deleteRepeatUser(activeId, toUserId)
+									}
 								})			
 							}
 							//end if else
@@ -586,5 +621,11 @@ obj.getActiveRangeRank = function(activeId, limit, cb){
 
 }
 
+//获得某一个活动所有记录条目
+obj.countActiveLog = function(activeId, cb){
+	activeLogModel.countAll({
+		'activeId':activeId
+	}, cb)
+}
 
 module.exports = obj;

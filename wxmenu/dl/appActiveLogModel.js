@@ -54,18 +54,24 @@ objSchema.statics.destroy = function (query, cb) {
 }
 
 
-objSchema.statics.getActiveMaxScoreDoc = function (activeId, cb) {
+objSchema.statics.getActiveMaxScoreList = function (activeId, cb) {
 
     return this.find({
                 'activeId':activeId
               })
-             .limit(1)
+             .limit(10)
              .skip(0)
              .sort({"supportScore":-1})
              .exec(function(err, list){
                 if(err) return cb(err, list)
-                if(!list) return cb(null, list)
-                return cb(null, list[0])
+                if(!list || list.length == 0) return cb(null, list)
+
+                var maxList = []
+                list.forEach(function(item){
+                    maxList.push(item.supportScore-0)
+                })
+
+                return cb(null, maxList)
              });
 }
 
