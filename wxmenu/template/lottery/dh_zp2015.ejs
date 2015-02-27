@@ -605,7 +605,7 @@ var appUserMobile = u_mobile
 
 
 
- $(function(){
+$(function(){
   $('#lottery_again').click(function(){
     location.href = location.href;
   })
@@ -664,6 +664,7 @@ var appUserMobile = u_mobile
     }
         window.lotteryData = d.data;
         work(d.data)
+        doshare()
 
     },'json')
 
@@ -689,11 +690,14 @@ var appUserMobile = u_mobile
      var tmp_s = ''
 	 
 	 
+
+     window.myPrizeName = false
      data.record.forEach(function(ro){
 	 
       if(ro.prizeId != '0' && ro.prizeObj){
         
         tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+        window.myPrizeName = ro.prizeObj.name
       }
      })
      $('#prize_list').html(tmp_s)
@@ -927,34 +931,34 @@ window.requestAnimFrame = (function() {
 
 	
 
-var mobile_num = ['139','138','137','136','135','134','159','150','151','158','157','188','187','152','182','147','183','184','170','178']
-$('#modify_info_btn').click(function(){
+	var mobile_num = ['139','138','137','136','135','134','159','150','151','158','157','188','187','152','182','147','183','184','170','178']
+	$('#modify_info_btn').click(function(){
 
-    var appUserMobile = $('#mobile_inp').val().trim();
+	    var appUserMobile = $('#mobile_inp').val().trim();
 
-    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
-      alert('请输入正确的手机号码')
-      return false;
-    }
-    //var front3 = appUserMobile.slice(0,3);
-    //if(mobile_num.indexOf(front3) == -1){
-    //	alert('请输入移动号码')
-    //  	return false;
-    //}
+	    if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+	      alert('请输入正确的手机号码')
+	      return false;
+	    }
+	    //var front3 = appUserMobile.slice(0,3);
+	    //if(mobile_num.indexOf(front3) == -1){
+	    //	alert('请输入移动号码')
+	    //  	return false;
+	    //}
 
-    $.post('/lottery/<%= appEname%>/complete',{
-	    truename:u_username, 
-	    mobile:appUserMobile,
-	    recordId:window.lastRecordId,
-    },function(d){
-      if(d.error == 1) return alert(d.data);
-      boxObjs.hide();
-      $('#prizebox').show();
-     
-    },'json')
-    return false;
-	
-})
+	    $.post('/lottery/<%= appEname%>/complete',{
+		    truename:u_username, 
+		    mobile:appUserMobile,
+		    recordId:window.lastRecordId,
+	    },function(d){
+	      if(d.error == 1) return alert(d.data);
+	      boxObjs.hide();
+	      $('#prizebox').show();
+	     
+	    },'json')
+	    return false;
+		
+	})
 
 
 
@@ -968,91 +972,99 @@ $('#modify_info_btn').click(function(){
 
 
 
+	function doshare(){	
+		
+
+		if(window.myPrizeName){
+			var titleStr = '在大华锦绣华城抽到'+window.myPrizeName
+		}
+		else{
+			var titleStr = '大华锦绣华城精美好礼任你抽'
+		}
+
+		//部署上生产环境，把alert去掉
+		if(window.jsticket_error=='1'){
+			//alert('微信jsdk config加载出错')
+			//alert(window.jsconfig)
+		}
+		if(window.jsticket_error=='0'){
+				$('#config').html(JSON.stringify(window.jsconfig))
+
+				wx.config(window.jsconfig);
+				wx.ready(function(){
+
+				    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+				  //  alert('wx jsdk ready')
 
 
-//部署上生产环境，把alert去掉
+				    wx.onMenuShareTimeline({
+					    title: titleStr, // 分享标题
+					    link: 'http://114.215.183.41/2015/dh2015/index.html', // 分享链接
+					    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo20150227.jpg', // 分享图标
+					    trigger:function(){
+					    	$('#action').append('<p>成功点击分享到朋友圈</p>')
+					    },
+					    complete:function(){
+					    	$('#action').append('<p>完成分享到朋友圈</p>')
+					    },
+					    success: function () { 
+					        // 用户确认分享后执行的回调函数
+					        $('#action').append('<p>成功分享到朋友圈</p>')
+					    },
+					    cancel: function () { 
+					        // 用户取消分享后执行的回调函数
+					        $('#action').append('<p>用户取消分享到朋友圈</p>')
+					    }
+					});
 
-	if(window.jsticket_error=='1'){
-		//alert('微信jsdk config加载出错')
-		//alert(window.jsconfig)
-	}
-	if(window.jsticket_error=='0'){
-			$('#config').html(JSON.stringify(window.jsconfig))
+					wx.onMenuShareAppMessage({
+					    title: '大华锦绣华城精美礼品任你抽', // 分享标题
+					    desc: '精美礼品大派送，更有机会活动iwatch哦', // 分享描述
+					    link: 'http://114.215.183.41/2015/dh2015/index.html', // 分享链接
+					    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo20150227.jpg', // 分享图标
+					    type: 'link', // 分享类型,music、video或link，不填默认为link
+					    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+					    trigger:function(){
+					    	$('#action').append('<p>成功点击发送给朋友</p>')
+					    },
+					    complete:function(){
+					    	$('#action').append('<p>完成发送给朋友</p>')
+					    },
+					    success: function () { 
+					        // 用户确认分享后执行的回调函数
+					        $('#action').append('<p>成功发送给朋友</p>')
+					    },
+					    cancel: function () { 
+					        // 用户取消分享后执行的回调函数
+					        $('#action').append('<p>取消发送给朋友</p>')
+					    }
+					});
 
-			wx.config(window.jsconfig);
-			wx.ready(function(){
-
-			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-			  //  alert('wx jsdk ready')
 
 
-			    wx.onMenuShareTimeline({
-				    title: '我在大华锦绣华城抽到'+ro.prizeObj.name+'你也赶紧来吧', // 分享标题
-				    link: 'http://114.215.183.41/2015/dh2015/index.html', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo20150227.jpg', // 分享图标
-				    trigger:function(){
-				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
-				    },
-				    complete:function(){
-				    	$('#action').append('<p>完成分享到朋友圈</p>')
-				    },
-				    success: function () { 
-				        // 用户确认分享后执行的回调函数
-				        $('#action').append('<p>成功分享到朋友圈</p>')
-				    },
-				    cancel: function () { 
-				        // 用户取消分享后执行的回调函数
-				        $('#action').append('<p>用户取消分享到朋友圈</p>')
-				    }
+				    wx.checkJsApi({
+					    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+					    success: function(res) {
+					    //	alert(JSON.stringify(res))
+					        // 以键值对的形式返回，可用的api值true，不可用为false
+					        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+					    }});
+
+				});
+				wx.error(function(res){
+
+				    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+				  //  alert('wx.error config出错')
+				  //  alert(JSON.stringify(res))
 				});
 
-				wx.onMenuShareAppMessage({
-				    title: '大华锦绣华城精美礼品任你抽', // 分享标题
-				    desc: '精美礼品大派送，更有机会活动iwatch哦', // 分享描述
-				    link: 'http://114.215.183.41/2015/dh2015/index.html', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo20150227.jpg', // 分享图标
-				    type: 'link', // 分享类型,music、video或link，不填默认为link
-				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-				    trigger:function(){
-				    	$('#action').append('<p>成功点击发送给朋友</p>')
-				    },
-				    complete:function(){
-				    	$('#action').append('<p>完成发送给朋友</p>')
-				    },
-				    success: function () { 
-				        // 用户确认分享后执行的回调函数
-				        $('#action').append('<p>成功发送给朋友</p>')
-				    },
-				    cancel: function () { 
-				        // 用户取消分享后执行的回调函数
-				        $('#action').append('<p>取消发送给朋友</p>')
-				    }
-				});
+				
 
-
-
-			    wx.checkJsApi({
-				    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-				    success: function(res) {
-				    //	alert(JSON.stringify(res))
-				        // 以键值对的形式返回，可用的api值true，不可用为false
-				        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-				    }});
-
-			});
-			wx.error(function(res){
-
-			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-			  //  alert('wx.error config出错')
-			  //  alert(JSON.stringify(res))
-			});
-
-			
+		}
 
 	}
 
 
-})
 
 
 
