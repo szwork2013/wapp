@@ -73,6 +73,21 @@ display: block;
 width: 80%;
 height: 20%;
 }
+
+
+
+.lottery_again3{
+ position: absolute;
+top: 60%;
+left: 10%;
+display: block;
+width: 80%;
+height: 30%;
+}
+
+
+
+
 .prize_list {
 width: 80%;
 height: 10%;
@@ -224,6 +239,17 @@ font-size: 18px;
 	left:0px;
 }
 
+#frist{
+	background: url("http://bcs.duapp.com/xytimg/choujiang%2Fzr20150304%2F1.jpg") no-repeat center 0;
+	background-size: 100% auto;
+	position:absolute;
+	z-index:999;
+	top:0px;
+	left:0px;
+}
+
+
+
 .question{
 	padding: 20px 0 !important;
 	width: 100% !important;
@@ -240,7 +266,25 @@ font-size: 18px;
 
 </style>
 
+
+
+<script>
+$(document).ready(function(){
+  $("#frist").click(function(){
+    $(this).hide();
+  });
+});
+</script>
+
+
+
+
 </head>
+
+
+
+
+
 <body>
 
 
@@ -249,7 +293,9 @@ font-size: 18px;
   <input type="hidden" id='openid' value=""/>
   
   
-  
+<div id="frist" class="question">
+
+</div>  
   
   
   
@@ -318,7 +364,7 @@ font-size: 18px;
 点开程序红包，可获得随机的现金或者礼品，红包个数有限，先到先得<br><br>
 
 活动规则：<br>
-1、或关注【正荣幸福城邦】官方微信并回复“抢红包”获得活动参与链接<br>
+1、关注【正荣幸福城邦】官方微信并回复“抢红包”获得活动参与链接<br>
 2、每人每个微信号限参与一次<br><br>
 
 奖品设置：<br>
@@ -374,7 +420,7 @@ font-size: 18px;
        
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
      
-        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，当您刮中奖品后方便我们联系您</h4>
+        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，当您抽中奖品后方便我们联系您</h4>
       </div> 
     <form class="bs-example bs-example-form" role="form">
       <div class="modal-body">      
@@ -503,7 +549,7 @@ $(function(){
     wxappid:appId,
     },function(d){
       if(d.error == 1) return alert(d.data);
-      alert('资料完善成功，刷新页面即可看到奖品')
+      alert('资料完善成功')
       $('#myModal').modal('hide')
       $.cookie('has_modify_info', 1, { expires: window.isforward_today, path: '/' })
       //window.localStorage['has_modify'] = '1';
