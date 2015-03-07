@@ -19,6 +19,14 @@ var obj = { //定义结构
       jsapiTicket:{type:String, default:''},//jsapiticket
       jsapiTicketDate:{type: Date, default: function(){return Date.now()}},//jsapiticket生成时间
 
+
+      moneyMchId:{type:String, default:''}, //红包商户号
+      moneyAppId:{type:String, default:''}, //商户appid
+      moneyAppKey:{type:String, default:''}, //商户key
+      moenyNickName:{type:String, default:''}, //红包提供方名称
+      moneySendName:{type:String, default:''}, //红包发送者名称
+      moneyIp:{type:String, default:''}, //红包发送ip地址
+
       //snsapi_base 自动跳转，只获取opendi
       //snsapi_userinfo 用户授权，获取用户昵称，头像，位置等信息
 	    writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间

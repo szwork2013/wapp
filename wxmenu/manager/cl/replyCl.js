@@ -31,6 +31,14 @@ obj.read = function(req, res){
 				replyKey:docObj.replyKey.join(','),
 				replyKind:docObj.replyKind,
 				replyPicture:docObj.replyPicture,
+
+				moneyMin:docObj.moneyMin,
+				moneyMax:docObj.moneyMax,
+				moneyWishing:docObj.moneyWishing,
+				moneyActName:docObj.moneyActName,
+				moneyRemark:docObj.moneyRemark,
+				moneyTotalNum:docObj.moneyTotalNum,
+
 				isShow:docObj.isShow,
 				writeTime:docObj.writeTime
 			})

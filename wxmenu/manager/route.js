@@ -29,6 +29,7 @@ var voteGroupCl = require('./cl/voteGroupCl.js');
 var voteItemCl = require('./cl/voteItemCl.js');
 var voteRecordCl = require('./cl/voteRecordCl.js');
 
+var moneyCl = require('./cl/moneyLogCl.js');
 
 
 var utils = require('../lib/utils.js')
@@ -238,6 +239,13 @@ var addroute = function(app){
 	app.post('/manger/voteRec/aggressiveCount',checkLogin, voteRecordCl.aggressiveCount) //统计vote参与人数和票数接口
 	app.get('/manger/voteRec/download', checkLogin, voteRecordCl.download) //下载列表，导出excel
 
+
+	//拿红包流水
+	app.get('/manger/moneyLog/list', checkLogin, moneyCl.list)
+	app.post('/manger/moneyLog/read', checkLogin, moneyCl.read)
+	app.post('/manger/moneyLog/update', checkLogin, moneyCl.update)
+	app.post('/manger/moneyLog/destroy', checkLogin, moneyCl.destroy)
+	app.post('/manger/moneyLog/create', checkLogin, moneyCl.create)
 
 
 	//获得guid

@@ -2,10 +2,15 @@ var wechat = require('wechat');
 var util = require('util')
 var utils = require('../lib/utils.js')
 var wxReplyDl = require('../dl/wxReplyModel.js');
+var moneyLogDl = require('../dl/moneyLogModel.js');
 var wxMenuDl = require('../dl/menuModel.js');
 var wxAppBl = require('../bl/wxApp.js');
 var crypto = require('crypto')
 var url = require('url')
+
+var moneySendLib = require('../lib/money.js')
+var userBl = require('../bl/wxUser.js')
+
 var ERR_REPLY = '系统错误，请您重试';
 var UNKNOW_REPLY = '未知操作'
 
@@ -133,6 +138,104 @@ var getAppInfo = function(req,res,next){
 }
 
 
+//保存流水
+var saveMoneyLog = function(dataObj){
+    moneyLogDl.insertOneByObj(dataObj, function(err){
+      if(err){
+        logger.error('saveMoneyLog error: %s, dataobj: %s', err, JSON.stringify(dataObj))
+      }
+    })
+}
+
+
+
+
+//发送红包的接口
+var moneySend = function(req, res, openId, replyDoc, appId){
+    var replyDoc = replyDoc;
+    var appobj = appobj;
+
+    wxAppBl.getById(appId, function(err, appDoc){
+        if(err){
+            logger.error('moneySend wxAppBl.getById error: %s', err)
+            res.reply(ERR_REPLY);
+            return;
+        }
+        if(!appDoc){
+            logger.error('moneySend wxAppBl.getById not found appId: %s', appId)
+            res.reply(ERR_REPLY);
+            return;
+        }
+        var min = replyDoc.moneyMin
+        var max = replyDoc.moneyMax
+        var randomVal = Math.floor(min+Math.random()*(max-min));
+
+        var options={
+            min_value:randomVal,
+            max_value:randomVal,
+            total_amount:randomVal,
+            re_openid:openId,
+            total_num:1,
+            showName:replyDoc.moneyActName,
+            luckyMoneyWishing:replyDoc.moneyWishing,
+            clientIp:appDoc.moneyIp,
+            mch_id:appDoc.moneyMchId,
+            wxappid:appDoc.moneyAppId,
+            wxkey:appDoc.moneyAppKey,
+            appEname:appDoc.appEname,
+        }
+
+       
+
+        //调用发送红包的sdk去发送红包
+        moneySendLib(options, function(err, result){
+
+            console.log('***********')
+            console.log(err)
+            console.log(result)
+            console.log('***********')
+            return
+
+            if(err){
+                logger.error('moneySend call moneySendLib error: %s', err)
+                res.reply(ERR_REPLY);
+                return;
+            }
+            else{
+                //否则发送成功，发送成功就将记录记录流水
+                userBl.getUserByOpenid(openId, function(err, userObj){
+                    if(err){
+                       logger.error('moneySend userBl.getUserByOpenid error: %s', err)
+                       return
+                    }
+                    else if(!userObj){
+                       logger.error('moneySend userBl.getUserByOpenid not found user openid: %s', openId)
+                       return
+                    }
+                    var userId = userObj.uobj._id.toString()
+                    //记录获取红包日志
+                    saveMoneyLog({
+                        appId:appId,
+                        openId:openId,
+                        userId:userId,
+                        replyId:replyDoc._id.toString(),
+                        logIp:req.ips[0] || '127.0.0.1',
+                        moneyVal:randomVal,
+                        writeTime:new Date()
+                    })
+                    res.end('')
+                })
+                    
+            }
+
+
+
+        })
+    })
+}
+
+
+
 var wxFunction = function(app, applist){
 
   applist.forEach(function(appobj){
@@ -173,8 +276,15 @@ var wxFunction = function(app, applist){
                               return;
                           }
                           if(menuDoc.length>0){ //如果找到匹配项
-                             res.reply(wxGenReplyObj(menuDoc, message.FromUserName, appId)); //创建回复对象
-                             return;
+
+                             if(menuDoc[0].replyKind == 4){
+                                moneySend(req, res, message.FromUserName, menuDoc[0], appId)//如果是发送红包的，则走红包流程去了
+                             }
+                             else{
+                                res.reply(wxGenReplyObj(menuDoc, message.FromUserName, appId)); //创建回复对象
+                                
+                             }
+                             return;   
                           }
 
                           wxReplyDl.findOneByObj({ //如果没有找到匹配项，去查找默认回复
@@ -258,9 +368,14 @@ var wxFunction = function(app, applist){
                                 logger.info('wxReplyDl.findByObj not found, replyType is 2, menu click, menu key is %s',EventKey);
                                 return res.reply(UNKNOW_REPLY);
                             }
-                            
-                            res.reply(wxGenReplyObj(menuDoc, message.FromUserName, appId)); //创建回复对象
-
+                            //如果有匹配的菜单点击
+                            if(menuDoc[0].replyKind == 4){//如果是设置了发红包
+                                moneySend(req, res, message.FromUserName, menuDoc[0], appId)//如果是发送红包的，则走红包流程去了
+                                return
+                             }
+                            else{
+                                res.reply(wxGenReplyObj(menuDoc, message.FromUserName, appId)); //创建回复对象
+                            }   
                       })
                     })
 
@@ -273,7 +388,7 @@ var wxFunction = function(app, applist){
                             replyType:3,
                           },function(err, replyDoc){
                             if(err){
-                                logger.error(' wxReplyDl.findOneByObj message.Event ==subscribe, error: %s',err);
+                                logger.error('wxReplyDl.findOneByObj message.Event ==subscribe, error: %s',err);
                                 res.reply(ERR_REPLY);
                                 return;
                             }
@@ -374,5 +489,32 @@ var wxFunction = function(app, applist){
 }
 
 
+/*
+//测试用
+setTimeout(function(){
+
+  moneySend(
+  {
+    ip:'127.0.0.1'
+  }, 
+  {
+    reply:console.log,
+    end:console.log,
+  }, 
+  'oINOHjgODv0R1bGWW_rthUxTM530', 
+  {
+      '_id':'123123123',
+      'moneyMin':100,
+      'moneyMax':200,
+      'moneyWishing':'moneyWishing',
+      'moneyActName':'moneyActName',
+      'moneyRemark':'moneyRemark',
+      'moneyTotalNum':1,
+  }, 
+  '53c93455a0bfa3856a6b27b8'
+  )
+
+},5000)
+*/
 
 module.exports = wxFunction

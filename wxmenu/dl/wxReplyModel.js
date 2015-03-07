@@ -12,10 +12,16 @@ var obj = { //定义结构,奖品doc
   replyType:{type:Number,required:true,default:1}, 
   replyKey:{ type: Array, default:[]},    //关键字 逗号分隔
   
-  replyKind:{type:Number,required:true,default:2}, //回复类型，1文字回复，2图文回复
+  replyKind:{type:Number,required:true,default:2}, //回复类型，1文字回复，2图文回复，3红包回复
 
   replyPicture:{type: String, default:''},  //回复图片地址
-   
+  
+  moneyMin:{type:Number,default:1}, //最小红包金额
+  moneyMax:{type:Number,default:1}, //最大红包金额
+  moneyWishing:{type: String, default:''}, //红包祝福语
+  moneyActName:{type: String, default:''}, //红包活动名称
+  moneyRemark:{type: String, default:''}, //红包备注信息
+  moneyTotalNum:{type:Number,default:1}, //红包发放总数，不修改1次
   
   isShow:{type:Number,required:true,default:1},                        //1表示启用，0表示不启用
   writeTime:{ type: Date, default: function(){return Date.now()}}, //录入时间

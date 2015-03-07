@@ -5,19 +5,25 @@
  拼接微信红包xml串
  */
 /*
-serverConfig.json 文件内容
- "clientIp":"222.73.202.251",
- "showName":"i8小时",
- " luckyMoneyWishing":"恭喜发财",
- "mch_id":"", //
- "wxkey":"",  //
- "wxappid":"" //
+option
+ var options={
+    min_value:randomVal,
+    max_value:randomVal,
+    total_amount:randomVal,
+    re_openid:openId,
+    total_num:1,
+    showName:menuDoc.moneyActName,
+    luckyMoneyWishing:menuDoc.moneyWishing,
+    clientIp:appDoc.moneyIp,
+    mch_id:appDoc.moneyMchId,
+    wxappid:appDoc.wxAppId,
+    wxkey:appDoc.wxAppSecret,
+    appEname:appDoc.appEname,
+    }
  */
-
-
-var serverConfig = require('../moneryConfig/moneyConfig.json');
 var xmlreader = require('xmlreader');  //需要安装 xmlreader包
 var fs = require('fs');
+var path = require('path')
 var https = require('https');
 var MD5=require('blueimp-md5').md5;
  
@@ -50,20 +56,20 @@ var fnCreateUrlParam = function(json){
 var fnGetWeixinBonus = function(option){
  
     var _option = option || {};
-    var _min_value = _option.min_value ||100, //红包最小金额
-        _max_value = _option.max_value || 100, //红包最大金额
-        _total_amount = _option.total_amount || 100, //红包总金额
-        _re_openid = _option.re_openid || 'omNdNuCzOuYOm5aBr1-B5hhUS1JI', //红包发送的目标用户
-    _total_num = _option.total_num || 1; //红包个数
+    var _min_value = _option.min_value || -1, //红包最小金额
+        _max_value = _option.max_value || -1, //红包最大金额
+        _total_amount = _option.total_amount || -1, //红包总金额
+        _re_openid = _option.re_openid || '', //红包发送的目标用户
+    _total_num = _option.total_num || 0; //红包个数
  
     var _now = new Date();
-    var _showName = option.showName || serverConfig.showName;
-    var _clientIp = serverConfig.clientIp;
-    var _wishing = option.luckyMoneyWishing || serverConfig.luckyMoneyWishing;
+    var _showName = option.showName || '';
+    var _clientIp = option.clientIp;
+    var _wishing = option.luckyMoneyWishing || '';
 
-    var _mch_id = serverConfig.mch_id;
-    var _wxappid = serverConfig.wxappid,
-        _wxkey = serverConfig.wxkey;
+    var _mch_id = option.mch_id;
+    var _wxappid = option.wxappid,
+        _wxkey = option.wxkey;
  
     var _date_time = _now.getFullYear()+''+(_now.getMonth()+1)+''+_now.getDate();
     var _date_no = (_now.getTime() +'').substr(-8); //生成8为日期数据，精确到毫秒
@@ -71,7 +77,7 @@ var fnGetWeixinBonus = function(option){
     if(_random_no<10){ //生成位数为2的随机码
         _random_no = '0'+_random_no;
     }
-    var _muc_id =  _mch_id;//'1230184802';
+    var _muc_id =  _mch_id;
     var _xmlTemplate = '<xml>{content}</xml>';
     var _contentJson = {};
     _contentJson.act_name = _showName;// '新年红包';
@@ -94,36 +100,43 @@ var fnGetWeixinBonus = function(option){
     _contentJson.total_num = _total_num ;//1;
     _contentJson.wishing = _wishing;//'恭喜发财';
     _contentJson.wxappid = _wxappid;// 'wxbfca079a0b9058d3';
- 
+    
     _contentJson.key = _wxkey;
     var _contentStr = fnCreateUrlParam(_contentJson);
     //console.log('content='+_contentStr);
  
     _contentJson.sign =  MD5(_contentStr).toUpperCase();
     //删除 key (key不参与签名)
+    //console.log(_contentJson)
+
     delete _contentJson.key;
     var _xmlData = fnCreateXml(_contentJson);
  
     var _sendData = '<xml>'+_xmlData+'</xml>'; //_xmlTemplate.replace(/{content}/)
- 
+    
     return _sendData;
     //console.log('xml='+_sendData);
 }
  
-var fnSendMoney = function(req,res,data,callback){
- 
+var fnSendMoney = function(data,callback){
+    var keyPath = path.join(__dirname, '..', 'moneryConfig')
+
     var _host = 'api.mch.weixin.qq.com';
     var _path = '/mmpaymkttransfers/sendredpack';
- 
-    var opt = {
-        host:_host,
-        port:'443',
-        method:'POST',
-        path:_path,
-        key: fs.readFileSync('../moneryConfig/apiclient_key.pem'), //将微信生成的证书放入 cert目录下
-        cert: fs.readFileSync('../moneryConfig/apiclient_cert.pem')
+    try{
+        var opt = {
+            host:_host,
+            port:'443',
+            method:'POST',
+            path:_path,
+            key: fs.readFileSync(path.join(keyPath, data.appEname+'_key.pem')), //将微信生成的证书放入 cert目录下
+            cert: fs.readFileSync(path.join(keyPath,data.appEname+'_cert.pem'))
+        }
     }
- 
+    catch(e){
+        callback(e)
+        return;
+    }
     var body = '';
     opt.agent = new https.Agent(opt);
     var req = https.request(opt, function(res) {
@@ -131,20 +144,24 @@ var fnSendMoney = function(req,res,data,callback){
         res.on('data',function(d){
             body += d;
         }).on('end', function(){
-            //console.log(res.headers);
-            //console.log('微信返回消息');
-            //console.log(body);
-            var ret = fnParseReceivedXML(body);
-            //如果回调存在就执行回调函数
-            if(typeof callback == 'function'){
-                if(ret === false){
-                    return callback('got error')
-                }
-                else{
-                    return callback(null, ret);
-                }           
-            }
-        });
+            console.log(res.headers);
+            console.log('微信返回消息');
+            console.log(body);
+
+            //解析响应的xml文件
+            fnParseReceivedXML(body, function(err, ret){
+                    var ret = ret
+                    //如果回调存在就执行回调函数
+                    if(typeof callback == 'function'){
+                        if(err){
+                            return callback(body)
+                        }
+                        else{
+                            return callback(null, ret);
+                        }           
+                    }
+            });//end fnParseReceivedXML
+        });//end .on('end'
     }).on('error', function(e) {
         //console.log("Got error: " + e.message);
         //请求出错记录日志
@@ -161,31 +178,36 @@ var fnSendMoney = function(req,res,data,callback){
 /*
     解析微信传回来得消息
  */
-var fnParseReceivedXML = function(xmlData){
+var fnParseReceivedXML = function(xmlData, cb){
  
     try {
         xmlreader.read(xmlData, function (errors, response) {
             if (null !== errors) {
                 logger.error('fnParseReceivedXML xmlreader.read error:%s', errors)
                 //console.log(errors);
-                return;
+                return cb(errors);
             }
             // console.log( response.xml );
             if(response && response.xml && response.xml.return_code) {
                 var resCode = (response.xml.return_code.text()||'').toLowerCase()
+
+                //console.log('###########')
+                //console.log(resCode)
+                //console.log('###########')
+
                 if(resCode == 'sucess'){
-                    return  'sucess';
+                    return  cb(null, 'sucess');
                 }
-                else return resCode;
+                else return cb(resCode);
             }
             logger.error('fnParseReceivedXML xmlreader.read not have return_code')
-            return false;
+            return cb('not have return_code');
         });
     }catch(e){
         logger.error('fnParseReceivedXML xmlreader.read try-catch error:%s', e)
-        return false
+        return cb(e);
         //console.log('weixin sendmoney error'+ e.message);
     }
 }
  
-exports.sendLuckyMoney = fnSendMoney;
+module.exports = fnSendMoney;

@@ -90,6 +90,53 @@
             </div>
 
 
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyMin" >最小红包金额</label>
+            </div>
+            <div data-container-for="moneyMin" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="moneyMin" data-bind="value:moneyMin">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyMax" >最大红包金额</label>
+            </div>
+            <div data-container-for="moneyMax" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="moneyMax" data-bind="value:moneyMax">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyWishing" >红包祝福语</label>
+            </div>
+            <div data-container-for="moneyWishing" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyWishing" data-bind="value:moneyWishing">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyActName" >红包活动名称</label>
+            </div>
+            <div data-container-for="moneyActName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyActName" data-bind="value:moneyActName">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyRemark" >红包备注信息</label>
+            </div>
+            <div data-container-for="moneyRemark" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyRemark" data-bind="value:moneyRemark">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyTotalNum" >每人发放数</label>
+            </div>
+            <div data-container-for="moneyTotalNum" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="moneyTotalNum" data-bind="value:moneyTotalNum">
+            </div>
+
+
+
+
+
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
@@ -169,6 +216,14 @@
                                     "replyKey": { editable: true, },
                                     "replyKind": { editable: true, type:"number"},
                                     "replyPicture": { editable: true},
+
+                                    "moneyMin":{ editable: true, type:"number"},
+                                    "moneyMax":{ editable: true, type:"number"},
+                                    "moneyWishing":{ editable: true},
+                                    "moneyActName":{ editable: true},
+                                    "moneyRemark":{ editable: true},
+                                    "moneyTotalNum":{ editable: true, type:"number"},
+
                                     "isShow": { editable: true,type:"number" }, 
                                     "writeTime": {editable: true, type: "date" },
                                 }
@@ -236,6 +291,36 @@
                         { 
                             field: "replyPicture",
                             title: "回复图片",
+                             hidden:true
+                        },
+                        { 
+                            field: "moneyMin",
+                            title: "红包最小金额",
+                            hidden:true
+                        },
+                        { 
+                            field: "moneyMax",
+                            title: "红包最大金额",
+                             hidden:true
+                        },
+                        { 
+                            field: "moneyWishing",
+                            title: "红包祝福语",
+                             hidden:true
+                        },
+                        { 
+                            field: "moneyActName",
+                            title: "红包活动名称",
+                             hidden:true
+                        },
+                        { 
+                            field: "moneyRemark",
+                            title: "红包备注信息",
+                             hidden:true
+                        },
+                        { 
+                            field: "moneyTotalNum",
+                            title: "红包每人发放总数",
                              hidden:true
                         },
                         { 

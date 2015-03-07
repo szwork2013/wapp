@@ -123,6 +123,52 @@
 
 
 
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyMchId" >红包商户号</label>
+            </div>
+            <div data-container-for="moneyMchId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyMchId" data-bind="value:moneyMchId" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyAppId" >商户appid</label>
+            </div>
+            <div data-container-for="moneyAppId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyAppId" data-bind="value:moneyAppId" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyAppKey" >商户appkey</label>
+            </div>
+            <div data-container-for="moneyAppKey" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyAppKey" data-bind="value:moneyAppKey" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moenyNickName" >红包提供方名称</label>
+            </div>
+            <div data-container-for="moenyNickName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moenyNickName" data-bind="value:moenyNickName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneySendName" >红包发送者名称</label>
+            </div>
+            <div data-container-for="moneySendName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneySendName" data-bind="value:moneySendName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyIp" >红包发送ip地址</label>
+            </div>
+            <div data-container-for="moneyIp" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyIp" data-bind="value:moneyIp" >
+            </div>
+
+
+
+
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="appIntro" >开发商介绍</label>
@@ -199,6 +245,13 @@
                                     "accessTokenDate": {editable: true, type: "date" },
                                     "jsapiTicket":{ editable: true},
                                     "jsapiTicketDate": {editable: true, type: "date" },
+
+                                    "moneyMchId":{ editable: true},
+                                    "moneyAppId":{ editable: true},
+                                    "moneyAppKey":{ editable: true},
+                                    "moenyNickName":{ editable: true},
+                                    "moneySendName":{ editable: true},
+                                    "moneyIp":{ editable: true},
 
                                     "writeTime": {editable: true, type: "date" },
                                     "useOAuth":{ editable: true, type:'number'},
@@ -296,6 +349,38 @@
                             field: "jsapiTicketDate",
                             title: "jsapiTicketDate",
                             format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+
+                        { 
+                            field: "moneyMchId",
+                            title: "红包商户号", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneyAppId",
+                            title: "商户appid", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneyAppKey",
+                            title: "商户appkey", 
+                            hidden:true
+                        },
+   
+                        { 
+                            field: "moenyNickName",
+                            title: "红包提供方名称", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneySendName",
+                            title: "红包发送者名称", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneyIp",
+                            title: "红包发送ip地址", 
+                            hidden:true
                         },
 
 

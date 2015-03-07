@@ -188,7 +188,8 @@ window.rec_status = [
 
 window.reply_kind=[
               { text: "文字回复", value: 2 },
-              { text: "图文回复", value: 1 }
+              { text: "图文回复", value: 1 },
+              { text: "红包回复", value: 3 }
             ]
 
 window.reply_type=[

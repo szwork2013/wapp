@@ -9,6 +9,12 @@ obj.getByEname = function(ename,cb){ //根据ename查找此app应用的信息
 	appModel.findOneByObj({appEname:ename},cb);
 }
 
+obj.getById = function(id, cb){
+	return appModel.findOneByObj({
+		'_id':id.toString()
+	},cb)
+}
+
 //返回所有app应用商到内存
 obj.getAllApp = function(cb){
 	var cb = cb || function(){}
