@@ -154,84 +154,99 @@ var saveMoneyLog = function(dataObj){
 var moneySend = function(req, res, openId, replyDoc, appId){
     var replyDoc = replyDoc;
     var appobj = appobj;
+    var replyId = replyDoc._id.toString()
 
-    wxAppBl.getById(appId, function(err, appDoc){
-        if(err){
-            logger.error('moneySend wxAppBl.getById error: %s', err)
-            res.reply(ERR_REPLY);
-            return;
-        }
-        if(!appDoc){
-            logger.error('moneySend wxAppBl.getById not found appId: %s', appId)
-            res.reply(ERR_REPLY);
-            return;
-        }
-        var min = replyDoc.moneyMin
-        var max = replyDoc.moneyMax
-        var randomVal = Math.floor(min+Math.random()*(max-min));
+    //先判断用户是否已经超过了获取红包的上限制
+    moneyLogDl.countAll({
+      'openId':openId,
+      'replyId':replyId
+    }, function(err, countLog){
+          if(err){
+              res.reply(ERR_REPLY);
+              return;
+          }
+          if(countLog >= replyDoc.moneyTotalNum){
+              res.reply('您已经拿过本次红包啦~');
+              return;
+          }
 
-        var options={
-            min_value:randomVal,
-            max_value:randomVal,
-            total_amount:randomVal,
-            re_openid:openId,
-            total_num:1,
-            showName:replyDoc.moneyActName,
-            luckyMoneyWishing:replyDoc.moneyWishing,
-            clientIp:appDoc.moneyIp,
-            mch_id:appDoc.moneyMchId,
-            wxappid:appDoc.moneyAppId,
-            wxkey:appDoc.moneyAppKey,
-            appEname:appDoc.appEname,
-        }
-
-       
-
-        //调用发送红包的sdk去发送红包
-        moneySendLib(options, function(err, result){
-
-            console.log('***********')
-            console.log(err)
-            console.log(result)
-            console.log('***********')
-            return
-
+          wxAppBl.getById(appId, function(err, appDoc){
             if(err){
-                logger.error('moneySend call moneySendLib error: %s', err)
+                logger.error('moneySend wxAppBl.getById error: %s', err)
                 res.reply(ERR_REPLY);
                 return;
             }
-            else{
-                //否则发送成功，发送成功就将记录记录流水
-                userBl.getUserByOpenid(openId, function(err, userObj){
-                    if(err){
-                       logger.error('moneySend userBl.getUserByOpenid error: %s', err)
-                       return
-                    }
-                    else if(!userObj){
-                       logger.error('moneySend userBl.getUserByOpenid not found user openid: %s', openId)
-                       return
-                    }
-                    var userId = userObj.uobj._id.toString()
-                    //记录获取红包日志
-                    saveMoneyLog({
-                        appId:appId,
-                        openId:openId,
-                        userId:userId,
-                        replyId:replyDoc._id.toString(),
-                        logIp:req.ips[0] || '127.0.0.1',
-                        moneyVal:randomVal,
-                        writeTime:new Date()
-                    })
-                    res.end('')
-                })
-                    
+            if(!appDoc){
+                logger.error('moneySend wxAppBl.getById not found appId: %s', appId)
+                res.reply(ERR_REPLY);
+                return;
+            }
+            var min = replyDoc.moneyMin
+            var max = replyDoc.moneyMax
+            var randomVal = Math.floor(min+Math.random()*(max-min));
+
+            var options={
+                min_value:randomVal,
+                max_value:randomVal,
+                total_amount:randomVal,
+                re_openid:openId,
+                total_num:1,
+                showName:replyDoc.moneyActName,
+                luckyMoneyWishing:replyDoc.moneyWishing,
+                clientIp:appDoc.moneyIp,
+                mch_id:appDoc.moneyMchId,
+                wxappid:appDoc.moneyAppId,
+                wxkey:appDoc.moneyAppKey,
+                appEname:appDoc.appEname,
             }
 
+           
+
+            //调用发送红包的sdk去发送红包
+            moneySendLib(options, function(err, result){
 
 
+                if(err){
+                    logger.error('moneySend call moneySendLib error: %s', err)
+                    res.reply(ERR_REPLY);
+                    return;
+                }
+                else{
+                    //否则发送成功，发送成功就将记录记录流水
+                    userBl.getUserByOpenid(openId, function(err, userObj){
+                        if(err){
+                           logger.error('moneySend userBl.getUserByOpenid error: %s', err)
+                           return
+                        }
+                        else if(!userObj){
+                           logger.error('moneySend userBl.getUserByOpenid not found user openid: %s', openId)
+                           return
+                        }
+                        var userId = userObj.uobj._id.toString()
+                        //记录获取红包日志
+                        saveMoneyLog({
+                            appId:appId,
+                            openId:openId,
+                            userId:userId,
+                            replyId:replyDoc._id.toString(),
+                            logIp:req.ips[0] || '127.0.0.1',
+                            moneyVal:randomVal,
+                            writeTime:new Date()
+                        })
+                        res.end('')
+                    })
+                        
+                }
+
+
+
+            })
         })
+
+
     })
+
+    
 }
 
 
@@ -489,32 +504,32 @@ var wxFunction = function(app, applist){
 }
 
 
-/*
+
 //测试用
-setTimeout(function(){
+// setTimeout(function(){
 
-  moneySend(
-  {
-    ip:'127.0.0.1'
-  }, 
-  {
-    reply:console.log,
-    end:console.log,
-  }, 
-  'oINOHjgODv0R1bGWW_rthUxTM530', 
-  {
-      '_id':'123123123',
-      'moneyMin':100,
-      'moneyMax':200,
-      'moneyWishing':'moneyWishing',
-      'moneyActName':'moneyActName',
-      'moneyRemark':'moneyRemark',
-      'moneyTotalNum':1,
-  }, 
-  '53c93455a0bfa3856a6b27b8'
-  )
+//   moneySend(
+//   {
+//     ips:['127.0.0.1']
+//   }, 
+//   {
+//     reply:console.log,
+//     end:console.log,
+//   }, 
+//   'oINOHjqwggZ7d98XlrxmGkKc83-o', 
+//   {
+//       '_id':'123123123',
+//       'moneyMin':100,
+//       'moneyMax':200,
+//       'moneyWishing':'moneyWishing',
+//       'moneyActName':'moneyActName',
+//       'moneyRemark':'moneyRemark',
+//       'moneyTotalNum':1,
+//   }, 
+//   '53c93455a0bfa3856a6b27b8'
+//   )
 
-},5000)
-*/
+// },5000)
+
 
 module.exports = wxFunction

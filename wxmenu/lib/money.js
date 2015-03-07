@@ -144,9 +144,9 @@ var fnSendMoney = function(data,callback){
         res.on('data',function(d){
             body += d;
         }).on('end', function(){
-            console.log(res.headers);
-            console.log('微信返回消息');
-            console.log(body);
+            // console.log(res.headers);
+            // console.log('微信返回消息');
+            // console.log(body);
 
             //解析响应的xml文件
             fnParseReceivedXML(body, function(err, ret){
@@ -191,12 +191,12 @@ var fnParseReceivedXML = function(xmlData, cb){
             if(response && response.xml && response.xml.return_code) {
                 var resCode = (response.xml.return_code.text()||'').toLowerCase()
 
-                //console.log('###########')
-                //console.log(resCode)
-                //console.log('###########')
+                // console.log('###########')
+                // console.log(resCode)
+                // console.log('###########')
 
-                if(resCode == 'sucess'){
-                    return  cb(null, 'sucess');
+                if(resCode == 'success'){
+                    return  cb(null, 'success');
                 }
                 else return cb(resCode);
             }

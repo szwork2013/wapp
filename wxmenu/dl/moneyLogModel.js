@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var obj = { //定义结构
     appId: { type: String, required:true, index:true},   //此次猜图所属猜图活动id
-    openId:{ type: String, required:true, default:''},                  //用户的openid
+    openId:{ type: String, required:true, index:true, default:''},                  //用户的openid
     userId:{ type: String, required:true, index:true},   //用户的id号
     replyId:{type: String, required:true},               //回复id，用来区分哪次红包活动
     logIp:{type:String,default: '127.0.0.1'},            //拿红包时的ip地址
