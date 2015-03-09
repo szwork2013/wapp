@@ -55,14 +55,14 @@
             <div data-container-for="recSex" class="k-edit-field w-800-r">
                <input type="number" id="recSex_inp" class="k-input k-textbox w-50-inp" name="recSex" data-bind="value:recSex" required="required">
             </div>
-
+<% if(session.admin != 'recordadmin'){ %>
             <div class="k-edit-label  w-800-l">
                 <label for="recTel" >被推荐人电话</label>
             </div>
             <div data-container-for="recTel" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="recTel" data-bind="value:recTel" required="required">
             </div>
-
+<% } %>
             <div class="k-edit-label  w-800-l">
                 <label for="recArea" >意向面积</label>
             </div>
@@ -134,12 +134,15 @@
             <div data-container-for="appUserName" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="appUserName" data-bind="value:appUserName"  readonly="readonly">
             </div>
+<% if(session.admin != 'recordadmin'){ %>
             <div class="k-edit-label  w-800-l">
                 <label for="appUserMobile" >推荐人手机</label>
             </div>
             <div data-container-for="appUserMobile" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="appUserMobile" data-bind="value:appUserMobile"  readonly="readonly">
             </div>
+<% } %>
+
             <div class="k-edit-label  w-800-l">
                 <label for="appUserBuildingRoom" >推荐人楼房</label>
             </div>
@@ -350,7 +353,9 @@ function req_fail(e) {
                                     
                                     "recName": { editable: true},
                                     "recSex": { editable: true, type:'number'},
+<% if(session.admin != 'recordadmin'){ %>
                                     "recTel": { editable: true},
+<% } %>
                                     "recArea": { editable: true},
                                     "recPrice": { editable: true},
                                     "recRoom": { editable: true},
@@ -416,11 +421,13 @@ $.post('/manger/app/getList',{},function(data_ary){
                             title: "推荐人姓名",
                             filterable:false
                         },
+<% if(session.admin != 'recordadmin'){ %>
                         { 
                             field: "appUserMobile",
                             title: "推荐人手机",
                             filterable:false
                         },
+<% } %>                       
                         { 
                             field: "appUserBuildingRoom",
                             title: "推荐人楼房",
@@ -446,10 +453,12 @@ $.post('/manger/app/getList',{},function(data_ary){
                             values:window.sex_ary,
                             hidden:true
                         },
+<% if(session.admin != 'recordadmin'){ %>
                          { 
                             field: "recTel",
                             title: "电话",
                         },
+<% } %>
                          { 
                             field: "recArea",
                             title: "意向面积",

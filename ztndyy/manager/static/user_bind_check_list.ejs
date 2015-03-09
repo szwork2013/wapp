@@ -78,7 +78,9 @@ function req_fail(e) {
                                 fields: {
                                     "_id": { editable: false },
                                     "userId": { editable: false },
+                                    <% if(session.admin != 'recordadmin'){ %>
                                     "userMobile": { editable: false },
+                                    <% } %>
                                     "userSex": { editable: false},
                                     "openId": { editable: false },
                                     "appId": { editable: false},
@@ -148,11 +150,13 @@ function req_fail(e) {
                             title:'真实姓名',
                             filterable:false
                         },
+<% if(session.admin != 'recordadmin'){ %>
                         {
                             field:'userMobile',
                             title:'手机号码',
                             filterable:false
                         },
+<% } %>
                         {
                             field:'userSex',
                             title:'性别',

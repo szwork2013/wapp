@@ -27,14 +27,14 @@
             <div data-container-for="appUserName" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="appUserName" data-bind="value:appUserName" required="required" data-required-msg="请填写真实姓名" aria-invalid="true">
             </div>
-
+<% if(session.admin != 'recordadmin'){ %>
             <div class="k-edit-label  w-800-l">
                 <label for="appUserMobile">手机号码</label>
             </div>
             <div data-container-for="appUserMobile" class="k-edit-field w-800-r">
                <input type="number" class="k-input k-textbox w-50-inp" name="appUserMobile" data-bind="value:appUserMobile" required="required" data-required-msg="请填写手机号码" aria-invalid="true">
             </div>
-
+<% } %>
             <div class="k-edit-label  w-800-l">
                 <label for="appUserSex">性别</label>
             </div>
@@ -145,7 +145,9 @@ function downFunc(e){
                                     "_id": { editable: false },
                                     "appId": { editable: true },
                                     "appUserName":{editable: true},
+                                    <% if(session.admin != 'recordadmin'){ %>
                                     "appUserMobile":{editable: true},
+                                    <% } %>
                                     "appUserSex":{editable: true},
                                     "appUserBirth":{editable: true},
                                     "appUserScore":{editable: true},
@@ -209,10 +211,12 @@ function downFunc(e){
                             field: "appUserName",
                             title: "真实姓名",
                         },
+<% if(session.admin != 'recordadmin'){ %>
                         { 
                             field: "appUserMobile",
                             title: "手机号码",
                         },
+<% } %>
                         { 
                             field: "appUserSex",
                             title: "性别",
