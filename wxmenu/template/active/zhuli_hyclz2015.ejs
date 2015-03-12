@@ -24,6 +24,10 @@
 
 
 
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script src="/api/xinyutang/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
+
+
 
 
 
@@ -132,9 +136,9 @@ display:none;
 
 
          <br>
-      <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#fff"> “<%= toUserObj.wxName %>”的车厘子已经集了<%= supportScore %>个</font>
+      <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#fff"> “<%= toUserObj.wxName %>”的车厘子已经集了<%= supportScore %>个
 	  <br>
-	 集满10个就可以在本页兑换哦<br></center>
+	 集满10个就可以在本页兑换哦<br><br></font></center>
       
            
    
@@ -876,11 +880,11 @@ $(function(){
 </a>
 </p>
 
-
+<!--
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
       
-<!--<script src="http://wzhfile.qiniudn.com/wx_share_v3.js"></script> -->      
+<script src="http://wzhfile.qiniudn.com/wx_share_v3.js"></script> -->      
 <div style="display:none">
 <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
