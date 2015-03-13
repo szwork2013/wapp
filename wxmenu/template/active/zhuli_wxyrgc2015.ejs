@@ -244,7 +244,7 @@ background-color:#6fcbde;
             </div>
            
 		   
-		    <button id="startExchange" class="share_timeline btn-block">
+		    <button id="startExchange" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
         </div>
@@ -387,8 +387,8 @@ $(function(){
 	//部署上生产环境，把alert去掉
 
 	if(window.jsticket_error=='1'){
-	//	alert('微信jsdk config加载出错')
-	//	alert(window.jsconfig)
+		alert('微信jsdk config加载出错')
+		alert(window.jsconfig)
 	}
 	if(window.jsticket_error=='0'){
 			$('#config').html(JSON.stringify(window.jsconfig))
