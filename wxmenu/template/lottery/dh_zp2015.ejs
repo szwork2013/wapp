@@ -49,6 +49,8 @@
 .main{
 	height: 1220px;width: 480px;!important;
 }
+
+/*
 #noprize{
 	background: url("http://bcs.duapp.com/xytimg/zhuli%2F2015zr.jpg") no-repeat center 0;
 	background-size: 640px 1220px;
@@ -113,7 +115,7 @@
 
 
 
-
+*/
 
 
 
@@ -224,7 +226,7 @@ color: #fff;
 #inner-cont {
 	position: absolute;
 	width: 100%;
-	top: 348px;/* -moz-transform: rotate(-5deg);
+	top: 345px;/* -moz-transform: rotate(-5deg);
 	-webkit-transform: rotate(-5deg);
 	-o-transform: rotate(-5deg);
 	-ms-transform: rotate(-5deg);
@@ -763,7 +765,7 @@ window.requestAnimFrame = (function() {
 	var steps = [];
 	var lostDeg = [300];
 	var prizeDeg = [300, 240, 160, 30, 60, 30, 10, -30];
-	//[羊年大吉，彩虹伞1把，蓝牙音响1套，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
+	//[蓝牙音箱，彩虹伞1把，1000元购房抵用券，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
 	var prize, sncode;
 	var count = 0;
 	var now = 0;
@@ -791,7 +793,7 @@ window.requestAnimFrame = (function() {
 						alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
-						$('#tongqu').show();
+					//	$('#tongqu').show();
 					//	alert('<%= wxuobj.appUserName %>');
 					location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize1";  
 					},1000)
@@ -799,11 +801,12 @@ window.requestAnimFrame = (function() {
 					}
 					
 					
-					else if(window.prizeTitle=='蓝牙音响1套'){
+					else if(window.prizeTitle=='1000元购房抵用券'){
 						alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
-						$('#xintiao').show();
+						//$('#xintiao').show();
+						location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize4"; 
 					},1000)
 						
 					}
@@ -812,14 +815,24 @@ window.requestAnimFrame = (function() {
 						alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
-						$('#nuanxin').show();
+						//$('#nuanxin').show();
 					//	alert('<%= wxuobj.appUserName %>');
+					location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize3"; 
 					},1000)
 						
 					}
 					
 					
-					
+					else if(window.prizeTitle=='蓝牙音箱'){
+						alert(window.result)
+					setTimeout(function(){
+						//	boxObjs.hide();
+					//	$('#nuanxin').show();
+					//	alert('<%= wxuobj.appUserName %>');
+					location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize2"; 
+					},1000)
+						
+					}
 					
 					else{
 						alert(window.result)
@@ -864,8 +877,7 @@ window.requestAnimFrame = (function() {
 
 
 		//start(prizeDeg[3])
-	//[羊年大吉，彩虹伞1把，蓝牙音响1套，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
-
+	//[蓝牙音箱，彩虹伞1把，1000元购房抵用券，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
 		//return;
 		$.ajax({
 			url: "/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>",
@@ -888,16 +900,16 @@ window.requestAnimFrame = (function() {
 		
 			
 					var prizeObj = {
-						'羊年大吉':prizeDeg[0],
+						'蓝牙音箱':prizeDeg[0],
 						'彩虹伞1把':prizeDeg[1],
-						'蓝牙音响1套':prizeDeg[2],
+						'1000元购房抵用券':prizeDeg[2],
 						'白色恋人巧克力1盒':prizeDeg[3],
 						'羊年大吉':prizeDeg[4],
 						'羊年大吉':prizeDeg[5],
 						'羊年大吉':prizeDeg[6],
 						'羊年大吉':prizeDeg[7]
 					}
-						//[羊年大吉，彩虹伞1把，蓝牙音响1套，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
+						//[蓝牙音箱，彩虹伞1把，1000元购房抵用券，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
 
 					if(d.error == 1){						
 						window.prizeTitle = false;
@@ -1006,8 +1018,8 @@ window.requestAnimFrame = (function() {
 
 				    wx.onMenuShareTimeline({
 					    title: titleStr, // 分享标题
-					    link: 'http://114.215.183.41/2015/dh2015/index.html', // 分享链接
-					    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo20150227.jpg', // 分享图标
+					    link: 'http://114.215.183.41/2015/dh2015/default.html', // 分享链接
+					    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo0315.jpg', // 分享图标
 					    trigger:function(){
 					    	$('#action').append('<p>成功点击分享到朋友圈</p>')
 					    },
@@ -1027,8 +1039,8 @@ window.requestAnimFrame = (function() {
 					wx.onMenuShareAppMessage({
 					    title: titleStr, // 分享标题
 					    desc: '精美礼品大派送，更有机会活动iwatch哦', // 分享描述
-					    link: 'http://114.215.183.41/2015/dh2015/index.html', // 分享链接
-					    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo20150227.jpg', // 分享图标
+					    link: 'http://114.215.183.41/2015/dh2015/default.html', // 分享链接
+					    imgUrl: 'http://bcs.duapp.com/xytimg/zp%2Flogo0315.jpg', // 分享图标
 					    type: 'link', // 分享类型,music、video或link，不填默认为link
 					    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 					    trigger:function(){
