@@ -191,7 +191,7 @@ font-size: 18px;
 
   display: block;
   position: absolute;
-  top: 690px;
+  top: 490px;
   left: 30px;
 }
 
@@ -267,16 +267,19 @@ color: #fff;
 <a href="javascript:;" title="再刮一次" class="lottery_again" onclick="mask();"></a>
 
 <input type="hidden" id='openid' value=""/>
-<!-- <ul id="prize_list" class="prize_list">
+ <ul id="prize_list" class="prize_list">
 
       </ul>
--->
+
 
 
 
 
 <div id="tongqu" class="question" style="display:none;">
+ <p style="margin-top:300px;margin-left:35%; font-color=#fff;font-size:22px">用户：<%= wxuobj.appUserName %></p>
+ <ul id="prize_list" class="prize_list">
 
+      </ul>
 <a href="javascript:;" title="再刮一次" class="lottery_again2" onclick="mask();"></a>
 
 	
@@ -587,10 +590,10 @@ if($.cookie('has_modify_info') == '1'){
 
 
 
-var forwardingUrl = 'http://menu.xy-tang.com/lottery/xinyutang?ename=yjs_zp2014';
-var forwardingImg = 'http://bcs.duapp.com/xytimg/yjszp/logo.jpg'
-var forwardingTitle ='狂欢圣诞，协信中心派大礼'
-var forwardingDesc ='狂欢圣诞，协信中心派大礼'
+//var forwardingUrl = 'http://menu.xy-tang.com/lottery/xinyutang?ename=yjs_zp2014';
+//var forwardingImg = 'http://bcs.duapp.com/xytimg/yjszp/logo.jpg'
+//var forwardingTitle ='狂欢圣诞，协信中心派大礼'
+//var forwardingDesc ='狂欢圣诞，协信中心派大礼'
 
 
 
@@ -789,6 +792,8 @@ window.requestAnimFrame = (function() {
 					setTimeout(function(){
 						//	boxObjs.hide();
 						$('#tongqu').show();
+					//	alert('<%= wxuobj.appUserName %>');
+					location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize1";  
 					},1000)
 						
 					}
@@ -808,6 +813,7 @@ window.requestAnimFrame = (function() {
 					setTimeout(function(){
 						//	boxObjs.hide();
 						$('#nuanxin').show();
+					//	alert('<%= wxuobj.appUserName %>');
 					},1000)
 						
 					}
