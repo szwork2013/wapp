@@ -38,13 +38,16 @@
     }
 <%}%>
     .container{
-        background:#FFFFFF;
+        background: url("http://bcs.duapp.com/xytimg/zp%2Fprize1234.jpg") no-repeat top center;background-size: 320px 610px;
         padding-bottom: 20px;
+		width:320px;
+		height:610px;
+		
     }
 	.container {
 width: 100%;
-padding-right: 2px;
-padding-left: 2px;
+padding-right: 0px;
+padding-left: 0px;
 }
 
 
@@ -115,6 +118,15 @@ background-color:#6fcbde;
 background-color:#6fcbde;
 }
 	
+	
+	.prize1234{
+	margin-top:180px;
+	margin-left:0px;
+	
+	
+	z-index:999;
+	
+	}
 </style>
 
 
@@ -124,39 +136,69 @@ background-color:#6fcbde;
 	
 	
 	
+	
+	
+	
+	<!-- mask div -->
+<div id="mask" class="mask_box" onclick="mask();">
+    <img src="http://wzhfile.qiniudn.com/guide5.png"/>
+</div> 
+<!-- mask div -->
+	
+	
+	 
+	
+	
+	
+
+	
         <div class="container">
 		
-		 <img src="http://bcs.duapp.com/xytimg/wxyrgc%2Fyrgc0313.jpg" width='100%' alt=""><br>
-		  
 		
-		
-		
- 
-            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %></center></div> 
 
 
 		
  <% if(isMyPage) { %>
-           <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
+     <div class="prize1234"> 
+		  
+		<center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>，</font><font style="color:#fffc00">我的奖品</font>
+		<br><img src="http://bcs.duapp.com/xytimg/zp%2Fprize1.png" / width="320px" height="auto"><br>
+		<a id="btnShare"  onclick="mask()"><img src="http://bcs.duapp.com/xytimg/zp%2Fzhongjiang.png" / width="320px" height="auto"></a>
+		
+		</center>
+		
+			</div>
+ 
 			
 			
-			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友为你助力</span>
-            </button>
+			
         <% }else{ %>
 		
-		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为他助力拿奖品</span>
-            </a>
-			<br>
+		<div class="prize1234"> 
 		
+		<center>您的好友  <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>，</font><font style="color:#fffc00">中奖了</font>
+		<br><img src="http://bcs.duapp.com/xytimg/zp%2Fprize1.png" / width="320px" height="auto"><br>
+		<a href="http://114.215.183.41/2015/dh2015/default.html"><img src="http://bcs.duapp.com/xytimg/zp%2Fchoujiang.png" / width="320px" height="auto"></a>
 		
+		</center>
 		
-           <a href="http://mp.weixin.qq.com/s?__biz=MzA5OTcyNzgzOA==&mid=204398361&idx=1&sn=3725f71faa20190a07d9d0a0b3d90b36#rd" class="share_timeline1 btn-block">
-              <span class="button1" >我也要领取礼物</span>
-            </a>
+		</div>
+     
 			
         <%}%>
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
 		
 <script>
 				$(function(){
@@ -440,17 +482,6 @@ $(function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <% } %>
     
 
@@ -648,11 +679,11 @@ $(function(){
 
 </script>		
 
-<p class="bottom_tip">
+<!--<p class="bottom_tip">
 <a href="#" target="_blank">
 	信玉堂技术支持
 </a>
-</p>
+</p>-->
 
 
 
