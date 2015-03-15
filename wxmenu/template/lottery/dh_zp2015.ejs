@@ -17,7 +17,7 @@
 <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
 
 
-<link href="http://bcs.duapp.com/xytimg/yjszp/activity-style.css" rel="stylesheet" type="text/css">
+<link href="http://bcs.duapp.com/xytimg/zp%2Factivity-style.css" rel="stylesheet" type="text/css">
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 
 
@@ -703,6 +703,19 @@ $(function(){
         
         tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
         window.myPrizeName = ro.prizeObj.name
+		if(ro.prizeObj.name=='彩虹伞1把'){
+		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize1";  
+		}
+		else if(ro.prizeObj.name=='蓝牙音箱'){
+		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize2";  
+		}
+		else if(ro.prizeObj.name=='1000元购房抵用券'){
+		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize4";  
+		}
+		else if(ro.prizeObj.name=='白色情人节巧克力1盒'){
+		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize3";  
+		}
+		
       }
      })
      $('#prize_list').html(tmp_s)
@@ -840,7 +853,8 @@ window.requestAnimFrame = (function() {
 						setTimeout(function(){
 							//boxObjs.hide();
 							//$('#prize_num').html(prizeTitle.slice(0,-1))
-							$('#nuli').show();
+						//	$('#nuli').show();
+						location.href=location.href
 						},1000)
 						
 					}
@@ -970,8 +984,8 @@ window.requestAnimFrame = (function() {
 		    recordId:window.lastRecordId,
 	    },function(d){
 	      if(d.error == 1) return alert(d.data);
-	      boxObjs.hide();
-	      $('#prizebox').show();
+	      //boxObjs.hide();
+	     // $('#prizebox').show();
 	     
 	    },'json')
 	    return false;
