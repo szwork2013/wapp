@@ -17,7 +17,7 @@ app.locals.newrelic = newrelic;
 
 app.use(express.cookieParser());
 app.use(express.session({secret: 'wxapp', cookie: {maxAge: 60000}}));
-app.use(clientSession.connect());
+
 
 /*
 app.use(ifile.connect(
