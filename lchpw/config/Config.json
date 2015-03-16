@@ -1,0 +1,13 @@
+{
+	"currentSite":"http://127.0.0.1",
+	"appEname":"lchpw",
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/lchpw",
+	"monoosePool":2,
+	"currentHost":"127.0.0.1",
+	"currentVersion":"v1",
+	"listenPort":7014,
+	"mangerListenPort":7015,
+	"wxAppId":"123",
+	"wxAppSecret":"123",
+	"wxAppToken":"weixin"
+}

@@ -1,0 +1,49 @@
+<ul class="home-nav fn-clear">
+
+
+            <% if(binderObj.appUserType == 0) {%>
+    			<li class="nav-recommend"><a href="/view/user/regist_v2?wxuserid=<%= userObj._id %>">我要推荐<label>hot</label><br /><span>Recommend</span></a></li>
+
+    			<li class="nav-rule"><a href="/view/user/regist_v2?wxuserid=<%= userObj._id %>">我的客户<br /><span>Client</span></a></li>
+            <%}else{%>
+                <li class="nav-recommend"><a target="_blank" href="/view/user/recommend_v2?wxuserid=<%= userObj._id %>">我要推荐<label>hot</label><br /><span>Recommend</span></a></li>
+                <li class="nav-rule"><a target="_blank" href="/view/user/recrecord_v2?wxuserid=<%= userObj._id %>">我的客户<br /><span>Client</span></a></li>
+            <%}%>
+
+
+
+			<li class="nav-commission"><a target="_blank" href="/view/service/newsdetail_v2?newsId=54d0e949031c355279f0f00d&wxuserid=<%= userObj._id %>"><p>使用指南<br /><span>Project</span></p></a></li>
+			
+<% if(userObj.code2 == '1'){ %>
+
+        <li class="nav-rule-detail"><a target="_blank" href="/view/user/myagent?wxuserid=<%= userObj._id %>">我的经纪人<br /><span>My agent</span></a></li>
+
+<% } else{ %>
+        <li class="nav-rule-detail"><a target="_blank" href="/view/service/newsdetail_v2?newsId=54d2efec031c355279f10f4e&wxuserid=<%= userObj._id %>">活动细则<br /><span>Rule</span></a></li>
+<% } %>
+		</ul>
+     		
+        <div class="sale-box">
+			<h6>在售项目</h6>
+			<div class="floor-box">
+				<a target="_blank" href="/view/service/newsdetail_v2?newsId=54d0e973031c355279f0f013&wxuserid=<%= userObj._id %>" class="floor-detail">
+                    <figure class="floor-img">
+                        <img src="http://bcs.duapp.com/xytimg/ztndyy.jpg" alt="">
+                    </figure>
+                            <div class="floor">
+                                <h5>中铁诺德誉园</h5>
+                                    <div class="award fn-clear">
+                                        <label class="award-title">佣金</label>
+                                        <div class="award-list">
+                                            <span>最高奖金4000元/套（税前）</span><br />
+                                        </div>
+                                    </div>
+                                    <!--激励部分-->
+                                    <div class="award fn-clear">
+                                        <div class="award-list">
+                                        </div>
+                                    <!--备注部分-->
+                                </div>
+                            </div>
+		  </div>
+	   </div>

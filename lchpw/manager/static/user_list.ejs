@@ -1,0 +1,487 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">用户id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appId" >开发商</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserName">真实姓名</label>
+            </div>
+            <div data-container-for="appUserName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appUserName" data-bind="value:appUserName" required="required" data-required-msg="请填写真实姓名" aria-invalid="true">
+            </div>
+<% if(session.admin != 'recordadmin'){ %>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserMobile">手机号码</label>
+            </div>
+            <div data-container-for="appUserMobile" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="appUserMobile" data-bind="value:appUserMobile" required="required" data-required-msg="请填写手机号码" aria-invalid="true">
+            </div>
+<% } %>
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserSex">性别</label>
+            </div>
+            <div data-container-for="appUserSex" class="k-edit-field w-800-r">
+               <input id="sex_inp" type="number" class="k-input k-textbox" name="appUserSex" data-bind="value:appUserSex" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserBirth">生日</label>
+            </div>
+            <div data-container-for="appUserBirth" class="k-edit-field w-800-r">
+               <input type="text" id="appUserBirth_inp" class="k-input k-textbox " name="appUserBirth" data-bind="value:appUserBirth" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserScore">积分</label>
+            </div>
+            <div data-container-for="appUserScore" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="appUserScore" data-bind="value:appUserScore" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userFrom">来源</label>
+            </div>
+            <div data-container-for="userFrom" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="userFrom" data-bind="value:userFrom" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="code1">身份</label>
+            </div>
+            <div data-container-for="code1" class="k-edit-field w-800-r">
+               <input type="number" id="code1" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="code2">是否接待</label>
+            </div>
+            <div data-container-for="code2" class="k-edit-field w-800-r">
+               <input type="number" id="code2" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+            </div>
+
+           <div class="k-edit-label  w-800-l">
+                <label for="isShow">是否启用</label>
+            </div>
+            <div data-container-for="isShow" class="k-edit-field w-800-r">
+               <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime_inp" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+function downFunc(e){
+    location.href = '/manger/user/user.csv'
+}
+
+ $(function () {
+                window.appd;
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/user/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/user/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/user/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/user/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "appId": { editable: true },
+                                    "appUserName":{editable: true},
+                                    <% if(session.admin != 'recordadmin'){ %>
+                                    "appUserMobile":{editable: true},
+                                    <% } %>
+                                    "appUserSex":{editable: true},
+                                    "appUserBirth":{editable: true},
+                                    "appUserScore":{editable: true},
+                                    "isShow": { editable: true,type:"number" },
+                                    "userFrom":{editable: true},
+                                    "code1":{editable: true},
+                                    "code2":{editable: true},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加用户" },
+                                 {template: '<a class="k-button" href="\\#" onclick="return downFunc()">下载用户列表</a>'}
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+
+            $.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+                window.appd = d;
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    detailInit: detailInit,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'用户id',
+                            
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商", 
+                            values:d,
+                            hidden:true
+                        },
+                        { 
+                            field: "appUserName",
+                            title: "真实姓名",
+                        },
+<% if(session.admin != 'recordadmin'){ %>
+                        { 
+                            field: "appUserMobile",
+                            title: "手机号码",
+                        },
+<% } %>
+                        { 
+                            field: "appUserSex",
+                            title: "性别",
+                            values:[
+                              { text: "男", value: 1 },
+                              { text: "女", value: 0 }
+                            ],
+                            hidden:true
+                        },
+                        { 
+                            field: "appUserBirth",
+                            title: "生日",
+                            hidden:true
+                        },
+                        { 
+                            field: "appUserScore",
+                            title: "积分",
+                            hidden:true
+                        },
+                        { 
+                            field: "userFrom",
+                            title: "来源",
+                            hidden:true
+                        },
+                        { 
+                            field: "code1",
+                            title: "身份",
+                            values:window.user_identity
+                        },
+                        { 
+                            field: "code2",
+                            title: "是否接待",
+                            values:window.is_jiedai
+                        },
+                        { 
+                            field: "isShow",
+                            title: "是否启用", 
+                            values:[
+                              { text: "启用", value: 1 },
+                              { text: "不启用", value: 0 }
+                            ]
+                        },                   
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                        filterable:window.filter_obj,
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+                  
+
+
+                         $('#writeTime_inp').kendoDateTimePicker();
+                         $('#appUserBirth_inp').kendoDatePicker();
+
+
+
+                         window.dropdown_init($("#appId_inp"), d)
+
+                         window.dropdown_init($("#sex_inp"), window.sex_ary)
+                         window.dropdown_init($("#code1"), window.user_identity)
+                         window.dropdown_init($('#code2'), window.is_jiedai)
+
+                         
+                         window.dropdown_init()
+
+                    }
+                    
+                });
+
+    })      
+                                    
+});
+
+
+
+
+
+
+
+
+
+
+
+function detailInit(e) {
+
+var cellobj = $("<div/>").appendTo(e.detailCell)
+
+var commandAry = [
+            { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+            { name: "destroy", text: "删除"},
+          ]
+
+
+var dataSource2 = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 5,
+                        serverFiltering:true,
+                        filter: { field: "userId", operator: "eq", value: e.data._id },
+                        transport: {
+                            read:  {
+                                        url: DataHost + "/manger/userapp/read",
+                                        type: "post"
+                                    },
+                                    update: {
+                                        url: DataHost + "/manger/userapp/update",
+                                        type: "post",
+                                        complete: function(e) {
+                                                    cellobj.data("kendoGrid").dataSource.read(); 
+                                            }
+                                    },
+                                     destroy: {
+                                        url: DataHost + "/manger/userapp/destroy",
+                                        type: "post"
+                                    },
+                                    create: {
+                                        url:DataHost + "/manger/userapp/create",
+                                        type: "post",
+                                        complete: function(e) {
+                                                    cellobj.data("kendoGrid").dataSource.read(); 
+                                            }
+                                    }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "userId": { editable: true },
+                                    "openId": { editable: true },
+                                    "appId": { editable: true},
+                                    "appUserCity": { editable: true},
+                                    "appUserCommunity": { editable: true},
+                                    "appUserBuilding":{editable: true},
+                                    "appUserRoom":{editable: true},
+                                    "appCardNumber":{editable: true},
+                                    "appUserType":{editable: true, type:"number"},  
+                                    "isNewSubmit":{editable: true, type:"number"},
+                                    "lastActiveTime":{editable: true, type:"date"},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+                   
+                    cellobj.kendoGrid({
+                        dataSource:dataSource2, 
+                        scrollable: false,
+                        sortable: true,
+                        pageable: true,
+                        toolbar: [
+                                    { name: "create", text: "添加绑定" }
+                                  ],
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'绑定id',
+                            hidden:true
+                        },
+                        {
+                            field:'userId',
+                            title:'用户id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商", 
+                            values:window.appd
+                        },
+                         { 
+                            field: "openId",
+                            title: "微信id",
+                            //hidden:true
+                        },
+                         { 
+                            field: "appUserCity",
+                            title: "城市",
+                        },
+                         { 
+                            field: "appUserCommunity",
+                            title: "小区",
+                            values:window.d2
+                        },
+                        { 
+                            field: "appUserBuilding",
+                            title: "楼号",                            
+                        },
+                        { 
+                            field: "appUserRoom",
+                            title: "所在房号",                            
+                        },
+                        { 
+                            field: "appCardNumber",
+                            title: "会员卡号",
+                        },
+                        { 
+                            field: "appUserType",
+                            title: "会员类型",
+                            values:[
+                              { text: "未认证", value: 0 },
+                              { text: "认证", value: 1 },
+                              { text: "认证Vip", value: 2 }
+                            ]
+                        },
+                        {
+                            field: "isNewSubmit",
+                            title: "新的认证",
+                            values:[
+                              { text: "初始化", value: 0 },
+                              { text: "新认证", value: 1 },
+                              { text: "不通过", value: 2 }
+                            ]
+                        },
+                        { 
+                            field: "lastActiveTime",
+                            title: "上次活跃时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },  
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                        filterable:false,
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        //template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                            }
+                        }, 
+                    edit:function(e2){
+                            var d = window.appd;
+
+                $('input[name="userId"]').val(e.data._id).prop('readonly','readonly').change();
+                            //$('input[name="openId"]').val(e.data.openId).prop('readonly','readonly').change();
+                  
+                           }  
+                    });
+                }
+
+
+
+
+
+
+
+</script>
+<% include inc/foot %>

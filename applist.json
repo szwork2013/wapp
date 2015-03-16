@@ -137,8 +137,22 @@
         "env_production" : {
           "NODE_ENV": "production"
         }
+      },
+      {
+        "name"      : "lchpw",
+        "script"    : "/var/nodejs/wapp/lchpw/app.js",
+        "max_memory_restart" : "300M",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "lchpwadmin",
+        "script"    : "/var/nodejs/wapp/lchpw/manager/app.js",
+        "max_memory_restart" : "300M",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
       }
-
-
   ]
 }

@@ -1,0 +1,56 @@
+<% include inc/headfile_v2 %>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+				
+				<h1 class="jjr-register"></h1>
+				
+				
+
+<section class="page-content container content-interests content-item">
+
+    <ul>
+
+
+
+<% if(list.length > 0){%>   
+<% 
+ list.forEach(function(obj,i){ 
+%>
+
+<li class="recrecord_list_box">
+
+			<p><span>经纪人</span><%= obj.recName %></p>
+            <p><span>电话</span><%= obj.recTel %></p>
+            <p><span>客户姓名</span><%= obj.recName %></p>
+            <!-- <p><span>客户电话</span><%= obj.recTel %></p> -->
+            <p><span>预约时间</span><%= obj.recCode1 %></p>
+            <p><span>提交时间</span><%= obj.writeTime %></p>
+
+</li>
+
+<% }) %>
+
+<%}else{%>
+
+
+<li class="recrecord_list_box">
+
+  <h1 class="no_record_h1">暂无经纪人记录</h1>
+
+</li>
+
+
+
+<%}%>
+
+
+    </ul>
+  </section>
+				
+				
+				
+				
+				
+			</div>
+		</section>
+<% include inc/foot_v2 %>

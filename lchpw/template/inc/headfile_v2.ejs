@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+<title>全民经纪平台</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="format-detection" content="telephone=no,address=no,email=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="stylesheet" href="/static/broker_v2/static/css/mjjr.css"/>
+
+
+<link rel="stylesheet" href="/static/broker_v2/css/main.css">
+<script src="http://wzhfile.qiniudn.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+
+<script src="http://wzhfile.qiniudn.com/date/iscroll.js" type="text/javascript"></script>
+
+
+<script>
+    
+    window.userid = '<%= userObj._id %>'
+    window.username = '<%= userObj.appUserName %>'
+    if(window.username == 'undefined'){
+        window.username = '未知用户'
+    }
+</script>
+<style type="text/css">
+.jjr-register{
+	background: url('http://wkmixtown.qiniudn.com/ztndyy/register-logo2.png') no-repeat;
+background-size: 47%;
+}
+.proxy_box{
+	width:100%; 
+}
+#proxy{
+	min-width:97%; 
+}
+
+</style>
+</head>
+<body>
