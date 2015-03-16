@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var ifile = require('ifile');
 var fs = require('fs');
 var path = require('path');
 var app = express();
