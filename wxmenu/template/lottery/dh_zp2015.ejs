@@ -703,16 +703,16 @@ $(function(){
         
         tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
         window.myPrizeName = ro.prizeObj.name
-		if(ro.prizeObj.name=='彩虹伞1把'){
+		if(ro.prizeObj.name=='蓝牙音箱'){
 		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize1";  
 		}
-		else if(ro.prizeObj.name=='蓝牙音箱'){
+		else if(ro.prizeObj.name=='mini充电宝'){
 		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize2";  
 		}
-		else if(ro.prizeObj.name=='1000元购房抵用券'){
+		else if(ro.prizeObj.name=='购房抵用券'){
 		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize4";  
 		}
-		else if(ro.prizeObj.name=='白色恋人巧克力1盒'){
+		else if(ro.prizeObj.name=='加湿器'){
 		location.href="http://menu.xy-tang.com/active/xinyutang?ename=prize3";  
 		}
 		
@@ -778,7 +778,7 @@ window.requestAnimFrame = (function() {
 	var steps = [];
 	var lostDeg = [300];
 	var prizeDeg = [300, 240, 160, 30, 60, 30, 10, -30];
-	//[蓝牙音箱，彩虹伞1把，1000元购房抵用券，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
+	//[mini充电宝，蓝牙音箱，购房抵用券，加湿器，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
 	var prize, sncode;
 	var count = 0;
 	var now = 0;
@@ -802,7 +802,7 @@ window.requestAnimFrame = (function() {
 			running = false;
 			setTimeout(function() {
 							
-					if(window.prizeTitle=='彩虹伞1把'){
+					if(window.prizeTitle=='蓝牙音箱'){
 						alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
@@ -814,7 +814,7 @@ window.requestAnimFrame = (function() {
 					}
 					
 					
-					else if(window.prizeTitle=='1000元购房抵用券'){
+					else if(window.prizeTitle=='购房抵用券'){
 						alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
@@ -824,7 +824,7 @@ window.requestAnimFrame = (function() {
 						
 					}
 					
-					else if(window.prizeTitle=='白色恋人巧克力1盒'){
+					else if(window.prizeTitle=='加湿器'){
 						alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
@@ -836,7 +836,7 @@ window.requestAnimFrame = (function() {
 					}
 					
 					
-					else if(window.prizeTitle=='蓝牙音箱'){
+					else if(window.prizeTitle=='mini充电宝'){
 						alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
@@ -891,7 +891,7 @@ window.requestAnimFrame = (function() {
 
 
 		//start(prizeDeg[3])
-	//[蓝牙音箱，彩虹伞1把，1000元购房抵用券，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
+	//[mini充电宝，蓝牙音箱，购房抵用券，加湿器，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
 		//return;
 		$.ajax({
 			url: "/lottery/<%= appEname%>/start?ename=<%= lotteryEname%>",
@@ -914,16 +914,16 @@ window.requestAnimFrame = (function() {
 		
 			
 					var prizeObj = {
-						'蓝牙音箱':prizeDeg[0],
-						'彩虹伞1把':prizeDeg[1],
-						'1000元购房抵用券':prizeDeg[2],
-						'白色恋人巧克力1盒':prizeDeg[3],
+						'mini充电宝':prizeDeg[0],
+						'蓝牙音箱':prizeDeg[1],
+						'购房抵用券':prizeDeg[2],
+						'加湿器':prizeDeg[3],
 						'羊年大吉':prizeDeg[4],
 						'羊年大吉':prizeDeg[5],
 						'羊年大吉':prizeDeg[6],
 						'羊年大吉':prizeDeg[7]
 					}
-						//[蓝牙音箱，彩虹伞1把，1000元购房抵用券，白色恋人巧克力1盒，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
+						//[mini充电宝，蓝牙音箱，购房抵用券，加湿器，羊年大吉，羊年大吉，羊年大吉，羊年大吉]
 
 					if(d.error == 1){						
 						window.prizeTitle = false;
