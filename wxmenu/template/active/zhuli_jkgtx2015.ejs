@@ -28,7 +28,7 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-     [助力]金科送健康，好油观天下
+     万斤食用油全城派送，这个开发商疯了！
 </title>
 
 <style type="text/css">
@@ -139,9 +139,51 @@ background-color:#6fcbde;
 		 <%= supportScore*200 %></b>克油,
 		
 		
-		<br>达相应数量就能兑换奖品哦</center></div> 
+		<br>达相应数量就能兑换奖品哦</center></div> <br>
 
 
+		
+		
+		
+		
+		 <% if(supportScore==0) { %>
+		<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou0.jpg" widht=100%><br>
+		 
+		 
+		  <% }else if(supportScore==1){ %>
+		 
+	<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou200.jpg" widht=100%><br>
+		 
+		   <% }else if(supportScore==2){ %>
+		   
+	<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou400.jpg" widht=100%><br>
+		    <% }else if(supportScore==3){ %>
+			
+	<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou600.jpg" widht=100%><br>
+			 <% }else if(supportScore==4){ %>
+			 
+			 <img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou800.jpg" widht=100%><br>
+			  <% }else if(supportScore>=5){ %>
+			  
+			<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou1000.jpg" widht=100%><br>
+			  
+			 
+		
+		 <% }else { %>
+	图片暂时无法显示
+		   <%}%>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
  <% if(isMyPage) { %>
            <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
@@ -153,13 +195,13 @@ background-color:#6fcbde;
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为他拿菜籽油</span>
+                <span class="button1" >动动手指为健康加油</span>
             </a>
 			<br>
 		
 		
 		
-           <a href="#" class="share_timeline1 btn-block">
+           <a href="http://mp.weixin.qq.com/s?__biz=MzAwNjA3Mjg4Ng==&mid=205244282&idx=1&sn=e69a14a8cf863cd8aa34dd417ff79950#rd" class="share_timeline1 btn-block">
               <span class="button1" >我也要领取菜籽油</span>
             </a>
 			
@@ -399,7 +441,7 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '[助力]金科送健康，好油观天下', // 分享标题
+	    title: '万斤食用油全城派送，这个开发商疯了！', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fjk%2Fjkgtx2.jpg', // 分享图标
 
@@ -422,7 +464,7 @@ $(function(){
 
 				wx.onMenuShareAppMessage({
 			
-	    title: '[助力]金科送健康，好油观天下', // 分享标题
+	    title: '万斤食用油全城派送，这个开发商疯了！', // 分享标题
 				    desc: '动动手指，为好友加油', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fjk%2Fjkgtx2.jpg', // 分享图标
@@ -507,8 +549,8 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '[助力]金科送健康，好油观天下', // 分享标题
-				    link: '', // 分享链接
+	    title: '万斤食用油全城派送，这个开发商疯了！', // 分享标题
+				    link: 'http://mp.weixin.qq.com/s?__biz=MzAwNjA3Mjg4Ng==&mid=205244282&idx=1&sn=e69a14a8cf863cd8aa34dd417ff79950#rd', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fjk%2Fjkgtx2.jpg', // 分享图标
 
     
@@ -535,9 +577,9 @@ $(function(){
 				
 				
 			
-	    title: '[助力]金科送健康，好油观天下', // 分享标题
+	    title: '万斤食用油全城派送，这个开发商疯了！', // 分享标题
 				    desc: '好友助力，惊喜好礼等你来拿', // 分享描述
-				    link: '#', // 分享链接
+				    link: 'http://mp.weixin.qq.com/s?__biz=MzAwNjA3Mjg4Ng==&mid=205244282&idx=1&sn=e69a14a8cf863cd8aa34dd417ff79950#rd', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fjk%2Fjkgtx2.jpg', // 分享图标
 				   
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
