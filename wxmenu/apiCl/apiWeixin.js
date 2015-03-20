@@ -140,6 +140,8 @@ obj.ApiInit = function(){
                         'appId':appid,
                         'type':'access_token'
                       }, function(err, data){
+                            console.log('^^^^^^^^^^^')
+                            console.log(err, data)
                             if(err) return callback(err);
                             if(!data) return callback(null, '{}')
                             callback(null, JSON.parse(data.token));
@@ -169,6 +171,8 @@ obj.ApiInit = function(){
                             'appId':appid,
                             'type':'js_ticket'
                           }, function(err, data){
+                            console.log('&&&&&&&&&&&&&&&')
+                            console.log(err, data)
                                 if(err) return callback(err);
                                 if(!data) return callback(null, '')
                                 callback(null, data.ticket);
