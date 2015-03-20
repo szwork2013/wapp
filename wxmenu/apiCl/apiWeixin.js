@@ -186,7 +186,7 @@ obj.ApiInit = function(){
 
                 }, function(type, ticketToken, callback){
 
-                        console.log('########')
+                            console.log('########')
                             console.log(ticketToken)
                             console.log('#####')
                         accessTokenDl.createOneOrUpdate({
@@ -195,7 +195,7 @@ obj.ApiInit = function(){
                           }, {
                             'appId':appid,
                             'type':'js_ticket',
-                            'ticket':ticketToken
+                            'ticket':JSON.stringify(ticketToken)
                           }, callback)
 
                         // settingModel.setItem(type, {key:'weixin_ticketToken', value: ticketToken}, function (err) {
