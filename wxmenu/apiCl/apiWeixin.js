@@ -78,85 +78,13 @@ obj.getJsConfig = function(req,res){
         if(err) return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':err}))
         if(!appObj) return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':'not found app'}))
 
-        //var curApi = obj['wxApi'][appename]
+        var curApi = obj['wxApi'][appename]
 
         var param = {
              debug: false,
              jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'],
              url: meUrl
             };
-
-
-                var item = appObj;
-                var ename = item.appEname
-                var appid = item.wxAppId
-                var secret = item.wxAppSecret
-
-                //声明api
-                curApi = new API(appid, secret, function (callback) {
-                      // 传入一个获取全局token的方法
-                      accessTokenDl.findOneByObj({
-                        'appId':appid,
-                        'type':'access_token'
-                      }, function(err, data){
-                            if(err) return callback(err);
-                            if(!data) return callback(null, '{}')
-                            callback(null, JSON.parse(data.token));
-                      })
-
-                }, function (token, callback) {
-                      // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
-                      // 这样才能在cluster模式及多机情况下使用，以下为写入到文件的示例
-                      accessTokenDl.createOneOrUpdate({
-                        'appId':appid,
-                        'type':'access_token'
-                      }, {
-                        'appId':appid,
-                        'type':'access_token',
-                        'token':JSON.stringify(token)
-                      }, callback)
-                      //fs.writeFile('access_token.txt', JSON.stringify(token), callback);
-                });
-                
-                //注册ticket处理函数
-                curApi.registerTicketHandle(function(type, callback){
-
-                        accessTokenDl.findOneByObj({
-                            'appId':appid,
-                            'type':'js_ticket'
-                          }, function(err, data){
-                                if(err) return callback(err);
-                                if(!data) return callback(null, '')
-                                callback(null, data.ticket);
-                          })
-
-                        // settingModel.getItem(type, {key: 'weixin_ticketToken'}, function (err, setting) {
-                        //    if (err) return callback(err);
-                        //    callback(null, setting.value);
-                        //  });
-
-
-                }, function(type, ticketToken, callback){
-
-                        accessTokenDl.createOneOrUpdate({
-                            'appId':appid,
-                            'type':'js_ticket'
-                          }, {
-                            'appId':appid,
-                            'type':'js_ticket',
-                            'ticket':ticketToken
-                          }, callback)
-
-                        // settingModel.setItem(type, {key:'weixin_ticketToken', value: ticketToken}, function (err) {
-                        //    if (err) return callback(err);
-                        //    callback(null);
-                        //  });
-
-                });
-
-
-
-
 
 
 
@@ -210,6 +138,10 @@ obj.ApiInit = function(){
                         'appId':appid,
                         'type':'access_token'
                       }, function(err, data){
+                            console.log('**********')
+                            console.log(err)
+                            console.log(data)
+                            console.log('**********')
                             if(err) return callback(err);
                             if(!data) return callback(null, '{}')
                             callback(null, JSON.parse(data.token));
