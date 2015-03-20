@@ -28,7 +28,7 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-     正荣幸福城邦：大白喊你免费看超能陆战队
+     送你一瓶太湖水
 </title>
 
 <style type="text/css">
@@ -81,9 +81,9 @@ text-decoration: none;
 border-radius: 4px;
 border: 0;
 height: 50px;
-color: #ffd665;
+color: #ffffff;
 text-align: center;
-background-color:#e94c3d;
+background-color:#48b3d9;
 }
 
 
@@ -126,40 +126,46 @@ background-color:#fffe00;
 	
         <div class="container">
 		
-		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2Fzrbg318.jpg" width='100%' alt=""><br>
+		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2Fbg320.jpg" width='100%' alt=""><br>
 		  
 		
 		
 		<br>
  
-            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已经点亮了
+            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已集了
         <b style="color:#c00; font-size:20px;">
 		
 		
-		 <%= supportScore %></b>个爱心,
+		 <%= supportScore %></b>个助力,
 		
 		
-		<br>达相应数量就能兑换电影票哦</center></div> 
+		<br>达到3次就可以在本页面进行兑换哦</center></div> 
 
 
 		
-
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		 <% if(supportScore==0) { %>
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2F0.jpg" width='100%'><br>
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2F0.jpg" width='100%'><br>
 		 
 		 
 		  <% }else if(supportScore==1){ %>
 		 
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2F1.jpg" width='100%'><br>
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2F1.jpg" width='100%'><br>
 		 
 		   <% }else if(supportScore==2){ %>
 		   
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2F2.jpg" width='100%'><br>
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2F2.jpg" width='100%'><br>
 		    <% }else if(supportScore>=3){ %>
 			
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2F3.jpg" width='100%'><br>
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2F3.jpg" width='100%'><br>
 			
 		
 		 <% }else { %>
@@ -178,24 +184,30 @@ background-color:#fffe00;
 		
 		
 		
+		
+		
+		
+		
+		
+		
  <% if(isMyPage) { %>
            <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
 			
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友为你点亮爱心</span>
+                <span class="share_timeline_button" >邀请好友为你加水</span>
             </button>
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >动动手指为他点亮爱心</span>
+                <span class="button1" >动动手指为TA加水</span>
             </a>
 			<br>
 		
 		
 		
-           <a href="http://mp.weixin.qq.com/s?__biz=MjM5NjIzODc3NQ==&mid=229023798&idx=1&sn=d2acc4d769e129613ceb881cc82ee629#rd" class="share_timeline1 btn-block">
-              <span class="button1" >我也要去看超能陆战队</span>
+           <a href="http://mp.weixin.qq.com/s?__biz=MjM5MjMwMzYyMg==&mid=204498843&idx=1&sn=56c546047a7f098b5a5bf1d0cc45e92d#rd" class="share_timeline1 btn-block">
+              <span class="button1" >我也想要一瓶太湖水</span>
             </a>
 			
         <%}%>
@@ -216,11 +228,11 @@ background-color:#fffe00;
 		
 			<br> 
 
-        <!--    <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
+            <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
                <span class="button1" >活动规则</span>
             </a>
 <br> 
-        -->
+       
 
             <div id="divVisitor" class="visitor">
 
@@ -267,7 +279,7 @@ background-color:#fffe00;
                             <!-- 兑奖码：<%= priceObj.giftId %> -->
                         <% } %>
                     </li>
-                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber %>份</li>
+                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*3 %>份</li>
                 </ul>
                 <%
                     })
@@ -318,10 +330,10 @@ background-color:#fffe00;
   <div class="modal-dialog" style="width:320px;margin: 30px auto;">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">助力成功</h4>
+        <h4 class="modal-title" id="myModalLabel">加水成功</h4>
       </div>
       <div class="modal-body"> 
-            <h4>成功帮TA加了点亮了一个爱心
+            <h4>成功帮TA的加了一次水
 			<!--<font id="reduceNumber" style="color:#c00; font-size:18px;"></font>-->
 			</h4>
       </div>
@@ -434,9 +446,9 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '正荣幸福城邦：大白喊你免费看超能陆战队', // 分享标题
+	    title: '送你一瓶太湖水', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2Fzrlogo318.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2Fbg320.jpg', // 分享图标
 
 			
 				    trigger:function(){
@@ -457,10 +469,10 @@ $(function(){
 
 				wx.onMenuShareAppMessage({
 			
-	    title: '正荣幸福城邦：大白喊你免费看超能陆战队', // 分享标题
-				    desc: '6个助力，就能免费看电影哦', // 分享描述
+	    title: '送你一瓶太湖水', // 分享标题
+				    desc: '助力拿水，3个助力即可兑奖哦', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2Fzrlogo318.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2Fbg320.jpg', // 分享图标
 					type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				    trigger:function(){
@@ -542,9 +554,9 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '正荣幸福城邦：大白喊你免费看超能陆战队', // 分享标题
-				    link: 'http://mp.weixin.qq.com/s?__biz=MjM5NjIzODc3NQ==&mid=229023798&idx=1&sn=d2acc4d769e129613ceb881cc82ee629#rd', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2Fzrlogo318.jpg', // 分享图标
+	    title: '送你一瓶太湖水', // 分享标题
+				    link: 'http://mp.weixin.qq.com/s?__biz=MjM5MjMwMzYyMg==&mid=204498843&idx=1&sn=56c546047a7f098b5a5bf1d0cc45e92d#rd', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2Fbg320.jpg', // 分享图标
 
     
 				
@@ -570,10 +582,10 @@ $(function(){
 				
 				
 			
-	    title: '正荣幸福城邦：大白喊你免费看超能陆战队', // 分享标题
-				    desc: '6个助力，就能免费看电影哦', // 分享描述
-				    link: 'http://mp.weixin.qq.com/s?__biz=MjM5NjIzODc3NQ==&mid=229023798&idx=1&sn=d2acc4d769e129613ceb881cc82ee629#rd', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fzhengrong%2Fzrlogo318.jpg', // 分享图标
+	    title: '送你一瓶太湖水', // 分享标题
+				    desc: '助力拿水，3个助力即可兑奖哦', // 分享描述
+				    link: 'http://mp.weixin.qq.com/s?__biz=MjM5MjMwMzYyMg==&mid=204498843&idx=1&sn=56c546047a7f098b5a5bf1d0cc45e92d#rd', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fxincheng%2Fbg320.jpg', // 分享图标
 				   
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
