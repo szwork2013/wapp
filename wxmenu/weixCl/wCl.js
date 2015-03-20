@@ -275,6 +275,14 @@ var wxFunction = function(app, applist){
               
 
 
+            if( appEname =='lh' && message.Content.trim() == '蓝玺台'){
+              wxpic_20140921_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
+                  res.reply(util.format('您的抽奖码为：%d', guid));
+              })
+            }
+            
+
+
               var appId = req.wxAppObj.appId;
 
               wxReplyDl.findByObj({ //查找自动回复，有没有匹配的
