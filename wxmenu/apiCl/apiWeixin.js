@@ -138,16 +138,15 @@ obj.ApiInit = function(){
                         'appId':appid,
                         'type':'access_token'
                       }, function(err, data){
-                            console.log('**********')
-                            console.log(err)
-                            console.log(data)
-                            console.log('**********')
                             if(err) return callback(err);
                             if(!data) return callback(null, '{}')
                             callback(null, JSON.parse(data.token));
                       })
 
                 }, function (token, callback) {
+                            console.log('**********')
+                            console.log(token)
+                            console.log('**********')
                       // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
                       // 这样才能在cluster模式及多机情况下使用，以下为写入到文件的示例
                       accessTokenDl.createOneOrUpdate({
@@ -181,6 +180,9 @@ obj.ApiInit = function(){
 
                 }, function(type, ticketToken, callback){
 
+                        console.log('########')
+                            console.log(ticketToken)
+                            console.log('#####')
                         accessTokenDl.createOneOrUpdate({
                             'appId':appid,
                             'type':'js_ticket'
