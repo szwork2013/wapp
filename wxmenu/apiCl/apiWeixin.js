@@ -91,7 +91,7 @@ obj.getJsConfig = function(req,res){
         //获取js的config文件
         curApi.getJsConfig(param, function(err, result){
             if(err){
-                console.log(err)
+                //console.log(err)
                 logger.error('obj.getJsSign -> curApi.getJsConfig error,err is %s, appename %s', err, appename)
                 return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':err}))
             }
@@ -131,8 +131,7 @@ obj.ApiInit = function(){
                 var appid = item.wxAppId
                 var secret = item.wxAppSecret
 
-                if(ename != 'xinyutang') return
-
+                
                 //声明api
                 obj['wxApi'][ename] = new API(appid, secret, function (callback) {
                       // 传入一个获取全局token的方法
@@ -140,17 +139,17 @@ obj.ApiInit = function(){
                         'appId':appid,
                         'type':'access_token'
                       }, function(err, data){
-                            console.log('^^^^^^^^^^^')
-                            console.log(err, data)
+                            // console.log('^^^^^^^^^^^')
+                            // console.log(err, data)
                             if(err) return callback(err);
                             if(!data) return callback(null, '{}')
                             callback(null, JSON.parse(data.token));
                       })
 
                 }, function (token, callback) {
-                            console.log('**********')
-                            console.log(token)
-                            console.log('**********')
+                            // console.log('**********')
+                            // console.log(token)
+                            // console.log('**********')
                       // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
                       // 这样才能在cluster模式及多机情况下使用，以下为写入到文件的示例
                       accessTokenDl.createOneOrUpdate({
@@ -171,8 +170,8 @@ obj.ApiInit = function(){
                             'appId':appid,
                             'type':'js_ticket'
                           }, function(err, data){
-                            console.log('&&&&&&&&&&&&&&&')
-                            console.log(err, data)
+                            // console.log('&&&&&&&&&&&&&&&')
+                            // console.log(err, data)
                                 if(err) return callback(err);
                                 if(!data) return callback(null, '')
                                 callback(null, data.ticket);
@@ -186,9 +185,9 @@ obj.ApiInit = function(){
 
                 }, function(type, ticketToken, callback){
 
-                            console.log('########')
-                            console.log(ticketToken)
-                            console.log('#####')
+                            // console.log('########')
+                            // console.log(ticketToken)
+                            // console.log('#####')
                         accessTokenDl.createOneOrUpdate({
                             'appId':appid,
                             'type':'js_ticket'
