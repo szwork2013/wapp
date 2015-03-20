@@ -89,6 +89,7 @@ obj.getJsConfig = function(req,res){
         //获取js的config文件
         curApi.getJsConfig(param, function(err, result){
             if(err){
+                console.log(err)
                 logger.error('obj.getJsSign -> curApi.getJsConfig error,err is %s, appename %s', err, appename)
                 return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':err}))
             }
