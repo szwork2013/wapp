@@ -131,6 +131,8 @@ obj.ApiInit = function(){
                 var appid = item.wxAppId
                 var secret = item.wxAppSecret
 
+                if(ename != 'xinyutang') return
+
                 //声明api
                 obj['wxApi'][ename] = new API(appid, secret, function (callback) {
                       // 传入一个获取全局token的方法
