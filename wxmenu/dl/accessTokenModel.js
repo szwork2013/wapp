@@ -39,5 +39,9 @@ objSchema.statics.destroy = function (query, cb) {
     return this.remove(query, cb); 
 }
 
+objSchema.statics.destroyall = function (cb) { 
+    return this.remove({}, cb); 
+}
+
 
 module.exports = mongoose.model('wxAccessToken', objSchema);

@@ -93,6 +93,9 @@ obj.getJsConfig = function(req,res){
             if(err){
                 //console.log(err)
                 logger.error('obj.getJsSign -> curApi.getJsConfig error,err is %s, appename %s', err, appename)
+                accessTokenDl.destroyall(function(){
+                    logger.error('obj.getJsSign -> accessTokenDl.destroyall token')
+                })
                 return res.send(obj.createJsStr({'jsticket_error':1, 'jsconfig':err}))
             }
 
