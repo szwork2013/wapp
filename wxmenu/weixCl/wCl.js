@@ -16,6 +16,7 @@ var UNKNOW_REPLY = '未知操作'
 
 //临时加载
 var wxpic_20140921_dl = require('../tempDl/20140921_wxpic.js');
+var wxpic_20150327_dl = require('../tempDl/20150327_wxpic.js');
 
 var currentSite = global.config.currentSite;
 
@@ -275,8 +276,8 @@ var wxFunction = function(app, applist){
               
 
 
-            if( appEname =='lh' && message.Content.trim() == '蓝玺台'){
-              wxpic_20140921_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
+            if( appEname =='mingmen' && message.Content.trim() == '高圆圆'){
+              wxpic_20150327_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
                   res.reply(util.format('您的抽奖码为：%d', guid));
               })
             }
@@ -440,13 +441,13 @@ var wxFunction = function(app, applist){
             
 
             //修改这里可以增加抽奖码规则
-            /*
+            
             if( appEname =='szlonghu'){
               wxpic_20140921_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
                   res.reply(util.format('您的抽奖码为：%d', guid));
               })
             }
-            */
+            
 
 
           })
