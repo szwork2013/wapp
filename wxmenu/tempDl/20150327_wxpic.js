@@ -57,21 +57,21 @@ objSchema.statics.getGuidByOpenid = function (openid, imgurl, cb) {
             openId:openid
       },function(err, doc){
             if(err) return cb(err)
-            if(doc){//如果存在，返回之前的guid2
-                  return cb(null, doc.guid2)
+            if(doc){//如果存在，返回之前的guid3
+                  return cb(null, doc.guid3)
             }
             //如果不存在，先去生成guid
-            guidDl.getSpecialGuid('guid3',function(err,guid2){
+            guidDl.getSpecialGuid('guid3',function(err,guid3){
                   if(err) return cb(err)
                   //然后创建记录
                   that.create({
                         openId:openid,
-                        guid2:guid2,
+                        guid3:guid3,
                         imgUrl:imgurl
                   },function(err, safedoc){
                         if(err) return cb(err)
                         //返回guid
-                        return cb(null, guid2)
+                        return cb(null, guid3)
                   })
             })
       })
