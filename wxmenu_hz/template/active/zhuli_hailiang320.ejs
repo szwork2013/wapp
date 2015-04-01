@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="telephone=no" name="format-detection"></meta>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"></meta>
+<meta content="no-cache" http-equiv="Pragma"></meta>
+<meta content="no-cache" http-equiv="Cache-Control"></meta>
+<meta content="0" http-equiv="Expires"></meta>
+<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/active_prize_2014/css/active.css"></link>
+<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
+<script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+
+
+<link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+
+
+<%- newrelic.getBrowserTimingHeader() %>
+<title>
+     大家一起为大白打气！
+</title>
+
+<style type="text/css">
+<% if(timeError==1){%>
+    .timeErrorHide{
+        display:none !important;
+    }
+<%}%>
+    .container{
+        background:#FFFFFF;
+        padding-bottom: 20px;
+    }
+	.container {
+width: 100%;
+padding-right: 2px;
+padding-left: 2px;
+}
+
+
+.button1 {
+display: inline-block;
+letter-spacing: 0;
+font-size: 20px;
+padding: 5px 0 0 0;
+height: 35px;
+line-height: 40px;
+margin: 0;
+font-weight: bold;
+}
+
+#round {padding:10px; width:100%; height:70px;border: 1px solid #dedede;-moz-border-radius: 15px; 
+-webkit-border-radius: 15px; 
+border-radius:5px;
+ }
+
+.lottery_again {
+position: absolute;
+display: block;
+font-size:20px;
+background-color:#6fcbde;
+padding:10px; width:99%; height:50px;border: 1px solid #dedede;-moz-border-radius: 15px; 
+-webkit-border-radius: 15px; 
+border-radius:5px;
+}
+a {
+color: #000;
+text-decoration: none;
+}
+.share_timeline1 {
+border-radius: 4px;
+border: 0;
+height: 50px;
+color: #ffffff;
+text-align: center;
+background-color:#c30d23;
+}
+
+
+
+.main{
+		width: 100%;
+		position: absolute;
+		margin-top:1000px;
+		display: none;
+		background: rgba(0,0,0,.7);
+		z-index: 100000;
+	}
+	
+	
+	.bottom_tip{
+	text-align: center;
+	font-size: 13px;
+	display: block;
+	position relative;
+	left: 0;
+	
+	width: 100%;
+}
+.bottom_tip a{
+	color:#000;
+}
+	
+	.share_timeline {
+background-color:#fffe00;
+}
+	
+</style>
+
+
+
+</head>
+    <body>
+	
+	
+	
+        <div class="container">
+		
+		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2Fbg320.jpg" width='100%' alt=""><br>
+		  
+		
+		
+		<br>
+ 
+            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”的大白已经被打了
+        <b style="color:#c00; font-size:20px;">
+		
+		
+		 <%= supportScore %></b>次气,
+		
+		
+		<br>打气完成一个大白可以领取20CM大白玩偶<br>打气完成两个大白可以领取50CM大白玩偶<br>每个用户只能领取1次哦</center></div>  
+
+
+		
+		
+		
+		
+		 <% if(supportScore==0) { %>
+	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F0.png" width='100%'><br>
+		 
+		 
+		  <% }else if(supportScore==1){ %>
+		 
+<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F1.png" width='100%'><br>
+		 
+		   <% }else if(supportScore==2){ %>
+		   
+	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F2.png" width='100%'><br>
+		    <% }else if(supportScore==3){ %>
+			
+	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F3.png" width='100%'><br>
+			 <% }else if(supportScore==4){ %>
+			 
+			<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F4.png" width='100%'><br>
+			  <% }else if(supportScore==5){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F5.png" width='100%'><br>
+			  
+			  <% }else if(supportScore==6){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F6.png" width='100%'><br>
+			    <% }else if(supportScore==7){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F7.png" width='100%'><br>
+			    <% }else if(supportScore==8){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F8.png" width='100%'><br>
+			    <% }else if(supportScore==9){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F9.png" width='100%'><br>
+			    <% }else if(supportScore==10){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F10.png" width='100%'><br>
+			    <% }else if(supportScore==11){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F11.png" width='100%'><br>
+			    <% }else if(supportScore==12){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F12.png" width='100%'><br>
+			   
+		
+		
+		
+		 <% }else if(supportScore==13){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F13.png" width='100%'><br>
+			   
+		
+		 <% }else if(supportScore==14){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F14.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==15){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F15.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==16){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F16.png" width='100%'><br>
+			   
+			   
+			   
+			    <% }else if(supportScore==17){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F17.png" width='100%'><br>
+			   
+			   
+			   
+			    <% }else if(supportScore==18){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F18.png" width='100%'><br>
+			   
+			   
+			   
+			    <% }else if(supportScore==19){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F19.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==20){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F20.png" width='100%'><br>
+			   
+			   
+			   
+			    <% }else if(supportScore==21){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F21.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==22){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F22.png" width='100%'><br>
+			   
+		
+		 <% }else if(supportScore==23){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F23.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==24){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F24.png" width='100%'><br>
+			   
+			   
+			   
+			    <% }else if(supportScore==25){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F25.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==26){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F26.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==27){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F27.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==28){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F28.png" width='100%'><br>
+			   
+			   
+			    <% }else if(supportScore==29){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F29.png" width='100%'><br>
+			   
+			    <% }else if(supportScore==30){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F30.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==31){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F31.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==32){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F32.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==33){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F33.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==34){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F34.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==35){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F35.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==36){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F36.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==37){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F37.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==38){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F38.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore==39){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F39.png" width='100%'><br>
+		
+		
+		  <% }else if(supportScore>=40){ %>
+			  
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2F40.png" width='100%'><br>
+			   
+		
+		
+		 <% }else { %>
+	图片暂时无法显示
+		   <%}%>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+ <% if(isMyPage) { %>
+           <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
+			
+			
+			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
+                <span class="share_timeline_button" >邀请好友为你的大白打气</span>
+            </button>
+        <% }else{ %>
+		
+		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
+                <span class="button1" >动动手指为他的大白打气</span>
+            </a>
+			<br>
+		
+		
+		
+           <a href="http://mp.weixin.qq.com/s?__biz=MjM5MjMwMzYyMg==&mid=204498843&idx=1&sn=56c546047a7f098b5a5bf1d0cc45e92d#rd" class="share_timeline1 btn-block">
+              <span class="button1" >我也想要大白玩偶</span>
+            </a>
+			
+        <%}%>
+		
+<script>
+				$(function(){
+					var height=$(window).height();
+					$('.main').css('height',height);
+					$('#share').click(function(event) {
+						$('.main').show();
+						setTimeout(function(){
+							$('.main').hide();
+						},5000)
+						
+					});
+				})
+			</script>
+		
+			<br> 
+
+            <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
+               <span class="button1" >活动规则</span>
+            </a>
+<br> 
+       
+
+            <div id="divVisitor" class="visitor">
+
+
+                
+
+
+                <div class="v-share-surplus">活动剩余时间：
+                    <span class="visitor_over_time" id="last_day"></span>天 
+                    <span class="visitor_over_time" id="last_hour"></span>小时 
+                    <span class="visitor_over_time" id="last_minute"></span>分钟 
+
+                </div>
+                <div class="v-prize-get clearfix">
+                    <span class="v-prize-get-tip">奖品列表：
+
+                    </span>
+                </div>
+				
+
+                <% 
+                    prizeList.forEach(function(priceObj, i){ 
+                %>
+                    <% if(priceObj.hasSelect) {%>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix selected">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else if(!priceObj.canSelect || myPrizeList.length >= activeObj.activeObj.prizeAmount){ %>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-disabled clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else { %>
+                          <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } %>
+                    <li class="v-prize-item-name">
+                        <%= priceObj.name %>
+                        <% if(priceObj.hasSelect) {%>
+                            (已兑) 
+                            <!-- 兑奖码：<%= priceObj.giftId %> -->
+                        <% } %>
+                    </li>
+                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*3 %>份</li>
+                </ul>
+                <%
+                    })
+                %>           
+            </div>
+           
+		   
+		    <button id="startExchange" class="share_timeline1 btn-block">
+                <span class="duijiang_button" >选择奖品，确定兑奖</span>
+            </button>
+        </div>
+
+
+
+
+
+<!-- mask div -->
+<div id="mask" class="mask_box" onclick="mask();">
+    <img src="http://wzhfile.qiniudn.com/guide5.png"/>
+</div> 
+<!-- mask div -->
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:320px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">活动规则</h4>
+      </div>
+      <div class="modal-body"> 
+            <%- activeObj.activeObj.intro %>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:320px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">助力成功</h4>
+      </div>
+      <div class="modal-body"> 
+            <h4>成功帮TA的大白打了一次气
+			<!--<font id="reduceNumber" style="color:#c00; font-size:18px;"></font>-->
+			</h4>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
+        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，方便我们把奖品发放给您</h4>
+      </div>
+    <form class="bs-example bs-example-form" role="form">
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="" maxlength="20">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" style="padding:0 10px;">
+            <span class="glyphicon glyphicon-phone" ></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <button type="button" class="btn btn-primary" id="save_change">保存</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script src="/api/xinyutang/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+
+
+var appId = '<%= appId %>'
+var appEname = '<%= appEname %>'
+var isMyPage = <%= isMyPage %>;
+var toUserId = '<%= toUserId %>'
+var fromUserId = '<%= fromUserId %>'
+var activeId = '<%= activeId %>'
+var supportCount = <%= supportCount %>
+var supportScore = <%= supportScore %>
+var hasAdd = <%= hasAdd %>
+var prizeList = <%- JSON.stringify(prizeList) %>
+var myPrizeList = <%- JSON.stringify(myPrizeList) %>
+var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
+var endTime = moment(new Date(activeObj.endTime))
+var now = <%= now %>
+var timeError = '<%= timeError %>'
+
+window.isAjax = false
+
+
+
+
+<% if (isMyPage){ %>
+
+	
+$(function(){
+
+	
+	//部署上生产环境，把alert去掉
+
+	if(window.jsticket_error=='1'){
+	//	alert('微信jsdk config加载出错')
+	//	alert(window.jsconfig)
+	}
+	if(window.jsticket_error=='0'){
+			$('#config').html(JSON.stringify(window.jsconfig))
+
+			wx.config(window.jsconfig);
+			wx.ready(function(){
+
+			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+			  //  alert('wx jsdk ready')
+
+
+			    wx.onMenuShareTimeline({
+				
+	    title: '大家一起为大白打气！', // 分享标题
+				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2Fbg320.jpg', // 分享图标
+
+			
+				    trigger:function(){
+				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成分享到朋友圈</p>')
+				    },
+				    success: function () { 
+				        // 用户确认分享后执行的回调函数
+				        $('#action').append('<p>成功分享到朋友圈</p>')
+				    },
+				    cancel: function () { 
+				        // 用户取消分享后执行的回调函数
+				        $('#action').append('<p>用户取消分享到朋友圈</p>')
+				    }
+				});
+
+				wx.onMenuShareAppMessage({
+			
+	    title: '大家一起为大白打气！', // 分享标题
+				    desc: '打气拿大白哦！', // 分享描述
+				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2Fbg320.jpg', // 分享图标
+					type: 'link', // 分享类型,music、video或link，不填默认为link
+				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				    trigger:function(){
+				    	$('#action').append('<p>成功点击发送给朋友</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成发送给朋友</p>')
+				    },
+				    success: function () { 
+				        // 用户确认分享后执行的回调函数
+				        $('#action').append('<p>成功发送给朋友</p>')
+				    },
+				    cancel: function () { 
+				        // 用户取消分享后执行的回调函数
+				        $('#action').append('<p>取消发送给朋友</p>')
+				    }
+				});
+
+
+
+			    wx.checkJsApi({
+				    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+				    success: function(res) {
+				    	//alert(JSON.stringify(res))
+				        // 以键值对的形式返回，可用的api值true，不可用为false
+				        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+				    }});
+
+			});
+			wx.error(function(res){
+
+			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+			//    alert('wx.error config出错')
+			//    alert(JSON.stringify(res))
+			});
+
+			
+
+	}
+
+
+
+
+
+
+
+
+})
+
+
+
+
+
+
+
+<%} else{ %>
+
+
+
+	
+$(function(){
+
+	
+	//部署上生产环境，把alert去掉
+
+	if(window.jsticket_error=='1'){
+	//	alert('微信jsdk config加载出错')
+	//	alert(window.jsconfig)
+	}
+	if(window.jsticket_error=='0'){
+			$('#config').html(JSON.stringify(window.jsconfig))
+
+			wx.config(window.jsconfig);
+		wx.ready(function(){
+
+			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+			//    alert('wx jsdk ready')
+
+
+			    wx.onMenuShareTimeline({
+				
+	    title: '大家一起为大白打气！', // 分享标题
+				    link: 'http://mp.weixin.qq.com/s?__biz=MjM5MjMwMzYyMg==&mid=204498843&idx=1&sn=56c546047a7f098b5a5bf1d0cc45e92d#rd', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2Fbg320.jpg', // 分享图标
+
+    
+				
+				
+			
+				    trigger:function(){
+				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成分享到朋友圈</p>')
+				    },
+				    success: function () { 
+				        // 用户确认分享后执行的回调函数
+				        $('#action').append('<p>成功分享到朋友圈</p>')
+				    },
+				    cancel: function () { 
+				        // 用户取消分享后执行的回调函数
+				        $('#action').append('<p>用户取消分享到朋友圈</p>')
+				    }
+				});
+
+				wx.onMenuShareAppMessage({
+				
+				
+			
+	    title: '大家一起为大白打气！', // 分享标题
+				    desc: '打气拿大白哦！', // 分享描述
+				    link: 'http://mp.weixin.qq.com/s?__biz=MjM5MjMwMzYyMg==&mid=204498843&idx=1&sn=56c546047a7f098b5a5bf1d0cc45e92d#rd', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F320%2Fbg320.jpg', // 分享图标
+				   
+				    type: 'link', // 分享类型,music、video或link，不填默认为link
+				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				    trigger:function(){
+				    	$('#action').append('<p>成功点击发送给朋友</p>')
+				    },
+				    complete:function(){
+				    	$('#action').append('<p>完成发送给朋友</p>')
+				    },
+				    success: function () { 
+				        // 用户确认分享后执行的回调函数
+				        $('#action').append('<p>成功发送给朋友</p>')
+				    },
+				    cancel: function () { 
+				        // 用户取消分享后执行的回调函数
+				        $('#action').append('<p>取消发送给朋友</p>')
+				    }
+				});
+
+
+
+			    wx.checkJsApi({
+				    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+				    success: function(res) {
+				   // 	alert(JSON.stringify(res))
+				        // 以键值对的形式返回，可用的api值true，不可用为false
+				        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+				    }});
+
+			});
+			wx.error(function(res){
+
+			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+			 //   alert('wx.error config出错')
+			  //  alert(JSON.stringify(res))
+			});
+
+			
+
+	}
+
+
+
+
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% } %>
+    
+
+
+
+var forwardingCallback = function(){
+    if(window.hasAdd) return false;
+    //发送请求支持  
+}
+
+//遮照功能
+var maskObj = $('#mask');
+var mask = function () {        
+        if(maskObj.is(':visible')){
+            maskObj.hide();
+        }
+        else{
+            maskObj.show();
+        }
+}
+//遮照功能
+
+
+
+$(function(){
+
+    //定时器更新时间
+    var updateLastTime = function(){
+        var now = moment()
+        var days = endTime.diff(now, 'days')
+        var hours = endTime.diff(now, 'hours') - days*24
+        var minutes = endTime.diff(now, 'minutes') - days*24*60 - hours*60
+        if(minutes<0){
+            $('#last_day').html(0)
+            $('#last_hour').html(0)
+            $('#last_minute').html(0)
+        }
+        else{
+             $('#last_day').html(days)
+            $('#last_hour').html(hours)
+            $('#last_minute').html(minutes)
+        }
+       
+        return arguments.callee;
+    }()
+
+    setInterval(function(){
+        updateLastTime()
+    },1000*60)
+    //定时器更新时间
+
+
+    //绑定点击事件
+    window.selPrizeId = false
+    var prizeUl = $('.prize-list-ul')
+    $('.prize-list-ul').click(function(){
+        var that = $(this)
+        if(that.hasClass('noSelected')){
+            return false;
+        }
+        if(that.hasClass('selected')){
+            //如果已经领过奖了
+            if(myPrizeList.length >= activeObj.prizeAmount){
+                return false;
+            }
+            else{
+                window.selPrizeId = false
+                that.removeClass('selected')
+                return false;
+            }
+        }
+
+        prizeUl.removeClass('selected')
+        that.addClass('selected')
+        window.selPrizeId = that.attr('prizeid')
+
+        return false;
+    })
+
+    //绑定兑换奖品事件，弹出完善资料对话框
+    $('#startExchange').click(function(){
+        if(!window.selPrizeId){
+            return false;
+        }
+        if(!isMyPage){
+            return false;
+        }
+        //弹出完善资料框
+        $('#myModal').modal({
+            backdrop:true
+          })
+    })
+
+    //保存按钮
+    $('#save_change').click(function(){
+        if(window.isAjax) return false
+          
+        var appUserName = $('#appUserName').val().trim();
+        var appUserMobile = $('#appUserMobile').val().trim();
+        if(!appUserName || appUserName == '未认证会员'){
+          alert('请填写真实姓名')
+          return false;
+        }
+        if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+          alert('请输入正确的手机号码')
+          return false;
+        }
+
+        var q = {
+            toUserId:toUserId,
+            prizeId:window.selPrizeId,
+            truename:appUserName,
+            mobile:appUserMobile
+        }
+
+          window.isAjax = true
+        $.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
+          window.isAjax = false
+            if(d.error == 1){
+                return alert(d.data)
+            }
+            alert('奖品兑换成功')
+            location.reload()
+
+        },'json')
+
+    })
+    //保存按钮
+
+
+    $('#goSupport').click(function(){
+        if(window.isAjax) return false
+
+        if(window.hasAdd){
+            alert('你已经帮过Ta了')
+            return false
+        }
+        window.isAjax = true
+         $.post('/active_data/'+appEname+'/addsupport',{
+            activeId:activeId, 
+            fromUserId:fromUserId,
+            toUserId:toUserId,
+        },function(d){
+            window.isAjax = false
+            if(d.error == 1){
+                if(d.data == 'no openid'){
+                    alert('身份过期，刷新页面重新支持')
+                    return location.reload();
+                }
+                else{
+                    alert(d.data)
+                }
+                return false;
+            } 
+
+            $('#reduceNumber').html(d.data.supportScore)
+
+            $('#myModal3').on('hidden.bs.modal', function (e) {
+                  location.reload()
+                }).modal({
+                    backdrop:false
+              })
+
+            //alert('恭喜您，支持成功')
+
+            
+            //alert('恭喜您，支持成功')
+            //var n = $('#supportCount').html()-0+1
+            //$('#supportCount').html(n)
+            //window.hasAdd = true;
+
+        },'json')
+
+    })
+
+
+
+
+    $('#lottery_again').click(function(){
+        location.reload()
+    })
+
+    $('#lottery_rule').click(function(){
+        $('#myModal2').modal({
+            backdrop:false
+          })
+    })
+
+
+})
+
+
+
+
+
+</script>		
+
+<p class="bottom_tip">
+<a href="#" target="_blank">
+	信玉堂技术支持
+</a>
+</p>
+
+
+
+   
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</div>  
+
+    </body>
+</html>
+

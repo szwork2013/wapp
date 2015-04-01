@@ -1,0 +1,430 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">开发商id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appName" >开发商名称</label>
+            </div>
+            <div data-container-for="appName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appName" data-bind="value:appName" required="required" data-required-msg="请填写开发商名称" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appEname" >开发商英文</label>
+            </div>
+            <div data-container-for="appEname" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appEname" data-bind="value:appEname" required="required" data-required-msg="请填写开发商英文" aria-invalid="true">
+            </div>
+
+
+             <div class="k-edit-label  w-800-l">
+                <label for="wxAppId" >appid</label>
+            </div>
+            <div data-container-for="wxAppId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppId" data-bind="value:wxAppId" required="required" data-required-msg="请填写微信appid" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="wxAppSecret" >appsecret</label>
+            </div>
+            <div data-container-for="wxAppSecret" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppSecret" data-bind="value:wxAppSecret" required="required" data-required-msg="请填写微信appsecret" aria-invalid="true">
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="wxAppToken" >Token</label>
+            </div>
+            <div data-container-for="wxAppToken" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="wxAppToken" data-bind="value:wxAppToken" required="required" data-required-msg="请填写微信Token" aria-invalid="true">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appTelphone" >联系电话</label>
+            </div>
+            <div data-container-for="appTelphone" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appTelphone" data-bind="value:appTelphone" required="required" data-required-msg="请填写联系电话" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appCustomTel">客服电话</label>
+            </div>
+            <div data-container-for="appCustomTel" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="appCustomTel" data-bind="value:appCustomTel" required="required" data-required-msg="请填写客服电话" aria-invalid="true">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appPicture">图片介绍</label>
+            </div>
+            <div data-container-for="appPicture" class="k-edit-field w-800-r">
+                <input type="file" name="upload_file" id="upload_file">
+                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="appPicture" data-bind="value:appPicture">
+            </div>
+          
+
+            <div class="k-edit-label  w-800-l">
+                <label for="useOAuth">OAuth</label>
+            </div>
+            <div data-container-for="useOAuth" class="k-edit-field w-800-r">
+               <input type="number" id="useOAuth_inp" class="k-input k-textbox w-50-inp" name="useOAuth" data-bind="value:useOAuth" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="oauthScope" >授权方式</label>
+            </div>
+            <div data-container-for="oauthScope" class="k-edit-field w-800-r">
+               <input type="text" id="oauthScope_inp" class="k-input k-textbox w-50-inp" name="oauthScope" data-bind="value:oauthScope" >
+            </div>
+
+
+
+
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="accessToken" >accessToken</label>
+            </div>
+            <div data-container-for="accessToken" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="accessToken" data-bind="value:accessToken">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="accessTokenDate">accessTokenDate</label>
+            </div>
+            <div data-container-for="accessTokenDate" class="k-edit-field w-800-r">
+               <input type="text" id="accessTokenDate" class="k-input k-textbox " name="accessTokenDate" data-bind="value:accessTokenDate">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="jsapiTicket" >jsapiTicket</label>
+            </div>
+            <div data-container-for="jsapiTicket" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="jsapiTicket" data-bind="value:jsapiTicket">
+            </div>
+            <div class="k-edit-label  w-800-l">
+                <label for="jsapiTicketDate">jsapiTicketDate</label>
+            </div>
+            <div data-container-for="jsapiTicketDate" class="k-edit-field w-800-r">
+               <input type="text" id="jsapiTicketDate" class="k-input k-textbox " name="jsapiTicketDate" data-bind="value:jsapiTicketDate">
+            </div>
+
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyMchId" >红包商户号</label>
+            </div>
+            <div data-container-for="moneyMchId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyMchId" data-bind="value:moneyMchId" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyAppId" >商户appid</label>
+            </div>
+            <div data-container-for="moneyAppId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyAppId" data-bind="value:moneyAppId" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyAppKey" >商户appkey</label>
+            </div>
+            <div data-container-for="moneyAppKey" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyAppKey" data-bind="value:moneyAppKey" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moenyNickName" >红包提供方名称</label>
+            </div>
+            <div data-container-for="moenyNickName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moenyNickName" data-bind="value:moenyNickName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneySendName" >红包发送者名称</label>
+            </div>
+            <div data-container-for="moneySendName" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneySendName" data-bind="value:moneySendName" >
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyIp" >红包发送ip地址</label>
+            </div>
+            <div data-container-for="moneyIp" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyIp" data-bind="value:moneyIp" >
+            </div>
+
+
+
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appIntro" >开发商介绍</label>
+            </div>
+            <div data-container-for="appIntro" class="k-edit-field w-800-r">
+               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="appIntro" data-bind="value:appIntro"></textarea>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+           
+
+        </script>
+
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/app/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/app/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/app/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/app/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "appName": { editable: true, type:'string',validation: { required: {message: "请填写开发商名称"}}  },
+                                    "appEname": { editable: true, type:'string', validation: { required: {message: "请填写开发商英文名"}}},
+                                    "wxAppId": { editable: true, type:'string',},
+                                    "wxAppSecret": { editable: true, type:'string',},
+                                    "wxAppToken": { editable: true, type:'string',},
+                                    "appTelphone": { editable: true, type:'string', validation: { required: {message: "请填写联系电话"}}},
+                                    "appCustomTel": { editable: true, type:'string', validation: { required: {message: "请填写客服电话"}}},
+                                    "appPicture": { editable: true, type:'string', validation: { required: {message: "请上传介绍图片"}}},
+                                    "appIntro":{editable: true, type:"string", validation: { required: {message: "请填写介绍"}}},
+
+                                    "accessToken":{ editable: true},
+                                    "accessTokenDate": {editable: true, type: "date" },
+                                    "jsapiTicket":{ editable: true},
+                                    "jsapiTicketDate": {editable: true, type: "date" },
+
+                                    "moneyMchId":{ editable: true},
+                                    "moneyAppId":{ editable: true},
+                                    "moneyAppKey":{ editable: true},
+                                    "moenyNickName":{ editable: true},
+                                    "moneySendName":{ editable: true},
+                                    "moneyIp":{ editable: true},
+
+                                    "writeTime": {editable: true, type: "date" },
+                                    "useOAuth":{ editable: true, type:'number'},
+                                    "oauthScope":{ editable: true},
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加开发商" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'开发商id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appName",
+                            title: "开发商", 
+                        },
+                        { 
+                            field: "wxAppId",
+                            title: "微信appid", 
+                        },
+                        { 
+                            field: "wxAppSecret",
+                            title: "微信appsecret", 
+                        },
+                        { 
+                            field: "wxAppToken",
+                            title: "微信Token", 
+                        },
+                         { 
+                            field: "appEname",
+                            title: "英文名", 
+                        },
+                         { 
+                            field: "appTelphone",
+                            title: "联系电话", 
+                        },
+                         { 
+                            field: "appCustomTel",
+                            title: "客服电话", 
+                        },
+                        { 
+                            field: "useOAuth",
+                            title: "OAuth",
+                            values:window.is_show_array
+                        },
+                        { 
+                            field: "oauthScope",
+                            title: "授权方式",
+                            values:window.oauth_scope,
+                            hidden:true
+                        },
+                        { 
+                            field: "appPicture",
+                            title: "介绍图片", 
+                            hidden:true
+                        },
+
+                        { 
+                            field: "accessToken",
+                            title: "accessToken", 
+                            hidden:true
+                        },
+                        { 
+                            field: "accessTokenDate",
+                            title: "accessTokenDate",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { 
+                            field: "jsapiTicket",
+                            title: "jsapiTicket", 
+                            hidden:true
+                        },
+                        { 
+                            field: "jsapiTicketDate",
+                            title: "jsapiTicketDate",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+
+                        { 
+                            field: "moneyMchId",
+                            title: "红包商户号", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneyAppId",
+                            title: "商户appid", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneyAppKey",
+                            title: "商户appkey", 
+                            hidden:true
+                        },
+   
+                        { 
+                            field: "moenyNickName",
+                            title: "红包提供方名称", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneySendName",
+                            title: "红包发送者名称", 
+                            hidden:true
+                        },
+                        { 
+                            field: "moneyIp",
+                            title: "红包发送ip地址", 
+                            hidden:true
+                        },
+
+
+                        { 
+                            field: "appIntro",
+                            title: "介绍内容", 
+                            hidden:true
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+
+                         $("#intro").kendoEditor(window.kendo_edit_option);             
+
+                        
+                        window.dropdown_init($("#useOAuth_inp"), window.is_show_array)
+                        window.dropdown_init($("#oauthScope_inp"), window.oauth_scope)
+                        
+                        $('#writeTime').kendoDateTimePicker();
+                        $('#accessTokenDate').kendoDateTimePicker();
+                        $('#jsapiTicketDate').kendoDateTimePicker();
+
+                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
+
+                    },
+                    //filterable:true         
+                });
+                                    
+});
+
+</script>
+<% include inc/foot %>

@@ -1,0 +1,211 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div class="app_sel_boc">
+<div class="clear">
+     <p class="">
+        <label for="app_sel_inp">选择投票活动：</label><input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
+    </p>
+     <div id="countStatus" style="display:none;">
+        截至当前总投票数：<span id="voteCount" ></span>
+        截至当前总参与人数：<span id="voteMemberCount"></span>
+    </div>
+    <p class="fl">
+        <label for="end">选择分组:</label><input id="groupId_inp" style="width: 200px" value=""/>
+    </p>
+</div>
+<div class="clear">
+     <p class="fl fl_margin">
+        <label for="start">开始日期:</label><input id="start" style="width: 200px" value="" />
+    </p>
+
+    <p class="fl fl_margin">
+        <label for="end">结束日期:</label><input id="end" style="width: 200px" value=""/>
+    </p>
+</div>
+    <button  id="down2" class="k-primary fl_margin k-primary k-button">
+        <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+        查询</button>
+    <button  id="down" class="k-primary fl_margin k-primary k-button">
+    <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+    导出列表</button>
+ 
+</div>
+
+<div id="resultStatus" style="display:none;">
+        投票数：<span id="resultVoteCount" ></span>
+        参与人数：<span id="resultVoteMemberCount"></span>
+</div>
+
+
+<div id="grid"></div>
+
+<script type="text/javascript">
+
+$(function(){
+
+
+
+
+var hasInit = false;
+ var changeVote = function(vid){
+                            
+
+            $.post('/manger/voteGroup/getList',{voteid:vid},
+                function(data_ary){
+                    var d4 = []
+                    data_ary.forEach(function(v){
+                        d4.push({
+                            text: v.title, 
+                            value:v._id
+                        })
+                    })
+                    d4.unshift({
+                            text: '全部', 
+                            value:''
+                        })
+                    if(!hasInit){
+
+                        window.dropdown_init($('#groupId_inp'),d4)
+                        hasInit = true;
+                    }
+                    else{
+
+                        var dropdownlist = $("#groupId_inp").data("kendoDropDownList");
+                        dropdownlist.setDataSource(d4)
+                        $("#groupId_inp").val('')
+                        
+                    }
+
+                    $.post('/manger/voteRec/aggressiveCount', {voteid:$('#app_sel_inp').val()}, function(d){
+                            if(d.error) return alert(d.data);
+                            $('#voteCount').html(d.data.voteCount)
+                            $('#voteMemberCount').html(d.data.voteMemberCount)
+                            $('#countStatus').show();
+                    },'json')
+                    
+                })
+        }
+
+
+
+    $.post('/manger/vote/getList',{},function(data_ary){
+                    var d2 = []
+                    data_ary.forEach(function(v){
+                        d2.push({
+                            text: v.title, 
+                            value:v._id
+                        })
+                    })
+
+                    window.voted = d2;
+                    
+                    window.dropdown_init($("#app_sel_inp"), d2, function(){
+                            setTimeout(function(){
+                                var v = $("#app_sel_inp").val();
+                                changeVote(v)
+                            },100)
+                            
+                        })
+
+                    var voteid = $.trim($("#app_sel_inp").val())
+                    if(voteid){
+                        changeVote(voteid)
+                    }
+                    else{
+                        window.dropdown_init($('#groupId_inp'),window.not_sel)
+                    }
+
+
+                    window.dropdown_init($('#groupId_inp'),window.not_sel)
+                    $('#start').kendoDateTimePicker();
+                    $('#end').kendoDateTimePicker();
+
+
+        var getDataToQuery = function(){
+            return {
+                voteid:$('#app_sel_inp').val(),
+                stime:$('#start').val(),
+                etime:$('#end').val(),
+                groupid:$('#groupId_inp').val(),
+               }
+        }
+
+        $('#down2').click(function(){
+            $('#kendo_mask').show()
+            $.post('/manger/voteRec/aggressive', getDataToQuery(), function(d){
+                $('#kendo_mask').hide()
+                if(d.error){
+                    return alert(d.data)
+                }
+                
+
+
+                $('#resultVoteCount').html(d.data.totalVoteNumber||0)
+                $('#resultVoteMemberCount').html(d.data.userJoinNumber||0)
+                $('#resultStatus').show();
+
+
+                $("#grid").kendoGrid({
+                        dataSource: {
+                            data: d.data.data,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        _id: { type: "string" },
+                                        title: { type: "string" },
+                                        supportCount: { type: "number" },
+                                        groupName:{ type: "string" },
+                                        groupId:{ type: "string" },
+                                        position: { type: "number" }
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        height: 550,
+                        scrollable: true,
+                        sortable: true,
+                        filterable: false,
+                        pageable: {
+                            input: true,
+                            numeric: false
+                        },
+                        columns: [
+                            { field: "position", title: "位置"},
+                            { field: "_id", title: "被投票id" ,hidden:true},
+                            { field: "title", title: "名称"},
+                            { field: "supportCount", title: "票数"},
+                            { field: "groupId", title: "分组Id", hidden:true},
+                            { field: "groupName", title: "分组名称"},
+                        ]
+                    });
+
+            },'json')
+
+            
+
+        })
+    
+
+        $('#down').click(function(){
+            $('#kendo_mask').show()
+            var group_q = ''
+            if($('#groupId_inp').val() && $('#groupId_inp').val() != ''){
+                var group_q ='&groupid='+$('#groupId_inp').val()
+            }
+             
+
+            var url = '/manger/voteRec/download?voteid='+$('#app_sel_inp').val()+'&stime='+
+                      $('#start').val()+'&etime='+$('#end').val()+group_q;
+            $('#kendo_mask').hide()
+            location.href = url
+        })
+    })
+})
+
+</script>
+
+<% include inc/foot %>

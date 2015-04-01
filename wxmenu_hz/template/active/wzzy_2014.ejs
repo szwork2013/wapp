@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        快帮 <%= toUserObj.appUserName %> 来抢《歌者归来》门票-绿城香樟园</title>
+    <meta name="viewport" content="width=device-width,target-densityDpi=medium-dpi,initial-scale=0.64,maximum-scale=0.64,user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="email=no" name="format-detection">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/css/base.css">
+	<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
+	<script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
+	<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+	<%- newrelic.getBrowserTimingHeader() %>
+	
+</head>
+<body>
+<div class="wrap">
+    <p class="p1" id="p1"></p>
+    <p class="p2" id="p2"></p>
+	<p class="p3" id="p3">
+	</p>
+
+    <a id="button1" href="javascript:;" class="button"></a>
+	<a id="button2" href="http://mp.weixin.qq.com/s?__biz=MjM5MDMxODc0NA==&mid=200285981&idx=1&sn=f627835298740c7ed217f65fcee9b38c#rd" target="_blank" class="button button2"></a>
+	
+	<div class="modify" id="modify">
+		<div class=""></div>
+	</div>
+	
+	<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:400px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+   		-->
+        <h4 class="modal-title" id="myModalLabel">抢票前留下大名，以便我们通知您领票</h4>
+      </div>
+	  <form class="bs-example bs-example-form" role="form">
+		  <div class="modal-body">			
+				<div class="input-group input-group-lg">
+				  <span class="input-group-addon"  style="padding:0 10px;">
+				  	<span class="glyphicon glyphicon-user"></span>
+				  </span>
+				  <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="<%= toUserObj.appUserName %>" maxlength="20">
+				</div>
+				<br/>
+				<div class="input-group input-group-lg">
+				  <span class="input-group-addon" style="padding:0 10px;">
+				  	<span class="glyphicon glyphicon-phone" ></span>
+				  </span>
+				  <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="<%= toUserObj.appUserMobile %>" maxlength="11">
+				</div>
+		  
+		  </div>
+		  <div class="modal-footer">
+		  	<!--
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			-->
+			<button type="button" class="btn btn-primary" id="save_change">保存</button>
+		  </div>
+	  </form>
+    </div>
+  </div>
+</div>
+	
+</div>
+<script type="text/javascript">
+
+var _toUserName = '<%= toUserObj.appUserName %>'
+var forwardingUrl = location.href;
+var forwardingImg = 'http://wzzy2014skin.qiniudn.com/img/active_logo.jpg'
+var forwardingTitle ='快帮 <%= toUserObj.appUserName %> 来抢《歌者归来》门票-绿城香樟园'
+var forwardingTitle ='快帮 <%= toUserObj.appUserName %> 来抢《歌者归来》门票-绿城香樟园'
+
+$(function(){
+	var hasSupport = false;
+
+
+	var appId = '<%= appId %>'
+	var appEname = '<&= appEname %>'
+	var isMyPage = <%= isMyPage %>;
+	var toUserId = '<%= toUserId %>'
+	var fromUserId = '<%= fromUserId %>'
+	var activeId = '<%= activeId %>'
+	var supportCount = <%= supportCount %>
+	var hasAdd = <%= hasAdd %>
+
+	
+	$('#p2').html('<%= toUserObj.appUserName %>')
+	$('#p1').html(supportCount)
+
+/*
+	if(isMyPage && window.localStorage['has_modify'] != '1'){
+		$('#myModal').modal({
+			backdrop:false
+		})
+	}
+*/
+
+	$('#save_change').click(function(){
+		var appUserName = $('#appUserName').val().trim();
+		var appUserMobile = $('#appUserMobile').val().trim();
+		if(!appUserName){
+			alert('请填写真实姓名')
+			return false;
+		}
+		if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+			alert('请输入正确的手机号码')
+			return false;
+		}
+		$.post('/api/user/modify',{
+		appUserName:appUserName, 
+		appUserMobile:appUserMobile,
+		wxuserid:fromUserId,
+		wxappid:appId,
+		},function(d){
+			if(d.error == 1) return alert(d.data);
+			alert('资料完善成功，快把链接分享给好友吧')
+			$('#myModal').modal('hide')
+			window.localStorage['has_modify'] = '1';
+			$('#p2').html(appUserName)
+		},'json')
+		return false;
+	})
+	
+	
+	$('#button1').click(function(){
+        alert('活动已经结束啦，感谢支持！')
+        return false;
+
+		if(hasAdd){
+			alert('您已经支持过啦')
+			return false
+		}
+		$.post('/active_data/<%= appEname %>/addsupport',{
+			activeId:activeId, 
+			fromUserId:fromUserId,
+			toUserId:toUserId,
+		},function(d){
+			if(d.error == 1){
+				if(d.data == 'no openid'){
+					alert('身份过期，刷新页面重新支持')
+					return location.href = location.href;
+				}
+				else alert(d.data);
+				return		
+			} 
+			alert('恭喜您，支持成功')
+			var n = $('#p1').html()-0+1
+			$('#p1').html(n)
+			hasAdd = true;
+		},'json')
+	})
+	
+	
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var share_score = 2000;
+var _host = "http://" + window.location.host;
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+function attention_wx()
+{
+     //alert(11111)
+    //alert(window.articleid)
+     if(window.articleid && window.userid && window.userid != '0'){
+        $.post('/api/score/forwarding',{'articleid':window.articleid,'wxuserid':window.userid},function(d){
+            //alert(JSON.stringify(d))
+        },'json')
+    }
+}
+function is_zero()
+{
+    if(share_score == 0)
+    {
+        share_score = 2000;
+    }
+}
+var dataForWeixin = {
+    appId: "",
+    MsgImg: window.forwardingImg,
+    TLImg: window.forwardingImg,
+    url:  window.forwardingUrl,
+    title: window.forwardingTitle,
+    desc: window.forwardingTitle,
+    fakeid: "",
+    callback: function() {
+        setTimeout(function(){
+          attention_wx();
+         },2000);       }
+}; (function() {
+    var onBridgeReady = function() {
+        WeixinJSBridge.on('menu:share:appmessage',
+        function(argv) {
+            is_zero();
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "appid": dataForWeixin.appId,
+                "img_url": dataForWeixin.MsgImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:timeline',
+        function(argv) { (dataForWeixin.callback)();
+        is_zero();
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) {});
+        });
+        WeixinJSBridge.on('menu:share:weibo',
+        function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": dataForWeixin.title,
+                "url": dataForWeixin.url
+            },
+            function(res) { (dataForWeixin.callback)();
+            });
+        });
+        WeixinJSBridge.on('menu:share:facebook',
+        function(argv) { (dataForWeixin.callback)();
+            WeixinJSBridge.invoke('shareFB', {
+                "img_url": dataForWeixin.TLImg,
+                "img_width": "120",
+                "img_height": "120",
+                "link": dataForWeixin.url,
+                "desc": dataForWeixin.desc,
+                "title": dataForWeixin.title
+            },
+            function(res) {});
+        });
+    };
+    if (document.addEventListener) {
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    } else if (document.attachEvent) {
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+})();
+
+
+
+
+
+
+
+var WeixinApi = (function () { 
+ 
+    /* 这里省略了一堆代码……下面直接看调用接口 */ 
+    return {
+        ready           :wxJsBridgeReady,
+        shareToTimeline :weixinShareTimeline,
+        shareToWeibo    :weixinShareWeibo,
+        shareToFriend   :weixinSendAppMessage,
+        showOptionMenu  :showOptionMenu,
+        hideOptionMenu  :hideOptionMenu,
+        showToolbar     :showToolbar,
+        hideToolbar     :hideToolbar,
+        getNetworkType  :getNetworkType,
+        imagePreview    :imagePreview
+    };    
+ 
+})();
+// 所有功能必须包含在 WeixinApi.ready 中进行
+WeixinApi.ready(function(Api){
+    alert(111)
+    // 微信分享的数据
+    var wxData = {
+        "imgUrl":'http://www.baidufe.com/fe/blog/static/img/weixin-qrcode-2.jpg',
+        "link":'http://www.baidufe.com',
+        "desc":'大家好，我是Alien，Web前端&Android客户端码农，喜欢技术上的瞎倒腾！欢迎多交流',
+        "title":"大家好，我是赵先烈"
+    };
+ 
+    // 分享的回调
+    var wxCallbacks = {
+        // 分享操作开始之前
+        ready:function () {
+            alert('ready')
+            // 你可以在这里对分享的数据进行重组
+        },
+        // 分享被用户自动取消
+        cancel:function (resp) {
+            alert('cancel')
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+        },
+        // 分享失败了
+        fail:function (resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+        },
+        // 分享成功
+        confirm:function (resp) {
+                
+        },
+        // 整个分享过程结束
+        all:function (resp) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+        }
+    };
+ 
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+ 
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+ 
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+});
+
+
+
+
+
+
+</script>
+</body>
+</html>

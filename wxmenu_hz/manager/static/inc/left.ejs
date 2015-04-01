@@ -1,0 +1,67 @@
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+           <ul class="nav nav-list">
+              <% if(session.admin.indexOf('lottery') != -1){ %>
+                  <li class="nav-header">抽奖管理</li>
+                  <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
+              <%} else if(session.admin.indexOf('active') != -1){ %>
+
+                  <li class="nav-header">活动管理</li>
+                  <li><a href="/manger/activePrizeRecord/list">活动兑奖流水</a></li>
+
+              <%}else if(session.admin.indexOf('vote') != -1){%>
+
+                  <li class="nav-header">投票管理</li>
+                  <li class=""><a href="/manger/vote/list">投票活动</a></li>
+
+                  <%if(session.admin.indexOf('95515_vote') != -1){%>
+                    <li class=""><a href="/manger/voteGroup/list">地区管理</a></li>
+                    <li class=""><a href="/manger/voteItem/list">投票人管理</a></li>
+                  <%}else{%>
+                    <li class=""><a href="/manger/voteGroup/list">分组管理</a></li>
+                    <li class=""><a href="/manger/voteItem/list">投票项管理</a></li>
+                  <%}%>
+          
+                  <li class=""><a href="/manger/voteRec/list">投票流水</a></li>
+                  <li class=""><a href="/manger/voteRec/aggressivelist">投票统计</a></li>
+
+              <%}else{%>
+                  <li class="nav-header">系统设置</li>
+                  <li><a href="/manger/admin/list">管理员</a></li>
+                  <li><a href="/manger/app/list">应用管理</a></li>
+                  <li><a href="/manger/guid/list">流水号管理</a></li>
+
+                  <li class="nav-header">用户管理</li>
+                  <li><a href="/manger/user/list">用户信息</a></li>
+
+                  <li class="nav-header">微信设置</li>
+                  <li><a href="/manger/reply/list">微信图文回复</a></li>
+                  <li><a href="/manger/menu/list">自定义菜单</a></li>
+
+                  <li class="nav-header">活动管理</li>
+                  <li><a href="/manger/active/list">活动管理</a></li>
+                  <li><a href="/manger/activelog/list">活动流水</a></li>
+                  <li><a href="/manger/activelog/ranklist">活动排行</a></li>
+                  <li><a href="/manger/activePrize/list">活动奖品</a></li>
+                  <li><a href="/manger/activePrizeRecord/list">活动兑奖流水</a></li>
+                  <li><a href="/manger/moneyLog/list">红包流水</a></li>
+              
+                  <li class="nav-header">抽奖管理</li>
+                  <li class=""><a href="/manger/lottery/list">抽奖活动</a></li>
+                  <li class=""><a href="/manger/lotteryPrize/list">奖品管理</a></li>
+                  <li class=""><a href="/manger/lotteryRec/list">抽奖流水</a></li>
+
+                  <li class="nav-header">投票管理</li>
+                  <li class=""><a href="/manger/vote/list">投票活动</a></li>
+                  <li class=""><a href="/manger/voteGroup/list">投票项分组</a></li>
+                  <li class=""><a href="/manger/voteItem/list">投票项管理</a></li>
+                  <li class=""><a href="/manger/voteRec/list">投票流水</a></li>
+                  <li class=""><a href="/manger/voteRec/aggressivelist">投票统计</a></li>
+              <%}%>
+                   
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span--> 
+        <div class="span10">

@@ -1,0 +1,79 @@
+<% include inc/head2 %>
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+
+<div class="app_sel_boc">
+    <span>输入 活动英文名 ename：  </span>
+    <input type="text" id="active_name" class="k-input k-textbox w-50-inp" >
+
+    <button  id="sync" class="k-primary sync_button k-primary k-button">
+        <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+        查看排名</button>
+
+</div>
+
+<div id="grid">
+<table class="table">
+  <thead>
+    <tr>
+      <th>排名</th>
+      <th>姓名</th>
+      <th>联系电话</th>
+      <th>支持数目</th>
+      <th>支持分数</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+    
+  
+  </tbody>
+</table>
+
+
+</div>
+
+
+<script>
+$(function(){
+    $('#sync').click(function(){
+        var enameVal = $('#active_name').val().trim()
+        if(!enameVal){
+            alert('请输入活动的唯一英文名')
+            return false;
+        }
+        $.post('/manger/activelog/getrank',{
+            activeEname:enameVal
+        },function(d){
+            if(d.error) return alert(d.data);
+            
+            var s = ''
+            if(d.data.length == 0){
+                s = '<tr>'+
+                    '<td colspan=4>暂无排行数据</td>'+
+                    '</tr>'
+            }
+            else{ 
+                d.data.forEach(function(o,i){
+                    s += '<tr>'+
+                         '<td>'+(i+1)+'</td>'+
+                         '<td>'+o.userName+'</td>'+
+                         '<td>'+o.userMobile+'</td>'+
+                         '<td>'+o.supportCount+'</td>'+
+                         '<td>'+(o.supportScore||0)+'</td>'+
+                         '</tr>'
+                })
+
+            }
+            $('#tbody').html(s)
+            
+        },'json')
+    })
+
+
+})
+
+</script>
+<% include inc/foot %>

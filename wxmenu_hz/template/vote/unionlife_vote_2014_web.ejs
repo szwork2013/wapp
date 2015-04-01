@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        
+
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link rel="shortcut icon" href="http://piccvote.qiniudn.com/favicon.ico">
+        
+        <link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+        <link href="http://piccvote.qiniudn.com/dist/css/flat-ui-pro.css" rel="stylesheet">
+        <!-- Using only with Flat-UI (free)-->
+        <link rel="stylesheet" href="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/css/icon-font.css">
+        <!-- end -->
+        <link rel="stylesheet" href="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/css/animations.css">
+        <link rel="stylesheet" href="http://piccvote.qiniudn.com/unionlife_vote_skin/static/css/style.css">
+        
+        <title>合众人寿十周年榜样人物评选活动</title>
+        <style type="text/css">
+            
+
+            .hotmap{
+                height: 740px !important;
+            }
+                .loading_box{
+                    width: 100%;
+                    height: 100%;
+                    background: url(http://piccvote.qiniudn.com/loading.gif) center center no-repeat;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    z-index: 999;
+                    opacity: 0.6;
+                    background-color: #fff;
+                }
+            .header-background{
+                height: 130px;
+                width: 100%;
+            }
+            .container{
+                width: 1170px\9;
+            }
+            .navbar-toggle{
+                display: none;
+            }
+            #item_info_modal{
+                width: 920px\9 !important;
+                left:50%\9;
+                margin-left: -475px\9;
+            }
+            .member_list li{
+                width: 420px;
+                width: 400px\9;
+            }
+            .content-21 .features.features-tabs .features-header .box{
+                *width: 32%;
+            }
+            .footer-7{
+                *margin-top: -10px;
+            }
+            .map_list{
+                top: 475px;
+            }
+            .map_list ul li{
+                *width: 165px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="page-wrapper"><div class="header-3">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar col-sm-12" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"></button>
+                    <a class="brand" href="#"><img src="/static/unionlife_vote_skin/startup/common-files/icons/logo.png" width="320" height="60" alt=""></a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="header-background"></div>
+</div>
+<div class="content-21 bg-midnight-blue">
+    <div class="container">
+        <div class="section-header row">
+        </div>
+        <h3>合众人寿十周年榜样人物评选活动</h3>
+        <div class="row">
+            <div class="col-sm-12 col-sm-offset-0">
+                <div class="features features-tabs">
+                    <div class="features-header">
+                        <div class="box active">
+                            <div class="fui-star-2"></div>
+                            热点地区
+                        </div>
+                        <div class="box">
+                            <div class="fui-mic"></div>
+                            投票规则
+                        </div>
+                        <div class="box">
+                            <div class="fui-user"></div>
+                            参与方式
+                        </div>
+                    </div>
+                    <div class="features-bodies">
+                        <div class="features-body active hotmap" style="padding: 5px 400px; ">
+                            <div id="map"></div>
+                            <div class="map_list">
+                                <ul id="map_list_ul">
+                                    
+                                </ul>
+                                <p style="text-align: center;clear: both;font-size: 13px;">分公司列表以音序排名</p>
+                            </div>
+                             <div class="ToolTip" style="right:50px;">
+                                <div id="topList" style="width:130px;float:left"></div>
+                                <div id="cityList" style="display:none;float:left"></div>
+                            </div>   
+                        </div>
+                        <div class="features-body rule" style="padding: 120px 50px 120px 50%;">
+                            <h4>投票规则</h4>
+                            <hr>
+                            <p>1、关注合众官方微信公众号才能参与，你懂的。</p>
+                            <p>2、小伙伴们每天投票数不限定，可选择N个地区的N个人投票，选到手抽筋！</p>
+                            <p>3、小伙伴们每天给你“心仪”的ta投票只有一次机会呦。</p>
+                            <p>4、不知道给谁投票，那就“摇一摇”吧，次数不限哦。</p>
+                            <p>5、本次活动投票解释权归合众人寿十周年榜样人物评选组所有。</p>
+                            <hr>
+                        </div>
+                        <div class="features-body join">
+                            <h4>亲，十周年榜样人物评选活动中所有投票数据与合众人寿官方微信同步，扫码就能参与，快来体验吧。</h4>
+                            <hr>
+                            <p>1、扫描二维码关注合众人寿官方微信</p>
+                            <p>2、回复“榜样”，点击推送消息按照提示即可参与投票</p>
+                            
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-7 ">
+    <div class="container">
+        版权所有 2014 合众人寿保险股份有限公司 Copyright &copy; Unionlife Insurance Company,Ltd.All Rights Reserved.</br>
+鄂ICP备12017196号
+    </div>
+</div>         
+ </div>
+
+
+<!-- 列表页弹窗 modal -->
+<div class="modal" id="item_info_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h6 class="modal-title" id="list_title"></h6>
+      </div>
+
+      <div class="modal-body" id="">
+            <ul id="modal_item_box" class="member_list">
+
+
+            </ul>
+      </div>
+
+      <div class="modal-footer">
+        <a href="javascript:;" data-dismiss="modal" aria-hidden="true" class="btn btn-primary btn-wide">关闭</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 列表页弹窗 modal -->
+
+
+
+<!-- 投票成功 modal-->
+<div class="modal " id="browser_old" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h6 class="modal-title">
+            温馨提示
+        </h6>
+      </div>
+
+      <div class="modal-body" style="padding:30px 50px;">
+            <h5 class="modal_suc_box ft16">
+                    您的浏览器可能不兼容本页面
+                    <br/><br/>
+                    请您升级到 <a href="http://rj.baidu.com/soft/detail/14917.html?ald">IE10</a> 或下载最新版的 <a href="http://rj.baidu.com/soft/detail/14744.html?ald">Chrome谷歌浏览器</a> 或 <a href="http://rj.baidu.com/soft/detail/11843.html?ald" >火狐浏览器</a>，以获得最佳浏览效果
+            </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- loading modal div -->
+<div id="loading_box" class="loading_box" style="display:none"></div>
+<!-- loading modal div -->
+
+
+
+   <!-- Placed at the end of the document so the pages load faster -->
+            <script src="http://wzhfile.qiniudn.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+            <script src="/static/unionlife_vote_skin/voteRecord.js" type="text/javascript"></script>
+
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.bxslider.min.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.sharrre.min.js"></script>
+            <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+
+
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/masonry.pkgd.min.js"></script>
+           
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/modernizr.custom.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/page-transitions.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/easing.min.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.svg.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.svganim.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/jquery.backgroundvideo.min.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/froogaloop.min.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/startup/common-files/js/startup-kit.js"></script>
+            <script src="/static/unionlife_vote_skin/static/js/chinamap.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/static/js/chinamapPath.js"></script>
+            <script src="http://piccvote.qiniudn.com/unionlife_vote_skin/static/js/raphael.js"></script>
+             <!--[if lte IE 9]> 
+                <script type="text/javascript">
+                    $('#browser_old').modal()
+                </script>
+
+            <![endif] -->
+
+            <script type="text/javascript">
+                if (!Array.prototype.forEach)
+                {
+                  Array.prototype.forEach = function(fun /*, thisp*/)
+                  {
+                    var len = this.length;
+                    if (typeof fun != "function")
+                      throw new TypeError();
+
+                    var thisp = arguments[1];
+                    for (var i = 0; i < len; i++)
+                    {
+                      if (i in this)
+                        fun.call(thisp, this[i], i, this);
+                    }
+                  };
+                }
+
+                var getFinalRecord = function(obj){
+                    var num = obj.totalNumber;
+                    window.voteRecordList.forEach(function(o){
+                            if(o.name == obj.title){
+                                num = o.vote
+                            }
+                    })
+                    return num
+                }
+
+                $(function(){
+                    window.province = []
+                    window.voteObj = {}
+                    window.redColor = ['#ff0000', '#ff3d3d', '#ef4618', '#e76767', '#ffb7b7']
+                    window.defaultColor = '#fddddd'
+
+                    
+
+
+                    //获取省份的列表
+                    var getAndPutProvince = function(){
+                        $.get('/vote/<%= appEname %>/getvoteinfo2',{
+                            r:Date.now(),
+                            voteename:'<%= voteEname %>',
+                            timestamp:'1356969600000'
+                        },function(d){
+                            if(d.error) return alert(d.data)
+                            window.province = d.data.group
+                            window.province = window.province.sort(function(a,b){
+                                return b.count - a.count
+                            })
+                            window.voteObj = d.data.vote
+
+                            var R = paintMapBefore()
+                            if(Object.keys){
+                                window.chinaKeys = Object.keys(china)
+                            }
+                            else{
+                                var list = []
+                                for (key in china){
+                                    list.push(key)
+                                }
+                                window.chinaKeys = list
+                            }
+
+                            
+
+                            //根据投票热度显示省份背景色
+                            window.chinaKeys.forEach(function(chinaKey){
+                                var chinaObj = window.china[chinaKey]
+                                var hasFound = false
+
+
+                                window.province.forEach(function(po, j){
+                                    if(po.title == chinaObj.name){
+                                        hasFound = true
+                                        chinaObj.bgColor = window.redColor[j] || window.defaultColor
+                                    }
+                                })
+                                if(!hasFound){
+                                    chinaObj.bgColor = '#efefef'
+                                }
+                            })
+
+                            Map(R)
+
+                            putProvinceData()
+                        },'json')
+                    }
+
+                    //放置省份数据
+                    var putProvinceData = function(){
+                        var tempStr = ''
+                        window.sortProvince = window.province.sort(function(a,b){
+                                if(a.ename > b.ename) return 1
+                                else return -1
+                        })
+
+                        window.sortProvince.forEach(function(pObj){
+                            var pName = pObj.title
+                            var curColor = '#fddddd'
+                            hasFound = false
+                            if(pName == '总公司' || pName == '合众资产' || pName == '大连' || pName == '青岛'){
+                                    if(pObj.count>=500){
+                                        curColor = '#ff0000'
+                                    }
+                                    hasFound = true
+                            }
+                            window.chinaKeys.forEach(function(chinaKey){
+                                if(pName == chinaKey){
+                                    hasFound = true
+                                      curColor  = window.china[chinaKey].bgColor
+                                    return;
+                                }
+                            })
+                            if(hasFound){
+                                 tempStr += '<li grouptitle="'+pName+'" groupid="'+pObj._id+'"><span style="background-color:'+curColor+'"></span>'+pName+'（昨日 '+pObj.count+' 票）</li>'
+                             }
+                        })
+
+                        $('#map_list_ul').html(tempStr)
+                    }
+
+                    //绑定点击事件
+                    $('#map_list_ul').delegate('li','click',function(){
+                        if(window.ajaxing) return false;
+
+                        var that =$(this)
+                        var groupId = that.attr('groupid')
+                        var pname = that.attr('grouptitle')
+                        window.openProvinceMember(pname)
+
+                        return false;
+                    })
+
+
+                    window.ajaxing = false
+                    //打开省份候选人列表页弹窗
+                    window.openProvinceMember = function(groupTitle){
+                        if(!groupTitle) return alert('no groupTitle')
+                        var groupId = false
+                        window.province.forEach(function(po){
+                            if(po.title == groupTitle){
+                                groupId = po._id
+                            }
+                        })
+                        if(!groupId) return false
+                        $('#list_title').html(groupTitle+' 列表')
+
+
+                        
+                        $('#loading_box').show()
+                        window.ajaxing = true;
+                        $.get('/vote/<%= appEname %>/items', {
+                            r:Date.now(),
+                            ename:'<%= voteEname %>',
+                            groupid:groupId
+                        }, function(d){
+                            $('#loading_box').hide()
+                            window.ajaxing = false;
+                            if(d.error) return alert(d.data)
+
+                            d.data.forEach(function(dObj){
+                                window.voteRecordList.forEach(function(recObj){
+                                    if(dObj.title == recObj.name){
+                                        dObj.totalNumber = recObj.vote
+                                    }
+                                })
+                            })
+
+                            d.data = d.data.sort(function(a,b){
+                                if(a.totalNumber > b.totalNumber){
+                                    return -1
+                                }
+                                return 1
+                            })
+
+                            var tempStr = ''
+                            d.data.forEach(function(obj){
+                                tempStr += '<li><img src="'+obj.pictureThumb+'" class="face" />'+
+                                           '<p class="info">'+
+                                           
+                                           //'<span>姓名：'+obj.title+'</span><span class="redt">票数：'+obj.totalNumber+
+                                           '<span>姓名：'+obj.title+'</span><span class="redt">票数：'+ getFinalRecord(obj) +
+                                           '</span><br/>'+
+                                           '<span>部门：'+obj.code2+'</span><span>职务：'+obj.code3+'</span>'+
+                                           '</p></li>'
+
+                            })
+ 
+
+                            $('#modal_item_box').html(tempStr)
+                            $('#item_info_modal').modal()
+
+                        })
+                    }
+
+
+
+                    $('#item_info_modal').on('hidden.bs.modal', function (e) {
+                        $('#modal_item_box, #list_title').empty()
+                    })
+
+                    //start
+                    getAndPutProvince()
+
+                })
+                
+            
+            </script>
+       <div style="display:none">
+        <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+       </div>
+    </body>
+</html>

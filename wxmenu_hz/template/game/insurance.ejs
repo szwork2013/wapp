@@ -1,0 +1,780 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+	<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+<meta charset="utf-8">
+
+		<title>玩游戏，发金币，大盈家就是这么任性</title>
+		<link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+		<link href="http://piccvote.qiniudn.com/base.css" rel="stylesheet">
+		<script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
+		<script src="http://piccvote.qiniudn.com/winner_skin/phaser.min.js"></script>
+		<script src="http://piccvote.qiniudn.com/winner_skin/Boot.js?v=1"></script>
+		<script src="http://piccvote.qiniudn.com/winner_skin/Preloader.js?v=1"></script>
+		<script src="http://piccvote.qiniudn.com/winner_skin/MainMenu.js"></script>
+		<script src="http://piccvote.qiniudn.com/winner_skin/Game.js"></script>
+		<script type="text/javascript">
+				function writeViewPort() {
+				    var ua = navigator.userAgent;
+				    var viewportChanged = false;
+				    var scale = 0;
+
+				    if (ua.indexOf("Android") >= 0) {
+				    	$('body').bind('touchmove', function(e){
+				    		e.preventDefault()
+				    		return false
+				    	})
+				    	$(document).bind('touchmove', function(e){
+				    		e.preventDefault()
+				    		return false
+				    	})
+				    	$('body').bind('dblclick', function(e){
+				    		e.preventDefault()
+				    		return false
+				    	})
+				    	$(document).bind('dblclick', function(e){
+				    		e.preventDefault()
+				    		return false
+				    	})
+
+
+				        document.write('<meta name="viewport" content = "width=640; maximum-scale=1.0,user-scalable=0" />');
+				    }
+				    else{
+				    	document.write('<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />')
+				    }
+				   
+
+				}
+
+				writeViewPort();
+		</script>
+		<style>
+			::-webkit-scrollbar { 
+			    display: none; 
+			}
+			body { margin: 0; padding:0;background-color: #000;}
+			body{
+				width: 320px;
+				background-color:#ad0202 !important;
+			}
+			button{
+				font-family: '微软雅黑'
+			}
+			.btn span{
+				margin-right: 5px;
+			}
+			.modal_suc_box font {
+				color: #c00;
+				padding: 0 2px;
+				line-height: 24px;
+			}
+			.startLicai{
+				font-size: 17px;
+				padding: 10px 20px;
+
+			}
+			.startLicai span{
+				margin-right: 5px;
+			}
+			.rePlayBox{
+				width: 275px;
+				height: auto;
+				padding: 10px 0;
+				text-align: right;
+				position: absolute;
+				left: 25px;
+				height: 54px;
+				bottom: 5px;
+			}
+			.rePlayBtn{
+				display: inline-block;
+			}
+			.jineinput{
+				width: 70% !important;
+			}
+			.jineDanwei{
+				padding-left: 10px;
+				float: left;
+				line-height: 30px;
+			}
+			.backSelectBox{
+				padding: 0 20px 20px 20px;
+				text-align: left;
+			}
+			.tableBox table td, .tableBox table th{
+				text-align: center;
+			}
+			.loading_box{
+				z-index: 9999;
+			}
+			.btn-toolbar{
+				text-align: center;
+			}
+			.btn-toolbar a{
+				display: block;
+			}
+			.btn-toolbar .btn{
+				display: block;
+				width: 240px;
+				font-size: 16px;
+				margin: 3px auto;
+			}
+
+			#selectBox .input-group-addon-left{
+				width: 72px;
+				display: block;
+				text-align: left;
+				font-weight: bolder;
+			}
+			.getBonusBox{
+				padding: 10px;
+				text-align: center;
+			}
+			select.form-control{
+				border-radius: 0 !important;
+				margin-left: -4px !important;
+				text-indent: 1em;
+			}
+			.input-group-addon{
+				position: relative;
+				z-index: 10;
+			}
+			#qiangHb{
+				background-color:#ccc !important;
+				border-color:#ccc !important;
+				margin-left: 15px;
+			}
+			.modal_suc_box{
+				font-size: 16px;
+				line-height: 32px;
+				text-align: left;
+				color: #ccc;
+			}
+			.modal_suc_box span{
+				font-family: "微软雅黑";
+				text-indent: 2em;
+				display: block;
+			}
+			.modal_suc_box font{
+				font-size: 20px;
+				padding: 0 2px;
+				color:#fffa50;
+			}
+			h6.ft15{
+				font-size:18px !important;
+				color: #c00;
+				font-weight: bold;
+			}
+			.table td, .table th{
+				font-size: 13px;
+				color:#ccc;
+				font-weight: normal;;
+			}
+			#reSelectBtn{
+				position: absolute;
+				top: 10px;
+				left: 20px;
+			}
+			.androidArrow{
+				position: absolute;
+				display: block;
+				top: 11px;
+				right: 10px;
+				z-index: 3;
+				background-color: #fff;
+			}
+			.modal-content{
+				width: 326px;
+				height: 440px;
+				padding:50px 35px;
+				background: url(http://piccvote.qiniudn.com/insGame/insGameOpenDiv3.png) 0 0 no-repeat !important;
+				display: block;
+				position: relative;
+				background-color:inherit;
+				box-shadow:none;
+				border: none;
+			}
+			.modal-dialog{
+				width: 326px;
+				overflow: hidden;
+				position: absolute;
+				left: 50%;
+				margin:30px 0 0 -163px !important;
+			}
+			#modalTitle{
+				position: absolute;
+				top: 4px;
+				left: 82px;
+				color:#fffa50;
+				width: 182px;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+			}
+			.modal-header{
+				border: none;
+			}
+			.modal-body{
+				padding: 0
+			}
+			#showBonusBox{
+				padding: 0;
+				margin-top: -10px;
+			}
+			.jineDanwei{
+				color:#ccc;
+			}
+			#selectBox, #successBox{
+				padding-top: 30px;
+			}
+			canvas{
+				position: relative;
+				z-index: 5;
+			}
+			.wrap_box{
+				width: 640px;
+				height: 960px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin: -480px auto auto -320px;
+				overflow: hidden;
+			}
+			.btn_line{
+				overflow: hidden;
+				clear: both;
+				height: 46px;
+				width: 240px;
+				margin: 0 auto;
+			}
+			.btnfl{
+				float: left;
+				display: block;
+				width: 105px;
+				margin: 5px 0;
+			}
+			.btnfr{
+				float: right;
+				margin: 5px;
+			}
+			 .btn-toolbar .btnfl .btn{
+			 	width: auto;
+			 	margin: 0;
+			 }
+			 .table{
+			 	margin-bottom: 0px;
+			 }
+			 .jine_tips{
+			 	padding: 5px 0 0 100px;
+			 	color: #d9534f;
+			 }
+			 .table>tbody>tr>td{
+			 	padding: 8px  5px;
+			 }
+		</style>
+	</head>
+	
+	<body scroll=no style="overflow:hidden">
+		<div class="wrap_box">
+			<script>
+
+			$(function() {
+				var W = $(window).width()
+				var H = $(window).height()
+				if(W > H){
+					var W = parseInt((H/960)*640)
+				}
+				else{
+					var H = parseInt((W/640)*960)
+				}
+				
+				// initialize the framework
+				var game = new Phaser.Game(640, 960, Phaser.AUTO, 'game');
+				// add game states
+				game.state.add('Boot', Winner.Boot);
+				game.state.add('Preloader', Winner.Preloader);
+				game.state.add('MainMenu', Winner.MainMenu);
+				game.state.add('Game', Winner.Game);
+				// start the Boot state
+				game.state.start('Boot');
+			});
+
+
+			</script>
+
+		
+<!-- 投票成功 modal-->
+<div class="modal " id="item_success_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<h6 class="modal-title ft15" id="modalTitle">闯关成功</h6>
+
+
+      <div class="modal-body" id="successBox">
+        	<div class="modal_suc_box ft16">
+
+
+
+        		<span>亲，你抢到<font id="score_font"></font>万金币，运势不错哦！同时击败了全国<font id="rate_font"></font>的用户，被封为<font id="title_font"></font>！</span>
+        		<span>快来使用虚拟金币参与大盈家保险理财计划吧！</span></div>
+        <div class="form-group getBonusBox">
+        	<button id="startLicai" type="button" class="startLicai btn btn-danger btn-lg"><span class="glyphicon glyphicon-calendar"></span>开始理财</button>
+        	<!-- <button id="qiangHb" type="button" class="startLicai btn btn-lg">抢红包</button> -->
+        </div>
+      </div>
+
+      <div class="modal-body" id="selectBox" style="display:none">
+        		
+
+				<div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon"><span class="input-group-addon-left">性别：</span></div>
+				      <select class="form-control " id="sexSelect">
+				      		<option value="1" selected="selected">男</option>
+				      		<option value="2">女</option>
+				      </select>
+				      <span class="androidArrow glyphicon glyphicon-chevron-down" style="display:none"></span>
+				    </div>
+				</div>
+
+				<div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon"><span class="input-group-addon-left">年龄：</span></div>
+				      <select class="form-control " id="ageSelect"></select>
+				      <span class="androidArrow glyphicon glyphicon-chevron-down" style="display:none"></span>
+				    </div>
+				</div>
+				
+				<div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon"><span class="input-group-addon-left">交费年限：</span></div>
+				      <select class="form-control" id="allocSelect">
+				      		<option value="1" selected="selected">3年</option>
+				      		<option value="2">5年</option>
+				      		<option value="3">10年</option>
+				      </select>
+				      <span class="androidArrow glyphicon glyphicon-chevron-down" style="display:none"></span>
+				    </div>
+				</div>
+
+				<div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon"><span class="input-group-addon-left">总金额：</span></div>
+				      <input id="cashInput" maxlength="5" max="99999" class="form-control jineinput" type="number" placeholder="投保金额1-1000（万元）">
+				      <div class="jineDanwei">万元</div>
+				    </div>
+				    <p class="jine_tips">可自行输入金额</p>
+				</div>
+
+				<div class="form-group getBonusBox">
+					<button id="getBonus" type="button" class="startLicai btn btn-danger btn-lg">查看收益</button>
+				</div>
+
+      </div>
+
+      <div class="modal-body" id="showBonusBox" style="display:none">
+
+        <div  class="tableBox" id="tableBox"></div>
+        <div class="btn-toolbar" role="toolbar">
+		  		<a href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=1&sn=0f2d529201c756cbc867ebcef249ab1a#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-info-sign"></span>关于合众人寿</button></a>
+		  	<div class="btn_line">
+		  		<a class="btnfl" href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=3&sn=b23813c1e6059ab55fa539cc6e2ac72b#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-warning-sign"></span>风险提示</button></a>
+
+		  		<a class="btnfl btnfr" href="http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202179176&idx=2&sn=30d71d98dd95b596231b28ab303ec492#rd" target="_blank"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-list"></span>产品说明</button></a>
+		  	</div>
+		</div>
+      </div>
+
+      <div class="rePlayBox">
+      		<button id="reSelectBtn" type="button" class="btn btn-info" style="display:none;">重选计划</button>
+      		<button id="rePlayBtn" type="button" class="rePlayBtn btn btn-danger"><span class="glyphicon glyphicon-repeat"></span>再玩一次</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- 投票成功 modal-->
+
+
+
+<!-- loading modal div -->
+<div id="loading_box" class="loading_box" style="display:none"></div>
+<!-- loading modal div -->
+
+
+<!-- mask div -->
+<div id="mask" class="mask_box" onclick="mask();"><img src="http://wzhfile.qiniudn.com/guide5.png"/></div> 
+<!-- mask div -->
+
+
+
+<script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+<script src="http://piccvote.qiniudn.com/dist/js/flat-ui-pro.js"></script>
+<script src="http://piccvote.qiniudn.com/assets/js/prettify.js"></script>
+<script src="http://piccvote.qiniudn.com/assets/js/application.js"></script>
+
+<script type="text/javascript">
+var browser={
+    versions:function(){
+            var u = navigator.userAgent, app = navigator.appVersion;
+            return {         //移动终端浏览器版本信息
+                 trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+
+if(browser.versions.android){
+	$('.androidArrow').show()
+}
+
+
+
+//http://wx.mintok.com/active/unionlife?ename=unionlife_game
+var forwardingUrl = 'http://mp.weixin.qq.com/s?__biz=MjM5NjQwMzcyMA==&mid=202260193&idx=1&sn=98c98d5c62fc23bd89f3d515019a6ece#rd&ADUIN=53822985&ADSESSION=1418085458&ADTAG=CLIENT.QQ.5365_.0&ADPUBNO=26398'
+var forwardingImg = 'http://piccvote.qiniudn.com/insGame/insGameLogo.png'
+var forwardingTitle ='玩游戏，发金币，大盈家就是这么任性！ '
+var forwardingDesc ='玩游戏，抢金币，体验“理财神器”合众大盈家。'
+var forwardingCallback = function(){
+	$.cookie('gameIns', '1')
+
+	if(window.clickReplay){
+		setTimeout(function(){
+			$('#successBox, #showBonusBox, #selectBox').hide()
+			$('#item_success_modal').modal('hide')
+			//restartGame()
+			location.href = location.href
+		}, 1000)
+	}
+}
+
+
+var maskObj = $('#mask');
+var mask = function () {		
+		if(maskObj.is(':visible')){
+			maskObj.hide();
+		}
+		else{
+			maskObj.show();
+		}
+}
+var loading_box = $('#loading_box')
+	var loading = function(){
+		loading_box.fadeIn(500)
+	}
+	var hideLoding = function(){
+		loading_box.fadeOut(500)
+	}
+
+
+window.isAjax = false
+var getBonusAjax = function(cash, sex, age, alloc){
+	if(window.isAjax) return false;
+
+	if(parseInt(cash) != cash){
+		return alert('请输入正确的投保金额')
+	}
+	if(parseInt(sex) != sex){
+		return alert('请输入选择正确的性别')
+	}
+	if(parseInt(age) != age){
+		return alert('请输入正确的年龄')
+	}
+	if(parseInt(alloc) != alloc){
+		return alert('请选择正确的资金分配')
+	}
+	loading()
+	window.isAjax = true
+	var qobj = {
+		cash:cash,
+		sex:sex,
+		age:age,
+		alloc:alloc
+	}
+	_hmt.push(['_trackEvent', 'get bonus', 'ajax', JSON.stringify(qobj)])
+	$.get('/insurance/unionlife/getbonus', qobj, function(d){
+		window.isAjax = false
+		hideLoding()
+		if(d.error) return alert(d.data)
+		putBonusData(d.data, age, alloc)
+
+	},'json')
+}
+
+var genZeroTo60Option = function(num, cur){
+	var temps = ''
+	var num = num || 66
+	var cyr = cur || 30
+
+	for(var i=0; i<num; i++){
+		if(i==cur){
+			var selStr = 'selected="selected"'
+		}
+		else{
+			var selStr = ''
+		}
+		temps += '<option value="'+i+'" '+selStr+'>'+i+' 岁</option>'
+	}
+
+	return temps
+}
+
+var putOption = function(num, cur){
+	var s = genZeroTo60Option(num,cur)
+
+	$('#ageSelect').html(s)
+}
+
+
+var tableStr ='<table class="table table-hover">'+
+	      	  '<thead><tr>'+
+	          '<th>年龄</th>'+
+	          '<th>低档演示</th>'+
+	          '<th>中档演示</th>'+
+	          '<th>高档演示</th></tr></thead>'+
+      		  '<tbody>{content}</tbody></table>';
+
+
+
+
+var putBonusData = function(bonusData, age, alloc){
+	var age = parseInt(age)
+	var tableBox = $('#tableBox')
+	
+	var checkList = [30, 40, 50, 60, 70, 88]
+    if(alloc == 1){
+    	var jiaofei = 3
+    }
+    else if(alloc == 2){
+    	var jiaofei = 5
+    }
+    else if(alloc == 3){
+    	var jiaofei = 10
+    }
+    checkList = checkList.filter(function(v){
+    	if(age+jiaofei+10 > v){
+    		return false
+    	}
+    	return true
+    })
+    var tempStr = ''
+
+
+    checkList.forEach(function(key){
+    	var lowerVal = (Math.round(bonusData.lower[key.toString()]/1000)/10).toFixed(1)
+    	var midVal = (Math.round(bonusData.middle[key.toString()]/1000)/10).toFixed(1)
+    	var highVal = (Math.round(bonusData.high[key.toString()]/1000)/10).toFixed(1)
+
+    	tempStr += '<tr>'
+    	tempStr += '<td>'+key.toString()+'岁</td>'
+    	tempStr += '<td>'+lowerVal+'万</td>'
+    	tempStr += '<td>'+midVal+'万</td>'
+    	tempStr += '<td>'+highVal+'万</td>'
+    	tempStr += '</tr>'
+    })
+
+    tableBox.html(tableStr.replace('{content}', tempStr))
+    $('#successBox, #selectBox').hide()
+	$('#showBonusBox').show()
+}
+
+
+var getResultInfo = function(score){
+	if(score<= 5*10000){
+		return [Math.floor(score/10000), '10%', '小财神']
+	}
+	else if(score<= 7*10000){
+		return [Math.floor(score/10000), '20%', '小财神']
+	}
+	else if(score<= 9* 10000){
+		return [Math.floor(score/10000), '30%', '小财神']
+	}
+	else if(score<= 11*10000){
+		return [Math.floor(score/10000), '40%', '小财神']
+	}
+	else if(score<= 13*10000){
+		return [Math.floor(score/10000), '50%', '小财神']
+	}
+	else if(score<= 15*10000){
+		return [Math.floor(score/10000), '60%', '大财神']
+	}
+	else if(score<= 17*10000){
+		return [Math.floor(score/10000), '70%', '大财神']
+	}
+	else if(score<= 19*10000){
+		return [Math.floor(score/10000), '80%', '大财神']
+	}
+	else if(score<= 21*10000){
+		return [Math.floor(score/10000), '90%', '大财神']
+	}
+	else if(score> 23*10000){
+		return [Math.floor(score/10000), '99%', '大财神']
+	}
+
+}
+
+
+var resultDiv = function(score, isjump){
+
+
+	if(!isjump){
+		var fontRes = getResultInfo(score)
+		$('#score_font').html(fontRes[0])
+		$('#rate_font').html(fontRes[1])
+		$('#title_font').html(fontRes[2])
+	}
+
+	
+	//保留两位小数
+	$('#cashInput').val((score/10000).toFixed(2))
+	$('#modalTitle').html('闯关成功')
+
+	$('#selectBox, #showBonusBox').hide()
+	$('#successBox').show()
+	$('#item_success_modal').modal({
+		'backdrop':'static'
+	})
+
+	if(isjump){
+		$('#startLicai').click()
+	}
+
+	
+}
+
+
+window.clickReplay = false
+
+var bindClickEvent = function(){
+	
+
+	$('#startLicai').click(function(){
+		$('#successBox, #showBonusBox').hide()
+		$('#selectBox').show()
+		$('#modalTitle').html('理财计划')
+		$('#rePlayBtn').hide()
+		return false;
+	})
+
+	$('#reSelectBtn').click(function(){
+		$('#modalTitle').html('理财计划')
+		$('#reSelectBtn').hide()
+		$('#successBox, #showBonusBox').hide()
+		$('#selectBox').show()
+		$('#rePlayBtn').hide()
+		return false;
+	})
+
+
+	$('#rePlayBtn').click(function(){
+
+		window.clickReplay = true
+		if($.cookie('gameIns') == '1'){
+			location.href = location.href
+		}
+		else{
+			mask()
+		}
+		return false;
+	})
+	
+	$('#qiangHb').click(function(){
+		alert('抢红包活动近期推出, 敬请期待…')
+	})
+
+	$('#getBonus').click(function(){
+		var cash = ($('#cashInput').val() - 0)*10000
+		var sex =$('#sexSelect').val()
+		var age =$('#ageSelect').val()
+		var alloc =$('#allocSelect').val()
+		$('#modalTitle').html('累计账户价值演示')
+		$('#reSelectBtn').show()
+		getBonusAjax(cash, sex, age, alloc)
+
+		return false;		
+	})
+
+
+	$('#allocSelect').change(function(){
+		var v = $(this).val()
+		var selAge = $('#ageSelect').val()
+
+		//3年
+		if(v == '1'){
+			putOption(66, selAge)
+		}
+		//5年交只能60
+		else if( v == '2'){
+			if(selAge>60){
+				selAge = 60
+			}
+			putOption(61, selAge)
+		}
+		else{
+			//10年交费只能55岁及以下
+			if(selAge>55){
+				selAge = 55
+			}
+			putOption(56, selAge)
+		}
+		
+
+	})
+
+	setTimeout(function(){
+		$('#allocSelect').change()
+	},500)
+
+	$('.androidArrow').click(function(){
+		$(this).parent().find('select').click().focus()
+	})
+
+	$('#ageSelect').html(genZeroTo60Option())
+
+}()
+
+
+function gameOverCallBack(score){
+
+	_hmt.push(['_trackEvent', 'game over', 'game', score])
+	resultDiv(score)
+}
+
+//Winner.Game.managePause()
+//resultDiv(300000)
+
+</script>
+
+
+
+
+<script src="http://wzhfile.qiniudn.com/wx_share_v3.js"></script> 
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</div>
+
+
+
+
+
+
+
+</div>
+	</body>
+</html>
