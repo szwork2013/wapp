@@ -80,6 +80,15 @@
                <input type="number" class="k-input k-textbox w-50-inp" name="appUserScore" data-bind="value:appUserScore" >
             </div>
 
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appUserType">用户类型</label>
+            </div>
+            <div data-container-for="appUserType" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" id="app_user_type" name="appUserType" data-bind="value:appUserType" >
+            </div>
+            
+
            <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
             </div>
@@ -152,6 +161,7 @@
                                     "appUserSex":{editable: true},
                                     "appUserBirth":{editable: true},
                                     "appUserScore":{editable: true},
+                                    "appUserType":{editable: true},
                                     "isShow": { editable: true,type:"number" },                                    
                                     "writeTime": {editable: true, type: "date" },
                                 }
@@ -243,6 +253,12 @@
                         { 
                             field: "appUserScore",
                             title: "积分",
+                            hidden:true
+                        },
+                        { 
+                            field: "app_user_type",
+                            title: "类型",
+                            values:window.app_user_type
                         },
                         { 
                             field: "isShow",
@@ -282,6 +298,8 @@
                          window.dropdown_init($("#appId_inp"), d)
 
                          window.dropdown_init($("#sex_inp"), window.sex_ary)
+                         window.dropdown_init($("#app_user_type"), window.app_user_type)
+
                          window.dropdown_init()
 
                     }

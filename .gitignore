@@ -12,6 +12,7 @@ upload
 newrelic_agent.log
 wxmenu/config/Config.json
 wxmenu/config/ConfigRelease.json
+wxmenu_hz/config/ConfigRelease.json
 /wxmenu/config/ConfigRelease.json
 /wxmenu/npm-debug.log
 /wxmenu/moneryConfig
