@@ -178,6 +178,26 @@ obj.getMyStarLog = function(userId, toUserId, cb){
 }
 
 
+
+obj.getAvgScore = function(userId, cb){
+
+	userModel.findOneByObj(qobj,function(err,udoc){
+		if(err) return cb(err)
+		starLogModel.countAll({
+			'toUserId':userId
+		}, function(err, count){
+			if(err) return cb(err)
+			if(count==0) return cb(null, 0)
+			var avg = udoc.appUserScore/count
+			return cb(null, avg)
+		})
+	})
+
+	
+
+}
+
+
 //处理打分
 obj.dealStar = function(userId, toUserId, score, ip, cb){
 
@@ -193,18 +213,28 @@ obj.dealStar = function(userId, toUserId, score, ip, cb){
 			toUserId:toUserId,
 			fromUserIdLuserId,
 			logIp:ip,
-			starScore:starScore,
+			starScore:score,
 		},function(err, doc){
 			if(err){
 				return cb(err)
 			}
-			
+			//然后给业务员打分，免去每次都groupby操作
+			userModel.createOneOrUpdate({
+				_id:toUserId
+			}, {
+				'$inc:':{
+				'appUserScore':score
+				}
+			}, function(err, doc){
+				if(err) return cb(err)
+				return cb(null, doc)
+			}) // end userModel.createOneOrUpdate
 
 			
-		})
+		})//end starLogModel.insertOneByObj
 
 
-	})
+	})//end obj.getMyStarLog
 
 
 }

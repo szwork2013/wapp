@@ -60,6 +60,7 @@ obj.hzstar = function(req,res){
 	var appId = req.wxuobj.appId;
 	var toUserId = req.query.touserid
 	var score = req.query.score
+	var ip = req.ips[0] || '127.0.0.1'
 	
 	if(!toUserId){
 			return res.send({error:1,data:'无效的 toUserId'}) 
@@ -71,7 +72,7 @@ obj.hzstar = function(req,res){
 	//数据检查是否存在
 
 
-	userBl.dealStar(userId, toUserId, score, function(err, doc){
+	userBl.dealStar(userId, toUserId, score, ip,  function(err, doc){
 			if(err){
 				return res.send({error:1,data:err}) 
 			}

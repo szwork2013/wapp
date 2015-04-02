@@ -30,7 +30,7 @@ var voteItemCl = require('./cl/voteItemCl.js');
 var voteRecordCl = require('./cl/voteRecordCl.js');
 
 var moneyCl = require('./cl/moneyLogCl.js');
-
+var starCl = require('./cl/starLogCl.js');
 
 var utils = require('../lib/utils.js')
 
@@ -246,6 +246,13 @@ var addroute = function(app){
 	app.post('/manger/moneyLog/update', checkLogin, moneyCl.update)
 	app.post('/manger/moneyLog/destroy', checkLogin, moneyCl.destroy)
 	app.post('/manger/moneyLog/create', checkLogin, moneyCl.create)
+
+	//star标星星流水
+	app.get('/manger/starLog/list', checkLogin, starCl.list)
+	app.post('/manger/starLog/read', checkLogin, starCl.read)
+	app.post('/manger/starLog/update', checkLogin, starCl.update)
+	app.post('/manger/starLog/destroy', checkLogin, starCl.destroy)
+	app.post('/manger/starLog/create', checkLogin, starCl.create)
 
 
 	//获得guid

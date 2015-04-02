@@ -1,0 +1,256 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">记录id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="toUserId" >目标用户</label>
+            </div>
+            <div data-container-for="toUserId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="toUserId" data-bind="value:toUserId">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="fromUserId" >打分用户</label>
+            </div>
+            <div data-container-for="fromUserId" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="fromUserId" data-bind="value:fromUserId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="logIp" >打分ip</label>
+            </div>
+            <div data-container-for="logIp" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="logIp" data-bind="value:logIp" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="starScore" >打分分数</label>
+            </div>
+            <div data-container-for="starScore" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="starScore" data-bind="value:starScore" required="required">
+            </div>
+
+           
+
+
+<div style="display:none">
+            <div class="k-edit-label  w-800-l">
+                <label for="code1" >备用1</label>
+            </div>
+            <div data-container-for="code1" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="code2" >备用2</label>
+            </div>
+            <div data-container-for="code2" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="code3" >备用3</label>
+            </div>
+            <div data-container-for="code3" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code3" data-bind="value:code3" >
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="code4" >备用4</label>
+            </div>
+            <div data-container-for="code4" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code4" data-bind="value:code4" >
+            </div>
+
+</div>            
+
+
+           <div class="k-edit-label  w-800-l">
+                <label for="writeTime">创建日期</label>
+            </div>
+            <div data-container-for="writeTime" class="k-edit-field w-800-r">
+               <input type="text" id="writeTime" class="k-input k-textbox " name="writeTime" data-bind="value:writeTime">
+            </div>
+
+ 
+        </script>
+
+
+<script>
+
+
+
+
+ $(function () {
+
+
+                var toolbarAry = [
+                                { name: "create", text: "添加" }
+                              ]
+                var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+                                           
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                       
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/starLog/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/starLog/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/starLog/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/starLog/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+
+                                    "toUserId": { editable: true },
+                                    "fromUserId": { editable: true },
+                                    "logIp": { editable: true}, 
+                                    "starScore": { editable: true},
+                                  
+
+                                    "code1": { editable: true},
+                                    "code2": { editable: true},
+                                    "code3": { editable: true},
+                                    "code4": { editable: true},
+                           
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                
+
+$.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'记录Id',
+                            hidden:true
+                        },
+
+                        { 
+                            field: "toUserId",
+                            title: "目标用户",
+                        },
+                        { 
+                            field: "fromUserId",
+                            title: "投票用户",
+                        },
+                        { 
+                            field: "logIp",
+                            title: "投票ip",
+                        },
+                        { 
+                            field: "starScore",
+                            title: "投票分数",
+                        },
+                        { 
+                            field: "code1",
+                            title: "备用1",
+                            hidden:true
+                        },
+                         { 
+                            field: "code2",
+                            title: "备用2",
+                            hidden:true
+                        },
+                        { 
+                            field: "code3",
+                            title: "备用3",
+                            hidden:true
+                        },
+                         { 
+                            field: "code4",
+                            title: "备用4",
+                            hidden:true
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        $('.k-window-content').addClass('w-800-content');
+                        $('.k-edit-form-container').addClass('w-800-content');
+
+                        $('#writeTime').kendoDateTimePicker();
+
+
+
+
+                    },
+                    filterable:window.filter_obj         
+                });
+      })                              
+});
+
+</script>
+<% include inc/foot %>
