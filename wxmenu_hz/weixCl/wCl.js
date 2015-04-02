@@ -289,7 +289,7 @@ var wxFunction = function(app, applist){
                     res.reply('您输入的工号格式不正确，正确格式为：hz_123456');
                     return
                 }
-                var workParam = 'worknum='+workNum
+                var workParam = 'isyewuyuan=1&worknum='+workNum
                 var menuDoc = {
                     'title':'',
                     'description':'',
