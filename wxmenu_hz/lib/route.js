@@ -12,6 +12,9 @@ var userCl = require('../viewCl/viewUserCl.js')
 var lotteryCl = require('../viewCl/viewLotteryCl.js')
 var voteCl = require('../viewCl/viewVoteCl.js')
 var insuranceCl = require('../viewCl/viewInsuranceCl.js')
+var hzYewuyuanCl = require('../viewCl/viewHzYewuyuanCl.js')
+
+
 
 var wxAppBl = require('../bl/wxApp.js');
 var userBl = require('../bl/wxUser.js');
@@ -316,6 +319,11 @@ var addroute = function(app){
 		//game insurance
 		app.get('/insurance/unionlife', insuranceCl.page)
 		app.get('/insurance/unionlife/getbonus', insuranceCl.getBonus)
+
+		//合众人寿业务员名片页面
+		app.get('/view/hzyewuyuan', getUserMid, hzYewuyuanCl.hzyewuyuan_mingpian)
+		//合众人寿业务员名片页面
+		app.post('/api/hzprizeinfo', hzYewuyuanCl.hzyewuyuan_info)
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];

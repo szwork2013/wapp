@@ -6,6 +6,7 @@ var userBl = require('../bl/wxUser.js');
 var appBl = require('../bl/wxApp.js');
 var utils = require('../lib/utils.js');
 var moment = require('moment');
+var yewuyuan = require('../tools/hz_yewuyuan.js')
 
 var obj = {}
 var oauth_back_url = '/oauth/back';
@@ -361,6 +362,19 @@ obj.oauthJumpBack = function(app,applist){
 								headimgurl:userinfo.headimgurl || '',
 							};
 
+							//合众人寿专属,获取业务员
+							/*var yewuyuanResult = yewuyuan.get_yewuyuan(userinfo.nickname)
+							if(yewuyuanResult){
+								var appUserBirth = yewuyuanResult.appUserBirth
+								var appUserSex = yewuyuanResult.appUserSex
+								var appUserType = 2
+							}
+							else{
+								var appUserBirth = '1970/1/1'
+								var appUserSex = 1
+								var appUserType = 1
+							}*/
+
 							//更新用户的微信属性
 							userModel.createOneOrUpdate({
 								_id:doc._id
@@ -368,6 +382,9 @@ obj.oauthJumpBack = function(app,applist){
 								 wxName:userinfo.nickname,                   //微信用户昵称
 								 wxAvatar:userinfo.headimgurl,                //微信用户头像
 								 wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
+								 //appUserBirth:appUserBirth,
+								 //appUserSex:appUserSex,
+								 //appUserType:appUserType,
 							},function(err,updatedoc){
 
 								//处理完异常

@@ -63,32 +63,40 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 		return;
 	}
 
-	var lotteryId = req.body.lotteryId
-	var isforward = parseInt(req.body.isforward) || 0;
-	var recordIp = req.ips[0] || '127.0.0.1'
 
-	lotteryBl.startLottery(userid, lotteryId, recordIp, isforward, function(err,result){
-		if(err){
-	        return res.send({error:1,data:err}) 
-     	}
-     	if(result.prizeId && result.prizeId != '0'){
-     		//根据奖品id拿奖品信息
-     		lotteryBl.getPrizeById(result.prizeId, function(err,po){
-     			if(err){
-     				return res.send({error:1,data:err});
-     			}
-     			if(!po){
-     				return res.send({error:1,data:'奖品未找到'});
-     			}
-     			result.prizeObj = po;
-     			return res.send({error:0,data:result});
-     		})
-     	}
-     	else{
-     		return res.send({error:0,data:result});
-     	}
+	userBl.getUserByUserId(userid, function(err, userobj){
+
+			if(err){
+				return res.send(500)
+			}
+
+			var mobile = userobj.appUserMobile
+			var lotteryId = req.body.lotteryId
+			var isforward = parseInt(req.body.isforward) || 0;
+			var recordIp = req.ips[0] || '127.0.0.1'
+
+			lotteryBl.startLottery(userid, lotteryId, recordIp, isforward, function(err,result){
+				if(err){
+			        return res.send({error:1,data:err}) 
+		     	}
+		     	if(result.prizeId && result.prizeId != '0'){
+		     		//根据奖品id拿奖品信息
+		     		lotteryBl.getPrizeById(result.prizeId, function(err,po){
+		     			if(err){
+		     				return res.send({error:1,data:err});
+		     			}
+		     			if(!po){
+		     				return res.send({error:1,data:'奖品未找到'});
+		     			}
+		     			result.prizeObj = po;
+		     			return res.send({error:0,data:result});
+		     		})
+		     	}
+		     	else{
+		     		return res.send({error:0,data:result});
+		     	}
+			}, mobile)
 	})
-
 }
 
 

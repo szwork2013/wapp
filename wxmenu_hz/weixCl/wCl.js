@@ -10,6 +10,7 @@ var url = require('url')
 
 var moneySendLib = require('../lib/money.js')
 var userBl = require('../bl/wxUser.js')
+var yewuyuan = require('../tools/hz_yewuyuan.js')
 
 var ERR_REPLY = '系统错误，请您重试';
 var UNKNOW_REPLY = '未知操作'
@@ -21,12 +22,13 @@ var wxpic_20150327_dl = require('../tempDl/20150327_wxpic.js');
 var currentSite = global.config.currentSite;
 
 
-var wxGenSingleObj = function(replyObj,openId,appId){
+var wxGenSingleObj = function(replyObj,openId,appId, param){
     var Obj = {}
     Obj.title = replyObj.replyTitle.trim()  || '';
     Obj.description = replyObj.replyDesc.trim()  || '';
     Obj.picurl = currentSite + replyObj.replyPicture.trim()  || ''; //拼接静态图片url地址
     Obj.url = replyObj.replyUrl.trim()  || '';
+
 
     if(replyObj.replyUrl.indexOf('?') != -1){ //增加 url 参数
         Obj.url = replyObj.replyUrl+'&wxopenid='+openId+'&wxappid='+appId;
@@ -34,6 +36,10 @@ var wxGenSingleObj = function(replyObj,openId,appId){
     else{
         Obj.url = replyObj.replyUrl+'?wxopenid='+openId+'&wxappid='+appId;
     }
+    if(param){
+      Obj.url += '&'+param
+    }
+
 
     return Obj;
 }
@@ -273,13 +279,36 @@ var wxFunction = function(app, applist){
                 // MsgId: '5837397576500011341' }
 
               //console.log(message)
-              
+
+
+
+            //如果是合众的公众账号，并且hz开头的自定义回复，则认为是业务员
+            if( appEname =='hezhong' && message.Content.trim().indexOf('hz') == 0){
+                var workNum = yewuyuan.get_number(message.Content.trim())
+                if(!workNum){
+                    res.reply('您输入的工号格式不正确，正确格式为：hz_123456');
+                    return
+                }
+                var workParam = 'worknum='+workNum
+                var menuDoc = {
+                    'title':'',
+                    'description':'',
+                    'picurl':'',
+                    'url':'/view/hzyewuyuan',
+                }
+                res.reply([wxGenSingleObj(menuDoc, message.FromUserName, appId, workParam)]); //创建回复对象
+                return;
+            }
+            //如果是合众的公众账号，并且hz开头的自定义回复，则认为是业务员
+
+
 
 
             if( appEname =='mingmen' && message.Content.trim() == '高圆圆'){
               wxpic_20150327_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
                   res.reply(util.format('您的抽奖码为：%d', guid));
               })
+              return
             }
             
 

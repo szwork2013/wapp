@@ -6,6 +6,8 @@ var lotteryModel = require('../dl/lotteryModel.js'); //加载抽奖模型
 var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js'); //加载奖品
 var lotteryRecModel = require('../dl/lotteryRecordModel.js'); //加载抽奖记录模型
 
+var hzCheckPrize = require('../tools/hz_must_prize.js')
+
 var obj = {}
 
 //根据英文短名获取抽奖信息
@@ -176,7 +178,7 @@ obj.getLotteryAndPrize = function(lotteryId,cb){
 
 
 
-obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用户进入抽奖页面点击抽奖程序
+obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb, mobile){ //用户进入抽奖页面点击抽奖程序
 	var cb = cb || function(){}
 	if(!userId) return cb('no userId');
 	if(!lotteryId) return cb('no lotteryId');
@@ -270,25 +272,25 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb){ //用�
 				if((!isForward && hasGetPrizeCount >= lotteryObj.allowLotteryTimes) || (isForward && hasGetPrizeForwardCount >= lotteryObj.allowLotteryTimes)){
 					
 					if(recList.length<limit){
-						return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb);//进入抽奖程序
+						return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb, mobile);//进入抽奖程序
 					}
 
 					if(!checkIsMax()){
 						return cb('参与次数过多')
 					}
-					return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb);//进入抽奖程序
+					return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb, mobile);//进入抽奖程序
 				
 				} 
 			}
 
 			if(recList.length == 0 || recList.length<limit){//用户没有抽过奖，或抽奖总数小于间隔抽奖数，则去抽奖
-				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb);//进入抽奖程序
+				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb, mobile);//进入抽奖程序
 			}
 			else{//判断是否超过间隔的抽奖次数
 				if(!checkIsMax()){
 					return cb('参与次数过多')
 				}
-				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb);//进入抽奖程序
+				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb, mobile);//进入抽奖程序
 			}
 
 		})//end lotteryRecModel.findAll
@@ -326,6 +328,15 @@ obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb
 			if(prList.length == 0){ //没有找到奖品，表示此次抽奖未中奖
 				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
 			}
+
+
+			//合众判断是否中奖
+			var isPrize = hzCheckPrize.checkPrize(mobile)
+			if(isPrize){
+				obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+				return
+			}
+
 
 			var userRate = (Math.random()*100).toFixed(2); //用户抽出的随机数
 
