@@ -2,6 +2,9 @@ var userModel = require('../dl/userModel.js'); //加载用户模型
 
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
+var starLogModel = require('../dl/starLogModel.js'); //打分的流水
+
+
 var moment = require('moment');
 var utils = require('../lib/utils.js');
 
@@ -113,9 +116,9 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(!userId){
 		return cb('缺少 userid')
 	}
-	if(!openId){
-		return cb('缺少 openId')
-	}
+	// if(!openId){
+	// 	return cb('缺少 openId')
+	// }
 
 	var appMObj = {}
 	if(qobj.appUserCommunity){
@@ -161,5 +164,51 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 			})//end userModel.createOneOrUpdate
 	//	})// end userAppModel.createOneOrUpdate 
 }
+
+
+
+
+//获得我的打分流水
+obj.getMyStarLog = function(userId, toUserId, cb){
+
+	starLogModel.findByObj({'fromUserId':userId, 'toUserId':toUserId}, function(err, docList){
+		if(err) return cb(err)
+		return cb(docList)
+	})
+}
+
+
+//处理打分
+obj.dealStar = function(userId, toUserId, score, ip, cb){
+
+	obj.getMyStarLog(userId, toUserId, function(err, docList){
+		if(err){
+			return cb(err)
+		}
+		if(docList.length > 0){
+			return cb('不能重复打分')
+		}
+
+		starLogModel.insertOneByObj({
+			toUserId:toUserId,
+			fromUserIdLuserId,
+			logIp:ip,
+			starScore:starScore,
+		},function(err, doc){
+			if(err){
+				return cb(err)
+			}
+			
+
+			
+		})
+
+
+	})
+
+
+}
+
+
 
 module.exports = obj;

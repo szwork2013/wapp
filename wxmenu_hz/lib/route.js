@@ -323,7 +323,13 @@ var addroute = function(app){
 		//合众人寿业务员名片页面
 		app.get('/view/hzyewuyuan', getUserMid, hzYewuyuanCl.hzyewuyuan_mingpian)
 		//合众人寿业务员名片页面
-		app.post('/api/hzprizeinfo', hzYewuyuanCl.hzyewuyuan_info)
+		app.post('/api/hzstar', hzYewuyuanCl.hzstar)
+
+
+
+
+
+
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];
