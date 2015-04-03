@@ -178,7 +178,7 @@ obj.getLotteryAndPrize = function(lotteryId,cb){
 
 
 
-obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb, mobile){ //用户进入抽奖页面点击抽奖程序
+obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb, mobile, ywy_mobile){ //用户进入抽奖页面点击抽奖程序
 	var cb = cb || function(){}
 	if(!userId) return cb('no userId');
 	if(!lotteryId) return cb('no lotteryId');
@@ -268,29 +268,38 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb, mobile){
 						return;
 					}
 				})
+
+
+				//一个用户只能中一次奖，直接返回出去
+				if(hasGetPrizeCount>0 || hasGetPrizeForwardCount>0){
+					return cb('您已近中过奖了')
+				}
+
+
+
 				//如果超过了最大的中奖次数
 				if((!isForward && hasGetPrizeCount >= lotteryObj.allowLotteryTimes) || (isForward && hasGetPrizeForwardCount >= lotteryObj.allowLotteryTimes)){
 					
 					if(recList.length<limit){
-						return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb, mobile);//进入抽奖程序
+						return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb, mobile, ywy_mobile);//进入抽奖程序
 					}
 
 					if(!checkIsMax()){
 						return cb('参与次数过多')
 					}
-					return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb, mobile);//进入抽奖程序
+					return obj._getPrize(userId, lotteryId, recordIp, isForward, true, cb, mobile, ywy_mobile);//进入抽奖程序
 				
 				} 
 			}
 
 			if(recList.length == 0 || recList.length<limit){//用户没有抽过奖，或抽奖总数小于间隔抽奖数，则去抽奖
-				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb, mobile);//进入抽奖程序
+				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb, mobile, ywy_mobile);//进入抽奖程序
 			}
 			else{//判断是否超过间隔的抽奖次数
 				if(!checkIsMax()){
 					return cb('参与次数过多')
 				}
-				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb, mobile);//进入抽奖程序
+				return obj._getPrize(userId, lotteryId, recordIp, isForward, false, cb, mobile, ywy_mobile);//进入抽奖程序
 			}
 
 		})//end lotteryRecModel.findAll
@@ -302,10 +311,10 @@ obj.startLottery = function(userId, lotteryId, recordIp, isForward, cb, mobile){
 
 
 
-obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb){//用户进入抽奖程序
+obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb, mobile, ywy_mobile){//用户进入抽奖程序
 
 	if(mustNoPrize){
-		return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+		return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb, mobile, ywy_mobile);//表示没有抽到奖品
 	}
 
 	lotteryPrizeModel.findByObj({//获得奖品列表
@@ -318,7 +327,7 @@ obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb
 
 
 			if(!prList || prList.length == 0){ //没有找到奖品，表示此次抽奖未中奖
-				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb, mobile, ywy_mobile);//表示没有抽到奖品
 			}
 			prList = prList.filter(function(pobj){ //剔除奖品已经抽取完毕项
 				var last = pobj.totalNumber - pobj.countNum
@@ -326,16 +335,20 @@ obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb
 			})
 
 			if(prList.length == 0){ //没有找到奖品，表示此次抽奖未中奖
-				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb, mobile, ywy_mobile);//表示没有抽到奖品
 			}
 
 
-			//合众判断是否中奖
-			var isPrize = hzCheckPrize.checkPrize(mobile)
-			if(isPrize){
-				obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+			//********************合众判断是否中奖
+			var hz_prizeId = hzCheckPrize.checkPrize(mobile, prList)
+			//如果中奖了，则获取这个奖品的_id然后进入中奖流程，否则继续流程
+			if(hz_prizeId){
+				obj._completeLottery(userId, lotteryId, recordIp, hz_prizeId, 0, isForward, cb, mobile, ywy_mobile);//表示没有抽到奖品
 				return
 			}
+			//********************合众判断是否中奖
+
+
 
 
 			var userRate = (Math.random()*100).toFixed(2); //用户抽出的随机数
@@ -358,10 +371,10 @@ obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb
 			if(prizeLen>0){
 				var prizePos = ~~(Math.random()*prizeLen); //获得随机的一个中奖奖品
 				var userPrizeId = ratePrizeAry[prizePos]._id;
-				return obj._completeLottery(userId, lotteryId, recordIp, userPrizeId, 0, isForward, cb);//抽到奖品 userPrizeId
+				return obj._completeLottery(userId, lotteryId, recordIp, userPrizeId, 0, isForward, cb, mobile, ywy_mobile);//抽到奖品 userPrizeId
 			}
 			else if(countPrizeAry.length == 0){ //如果没有概率中奖，并且也没有计数抽奖的奖品，则表示用户没有中奖
-				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+				return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb, mobile, ywy_mobile);//表示没有抽到奖品
 			}
 
 			//如果用户概率没有中奖，并且有奖品是计数中奖的，则进入计数抽奖流程
@@ -387,7 +400,7 @@ obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb
 				})
 
 				if(userCountPrizeId == 0){ //如果计数抽奖也没中
-					return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb);//表示没有抽到奖品
+					return obj._completeLottery(userId, lotteryId, recordIp, 0, 0, isForward, cb, mobile, ywy_mobile);//表示没有抽到奖品
 				}
 
 				
@@ -419,7 +432,7 @@ obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb
 }
 
 
-obj._completeLottery = function(userId, lotteryId, recordIp, prizeId, nextPriceNum, isForward, cb){//用户抽奖结束，更新记录和相关信息
+obj._completeLottery = function(userId, lotteryId, recordIp, prizeId, nextPriceNum, isForward, cb, mobile, ywy_mobile){//用户抽奖结束，更新记录和相关信息
 	var prizeId = prizeId || 0;
 	var nextPriceNum = nextPriceNum || 0;
 
@@ -437,6 +450,8 @@ obj._completeLottery = function(userId, lotteryId, recordIp, prizeId, nextPriceN
 				guid = 0;
 			}
 			*/
+
+
 
 			lotteryRecModel.insertOneByObj({
 				lotteryId:lotteryId,
@@ -481,7 +496,15 @@ obj._completeLottery = function(userId, lotteryId, recordIp, prizeId, nextPriceN
 						recordId:recDoc._id
 					});
 
+
 					obj._checkWrongCountPrize(lotteryId);
+
+					//**********合众人寿发送短信通知业务员，有人中奖了
+					if(prizeId!=0){
+						hzCheckPrize.sendSms(userObj, prizeId, ywy_mobile)
+					}
+					//**********合众人寿发送短信通知业务员，有人中奖了
+					
 					return;
 				}) //end lotteryPrizeModel.createOneOrUpdate
 

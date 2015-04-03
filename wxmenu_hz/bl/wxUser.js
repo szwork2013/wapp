@@ -181,7 +181,9 @@ obj.getMyStarLog = function(userId, toUserId, cb){
 
 obj.getAvgScore = function(userId, cb){
 
-	userModel.findOneByObj(qobj,function(err,udoc){
+	userModel.findOneByObj({
+		_id:userId
+		},function(err,udoc){
 		if(err) return cb(err)
 		starLogModel.countAll({
 			'toUserId':userId

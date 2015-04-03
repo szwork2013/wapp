@@ -15,6 +15,15 @@ var platForm = os.platform()
 obj.activeMiddle = function(req,res,next){
 	var toUserId = req.query.touserid;
 	var activeEname = req.query.ename;
+	//获取工号号码
+	var workNum = req.query['worknum']
+	if(workNum){
+		var wokrNumParam = '&worknum='+workNum
+	}
+	else{
+		var wokrNumParam = ''
+	}
+
 
 	var pathname = url.parse(req.originalUrl).pathname || ''
 	try{
@@ -80,10 +89,10 @@ obj.activeMiddle = function(req,res,next){
 					if(redirect_url){
 						//增加openid参数
 						if(redirect_url.indexOf('?') == -1){
-							redirect_url = redirect_url + '?openid='+openId
+							redirect_url = redirect_url + '?openid='+openId+wokrNumParam
 						}
 						else{
-							redirect_url = redirect_url + '&openid='+openId
+							redirect_url = redirect_url + '&openid='+openId+wokrNumParam
 						}
 						//跳转
 						res.redirect(redirect_url)
@@ -129,6 +138,7 @@ obj.activeMiddle = function(req,res,next){
 
 
 obj.activePage = function(req,res){ //活动页面展示
+
 
 		res.set('Cache-Control', 'no-cache')
     	res.set('ETag', Date.now().toString())

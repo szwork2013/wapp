@@ -59,7 +59,7 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 	var appEname = appobj.data;
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
-		res.send({error:0,data:'用户身份丢失，请重新进入'})
+		res.send({error:1,data:'用户身份丢失，请重新进入'})
 		return;
 	}
 
@@ -69,11 +69,24 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 			if(err){
 				return res.send(500)
 			}
+			if(!userobj){
+				return res.send({error:1,data:'未找到用户'})
+			}
+			var userobj = userobj.uobj
 
 			var mobile = userobj.appUserMobile
 			var lotteryId = req.body.lotteryId
 			var isforward = parseInt(req.body.isforward) || 0;
 			var recordIp = req.ips[0] || '127.0.0.1'
+			var ywy_mobile = req.body.ywy_mobile
+
+			if(!userobj.appUserCode || userobj.appUserCode == ''){
+				return res.send({error:1,data:'未认证用户无法抽奖'})
+			}
+			if(!userobj.appUserType == 2){
+				return res.send({error:1,data:'业务员无法抽奖'})
+			}
+
 
 			lotteryBl.startLottery(userid, lotteryId, recordIp, isforward, function(err,result){
 				if(err){
@@ -95,7 +108,7 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 		     	else{
 		     		return res.send({error:0,data:result});
 		     	}
-			}, mobile)
+			}, mobile, ywy_mobile)
 	})
 }
 
