@@ -213,7 +213,7 @@ obj.dealStar = function(userId, toUserId, score, ip, cb){
 
 		starLogModel.insertOneByObj({
 			toUserId:toUserId,
-			fromUserIdLuserId,
+			fromUserId:userId,
 			logIp:ip,
 			starScore:score,
 		},function(err, doc){
