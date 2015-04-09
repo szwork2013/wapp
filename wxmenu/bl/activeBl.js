@@ -648,7 +648,10 @@ obj.getActiveNewMember = function(activeId, limit, cb){
 				},0,limit,function(err, logList){
 
 						if(err) return cb(err);
-						if(logList.length == 0) return cb(null, logList)
+						if(logList.length == 0) return cb(null, {
+								'data':[],
+								'count':0,
+							})
 
 						var fromUserIdList = []
 						logList.forEach(function(item){
