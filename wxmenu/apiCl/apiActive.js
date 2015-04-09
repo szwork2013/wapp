@@ -58,6 +58,11 @@ obj.addSupport = function(req,res){
 
 	
 }
+
+
+
+
+
 //兑换奖品
 obj.startExchangePrize = function(req,res){
 
@@ -118,6 +123,27 @@ obj.getActiveRangeRank = function(req,res){
     })
 
 }
+
+
+
+//获取最新参加活动的100个人
+obj.getActiveNewMember = function(req,res){
+
+    var activeId = req.query.activeid;
+    var limit = (req.query.limit-0) || 10
+    //最多查找100个rank
+    if(limit > 100){
+        limit = 100
+    }
+
+    activeBl.getActiveNewMember(activeId, limit, function(err,doc){
+        if(err) return res.json({error:1,data:err})
+        res.json({error:0,data:doc})
+    })
+
+}
+
+
 
 
 module.exports = obj;

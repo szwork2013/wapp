@@ -285,6 +285,8 @@ var addroute = function(app){
 		app.get('/active_data/getrank', activeCl.activeRank)
 		//获取区间活动的排名
 		app.get('/active_data/getrangerank', apiActive.getActiveRangeRank)
+		//获取活动新助力的最新100人
+		app.get('/active_data/getnewmember', apiActive.getActiveNewMember)
 		//active exchange prize
 		app.post('/active_data/:appename/exchangeprize', apiActive.startExchangePrize);
 
@@ -299,6 +301,7 @@ var addroute = function(app){
 		app.get('/lottery/:appename/info', apiLottery.getLotteryInfo)
 		app.post('/lottery/:appename/start', apiLottery.startLottery)
 		app.post('/lottery/:appename/complete', apiLottery.improveInfo)
+
 
 		//vote
 		app.get('/vote/:appename', getUserMid, voteCl.votePage)//投票页面

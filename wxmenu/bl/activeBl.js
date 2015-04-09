@@ -621,6 +621,81 @@ obj.getActiveRangeRank = function(activeId, limit, cb){
 
 }
 
+
+
+
+
+
+
+
+obj.getActiveNewMember = function(activeId, limit, cb){
+	activeModel.findOneByObj({
+		_id:activeId,
+		isShow:1
+	},function(err,actdoc){
+		if(err) return cb(err);
+		if(!actdoc) return cb('没找到活动')
+
+
+		activeLogModel.countAll({},function(err, countNum){
+			if(err) return cb(err);
+		
+
+				activeLogModel.findAll({
+					'activeId':activeId
+				},0,limit,function(err, logList){
+
+						if(err) return cb(err);
+						if(logList.length == 0) return cb(null, logList)
+
+						var fromUserIdList = []
+						logList.forEach(function(item){
+							fromUserIdList.push(item.fromUserId)
+						})
+
+						userModel.getUserByIds(fromUserIdList, function(err, userList){
+							if(err) return cb(err);
+							var resultList = []
+							logList.forEach(function(logItem,i){
+								userList.forEach(function(userItem){
+									//匹配到用户
+									if(logItem.toUserId == userItem.value.toString()){
+										resultList.push({
+											appUserName:userItem.name,
+											userId:logItem.toUserId,
+											name:userItem.name,
+											sex:userItem.sex,
+											mobile:userItem.mobile,
+											wxName:userItem.wxName,
+											wxAvatar:userItem.wxAvatar,
+											wxAddress:userItem.wxAddress,
+											supportScore:logItem.supportScore,
+											pos:(i+1),
+										})
+									}
+								})//end userList.forEach
+							})//end logList.forEach
+
+							//console.log(resultList)
+							return cb(null, {
+								'data':resultList,
+								'count':countNum,
+							})
+
+						})//end userModel.getUserByIds
+
+
+				})//end activeLogModel.findAll
+
+		})//end activeLogModel.countAll
+
+	})//end activeModel.findOneByObj
+
+}
+
+
+
+
 //获得某一个活动所有记录条目
 obj.countActiveLog = function(activeId, cb){
 	activeLogModel.countAll({
