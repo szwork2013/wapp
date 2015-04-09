@@ -276,7 +276,7 @@ var wxFunction = function(app, applist){
               
 
 
-            if( appEname =='mingmen' && message.Content.trim() == '高圆圆'){
+            if( appEname =='yhw' && message.Content.trim() == '颐和湾'){
               wxpic_20150327_dl.getGuidByOpenid(message.FromUserName, message.PicUrl, function(err, guid){
                   res.reply(util.format('您的抽奖码为：%d', guid));
               })
