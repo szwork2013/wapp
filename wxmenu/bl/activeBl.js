@@ -637,7 +637,9 @@ obj.getActiveNewMember = function(activeId, limit, cb){
 		if(!actdoc) return cb('没找到活动')
 
 
-		activeLogModel.countAll({},function(err, countNum){
+		activeLogModel.countAll({
+			'activeId':activeId
+		},function(err, countNum){
 			if(err) return cb(err);
 		
 
