@@ -2,7 +2,7 @@ var request = require('request')
 var async = require('async')
 var fs = require('fs')
 var child_process = require('child_process')
-var iconv = require('iconv')
+var Iconv  = require('iconv').Iconv;
 
 var userBl = require('./wxUser.js');
 var userModel = require('../dl/userModel.js'); //加载用户模型
