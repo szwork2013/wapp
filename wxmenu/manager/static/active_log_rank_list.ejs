@@ -54,7 +54,7 @@ $(function(){
 
         alert('头像生成中，请耐心等待，不要刷新页面，不要重复点击')
         ajaxing = true
-        $.post('/manger/activelog/getrank',{
+        $.post('/manger/activelog/saveavatar',{
             activeEname:enameVal
         },function(d){
             ajaxing = false

@@ -736,7 +736,7 @@ obj.saveAvatarAndName = function(){
 			'activeId':activeId
 		}, 0, 2000, function(err, logList){
 			if(err) return cb(err);
-			if(logList.length == 0) return cb(null, '')
+			if(logList.length == 0) return cb('还没有会员参与')
 
 			var fromUserIdList = []
 			logList.forEach(function(item){
