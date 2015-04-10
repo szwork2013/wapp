@@ -796,7 +796,7 @@ obj._saveUserAvatar = function(userList, cb){
 		      console.log('exec error: ' + error);
 		    }
 	})
-	child_process.exec('rm -rf /var/nodejs/wapp/wxmenu/manager/static/m_skin/avatar.tar.gz', function(error, stdout, stderr){
+	child_process.exec('rm -rf /var/nodejs/wapp/wxmenu/manager/static/avatar.tar.gz', function(error, stdout, stderr){
 			console.log('stdout: ' + stdout);
 		    console.log('stderr: ' + stderr);
 		    if (error !== null) {
@@ -809,6 +809,10 @@ obj._saveUserAvatar = function(userList, cb){
 			var errorCount = 0
 			//循环遍历userList
 			userList.forEach(function(userObj){
+				if(!userObj.wxName || !userObj.wxAvatar){
+					return;
+				}
+
 				//将异步方法丢入数组，供async调用
 				dealFunc.push(function(callback){
 					
@@ -821,7 +825,7 @@ obj._saveUserAvatar = function(userList, cb){
 					ws.on('end', function(err){
 						callback()
 					})
-
+					
 					request(userObj.wxAvatar).pipe(ws).on('close', function(){
 						callback()
 					});
@@ -833,7 +837,7 @@ obj._saveUserAvatar = function(userList, cb){
 			async.series(dealFunc, function(err){
 				if(err) return cb('保存出错了')
 				//如果没出错，那么把这个文件夹打包，放入static目录下，供下载
-				var cmd = 'tar -zcvf /var/nodejs/wapp/wxmenu/manager/static/m_skin/avatar.tar.gz  -C '+saveFolder+' .'
+				var cmd = 'tar -zcvf /var/nodejs/wapp/wxmenu/manager/static/avatar.tar.gz  -C '+saveFolder+' .'
 				//执行shell命令打包文件夹
 				child_process.exec(cmd,  function(error, stdout, stderr){
 						console.log('stdout: ' + stdout);
@@ -843,7 +847,7 @@ obj._saveUserAvatar = function(userList, cb){
 					    }
 					    return cb(null, {
 							error:errorCount,
-							url:'/m_skin/avatar.tar.gz'
+							url:'/static/avatar.tar.gz'
 						})
 				})
 				
