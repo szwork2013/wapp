@@ -13,6 +13,10 @@
         <span class="k-sprite k-icon k-i-refresh">Refresh</span>
         查看排名</button>
 
+
+    <button  id="save" class="k-primary sync_button k-primary k-button">
+        <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+        下载头像</button>
 </div>
 
 <div id="grid">
@@ -38,6 +42,34 @@
 
 <script>
 $(function(){
+    var ajaxing = false
+    $('#save').click(function(){
+        if(ajaxing) return;
+
+        var enameVal = $('#active_name').val().trim()
+        if(!enameVal){
+            alert('请输入活动的唯一英文名')
+            return false;
+        }
+
+        alert('头像生成中，请耐心等待，不要刷新页面，不要重复点击')
+        ajaxing = true
+        $.post('/manger/activelog/getrank',{
+            activeEname:enameVal
+        },function(d){
+            ajaxing = false
+            if(d.error) return alert(d.data);
+            if(d.data.error > 0){
+                alert('头像生成成功，不过有 '+d.data.error+' 个错误')
+            }
+            else{
+                alert('头像生成成功')
+            }
+            return window.open(d.data.url)
+        })
+
+    })
+
     $('#sync').click(function(){
         var enameVal = $('#active_name').val().trim()
         if(!enameVal){

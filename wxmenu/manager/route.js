@@ -174,6 +174,7 @@ var addroute = function(app){
 	//active other
 	app.get('/manger/activelog/ranklist', checkLogin, activeLogCl.ranklist)
   	app.post('/manger/activelog/getrank', checkLogin, activeLogCl.getrank)
+  	app.post('/manger/activelog/saveavatar', checkLogin, activeLogCl.saveAvatarAndName)
 
 	//lottery
 	app.get('/manger/lottery/list', checkLogin, lotteryCl.list)

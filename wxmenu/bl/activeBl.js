@@ -787,29 +787,42 @@ obj.saveAvatarAndName = function(){
 obj._saveUserAvatar = function(userList, cb){
 	var dealFunc = []
 	var saveFolder = '/tmp/avatar/'
+
+	//先删除目录，然后创建目录
 	child_process.execSync('rm -rf '+saveFolder)
+	child_process.execSync('rm -rf /var/nodejs/wapp/wxmenu/manager/static/avatar.tar.gz')
 	fs.mkdirSync(saveFolder)
+	var errorCount = 0
 	//循环遍历userList
-	userList.forEach(function(){
+	userList.forEach(function(userObj){
 		//将异步方法丢入数组，供async调用
 		dealFunc.push(function(callback){
-			//先删除目录，然后创建目录
 			
-
-			//
-			var ws = fs.createWriteStream('./img/large/demo.jpg');
-			ws.on('error', function(err) { 
-					callback(err)
+			//保存头像
+			var ws = fs.createWriteStream(saveFolder+userObj.wxName+'.jpg');
+			ws.on('error', function(err) {
+				errorCount++
+				callback()
 			});
 			ws.on('end', function(err){
 				callback()
 			})
-			request(largeImage).pipe(ws);
-
+			request(userObj.wxAvatar).pipe(ws);
 
 		})
+
 	})
 
+	async.series(dealFunc, function(err){
+		if(err) return cb('保存出错了')
+		//如果没出错，那么把这个文件夹打包，放入static目录下，供下载
+		var cmd = 'tar -zcvf /var/nodejs/wapp/wxmenu/manager/static/avatar.tar.gz  -C '+saveFolder+' .'
+		child_process.execSync(cmd)
+		return cb(null, {
+			error:errorCount,
+			url:'/static/avatar.tar.gz'
+		})
+	})
 
 }
 
