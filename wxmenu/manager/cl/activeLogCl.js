@@ -101,7 +101,7 @@ obj.getrank =  function(req, res){
 obj.saveAvatarAndName = function(req, res){
 	var ename = req.body.activeEname;
 
-	bl.saveAvatarAndName(ename, 2000, function(err,url){
+	bl.saveAvatarAndName(ename, function(err,url){
 		if(err) return res.json({error:1,data:err})
 		return res.json({error:0,data:url})
 	})
