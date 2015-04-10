@@ -54,7 +54,8 @@
        "connect-mongo":"0.4.1",
        "wechat-api":"1.6.0",
        "xmlreader":"0.2.3",
-       "blueimp-md5":"1.1.0"
+       "blueimp-md5":"1.1.0",
+       "iconv":"2.1.6"
    },
   "engines": {
     "node": ">=0.10.0"
