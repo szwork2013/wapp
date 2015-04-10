@@ -809,7 +809,7 @@ obj._saveUserAvatar = function(userList, cb){
 			fs.mkdirSync(saveFolder)
 			var errorCount = 0
 			//循环遍历userList
-			userList.forEach(function(userObj){
+			userList.forEach(function(userObj, i){
 				if(!userObj.wxName || !userObj.wxAvatar){
 					return;
 				}
@@ -820,7 +820,7 @@ obj._saveUserAvatar = function(userList, cb){
 					var wxNameBuf = iconv.convert(userObj.wxName);
 
 					//保存头像
-					var ws = fs.createWriteStream(saveFolder+wxNameBuf+'.jpg');
+					var ws = fs.createWriteStream(saveFolder+i+'.jpg');
 					ws.on('error', function(err) {
 						errorCount++
 						callback()
