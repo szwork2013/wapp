@@ -816,11 +816,11 @@ obj._saveUserAvatar = function(userList, cb){
 
 				//将异步方法丢入数组，供async调用
 				dealFunc.push(function(callback){
-					//var iconv = new Iconv('UTF-8', 'GBK');
-					//var wxNameBuf = iconv.convert(userObj.wxName);
+					var iconv = new Iconv('UTF-8', 'GBK');
+					var wxNameBuf = iconv.convert(userObj.wxName);
 
 					//保存头像
-					var ws = fs.createWriteStream(saveFolder+userObj.wxName+'.jpg');
+					var ws = fs.createWriteStream(saveFolder+wxNameBuf+'.jpg');
 					ws.on('error', function(err) {
 						errorCount++
 						callback()
