@@ -724,7 +724,7 @@ obj.countActiveLog = function(activeId, cb){
 
 
 //根据活动的ename，打包参与用户的头像
-obj.saveAvatarAndName = function(){
+obj.saveAvatarAndName = function(ename, cb){
 
 
 	obj.getActiveByEname(ename, function(err, aobj){
