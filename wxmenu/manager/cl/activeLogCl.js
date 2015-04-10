@@ -97,6 +97,17 @@ obj.getrank =  function(req, res){
 
 }
 
+//根据活动的ename，打包参与用户的头像
+obj.saveAvatarAndName = function(req, res){
+	var ename = req.body.activeEname;
+
+	bl.saveAvatarAndName(ename, 2000, function(err,url){
+		if(err) return res.json({error:1,data:err})
+		return res.json({error:0,data:url})
+	})
+
+}
+
 
 
 module.exports = obj;

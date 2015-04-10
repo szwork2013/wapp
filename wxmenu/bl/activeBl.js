@@ -1,3 +1,8 @@
+var request = require('request')
+var async = require('async')
+var fs = require('fs')
+var child_process = require('child_process')
+
 var userBl = require('./wxUser.js');
 var userModel = require('../dl/userModel.js'); //加载用户模型
 
@@ -10,6 +15,7 @@ var appActivePrizeRecordModel = require('../dl/appActivePrizeRecordModel.js');
 var guidModel = require('../dl/guidModel.js');
 var moment = require('moment');
 var utils = require('../lib/utils.js');
+
 
 
 var obj = {}
@@ -707,5 +713,106 @@ obj.countActiveLog = function(activeId, cb){
 		'activeId':activeId
 	}, cb)
 }
+
+
+
+
+
+
+
+
+
+
+//根据活动的ename，打包参与用户的头像
+obj.saveAvatarAndName = function(){
+
+
+	obj.getActiveByEname(ename, function(err, aobj){
+		if(err) return cb(err)
+		if(!aobj) return cb('未找到活动')
+		var activeId = aobj._id
+
+		activeLogModel.findAll({
+			'activeId':activeId
+		}, 0, 2000, function(err, logList){
+			if(err) return cb(err);
+			if(logList.length == 0) return cb(null, '')
+
+			var fromUserIdList = []
+			logList.forEach(function(item){
+				fromUserIdList.push(item.fromUserId)
+			})
+
+			userModel.getUserByIds(fromUserIdList, function(err, userList){
+				if(err) return cb(err);
+				var resultList = []
+				logList.forEach(function(logItem,i){
+					userList.forEach(function(userItem){
+						//匹配到用户
+						if(logItem.toUserId == userItem.value.toString()){
+							resultList.push({
+								appUserName:userItem.name,
+								userId:logItem.toUserId,
+								name:userItem.name,
+								sex:userItem.sex,
+								mobile:userItem.mobile,
+								wxName:userItem.wxName,
+								wxAvatar:userItem.wxAvatar,
+								wxAddress:userItem.wxAddress,
+								supportScore:logItem.supportScore,
+								pos:(i+1),
+							})
+						}
+					})
+				})
+
+				//将查出的用户资料数组，丢入工厂函数，去下载并打包头像
+				obj._saveUserAvatar(resultList, cb)
+
+			})
+
+
+		})
+	})
+}
+
+
+
+
+
+
+
+
+//去下载并打包头像
+obj._saveUserAvatar = function(userList, cb){
+	var dealFunc = []
+	var saveFolder = '/tmp/avatar/'
+	child_process.execSync('rm -rf '+saveFolder)
+	fs.mkdirSync(saveFolder)
+	//循环遍历userList
+	userList.forEach(function(){
+		//将异步方法丢入数组，供async调用
+		dealFunc.push(function(callback){
+			//先删除目录，然后创建目录
+			
+
+			//
+			var ws = fs.createWriteStream('./img/large/demo.jpg');
+			ws.on('error', function(err) { 
+					callback(err)
+			});
+			ws.on('end', function(err){
+				callback()
+			})
+			request(largeImage).pipe(ws);
+
+
+		})
+	})
+
+
+}
+
+
 
 module.exports = obj;

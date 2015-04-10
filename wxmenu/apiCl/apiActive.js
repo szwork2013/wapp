@@ -132,8 +132,8 @@ obj.getActiveNewMember = function(req,res){
     var activeId = req.query.activeid;
     var limit = (req.query.limit-0) || 10
     //最多查找100个rank
-    if(limit > 100){
-        limit = 100
+    if(limit > 2000){
+        limit = 2000
     }
 
     activeBl.getActiveNewMember(activeId, limit, function(err,doc){
