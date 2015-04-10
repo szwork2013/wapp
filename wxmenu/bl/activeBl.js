@@ -821,7 +821,10 @@ obj._saveUserAvatar = function(userList, cb){
 					ws.on('end', function(err){
 						callback()
 					})
-					request(userObj.wxAvatar).pipe(ws);
+					
+					request(userObj.wxAvatar).pipe(ws).on('close', function(){
+						callback()
+					});
 
 				})
 
