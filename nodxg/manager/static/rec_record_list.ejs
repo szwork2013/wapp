@@ -149,10 +149,10 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="recCode1" >指定接待</label>
+                <label for="recCode1" >备注信息</label>
             </div>
             <div data-container-for="recCode1" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="recCode1" data-bind="value:recCode1" >
+               <textarea type="text" class="k-input k-textbox w-90-inp" name="recCode1" data-bind="value:recCode1" id="recCode1" ></textarea>
             </div>
 
 
@@ -516,8 +516,7 @@ $.post('/manger/community/getList',{},function(data_ary2){
                         },
                         { 
                             field: "recCode1",
-                            title: "指定接待",
-                            hidden:false,
+                            title: "备注",
                             hidden:true
                         },
                         { 
@@ -594,6 +593,8 @@ $.post('/manger/community/getList',{},function(data_ary2){
                         window.dropdown_init($('#recStatus_inp'),window.recStatus_type)
                         window.dropdown_init($('#recSex_inp'),window.sex_ary)
 
+
+                        $("#recCode1").kendoEditor(window.kendo_edit_option);
 
                     },
                     filterable:window.filter_obj         
