@@ -875,24 +875,45 @@ $(function(){
           alert('请输入正确的手机号码')
           return false;
         }
+		
+		
 
-        var q = {
-            toUserId:toUserId,
-            prizeId:window.selPrizeId,
-            truename:appUserName,
-            mobile:appUserMobile
+     //   var q = {
+     //       toUserId:toUserId,
+     //       prizeId:window.selPrizeId,
+     //       truename:appUserName,
+     //       mobile:appUserMobile
+      //  }
+		  var q = {
+            appUserName:appUserName, 
+            appUserMobile:appUserMobile,
+            wxuserid:fromUserId,
+            wxappid:appId
         }
-
-          window.isAjax = true
-        $.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
-          window.isAjax = false
+		
+		 $.post('/api/user/modify', q, function(d){
             if(d.error == 1){
                 return alert(d.data)
             }
-            alert('奖品兑换成功')
-            location.reload()
+            alert('资料完善成功')
+            location.href = location.href
 
         },'json')
+
+        return false;
+		
+		
+
+       //   window.isAjax = true
+        //$.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
+        //  window.isAjax = false
+        //    if(d.error == 1){
+         //       return alert(d.data)
+          //  }
+          //  alert('奖品兑换成功')
+          //  location.reload()
+
+        //},'json')
 
     })
     //保存按钮
