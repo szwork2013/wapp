@@ -310,6 +310,12 @@ background-color:#fffe00;
 		    <button id="startExchange" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
+			
+			 <br>
+		    <button id="startRank" class="share_timeline1 btn-block">
+                <span class="duijiang_button" >查看目前排名</span>
+            </button>
+			
         </div>
 
 
@@ -414,6 +420,70 @@ background-color:#fffe00;
 
 
 
+
+
+
+
+
+
+
+
+
+<!-- Modal Rank -->
+<div class="modal fade " id="rankModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+ 
+        <h4 class="modal-title" id="myModalLabel">助力排名</h4>
+      </div>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>姓名</th>
+          <th>集得助力</th>
+        </tr>
+      </thead>
+      <tbody>
+       <%  for(var i=0; i<120; i++){ 
+            var obj = rankList[i];
+            if(!obj) break;
+      %>
+             <tr>
+              <td><%= (i+1) %></td>
+              <td><%= obj.userName %></td>
+              <td><%= obj.supportCount %></td>
+            </tr>
+        <% } %> 
+       
+      
+      </tbody>
+    </table>
+   
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script src="/api/xinyutang/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
 
@@ -438,6 +508,23 @@ var now = <%= now %>
 var timeError = '<%= timeError %>'
 
 window.isAjax = false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -766,6 +853,37 @@ $(function(){
           })
     })
 
+	
+	
+	
+	
+	
+	
+	
+	
+ //绑定兑换奖品事件，弹出完善资料对话框
+    $('#startRank').click(function(){
+        $('#rankModal').modal({
+            backdrop:true
+          })
+    })
+    $('.close').click(function(){
+        $('#rankModal').modal('hide')
+    })
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     //保存按钮
     $('#save_change').click(function(){
         if(window.isAjax) return false
