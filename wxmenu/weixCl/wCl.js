@@ -152,7 +152,7 @@ var saveMoneyLog = function(dataObj){
 
 
 //发送红包的接口
-var moneySend = function(req, res, openId, replyDoc, appId){
+var moneySend = function(req, res, openId, replyDoc, appId, cb){
     var replyDoc = replyDoc;
     var appobj = appobj;
     var replyId = replyDoc._id.toString()
@@ -163,23 +163,28 @@ var moneySend = function(req, res, openId, replyDoc, appId){
       'replyId':replyId
     }, function(err, countLog){
           if(err){
-              res.reply(ERR_REPLY);
+              if(cb) return cb(err);
+              else res.reply(ERR_REPLY);
               return;
           }
           if(countLog >= replyDoc.moneyTotalNum){
-              res.reply('您已经拿过本次红包啦~');
+              
+              if(cb) return cb('您已经拿过本次红包啦~');
+              else res.reply('您已经拿过本次红包啦~');
               return;
           }
 
           wxAppBl.getById(appId, function(err, appDoc){
             if(err){
                 logger.error('moneySend wxAppBl.getById error: %s', err)
-                res.reply(ERR_REPLY);
+                if(cb) return cb(err)
+                else res.reply(ERR_REPLY);
                 return;
             }
             if(!appDoc){
                 logger.error('moneySend wxAppBl.getById not found appId: %s', appId)
-                res.reply(ERR_REPLY);
+                if(cb) return cb('not found appId')
+                else res.reply(ERR_REPLY);
                 return;
             }
             var min = replyDoc.moneyMin
@@ -209,7 +214,8 @@ var moneySend = function(req, res, openId, replyDoc, appId){
 
                 if(err){
                     logger.error('moneySend call moneySendLib error: %s', err)
-                    res.reply(ERR_REPLY);
+                    if(cb) return cb(err)
+                    else res.reply(ERR_REPLY);
                     return;
                 }
                 else{
@@ -234,18 +240,18 @@ var moneySend = function(req, res, openId, replyDoc, appId){
                             moneyVal:randomVal,
                             writeTime:new Date()
                         })
-                        res.end('')
-                    })
+                        if(cb) return cb(null, randomVal)
+                        else res.end('')
+
+                    })//end userBl.getUserByOpenid
                         
-                }
+                }//end if else
 
+            })//end moneySendLib
 
+        })//end wxAppBl.getById
 
-            })
-        })
-
-
-    })
+    })//end moneyLogDl.countAll
 
     
 }
@@ -542,3 +548,4 @@ var wxFunction = function(app, applist){
 
 
 module.exports = wxFunction
+module.exports.moneySend = moneySend

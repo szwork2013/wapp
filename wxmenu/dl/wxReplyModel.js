@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构,奖品doc
   appId:{ type: String, required:true},        //此所属应用id
   replyTitle:{ type: String, required:true},   //回复标题
+  replyEname:{ type: String, index:true, unique:true},   //回复英文关键字唯一
   replyUrl:{type:String, default:''},      //跳转地址
   replyDesc:{ type: String, default:''},    //回复描述
 

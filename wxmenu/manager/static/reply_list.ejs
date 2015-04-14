@@ -29,6 +29,15 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
+                <label for="replyEname" >唯一英文标示</label>
+            </div>
+            <div data-container-for="replyEname" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="replyEname" data-bind="value:replyEname" id="replyEname" required="required" data-required-msg="请填写唯一英文标示" aria-invalid="true">
+            </div>
+
+
+
+            <div class="k-edit-label  w-800-l">
                 <label for="replyUrl" >跳转地址</label>
             </div>
             <div data-container-for="replyUrl" class="k-edit-field w-800-r">
@@ -216,6 +225,7 @@
                                     "_id": { editable: false },
                                     "appId": { editable: true },
                                     "replyTitle": { editable: true },
+                                    "replyEname": { editable: true },
                                     "replyUrl": { editable: true},
                                     "replyDesc": { editable: true},
                                     "replyType": { editable: true, type:"number"},
@@ -269,6 +279,11 @@
                          { 
                             field: "replyTitle",
                             title: "回复标题", 
+                        },
+                         { 
+                            field: "replyEname",
+                            title: "唯一英文标示", 
+                            hidden:true
                         },
                          { 
                             field: "replyUrl",
@@ -400,6 +415,12 @@
                         var vtype = $("#replyType_inp").data("kendoDropDownList").value()
                         switch_kind(vkind);
                         switch_type(vtype);
+
+                        //默认填入
+                        var replyEnameVal = $('#replyEname').val()
+                        if(!replyEnameVal){
+                            $('#replyEname').val(Date.now()).change()
+                        }
 
                     },
                     filterable:window.filter_obj         

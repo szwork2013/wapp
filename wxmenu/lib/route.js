@@ -289,7 +289,8 @@ var addroute = function(app){
 		app.get('/active_data/getnewmember', apiActive.getActiveNewMember)
 		//active exchange prize
 		app.post('/active_data/:appename/exchangeprize', apiActive.startExchangePrize);
-
+		//getmoney获取红包
+		app.post('/api/:appename/getmoney', apiActive.getMoney)//红包获取ajax接口
 		
 		//end active
 		app.post('/api/user/modify',getUserMid, userCl.modify);
@@ -319,6 +320,8 @@ var addroute = function(app){
 		//game insurance
 		app.get('/insurance/unionlife', insuranceCl.page)
 		app.get('/insurance/unionlife/getbonus', insuranceCl.getBonus)
+
+
 
 		app.get('/', function(req,res){
 			var count = req.session['count'];

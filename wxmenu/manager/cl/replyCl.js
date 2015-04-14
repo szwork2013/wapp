@@ -25,6 +25,7 @@ obj.read = function(req, res){
 				_id:docObj._id,
 				appId:docObj.appId,
 				replyTitle:docObj.replyTitle,
+				replyEname:docObj.replyEname,
 				replyUrl:docObj.replyUrl,
 				replyDesc:docObj.replyDesc,
 				replyType:docObj.replyType,

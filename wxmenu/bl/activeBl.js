@@ -12,6 +12,7 @@ var activeLogModel = require('../dl/appActiveLogModel.js');
 
 var appActivePrizeModel = require('../dl/appActivePrizeModel.js');
 var appActivePrizeRecordModel = require('../dl/appActivePrizeRecordModel.js');
+var wxReplyDl = require('../dl/wxReplyModel.js');
 
 var guidModel = require('../dl/guidModel.js');
 var moment = require('moment');
@@ -35,9 +36,24 @@ obj.getActiveByEname = function(activeEname,cb){
 		if(!doc) return cb('not found active')
 		cb(null,doc);
 	})
-
-
 }
+
+
+//根据活动的id查找活动
+obj.getActiveById = function(activeId,cb){
+	if(!activeId){
+		return cb('wrong activeId')
+	}
+	activeModel.findOneByObj({
+		'_id':activeId,
+		isShow:1
+	},function(err,doc){
+		if(err) return cb(err);
+		if(!doc) return cb('not found active')
+		cb(null,doc);
+	})
+}
+
 
 obj.getIfHasAdd = function(activeId, fromOpenid, toUserId, cb){ //根据openid查找用户信息
 
@@ -861,5 +877,16 @@ obj._saveUserAvatar = function(userList, cb){
 }
 
 
+obj.getReplyDocByEname = function(ename, cb){
+
+	wxReplyDl.findOneByObj({
+		'replyEname':ename
+	},function(err, doc){
+		if(err) return cb(err)
+		if(!doc) return cb('not found reply')
+		cb(null, doc)
+	})
+
+}
 
 module.exports = obj;

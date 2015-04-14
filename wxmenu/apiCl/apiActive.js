@@ -1,7 +1,9 @@
 var activeBl = require('../bl/activeBl.js');
 var userBl = require('../bl/wxUser.js');
+var appBl = require('../bl/wxApp.js');
 var utils = require('../lib/utils.js');
 
+var wxCl = require('../weixCl/wCl.js')
 var url = require('url')
 var utils = require('../lib/utils.js');
 var moment = require('moment')
@@ -143,6 +145,70 @@ obj.getActiveNewMember = function(req,res){
 
 }
 
+obj.getMoney = function(req,res){
+
+    var pathname = url.parse(req.originalUrl).pathname || ''
+    try{
+      var appEname = pathname.split('/')[2] || ''
+      //console.log(appEname)
+    }
+    catch(e){
+      return res.json({error:1,data:e})
+    }
+
+    var userId = req.session[appEname+'_userid'];
+    //没有身份的用户记录错误日志，应该是直接抛接口
+    if(!userId){
+      logger.error('apiActive.startExchangePrize: session lost, userId: %s, appEname: %s, process.id: %s', (userId||'undefined'), appEname, process.pid.toString())
+      return res.send({error:1, data:'身份丢失，请重新进入'})
+    }
+
+    var replayEname = req.body.replayEname
+    var activeId = req.body.activeId
+
+    userBl.getUser({'_id':userId}, function(err, doc){
+          if(err){
+            return res.send({error:1, data:'内部错误，请重试'})
+          }
+          if(doc.bind.length == 0){
+            logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', fromUserId)
+            return res.send({error:1, data:'出错啦，请关闭重试'})
+          }
+          var openId = doc.bind[0].openId
+
+          appBl.getByEname(appEname, function(err, appObj){
+              if(err) return res.send({error:1, data:err})
+              var appId = appObj._id.toString()
+
+
+              activeBl.getActiveById(activeId, function(err, activeDoc){
+                  if(err) return res.send({error:1, data:err})
+                  //检查活动是否已经开始或者未开始
+                  var isValid = activeBl.checkActiveTime
+                  if(isValid !== true){
+                      return res.send({error:1, data:isValid})
+                  }
+
+                  activeBl.getReplyDocByEname(replayEname, function(err, replyDoc){
+                       if(err) return res.send({error:1, data:err})
+                       if(replyDoc.replyKind != 3){
+                            return res.send({error:1, data:'invalid replayEname'})
+                       }
+
+                       wxCl.moneySend(req, {}, openId, replyDoc, appId, function(err, moneyVal){
+                            if(err) return res.send({error:1, data:err})
+                            res.send({error:0, data:moneyVal})
+
+                       })//end wxCl.moneySend
+
+                  })//end activeBl.getReplyDocByEname
+
+              })//end activeBl.getActiveById
+
+          })//end appBl.getByEname
+
+    })//end userBl.getUser
+}
 
 
 
