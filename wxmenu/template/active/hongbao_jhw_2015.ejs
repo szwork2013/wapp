@@ -127,6 +127,8 @@ $(function(){
 			
 			wx.config(window.jsconfig);
 			wx.ready(function(){
+				alert(1)
+				alert(typeof wx.hideOptionMenu)
 				wx.hideOptionMenu();
 			});
 			wx.error(function(res){
