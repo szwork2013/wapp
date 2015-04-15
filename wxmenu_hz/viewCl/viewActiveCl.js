@@ -358,5 +358,18 @@ obj.activeRank = function(req,res){
 
 
 
+//获取业务员的平均分
+obj.avgScore = function(req,res){
+
+	var userid = req.query.userid
+	userBl.getAvgScore(userid,function(err,avgscore){
+		if(err) return res.json({error:1,data:err})
+		res.json({error:0,data:avgscore})
+	})
+
+}
+
+
+
 
 module.exports = obj;

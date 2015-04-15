@@ -196,8 +196,4 @@ obj.hzstar = function(req,res){
 }
 
 
-
-
-
-
 module.exports = obj;

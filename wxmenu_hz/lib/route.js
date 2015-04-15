@@ -286,6 +286,11 @@ var addroute = function(app){
 		app.post('/active_data/:appename/addsupport', apiActive.addSupport)
 		//获取排名
 		app.get('/active_data/getrank', activeCl.activeRank)
+		//获取业务员平均分
+		app.get('/active_data/avgscore', activeCl.avgScore)
+
+
+
 		//获取区间活动的排名
 		app.get('/active_data/getrangerank', apiActive.getActiveRangeRank)
 		//active exchange prize
@@ -324,6 +329,8 @@ var addroute = function(app){
 		//app.get('/view/hzyewuyuan', getUserMid, hzYewuyuanCl.hzyewuyuan_mingpian)
 		//合众人寿业务员名片页面打分
 		app.post('/api/hzstar', hzYewuyuanCl.hzstar)
+
+
 
 
 
