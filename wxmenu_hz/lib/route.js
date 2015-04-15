@@ -321,8 +321,8 @@ var addroute = function(app){
 		app.get('/insurance/unionlife/getbonus', insuranceCl.getBonus)
 
 		//合众人寿业务员名片页面
-		app.get('/view/hzyewuyuan', getUserMid, hzYewuyuanCl.hzyewuyuan_mingpian)
-		//合众人寿业务员名片页面
+		//app.get('/view/hzyewuyuan', getUserMid, hzYewuyuanCl.hzyewuyuan_mingpian)
+		//合众人寿业务员名片页面打分
 		app.post('/api/hzstar', hzYewuyuanCl.hzstar)
 
 

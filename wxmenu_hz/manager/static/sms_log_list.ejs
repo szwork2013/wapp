@@ -14,32 +14,39 @@
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="toUserId" >目标用户</label>
+                <label for="userId" >用户id</label>
             </div>
-            <div data-container-for="toUserId" class="k-edit-field w-800-r">
-               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="toUserId" data-bind="value:toUserId">
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId">
             </div>
 
-
-            <div class="k-edit-label  w-800-l">
-                <label for="fromUserId" >打分用户</label>
-            </div>
-            <div data-container-for="fromUserId" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="fromUserId" data-bind="value:fromUserId" required="required">
-            </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="logIp" >打分ip</label>
+                <label for="mobileNumber" >手机号码</label>
+            </div>
+            <div data-container-for="mobileNumber" class="k-edit-field w-800-r">
+               <input type="number" id="" class="k-input k-textbox w-50-inp" name="mobileNumber" data-bind="value:mobileNumber">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="smsCode" >短信校验码</label>
+            </div>
+            <div data-container-for="smsCode" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="smsCode" data-bind="value:smsCode" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="logIp" >短信ip</label>
             </div>
             <div data-container-for="logIp" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="logIp" data-bind="value:logIp" required="required">
             </div>
 
             <div class="k-edit-label  w-800-l">
-                <label for="starScore" >打分分数</label>
+                <label for="type" >状态</label>
             </div>
-            <div data-container-for="starScore" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="starScore" data-bind="value:starScore" required="required">
+            <div data-container-for="type" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="type" id="type" data-bind="value:type" required="required">
             </div>
 
            
@@ -115,22 +122,22 @@
                        
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/starLog/read",
+                                url: DataHost + "/manger/smsCl/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/starLog/update",
+                                url: DataHost + "/manger/smsCl/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/starLog/destroy",
+                                url: DataHost + "/manger/smsCl/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/starLog/create",
+                                url:DataHost + "/manger/smsCl/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
@@ -145,11 +152,11 @@
                                 fields: {
                                     "_id": { editable: false },
 
-                                    "toUserId": { editable: true },
-                                    "fromUserId": { editable: true },
+                                    "userId": { editable: true },
+                                    "mobileNumber": { editable: true },
+                                    "smsCode": { editable: true },
                                     "logIp": { editable: true}, 
-                                    "starScore": { editable: true},
-                                  
+                                    "type": { editable: true},
 
                                     "code1": { editable: true},
                                     "code2": { editable: true},
@@ -162,7 +169,10 @@
                         }
                     });
 
-                
+window.sms_log_type=[
+      { text: "未使用", value: 1 },
+      { text: "已使用", value: 2 }
+    ]         
 
 $.post('/manger/app/getList',{},function(data_ary){
                 var d = []
@@ -187,20 +197,25 @@ $.post('/manger/app/getList',{},function(data_ary){
                         },
 
                         { 
-                            field: "toUserId",
-                            title: "目标用户",
+                            field: "userId",
+                            title: "用户id",
                         },
                         { 
-                            field: "fromUserId",
-                            title: "投票用户",
+                            field: "mobileNumber",
+                            title: "手机号",
+                        },
+                        { 
+                            field: "smsCode",
+                            title: "校验码",
                         },
                         { 
                             field: "logIp",
-                            title: "打分ip",
+                            title: "短信ip",
                         },
                         { 
-                            field: "starScore",
-                            title: "投票分数",
+                            field: "type",
+                            title: "状态",
+                            values:sms_log_type
                         },
                         { 
                             field: "code1",
@@ -243,7 +258,8 @@ $.post('/manger/app/getList',{},function(data_ary){
 
                         $('#writeTime').kendoDateTimePicker();
 
-
+                        window.dropdown_init($("#type"), sms_log_type)
+                        
 
 
                     },

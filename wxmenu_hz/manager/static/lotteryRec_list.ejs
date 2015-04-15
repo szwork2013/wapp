@@ -17,6 +17,9 @@
 
 <script type="text/javascript">
 //导出获奖名单
+
+
+
     var lotteryList = <%- lotteryList%>
     var lotteryKV = []
     lotteryList.forEach(function(lo){
@@ -139,13 +142,14 @@
                <input id="code1" type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
             </div>
 
-<div style="display:none">
+
             <div class="k-edit-label  w-800-l">
-                <label for="code2" >备用2</label>
+                <label for="code2" >用户类型</label>
             </div>
             <div data-container-for="code2" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
+               <input type="text" id="code2" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
             </div>
+<div style="display:none">
             <div class="k-edit-label  w-800-l">
                 <label for="code3" >备用3</label>
             </div>
@@ -166,7 +170,12 @@
 <script>
 
  $(function () {
-    
+            window.member_type = [
+              { text: "十年用户", value: 'tenyear' },
+              { text: "金牌用户", value: 'gold' },
+              { text: "银牌用户", value: 'silver' },
+              { text: "其他用户", value: 'other' },
+            ]
      
                 var DataHost = window.DataHost,
                     dataSource = new kendo.data.DataSource({
@@ -373,7 +382,7 @@ $.post('/manger/lottery/getList',{},function(data_ary){
                          window.dropdown_init($("#lottery_inp"), window.lotteryData)
                          window.dropdown_init($("#prize_inp"), window.lotteryPrizeData)
                          window.dropdown_init($("#code1"), window.is_get_prize)
-
+                         window.dropdown_init($("#code2"), window.member_type)
 
                     }
                     

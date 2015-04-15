@@ -144,6 +144,25 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(qobj.appUserMobile){
 		userMObj.appUserMobile = qobj.appUserMobile
 	}
+
+
+	if(qobj.appUserCode){
+		userMObj.appUserCode = qobj.appUserCode
+	}
+	if(qobj.appSmsCode){
+		userMObj.appSmsCode = qobj.appSmsCode
+	}
+	if(qobj.appUserType){
+		userMObj.appUserType = qobj.appUserType
+	}
+	if(qobj.code1){
+		userMObj.code1 = qobj.code1
+	}
+	if(qobj.code2){
+		userMObj.code2 = qobj.code2
+	}
+
+
 	//console.log(appMObj)
 
 	/*
@@ -153,15 +172,35 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 		},qobj,function(err,doc2){
 			if(err) return cb(err);
 	*/
-			userModel.createOneOrUpdate({
+
+	userModel.countAll({
+		'code1': qobj.code1 || '-1'
+	}, function(err, countYwy){
+		if(err){
+			//logger.error('wxuser.modify userModel.createOneOrUpdate error: %s', err);
+			return cb(err);
+		} 
+		if(userMObj.appUserType && userMObj.appUserType == 2 && countYwy > 0){
+			return cb('工号已经存在')
+		}
+
+		userModel.createOneOrUpdate({
 				_id:userId
 			},userMObj, function(err,doc){
-				if(err) return cb(err);
+				//出错一般是工号存在
+				if(err){
+					//logger.error('wxuser.modify userModel.createOneOrUpdate error: %s', err);
+					return cb(err);
+				} 
 				cb(null,{
 					'userObj':doc
 					//'binderObj':doc2
 				})//end cb		
-			})//end userModel.createOneOrUpdate
+		})//end userModel.createOneOrUpdate
+
+
+	})
+			
 	//	})// end userAppModel.createOneOrUpdate 
 }
 

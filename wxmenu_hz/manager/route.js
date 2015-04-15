@@ -31,6 +31,7 @@ var voteRecordCl = require('./cl/voteRecordCl.js');
 
 var moneyCl = require('./cl/moneyLogCl.js');
 var starCl = require('./cl/starLogCl.js');
+var smsCl = require('./cl/smsLogCl.js');
 
 var utils = require('../lib/utils.js')
 
@@ -88,9 +89,6 @@ var addroute = function(app){
 	app.post('/manger/guid/read', checkLogin,  guidCl.read)
 	app.post('/manger/guid/update', checkLogin, guidCl.update)
 
-
-
-
 	//app
 	app.get('/manger/app/list', checkLogin, appCl.list)
 	app.post('/manger/app/read', checkLogin, appCl.read)
@@ -98,7 +96,6 @@ var addroute = function(app){
 	app.post('/manger/app/destroy', checkLogin, appCl.destroy)
 	app.post('/manger/app/create', checkLogin, appCl.create)
 	app.post('/manger/app/getList', checkLogin, appCl.getList)
-
 
 	//user
 	app.get('/manger/user/list', checkLogin, userCl.list)
@@ -254,6 +251,13 @@ var addroute = function(app){
 	app.post('/manger/starLog/destroy', checkLogin, starCl.destroy)
 	app.post('/manger/starLog/create', checkLogin, starCl.create)
 
+
+	//smslog
+	app.get('/manger/smslog/list', checkLogin, smsCl.list)
+	app.post('/manger/smslog/read', checkLogin, smsCl.read)
+	app.post('/manger/smslog/update', checkLogin, smsCl.update)
+	app.post('/manger/smslog/destroy', checkLogin, smsCl.destroy)
+	app.post('/manger/smslog/create', checkLogin, smsCl.create)
 
 	//获得guid
 	app.get('/manger/guid/getguid', checkLogin, function(req,res){ 

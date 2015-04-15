@@ -16,13 +16,13 @@ var obj = { //定义结构
 	  appUserBirth:{type: Date, default: function(){return new Date('1970/1/1')} }, //会员生日
 	  appUserScore:{type:Number,default:0,index:true},
 	  appUserType:{type:Number,default:1,}, //1表示普通的用户，2表示业务员
-	  appUserCode:{type:String,index:true}, //用户抽奖的邀请码
+	  appUserCode:{type:String}, //所属业务员
 
 	  isShow:{ type:Number, default:1}, //是否启用这个用户,1表示启用，0表示未启用
 	  writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 
-	  code1:{type:String},
-	  code2:{type:String},
+	  code1:{type:String, unique:true, index:true}, //表示代理人工号
+	  code2:{type:String}, //表示代理人微信账号
 }
 
 

@@ -6,15 +6,15 @@ var obj = { //定义结构
     prizeId:{ type: String, default:0},      //猜图奖品的id号，如果是'0'，表示此次抽奖未中奖
     userId:{ type: String, required:true, index:true},      //用户的id号
     truename:{ type: String, required:true},      //真实姓名
-    mobile:{ type: String, required:true, index:true},      //联系电话
+    mobile:{ type: String, required:true, },      //联系电话
     recordIp:{type:String,default: '127.0.0.1'},           //用户抽奖时的ip地址
     giftId:{ type: Number, default:0, unique:true, index:true},        //用户领奖的6位id号码,0表示未中奖
     isForward:{ type: Number, default:0},                  //是否是转发额外的奖励，是否转发控制由前端处理
     code1:{type:String,default: ''}, //是否手工已经发奖，1表示发奖，0表示未发奖
-    code2:{type:String,default: ''}, //备用字段
+    code2:{type:String,default: 'other'}, //表示中奖的是10年会员，还是金牌会员，还是银牌会员，还是其他
     code3:{type:String,default: ''}, //备用字段
     code4:{type:String,default: ''}, //备用字段
-    writeTime:{ type: Date, default: function(){return Date.now()}}, //用户抽奖的时间
+    writeTime:{ type: Date, default: function(){return Date.now()}, index:true}, //用户抽奖的时间
 }
 
 

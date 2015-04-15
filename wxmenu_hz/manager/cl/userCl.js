@@ -38,6 +38,8 @@ obj.read = function(req, res){
 				  isShow:v.isShow,
 				  appUserType:v.appUserType,
 				  appUserCode:v.appUserCode,
+				  code1:v.code1,
+				  code2:v.code2,
 				  writeTime: v.writeTime,			
 			})			
 		})
