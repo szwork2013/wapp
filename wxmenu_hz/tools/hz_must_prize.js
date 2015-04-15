@@ -7,7 +7,7 @@ var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js');
 
 
 var guidModel = require('../dl/guidModel.js'); //guid 模型
-var userBl = require('./wxUser.js'); //加载用户Bl
+var userBl = require('../bl/wxUser.js'); //加载用户Bl
 
 var moment = require('moment')
 
@@ -24,6 +24,14 @@ var memberSilverLen = memberSilver.length
 //必须中奖的列表
 obj.prizeRuleList = []
 obj.rulesList = [
+	{//开发测试用
+		'dateStart':moment("20150401", "YYYYMMDD"),
+		'dateEnd':moment("20150430", "YYYYMMDD"),
+		'phoneTime':[7,13,18,21],
+		'phoneAll':3,
+		'phoneTen':1,
+		'magic':100,
+	},
 	{
 		'dateStart':moment("20150501", "YYYYMMDD"),
 		'dateEnd':moment("20150515", "YYYYMMDD"),
@@ -90,37 +98,39 @@ obj.getCurDayPrizeCount = function(prizeList, cb){
 	var phoneId = ''
 	var magicId = ''
 	prizeList.forEach(function(item){
-		if(item.name == 'phone'){
-			obj.phoneId = phoneId = item._id
+		if(item.desc == 'phone'){
+			phoneId = item._id
+			obj.phoneId = phoneId
 		}
-		if(item.name == 'magic'){
-			obj.magicId = magicId = item._id
+		if(item.desc == 'magic'){
+			magicId = item._id
+			obj.magicId = magicId
 		}
 	})
 
-	if(!phoneId or !magicId){
+	if(!phoneId || !magicId){
 		logger.error('hz_must_prize.js obj.getCurDayPrizeCount no prizelist, prizelist: %s', prizeList);
 		cb('未找到奖品')
 		return
 	}
 
 	var todayZero = moment().hour(0).minute(0).second(0)
-	var obj = {}
+	var returnObj = {}
 	lotteryRecModel.countAll({
 		'prizeId':magicId,
-		'writeTime':{'$lte':todayZero}
+		'writeTime':{'$gte':todayZero}
 	}, function(err, countMagic){
 		if(err) return cb(err)
-		obj.magic = countMagic
+		returnObj.magic = countMagic
 
 		lotteryRecModel.countAll({
-			'prizeId':magicId,
-			'writeTime':{'$lte':todayZero}
+			'prizeId':phoneId,
+			'writeTime':{'$gte':todayZero}
 		}, function(err, countPhone){
 			if(err) return cb(err)
-			obj.phone = countPhone
+			returnObj.phone = countPhone
 
-			cb(null, obj)
+			cb(null, returnObj)
 
 		})//end lotteryRecModel.countAll
 
@@ -143,7 +153,7 @@ obj.checkIfgetPrize = function(){
 	return 'nothing'
 }
 
-
+//最后校验
 obj.reCheck = function(prizeId, recordDoc, maxCount, cb){
 	var todayZero = moment().hour(0).minute(0).second(0)
 
@@ -180,6 +190,11 @@ obj.reCheck = function(prizeId, recordDoc, maxCount, cb){
 					name:prizeDoc.name,
 					imgUrl:prizeDoc.imgUrl,
 				})
+
+				//只有抽中手机才发短信告知业务员
+				if(prizeDoc.desc == 'phone'){
+					obj.sendSmsPrize(recordDoc.userId, prizeDoc._id.toString())
+				}
 				return
 			})
 			return
@@ -211,7 +226,7 @@ obj.prizeDeal = function(logData, prizeId, cb){
 					'giftId':guid,
 					'code2':logData.userType,
 					'writeTime':new Date()
-				},function(err, doc){
+				},function(err, recordDoc){
 					if(err) return cb(err); //如果出错
 					if(prizeId == 0){
 						cb(null, {
@@ -241,6 +256,8 @@ obj.checkPrize = function(mobile, prizeList, logData, cb){
 	//匹配规则，奖品的ename、手机号、时间
 
 	var userType = obj.getMobileType(mobile)
+	console.log(userType)
+
 	var nowRule = obj.getNowRule()
 	logData.userType = userType
 
@@ -251,6 +268,8 @@ obj.checkPrize = function(mobile, prizeList, logData, cb){
 	}
 
 	var userGetPrize = obj.checkIfgetPrize()
+	//var userGetPrize = 'phone';
+	
 	if(userGetPrize === 'nothing'){
 		obj.prizeDeal(logData, 0, cb)
 		return
@@ -262,6 +281,7 @@ obj.checkPrize = function(mobile, prizeList, logData, cb){
 
 		//如果用户抽中魔豆
 		if(userGetPrize === 'magic'){
+			console.log(countObj, nowRule)
 			//如果魔豆已经超过限额
 			if(countObj.magic >= nowRule.magic){
 				//用户未中奖
@@ -279,7 +299,7 @@ obj.checkPrize = function(mobile, prizeList, logData, cb){
 		if(userGetPrize === 'phone'){
 
 			//先判断下一个中间手机的时间有没有到来
-			var nextHour = nowRule.phoneTime[countObj.phone] or 0
+			var nextHour = nowRule.phoneTime[countObj.phone] || 0
 			if(nextPrizeTime == 0){
 				logger.error('today sail more than one, fuck');
 			}
@@ -358,24 +378,42 @@ obj.checkPrize = function(mobile, prizeList, logData, cb){
 50：内容含有敏感词
 51：手机号码不正确
 */
-obj.sendSms = function(userObj, prizeId, ywy_mobile){
-	lotteryBl.getPrizeById(prizeId, function(err, prizeObj){
-		if(err){
-			logger.error('hz_must_prize.js uobj.sendSms error, err: %s', err);
-			return
-		}
-		if(!prizeObj){
-			logger.error('hz_must_prize.js uobj.sendSms not found prizeObj, err: %s, prizeId: %s',
-				err, prizeId);
-			return
-		}
-		var smsContent = util.format('尊敬的业务员，您的客户%s抽中奖品%s',userObj.appUserName, prizeObj.name)
-		
-		obj.sendSms(ywy_mobile, smsContent, function(){
-			
-		})
-		return
-	})
+obj.sendSmsPrize = function(userId, prizeId){
+
+
+	userBl.getUserByUserId(userId, function(err, userDoc){
+		if(err) return
+		if(!userDoc) return	
+		var ywyUserId = userDoc.uobj.appUserCode
+		var appUserName = userDoc.uobj.appUserName
+
+		userBl.getUserByUserId(ywyUserId, function(err, ywyDoc){
+				if(err) return
+				if(!ywyDoc){
+					//没找到业务员记录错误日志
+					logger.error('hz_must_prize.js obj.sendSmsPrize  error, ywyDoc not found, userid: %s', userId);
+					return
+				}
+				var ywy_mobile = ywyDoc.uobj.appUserMobile
+
+				lotteryBl.getPrizeById(prizeId, function(err, prizeObj){
+					if(err){
+						logger.error('hz_must_prize.js uobj.sendSms error, err: %s', err);
+						return
+					}
+					if(!prizeObj){
+						logger.error('hz_must_prize.js uobj.sendSms not found prizeObj, err: %s, prizeId: %s',
+							err, prizeId);
+						return
+					}
+					var smsContent = util.format('尊敬的业务员，您的客户%s抽中奖品%s',appUserName, prizeObj.name)
+					
+					obj.sendSms(ywy_mobile, smsContent, function(){})
+					return
+				})
+		})//end userBl.getUserByUserId
+
+	})//end userBl.getUserByUserId
 }
 
 
@@ -391,9 +429,9 @@ obj.sendSms = function(mobile, content, cb){
 		smsUser,smsPwd,mobile,smsContent)
 
 	request(smsReqUrl, function (error, response, body) {
-		  if (!error && response.statusCode == 200) {
+		  if (error || response.statusCode != 200) {
 		  	logger.error('hz_must_prize.js uobj.sendSms response err, err: %s, body: %s',
-			err, body);
+			error, body);
 			return cb('error')
 		  }
 		  if(body == '0'){
@@ -404,7 +442,6 @@ obj.sendSms = function(mobile, content, cb){
 		  	logger.error('hz_must_prize.js uobj.sendSms send fail body: %s',body);
 		  	return cb(body)
 		  }
-
 	})
 
 

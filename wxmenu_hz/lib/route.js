@@ -29,7 +29,8 @@ var apiActive = require('../apiCl/apiActive.js');
 var apiLottery = require('../apiCl/apiLottery.js');
 //vote
 var apiVote = require('../apiCl/apiVote.js');
-
+//sms
+var apiSmsLog = require('../apiCl/apiSmsLog.js');
 
 //console.log(global.config)
 function getAllApp(callback){
@@ -329,7 +330,10 @@ var addroute = function(app){
 		//app.get('/view/hzyewuyuan', getUserMid, hzYewuyuanCl.hzyewuyuan_mingpian)
 		//合众人寿业务员名片页面打分
 		app.post('/api/hzstar', hzYewuyuanCl.hzstar)
-
+		//获得某一个客户对业务员的打分情况
+		app.get('/api/hzstarstatus', hzYewuyuanCl.hzstarstatus)
+		//发送短信验证码
+		app.post('/api/smscode', apiSmsLog.sendSms)
 
 
 

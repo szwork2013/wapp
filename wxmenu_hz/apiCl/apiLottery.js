@@ -3,6 +3,9 @@ var userBl = require('../bl/wxUser.js');
 var utils = require('../lib/utils.js');
 var obj = {}
 
+var os = require('os')
+var platForm = os.platform()
+
 obj.getLotteryInfo = function(req,res){
 	//先获取用户id
 	var appobj = utils.getAppEname(req.originalUrl)
@@ -11,7 +14,10 @@ obj.getLotteryInfo = function(req,res){
 	}
 	var appEname = appobj.data;
 
-	//req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
+	//如果是本地开发环境
+    if(platForm == 'win32'){
+		req.session[appEname+'_userid'] = '552e69a151a8d2bfc651d9af'
+	}
 
 	var userid = req.session[appEname+'_userid'];
 	//如果用户身份丢失
@@ -57,6 +63,12 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 		return res.send(appobj)
 	}
 	var appEname = appobj.data;
+
+	//如果是本地开发环境
+    if(platForm == 'win32'){
+		req.session[appEname+'_userid'] = '552e69a151a8d2bfc651d9af'
+	}
+
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
 		res.send({error:1,data:'用户身份丢失，请重新进入'})
@@ -92,18 +104,8 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 				if(err){
 			        return res.send({error:1,data:err}) 
 		     	}
-		     	if(result.prizeId && result.prizeId != '0'){
-		     		//根据奖品id拿奖品信息
-		     		lotteryBl.getPrizeById(result.prizeId, function(err,po){
-		     			if(err){
-		     				return res.send({error:1,data:err});
-		     			}
-		     			if(!po){
-		     				return res.send({error:1,data:'奖品未找到'});
-		     			}
-		     			result.prizeObj = po;
-		     			return res.send({error:0,data:result});
-		     		})
+		     	if(result.prizeId && result.prizeId != '0'){		
+		     		return res.send({error:0,data:result});
 		     	}
 		     	else{
 		     		return res.send({error:0,data:result});

@@ -127,8 +127,38 @@ $(function(){
 
 
 
+
+    //部署上生产环境，把alert去掉
+
+    if(window.jsticket_error=='1'){
+
+    }
+    if(window.jsticket_error=='0'){
+            
+            wx.config(window.jsconfig);
+            wx.ready(function(){
+
+                wx.hideOptionMenu();
+            });
+            wx.error(function(res){
+
+            });
+
+            
+
+    }
+
 </script> 
 
+
+
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</div>  
 
 </body>
 </html>

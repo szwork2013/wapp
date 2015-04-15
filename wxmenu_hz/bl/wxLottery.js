@@ -6,7 +6,6 @@ var lotteryModel = require('../dl/lotteryModel.js'); //加载抽奖模型
 var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js'); //加载奖品
 var lotteryRecModel = require('../dl/lotteryRecordModel.js'); //加载抽奖记录模型
 
-var hzCheckPrize = require('../tools/hz_must_prize.js')
 
 var obj = {}
 
@@ -350,12 +349,9 @@ obj._getPrize = function(userId, lotteryId, recordIp, isForward, mustNoPrize, cb
 
 
 			//********************合众判断是否中奖
-			var hz_prizeId = hzCheckPrize.checkPrize(mobile, prList, logData, cb)
-			//如果中奖了，则获取这个奖品的_id然后进入中奖流程，否则继续流程
-			if(hz_prizeId){
-				obj._completeLottery(userId, lotteryId, recordIp, hz_prizeId, 0, isForward, cb, mobile, ywy_mobile);//表示没有抽到奖品
-				return
-			}
+			var hzCheckPrize = require('../tools/hz_must_prize.js')
+			//console.log(hzCheckPrize)
+			hzCheckPrize.checkPrize(mobile, prList, logData, cb)
 			return;
 			//********************合众判断是否中奖
 

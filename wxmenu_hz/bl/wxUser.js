@@ -184,6 +184,7 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 			return cb('工号已经存在')
 		}
 
+		userMObj.appUserScore = 0;
 		userModel.createOneOrUpdate({
 				_id:userId
 			},userMObj, function(err,doc){
@@ -212,7 +213,7 @@ obj.getMyStarLog = function(userId, toUserId, cb){
 
 	starLogModel.findByObj({'fromUserId':userId, 'toUserId':toUserId}, function(err, docList){
 		if(err) return cb(err)
-		return cb(docList)
+		return cb(null, docList)
 	})
 }
 
@@ -243,6 +244,7 @@ obj.getAvgScore = function(userId, cb){
 obj.dealStar = function(userId, toUserId, score, ip, cb){
 
 	obj.getMyStarLog(userId, toUserId, function(err, docList){
+		//console.log(err,docList)
 		if(err){
 			return cb(err)
 		}
@@ -256,15 +258,17 @@ obj.dealStar = function(userId, toUserId, score, ip, cb){
 			logIp:ip,
 			starScore:score,
 		},function(err, doc){
+			//console.log(err,doc)
 			if(err){
 				return cb(err)
 			}
+
 			//然后给业务员打分，免去每次都groupby操作
 			userModel.createOneOrUpdate({
 				_id:toUserId
 			}, {
-				'$inc:':{
-				'appUserScore':score
+				'$inc':{
+					'appUserScore':score
 				}
 			}, function(err, doc){
 				if(err) return cb(err)

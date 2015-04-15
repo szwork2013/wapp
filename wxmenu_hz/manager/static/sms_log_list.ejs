@@ -122,22 +122,22 @@
                        
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/smsCl/read",
+                                url: DataHost + "/manger/smslog/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/smsCl/update",
+                                url: DataHost + "/manger/smslog/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/smsCl/destroy",
+                                url: DataHost + "/manger/smslog/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/smsCl/create",
+                                url:DataHost + "/manger/smslog/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 

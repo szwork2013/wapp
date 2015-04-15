@@ -6,10 +6,6 @@ obj.userCodeList  = []
 
 obj.checkUserCode = function(smsCode, mobile, cb){
 
-
-	apiSmsLog.
-		
-
 }
 
 

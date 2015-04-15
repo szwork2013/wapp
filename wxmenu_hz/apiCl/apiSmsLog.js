@@ -9,6 +9,8 @@ var url = require('url')
 var utils = require('../lib/utils.js');
 var moment = require('moment')
 
+var os = require('os')
+var platForm = os.platform()
 
 var obj = {}
 
@@ -27,7 +29,13 @@ obj.sendSms = function(req,res){
 
     //req.session[appEname+'_oauth_openid'] = 'qwe'
 
-	var activeId = req.body.activeId;
+  //如果是本地开发环境
+  if(platForm == 'win32'){
+
+      req.session[appEname+'_userid'] = '552e69a151a8d2bfc651d9af'
+    
+  }
+
 	var userId = req.session[appEname+'_userid']
 
 
@@ -35,7 +43,6 @@ obj.sendSms = function(req,res){
       logger.error('apiActive.addSupport: session lost, fromUserId: %s, appEname: %s, process.id: %s', (fromUserId||'undefined'), appEname, process.pid.toString())
       return res.send({error:1, data:'身份丢失，请重新进入'})
   }
-
 
 	var mobile = req.body.mobile;
 
@@ -49,7 +56,7 @@ obj.sendSms = function(req,res){
         return res.send({error:1, data:'内部错误，请重试'})
       }
       if(doc.bind.length == 0){
-        logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', fromUserId)
+        logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', userId)
         return res.send({error:1, data:'出错啦，请关闭重试'})
       }
       
@@ -72,7 +79,7 @@ obj.sendSms = function(req,res){
           var insertData = {
               'userId':userId,
               'mobileNumber':mobile,
-              'smsCode':smsCode
+              'smsCode':smsCode,
               'logIp':req.ips[0] || '127.0.0.1',
               'type':1,
               'writeTime':new Date()
