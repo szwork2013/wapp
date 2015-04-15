@@ -23,6 +23,14 @@ objSchema.statics.findByObj = function(obj,cb){
       var obj = obj || {};
       return this.find(obj, cb);
 }
+objSchema.statics.findOneByObj = function (obj,cb) {
+    var obj = obj || {};
+    return this.findOne(obj, function(err,doc){
+        if(err) console.log('DB error', err);
+        cb(err,doc)
+    })
+}
+
 
 objSchema.statics.insertOneByObj = function (obj,cb) {
 	var obj = obj || {};

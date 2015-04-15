@@ -54,7 +54,7 @@ obj.activeMiddle = function(req,res,next){
 			return res.send(500,err)
 		}
 		if(!appObj){
-			return res.send(500,'not found user')
+			return res.send(500,'not found app')
 		}
 
 			userBl.getUserByUserId(userid,function(err,fromUserObj){

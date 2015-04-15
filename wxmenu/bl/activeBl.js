@@ -195,7 +195,7 @@ obj.getCountByActiveIdAndToUserId = function(activeId, toUserId, cb){ //计算�
 
 }
 
-var checkActiveTime = function(activeObj){
+var checkActiveTime = obj.checkActiveTime =function(activeObj){
 	var s = moment(activeObj.startTime)
 	var e = moment(activeObj.endTime)
 	var n = moment();

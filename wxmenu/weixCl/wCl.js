@@ -172,18 +172,21 @@ var moneySend = function(req, res, openId, replyDoc, appId, cb){
               return;
         }
         //先判断用户是否已经超过了获取红包的上限制
-        moneyLogDl.countAll({
+        moneyLogDl.findOneByObj({
           'openId':openId,
           'replyId':replyId
-        }, function(err, countLog){
+        }, function(err, logDoc){
               if(err){
                   if(cb) return cb(err);
                   else res.reply(ERR_REPLY);
                   return;
               }
-              if(countLog > 0){//如果此人已经拿过
+              if(logDoc){//如果此人已经拿过
                   
-                  if(cb) return cb('您已经拿过本次红包啦~');
+                  if(cb) return cb(null, {
+                      'hasGet':true,
+                      'val':logDoc.moneyVal
+                    });
                   else res.reply('您已经拿过本次红包啦~');
                   return;
               }
@@ -201,8 +204,8 @@ var moneySend = function(req, res, openId, replyDoc, appId, cb){
                     else res.reply(ERR_REPLY);
                     return;
                 }
-                var min = replyDoc.moneyMin
-                var max = replyDoc.moneyMax
+                var min = replyDoc.moneyMin * 100
+                var max = replyDoc.moneyMax * 100
                 var randomVal = Math.floor(min+Math.random()*(max-min));
 
                 var options={
@@ -220,14 +223,14 @@ var moneySend = function(req, res, openId, replyDoc, appId, cb){
                     appEname:appDoc.appEname,
                 }
 
-               
+                //console.log(options)
 
                 //调用发送红包的sdk去发送红包
                 moneySendLib(options, function(err, result){
 
 
                     if(err){
-                        logger.error('moneySend call moneySendLib error: %s', err)
+                        logger.error('moneySend call moneySendLib, money val: %s,  error: %s', randomVal, err)
                         if(cb) return cb(err)
                         else res.reply(ERR_REPLY);
                         return;
@@ -251,10 +254,14 @@ var moneySend = function(req, res, openId, replyDoc, appId, cb){
                                 userId:userId,
                                 replyId:replyDoc._id.toString(),
                                 logIp:req.ips[0] || '127.0.0.1',
-                                moneyVal:randomVal,
+                                moneyVal:(randomVal/100),
                                 writeTime:new Date()
                             })
-                            if(cb) return cb(null, randomVal)
+                            if(cb) return cb(null, 
+                              {
+                                'hasGet':false,
+                                'val':(randomVal/100)
+                              })
                             else res.end('')
 
                         })//end userBl.getUserByOpenid

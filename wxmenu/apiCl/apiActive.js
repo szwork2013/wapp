@@ -166,6 +166,8 @@ obj.getMoney = function(req,res){
     var replayEname = req.body.replayEname
     var activeId = req.body.activeId
 
+
+
     userBl.getUser({'_id':userId}, function(err, doc){
           if(err){
             return res.send({error:1, data:'内部错误，请重试'})
@@ -177,6 +179,7 @@ obj.getMoney = function(req,res){
           var openId = doc.bind[0].openId
 
           appBl.getByEname(appEname, function(err, appObj){
+
               if(err) return res.send({error:1, data:err})
               var appId = appObj._id.toString()
 
@@ -184,10 +187,11 @@ obj.getMoney = function(req,res){
               activeBl.getActiveById(activeId, function(err, activeDoc){
                   if(err) return res.send({error:1, data:err})
                   //检查活动是否已经开始或者未开始
-                  var isValid = activeBl.checkActiveTime
+                  var isValid = activeBl.checkActiveTime(activeDoc)
                   if(isValid !== true){
                       return res.send({error:1, data:isValid})
                   }
+
 
                   activeBl.getReplyDocByEname(replayEname, function(err, replyDoc){
                        if(err) return res.send({error:1, data:err})

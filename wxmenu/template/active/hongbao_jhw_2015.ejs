@@ -31,11 +31,13 @@
 		width: 300px;
 		text-align: center;
 		position: absolute;
-		top: 500px;
+		top: 66%;
 		left: 50%;
 		margin-left: -150px;
-		color: #c00;
-		font-size: 18px;
+		color: #f8ff00;
+		font-size: 22px;
+		z-index: 9;
+		font-family: '微软雅黑';
 	}
 
 </style>
@@ -43,13 +45,13 @@
 <body bgcolor="#ff0000">
 
 <div id="noHongBao" class="box" style="display:none">
-	<img src="" class="bgimg" />
+	<img src="http://wkmixtown.qiniudn.com/jhw/hongbao_jhw_dbq.jpg" class="bgimg" />
 </div>
 <div id="HongBao1" class="box" style="display:none">
-	<img src="" class="bgimg" />
+	<img src="http://wkmixtown.qiniudn.com/jhw/hongbao_jhw_gx.jpg" class="bgimg" />
 </div>
 <div id="HongBao2" class="box" style="display:none">
-	<img src="" class="bgimg" />
+	<img src="http://wkmixtown.qiniudn.com/jhw/hongbao_jhw_je.jpg" class="bgimg" />
 	<p id="totalMoney" class="totalMoney"></p>
 </div>
 
@@ -90,8 +92,15 @@ $(function(){
         		$('#noHongBao').show()
         	}
         	else{
-        		$('#totalMoney').html('获得'+d.data+'元')
-        		$('#HongBao1').show()
+        		if(d.data.hasGet == true){
+        			$('#totalMoney').html('获得 '+d.data.val+' 元')
+        			$('#HongBao2').show()
+        		}
+        		else{
+        			$('#totalMoney').html('获得 '+d.data.val+' 元')
+        			$('#HongBao1').show()
+        		}
+        		
         	}
 
         })
@@ -119,7 +128,7 @@ $(function(){
 
 			wx.config(window.jsconfig);
 			wx.ready(function(){
-
+				wx.hideOptionMenu();
 			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
 			  //  alert('wx jsdk ready')
 

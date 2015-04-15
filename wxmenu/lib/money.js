@@ -43,9 +43,12 @@ var fnCreateUrlParam = function(json){
  
     var _str = '';
     var _arr = []
-    for(var key in json){
+    var keyList = Object.keys(json).sort()
+
+    keyList.forEach(function(key){
         _arr.push(key+'='+json[key]);
-    }
+    })
+
     return _arr.join('&');
 }
  
@@ -89,7 +92,7 @@ var fnGetWeixinBonus = function(option){
     //_contentJson.logo_imgurl = '';
     _contentJson.min_value = _min_value;// '100';
     _contentJson.nick_name = _showName;
-    _contentJson.nonce_str = '50780e0cca98c8c8e814883e5caa672e';
+    _contentJson.nonce_str = Date.now().toString(); //'50780e0cca98c8c8e814883e5caa672e';
     _contentJson.re_openid = _re_openid;// 'omNdNuCzOuYOm5aBr1-B5hhUS1JI'; //涛子的openid // 'onqOjjmM1tad-3ROpncN-yUfa6uI';
     _contentJson.remark = _wishing;
     _contentJson.send_name =_showName;//
@@ -101,17 +104,21 @@ var fnGetWeixinBonus = function(option){
     _contentJson.wishing = _wishing;//'恭喜发财';
     _contentJson.wxappid = _wxappid;// 'wxbfca079a0b9058d3';
     
-    _contentJson.key = _wxkey;
-    var _contentStr = fnCreateUrlParam(_contentJson);
+    //_contentJson.key = _wxkey;
+    console.log(_contentJson)
+    var _contentStr = fnCreateUrlParam(_contentJson)+'&key='+_wxkey;
     //console.log('content='+_contentStr);
- 
+    
+    console.log(_contentStr)
+
     _contentJson.sign =  MD5(_contentStr).toUpperCase();
     //删除 key (key不参与签名)
     //console.log(_contentJson)
 
     delete _contentJson.key;
     var _xmlData = fnCreateXml(_contentJson);
- 
+    console.log(_xmlData)
+
     var _sendData = '<xml>'+_xmlData+'</xml>'; //_xmlTemplate.replace(/{content}/)
     
     return _sendData;
@@ -130,7 +137,7 @@ var fnSendMoney = function(data,callback){
             method:'POST',
             path:_path,
             key: fs.readFileSync(path.join(keyPath, data.appEname+'_key.pem')), //将微信生成的证书放入 cert目录下
-            cert: fs.readFileSync(path.join(keyPath,data.appEname+'_cert.pem'))
+            cert: fs.readFileSync(path.join(keyPath, data.appEname+'_cert.pem'))
         }
     }
     catch(e){
