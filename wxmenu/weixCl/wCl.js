@@ -157,20 +157,6 @@ var moneySend = function(req, res, openId, replyDoc, appId, cb){
     var appobj = appobj;
     var replyId = replyDoc._id.toString()
 
-    //先判断一次活动总的红包数是否超过了
-    moneyLogDl.countAll({
-      'replyId':replyId
-    }, function(err, countTotal){
-        if(err){
-              if(cb) return cb(err);
-              else res.reply(ERR_REPLY);
-              return;
-          }
-        if(countTotal>=replyDoc.moneyTotalNum){
-              if(cb) return cb('红包已经发放完啦~');
-              else res.reply('红包已经发放完啦~');
-              return;
-        }
         //先判断用户是否已经超过了获取红包的上限制
         moneyLogDl.findOneByObj({
           'openId':openId,
@@ -189,6 +175,21 @@ var moneySend = function(req, res, openId, replyDoc, appId, cb){
                     });
                   else res.reply('您已经拿过本次红包啦~');
                   return;
+              }
+
+             //先判断一次活动总的红包数是否超过了
+          moneyLogDl.countAll({
+            'replyId':replyId
+          }, function(err, countTotal){
+              if(err){
+                    if(cb) return cb(err);
+                    else res.reply(ERR_REPLY);
+                    return;
+                }
+              if(countTotal>=replyDoc.moneyTotalNum){
+                    if(cb) return cb('红包已经发放完啦~');
+                    else res.reply('红包已经发放完啦~');
+                    return;
               }
 
               wxAppBl.getById(appId, function(err, appDoc){
