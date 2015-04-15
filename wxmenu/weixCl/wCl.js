@@ -177,7 +177,7 @@ var moneySend = function(req, res, openId, replyDoc, appId, cb){
                   return;
               }
 
-             //先判断一次活动总的红包数是否超过了
+        //先判断一次活动总的红包数是否超过了
           moneyLogDl.countAll({
             'replyId':replyId
           }, function(err, countTotal){
