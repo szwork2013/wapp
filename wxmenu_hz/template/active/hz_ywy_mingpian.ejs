@@ -8,7 +8,20 @@
     <meta content="0" http-equiv="Expires"></meta>
 	<title><%= toUserObj.appUserName %>的名片</title>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/card.css">
+	<style type="text/css">
+		#infoBox p {
+			color: #5cf95a;
+			line-height: 0.95rem;
+			font-size: 0.7rem;
+			overflow: hidden;
+			font-family: "微软雅黑";
+			}
+			#beforeScore p:nth-child(6) {
+				line-height: 1rem; 
+			}
+	</style>
 </head>
 <body>
 
@@ -69,7 +82,7 @@ var prizeList = <%- JSON.stringify(prizeList) %>
 var myPrizeList = <%- JSON.stringify(myPrizeList) %>
 var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
 var endTime = moment(new Date(activeObj.endTime))
-var avgStar = 
+//var avgStar = 
 
 window.isAjax = false
 
@@ -88,7 +101,7 @@ function initCardInfo(){
 
 
 	var getAvgScore = function(){
-		$.post('/active_data/avgscore', {userid:toUserId}, function(d){
+		$.get('/active_data/avgscore', {userid:toUserId}, function(d){
             if(d.error == 1){
                 return alert(d.data)
             }
@@ -104,32 +117,33 @@ function initCardInfo(){
 	}()
 
 
-	var getMyScore = function(){
-		$.get('/api/hzstarstatus', {
-			fromuserid:fromUserId,
-			touserid:toUserId
-		}, function(d){
-            if(d.error == 1){
-                return alert(d.data)
-            }
-            else{
-            	if(d.data.length >0){
-            		window.hasStar = true
-            		var myScore = d.data[0].starScore
-            		for(var i=0; i<myScore; i++){
-            			$('#beforeScore .star').eq(i).addClass('active')
-            		}
-            		return
-            	}
-            	else{
-            		window.hasStar = false
-            	}
+	if(!isMyPage){
+		var getMyScore = function(){
+			$.get('/api/hzstarstatus', {
+				fromuserid:fromUserId,
+				touserid:toUserId
+			}, function(d){
+	            if(d.error == 1){
+	                return alert(d.data)
+	            }
+	            else{
+	            	if(d.data.length >0){
+	            		window.hasStar = true
+	            		var myScore = d.data[0].starScore
+	            		for(var i=0; i<myScore; i++){
+	            			$('#beforeScore .star').eq(i).addClass('active')
+	            		}
+	            		return
+	            	}
+	            	else{
+	            		window.hasStar = false
+	            	}
 
-            }
-        },'json')
+	            }
+	        },'json')
 
-	}()
-
+		}()
+	}
 
 
 	//评分
@@ -146,10 +160,10 @@ function initCardInfo(){
 function bindEvent(){
 
 	//打分按钮
-    $('##beforeScore .star').click(function(){
+    $('#beforeScore .star').click(function(){
     	if(window.hasStar) return
     	if(window.isAjax) return
-    	var scoreLevel = $(this).index()+1;
+    	var scoreLevel = $(this).index();
 
     	window.isAjax = true
         $.post('/api/hzstar', {
@@ -209,7 +223,6 @@ function initWrapperSize(){
 	$("#infoBox").css("top",293/2495*$(".wrapper").height());
 
 	initCardWrapperSize();
-	initActivityWrapperSize();
 }
 
 function initCardWrapperSize(){
@@ -302,7 +315,7 @@ $(function(){
 
 			});
 			wx.error(function(res){ });
-
+		}
 })
 
 </script> 

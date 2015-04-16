@@ -15,9 +15,7 @@ obj.getLotteryInfo = function(req,res){
 	var appEname = appobj.data;
 
 	//如果是本地开发环境
-    if(platForm == 'win32'){
-		req.session[appEname+'_userid'] = '552e69a151a8d2bfc651d9af'
-	}
+
 
 	var userid = req.session[appEname+'_userid'];
 	//如果用户身份丢失
@@ -64,10 +62,7 @@ obj.startLottery = function(req,res){ //用户进入抽奖页面点击抽奖程�
 	}
 	var appEname = appobj.data;
 
-	//如果是本地开发环境
-    if(platForm == 'win32'){
-		req.session[appEname+'_userid'] = '552e69a151a8d2bfc651d9af'
-	}
+
 
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){

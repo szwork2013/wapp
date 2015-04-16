@@ -200,8 +200,8 @@ obj.hzstar = function(req,res){
 //获得某一个客户对业务员的打分情况
 obj.hzstarstatus = function(req,res){ 
 
-	var userId = req.body.fromuserid
-	var toUserId = req.body.touserid
+	var userId = req.query.fromuserid
+	var toUserId = req.query.touserid
 
 	
 	if(!toUserId){

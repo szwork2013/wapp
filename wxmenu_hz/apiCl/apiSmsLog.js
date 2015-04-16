@@ -30,11 +30,7 @@ obj.sendSms = function(req,res){
     //req.session[appEname+'_oauth_openid'] = 'qwe'
 
   //如果是本地开发环境
-  if(platForm == 'win32'){
 
-      req.session[appEname+'_userid'] = '552e69a151a8d2bfc651d9af'
-    
-  }
 
 	var userId = req.session[appEname+'_userid']
 
@@ -50,12 +46,15 @@ obj.sendSms = function(req,res){
     return res.send({error:1, data:'手机号格式有误'})
   }
 
+
   //查找用户是否存在
   userBl.getUser({'_id':userId}, function(err, doc){
       if(err){
         return res.send({error:1, data:'内部错误，请重试'})
       }
-      if(doc.bind.length == 0){
+
+      ///console.log(doc)
+      if(!doc || doc.bind.length == 0){
         logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', userId)
         return res.send({error:1, data:'出错啦，请关闭重试'})
       }

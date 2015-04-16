@@ -282,7 +282,7 @@ obj.checkPrize = function(mobile, prizeList, logData, cb){
 
 		//如果用户抽中魔豆
 		if(userGetPrize === 'magic'){
-			console.log(countObj, nowRule)
+			//console.log(countObj, nowRule)
 			//如果魔豆已经超过限额
 			if(countObj.magic >= nowRule.magic){
 				//用户未中奖
@@ -422,7 +422,7 @@ obj.sendSms = function(mobile, content, cb){
 	
 	//获取到用户的名字，手机，奖品名字，业务员手机
 	//然后就可以进行发送手机短信的流程了
-	var smsPwd = 'CE3F35A459E5C9ADCEB3B6AFCE5AB7A2'
+	var smsPwd = '99541CABC900E8612C161D7399A85BF1'
 	var smsUser = 'snoopyxdy'
 	
 	var smsContent = encodeURIComponent(content)

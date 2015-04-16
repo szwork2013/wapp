@@ -30,9 +30,7 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 
 	var appEname = appobj.data;
 	//如果是本地开发环境
-    if(platForm == 'win32'){
-		req.session[appEname+'_userid'] = '53ecc71816eafb68369b4920'
-	}
+
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
 		return res.send('用户身份丢失，请重新进入')
@@ -45,7 +43,7 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 
 
 	//获取业务员的信息
-	userBl.getUserByUserId(ywy_userid, function(err, ywyObj){
+	userBl.getUserByUserId(ywyuserid, function(err, ywyObj){
 		if(err){
 			return res.send(err)
 		}

@@ -129,6 +129,8 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 			  appId:uobj.uobj.appId,                 //appId表示用户第一次绑定的app应用id
 			  appUserName:uobj.uobj.appUserName || '未知用户',       //会员姓名
 			  appUserMobile:uobj.uobj.appUserMobile,  //会员手机号
+			  appUserType:uobj.uobj.appUserType,  //会员类型
+			  appUserCode:uobj.uobj.appUserCode,  //会员类型
 			  appUserSex:uobj.uobj.appUserSex, //0表示女性，1表示男性
 			  appUserBirth: moment(uobj.uobj.appUserBirth).format('YYYY-MM-DD'), //会员生日
 			  appUserScore:uobj.uobj.appUserScore,

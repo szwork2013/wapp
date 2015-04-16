@@ -44,7 +44,7 @@ obj.activeMiddle = function(req,res,next){
     	else{
     		//真实情况需要注释掉
 		    req.session[appEname+'_oauth_openid'] = 'oINOHjmRX93qnSoVjN3s9UTZT2x0'
-		    req.session[appEname+'_userid'] = '552e69a151a8d2bfc651d9af'
+		    req.session[appEname+'_userid'] = '552f9f23ae42c88e657cc36a'
     	}
 	    
     }
@@ -183,7 +183,10 @@ obj.activePage = function(req,res){ //活动页面展示
 			wxName:req.fromUserObj.wxName,
 			wxAvatar:req.fromUserObj.wxAvatar,
 			wxAddress:req.fromUserObj.wxAddress,
-			appUserMobile:req.fromUserObj.appUserMobile
+			appUserMobile:req.fromUserObj.appUserMobile,
+			appUserScore:req.fromUserObj.appUserScore,
+			appUserType:req.fromUserObj.appUserType,
+			appUserCode:req.fromUserObj.appUserCode,
 		}
 		if(req.fromUserObj.appUserName == '未认证会员'){
 				fromUserObj.appUserName = ''

@@ -10,6 +10,20 @@
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
     <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
     <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/card.css">
+    <style type="text/css">
+      .prizeDialog {
+        background: url(http://piccvote.qiniudn.com/lottery/imgs/prizeDialog2.png) no-repeat;
+        }
+
+        .prizeNameBox{
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        bottom: 23%;
+        font-family: "微软雅黑";
+        color: #fff;
+        }
+    </style>
   </head>
 <body>
 
@@ -31,10 +45,10 @@
 
   <div id="dialogModal" class="modal">
     <div class="dialog">
-      <img class="dialogBox" src="imgs/box.png" alt="">
-      <input type="text" class="nameText">
-      <input type="text" class="telText">
-      <input type="text" class="codeText">
+      <img class="dialogBox" src="http://piccvote.qiniudn.com/lottery/imgs/box.png" alt="">
+      <input type="text" class="nameText" maxlength="10">
+      <input type="text" class="telText" maxlength="11">
+      <input type="text" class="codeText" maxlength="6">
       <input class="getCode" type="button">
       <input class="submitBtn" type="button">   
     </div>
@@ -67,6 +81,7 @@ var ywyUserId = '<%= ywyuserid%>'
 var appId = '<%= appId%>'
 var u_username = '<%= wxuobj.appUserName %>'
 var u_mobile = '<%= wxuobj.appUserMobile %>'
+var u_type = '<%= wxuobj.appUserType %>'
 var appUserName = u_username
 var appUserMobile = u_mobile 
 
@@ -74,16 +89,18 @@ window.isAjaxing = false
 
 $(function(){
   $(window).resize(initWrapperSize);
-
-  //用户未完善资料
-  if(user_v == '未认证会员' || mobile_v.length != 11){
+  initWrapperSize();
+  //用户未完善资料 
+  if(u_username == '未认证会员' || u_mobile.length != 11 || u_type == 0){
     $('#appUserName').val('');
     $('#appUserMobile').val('');
+    $(".activityWrapper").show();
     $('#dialogModal').show()
     bindInfoEvent()
     return;
   }
   else{
+      $(".activityWrapper").show();
       bindLottery()
   }
 
@@ -119,6 +136,8 @@ function initWrapperSize(){
   initActivityWrapperSize();
 
 }
+
+
 
 
 function initActivityWrapperSize(){ 
@@ -195,7 +214,7 @@ function bindInfoEvent(){
         }
     
         var q = {
-            userId:toUserId,
+            userId:userid,
             appUserName:appUserName,
             appUserMobile:appUserMobile,
             appUserCode:ywyUserId,
@@ -204,7 +223,7 @@ function bindInfoEvent(){
         }
 
         window.isAjax = true
-        $.post('/api/user/modify?wxuserid='+fromUserId, q, function(d){
+        $.post('/api/user/modify?wxuserid='+userid, q, function(d){
             window.isAjax = false
             if(d.error == 1){
                 return alert(d.data)
@@ -275,6 +294,9 @@ function bindLottery(){
                 })
 
                 if(hasPrize){
+                    $(".box").eq(1).addClass('prize open');
+                    $(".box").eq(1).children(".boxWrapper").addClass('prizeBg');
+
                     $('.prizeTip').show()
                     return
                 }
