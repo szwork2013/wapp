@@ -333,7 +333,7 @@ var addroute = function(app){
 		//获得某一个客户对业务员的打分情况
 		app.get('/api/hzstarstatus', hzYewuyuanCl.hzstarstatus)
 		//发送短信验证码
-		app.post('/api/smscode', apiSmsLog.sendSms)
+		app.post('/api/:appename/smscode', apiSmsLog.sendSms)
 
 
 

@@ -154,6 +154,7 @@ window.is_show_array = [
                   { text: "不启用", value: 0 }
                 ]
 window.app_user_type = [
+                  { text: "初始化", value: 0 },
                   { text: "普通会员", value: 1 },
                   { text: "业务员", value: 2 }
                 ]

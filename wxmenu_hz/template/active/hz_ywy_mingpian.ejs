@@ -1,60 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"></meta>
-<meta content="no-cache" http-equiv="Pragma"></meta>
-<meta content="no-cache" http-equiv="Cache-Control"></meta>
-<meta content="0" http-equiv="Expires"></meta>
-<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
-<script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
-<script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
-<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
-<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
-<link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
-<title>合众业务员注册</title>
-<style type="text/css">
-	.box{
-		width: 100%;
-		position: relative;
-		top:0;
-		left:0;
-	}
-
-	.bgimg{
-		width: 100%;
-		position: relative;
-		height: 100%;
-		display: block;
-	}
-	.totalMoney{
-		width: 300px;
-		text-align: center;
-		position: absolute;
-		top: 500px;
-		left: 50%;
-		margin-left: -150px;
-		color: #c00;
-		font-size: 18px;
-	}
-
-</style>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="no-cache" http-equiv="Pragma"></meta>
+    <meta content="no-cache" http-equiv="Cache-Control"></meta>
+    <meta content="0" http-equiv="Expires"></meta>
+	<title><%= toUserObj.appUserName %>的名片</title>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/card.css">
 </head>
-<body bgcolor="#ff0000">
+<body>
+
+<% if(isMyPage && toUserObj.appUserType != 2) {%>
+	<script type="text/javascript">
+		//不是业务员进入，直接跳转到注册业务员页面
+		location.href = '/active/<%= appEname%>?ename=hz_ywy_reg'
+	</script>
+
+<% }else{ %>  
+	<div class="wrapper cardWrapper">
+		<div id="infoBox">
+			<div id="beforeScore">
+				<div class="hasScore">
+					<span class=""></span>
+					<span class=""></span>
+					<span class=""></span>
+				</div>
+				<p>姓名：<span name="name"><%= toUserObj.appUserName %></span></p>
+				<p>手机：<span name="tel"><%= toUserObj.appUserMobile %></span></p>
+				<p>工号：<span name="num"><%= toUserObj.code1 %></span></p>
+				<p>合众人寿保险股份有限公司官方微信认证代理人</p>
+				<p>诚邀您参加合众人寿十周年客服节活动，请您为我评分并参与抽奖，赢取手机、魔豆等精美礼品。</p>
+
+				<% if(!isMyPage) { %>
+					<p><span>请为我评分：</span>
+						<span class="star"></span>
+						<span class="star"></span>
+						<span class="star"></span>
+					</p>
+				<% } %>
+
+			</div>
+
+		</div>
+		<% if(!isMyPage) { %>
+			<a href="/lottery/<%= appEname%>?ename=hz_ywy_prize&wxuserid=<%= fromUserId %>&ywyuserid=<%= toUserId %>" id="gameStart" ></a>
+		<%} %>
+	</div>
+
+<% } %>
 
 
-
-
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
-<script src="/api/xinyutang/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
 <script type="text/javascript">
-
 var logCount = <%= logCount %>
 var appId = '<%= appId %>'
 var appEname = '<%= appEname %>'
 var isMyPage = <%= isMyPage %>;
 var toUserId = '<%= toUserId %>'
 var fromUserId = '<%= fromUserId %>'
+var fromUserObj = <%- JSON.stringify(fromUserObj) %>
+var toUserObj = <%- JSON.stringify(toUserObj) %>
 var activeId = '<%= activeId %>'
 var supportCount = <%= supportCount %>
 var supportScore = <%= supportScore %>
@@ -68,7 +74,17 @@ var avgStar =
 window.isAjax = false
 
 
+
+
 $(function(){
+	initCardInfo();
+	initWrapperSize();
+	bindEvent();
+});
+
+function initCardInfo(){
+
+	window.hasStar = true
 
 
 	var getAvgScore = function(){
@@ -77,18 +93,71 @@ $(function(){
                 return alert(d.data)
             }
             else{
-            	alert(d.data)
+            	//放业务员平均分
+            	var avgscore = d.data
+            	var roundScore = Math.round(avgscore)
+            	for(var i=0; i<roundScore; i++){
+        			$('#beforeScore .hasScore span').eq(i).addClass('active')
+        		}
+            }
+        },'json')
+	}()
+
+
+	var getMyScore = function(){
+		$.get('/api/hzstarstatus', {
+			fromuserid:fromUserId,
+			touserid:toUserId
+		}, function(d){
+            if(d.error == 1){
+                return alert(d.data)
+            }
+            else{
+            	if(d.data.length >0){
+            		window.hasStar = true
+            		var myScore = d.data[0].starScore
+            		for(var i=0; i<myScore; i++){
+            			$('#beforeScore .star').eq(i).addClass('active')
+            		}
+            		return
+            	}
+            	else{
+            		window.hasStar = false
+            	}
+
             }
         },'json')
 
-	}
-	
-			
-	//保存按钮
-    $('#save_change').click(function(){
+	}()
 
 
-        $.post('/api/hzstar', {}, function(d){
+
+	//评分
+	// $.ajax({ 
+	// 	url: "",
+	// 	success: function(data){
+	// 		if(success){
+				// 给 infoBox 中 name = name/tel/num 的 span 赋值，并设置相应的评分等级，有几级就给几颗星加active类名
+	// 		}				
+	// 	}
+	// });	
+}
+
+function bindEvent(){
+
+	//打分按钮
+    $('##beforeScore .star').click(function(){
+    	if(window.hasStar) return
+    	if(window.isAjax) return
+    	var scoreLevel = $(this).index()+1;
+
+    	window.isAjax = true
+        $.post('/api/hzstar', {
+        	'fromuserid':fromUserId,
+        	'touserid':toUserId,
+        	'score':scoreLevel
+        }, function(d){
+        	window.isAjax = false
             if(d.error == 1){
                 return alert(d.data)
             }
@@ -99,13 +168,82 @@ $(function(){
         },'json')
 
     })
-    //保存按钮
+    //打分按钮
+
+}
+
+// function setScore(scoreLevel){
+// 	$("#beforeScore").hide();
+// 	for(var i=1;i<=scoreLevel;i++){
+// 		$("#afterScore p:last span").eq(i).addClass('active');
+// 	}
+// 	$("#afterScore").show();
+// }
+
+$(window).resize(initWrapperSize);
+
+function initWrapperSize(){
+	var windowWidth = $(window).width();
+	var windowHeight = $(window).height();
+	if(windowWidth<windowHeight){
+		if(windowWidth/1616*2495>windowHeight){
+			$(".wrapper").css({
+				"width":windowHeight/2495*1616,
+				"height":windowHeight,
+				"background-size":windowHeight/2495*1616 + "px," + windowHeight + "px"
+			});			
+		} else {
+			$(".wrapper").css({
+				"width":windowWidth,
+				"height":windowWidth/1616*2495,
+				"background-size":windowWidth + "px," + windowWidth/1616*2495 + "px"
+			});
+		}
+	} else {
+		$(".wrapper").css({
+			"width":windowWidth,
+			"height":windowWidth/1616*2495,
+			"background-size":windowWidth + "px," + windowWidth/1616*2495 + "px"
+		});
+	}
+	$("#infoBox").css("top",293/2495*$(".wrapper").height());
+
+	initCardWrapperSize();
+	initActivityWrapperSize();
+}
+
+function initCardWrapperSize(){
+	var infoWidth = $("#infoBox").width();
+	var infoHeight = $("#infoBox").height();
+	$(".hasScore span").css({
+		"width":infoWidth*(100/1494),
+		"height":infoHeight*(96/721),
+		"background-size":infoWidth*(100/1494) + "px," + infoHeight*(96/721) + "px"
+	});
+
+	$(".star").css({
+		"width":infoWidth*(162/1494),
+		"height":infoHeight*(156/721),
+		"background-size":infoWidth*(162/1494) + "px," + infoHeight*(156/721) + "px"
+	});
+	
+	$("#gameStart").css({"top":1035/2495*$(".wrapper").height(),"right":54/1616*$(".wrapper").width()});
+	$("#gameStart").css("background-size",$("#gameStart").width()+"px," + $("#gameStart").height() +"px");
+}
+
+</script>
 
 
 
 
 
 
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script src="/api/xinyutang/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+$(function(){
 
 
 
@@ -116,89 +254,71 @@ $(function(){
 		//alert(window.jsconfig)
 	}
 	if(window.jsticket_error=='0'){
-			$('#config').html(JSON.stringify(window.jsconfig))
+			
 
 			wx.config(window.jsconfig);
 			wx.ready(function(){
 
-			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-			  //  alert('wx jsdk ready')
-
 
 			    wx.onMenuShareTimeline({
-				    title: '过年到龙湖打卡领红包（第二波）', // 分享标题
-				    link: 'http://mp.weixin.qq.com/s?__biz=MzA3NzE0MjgzNg==&mid=206128992&idx=1&sn=cd4c22c836d120c6f862e8f17084a5aa#rd', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Flogo20150214.png', // 分享图标
+				    title: '帮<%= toUserObj.appUserName %>打分吧', // 分享标题
+				    link: 'http://wx.mintok.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+				    imgUrl: 'http://piccvote.qiniudn.com/lottery/imgs/200200.jpg', // 分享图标
 				    trigger:function(){
-				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
+				    	
 				    },
 				    complete:function(){
-				    	$('#action').append('<p>完成分享到朋友圈</p>')
+				    	
 				    },
 				    success: function () { 
 				        // 用户确认分享后执行的回调函数
-				        $('#action').append('<p>成功分享到朋友圈</p>')
+				        
 				    },
 				    cancel: function () { 
-				        // 用户取消分享后执行的回调函数
-				        $('#action').append('<p>用户取消分享到朋友圈</p>')
+				        // 用户取消分享后执行的回调函数  
 				    }
 				});
 
 				wx.onMenuShareAppMessage({
-				    title: '过年到龙湖打卡领红包（第二波）', // 分享标题
-				    desc: '全套APPLE洋财，大奖层层加码', // 分享描述
-				    link: 'http://mp.weixin.qq.com/s?__biz=MzA3NzE0MjgzNg==&mid=206128992&idx=1&sn=cd4c22c836d120c6f862e8f17084a5aa#rd', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Flogo20150214.png', // 分享图标
+					title: '帮<%= toUserObj.appUserName %>打分吧', // 分享标题
+					desc: '帮<%= toUserObj.appUserName %>打分吧', // 分享描述
+				    link: 'http://wx.mintok.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+				    imgUrl: 'http://piccvote.qiniudn.com/lottery/imgs/200200.jpg', // 分享图标
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				    trigger:function(){
-				    	$('#action').append('<p>成功点击发送给朋友</p>')
+				    	
 				    },
 				    complete:function(){
-				    	$('#action').append('<p>完成发送给朋友</p>')
+				    	
 				    },
 				    success: function () { 
-				        // 用户确认分享后执行的回调函数
-				        $('#action').append('<p>成功发送给朋友</p>')
+				        
 				    },
 				    cancel: function () { 
-				        // 用户取消分享后执行的回调函数
-				        $('#action').append('<p>取消发送给朋友</p>')
+				        
 				    }
 				});
 
-
-
-			    wx.checkJsApi({
-				    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-				    success: function(res) {
-				    //	alert(JSON.stringify(res))
-				        // 以键值对的形式返回，可用的api值true，不可用为false
-				        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-				    }});
-
 			});
-			wx.error(function(res){
-
-			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-			  //  alert('wx.error config出错')
-			  //  alert(JSON.stringify(res))
-			});
-
-			
-
-
-
+			wx.error(function(res){ });
 
 })
-
-
-
 
 </script> 
 
 
+
+
+
+
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</div>  
 </body>
 </html>
 

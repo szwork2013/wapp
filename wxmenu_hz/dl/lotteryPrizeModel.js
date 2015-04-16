@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var obj = { //定义结构
   lotteryId: { type: String, required:true}, //此奖品所属活动id
   name:{ type: String, required:true},      //猜图奖品的名称
-  desc:{ type: String, default: ''},        //奖品描述
+  desc:{ type: String, default: ''},        //奖品ename
   imgUrl:{ type: String, default: ''},      //猜图奖品的图片名称
   price:{type:Number,default: 0},           //猜图奖品的价格
   //defaultNumber:{type: Number, default:0}, 

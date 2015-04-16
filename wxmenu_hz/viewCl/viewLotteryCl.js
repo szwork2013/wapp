@@ -17,9 +17,9 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 
 	var lotteryEname = req.query.ename;
 	//业务员用户id
-	var ywy_userid = req.query.ywy_userid;
-	if(!ywy_userid){
-		return res.send('缺少参数 ywy_userid')
+	var ywyuserid = req.query.ywyuserid || '';
+	if(!ywyuserid){
+		return res.send('缺少参数 ywyuserid')
 	}
 
 
@@ -91,6 +91,7 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 					appEname:appEname,
 					appId:appObj._id,
 					userid:userid,
+					ywyuserid:ywyuserid,
 					wxuobj:wxuobj,
 					timeError:timeError,
 					ywy_userid:ywy_userid,

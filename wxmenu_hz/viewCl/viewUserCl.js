@@ -4,7 +4,21 @@ var utils = require('../lib/utils.js');
 var hzUserCodeTool = require('../tools/hz_user_code.js')
 var apiSmsLog = require('../apiCl/apiSmsLog.js')
 var moment = require('moment')
+var ywyList = require('../tools/ywy.json')
+var ywyListLen = ywyList.length
 var obj = {}
+
+
+//检查是否为业务员
+obj.checkIsYwy = function(gh, name){
+
+	for(var i=0; i<ywyListLen; i++){
+		if(ywyList[i].gh == gh && ywyList[i].name == name){
+			return true
+		}
+	}
+	return false
+}
 
 
 //ajax 接口
@@ -68,6 +82,11 @@ obj.modify = function(req,res){ //用户认证绑定
 		}
 		if(!qobj.code2){
 			return res.send({error:1,data:'微信账号输入有误'}) 
+		}
+
+		var isYwy = obj.checkIsYwy(qobj.code1, qobj.appUserName)
+		if(!isYwy){
+			return res.send({error:1,data:'对不起，姓名或工号有误，请重新输入或联系010-59949231'}) 
 		}
 
 		userBl.modify(userId, openId, qobj, function(err,doc){ //修改用户资料

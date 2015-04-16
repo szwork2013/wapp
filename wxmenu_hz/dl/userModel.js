@@ -15,7 +15,7 @@ var obj = { //定义结构
 	  appUserSex:{type:Number, default:1}, //0表示女性，1表示男性
 	  appUserBirth:{type: Date, default: function(){return new Date('1970/1/1')} }, //会员生日
 	  appUserScore:{type:Number,default:0,index:true},
-	  appUserType:{type:Number,default:1,}, //1表示普通的用户，2表示业务员
+	  appUserType:{type:Number,default:0,}, //1表示普通的用户，2表示业务员,默认0初始化
 	  appUserCode:{type:String}, //所属业务员
 
 	  isShow:{ type:Number, default:1}, //是否启用这个用户,1表示启用，0表示未启用

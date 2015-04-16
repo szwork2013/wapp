@@ -188,6 +188,7 @@ obj.reCheck = function(prizeId, recordDoc, maxCount, cb){
 				 cb(null, {
 					prizeId:prizeDoc._id.toString(),
 					name:prizeDoc.name,
+					ename:prizeDoc.desc,
 					imgUrl:prizeDoc.imgUrl,
 				})
 
