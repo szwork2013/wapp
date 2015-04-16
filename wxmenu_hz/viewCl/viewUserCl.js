@@ -58,17 +58,26 @@ obj.modify = function(req,res){ //用户认证绑定
 			return res.send({error:1,data:'appSmsCode 有误'}) 
 		}
 
-		//检查sms短信码
-		apiSmsLog.checkSms(userId, qobj.appUserMobile, qobj.appSmsCode, function(err, result){
-				if(err || !result){
-					return res.send({error:1,data:'短信验证码无效'}) 
+		userBl.getUser({
+			'appUserMobile':qobj.appUserMobile
+		}, function(err, doc){
+				if(err) return res.send({error:1,data:err}) 
+				if(doc){
+					return res.send({error:1,data:'手机号已被注册'}) 
 				}
-				
-				userBl.modify(userId, openId, qobj, function(err,doc){ //修改用户资料
-					if(err){
-				        return res.send({error:1,data:err}) 
-			     	}
-			     	res.send({error:0,data:doc});		
+
+				//检查sms短信码
+				apiSmsLog.checkSms(userId, qobj.appUserMobile, qobj.appSmsCode, function(err, result){
+						if(err || !result){
+							return res.send({error:1,data:'短信验证码无效'}) 
+						}
+						
+						userBl.modify(userId, openId, qobj, function(err,doc){ //修改用户资料
+							if(err){
+						        return res.send({error:1,data:err}) 
+					     	}
+					     	res.send({error:0,data:doc});		
+						})
 				})
 		})
 		return
