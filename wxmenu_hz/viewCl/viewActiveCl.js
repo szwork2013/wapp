@@ -44,7 +44,7 @@ obj.activeMiddle = function(req,res,next){
     	else{
     		//真实情况需要注释掉
 		    req.session[appEname+'_oauth_openid'] = 'oINOHjmRX93qnSoVjN3s9UTZT2x0'
-		    req.session[appEname+'_userid'] = '552f9f23ae42c88e657cc36a'
+		    req.session[appEname+'_userid'] = '552fc7d18a97300152f5653e'
     	}
 	    
     }
