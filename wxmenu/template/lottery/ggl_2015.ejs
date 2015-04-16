@@ -478,12 +478,12 @@ $(function(){
             
             
             if(window.lotteryData.record.length>=6){
-               alert('谢谢参与，您可以在9.20、10.1来香樟园，参与现场版iphone6的抽取，详请请查看本活动规则')
+               alert('谢谢参与')
                return false;
             }
 
-              if(window.lotteryData.record.length>=3 && $.cookie('isforward') != '1'){
-                  alert('您已经刮过3次了，转发本页面到朋友圈可再次获得3次刮奖机会')
+              if(window.lotteryData.record.length>=1 && $.cookie('isforward') != '1'){
+                  alert('您已经刮过1次了')
                   return false;
               }
 
