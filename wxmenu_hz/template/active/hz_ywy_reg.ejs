@@ -61,7 +61,9 @@ window.isAjax = false
 
 
 $(function(){
+    alert(1)
     initWrapperSize();
+    alert(2)
     $(".formModal").show();
     bindEvent();
 });
@@ -69,7 +71,9 @@ $(function(){
 
 
 function bindEvent(){
-
+    alert(typeof fromUserObj)
+    alert(typeof fromUserObj.appUserType)
+    alert(fromUserObj.appUserType)
     if(fromUserObj.appUserType == 1){
         alert('本注册页面仅针对业务员开放')
         return
