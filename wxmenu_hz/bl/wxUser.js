@@ -158,6 +158,10 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(qobj.code1){
 		userMObj.code1 = qobj.code1
 	}
+	else{
+		userMObj.code1 = Date.now() + '' + Math.random()
+	}
+
 	if(qobj.code2){
 		userMObj.code2 = qobj.code2
 	}
