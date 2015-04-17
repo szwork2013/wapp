@@ -95,7 +95,7 @@ obj.modify = function(req,res){ //用户认证绑定
 
 		var isYwy = obj.checkIsYwy(qobj.code1, qobj.appUserName)
 		if(!isYwy){
-			return res.send({error:1,data:'对不起，姓名或工号有误，请重新输入或联系010-59949231'}) 
+			return res.send({error:1,data:'对不起，姓名或工号有误'}) 
 		}
 
 		userBl.modify(userId, openId, qobj, function(err,doc){ //修改用户资料
