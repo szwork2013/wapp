@@ -1,0 +1,82 @@
+<!DOCTYPE>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.common.min.css" />
+<link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.metro.min.css" />
+
+
+
+<style TYPE="text/css">
+<% if(timeError==1){%>
+	.timeErrorHide{
+		display: none !important;
+	}
+<%}%>
+</style>
+
+</head>
+<body>
+
+
+
+<div class="demo-section k-header">
+    <input name="files" id="files" type="file" />
+</div>
+
+
+
+
+
+
+<script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+<script src="http://menuadmin.xy-tang.com/m_skin/kendoui/js/kendo.all.min.js"  type="text/javascript"></script> 
+
+
+<script type="text/javascript">
+var voteObj = <%- JSON.stringify(voteObj) %>
+var voteEname = '<%= ename %>'
+var appId = '<%= appId %>'
+var appEname = '<%= appEname %>'
+var userid = '<%=  userid %>'
+var wxuobj = <%- JSON.stringify(wxuobj) %>
+var groupList = <%- JSON.stringify(groupList) %>
+window.isAjaxIng = false;
+//这里需要根据后台设置的间隔时间做调整
+window.isforward_today = moment().hour(23).minute(59).second(59)
+window.isforward_today = new Date(window.isforward_today)
+window.itemList = []
+window.itemShakeList = []
+window.myItemList = []
+
+
+
+
+$("#files").kendoUpload({
+    async: {
+        saveUrl: "/vote/<%= appEname %>/uploadpic",
+        removeUrl: "/vote/<%= appEname %>/removepic",
+        autoUpload: true
+    }
+});
+
+</script>
+
+
+
+
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</div>
+
+</body>
+</html>

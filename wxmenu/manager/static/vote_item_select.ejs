@@ -1,0 +1,160 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+<div class="demo-section k-header">
+       <div class="app_sel_boc">
+            <span>选择投票分组：  </span>
+            <input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
+
+            <button  id="down" class="k-primary sync_button k-primary k-button">
+                <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+                审核不通过</button>
+
+        </div>
+
+
+        <div id="listView"></div>
+        <div id="pager" class="k-pager-wrap"> </div>
+    </div>
+
+
+
+<script type="text/javascript">
+//导出获奖名单
+    var groupList = <%- groupList%>
+    var groupKV = []
+    groupList.forEach(function(item){
+        groupKV.push(
+             { text: item.title, value: item.groupId}
+        )
+    })
+    window.dropdown_init($("#app_sel_inp"), groupKV, function(data){
+        console.log(data)
+        var groupId = data.groupId
+        showList(groupId)
+    })
+
+
+
+    $('#down').click(function(){
+        if(window.selectIdList.length == 0){
+            return
+        }
+        var ids = window.selectIdList.join(',')
+        $.post('/manger/voteItem/hide', {
+            ids:ids
+        }, function(d){
+            if(d.error == 1){
+                return alert(d.data)
+            }
+            else{
+                var listView = $("#listView").data("kendoListView");
+                listView.refresh();
+            }
+        }. 'json')
+
+        return false;
+    })
+
+
+$(function () {
+
+
+    var showList = function(groupId){
+
+
+        window.appd;
+        var DataHost = window.DataHost,
+            dataSource = new kendo.data.DataSource({
+                type: "json",
+                serverPaging: true,
+                serverSorting: true,
+                batch: true,
+                pageSize: 15,
+                serverFiltering:true,
+                filter: [
+                    { field: "isShow", operator: "eq", value: 1 },
+                    { field: "groupId", operator: "eq", value: groupId }
+                ],
+                transport: {
+                    read:  {
+                        url: DataHost + "/manger/voteItem/read",
+                        type: "post"
+                    }
+                },
+                schema: {
+                    total: "Total",
+                    data: "Data",
+                    model: {
+                        id:"_id",
+                        fields: {
+                            "_id": { editable: false },
+                            "appId":{ editable: true },
+                            "voteId":{ editable: true },
+                            "groupId":{ editable: true },
+
+                            "title": { editable: true },
+                            "pictureThumb": { editable: true },
+                            "picture": { editable: true },
+                            "sex": { editable: true, type: "number"}, 
+                            "age": { editable: true, type: "number"}, 
+                            "number": { editable: true},
+                            "desc": { editable: true},
+                            "desc2": { editable: true}, 
+
+                            "todayVoteNumber": { editable: true, type: "number"}, 
+                            "lastdayVoteNumber": { editable: true, type: "number"}, 
+                            "lastdayVoteOrder": { editable: true, type: "number"}, 
+                            "isFreez": { editable: true, type: "number"}, 
+                  
+                            "code1": { editable: true },
+                            "code2": { editable: true },
+                            "code3": { editable: true },
+                            "code4": { editable: true },
+
+                            "totalCount": { editable: false },
+                            
+                            "isShow": { editable: true, type: "number"},
+                            "writeTime": {editable: true, type: "date" },
+                        }
+                    }
+                }
+            });
+
+
+             $("#pager").kendoPager({
+                dataSource: dataSource
+            });       
+
+             $("#listView").kendoListView({
+                dataSource: dataSource,
+                selectable: "multiple",
+                dataBound: onDataBound,
+                change: onChange,
+                template: kendo.template($("#template").html())
+            });
+
+               function onDataBound() {
+                kendoConsole.log("ListView data bound");
+            }
+
+            window.selectIdList = []
+            function onChange() {
+                var data = dataSource.view(),
+                    selected = $.map(this.select(), function(item) {
+                        return data[$(item).index()]._id;
+                    });
+                window.selectIdList = selected
+
+            }
+
+}
+
+
+
+})
+
+
+</script>
+<% include inc/foot %>

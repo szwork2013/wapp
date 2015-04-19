@@ -212,6 +212,13 @@ obj.getItemsInfo = function(req,res){
 
 	var groupid = req.query.groupid;
 	var voteEname = req.query.ename;
+	//排序类型
+	//1 表示按投票个数来倒排序
+	//2 表示按更新时间来倒排序
+	//3 表示乱排序
+	var sortType = req.query.sorttype || 1
+
+
 	if(groupid && groupid.length != 24){
 		return res.send({error:1,data:'groupid有误'})
 	}
@@ -244,7 +251,7 @@ obj.getItemsInfo = function(req,res){
 	     	}
 
 	     	return res.send({error:0,data:itemlist})
-     	})
+     	}, sortType)
 
 	})
 

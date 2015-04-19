@@ -95,6 +95,14 @@
                <input type="number" id="isShow_inp" class="k-input k-textbox" name="isShow" data-bind="value:isShow" >
             </div>
 
+            <div class="k-edit-label  w-800-l">
+                <label for="isFrontUpload">是否前端上传投票项</label>
+            </div>
+            <div data-container-for="isFrontUpload" class="k-edit-field w-800-r">
+               <input type="number" id="isFrontUpload" class="k-input k-textbox" name="isFrontUpload" data-bind="value:isFrontUpload" >
+            </div>
+
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="writeTime">创建日期</label>
@@ -165,6 +173,7 @@
                                     "userJoinCount":{editable:false},
                                     "isFreez": { editable: true, type: "number"},
                                     "isShow": { editable: true, type: "number"},
+                                    "isFrontUpload":{ editable: true, type: "number"},
                                     "writeTime": {editable: true, type: "date" },
                                 }
                             }
@@ -268,6 +277,13 @@ $.post('/manger/vote/getList',{},function(data_ary){
                             title: "是否冻结",
                             values: window.is_freeze
                         },
+
+                        { 
+                            field: "isFrontUpload",
+                            title: "是否前端上传投票项",
+                            values: window.is_show_array
+                        },
+
                         { 
                             field: "code1",
                             title: "备用字段1", 
@@ -323,6 +339,8 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         window.dropdown_init($("#isFreez_inp"), window.is_freeze)
                         $('#writeTime_inp').kendoDateTimePicker();
                          window.dropdown_init()
+                         window.dropdown_init($("#isFrontUpload"), window.is_show_array)
+
 
                     }
                     

@@ -1,6 +1,7 @@
 var mongoose =require('./db_conn.js');
 var Schema = mongoose.Schema;
 
+
 var obj =  { //定义结构,投票抽奖活动，被投票项分组group的doc
       appId:{type:String,required:true}, //应用id
       voteId:{type:String,required:true,index:true}, //所属投票id
@@ -13,6 +14,7 @@ var obj =  { //定义结构,投票抽奖活动，被投票项分组group的doc
       //分组是否显示，如果不显示，则改分组所有的被投票项都不被显示
       //如果此投票不分组，那么只需要建一个组即可
       
+      isFrontUpload:{type:Number,default:0}, //是否支持前端上传投票项
       
       code1:{type: String, default:''}, //备用字段1
       code2:{type: String, default:''}, //备用字段2

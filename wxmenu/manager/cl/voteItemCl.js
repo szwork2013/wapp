@@ -1,4 +1,5 @@
 var dl = require('../../dl/voteItemModel.js');
+var groupDl = require('../../dl/voteGroupModel.js');
 var bl = require('../../bl/wxVote.js');
 var dl2 = require('../../dl/userModel.js');
 var utils = require('../../lib/utils.js');
@@ -9,6 +10,41 @@ var salt = global.app.get('salt');
 obj.list = function(req, res){
 	res.render('vote_item_list', {session:req.session});
 }
+
+
+obj.select = function(req, res){
+
+	groupDl.findAll({}, 0, 1000, function(err, list){
+		if(err) return res.send(err)
+		res.render('vote_item_list', {
+			session:req.session,
+			groupList:list
+		});
+	})
+	
+}
+
+
+
+obj.hide = function(req, res){
+	var ids = req.body.ids
+	var idList = ids.split(',')
+	if(idList.length == 0){
+		return res.send({error:0, data:'ok'})
+	}
+
+	dl.createOneOrUpdate({"_id":{
+			"$in":idList
+		}}, {
+		'isShow':0,
+	}, function(err, list){
+		if(err) return res.send({error:1, data:err})
+		res.send({error:0, data:'ok'})
+	})
+
+
+}
+
 
 
 

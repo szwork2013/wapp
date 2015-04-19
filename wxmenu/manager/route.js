@@ -225,7 +225,9 @@ var addroute = function(app){
 	app.post('/manger/voteItem/destroy', checkLogin, voteItemCl.destroy)
 	app.post('/manger/voteItem/create', checkLogin, voteItemCl.create)
 	app.post('/manger/voteItem/getList', checkLogin, voteItemCl.getList)
-
+	//审核使用
+	app.get('/manger/voteItem/select', checkLogin, voteItemCl.select)
+	app.post('/manger/voteItem/hide', checkLogin, voteItemCl.hide)
 
 	//vote record
 	app.get('/manger/voteRec/list', checkLogin, voteRecordCl.list)

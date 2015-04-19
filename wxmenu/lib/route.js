@@ -26,7 +26,7 @@ var apiActive = require('../apiCl/apiActive.js');
 var apiLottery = require('../apiCl/apiLottery.js');
 //vote
 var apiVote = require('../apiCl/apiVote.js');
-
+var apiVoteFront = require('../apiCl/frontUpload.js');
 
 //console.log(global.config)
 function getAllApp(callback){
@@ -312,6 +312,15 @@ var addroute = function(app){
 		app.get('/vote/:appename/rank', apiVote.getRank)//根据分组或不分组，查询排名
 		app.post('/vote/:appename/myrecord', apiVote.getMyRecord) //获取用户的记录
 		app.get('/vote/:appename/getvoteinfo2', apiVote.getVoteInfo2) //给web投票用的获取投票信息
+
+		//照片投票
+		app.post('/vote/:appename/uploadpic', apiVoteFront.frontUpload)//上传图片到七牛
+		app.post('/vote/:appename/removepic', function(req, res){
+			res.json({})
+		})//删除图片
+		app.post('/vote/:appename/uploaditem', apiVoteFront.uploadToVoteItem)//上传投票项
+		app.get('/vote/:appename/myitem', apiVoteFront.myItem)
+
 
 		//获取jsapi-ticket
 		app.get('/api/:appename/jsconfig', apiWx.getJsConfig) //给web投票用的获取投票信息

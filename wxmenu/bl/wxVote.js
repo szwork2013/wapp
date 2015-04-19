@@ -268,12 +268,21 @@ obj.getItemVoteCountsByIds = function(itemids, cb){
 				itemId:itemid
 			},function(err, count){
 				if(err) return callback(err)
-				result.push({
-					itemId:itemid,
-					count:count
-				})
-				callback()
 
+				voteItem.findOneByObj({
+					'_id':itemid
+				}, function(err, itemObj){
+					if(err) return callback(err)
+					result.push({
+						writeTime:moment(itemObj.writeTime),
+						itemId:itemid,
+						count:count,
+						random:Math.random()
+					})
+					callback()
+
+				})//end voteRecord.findOneByObj
+			
 			})//end countAll
 
 		})//end push
@@ -294,8 +303,11 @@ obj.getItemVoteCountsByIds = function(itemids, cb){
 
 
 //根据分组groupid获取分组被投票项列表
-obj.getItemByGroupId = function(voteid, groupid, cb){
+obj.getItemByGroupId = function(voteid, groupid, cb, sortType){
 	var cb = cb || function(){};
+	if(!sortType){
+		var sortType = 1
+	}
 
 	//当不传递groupid,则表示查询所有分组的被投票项
 	if(!groupid){
@@ -380,13 +392,35 @@ obj.getItemByGroupId = function(voteid, groupid, cb){
 					})
 				})//end tempList.forEach
 
-				//排序
-				list = tempList.sort(function(a,b){
-					if(a.totalNumber > b.totalNumber){
-						return -1;
-					}
-					return 1;
-				})
+				//按名次排序
+				if(sortType == 1){
+					//排序
+					list = tempList.sort(function(a,b){
+						if(a.totalNumber > b.totalNumber){
+							return -1;
+						}
+						return 1;
+					})
+				}
+				//按时间排序
+				else if(sortType == 2){
+					list = tempList.sort(function(a,b){
+						if(a.writeTime > b.writeTime){
+							return -1;
+						}
+						return 1;
+					})	
+				}
+				//按乱序
+				else{
+					list = tempList.sort(function(a,b){
+						if(a.random > b.random){
+							return -1;
+						}
+						return 1;
+					})	
+				}
+				
 				cb(null,list)
 
 			}) //end obj.getItemVoteCountsByIds
@@ -900,7 +934,32 @@ obj.setSchedule = function(){
 }
 
 
+//根据分组的ename查找分组
+obj.getGroupByEname = function(groupEname, cb){
+	voteGroup.findOneByObj({
+		'ename':groupEname
+	}, function(err, groupItem){
+		if(err) return cb(err)
+		return cb(null, groupItem)
+	})
+}
 
+//根据用户的id和分组的id查找此用户上传的数量
+obj.getUserUploadItem = function(userId, groupId, cb){
+	voteItem.findByObj({
+		'groupId':groupId,
+		'code4':userId,
+	}, function(err, itemList){
+		return cb(err, itemlist)
+	})
+}
+
+//前端插入投票项
+obj.frontSaveVoteItem = function(query, saveObj, cb){
+
+	voteItem.createOneOrUpdate(query, saveObj, cb)
+
+}
 
 
 module.exports = obj;

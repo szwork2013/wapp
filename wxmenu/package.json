@@ -55,7 +55,8 @@
        "wechat-api":"1.6.0",
        "xmlreader":"0.2.3",
        "blueimp-md5":"1.1.0",
-       "iconv":"2.1.6"
+       "iconv":"2.1.6",
+       "qiniu":"6.1.6"
    },
   "engines": {
     "node": ">=0.10.0"
