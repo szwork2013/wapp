@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0"/>
     <meta content="no-cache" http-equiv="Pragma"></meta>
     <meta content="no-cache" http-equiv="Cache-Control"></meta>
     <meta name="format-detection" content="telephone=no" />
@@ -10,7 +10,7 @@
     <title>抽奖活动</title>
     <script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
     <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/card2.css">
+    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/card.css?v=20150419">
     <style type="text/css">
       .prizeDialog {
         background: url(http://piccvote.qiniudn.com/lottery/imgs/prizeDialog2.png) no-repeat;
@@ -115,6 +115,8 @@ $(function(){
 })
 
 
+$(window).resize(initWrapperSize);
+
 function initWrapperSize(){
   var windowWidth = $(window).width();
   var windowHeight = $(window).height();
@@ -142,10 +144,7 @@ function initWrapperSize(){
   $("#infoBox").css("top",293/2495*$(".wrapper").height());
 
   initActivityWrapperSize();
-
 }
-
-
 
 
 function initActivityWrapperSize(){ 
@@ -188,7 +187,6 @@ function initActivityWrapperSize(){
   $(".nomalTip,.prizeTip").css("background-size",$(".wrapper").width()*(979/1616) + "px," + $(".wrapper").height()*(232/2495) + "px");
   $(".noPrizeTip").css("background-size",$(".wrapper").width()*(1185/1616) + "px," + $(".wrapper").height()*(232/2495) + "px");
 }
-
 
 
 
@@ -351,6 +349,8 @@ function bindLottery(){
             //点击箱子进行抽奖
             $(".box").click(function(){
                 var that = $(this)
+                var pos = that.index('.box')
+          
                 if($(".box.open").length===0){
 
                  if(window.isAjaxing) return
@@ -370,19 +370,23 @@ function bindLottery(){
                           if(d.error == 1){
                              return alert(d.data)
                           }
+
+                          $(".box").eq(pos).addClass('prize open');
+                          $(".box").eq(pos).children(".boxWrapper").addClass('prizeBg');
+
+
                           if(d.data.prizeId == 0){//没中奖
                             $(this).addClass('noPrize open');
                             setTimeout(function(){              
                                 $("#noPrizeModal").show();
-                            },1000);
+                            },2000);
                             return
                           }
                           else{//中奖了
-                            that.addClass('prize open');
-                            that.children(".boxWrapper").addClass('prizeBg');
+                            
                             setTimeout(function(){              
                               $("#prizeModal").show();
-                            },1000);
+                            },2000);
                             if(d.data.ename == 'phone'){
                                 var temps = '抽中智能手机一部'
                             }

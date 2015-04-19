@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0"/>
     <meta content="no-cache" http-equiv="Pragma"></meta>
     <meta content="no-cache" http-equiv="Cache-Control"></meta>
     <meta name="format-detection" content="telephone=no" />
@@ -10,7 +10,7 @@
     <title>代理人登记</title>
     <script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
     <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/regist2.css">
+    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/regist.css?v=20150419">
 </head>
 <body>
 
@@ -72,6 +72,17 @@ $(function(){
 
 
 function bindEvent(){
+
+    $(".confirm").click(function(){
+        alert('5月1日活动开启，敬请期待')
+
+        /*
+        setTimeout(function(){
+            window.open('/active/<%= appEname %>?ename=hz_ywy_mingpian&toUserId=<%= fromUserId %>')
+        },1500)
+        */
+        
+    });
 
     if(fromUserObj.appUserType == 1){
         alert('本注册页面仅针对业务员开放')
@@ -138,10 +149,7 @@ function bindEvent(){
 
     })
     //保存按钮
-
-    $(".confirm").click(function(){
-        alert('5月1日活动开启，敬请期待')
-    });
+    
 
     if(fromUserObj.appUserName &&
      fromUserObj.appUserName != '未认证会员' &&
@@ -186,13 +194,13 @@ function initWrapperSize(){
         });
     }   
 
-    var formWidth = $(".wrapper").width()*(1122/1616);
-    var formHeight = $(".wrapper").height()*(1346/2495);
-    $(".formDialog").css({
-        "width":formWidth,
-        "height":formHeight,
-        "background-size":formWidth + "px," + formHeight + "px"
-    });
+    // var formWidth = $(".wrapper").width()*(1122/1616);
+    // var formHeight = $(".wrapper").height()*(1346/2495);
+    // $(".formDialog").css({
+    //  "width":formWidth,
+    //  "height":formHeight,
+    //  "background-size":formWidth + "px," + formHeight + "px"
+    // });
 
     var alertWidth = $(".wrapper").width()*(1122/1616);
     var alertHeight = $(".wrapper").height()*(643/2495);
