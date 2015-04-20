@@ -950,14 +950,21 @@ obj.getUserUploadItem = function(userId, groupId, cb){
 		'groupId':groupId,
 		'code4':userId,
 	}, function(err, itemList){
-		return cb(err, itemlist)
+		return cb(err, itemList)
 	})
 }
 
 //前端插入投票项
 obj.frontSaveVoteItem = function(query, saveObj, cb){
 
-	voteItem.createOneOrUpdate(query, saveObj, cb)
+
+	if(query._id){
+		voteItem.createOneOrUpdate(query, saveObj, cb)
+	}
+	else{
+		voteItem.insertOneByObj(saveObj, cb)
+	}
+	
 
 }
 

@@ -16,7 +16,7 @@ obj.select = function(req, res){
 
 	groupDl.findAll({}, 0, 1000, function(err, list){
 		if(err) return res.send(err)
-		res.render('vote_item_list', {
+		res.render('vote_item_select', {
 			session:req.session,
 			groupList:list
 		});
@@ -26,7 +26,7 @@ obj.select = function(req, res){
 
 
 
-obj.hide = function(req, res){
+obj.pass = function(req, res){
 	var ids = req.body.ids
 	var idList = ids.split(',')
 	if(idList.length == 0){
@@ -36,7 +36,7 @@ obj.hide = function(req, res){
 	dl.createOneOrUpdate({"_id":{
 			"$in":idList
 		}}, {
-		'isShow':0,
+		'isShow':1,
 	}, function(err, list){
 		if(err) return res.send({error:1, data:err})
 		res.send({error:0, data:'ok'})

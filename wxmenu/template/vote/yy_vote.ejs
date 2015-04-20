@@ -10,6 +10,12 @@
 
 
 <style TYPE="text/css">
+.k-upload-files, .k-upload-status{
+    display: none;
+}
+.k-upload{
+    border: none;
+}
 <% if(timeError==1){%>
 	.timeErrorHide{
 		display: none !important;
@@ -23,7 +29,13 @@
 
 
 <div class="demo-section k-header">
-    <input name="files" id="files" type="file" />
+<input type="file" name="files" id="upload" />
+<script id="fileTemplate" type="text/x-kendo-template">
+    <div>
+        <button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>
+    </div>
+</script>
+
 </div>
 
 
@@ -55,15 +67,34 @@ window.itemShakeList = []
 window.myItemList = []
 
 
-
-
-$("#files").kendoUpload({
+$("#upload").kendoUpload({
+    template: kendo.template($('#fileTemplate').html()),
     async: {
-        saveUrl: "/vote/<%= appEname %>/uploadpic",
+        saveUrl: "/vote/<%= appEname %>/uploadpic?type=child",
         removeUrl: "/vote/<%= appEname %>/removepic",
         autoUpload: true
+    },
+    success: onSuccess,
+    complete: onComplete,
+    error: function(e,d){
+        console.log(e)
+        console.log(d)
     }
 });
+
+function onSuccess(e){
+    var response = e.response
+    if(response.result == '0'){
+        return alert(response.error)
+    } 
+    else{
+        return alert(response.result)
+    }
+}
+
+function onComplete(e){
+
+}
 
 </script>
 

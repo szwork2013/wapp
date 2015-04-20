@@ -7,10 +7,12 @@
             <span>选择投票分组：  </span>
             <input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
 
+            <button  id="selall" class="k-primary sync_button k-primary k-button">
+                <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+                全选</button>
             <button  id="down" class="k-primary sync_button k-primary k-button">
                 <span class="k-sprite k-icon k-i-refresh">Refresh</span>
-                审核不通过</button>
-
+                审核通过</button>
         </div>
 
 
@@ -20,21 +22,42 @@
 
 
 
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="product">
+        <img src="#:pictureThumb#" alt="#:desc# image" />
+        <h3>#:title#</h3>
+    </div>
+</script>
+
+
 <script type="text/javascript">
+$(function () {
 //导出获奖名单
-    var groupList = <%- groupList%>
-    var groupKV = []
+    var groupList = <%- JSON.stringify(groupList)%>
+    var groupKV = [
+        { text: '请选择分组', value: '123456789012345678901234'}
+    ]
     groupList.forEach(function(item){
+        console.log(item)
         groupKV.push(
-             { text: item.title, value: item.groupId}
+             { text: item.title, value: item._id.toString()}
         )
     })
     window.dropdown_init($("#app_sel_inp"), groupKV, function(data){
-        console.log(data)
-        var groupId = data.groupId
-        showList(groupId)
+        var that = this
+        setTimeout(function(){
+            var value = that.value();
+            //console.log(value)
+            //alert(value)
+            showList(value)
+        }, 500)
+        
     })
 
+    $('#selall').click(function(){
+        var listView = $("#listView").data("kendoListView");
+        listView.select(listView.element.children());
+    })
 
 
     $('#down').click(function(){
@@ -42,7 +65,7 @@
             return
         }
         var ids = window.selectIdList.join(',')
-        $.post('/manger/voteItem/hide', {
+        $.post('/manger/voteItem/pass', {
             ids:ids
         }, function(d){
             if(d.error == 1){
@@ -50,15 +73,15 @@
             }
             else{
                 var listView = $("#listView").data("kendoListView");
-                listView.refresh();
+                listView.dataSource.read();
             }
-        }. 'json')
+        },'json')
 
         return false;
     })
 
 
-$(function () {
+
 
 
     var showList = function(groupId){
@@ -74,7 +97,7 @@ $(function () {
                 pageSize: 15,
                 serverFiltering:true,
                 filter: [
-                    { field: "isShow", operator: "eq", value: 1 },
+                    { field: "isShow", operator: "eq", value: 0 },
                     { field: "groupId", operator: "eq", value: groupId }
                 ],
                 transport: {
@@ -136,7 +159,7 @@ $(function () {
             });
 
                function onDataBound() {
-                kendoConsole.log("ListView data bound");
+                console.log("ListView data bound");
             }
 
             window.selectIdList = []
