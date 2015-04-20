@@ -10,7 +10,7 @@ var obj = {}
 qiniu.conf.ACCESS_KEY = config.QINIU_ACCESS_KEY
 qiniu.conf.SECRET_KEY = config.QINIU_SECRET_KEY
 
-
+var qiniuHost = 'http://7xinbw.com1.z0.glb.clouddn.com/'
 var allowExtraName = ['png', 'jpg', 'gif']
 
 obj.delFile = function(filePath){
@@ -22,7 +22,7 @@ obj.delFile = function(filePath){
 
 }
 
-obj.uploadToQiniu = function(fileSavePath, folder, cb){
+obj.uploadToQiniu = function(fileSavePath, folder, baseName, cb){
 
 
 	fs.stat(fileSavePath, function(err, fileStat){
@@ -48,23 +48,30 @@ obj.uploadToQiniu = function(fileSavePath, folder, cb){
 			var extra = new qiniu.io.PutExtra();
 
 			//console.log(folder, fileSavePath)
+			var saveFileName = folder+'/'+baseName
 
-			qiniu.io.putFile(upToken, folder, fileSavePath, extra, function(err, ret){
+			qiniu.io.putFile(upToken, saveFileName, fileSavePath, extra, function(err, ret){
 				obj.delFile(fileSavePath)
 			    if(err) {
-			      logger.error('qiniu upload error, file path: %s, error: %s', fileSavePath, err)
+			      try{
+			      	logger.error('qiniu upload error, file path: %s, error: %s', fileSavePath, JSON.stringify(err))
+			      }
+			      catch(e){
+			      	logger.error('qiniu upload error, file path: %s, error: %s', fileSavePath, err)
+			      }
 			      return cb({
 						result: '0',
 						error:'上传失败，请重试'
 				  })
+				}
 			      // 上传成功， 处理返回值
 			      //console.log(ret.key, ret.hash);
 			      // ret.key & ret.hash
-			      console.log(ret)
+			      //console.log(ret)
 			   	  return cb({
-						result: '1xxxx'
+						result: qiniuHost+ret.key
 				  })
-			   	}
+			   	
 			  })//end qiniu.io.putFile
 
 		})//end fs.stat
@@ -115,7 +122,7 @@ obj.frontUpload = function(req,res){
 				})
 		}
 		//保存到七牛
-		obj.uploadToQiniu(fileSavePath, folder, function(result){
+		obj.uploadToQiniu(fileSavePath, folder, fileName, function(result){
 				res.json(result)
 		})//end obj.uploadToQiniu
 
@@ -216,7 +223,7 @@ obj.uploadToVoteItem = function(req, res){
 				'voteId':voteId,
 				'groupId':groupId,
 				'title':itemName,
-				'pictureThumb':itemPicUrl,
+				'pictureThumb':itemPicUrl+'_thumb', //七牛定义的_thumb为缩略图
 				'picture':itemPicUrl,
 				'number':itemMobile,
 				'desc':desc,
