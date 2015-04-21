@@ -16,6 +16,19 @@
 .k-upload{
     border: none;
 }
+.k-upload-button{
+    width: 200px;
+    height: 40px;
+    line-height: 35px;
+    border-radius: 10px;
+    font-family: "微软雅黑";
+}
+.k-upload-button:hover, .k-button:hover{
+    background: none !important;
+    background-color: #c00 !important;
+}
+
+
 <% if(timeError==1){%>
 	.timeErrorHide{
 		display: none !important;
@@ -28,7 +41,7 @@
 
 
 
-<div class="demo-section k-header">
+<div class="demo-section k-header" id="upload">
 <input type="file" name="files" id="upload" />
 <script id="fileTemplate" type="text/x-kendo-template">
     <div>
@@ -81,6 +94,8 @@ $("#upload").kendoUpload({
         console.log(d)
     }
 });
+
+$('.k-upload-button').find('span').html('请选择照片')
 
 function onSuccess(e){
     var response = e.response
