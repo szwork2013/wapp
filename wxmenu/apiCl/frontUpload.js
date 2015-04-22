@@ -160,8 +160,8 @@ obj.uploadToVoteItem = function(req, res){
 	var itemMobile = req.body.itemMobile
 	var itemPicUrl = req.body.itemPicUrl
 	var age = req.body.age  || '1'
-	var desc = req.body.title
-	var desc2 = req.body.desc2
+	var desc = req.body.title || ''
+	var desc2 = req.body.desc2 || ''
 	var _id = req.body._id || ''
 
 	if(age != parseInt(age) || parseInt(age) >12 || parseInt(age) <1){
@@ -255,8 +255,22 @@ obj.uploadToVoteItem = function(req, res){
 
 //获取用户id参与上传的投票项
 obj.myItem = function(req, res){
+	//前端上传
+	var appobj = utils.getAppEname(req.originalUrl)
+	if(appobj.error){
+		return res.send(appobj)
+	}
+	var appEname = appobj.data;
+
+	var userid = req.session[appEname+'_userid'];
+
 	var userId = req.query.userId
 	var groupEname = req.query.groupEname
+
+	if(!userId){
+		userId = userid
+	}
+
 
 	if(!userId){
 		return res.send({error:1, data:'userid参数错误'})
@@ -295,6 +309,7 @@ obj.myItem = function(req, res){
 					'desc2':item.desc2,
 					'code4':item.code4,
 					'isShow':item.isShow,
+					'todayVoteNumber':item.todayVoteNumber,
 					'writeTime':item.writeTime,
 
 				})

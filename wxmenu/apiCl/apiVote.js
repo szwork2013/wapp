@@ -212,6 +212,7 @@ obj.getItemsInfo = function(req,res){
 
 	var groupid = req.query.groupid;
 	var voteEname = req.query.ename;
+	var limit = req.query.limit;
 	//排序类型
 	//1 表示按投票个数来倒排序
 	//2 表示按更新时间来倒排序
@@ -251,7 +252,7 @@ obj.getItemsInfo = function(req,res){
 	     	}
 
 	     	return res.send({error:0,data:itemlist})
-     	}, sortType)
+     	}, sortType, limit)
 
 	})
 

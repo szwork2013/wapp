@@ -1,0 +1,125 @@
+@charset "utf-8";
+/* CSS Document */
+*{
+	font-family: "微软雅黑" !important;
+}
+.clearfix{
+	clear: both;
+}
+.clearfix:after { 
+content: "."; 
+display: block; 
+height: 0; 
+clear: both; 
+visibility: hidden; 
+} 
+body{font-size:14px; font-family:Microsoft YaHei; color:#fff}
+body,h1,h2,h3,h4,h5,h6,p,span,img,ul,ul li,li,ol,ol li,input,figure{margin:0; border:none; padding:0;}
+img{max-width: none;}
+ul,ol{ list-style:none}
+.cleart{ clear:both}
+a,a:hover{ text-decoration:none}
+a{color:#541111}
+a:hover{color:#541111; text-decoration:underline}
+h2 {line-height: 25px;}
+.icon{ background:url(icon.jpg) no-repeat;}
+.wrap{ width:100%; margin:0 auto; height:100%}
+.relBox { width:100%;position:relative; background:#000; height:100%;}
+.relBox img { position:relative;width:100%; display:inline-block; }
+.relBox a.indexBtn{ position:absolute; bottom:20%; left:46%; right:16%; margin-left:-100px;}
+.relBox h2.top{ height:50px;top:0; position:absolute; background:#202020; color:#fff; width:100%; font-weight:200; line-height:50px; text-align:center; font-size:1.3em; z-index:1001}
+.relBox .main{ width:85%;margin:1% auto;  position:relative; top:70px; color:#fff;}
+.relBox .main .labelBox{ width:95%; position:relative; margin:0 0 0 5%; border-bottom:1px solid #fff; font-size:2.0em;}
+.relBox .main .labelBox ul li{ padding:5px 10px; text-align:center; line-height:20px; float:left;width:32.5%; border-right:1px solid #fff; cursor:pointer; color:#fff;}
+.relBox .main .labelBox ul li.active{ color:#ffa200}
+.relBox .main .ctBox .actCont{ width:100%;padding:20px 10px; font-size:1.0em; line-height:20px; color:#fff;}
+.addWidth{padding:20px 0 0 0px;}
+.relBox .bottom{ position:fixed; left:0px; background:#3366ff;}
+.relBox .bottom a{ color:#fff; line-height:50px}
+.relBox .main h2.regTitle{ text-align:center; font-size:1.8em; display:block; height:40px; padding-top:5px}
+.relBox .main .inpBox{ width:100%;}
+.relBox .main .inpBox ul li{ padding:8px 0}
+.relBox .main .inpBox ul li .input{ border:2px solid #b5b5b5;-moz-border-radius:10px;-webkit-border-radius:10px; border-radius:10px;background:none; padding:5px 20px; width:85%; height:20px; color:#fff; font-size:1.4em;outline:medium;}
+.relBox .main .inpBox ul li input.subBtn{ color:#fff; width:300px; margin:0 auto; background:#f39800; border:none;-moz-border-radius:15px;-webkit-border-radius:15px; border-radius:15px; display:block; height:40px; font-size:1.5em}
+/*.relBox .main .inpBox ul li input.file,.relBox .main .inpBox ul li input.subBtn,.relBox .main .inpBox ul li input.fileCover{ width:70%; margin:0 auto; background:#f39800; border:none;-moz-border-radius:15px;-webkit-border-radius:15px; border-radius:15px; display:block; height:40px; font-size:1.8em}
+.relBox .main .inpBox ul li input.file{position:absolute; top:10px; left:30%; background:none; margin-left:-20%; text-indent:-9999px; opacity:0; filter:alpha(opacity=0);}*/
+.relBox .main .proBox{position:relative;margin:5% auto 20%;}
+.relBox .main .proBg{ }
+.relBox .main p.proFont{ color:#fff; font-size:0.95em; position:absolute;width:90%; top:0; left:0; padding:10px 15px;z-index:2;height:70px; line-height:25px;}
+.myPiccs{ margin-left:10%; min-height: 50px; margin-top:5%}
+.myPiccs ul li{width:100%}
+.relBox .main .shareBox{ width:100%; }
+.relBox .main .shareBox ul li a{ border:2px solid #b5b5b5;-moz-border-radius:5px;-webkit-border-radius:5px; border-radius:5px;background:none; padding:10px 20px; width:80%;  color:#fff; font-size:1.2em;outline:medium; background:#f39800; border:none; display:block; margin:20px auto; text-align:center}
+.relBox .main .groupBox { width:100%;}
+.relBox .main .groupBox ul li{ width:45%; margin-right:5%; float:left;}
+.relBox .relBoxImg{
+	display: block;
+	position: fixed;
+	width: 100%;
+	height: 100%
+}
+.regWrap .relBox{
+	width: 100%;
+	height: 100%;
+	top:0;
+	position:relative;
+	left: 0;
+}
+.regWrap{
+	top:0;
+	left: 0;
+	position: relative !important; 
+}
+.regWrap .relBox .main{
+	width: 100%;
+	position: inherit;
+}
+.relBox .main .groupBox {
+width: 85%;
+margin: 0 auto;
+}
+.relBox .main .proBox {
+position: relative;
+margin: 5% auto 20%;
+}
+.relBox .main .proBg {
+margin: 0 auto;
+position: relative;
+color:#fff;
+line-height: 30px;
+background:rgba(255,255,255,0.4);
+width:90%; padding:10px 15px; position:relative; margin: 0 auto; z-index:1; height:70px;-moz-border-radius:8px;-webkit-border-radius:8px; border-radius:8px;
+}
+
+.regWrap .img_btn{
+	width: 90%;
+}
+.regWrap .groupBox li{
+	text-align: center;
+}
+.relBox h2.top {
+	position: relative;
+}
+.relBox .bottom{
+	position: fixed;
+	bottom: 0px;
+}
+.relBox .bottom{ height:50px;background:#202020; color:#fff; width:100%; font-weight:200; line-height:50px; text-align:center; font-size:1.3em; z-index:1001}
+.thumb_li{
+	text-align: center;
+	padding: 20px 0
+}
+.thumb_li img{
+	width: 60%;
+}
+.inpBox li{
+	text-align: center;
+}
+#mymain ul li{
+	border: none !important;
+	background:none !important;
+	color: #fff;
+}
+.img_block img{
+	border: #fff 2px solid;
+}

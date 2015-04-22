@@ -3,6 +3,11 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<link href="/static/yy_vote/css/main.css" type="text/css" rel="stylesheet" />
+<link href="/static/yy_vote/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/static/yy_vote/css/lightbox.css" type="text/css" media="screen" />
+
 <link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.common.min.css" />
 <link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.metro.min.css" />
@@ -39,8 +44,83 @@
 </head>
 <body>
 
+<div class="wrap">
+    <div class="relBox">
+        <img class="relBoxImg" src="http://piccvote.qiniudn.com/yy_vote/images/rule_bg.jpg" width="100%" />
+        <h2 class="top">印象•东方之门，随手拍，拿奖金</h2>
+        <!---主要内容开始-->
+        <div class="main">
+            <div class="labelBox">
+                <ul>
+                    <li class="active">活动规则</li>
+                    <li>所有作品</li>
+                    <li>我的作品</li>
+                </ul>
+                <div class="cleart"></div>
+            </div>
+            <div class="ctBox">
+                <div class="actCont">
+                    全民征稿：4月28日—5月28日<br />
+                    结果公示：6月7日<br />
+                    领奖方式：6月8日-6月12日，本人到东方之门展示中心凭姓名手机号领取<br />
+                    活动对象<br />
+                    A、我是摄影师：十周岁以上，即2005年4月1日以前出生<br />
+                    B、小小摄影家：十周岁以下，即2005年4月1日以后出生<br />
+                    征集作品内容：<br />
+                    【我眼中的东方之门】在任何一个地方以任何视角实景拍摄，东方之门建筑体，东方之门与城市的关系，东方之门与人物的关系等等。<br />
+                    奖品设置：<br />
+                </div>
+<!--选项卡二 内容开始-->
+<div class="actCont" >
+<div id="main">
+    <ul id="waterfall" class="clearfix">
+        
+    </ul>
+    
+    <div class="clear"></div>
+    
+</div>
+</div>
+ <!--选项卡二 内容结束-->
 
 
+
+<!--选项卡三 内容开始-->
+     <div class="actCont" style="display:none">
+        <div id="mymain" class="myPiccs" style="display:none;">
+                <ul id="myItem" ></ul>
+                <div class="clear"></div>
+        </div>
+         <div class="shareBox">
+            <ul>
+                <li style="display:none;" id="active" >
+                    <a href="/static/yy_vote/regist.html">我也要参加活动</a>
+                </li>
+                <li><a href="#">分享至朋友圈  邀好友来点赞</a></li>
+                <li><a href="#">关注东方之门  静候比赛结果</a></li>
+            </ul>
+    </div>
+    </div>
+    <!--选项卡三 内容结束-->
+
+
+
+
+            </div>
+        </div>
+         <!---主要内容结束-->
+         <!-- <div class="bottom"><a href="#">返回首页</a></div> -->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div style="display:none">
 <div class="demo-section k-header" id="upload">
 <input type="file" name="files" id="upload" />
 <script id="fileTemplate" type="text/x-kendo-template">
@@ -48,6 +128,8 @@
         <button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>
     </div>
 </script>
+
+</div>
 
 </div>
 
@@ -61,6 +143,14 @@
 <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 <script src="http://menuadmin.xy-tang.com/m_skin/kendoui/js/kendo.all.min.js"  type="text/javascript"></script> 
+<script type="text/javascript" src="http://wzhfile.qiniudn.com/jquery.lazyload.min.js"></script>
+
+<script type="text/javascript" src="/static/yy_vote/js/lightbox.js"></script>
+<script type="text/javascript" src="/static/yy_vote/js/jquery.masonry.min.js"></script>
+
+
+
+
 
 
 <script type="text/javascript">
@@ -78,6 +168,188 @@ window.isforward_today = new Date(window.isforward_today)
 window.itemList = []
 window.itemShakeList = []
 window.myItemList = []
+
+
+
+var init = function(){
+    
+    
+    var oLabelLi=$(".labelBox ul li");
+    $(".actCont:gt(0)").hide();
+    oLabelLi.click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        $(".actCont").eq(oLabelLi.index(this)).show().siblings().hide();
+        setTimeout(function(){
+                    $(window).trigger('scroll')
+            },100)
+    }).eq(1).click()
+    oLabelLi.last().css('border','none');
+    
+    // var oTop=window.screen.height-60;
+    // var oBottom=$(".bottom");
+    // oBottom.css('top',oTop+'px')
+}
+
+
+
+var initAjax = function(){
+
+
+    //第三选项卡
+    window.myItem = {}
+    $.get('/vote/<%= appEname %>/myitem', {
+        'userId':'<%=  userid %>',
+        'groupEname':'child',
+    }, function(d){
+        if(d.error){
+            return alert(d.data)
+        }
+        window.myItem.child = d.data[0]
+
+         $.get('/vote/<%= appEname %>/myitem', {
+                'userId':'<%=  userid %>',
+                'groupEname':'adult',
+            }, function(d){
+                if(d.error){
+                    return alert(d.data)
+                }
+                window.myItem.adult = d.data[0]
+                var temps = ''
+                var hasItem = 0
+                if(window.myItem.adult){
+                    hasItem++;
+                    temps += '<li>成人组：<div class="img_block">'+
+                             '<img src="'+window.myItem.adult.pictureThumb+'" width="100%" />'
+                             '<a href="javascript:;" class="ilike">'+window.myItem.adult.todayVoteNumber+'</a></div>'
+                             '<h3>'+window.myItem.adult.title+'</h3></li>'
+                }
+                if(window.myItem.child){
+                    hasItem++;
+                    temps += '<li>儿童组：<div class="img_block">'+
+                             '<img src="'+window.myItem.child.pictureThumb+'" width="100%" />'
+                             '<a href="javascript:;" class="ilike">'+window.myItem.child.todayVoteNumber+'</a></div>'
+                             '<h3>'+window.myItem.child.title+'</h3></li>'
+                }
+                $('#myItem').html(temps)
+
+                if(hasItem == 0){
+                    $('#active').show()
+                }
+                else if(hasItem == 1){
+                    $('#active').show()
+                    $('#mymain').show()
+                }
+                else{
+                    $('#mymain').show()
+                }
+
+        },'json')
+    }, 'json')
+
+    
+    //获取投票信息
+    window.child_group_id = ''
+    window.adult_group_id = ''
+    groupList.forEach(function(item){
+        if(item.ename == 'adult'){
+            window.adult_group_id = item._id
+        }
+        if(item.ename == 'child'){
+            window.child_group_id = item._id
+        }
+    })
+
+    //生成瀑布流
+    //分别获取成人和幼儿组的数据
+    $.get('/vote/<%= appEname %>/items',{
+        'groupid':window.child_group_id,
+        'ename':voteEname,
+        'sorttype':2,
+        'limit':100
+    }, function(d){
+        if(d.error){
+            return alert(d.data)
+        }
+        window.itemList = d.data
+
+         $.get('/vote/<%= appEname %>/items',{
+            'groupid':window.adult_group_id,
+            'ename':voteEname,
+            'sorttype':2,
+            'limit':100
+        }, function(d){
+            if(d.error){
+                return alert(d.data)
+            }
+            window.itemList = window.itemList.concat(d.data)
+
+            window.itemList.sort(function(a,b){
+                var aTime = moment(a.writeTime)
+                var bTime = moment(b.writeTime)
+                if(aTime >= bTime){
+                    return -1
+                }
+                else return 1
+            })
+
+            var temps = ''
+            window.itemList.forEach(function(item){
+                temps += '<li><div class="img_block">'+
+                         '<img  class="lazy" data-original="'+item.pictureThumb+'" width="250"  />'+
+                         '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike">'+item.todayVoteNumber+'</a>'+
+                         '</div><h3>'+item.desc+'</h3></li>'
+            })
+            $('#waterfall').html(temps)
+            $("img.lazy").lazyload();
+
+            var $waterfall = $('#waterfall');
+            $waterfall.masonry({
+                columnWidth: 200
+            });
+
+            window.ajaxVote = false
+        
+            $waterfall.delegate('a[name="ilike"]', 'click', function(){
+                    if(window.ajaxVote) return false;
+                    var that = $(this)
+                    var total = that.attr('total') - 0 || 0
+                    var q = {
+                        'itemid':that.attr('itemid')
+                    }
+                    window.ajaxVote = true
+                    $.post('/vote/'+appEname+'/start', q, function(d){
+                            window.ajaxVote = false
+                            if(d.error == 1){
+                                return alert(d.data);
+                            }
+                            else{
+                                that.html(++total)
+                                alert('投票成功')
+                            }
+                    })
+            })
+        
+        }, 'json')
+
+    }, 'json')
+}
+
+
+
+ $(function(){  
+    init()
+    initAjax()
+});
+
+
+
+
+
+
+
+
+
+
 
 
 $("#upload").kendoUpload({

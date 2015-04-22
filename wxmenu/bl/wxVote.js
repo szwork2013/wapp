@@ -303,10 +303,13 @@ obj.getItemVoteCountsByIds = function(itemids, cb){
 
 
 //根据分组groupid获取分组被投票项列表
-obj.getItemByGroupId = function(voteid, groupid, cb, sortType){
+obj.getItemByGroupId = function(voteid, groupid, cb, sortType, limit){
 	var cb = cb || function(){};
 	if(!sortType){
 		var sortType = 1
+	}
+	if(!limit || limit > 1000){
+		limit = 1000
 	}
 
 	//当不传递groupid,则表示查询所有分组的被投票项
@@ -333,7 +336,8 @@ obj.getItemByGroupId = function(voteid, groupid, cb, sortType){
 		}
 	}
 
-	voteItem.findByObj(q, function(err,list){
+	voteItem.findAll(q, 0, limit, function(err,list){
+		//console.log(list)
 		if(err) return cb(err);
 		if(list.length == 0) return cb(null, []);
 		//查询分组信息

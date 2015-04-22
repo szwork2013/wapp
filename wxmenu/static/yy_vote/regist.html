@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="MobileOptimized" content="640" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>印象-东方之门</title>
+<meta name="description" content="印象-东方之门" />
+<meta name="keywords" content="印象-东方之门" />
+<link href="/static/yy_vote/css/main.css" type="text/css" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.common.min.css" />
+<link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.metro.min.css" />
+
+
+<script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+<script src="http://menuadmin.xy-tang.com/m_skin/kendoui/js/kendo.all.min.js"  type="text/javascript"></script>
+<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<style TYPE="text/css">
+.k-upload-files, .k-upload-status{
+    display: none;
+}
+.k-upload, .k-header{
+    text-align: center;
+    border: none !important;
+    background: none !important;
+}
+
+.k-upload-button{
+width: 300px;
+height: 40px;
+line-height: 35px;
+border-radius: 10px;
+font-family: "微软雅黑";
+position: absolute;
+top: 0;
+left: 50%;
+margin-left: -150px;
+background: #f39800 !important;
+border:none !important;
+color:#fff !important;
+}
+.k-upload-button:hover, .k-button:hover{
+    background: none !important;
+    background-color: #c00 !important;
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- 封面 -->
+<div class="wrap regWrap" id="reg_cover" style="display:none">
+	<div class="relBox">
+   		<img class="relBoxImg" src="http://piccvote.qiniudn.com/yy_vote/images/rule_bg.jpg" width="100%" />
+        <h2 class="top">印象•东方之门，随手拍，拿奖金</h2>
+        <!---主要内容开始-->
+        <div class="main">
+        	<div class="proBox">
+            	<div class="proBg">上传1张照片，图片大小不能超过2M，同时提交您的参赛资料,每个微信用户只能提交一次</div>
+          
+            </div>
+            <div class="groupBox">
+            	<ul class="clearfix">
+                	<li><a id="adult_btn" href="javascript:;"><img class="img_btn" src="http://piccvote.qiniudn.com/yy_vote/images/group_01.png" width="100%" /></a></li>
+                    <li><a id="child_btn" href="javascript:;"><img class="img_btn"  src="http://piccvote.qiniudn.com/yy_vote/images/group_02.png" width="100%" /></a></li>
+                </ul>
+            </div>
+        </div>
+         <!---主要内容结束-->
+         <div class="bottom"><a href="/active/xinyutang?ename=yy_vote">返回首页</a></div>
+    </div>
+</div>
+
+
+<!-- 成人组 -->
+<div class="wrap regWrap" id="reg_adult" style="display:none">
+    <div class="relBox">
+        <img class="relBoxImg" src="http://piccvote.qiniudn.com/yy_vote/images/rule_bg.jpg" width="100%" />
+        <h2 class="top">印象•东方之门，随手拍，拿奖金</h2>
+        <!---主要内容开始-->
+        <div class="main">
+            <h2 class="regTitle">我是摄影师</h2>
+            <div class="inpBox">
+                <form action="##">
+                <ul>
+        <li><input type="text" id="ad_name" placeholder="姓名" maxlength="10" class="input" /></li>
+        <li><input type="text" id="ad_mobile" placeholder="联系方式" maxlength="11" class="input"  /></li>
+        <li><input type="text" id="ad_title" placeholder="作品标题" maxlength="10" class="input"  /></li>
+        <li id="adult_thumb" class="thumb_li" style="display:none;">
+                        <img src="" class="thumb" />
+                        <input type="hidden" id="ad_img" />
+         </li>
+
+        <li style="position:relative">
+
+        <div class="demo-section k-header" id="upload">
+        <input type="file" name="files" id="upload_adult" />
+        <script id="fileTemplate" type="text/x-kendo-template">
+            <div>
+                <button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>
+            </div>
+        </script>
+        </div>
+                    </li>
+
+
+                    <li><input class="subBtn" type="button" id="adult_submit" value="提交"/></li>
+                </ul>
+                </form>
+            </div>
+            <div class="proBox">
+                <div class="proBg">上传1张照片，图片大小不能超过2M，同时提交您的参赛资料,每个微信用户只能提交一次</div>
+    
+            </div>
+        </div>
+         <!---主要内容结束-->
+         <!-- <div class="bottom"><a href="/static/yy_vote/regist.html">返回</a></div> -->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!--幼儿组-->
+<div class="wrap regWrap" id="reg_child" style="display:none">
+    <div class="relBox">
+        <img class="relBoxImg" src="http://piccvote.qiniudn.com/yy_vote/images/rule_bg.jpg" width="100%" />
+        <h2 class="top">印象•东方之门，随手拍，拿奖金</h2>
+        <!---主要内容开始-->
+        <div class="main">
+            <h2 class="regTitle">小小摄影师</h2>
+            <div class="inpBox">
+                <form action="##">
+                <ul>
+
+        <li><input class="input"  type="text" id="ch_name" placeholder="小小摄影师家姓名" maxlength="10" /></li>
+        <li><input class="input"  type="text" id="ch_age" placeholder="年龄(例:8岁)" maxlength="11"  /></li>
+        <li><input class="input"  type="text" id="ch_mobile" placeholder="家长联系方式" maxlength="11"  /></li>
+        <li><input class="input"  type="text" id="ch_title" placeholder="作品标题" maxlength="10"  /></li>
+        <li id="child_thumb" class="thumb_li" style="display:none;">
+                        <img src="" class="thumb" />
+                        <input type="hidden" id="ch_img" />
+         </li>
+
+        <li style="position:relative">
+
+        <div class="demo-section k-header" id="upload2">
+        <input type="file" name="files" id="upload_child" />
+        <script id="fileTemplate2" type="text/x-kendo-template">
+            <div>
+                <button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>
+            </div>
+        </script>
+        </div>
+                    </li>
+
+                    <li><input class="subBtn" type="button" id="child_submit" value="提交"/></li>
+                </ul>
+                </form>
+            </div>
+            <div class="proBox">
+                <div class="proBg">上传1张照片，图片大小不能超过2M，同时提交您的参赛资料,每个微信用户只能提交一次</div>
+            </div>
+        </div>
+         <!---主要内容结束-->
+         <!-- <div class="bottom"><a href="/static/yy_vote/regist.html">返回</a></div> -->
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+window.isAjaxing = false
+var initAjax = function(){
+
+    window.myItem = {}
+    $.get('/vote/xinyutang/myitem', {
+        'groupEname':'child',
+    }, function(d){
+        if(d.error){
+            return alert(d.data)
+        }
+        window.myItem.child = d.data[0]
+
+         $.get('/vote/xinyutang/myitem', {
+                'groupEname':'adult',
+            }, function(d){
+                if(d.error){
+                    return alert(d.data)
+                }
+                window.myItem.adult = d.data[0]
+
+                $('#adult_btn').click(function(){
+                    if(window.myItem.adult){
+                        alert('您已经上传过成人组照片了')
+                        return false
+                    }
+
+                    $('#reg_cover').hide()
+                    $('#reg_adult').show()
+
+                })
+               
+               $('#child_btn').click(function(){
+                    if(window.myItem.child){
+                        alert('您已经上传过儿童组照片了')
+                        return false
+                    }
+                    $('#reg_cover').hide()
+                    $('#reg_child').show()
+                })
+
+               $('#reg_cover').show()
+
+        },'json')
+    }, 'json')
+
+
+
+}
+
+var adultInit = function(){
+
+
+    $("#upload_adult").kendoUpload({
+        template: kendo.template($('#fileTemplate').html()),
+        async: {
+            saveUrl: "/vote/xinyutang/uploadpic?type=adult",
+            removeUrl: "/vote/xinyutang/removepic",
+            autoUpload: true
+        },
+        success: function(e){
+            var response = e.response
+            if(response.result == '0'){
+                return alert(response.error)
+            } 
+            else{
+                alert('上传成功')
+                $('#adult_thumb img').attr('src', response.result)
+                $('#adult_thumb').show()
+                $('#ad_img').val(response.result)
+                return
+            }
+        },
+        error: function(e,d){
+            alert('上传失败请重试')
+        }
+    });
+    $('.k-upload-button').find('span').html('请选择照片').css('font-size', '1.4em')
+
+
+    $('#adult_submit').click(function(){
+        if(window.isAjaxing) return
+        var groupEname = 'adult'
+        var itemName = ($('#ad_name').val() || '').trim()
+        var itemMobile = ($('#ad_mobile').val() || '').trim()
+        var itemPicUrl = ($('#ad_img').val() || '').trim()
+        var title = ($('#ad_title').val() || '').trim()
+
+
+        if(!itemName){
+             alert('请输入姓名')
+             return false
+        }
+
+        if(!itemMobile || !/^[0-9]{11}$/.test(itemMobile)){
+            alert('请输入正确的手机号码')
+            return false;
+          }
+        if(!itemPicUrl){
+            alert('请上传图片')
+            return false;
+          }
+        if(!title){
+            alert('请填写描述')
+            return false;
+          }
+
+          $.post('/vote/xinyutang/uploaditem', {
+                'groupEname':groupEname,
+                'itemName':itemName,
+                'itemMobile':itemMobile,
+                'itemPicUrl':itemPicUrl,
+                'title':title,
+                'age':1
+          }, function(d){
+                if(d.error){
+                    alert(d.data)
+                    return
+                }
+                alert('上传成功，请等待审核')
+                setTimeout(function(){
+                    location.href = '/active/xinyutang?ename=yy_vote'
+                },1500)
+          },'json')
+
+
+    })
+
+}
+
+
+
+
+
+
+var childInit = function(){
+
+
+    $("#upload_child").kendoUpload({
+        template: kendo.template($('#fileTemplate2').html()),
+        async: {
+            saveUrl: "/vote/xinyutang/uploadpic?type=child",
+            removeUrl: "/vote/xinyutang/removepic",
+            autoUpload: true
+        },
+        success: function(e){
+            var response = e.response
+            if(response.result == '0'){
+                return alert(response.error)
+            } 
+            else{
+                alert('上传成功')
+                $('#child_thumb img').attr('src', response.result)
+                $('#child_thumb').show()
+                $('#ch_img').val(response.result)
+                return
+            }
+        },
+        error: function(e,d){
+            alert('上传失败请重试')
+        }
+    });
+    $('.k-upload-button').find('span').html('请选择照片').css('font-size', '1.4em')
+
+
+
+    $('#child_submit').click(function(){
+        if(window.isAjaxing) return
+        var groupEname = 'child'
+        var itemName = ($('#ch_name').val() || '').trim()
+        var itemMobile = ($('#ch_mobile').val() || '').trim()
+        var itemPicUrl = ($('#ch_img').val() || '').trim()
+        var title = ($('#ch_title').val() || '').trim()
+        var age = parseInt(($('#ch_age').val() || '').trim())
+
+
+        if(!itemName){
+             alert('请输入姓名')
+             return false
+        }
+
+        if(!itemMobile || !/^[0-9]{11}$/.test(itemMobile)){
+            alert('请输入正确的手机号码')
+            return false;
+          }
+        if(!itemPicUrl){
+            alert('请上传图片')
+            return false;
+          }
+        if(!title){
+            alert('请填写描述')
+            return false;
+          }
+          if(age<=0 || age>12){
+            alert('年龄输入有误，需在12周岁以下')
+            return false
+          }
+
+
+          $.post('/vote/xinyutang/uploaditem', {
+                'groupEname':groupEname,
+                'itemName':itemName,
+                'itemMobile':itemMobile,
+                'itemPicUrl':itemPicUrl,
+                'title':title,
+                'age':age
+          }, function(d){
+                if(d.error){
+                    alert(d.data)
+                    return
+                }
+                alert('上传成功，请等待审核')
+                setTimeout(function(){
+                    location.href = '/active/xinyutang?ename=yy_vote'
+                },1500)
+          },'json')
+
+
+    })
+
+}
+
+
+
+
+
+$(function(){
+
+initAjax()
+adultInit()
+childInit()
+
+})
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
