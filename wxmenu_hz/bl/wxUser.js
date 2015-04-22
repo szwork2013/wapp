@@ -320,8 +320,8 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 	userModel.findAll({
 		'appUserType':2,
 		'writeTime':{
-			'$gte':dayMoment,
-			'$lt':endMoment
+			'$gte':dayMoment.format('YYYY/MM/DD HH:mm:ss'),
+			'$lt':endMoment.format('YYYY/MM/DD HH:mm:ss')
 		}
 	},0,10000,function(err, list){
 		if(err){
@@ -388,7 +388,6 @@ obj.mailTo = function(resultLength, excelPath, filename){
 	// setup e-mail data with unicode symbols
 	var mailOptions = {
 	    from: "wuzh <"+config.MAIL_ACC+">", // sender address
-	    to: "53822985@qq.com,", // list of receivers
 	    subject: "合众业务员注册数", // Subject line
 	    //text: string, // plaintext body
 	    html: "当天共有 "+resultLength+" 业务员注册成功。</b>" // html body
@@ -445,7 +444,7 @@ obj.setSchedule = function(){
 		   obj.getTodayYwyRegAndMail(s, e)
 	});
 	//马上执行一次
-	//obj.getTodayYwyRegAndMail(s, e)
+	obj.getTodayYwyRegAndMail(s, e)
 }
 
 //只有一个
