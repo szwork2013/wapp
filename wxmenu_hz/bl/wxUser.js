@@ -353,7 +353,7 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 					return
 				}
 			  var saveExcelPath = path.join(__dirname,'..','upload')
-			  var excelName = moment().format('YYYY-MM-DD') + '_list.csv'
+			  var excelName = dayMoment.format('YYYY-MM-DD') + '_list.csv'
 			  var excelPath =  path.join(saveExcelPath, excelName)
 			  try{
 			  	//var buf = iconv.convert()
@@ -383,15 +383,14 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 
 obj.mailTo = function(resultLength, excelPath, filename){
 
-	console.log()
 
 	// setup e-mail data with unicode symbols
 	var mailOptions = {
-	    from: "wuzh ✔<"+config.MAIL_ACC+">", // sender address
+	    from: "wuzh <"+config.MAIL_ACC+">", // sender address
 	    to: "53822985@qq.com,", // list of receivers
-	    subject: "合众业务员注册数✔", // Subject line
+	    subject: "合众业务员注册数", // Subject line
 	    //text: string, // plaintext body
-	    html: "当天共有 "+resultLength+" 业务员注册成功。✔</b>" // html body
+	    html: "当天共有 "+resultLength+" 业务员注册成功。</b>" // html body
 	}
 
 	if(excelPath){
@@ -422,6 +421,8 @@ obj.mailTo = function(resultLength, excelPath, filename){
 
 
 setTimeout(function(){
+	var s = moment('2015/4/17').hour(0).minute(0).second(0)
+	var e = moment('2015/4/20').hour(23).minute(23).second(23)
 	obj.getTodayYwyRegAndMail()
 },2000)
 
