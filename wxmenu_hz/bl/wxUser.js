@@ -419,12 +419,35 @@ obj.mailTo = function(resultLength, excelPath, filename){
 
 }
 
-
+/*
 setTimeout(function(){
 	var s = moment('2015/4/21').hour(0).minute(0).second(0)
 	var e = moment('2015/4/21').hour(18).minute(0).second(0)
 	obj.getTodayYwyRegAndMail(s, e)
 },2000)
+*/
 
+
+//定义定时器
+obj.setSchedule = function(){
+	//定义规则
+	var rule = new node_schedule.RecurrenceRule();
+	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
+	rule.hour = 11;
+	rule.minute = 45;
+
+	var s = moment().day(-1).hour(18).minute(0).second(0)
+	var e = moment().hour(18).minute(0).second(0)
+	var j = node_schedule.scheduleJob(rule, function(){
+			//执行定时计划
+		   obj.getTodayYwyRegAndMail(s, e)
+	});
+	//马上执行一次
+}
+
+//只有一个
+if(global.listenPort == 7900){
+	obj.setSchedule()
+}
 
 module.exports = obj;
