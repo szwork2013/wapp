@@ -434,10 +434,10 @@ obj.setSchedule = function(){
 	//定义规则
 	var rule = new node_schedule.RecurrenceRule();
 	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
-	rule.hour = 11;
-	rule.minute = 50;
+	rule.hour = 12;
+	rule.minute = 00;
 
-	var s = moment().day(-1).hour(18).minute(0).second(0)
+	var s = moment().add(-1, 'days').hour(18).minute(0).second(0)
 	var e = moment().hour(18).minute(0).second(0)
 
 	var j = node_schedule.scheduleJob(rule, function(){
@@ -445,7 +445,7 @@ obj.setSchedule = function(){
 		   obj.getTodayYwyRegAndMail(s, e)
 	});
 	//马上执行一次
-	obj.getTodayYwyRegAndMail(s, e)
+	//obj.getTodayYwyRegAndMail(s, e)
 }
 
 //只有一个
