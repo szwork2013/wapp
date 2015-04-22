@@ -26,6 +26,9 @@ var smtpTransport = nodemailer.createTransport({
     }
 });
 
+console.log(config.MAIL_ACC)
+console.log(config.MAIL_PWD)
+
 obj.getUserByOpenid = function(openId,cb){ //根据openid查找用户信息
 	var cb = cb || function(){}
 	if(!openId) return cb('no openid');
