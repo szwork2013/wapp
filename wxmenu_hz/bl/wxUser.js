@@ -435,7 +435,7 @@ obj.setSchedule = function(){
 	var rule = new node_schedule.RecurrenceRule();
 	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
 	rule.hour = 11;
-	rule.minute = 45;
+	rule.minute = 50;
 
 	var s = moment().day(-1).hour(18).minute(0).second(0)
 	var e = moment().hour(18).minute(0).second(0)
@@ -445,7 +445,7 @@ obj.setSchedule = function(){
 		   obj.getTodayYwyRegAndMail(s, e)
 	});
 	//马上执行一次
-	obj.getTodayYwyRegAndMail(s, e)
+	//obj.getTodayYwyRegAndMail(s, e)
 }
 
 //只有一个
