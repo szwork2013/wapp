@@ -10,31 +10,29 @@
     <title>代理人登记</title>
     <script src="http://wzzy2014skin.qiniudn.com/js/jquery.1.11.1.min.js" type="text/javascript"></script>
     <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/regist.css?v=20150419">
+    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/regist2.css">
 </head>
 <body>
 
 
-    <div class="wrapper">
-        <input type="text" class="name" maxlength="10">
-        <input type="text" class="tel" maxlength ="11">
-        <input type="text" class="num" maxlength="20">
-        <input type="text" class="weixin" maxlength="20">
-        <input type="button" class="submit">
-    </div>
-    <!-- <div class="modal formModal">
-        <div class="dialog formDialog">
-            <input type="text" class="name">
-            <input type="text" class="tel">
-            <input type="text" class="num">
-            <input type="text" class="weixin">
-            <input type="button" class="submit">
-        </div>
-    </div> -->
     <div class="modal alertModal">
         <div class="dialog alertDialog">
             <input type="button" class="confirm">
         </div>
+    </div>
+    <div class="wrapper"></div>
+
+
+    <div class="inputDialog">
+        <input type="text" class="name" maxlength="10">
+        <p></p>
+        <input type="text" class="tel" maxlength ="11">
+        <p></p>
+        <input type="text" class="num" maxlength="20">
+        <p></p>
+        <input type="text" class="weixin" maxlength="20">
+        <p></p>
+        <input type="button" class="submit">
     </div>
 
 
@@ -62,11 +60,11 @@ window.isAjax = false
 
 
 $(function(){
-   
+    
     initWrapperSize();
-  
-    $(".formModal").show();
     bindEvent();
+    $(".inputDialog").show();
+
 });
 
 
@@ -194,13 +192,11 @@ function initWrapperSize(){
         });
     }   
 
-    // var formWidth = $(".wrapper").width()*(1122/1616);
-    // var formHeight = $(".wrapper").height()*(1346/2495);
-    // $(".formDialog").css({
-    //  "width":formWidth,
-    //  "height":formHeight,
-    //  "background-size":formWidth + "px," + formHeight + "px"
-    // });
+    $(".inputDialog").css({
+        // "width":$(".wrapper").width(),
+        "height":$(".wrapper").height()*0.382,
+        "top":$(".wrapper").height()*0.553
+    });
 
     var alertWidth = $(".wrapper").width()*(1122/1616);
     var alertHeight = $(".wrapper").height()*(643/2495);
@@ -210,7 +206,6 @@ function initWrapperSize(){
         "background-size":alertWidth + "px," + alertHeight + "px"
     });
 }
-
 </script> 
 
 
