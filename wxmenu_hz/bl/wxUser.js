@@ -438,11 +438,13 @@ obj.setSchedule = function(){
 
 	var s = moment().day(-1).hour(18).minute(0).second(0)
 	var e = moment().hour(18).minute(0).second(0)
+
 	var j = node_schedule.scheduleJob(rule, function(){
 			//执行定时计划
 		   obj.getTodayYwyRegAndMail(s, e)
 	});
 	//马上执行一次
+	obj.getTodayYwyRegAndMail(s, e)
 }
 
 //只有一个
