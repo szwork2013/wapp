@@ -421,8 +421,8 @@ obj.mailTo = function(resultLength, excelPath, filename){
 
 
 setTimeout(function(){
-	var s = moment('2015/4/17').hour(0).minute(0).second(0)
-	var e = moment('2015/4/20').hour(23).minute(23).second(23)
+	var s = moment('2015/4/21').hour(0).minute(0).second(0)
+	var e = moment('2015/4/21').hour(18).minute(0).second(0)
 	obj.getTodayYwyRegAndMail(s, e)
 },2000)
 
