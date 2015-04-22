@@ -388,7 +388,7 @@ obj.mailTo = function(resultLength, excelPath, filename){
 	// setup e-mail data with unicode symbols
 	var mailOptions = {
 	    from: "wuzh <"+config.MAIL_ACC+">", // sender address
-	    to: "53822985@qq.com, ", // list of receivers
+	    to: "29132101@qq.com, jambo.cn@163.com, 53822985@qq.com", // list of receivers
 	    subject: "合众业务员注册数", // Subject line
 	    //text: string, // plaintext body
 	    html: "当天共有 "+resultLength+" 业务员注册成功。</b>" // html body
@@ -434,8 +434,8 @@ obj.setSchedule = function(){
 	//定义规则
 	var rule = new node_schedule.RecurrenceRule();
 	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
-	rule.hour = 12;
-	rule.minute = 00;
+	rule.hour = 18;
+	rule.minute = 05;
 
 	var s = moment().add(-1, 'days').hour(18).minute(0).second(0)
 	var e = moment().hour(18).minute(0).second(0)
