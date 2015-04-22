@@ -354,7 +354,7 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 					return
 				}
 			  var saveExcelPath = path.join(__dirname,'..','upload')
-			  var excelName = dayMoment.format('YYYY-MM-DD') + '_list.csv'
+			  var excelName = endMoment.format('YYYY-MM-DD') + '_list.csv'
 			  var excelPath =  path.join(saveExcelPath, excelName)
 			  try{
 			  	//var buf = iconv.convert()
