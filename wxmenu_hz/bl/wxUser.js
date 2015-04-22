@@ -349,7 +349,7 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 					logger.error('obj.getTodayYwyRegAndMail json2csv got error: %s', err);
 					return
 				}
-			  var saveExcelPath = path.join(__dirname,'..','static')
+			  var saveExcelPath = path.join(__dirname,'..','upload')
 			  var excelName = moment().format('YYYY-MM-DD') + '_list.csv'
 			  var excelPath =  path.join(saveExcelPath, excelName)
 			  try{
