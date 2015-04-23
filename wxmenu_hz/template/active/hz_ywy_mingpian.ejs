@@ -39,7 +39,7 @@
 	<div class="wrapper cardWrapper">
 		<div id="infoBox">
 			<div id="beforeScore">
-				<div class="hasScore">
+				<div class="hasScore" style="display:none;">
 					<span class=""></span>
 					<span class=""></span>
 					<span class=""></span>
@@ -273,7 +273,8 @@ $(function(){
 
 
 			    wx.onMenuShareTimeline({
-				    title: '帮<%= toUserObj.appUserName %>打分吧', // 分享标题
+				   	title: '诚邀您参与2015年合众人寿客服节抽奖活动', // 分享标题
+					desc: '2015年合众人寿客服节开幕，欢迎您的参与，我的服务好不好，评分说了算，您还可以抽奖哟~', // 分享描述
 				    link: 'http://hz.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://piccvote.qiniudn.com/lottery/imgs/200200.jpg', // 分享图标
 				    trigger:function(){
@@ -292,8 +293,8 @@ $(function(){
 				});
 
 				wx.onMenuShareAppMessage({
-					title: '帮<%= toUserObj.appUserName %>打分吧', // 分享标题
-					desc: '帮<%= toUserObj.appUserName %>打分吧', // 分享描述
+					title: '诚邀您参与2015年合众人寿客服节抽奖活动', // 分享标题
+					desc: '2015年合众人寿客服节开幕，欢迎您的参与，我的服务好不好，评分说了算，您还可以抽奖哟~', // 分享描述
 				    link: 'http://hz.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://piccvote.qiniudn.com/lottery/imgs/200200.jpg', // 分享图标
 				    type: 'link', // 分享类型,music、video或link，不填默认为link

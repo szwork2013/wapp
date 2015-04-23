@@ -13,6 +13,14 @@
     <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
     <link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/regist2.css">
+    <style type="text/css">
+        .modal-backdrop{
+            z-index: 2;
+        }
+        .inputDialog input{
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -40,24 +48,26 @@
 
 
 <!-- Modal -->
-<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:320px;margin: 30px auto;">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">助力成功</h4>
+
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+
+        <h4 class="modal-title" id="myModalLabel">消息</h4>
       </div>
       <div class="modal-body"> 
-            <h4>成功帮TA助力<font id="reduceNumber" style="color:#c00; font-size:18px;">次</font>
-            </h4>
+        <p id="msg"></p>
+
       </div>
       <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      <a href="/static/yy_vote/regist.html" data-dismiss="modal" class="btn btn-default" >确定</a>
       </div>
     </form>
     </div>
   </div>
 </div>
-
 
 
 
@@ -98,23 +108,27 @@ $(function(){
 function bindEvent(){
 
     $(".confirm").click(function(){
-        alert('回复关键字“业务员名片”，查看个人名片')
-
-        /*
-        setTimeout(function(){
-            window.open('/active/<%= appEname %>?ename=hz_ywy_mingpian&toUserId=<%= fromUserId %>')
-        },1500)
-        */
+        $('#msg').html('回复关键字“业务员名片”，查看个人名片')
+        $('#myModal').modal({
+                backdrop:true
+        })
         
     });
 
     if(fromUserObj.appUserType == 1){
-        alert('本注册页面仅针对业务员开放')
+        $('#msg').html('本注册页面仅针对业务员开放')
+        $('#myModal').modal({
+                backdrop:true
+        })
         return
     }
 
     if(fromUserObj.appUserType == 2){
-        alert('您已经登记成功，回复关键字“业务员名片”，查看个人名片')
+        $('#msg').html('您已经登记成功，回复关键字“业务员名片”，查看个人名片')
+        $('#myModal').modal({
+                backdrop:true
+        })
+        
         $(".formModal").hide();
         $(".alertModal").show();
         return
@@ -132,19 +146,35 @@ function bindEvent(){
 
 
         if(!appUserName || appUserName == '未认证会员'){
-          alert('请填写真实姓名')
+            $('#msg').html('请填写真实姓名')
+            $('#myModal').modal({
+                    backdrop:true
+            })
+          
           return false;
         }
         if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
-          alert('请输入正确的手机号码')
+             $('#msg').html('请输入正确的手机号码')
+            $('#myModal').modal({
+                    backdrop:true
+            })
+          
           return false;
         }
         if(!code1){
-          alert('请输入正确的工号')
+             $('#msg').html('请输入正确的工号')
+            $('#myModal').modal({
+                    backdrop:true
+            })
+          
           return false;
         }
         if(!code2){
-          alert('请输入正确的微信账号')
+             $('#msg').html('请输入正确的微信账号')
+            $('#myModal').modal({
+                    backdrop:true
+            })
+          
           return false;
         }
 
@@ -163,7 +193,11 @@ function bindEvent(){
         $.post('/api/user/modify?wxuserid='+fromUserId, q, function(d){
             window.isAjax = false
             if(d.error == 1){
-                return alert(d.data)
+                 $('#msg').html(d.data)
+                    $('#myModal').modal({
+                            backdrop:true
+                    })
+                return
             }
             else{
                 $(".formModal").hide();

@@ -39,12 +39,12 @@ obj.activeMiddle = function(req,res,next){
 
     	if(global.env == 'debug'){
     		req.session[appEname+'_oauth_openid'] = 'asd'
-		    req.session[appEname+'_userid'] = '53ecbe65e00fd324efd73032'
+		    req.session[appEname+'_userid'] = '55372ce744e0eadb6b3303ba'
     	}
     	else{
     		//真实情况需要注释掉
 		    req.session[appEname+'_oauth_openid'] = 'oINOHjmRX93qnSoVjN3s9UTZT2x0'
-		    req.session[appEname+'_userid'] = '552fc7d18a97300152f5653e'
+		    req.session[appEname+'_userid'] = '55372ce744e0eadb6b3303ba'
     	}
 	    
     }
