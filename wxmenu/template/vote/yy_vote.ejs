@@ -17,6 +17,26 @@
 
 
 <style TYPE="text/css">
+.mask_box {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+display: none;
+background-color: #000;
+filter: alpha(Opacity=90);
+-moz-opacity: 0.90;
+opacity: 0.90;
+z-index: 99999;
+}
+.mask_box img{
+    display: block;
+    position: absolute;
+    right: 0;
+    top:0;
+}
+
 .k-upload-files, .k-upload-status{
     display: none;
 }
@@ -98,7 +118,7 @@
                 <li style="display:none;" id="active" >
                     <a href="javascript:;" id="join_btn">我也要参加活动</a>
                 </li>
-                <li><a href="#">分享至朋友圈  邀好友来点赞</a></li>
+                <li><a href="javascript:;" onclick="mask();">分享至朋友圈  邀好友来点赞</a></li>
                 <li><a href="#">关注东方之门  静候比赛结果</a></li>
             </ul>
     </div>
@@ -161,7 +181,11 @@
 
 
 
-
+<!-- mask div -->
+<div id="mask" class="mask_box" onclick="mask();">
+    <img src="http://wzhfile.qiniudn.com/guide5.png"/>
+</div> 
+<!-- mask div -->
 
 
 
@@ -191,6 +215,18 @@ window.itemList = []
 window.itemShakeList = []
 window.myItemList = []
 
+
+//遮照功能
+var maskObj = $('#mask');
+var mask = function () {        
+        if(maskObj.is(':visible')){
+            maskObj.hide();
+        }
+        else{
+            maskObj.show();
+        }
+}
+//遮照功能
 
 
 var init = function(){
