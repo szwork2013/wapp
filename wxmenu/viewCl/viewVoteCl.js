@@ -8,7 +8,8 @@ var obj = {}
 
 obj.votePage = function(req,res){ //活动页面展示
 	var wxuobj = req.wxuobj;
-
+	var requestedUrl = req.protocol + '://' + req.get('Host') + req.url;
+	
 	var ename = req.query.ename;
 	var appobj = utils.getAppEname(req.originalUrl)
 	if(appobj.error){
@@ -102,6 +103,7 @@ obj.votePage = function(req,res){ //活动页面展示
 							userid:userid,
 							groupList:tempGroupList,
 							wxuobj:wxuobj,
+							'jsurl':encodeURIComponent(requestedUrl),
 							timeError:timeError
 						});
 

@@ -96,7 +96,7 @@
          <div class="shareBox">
             <ul>
                 <li style="display:none;" id="active" >
-                    <a href="/static/yy_vote/regist.html">我也要参加活动</a>
+                    <a href="javascript:;" id="join_btn">我也要参加活动</a>
                 </li>
                 <li><a href="#">分享至朋友圈  邀好友来点赞</a></li>
                 <li><a href="#">关注东方之门  静候比赛结果</a></li>
@@ -122,18 +122,43 @@
 
 
 
-<div style="display:none">
-<div class="demo-section k-header" id="upload">
-<input type="file" name="files" id="upload" />
-<script id="fileTemplate" type="text/x-kendo-template">
-    <div>
-        <button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'></button>
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:320px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+
+        <h4 class="modal-title" id="myModalLabel">参赛须知</h4>
+      </div>
+      <div class="modal-body"> 
+<p>
+1、参与者均需实名，谢绝网名、匿名参与，参与者应对投送作品拥有充分、完全、排他的著作权，不得侵犯任何第三方的任何著作权、肖像权、名誉权等其他知识产权或专有权利，如有任何相关的法律纠纷，其法律责任由参展作者本人承担；
+</p>
+<p>
+2、主承办单位拥有本届摄影大赛全部获奖作品的永久使用权（不排斥作者的使用权），可将其用于展览、展示、海报、印刷出版、各类媒体发表等方面，不再另付稿酬。
+</p>
+<p>
+3、参赛者投送作品，即视为同意本规则。凡不符合征稿要求的作品，一经发现一律取消参赛资格。
+</p>
+<p>
+4、凡投稿者，即视为其已同意本征稿启事之所有规定并向主办单位发出符合上述规定的要约。
+</p>
+<p>
+5、本征稿启事解释权属于主办单位
+</p>
+      </div>
+      <div class="modal-footer">
+      <a href="/static/yy_vote/regist.html" class="btn btn-default" >确定</a>
+      </div>
+    </form>
     </div>
-</script>
-
+  </div>
 </div>
 
-</div>
+
+
 
 
 
@@ -191,6 +216,11 @@ var init = function(){
 
 var initAjax = function(){
 
+    $('#join_btn').click(function(){
+        $('#myModal').modal({
+                backdrop:true
+        })
+    })
 
     //第三选项卡
     window.myItem = {}
@@ -345,40 +375,6 @@ var initAjax = function(){
 
 
 
-
-
-
-
-$("#upload").kendoUpload({
-    template: kendo.template($('#fileTemplate').html()),
-    async: {
-        saveUrl: "/vote/<%= appEname %>/uploadpic?type=child",
-        removeUrl: "/vote/<%= appEname %>/removepic",
-        autoUpload: true
-    },
-    success: onSuccess,
-    complete: onComplete,
-    error: function(e,d){
-        console.log(e)
-        console.log(d)
-    }
-});
-
-$('.k-upload-button').find('span').html('请选择照片')
-
-function onSuccess(e){
-    var response = e.response
-    if(response.result == '0'){
-        return alert(response.error)
-    } 
-    else{
-        return alert(response.result)
-    }
-}
-
-function onComplete(e){
-
-}
 
 </script>
 
