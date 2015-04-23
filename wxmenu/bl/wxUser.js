@@ -113,9 +113,9 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(!userId){
 		return cb('缺少 userid')
 	}
-	if(!openId){
-		return cb('缺少 openId')
-	}
+	// if(!openId){
+	// 	return cb('缺少 openId')
+	// }
 
 	var appMObj = {}
 	if(qobj.appUserCommunity){
@@ -140,6 +140,9 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	}
 	if(qobj.appUserMobile){
 		userMObj.appUserMobile = qobj.appUserMobile
+	}
+	if(qobj.wxAddress){
+		userMObj.wxAddress = qobj.wxAddress
 	}
 	//console.log(appMObj)
 

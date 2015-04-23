@@ -15,6 +15,7 @@ obj.modify = function(req,res){ //用户认证绑定
 		//必填项
 		appUserName:req.body.appUserName,
 		appUserMobile:req.body.appUserMobile,
+		wxAddress:req.body.wxAddress,
 	}
 
 
