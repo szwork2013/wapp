@@ -202,7 +202,42 @@ background-color:#fffe00;
                     <span class="visitor_over_time" id="last_minute"></span>分钟 
 
                 </div>
-                
+                 <!-- <div class="v-prize-get clearfix">
+                    <span class="v-prize-get-tip">奖品列表：
+
+                    </span>
+                </div>
+
+                <% 
+                    prizeList.forEach(function(priceObj, i){ 
+                %>
+                    <% if(priceObj.hasSelect) {%>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix selected">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else if(!priceObj.canSelect || myPrizeList.length >= activeObj.activeObj.prizeAmount){ %>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-disabled clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else { %>
+                          <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } %>
+                    <li class="v-prize-item-name">
+                        <%= priceObj.name %>
+                        <% if(priceObj.hasSelect) {%>
+                            (已兑)
+                        <% } %>
+                    </li>
+                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber %>份</li>
+                </ul>
+                <%
+                    })
+                %>    -->  
 				
 
                
