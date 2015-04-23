@@ -27,6 +27,7 @@ obj.uploadToQiniu = function(fileSavePath, folder, baseName, cb){
 
 	fs.stat(fileSavePath, function(err, fileStat){
 			if(err){
+				logger.error('qiniu upload error, fs.stat(fileSavePath, file path: %s, error: %s', fileSavePath, JSON.stringify(err))
 				obj.delFile(fileSavePath)
 				return cb({
 					result: '0',
@@ -131,7 +132,7 @@ obj.frontUpload = function(req,res){
 	else{
 		res.json({
 			result: '0',
-			error:'上传失败请重试'
+			error:'上传失败请重试!'
 		})
 	}
 	
