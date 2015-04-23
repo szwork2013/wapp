@@ -8,7 +8,7 @@
 
 <link href="http://piccvote.qiniudn.com/yy_vote/css/main.css" type="text/css" rel="stylesheet" />
 <link href="http://piccvote.qiniudn.com/yy_vote/css/style.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="http://piccvote.qiniudn.com/yy_vote/css/lightbox.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://wzhfile.qiniudn.com/lightbox.css" type="text/css" media="screen" />
 
 <link href="http://piccvote.qiniudn.com/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.common.min.css" />
@@ -116,7 +116,7 @@ z-index: 99999;
          <div class="shareBox">
             <ul>
                 <li style="display:none;" id="active" >
-                    <a href="javascript:;" id="join_btn">我也要参加活动</a>
+                    <a href="javascript:;" id="join_btn">我要参加活动</a>
                 </li>
                 <li><a href="javascript:;" onclick="mask();">分享至朋友圈  邀好友来点赞</a></li>
                 <li><a href="#">关注东方之门  静候比赛结果</a></li>
@@ -189,7 +189,10 @@ z-index: 99999;
 
 
 
-<script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="/static/yy_vote/lightbox.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/blocksit.min.js" type="text/javascript"></script>
+
 <script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
 <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
@@ -358,17 +361,20 @@ var initAjax = function(){
             var temps = ''
             window.itemList.forEach(function(item){
                 temps += '<li><div class="img_block">'+
-                         '<img  class="lazy" data-original="'+item.pictureThumb+'" width="250"  />'+
+                         '<img  data-lightbox="image-1" data-title="'+item.desc+'" class="lazy" src="'+item.pictureThumb+'" width="250"  />'+
                          '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike">'+item.todayVoteNumber+'</a>'+
                          '</div><h3>'+item.desc+'</h3></li>'
             })
             $('#waterfall').html(temps)
-            $("img.lazy").lazyload();
+            //$("img.lazy").lazyload();
 
              var $waterfall = $('#waterfall');
-            // $waterfall.masonry({
-            //     columnWidth: 200
-            // });
+             $('#waterfall').BlocksIt({
+                    numOfCol: 2,
+                    offsetX: 8,
+                    offsetY: 8
+                });
+
 
             window.ajaxVote = false
         
