@@ -1,7 +1,8 @@
 <!DOCTYPE>
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+<title>印象•东方之门，随手拍，拿奖金</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
@@ -17,6 +18,45 @@
 
 
 <style TYPE="text/css">
+.actCont2{
+    padding: 20px 5px !important;
+}
+.ilike{
+    left:10px;
+    top:10px;
+    width: 75px;
+}
+.relBox .main{
+    width: 100%;
+}
+.no_upload{
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: none;
+    padding: 10px 20px;
+    width: 100%;
+    color: #fff;
+    font-size: 1.2em;
+    outline: medium;
+    background:rgba(255,255,255,0.4);
+    border: none;
+    display: block;
+    margin: 20px auto;
+    padding: 15px 0;
+    text-align: center;
+    color:#fff;
+
+}
+.relBox .main .shareBox{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+.relBox .main .shareBox ul li a{
+    width: 100%;
+}
 .mask_box {
 position: fixed;
 top: 0;
@@ -55,7 +95,7 @@ z-index: 99999;
     background-color: #c00 !important;
 }
 .waterL, .waterR{
-    width: 45%;
+    width: 48%;
     display: block;
     overflow: hidden;
     height: auto;
@@ -78,13 +118,22 @@ z-index: 99999;
     margin-bottom: 10px;
 }
 .img_block h3{
- text-indent: 1em;
- font-size: 14px;
+ text-indent: 5px;
+ font-size: 12px;
  margin: 0px;
- background-color: #fff;
- padding: 10px 0;
+ background-color: #000;
+ padding: 5px 0;
+ color:#fff;
+ overflow: hidden;
+ height: 24px;
 }
-
+.img_block img{
+    border: none !important;
+}
+.img_block{
+   border: #fff 4px solid;
+   padding: 0 !important;
+}
 #change_btn{
     border: 2px solid #b5b5b5;
     -moz-border-radius: 5px;
@@ -123,7 +172,7 @@ z-index: 99999;
 <div class="wrap">
     <div class="relBox">
         <img class="relBoxImg" src="http://piccvote.qiniudn.com/yy_vote/images/rule_bg.jpg" width="100%" />
-        <h2 class="top">印象•东方之门，随手拍，拿奖金</h2>
+        <!-- <h2 class="top">印象•东方之门，随手拍，拿奖金</h2> -->
         <!---主要内容开始-->
         <div class="main">
             <div class="labelBox">
@@ -147,7 +196,7 @@ z-index: 99999;
                     奖品设置：<br />
                 </div>
 <!--选项卡二 内容开始-->
-<div class="actCont" >
+<div class="actCont actCont2" >
 <div id="main" class="clearfix">
     <div class="waterL" id="waterL"></div>
     <div class="waterR" id="waterR"></div>
@@ -363,7 +412,15 @@ var initAjax = function(){
                              '<a href="javascript:;" class="ilike">'+window.myItem.child.todayVoteNumber+'</a></div>'
                              '<h3>'+window.myItem.child.title+'</h3></li>'
                 }
-                $('#myItem').html(temps)
+
+                if(temps==''){
+                    $('#mymain').html('<div class="no_upload">您还未上传作品</div>').show()
+                }
+                else{
+                    $('#myItem').html(temps)
+                }
+
+                
 
                 if(hasItem == 0){
                     $('#active').show()
