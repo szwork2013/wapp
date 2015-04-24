@@ -226,7 +226,7 @@ obj.uploadToVoteItem = function(req, res){
 				'groupId':groupId,
 				'title':itemName,
 				'pictureThumb':itemPicUrl+'_thumb', //七牛定义的_thumb为缩略图
-				'picture':itemPicUrl,
+				'picture':itemPicUrl+'_big',
 				'number':itemMobile,
 				'desc':desc,
 				'age':age,
@@ -309,6 +309,7 @@ obj.myItem = function(req, res){
 					'age':item.age,
 					'title':item.desc,
 					'desc2':item.desc2,
+					'code2':item.code2,
 					'code4':item.code4,
 					'isShow':item.isShow,
 					'todayVoteNumber':item.todayVoteNumber,

@@ -83,7 +83,7 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="code2" >部门</label>
+                <label for="code2" >流水号</label>
             </div>
             <div data-container-for="code2" class="k-edit-field w-800-r">
                <input type="text" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
@@ -425,8 +425,7 @@ $.post('/manger/voteGroup/getList',{},function(data_ary){
                          },
                          { 
                             field: "code2",
-                            title: "备用字段2", 
-                            hidden:true
+                            title: "流水号"
                          },
                          { 
                             field: "code3",

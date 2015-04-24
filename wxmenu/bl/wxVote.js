@@ -964,13 +964,20 @@ obj.getUserUploadItem = function(userId, groupId, cb){
 //前端插入投票项
 obj.frontSaveVoteItem = function(query, saveObj, cb){
 
-
-	if(query._id){
-		voteItem.createOneOrUpdate(query, saveObj, cb)
-	}
-	else{
-		voteItem.insertOneByObj(saveObj, cb)
-	}
+	guidModel.getGuid4(function(err, guid4){
+		if(err){
+			return cb(err)
+		}
+		//增加流水号
+		saveObj.code2 = guid4
+		if(query._id){
+			voteItem.createOneOrUpdate(query, saveObj, cb)
+		}
+		else{
+			voteItem.insertOneByObj(saveObj, cb)
+		}
+	})
+	
 	
 
 }

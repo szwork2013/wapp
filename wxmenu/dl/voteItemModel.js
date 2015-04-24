@@ -26,7 +26,7 @@ var obj =  { //定义结构,投票抽奖活动，被投票项分组group的doc
       //是否显示
 
       code1:{type: String, default:''}, //备用字段1，是否可能存在作弊
-      code2:{type: String, default:''}, //备用字段2，部门使用
+      code2:{type: String, default:''}, //备用字段2，投票的流水号
       code3:{type: String, default:''}, //备用字段3，出生日期
       code4:{type: String, default:''}, //备用字段4，上传用户Id
 
