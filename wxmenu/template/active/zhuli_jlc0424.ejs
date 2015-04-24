@@ -828,6 +828,8 @@ $(function(){
           
         var appUserName = $('#appUserName').val().trim();
         var appUserMobile = $('#appUserMobile').val().trim();
+        var wxAddress = $('#wxAddress').val().trim();
+
         if(!appUserName || appUserName == '未认证会员'){
           alert('请填写真实姓名')
           return false;
@@ -837,20 +839,25 @@ $(function(){
           return false;
         }
 
+       // if(sfz.indexOf(wxAddress) == -1){
+       // 	alert('身份证号无效')
+       //  	return false;
+       // }
+
         var q = {
-            toUserId:toUserId,
-            prizeId:window.selPrizeId,
-            truename:appUserName,
-            mobile:appUserMobile
+            appUserName:appUserName,
+            appUserMobile:appUserMobile,
+            wxAddress:wxAddress,
         }
 
           window.isAjax = true
-        $.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
+        $.post('/api/user/modify?wxuserid=<%= fromUserId %>', q, function(d){
           window.isAjax = false
             if(d.error == 1){
                 return alert(d.data)
             }
-            alert('奖品兑换成功')
+            alert('资料修改成功')
+            //$('#myModal').modal('hide')
             location.reload()
 
         },'json')
