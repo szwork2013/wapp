@@ -348,7 +348,7 @@ var init = function(){
         setTimeout(function(){
                     $(window).trigger('scroll')
             },100)
-    }).eq(1).click()
+    })
     oLabelLi.last().css('border','none');
     
     // var oTop=window.screen.height-60;
@@ -464,11 +464,11 @@ var initAjax = function(){
                 $.post('/vote/'+appEname+'/start', q, function(d){
                         window.ajaxVote = false
                         if(d.error == 1){
-                            return alert(d.data);
+                            //return alert(d.data);
                         }
                         else{
                             that.html(++total)
-                            alert('投票成功')
+                            //alert('投票成功')
                         }
                 })
         })
