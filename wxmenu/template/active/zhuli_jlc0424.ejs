@@ -813,7 +813,9 @@ $(function(){
 	
 	
 	
-	
+	$('#myModal').modal({
+			backdrop:'static'
+		})
 	
 	
 	
@@ -834,7 +836,7 @@ $(function(){
           alert('请输入正确的手机号码')
           return false;
         }
-location.reload()
+
         var q = {
             toUserId:toUserId,
             prizeId:window.selPrizeId,
