@@ -26,12 +26,13 @@ obj.uploadToQiniu = function(fileSavePath, folder, baseName, cb){
 
 
 	fs.stat(fileSavePath, function(err, fileStat){
+			console.log(err, fileStat)
 			if(err){
 				logger.error('qiniu upload error, fs.stat(fileSavePath, file path: %s, error: %s', fileSavePath, JSON.stringify(err))
 				obj.delFile(fileSavePath)
 				return cb({
 					result: '0',
-					error:'上传失败请重试'
+					error:'上传到云端失败'
 				})
 			}
 
@@ -102,9 +103,9 @@ obj.frontUpload = function(req,res){
 	var folder = req.query.type || 'other'
 
 
-	//console.log(req.files)
-	//console.log(req.files.files.path)
-	//console.log(req.files.files.originalFilename)
+	console.log(req.files)
+	console.log(req.files.files.path)
+	console.log(req.files.files.originalFilename)
 
 
 	if(req.files && req.files.files && req.files.files.path && req.files.files.originalFilename){
