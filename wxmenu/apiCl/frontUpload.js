@@ -37,7 +37,7 @@ obj.uploadToQiniu = function(fileSavePath, folder, baseName, cb){
 			}
 
 			var size = fileStat.size
-			if(size > 1024*1024){
+			if(size > 1024*1024*4){
 				obj.delFile(fileSavePath)
 				return cb({
 					result: '0',
