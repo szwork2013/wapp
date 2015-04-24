@@ -295,9 +295,9 @@ var adultInit = function(){
             }
         },
         error: function(e){
-            alert(JSON.stringify(e))
+            //alert(JSON.stringify(e))
 
-            $('#msg').html('上传失败，请稍后重试')
+            $('#msg').html('上传失败，请调整您的图片大小')
         }
     });
     $('.k-upload-button').find('span').html('请选择照片').css('font-size', '1.4em')
@@ -388,8 +388,8 @@ var childInit = function(){
             }
         },
         error: function(e,d){
-            alert(JSON.stringify(e))
-            $('#msg').html('上传失败，请稍后重试')
+            //alert(JSON.stringify(e))
+            $('#msg').html('上传失败，请调整您的图片大小')
         }
     });
     $('.k-upload-button').find('span').html('请选择照片').css('font-size', '1.4em')
