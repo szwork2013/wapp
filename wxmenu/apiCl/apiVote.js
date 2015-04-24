@@ -213,6 +213,7 @@ obj.getItemsInfo = function(req,res){
 	var groupid = req.query.groupid;
 	var voteEname = req.query.ename;
 	var limit = req.query.limit;
+	var skip = req.query.skip || 0;
 	//排序类型
 	//1 表示按投票个数来倒排序
 	//2 表示按更新时间来倒排序
@@ -227,7 +228,7 @@ obj.getItemsInfo = function(req,res){
 	//先读取缓存
 	var cacheKey = voteEname+groupid
 	var now = Date.now()
-	if(global[cacheKey] /*&& now - global[cacheKey].timestamp < 3600*10*/){		
+	if(false && global[cacheKey] /*&& now - global[cacheKey].timestamp < 3600*10*/){		
 		res.send({error:0,data:global[cacheKey].data}) 
 		return;
 	} 
@@ -252,7 +253,7 @@ obj.getItemsInfo = function(req,res){
 	     	}
 
 	     	return res.send({error:0,data:itemlist})
-     	}, sortType, limit)
+     	}, sortType, limit, skip)
 
 	})
 

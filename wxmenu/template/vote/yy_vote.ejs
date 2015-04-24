@@ -54,7 +54,61 @@ z-index: 99999;
     background: none !important;
     background-color: #c00 !important;
 }
+.waterL, .waterR{
+    width: 45%;
+    display: block;
+    overflow: hidden;
+    height: auto;
+    min-height: 50px;
 
+}
+.waterL{
+    float: left;
+}
+.waterR{
+    float: right;
+}
+.relBox .main .labelBox{
+    margin: 0 auto;
+}
+#main{
+    width: 100%;
+}
+.img_block{
+    margin-bottom: 10px;
+}
+.img_block h3{
+ text-indent: 1em;
+ font-size: 14px;
+ margin: 0px;
+ background-color: #fff;
+ padding: 10px 0;
+}
+
+#change_btn{
+    border: 2px solid #b5b5b5;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: none;
+    padding: 10px 20px;
+    width: 80%;
+    color: #fff;
+    font-size: 1.2em;
+    outline: medium;
+    background: #f39800;
+    border: none;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+
+}
+.clearpadding{
+    padding-top: 20px;
+}
+.lb-number{
+    display: none !important;
+}
 
 <% if(timeError==1){%>
 	.timeErrorHide{
@@ -94,12 +148,13 @@ z-index: 99999;
                 </div>
 <!--选项卡二 内容开始-->
 <div class="actCont" >
-<div id="main">
-    <ul id="waterfall" class="clearfix" style="margin-left: 10px;">
-        
-    </ul>
-    
-    <div class="clear"></div>
+<div id="main" class="clearfix">
+    <div class="waterL" id="waterL"></div>
+    <div class="waterR" id="waterR"></div>
+
+    <div class="clear clearpadding">
+        <a href="javascript:;" id="change_btn" style="display:none;">换一换</a>
+    </div>
     
 </div>
 </div>
@@ -325,82 +380,121 @@ var initAjax = function(){
         }
     })
 
-    //生成瀑布流
-    //分别获取成人和幼儿组的数据
-    $.get('/vote/<%= appEname %>/items',{
-        'groupid':window.child_group_id,
-        'ename':voteEname,
-        'sorttype':2,
-        'limit':100
-    }, function(d){
-        if(d.error){
-            return alert(d.data)
-        }
-        window.itemList = d.data
 
-         $.get('/vote/<%= appEname %>/items',{
-            'groupid':window.adult_group_id,
-            'ename':voteEname,
-            'sorttype':2,
-            'limit':100
-        }, function(d){
-            if(d.error){
-                return alert(d.data)
-            }
-            window.itemList = window.itemList.concat(d.data)
-
-            window.itemList.sort(function(a,b){
-                var aTime = moment(a.writeTime)
-                var bTime = moment(b.writeTime)
-                if(aTime >= bTime){
-                    return -1
+    window.ajaxVote = false
+    var bindEvent = function(){
+        $('#main').delegate('a[name="ilike"]', 'click', function(){
+                if(window.ajaxVote) return false;
+                var that = $(this)
+                var total = that.attr('total') - 0 || 0
+                var q = {
+                    'itemid':that.attr('itemid')
                 }
-                else return 1
-            })
+                window.ajaxVote = true
+                $.post('/vote/'+appEname+'/start', q, function(d){
+                        window.ajaxVote = false
+                        if(d.error == 1){
+                            return alert(d.data);
+                        }
+                        else{
+                            that.html(++total)
+                            alert('投票成功')
+                        }
+                })
+        })
 
-            var temps = ''
-            window.itemList.forEach(function(item){
-                temps += '<li><div class="img_block">'+
-                         '<img  data-lightbox="image-1" data-title="'+item.desc+'" class="lazy" src="'+item.pictureThumb+'" width="250"  />'+
-                         '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike">'+item.todayVoteNumber+'</a>'+
-                         '</div><h3>'+item.desc+'</h3></li>'
-            })
-            $('#waterfall').html(temps)
-            //$("img.lazy").lazyload();
-
-             var $waterfall = $('#waterfall');
-             $('#waterfall').BlocksIt({
-                    numOfCol: 2,
-                    offsetX: 8,
-                    offsetY: 8
-                });
+        window.skip = 0
+        $('#change_btn').click(function(){
+            genWaterFull(window.skip)
+            window.skip += 25
+        })
 
 
-            window.ajaxVote = false
-        
-            $waterfall.delegate('a[name="ilike"]', 'click', function(){
-                    if(window.ajaxVote) return false;
-                    var that = $(this)
-                    var total = that.attr('total') - 0 || 0
-                    var q = {
-                        'itemid':that.attr('itemid')
+    }();
+
+
+    var $waterL = $('#waterL')
+    var $waterR = $('#waterR')
+
+    //生成瀑布流
+    var genWaterFull = function(skip){
+                
+                if(!skip){
+                    var skip = 0
+                }
+                 //生成瀑布流
+                //分别获取成人和幼儿组的数据
+                $.get('/vote/<%= appEname %>/items',{
+                    'groupid':window.child_group_id,
+                    'ename':voteEname,
+                    'sorttype':2,
+                    'skip':skip,
+                    'limit':25
+                }, function(d){
+                    if(d.error){
+                        return alert(d.data)
                     }
-                    window.ajaxVote = true
-                    $.post('/vote/'+appEname+'/start', q, function(d){
-                            window.ajaxVote = false
-                            if(d.error == 1){
-                                return alert(d.data);
+                    window.itemList = d.data
+
+                     $.get('/vote/<%= appEname %>/items',{
+                        'groupid':window.adult_group_id,
+                        'ename':voteEname,
+                        'sorttype':2,
+                        'skip':skip,
+                        'limit':25
+                    }, function(d){
+                        if(d.error){
+                            return alert(d.data)
+                        }
+                        window.itemList = window.itemList.concat(d.data)
+
+                        if(window.itemList.length == 0){
+                            alert('对不起，没有其他作品了')
+                            return
+                        }
+                        
+
+                        window.itemList.sort(function(a,b){
+                            var aTime = moment(a.writeTime)
+                            var bTime = moment(b.writeTime)
+                            if(aTime >= bTime){
+                                return -1
+                            }
+                            else return 1
+                        })
+
+                        var temps = ''
+                        $waterL.empty()
+                        $waterR.empty()
+                        
+                        window.itemList.forEach(function(item){
+                            var temps = '<div class="img_block">'+
+                                     '<a data-title="'+item.desc+'" data-lightbox="image-1"  href="'+item.pictureThumb+'">'+
+                                     '<img data-title="'+item.desc+'" class="lazy" src="'+item.pictureThumb+'" width="250"  /></a>'+
+                                     '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike">'+item.todayVoteNumber+'</a>'+
+                                     '<h3>'+item.desc+'</h3></div>'
+                            var lh = $waterL.height()
+                            var rh = $waterR.height()
+                            if(lh > rh){
+                                $waterR.append(temps)
                             }
                             else{
-                                that.html(++total)
-                                alert('投票成功')
+                                $waterL.append(temps)
                             }
-                    })
-            })
-        
-        }, 'json')
 
-    }, 'json')
+                        })
+                        
+                        $('#change_btn').show()
+                                           
+                    }, 'json')
+
+                }, 'json')
+    }
+
+
+    genWaterFull()
+    window.skip += 25
+   
 }
 
 
