@@ -134,7 +134,7 @@ z-index: 99999;
    border: #fff 4px solid;
    padding: 0 !important;
 }
-#change_btn{
+.change_btn{
     border: 2px solid #b5b5b5;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -148,7 +148,7 @@ z-index: 99999;
     background: #f39800;
     border: none;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 15px;
     text-align: center;
 
 }
@@ -202,7 +202,8 @@ z-index: 99999;
     <div class="waterR" id="waterR"></div>
 
     <div class="clear clearpadding">
-        <a href="javascript:;" id="change_btn" style="display:none;">换一换</a>
+        <a href="javascript:;" class="change_btn" id="change_btn" style="display:none;">换一换</a>
+        <a href="javascript:;" class="change_btn" id="join_btn2" style="display:none;">我要参加活动</a>
     </div>
     
 </div>
@@ -359,7 +360,7 @@ var init = function(){
 
 var initAjax = function(){
 
-    $('#join_btn').click(function(){
+    $('#join_btn, #join_btn2').click(function(){
         $('#myModal').modal({
                 backdrop:true
         })
@@ -554,6 +555,8 @@ var initAjax = function(){
                         })
                         
                         $('#change_btn').show()
+                        $('#join_btn2').show()
+
                                            
                     }, 'json')
 
