@@ -192,8 +192,8 @@ obj.reCheck = function(prizeId, recordDoc, maxCount, cb){
 					imgUrl:prizeDoc.imgUrl,
 				})
 
-				//只有抽中手机才发短信告知业务员
-				if(prizeDoc.desc == 'phone'){
+				//只有抽中手机和魔豆才发短信告知业务员
+				if(prizeDoc.desc == 'phone' || prizeDoc.desc == 'magic'){
 					obj.sendSmsPrize(recordDoc.userId, prizeDoc._id.toString())
 				}
 				return
@@ -387,6 +387,7 @@ obj.sendSmsPrize = function(userId, prizeId){
 		if(!userDoc) return	
 		var ywyUserId = userDoc.uobj.appUserCode
 		var appUserName = userDoc.uobj.appUserName
+		var appUserMobile = userDoc.uobj.appUserMobile
 
 		userBl.getUserByUserId(ywyUserId, function(err, ywyDoc){
 				if(err) return
@@ -398,6 +399,12 @@ obj.sendSmsPrize = function(userId, prizeId){
 				var ywy_mobile = ywyDoc.uobj.appUserMobile
 
 				lotteryBl.getPrizeById(prizeId, function(err, prizeObj){
+					if(prizeObj.ename == 'phone'){
+						var prizeStr = '手机一部'
+					}else{
+						var prizeStr = '魔豆一个'
+					}
+
 					if(err){
 						logger.error('hz_must_prize.js uobj.sendSms error, err: %s', err);
 						return
@@ -407,7 +414,7 @@ obj.sendSmsPrize = function(userId, prizeId){
 							err, prizeId);
 						return
 					}
-					var smsContent = util.format('尊敬的业务员，您的客户%s抽中奖品%s',appUserName, prizeObj.name)
+					var smsContent = util.format('【合众人寿】您的客户（手机号为%s）已经参与抽奖，获得%s。请及时与ta联系，拜访的好机会来喽~',appUserMobile,prizeStr)
 					
 					obj.sendSms(ywy_mobile, smsContent, function(){})
 					return
@@ -443,6 +450,47 @@ obj.sendSms = function(mobile, content, cb){
 		  	logger.error('hz_must_prize.js uobj.sendSms send fail body: %s',body);
 		  	return cb(body)
 		  }
+	})
+
+
+}
+
+
+obj.sendSms2 = function(mobile, content, cb){
+	
+	//获取到用户的名字，手机，奖品名字，业务员手机
+	//然后就可以进行发送手机短信的流程了
+	var smsPwd = '365221'
+	var smsUser = 'JC2017'
+	
+	var smsContent = encodeURIComponent(content)
+	var smsReqUrl = util.format('http://61.145.229.29:9003/MWGate/wmgw.asmx/MongateSendSubmit?userId=%s'+
+		'&password=%s&pszMobis=%s&pszMsg=%s&iMobiCount=1&pszSubPort=*&MsgId=%s',
+		smsUser,smsPwd,mobile,smsContent,Date.now())
+
+
+	request(smsReqUrl, function (error, response, body) {
+		  if (error || response.statusCode != 200) {
+		  	logger.error('hz_must_prize.js uobj.sendSms response err, err: %s, body: %s',
+			error, body);
+			return cb('error')
+		  }
+		  var matchList = body.match(/>(.*?)</)
+		  if(matchList>0){
+		  		if(matchList[1].length <= 6){
+		  			logger.info('hz_must_prize.js uobj.sendSms error, code: %s', body)
+		  			cb('error')
+		  			return
+		  		}
+		  		else{
+		  			return cb(null, 'ok')
+		  		}
+		  }
+		  else{
+		  	logger.error('hz_must_prize.js uobj.sendSms send fail body: %s',body);
+		  	return cb('error')
+		  }
+
 	})
 
 
