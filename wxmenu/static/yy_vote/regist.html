@@ -177,6 +177,36 @@ color:#fff !important;
 
 
 
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:320px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button> 
+
+        <h4 class="modal-title" id="myModalLabel">消息</h4>
+      </div>
+      <div class="modal-body"> 
+        <p id="msg">上传中，请稍后...</p>
+
+      </div>
+      <div class="modal-footer">
+      <a href="javascript:;" data-dismiss="modal" class="btn btn-default" >确定</a>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
 <script type="text/javascript">
 window.isAjaxing = false
 var initAjax = function(){
@@ -237,21 +267,31 @@ var adultInit = function(){
             removeUrl: "/vote/xinyutang/removepic",
             autoUpload: true
         },
-        success: function(e){
+        upload:function(){
+            ('#msg').('上传中，请稍后...')
+            $('#myModal').modal({
+                backdrop:'static'
+            })
+         },
+         success: function(e){
             var response = e.response
             if(response.result == '0'){
                 return alert(response.error)
             } 
             else{
-                alert('上传成功')
+                $('#msg').html('上传成功')
                 $('#adult_thumb img').attr('src', response.result)
                 $('#adult_thumb').show()
                 $('#ad_img').val(response.result)
                 return
             }
         },
-        error: function(e,d){
-            alert('上传失败请重试')
+        error: function(e){
+            alert(JSON.stringify(e))
+            $('#myModal').modal({
+                    backdrop:true
+            })
+            $('#msg').('上传失败，请稍后重试')
         }
     });
     $('.k-upload-button').find('span').html('请选择照片').css('font-size', '1.4em')
