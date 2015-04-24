@@ -416,7 +416,7 @@ obj.sendSmsPrize = function(userId, prizeId){
 					}
 					var smsContent = util.format('【合众人寿】您的客户（手机号为%s）已经参与抽奖，获得%s。请及时与ta联系，拜访的好机会来喽~',appUserMobile,prizeStr)
 					
-					obj.sendSms(ywy_mobile, smsContent, function(){})
+					obj.sendSms2(ywy_mobile, smsContent, function(){})
 					return
 				})
 		})//end userBl.getUserByUserId
@@ -477,7 +477,7 @@ obj.sendSms2 = function(mobile, content, cb){
 		  }
 		  var matchList = body.match(/>(.*?)</)
 		  if(matchList>0){
-		  		if(matchList[1].length <= 6){
+		  		if(matchList[1] && matchList[1].length <= 6){
 		  			logger.info('hz_must_prize.js uobj.sendSms error, code: %s', body)
 		  			cb('error')
 		  			return
