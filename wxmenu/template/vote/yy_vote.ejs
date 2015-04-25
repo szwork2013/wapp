@@ -186,7 +186,7 @@ z-index: 99999;
             <div class="ctBox">
                 <div class="actCont">
                    <img src=http://bcs.duapp.com/xytimg/dfzm%2Frule1.png width=90% height=auto>
-				   <a href="javascript:;" class="change_btn" id="join_btn2" style="display:none;">我也要参加</a>
+				    <a href="javascript:;" class="change_btn" id="join_btn3" style="display:none;">我也要参加</a>
 
                 </div>
 <!--选项卡二 内容开始-->
@@ -332,19 +332,12 @@ var mask = function () {
 //遮照功能
 
 
-window.hasInitWater = false
 var init = function(){
     
     
     var oLabelLi=$(".labelBox ul li");
     $(".actCont:gt(0)").hide();
     oLabelLi.click(function(){
-        var n = $(this).index()
-        if(n == 1 && !window.hasInitWater){
-            window.hasInitWater = true
-            window.genWaterFull()
-            window.skip += 25
-        }
         $(this).addClass("active").siblings().removeClass("active");
         $(".actCont").eq(oLabelLi.index(this)).show().siblings().hide();
         setTimeout(function(){
@@ -489,7 +482,7 @@ var initAjax = function(){
     var $waterR = $('#waterR')
 
     //生成瀑布流
-    window.genWaterFull = function(skip){
+    var genWaterFull = function(skip){
                 
                 if(!skip){
                     var skip = 0
@@ -566,7 +559,8 @@ var initAjax = function(){
     }
 
 
-    
+    genWaterFull()
+    window.skip += 25
    
 }
 
