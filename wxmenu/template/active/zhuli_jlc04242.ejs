@@ -21,18 +21,34 @@
 
 
 
+
+
+
+
+
+<%- newrelic.getBrowserTimingHeader() %>
 <title>
      【风华里】家门口的世乒赛门票，风华里来送
 </title>
 
 <style type="text/css">
+
+
+
+
+body {
+
+background-color: #fff;
+
+
+}
 <% if(timeError==1){%>
     .timeErrorHide{
         display:none !important;
     }
 <%}%>
     .container{
-        background:#FFFFFF;
+        background:#ffffff;
         padding-bottom: 20px;
     }
 	.container {
@@ -78,6 +94,9 @@ height: 50px;
 color: #ffffff;
 text-align: center;
 background-color:#24a158;
+/*background-image: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fbtnbg0329.jpg);*/
+background-size:320px 50px;
+
 }
 
 
@@ -109,6 +128,42 @@ background-color:#24a158;
 background-color:#fffe00;
 }
 	
+	
+	
+	
+	.share_timeline_button {
+display: inline-block;
+letter-spacing: 0;
+padding: 5px 0 0 55px;
+height: 35px;
+/*background: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fxs.png) no-repeat 2px -14px;*/
+background-size: 50px 50px;
+margin: 0;
+
+}
+	
+	.duijiang_button {
+display: inline-block;
+letter-spacing: 0;
+font-size: 20px;
+padding: 5px 0 0 55px;
+height: 35px;
+/*background: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fxs.png) no-repeat 2px -14px;*/
+background-size: 50px 50px;
+margin: 0;
+font-weight: bold;
+}
+	
+	
+	.modal{
+	color:#000;}
+	
+	
+
+	
+	
+	
+	
 </style>
 
 
@@ -120,15 +175,12 @@ background-color:#fffe00;
 	
         <div class="container">
 		
-		  <img src="http://bcs.duapp.com/xytimg/zhuli%2Fjlc%2F0424%2Fjlc04241.jpg" width='100%' alt=""><br>
+		
+		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fjlc%2F0424%2Fjlc04241.jpg" width='100%' alt=""><br>
 		  
 		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fjlc%2F0424%2Fjlc04242.jpg" width='100%' alt="">
 		
 		<br>
-		  
-		
-		
-		
  
             <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已经获得了
         <b style="color:#c00; font-size:20px;">
@@ -142,11 +194,23 @@ background-color:#fffe00;
 
 		
 		
-
 		
 		
 		
-	 <% if(isMyPage) { %>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+ <% if(isMyPage) { %>
            <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
 			
 			
@@ -185,7 +249,10 @@ background-color:#fffe00;
 				})
 			</script>
 		
-	
+
+        <!--    <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
+               <span class="button1" >活动规则</span>
+            </a>-->
 <br> 
        
 
@@ -195,17 +262,18 @@ background-color:#fffe00;
                 
 
 
-                <div class="v-share-surplus">活动剩余时间：
-                    <span class="visitor_over_time" id="last_day"></span>天 
-                    <span class="visitor_over_time" id="last_hour"></span>小时 
-                    <span class="visitor_over_time" id="last_minute"></span>分钟 
+                <div class="v-share-surplus"><b style="color:#000;">活动剩余时间：</b>
+                    <span class="visitor_over_time" id="last_day"></span><b style="color:#000;">天</b> 
+                    <span class="visitor_over_time" id="last_hour"></span><b style="color:#000;">小时</b>
+                    <span class="visitor_over_time" id="last_minute"></span><b style="color:#000;">分钟</b>
 
                 </div>
-                 <!-- <div class="v-prize-get clearfix">
-                    <span class="v-prize-get-tip">奖品列表：
+          <!--      <div class="v-prize-get clearfix">
+                    <span class="v-prize-get-tip"><b style="color:#000;">奖品列表：</b>
 
                     </span>
                 </div>
+				
 
                 <% 
                     prizeList.forEach(function(priceObj, i){ 
@@ -229,27 +297,27 @@ background-color:#fffe00;
                     <li class="v-prize-item-name">
                         <%= priceObj.name %>
                         <% if(priceObj.hasSelect) {%>
-                            (已兑)
+                            (已兑) 
+                            <!-- 兑奖码：<%= priceObj.giftId %> -->
                         <% } %>
                     </li>
                     <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber %>份</li>
                 </ul>
                 <%
                     })
-                %>    -->  
-				
-
-               
+                %>           
             </div>
            
 		   
-		   
+		    <button id="startExchange" class="share_timeline1 btn-block">
+                <span class="duijiang_button" >选择奖品，确定兑奖</span>
+            </button>
+			-->
 			
 			 <br>
 		    <button id="startRank" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >查看目前排名</span>
             </button>
-			
         </div>
 
 
@@ -339,13 +407,6 @@ background-color:#fffe00;
           </span>
           <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
         </div>
-       <!-- <br/>
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon" style="padding:0 10px;">
-            <span class="glyphicon glyphicon-credit-card" ></span>
-          </span>
-          <input type="text" class="form-control" placeholder="请输入身份证号" id="wxAddress" value="" maxlength="18">
-        </div>-->
       
       </div>
       <div class="modal-footer">
@@ -358,9 +419,6 @@ background-color:#fffe00;
     </div>
   </div>
 </div>
-
-
-
 
 
 
@@ -389,7 +447,7 @@ background-color:#fffe00;
         </tr>
       </thead>
       <tbody>
-       <%  for(var i=0; i<20; i++){ 
+       <%  for(var i=0; i<120; i++){ 
             var obj = rankList[i];
             if(!obj) break;
       %>
@@ -407,7 +465,6 @@ background-color:#fffe00;
     </div>
   </div>
 </div>
-
 
 
 
@@ -449,8 +506,6 @@ var now = <%= now %>
 var timeError = '<%= timeError %>'
 
 window.isAjax = false
-
-
 
 
 
@@ -665,7 +720,23 @@ $(function(){
 
 
 
+
+
+
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -759,20 +830,23 @@ $(function(){
             return false;
         }
         //弹出完善资料框
-        // $('#myModal').modal({
-        //     backdrop:'static'
-        //   })
+        $('#myModal').modal({
+            backdrop:true
+          })
     })
-
+	
+	
+	<% if(fromUserObj.appUserName == '未认证会员' || !fromUserObj.appUserName) {%>
+ if(isMyPage){   
+	  $('#myModal').modal({
+            backdrop:'static'
+          })
+		  }  
+    <% } %>
 	
 	
 	
-	
-	
-	
-	
-	
- //绑定兑换奖品事件，弹出完善资料对话框
+	 //绑定兑换奖品事件，弹出完善资料对话框
     $('#startRank').click(function(){
         $('#rankModal').modal({
             backdrop:true
@@ -781,31 +855,22 @@ $(function(){
     $('.close').click(function(){
         $('#rankModal').modal('hide')
     })
-	
-	
-	
-	
-	
-	
-	
-	<% if(!fromUserObj.wxAddress || !/^\d$/.test(fromUserObj.wxAddress[0])){ %>
-		$('#myModal').modal({
-			backdrop:'static'
-		})
-	<% } %>
-	
 
 	
 	
-	//var sfz = ['521579935488633455','123123123','88888888']
+	
+	
+	
+	
+	
+	
+
     //保存按钮
     $('#save_change').click(function(){
-        if(window.isAjax) return false
+       // if(window.isAjax) return false
           
         var appUserName = $('#appUserName').val().trim();
         var appUserMobile = $('#appUserMobile').val().trim();
-        var wxAddress = $('#wxAddress').val().trim();
-
         if(!appUserName || appUserName == '未认证会员'){
           alert('请填写真实姓名')
           return false;
@@ -814,29 +879,45 @@ $(function(){
           alert('请输入正确的手机号码')
           return false;
         }
+		
+		
 
-      //  if(sfz.indexOf(wxAddress) == -1){
-      //  	alert('身份证号无效')
-      //   	return false;
+     //   var q = {
+     //       toUserId:toUserId,
+     //       prizeId:window.selPrizeId,
+     //       truename:appUserName,
+     //       mobile:appUserMobile
       //  }
-
-        var q = {
-            appUserName:appUserName,
+		  var q = {
+            appUserName:appUserName, 
             appUserMobile:appUserMobile,
-            wxAddress:wxAddress,
+            wxuserid:fromUserId,
+            wxappid:appId
         }
-
-          window.isAjax = true
-        $.post('/api/user/modify?wxuserid=<%= fromUserId %>', q, function(d){
-          window.isAjax = false
+		
+		 $.post('/api/user/modify', q, function(d){
             if(d.error == 1){
                 return alert(d.data)
             }
-            alert('资料修改成功')
-            //$('#myModal').modal('hide')
-            location.reload()
+            alert('资料完善成功')
+            location.href = location.href
 
         },'json')
+
+        return false;
+		
+		
+
+       //   window.isAjax = true
+        //$.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
+        //  window.isAjax = false
+        //    if(d.error == 1){
+         //       return alert(d.data)
+          //  }
+          //  alert('奖品兑换成功')
+          //  location.reload()
+
+        //},'json')
 
     })
     //保存按钮
