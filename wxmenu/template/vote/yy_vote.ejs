@@ -18,6 +18,9 @@
 
 
 <style TYPE="text/css">
+.lb-nav a.lb-next, .lb-nav a.lb-prev{
+    opacity: 1 !important;
+}
 .actCont2{
     padding: 20px 5px !important;
 }
@@ -270,7 +273,7 @@ z-index: 99999;
 </p>
       </div>
       <div class="modal-footer">
-      <a href="/static/yy_vote/regist.html?v=2015042403" class="btn btn-default" >同意</a>
+      <a href="/static/yy_vote/regist.html?v=2015042405" class="btn btn-default" >同意</a>
       </div>
     </form>
     </div>
@@ -318,6 +321,25 @@ window.itemList = []
 window.itemShakeList = []
 window.myItemList = []
 
+var Get_QueryString_Plus = function(url){
+      var no_q = 1,
+      now_url = url && (url.split('?')[1] || no_q) || document.location.search.slice(1) || no_q;
+      if(now_url === no_q) return false;
+      var q_array = now_url.split('&'),
+          q_o = {},
+          v_array; 
+        for(var i=0;i<q_array.length;i++){
+              v_array = q_array[i].split('=');
+              try{
+                q_o[v_array[0]] = decodeURIComponent(v_array[1]);
+              }
+              catch(e){
+                q_o[v_array[0]] = null;
+              }
+        };
+        return q_o;
+    }
+
 
 //遮照功能
 var maskObj = $('#mask');
@@ -354,6 +376,12 @@ var init = function(){
     })
     oLabelLi.last().css('border','none');
     
+    var q = Get_QueryString_Plus() || {}
+    if(q.showmy == '1'){
+        oLabelLi.eq(2).click()
+    }
+
+
     // var oTop=window.screen.height-60;
     // var oBottom=$(".bottom");
     // oBottom.css('top',oTop+'px')
@@ -475,6 +503,7 @@ var initAjax = function(){
                         }
                 })
         })
+
 
         window.skip = 0
         $('#change_btn').click(function(){

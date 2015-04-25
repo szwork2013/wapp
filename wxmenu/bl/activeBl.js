@@ -146,13 +146,55 @@ obj.getRankByActiveId = function(activeId, limit, cb){ //排名
 }
 
 
+//获取用户附近上下10名的排名
+obj.nearRank = function(userid, rankList, step){
+	var step = step || 10
+	var len = rankList.length;
+	var userPos = -1
+	for(var i=0;i<len;i++){
+		if(rankList[i].userId.toString() == userid){
+			userPos = i
+			break;
+		}
+	}
+	//console.log(userid, userPos)
+	//没找到
+	if(userPos == -1){
+		return []
+	}
+
+	var s = userPos < step ? 0 : (userPos-step)
+	var e = userPos + step
+
+	return rankList.slice(s, e)
+
+}
+
+
+global.activeRank = {}
 obj.getRankByEname = function(ename, limit, cb){ //排名,根据ename找
+
+	//排名增加缓存
+	if(global.activeRank[ename] && Date.now() - global.activeRank[ename].timestamp < 3600*5){
+		return cb(null, global.activeRank[ename].value)
+	}
+
 
 		obj.getActiveByEname(ename, function(err, aobj){
 			if(err) return cb(err)
 			if(!aobj) return cb('未找到活动')
 
-			obj.getRankByActiveId(aobj._id, limit, cb)
+			obj.getRankByActiveId(aobj._id, limit, function(err, rankList){
+				if(err) return cb(err)
+				if(rankList.length == 0) return cb(null, rankList)
+				global.activeRank[ename] = {
+					'value':rankList,
+					'timestamp':Date.now()
+				}
+
+				return cb(null, rankList)
+
+			})
 		})
 
 	}

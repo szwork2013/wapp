@@ -441,6 +441,8 @@ var myPrizeList = <%- JSON.stringify(myPrizeList) %>
 var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
 var endTime = moment(new Date(activeObj.endTime))
 var now = <%= now %>
+var rank = <%- JSON.stringify(rankList) %>
+var nearRank = <%- JSON.stringify(nearRankList) %>
 var timeError = '<%= timeError %>'
 
 window.isAjax = false
