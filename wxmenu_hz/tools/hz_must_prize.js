@@ -475,7 +475,7 @@ obj.sendSms2 = function(mobile, content, cb){
 			error, body);
 			return cb('error')
 		  }
-		  var matchList = body.match(/>(.*?)</)
+		  var matchList = body.match(/">(.*?)<\/string>/)
 		  if(matchList>0){
 		  		if(matchList[1] && matchList[1].length <= 6){
 		  			logger.info('hz_must_prize.js uobj.sendSms error, code: %s', body)

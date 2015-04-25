@@ -384,8 +384,10 @@ background-color:#fffe00;
         </tr>
       </thead>
       <tbody>
-       <%  for(var i=0; i<20; i++){ 
-            var obj = nearRank[i];
+
+<% if (nearRankList.length > 0) {%>
+       <%  for(var i=0; i<nearRankList.length; i++){ 
+            var obj = nearRankList[i];
             if(!obj) break;
       %>
              <tr>
@@ -394,7 +396,11 @@ background-color:#fffe00;
               <td><%= obj.supportCount %></td>
             </tr>
         <% } %> 
-       
+<% } else { %>
+	<tr>
+      <td colspan="3" style="text-align:center;">还未参加本活动</td>
+    </tr>
+<%} %>      
       
       </tbody>
     </table>

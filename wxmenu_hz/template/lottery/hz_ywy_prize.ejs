@@ -12,7 +12,7 @@
     <script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
     <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
     <link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/card.css?v=20150419">
+    <link rel="stylesheet" href="http://piccvote.qiniudn.com/lottery/card.css?v=20150425">
     <style type="text/css">
     .mask_box {
 position: fixed;
@@ -27,15 +27,46 @@ filter: alpha(Opacity=90);
 opacity: 0.90;
 z-index: 99999;
 }
+.prizeShare{
+  bottom: 8.5%
+}
+.prizeBtn{
+  bottom: 19%;
+}
+.noPrizeBtn{
+  bottom: 19%;
+}
+.noPrizeShare{
+  bottom: 4%;
+}
+.tip{
+  bottom: 36.5%;
+}
+.dialog input{
+  padding: 5px;
+}
+.getCode{
+  top:51.8%;
+}
+.submitBtn{
+  top:68.3%;
+}
+.nameText {
+top: 24.1%;
+}
+.telText {
+top: 37.3%;
+}
+.codeText{
+  top:52%;
+}
 .mask_box img{
     display: block;
     position: absolute;
     right: 0;
     top:0;
 }
-      .prizeDialog {
-        background: url(http://piccvote.qiniudn.com/lottery/imgs/prizeDialog2.png) no-repeat;
-        }
+
         .getCode.disable {
           background: #ddd;
           border-radius: 4px;
@@ -48,7 +79,7 @@ z-index: 99999;
         position: absolute;
         text-align: center;
         width: 100%;
-        bottom: 23%;
+        bottom: 29%;
         font-family: "微软雅黑";
         color: #fff;
         }
@@ -86,6 +117,7 @@ z-index: 99999;
   <div id="prizeModal" class="modal">
     <div class="prizeDialog dialogObj">
       <a class="prizeBtn dialogBtn" href=""></a>
+      <a class="prizeShare dialogBtn" href="javascript:;" onclick="mask();"></a>
       <p class="prizeNameBox" id="prizeNameBox"></p>
       <img src="http://piccvote.qiniudn.com/lottery/imgs/leftLeaf.png" class="leftLeaf" alt=""> 
     </div>
@@ -94,9 +126,12 @@ z-index: 99999;
   <div id="noPrizeModal" class="modal">
     <div class="noPrizeDialog dialogObj">     
       <a class="noPrizeBtn dialogBtn" href=""></a> 
+      <a class="noPrizeShare dialogBtn" href="javascript:;" onclick="mask();"></a> 
       <img src="http://piccvote.qiniudn.com/lottery/imgs/leftLeaf.png" class="leftLeaf" alt="">   
     </div>
   </div>
+
+
 
 
 <!-- mask div -->
@@ -180,27 +215,27 @@ function initWrapperSize(){
   var windowWidth = $(window).width();
   var windowHeight = $(window).height();
   if(windowWidth<windowHeight){
-    if(windowWidth/1616*2495>windowHeight){
+    if(windowWidth/1616*2800>windowHeight){
       $(".wrapper").css({
-        "width":windowHeight/2495*1616,
+        "width":windowHeight/2800*1616,
         "height":windowHeight,
-        "background-size":windowHeight/2495*1616 + "px," + windowHeight + "px"
+        "background-size":windowHeight/2800*1616 + "px," + windowHeight + "px"
       });     
     } else {
       $(".wrapper").css({
         "width":windowWidth,
-        "height":windowWidth/1616*2495,
-        "background-size":windowWidth + "px," + windowWidth/1616*2495 + "px"
+        "height":windowWidth/1616*2800,
+        "background-size":windowWidth + "px," + windowWidth/1616*2800 + "px"
       });
     }
   } else {
     $(".wrapper").css({
       "width":windowWidth,
-      "height":windowWidth/1616*2495,
-      "background-size":windowWidth + "px," + windowWidth/1616*2495 + "px"
+      "height":windowWidth/1616*2800,
+      "background-size":windowWidth + "px," + windowWidth/1616*2800 + "px"
     });
   }
-  $("#infoBox").css("top",293/2495*$(".wrapper").height());
+  $("#infoBox").css("top",293/2800*$(".wrapper").height());
 
   initActivityWrapperSize();
 }
