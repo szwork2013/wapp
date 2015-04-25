@@ -332,12 +332,19 @@ var mask = function () {
 //遮照功能
 
 
+window.hasInitWater = false
 var init = function(){
     
     
     var oLabelLi=$(".labelBox ul li");
     $(".actCont:gt(0)").hide();
     oLabelLi.click(function(){
+        var n = $(this).index()
+        if(n == 1 && !window.hasInitWater){
+            window.hasInitWater = true
+            window.genWaterFull()
+            window.skip += 25
+        }
         $(this).addClass("active").siblings().removeClass("active");
         $(".actCont").eq(oLabelLi.index(this)).show().siblings().hide();
         setTimeout(function(){
@@ -482,7 +489,7 @@ var initAjax = function(){
     var $waterR = $('#waterR')
 
     //生成瀑布流
-    var genWaterFull = function(skip){
+    window.genWaterFull = function(skip){
                 
                 if(!skip){
                     var skip = 0
@@ -559,8 +566,7 @@ var initAjax = function(){
     }
 
 
-    genWaterFull()
-    window.skip += 25
+    
    
 }
 

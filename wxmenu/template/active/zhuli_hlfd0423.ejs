@@ -474,7 +474,7 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '高潮来了，包租婆免费做吧！', // 分享标题
+	    			title: '高潮来了，包租婆免费做吧！', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F423%2Fshare.jpg', // 分享图标
 
@@ -833,6 +833,8 @@ $(function(){
             location.reload()
 
         },'json')
+
+        return false
 
     })
     //保存按钮
