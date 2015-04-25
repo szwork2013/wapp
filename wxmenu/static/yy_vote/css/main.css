@@ -28,7 +28,7 @@ h2 {line-height: 25px;}
 .relBox img { position:relative;width:100%; display:inline-block; }
 .relBox a.indexBtn{ position:absolute; bottom:20%; left:46%; right:16%; margin-left:-100px;}
 .relBox h2.top{ height:50px;top:0; position:absolute; background:#202020; color:#fff; width:100%; font-weight:200; line-height:50px; text-align:center; font-size:1.3em; z-index:1001}
-.relBox .main{ width:85%;margin:1% auto;   top:70px; color:#fff;}
+.relBox .main{ width:85%;margin:1% auto;   top:30px; color:#fff;}
 .relBox .main .labelBox{ width:95%; position:relative; margin:0 0 0 5%; border-bottom:1px solid #fff; font-size:2.0em;}
 .relBox .main .labelBox ul li{ padding:5px 10px; text-align:center; line-height:20px; float:left;width:32.5%; border-right:1px solid #fff; cursor:pointer; color:#fff;}
 .relBox .main .labelBox ul li.active{ color:#ffa200}
