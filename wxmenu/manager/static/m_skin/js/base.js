@@ -152,6 +152,7 @@ window.filter_obj = {
 window.is_show_array = [
                   { text: "启用", value: 1 },
                   { text: "不启用", value: 0 },
+                  { text: "不通过", value: -1 }
                 ]
 window.oauth_scope = [
                   { text: "仅OPenId，自动跳转", value: 'snsapi_base' },
