@@ -385,11 +385,11 @@ background-color:#fffe00;
       </thead>
       <tbody>
        <%  for(var i=0; i<20; i++){ 
-            var obj = rankList[i];
+            var obj = nearRank[i];
             if(!obj) break;
       %>
              <tr>
-              <td><%= (i+1) %></td>
+              <td><%= obj.pos %></td>
               <td><%= obj.userName %></td>
               <td><%= obj.supportCount %></td>
             </tr>
