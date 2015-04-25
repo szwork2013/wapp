@@ -121,6 +121,7 @@ obj.getActiveRangeRank = function(req,res){
 
     activeBl.getActiveRangeRank(activeId, limit, function(err,doc){
         if(err) return res.json({error:1,data:err})
+        var doc = doc.slice(0, 100)
         res.json({error:0,data:doc})
     })
 
