@@ -822,11 +822,66 @@ $(function(){
 	
 	
 	//检查身份证
-	var checkSfz = function(s){
-		if(!s) return false;
+	var checkSfz = function(idcard){
+		if(!idcard) return false;
 
+		var val = idcard.toLowerCase();
+        if (val.length!=15&&val.length!=18){
+                    return false;
+                }
+		var aCity={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙 江",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖 北",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西 藏",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外"};
+		            if(aCity[parseInt(val.substr(0,2))]==null){
+		                return false;
+		        }
+		    var IsNumeric = function(oNum){ 
+		      if(!oNum) return false; 
+		      var strP=/^\d+(\.\d+)?$/; 
+		      if(!strP.test(oNum)) return false; 
+		      try{if(parseFloat(oNum)!=oNum) return false;} 
+		      catch(ex){return false;} 
+		      return true; 
+		    }
+		    var IsValidDate = function(Year,Month,Day){
+		        var isdate = Year+"/"+Month+"/"+Day
+		        var isdate2 = new  Date(isdate);
+		        yyyy=String(isdate2.getFullYear())
+		        mm = (isdate2.getMonth()+1)<10?"0"+String(isdate2.getMonth()+1):String(isdate2.getMonth()+1)
+		        dd = isdate2.getDate()<10?"0"+String(isdate2.getDate()):String(isdate2.getDate())
+		        isdate2 = yyyy+"/"+mm+"/"+dd;
+		        if(isdate!=isdate2){return false;}
+		        return true;
+		    }        
+		    var Ai;
+		    if(val.length==18){Ai = val.substring(0,17);}
+		    else {Ai =val.substring(0,6)+"19"+val.substring(6,12);}
+		    if(IsNumeric(Ai) === false){
 
-		return false
+		            return false;
+		    }
+		    var strYear,strMonth,strDay,strBirthDay;
+		    strYear = Ai.substr(6,4); 
+		    strMonth =Ai.substr(10,2) ;
+		    strDay = Ai.substr(12,2);
+		    var birthday = strYear+"/"+strMonth+"/"+strDay
+		    if (IsValidDate(strYear,strMonth,strDay)==false){
+
+		            return false;
+		    }
+		    var arrVerifyCode = new Array("1","0","x","9","8","7","6","5","4","3","2");
+		    var Wi = new Array(7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2);
+		    var k,TotalmulAiWi=0;
+		        for (k=0; k<17;k++){ 
+		         TotalmulAiWi = TotalmulAiWi + parseInt(Ai.substr(k,1)) * Wi[k];
+		         }     
+		    var modValue =TotalmulAiWi % 11 ;
+		    var strVerifyCode = arrVerifyCode[modValue];
+		    Ai = Ai+strVerifyCode;             
+		      if((val.length==18)&&(val!=Ai)){
+
+		            return false;
+		        }    
+		   return true  
+
 	}
 
     //保存按钮
