@@ -77,7 +77,7 @@ border: 0;
 height: 50px;
 color: #ffffff;
 text-align: center;
-background-color:#390007;
+background-color:#ee7d07;
 }
 
 
@@ -583,7 +583,7 @@ $(function(){
 			    wx.onMenuShareTimeline({
 				
 	    title: '高潮来了，包租婆免费做吧！', // 分享标题
-				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+				    link: 'http://xyt.xy-tang.com/2015/lianghai/index.php', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F423%2Fshare.jpg', // 分享图标
 
     
@@ -612,7 +612,7 @@ $(function(){
 			
 	    title: '高潮来了，包租婆免费做吧！', // 分享标题
 				    desc: '加油，再努把力，你就是房东', // 分享描述
-				    link: 'http://mp.weixin.qq.com/s?__biz=MjM5ODEwMTU3Mg==&mid=233541651&idx=1&sn=ff5276d08b2091011ecbcefaf3403cd0#rd', // 分享链接
+				    link: 'http://xyt.xy-tang.com/2015/lianghai/index.php', // 分享链接
 				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F423%2Fshare.jpg', // 分享图标
 				   
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
@@ -783,9 +783,11 @@ $(function(){
 	
 	
 	<% if(!fromUserObj.wxAddress || !/^\d$/.test(fromUserObj.wxAddress[0])){ %>
+		 if(isMyPage){  
 		$('#myModal').modal({
 			backdrop:'static'
 		})
+		  } 
 	<% } %>
 	
 
