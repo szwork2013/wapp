@@ -228,6 +228,7 @@ var addroute = function(app){
 	//审核使用
 	app.get('/manger/voteItem/select', checkLogin, voteItemCl.select)
 	app.post('/manger/voteItem/pass', checkLogin, voteItemCl.pass)
+	app.post('/manger/voteItem/stop', checkLogin, voteItemCl.stop)
 
 	//vote record
 	app.get('/manger/voteRec/list', checkLogin, voteRecordCl.list)

@@ -45,6 +45,25 @@ obj.pass = function(req, res){
 
 }
 
+obj.stop = function(req, res){
+	var ids = req.body.ids
+	var idList = ids.split(',')
+	if(idList.length == 0){
+		return res.send({error:0, data:'ok'})
+	}
+
+	dl.createOneOrUpdate({"_id":{
+			"$in":idList
+		}}, {
+		'isShow':-1,
+	}, function(err, list){
+		if(err) return res.send({error:1, data:err})
+		res.send({error:0, data:'ok'})
+	})
+
+
+}
+
 
 
 

@@ -422,6 +422,9 @@ var initAjax = function(){
                     if(window.myItem.adult.isShow == 1){
                         var type = '已审核'
                     }
+                    else if(window.myItem.adult.isShow == -1){
+                        var type = '不通过'
+                    }
                     else{
                         var type = '待审核'
                     }
@@ -434,6 +437,9 @@ var initAjax = function(){
                 if(window.myItem.child){
                     if(window.myItem.child.isShow == 1){
                         var type = '已审核'
+                    }
+                    else if(window.myItem.child.isShow == -1){
+                        var type = '不通过'
                     }
                     else{
                         var type = '待审核'

@@ -10,9 +10,12 @@
             <button  id="selall" class="k-primary sync_button k-primary k-button">
                 <span class="k-sprite k-icon k-i-refresh">Refresh</span>
                 全选</button>
-            <button  id="down" class="k-primary sync_button k-primary k-button">
+            <button  id="pass" class="k-primary sync_button k-primary k-button">
                 <span class="k-sprite k-icon k-i-refresh">Refresh</span>
                 审核通过</button>
+            <button  id="stop" class="k-primary sync_button k-primary k-button">
+                <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+                审核不通过</button>
         </div>
 
 
@@ -62,7 +65,7 @@ $(function () {
     })
 
 
-    $('#down').click(function(){
+    $('#pass').click(function(){
         if(window.selectIdList.length == 0){
             return
         }
@@ -82,6 +85,25 @@ $(function () {
         return false;
     })
 
+    $('#stop').click(function(){
+        if(window.selectIdList.length == 0){
+            return
+        }
+        var ids = window.selectIdList.join(',')
+        $.post('/manger/voteItem/stop', {
+            ids:ids
+        }, function(d){
+            if(d.error == 1){
+                return alert(d.data)
+            }
+            else{
+                var listView = $("#listView").data("kendoListView");
+                listView.dataSource.read();
+            }
+        },'json')
+
+        return false;
+    })
 
 
 
