@@ -317,7 +317,7 @@ background-color:#fffe00;
         <!--
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       -->
-        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，方便我们把奖品发放给您</h4>
+       <h4 class="modal-title" id="myModalLabel">请先完善您的资料，方便我们把奖品发放给您</h4>
       </div>
 
       <div class="modal-body">      
@@ -857,14 +857,14 @@ $(function(){
         }
 
           window.isAjax = true
-        $.post('/api/user/modify?wxuserid=<%= fromUserId %>', q, function(d){
+        $.post('/api/user/modify?wxuserid=<%=fromUserId%>', q, function(d){
           window.isAjax = false
             if(d.error == 1){
                 return alert(d.data)
             }
             alert('资料修改成功')
             //$('#myModal').modal('hide')
-            location.reload()
+            location.href = location.href
 
         },'json')
 
