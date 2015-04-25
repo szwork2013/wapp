@@ -124,7 +124,7 @@ obj.getRankByActiveId = function(activeId, limit, cb){ //排名
 			}
 			var tempList = []
 
-			list.forEach(function(oActive){
+			list.forEach(function(oActive, i){
 				ulist.forEach(function(oUser){
 					if(oActive._id == oUser.value){
 						tempList.push({
@@ -132,7 +132,8 @@ obj.getRankByActiveId = function(activeId, limit, cb){ //排名
 							supportCount:oActive.supportCount,
 							supportScore:oActive.supportScore,
 							userName:oUser.name,
-							userMobile:oUser.mobile
+							userMobile:oUser.mobile,
+							pos:(i+1),
 						})
 					}
 				})
