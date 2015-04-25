@@ -474,11 +474,26 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    			title: '高潮来了，包租婆免费做吧！', // 分享标题
-				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F423%2Fshare.jpg', // 分享图标
+
+<% if(!fromUserObj.wxAddress || !/^\d$/.test(fromUserObj.wxAddress[0])){ %>
+
+
+	//这里面些用户没有完善身份证的title，desc，link等
+
+<% } else{ %>
+
+		title: '高潮来了，包租婆免费做吧！', // 分享标题
+	    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+	    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F423%2Fshare.jpg', // 分享图标
+
+<% } %>
+
+
+	    		
 
 			
+
+
 				    trigger:function(){
 				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
 				    },
@@ -496,11 +511,20 @@ $(function(){
 				});
 
 				wx.onMenuShareAppMessage({
-			
-	    title: '高潮来了，包租婆免费做吧！', // 分享标题
+
+<% if(!fromUserObj.wxAddress || !/^\d$/.test(fromUserObj.wxAddress[0])){ %>
+
+	//这里面些用户没有完善身份证的title，desc，link等
+
+<% } else{ %>
+
+		
+	   				title: '高潮来了，包租婆免费做吧！', // 分享标题
 				    desc: '加油，再努把力，你就是房东', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F423%2Fshare.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhailiang%2F423%2Fshare.jpg', 
+<% } %>
+				    // 分享图标
 					type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				    trigger:function(){
@@ -785,7 +809,7 @@ $(function(){
 	<% if(!fromUserObj.wxAddress || !/^\d$/.test(fromUserObj.wxAddress[0])){ %>
 		 if(isMyPage){  
 		$('#myModal').modal({
-			backdrop:'static'
+			//backdrop:'static'
 		})
 		  } 
 	<% } %>
