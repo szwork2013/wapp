@@ -817,13 +817,13 @@ $(function(){
 	
 	
 	
-	<% if(!fromUserObj.wxAddress || !/^\d$/.test(fromUserObj.wxAddress[0])){ %>
+	
 		 if(isMyPage){  
 		$('#myModal').modal({
 			backdrop:'static'
 		})
 		  } 
-	<% } %>
+
 	
 
 	
@@ -836,7 +836,7 @@ $(function(){
           
         var appUserName = $('#appUserName').val().trim();
         var appUserMobile = $('#appUserMobile').val().trim();
-        var wxAddress = $('#wxAddress').val().trim();
+       // var wxAddress = $('#wxAddress').val().trim();
 
         if(!appUserName || appUserName == '未认证会员'){
           alert('请填写真实姓名')
@@ -852,7 +852,7 @@ $(function(){
         var q = {
             appUserName:appUserName,
             appUserMobile:appUserMobile,
-            wxAddress:wxAddress,
+           // wxAddress:wxAddress,
         }
 
           window.isAjax = true
