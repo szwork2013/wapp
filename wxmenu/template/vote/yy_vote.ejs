@@ -380,8 +380,11 @@ var init = function(){
     })
     oLabelLi.last().css('border','none');
     
-    var q = Get_QueryString_Plus() || {}
-    if(q.showmy == '1'){
+    var showmy = $.cookie('showmy')
+    if(showmy == '1'){
+        $.cookie('showmy', '0', { path: '/' })
+        $.removeCookie('showmy', { path: '/' });
+
         oLabelLi.eq(2).click()
     }
 
