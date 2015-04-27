@@ -133,6 +133,7 @@ obj.getRankByActiveId = function(activeId, limit, cb){ //排名
 							supportScore:oActive.supportScore,
 							userName:oUser.name,
 							userMobile:oUser.mobile,
+							wxAddress:oUser.wxAddress,
 							pos:(i+1),
 						})
 					}

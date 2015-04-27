@@ -14,9 +14,9 @@
         查看排名</button>
 
 
-    <button  id="save" class="k-primary sync_button k-primary k-button">
+    <!-- <button  id="save" class="k-primary sync_button k-primary k-button">
         <span class="k-sprite k-icon k-i-refresh">Refresh</span>
-        下载头像</button>
+        下载头像</button> -->
 </div>
 
 <div id="grid">
@@ -26,6 +26,7 @@
       <th>排名</th>
       <th>姓名</th>
       <th>联系电话</th>
+      <th>证件/位置</th>
       <th>支持数目</th>
       <th>支持分数</th>
     </tr>
@@ -84,7 +85,7 @@ $(function(){
             var s = ''
             if(d.data.length == 0){
                 s = '<tr>'+
-                    '<td colspan=4>暂无排行数据</td>'+
+                    '<td colspan=5>暂无排行数据</td>'+
                     '</tr>'
             }
             else{ 
@@ -93,6 +94,7 @@ $(function(){
                          '<td>'+(i+1)+'</td>'+
                          '<td>'+o.userName+'</td>'+
                          '<td>'+o.userMobile+'</td>'+
+                         '<td>'+o.wxAddress+'</td>'+
                          '<td>'+o.supportCount+'</td>'+
                          '<td>'+(o.supportScore||0)+'</td>'+
                          '</tr>'
