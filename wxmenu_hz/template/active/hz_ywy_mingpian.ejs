@@ -168,8 +168,8 @@ function bindEvent(){
 	window.score = 0
 	//打分按钮
     $('#beforeScore .star').click(function(){
-
-
+    	
+    	if(window.hasStar) return false;
     	$("#beforeScore p:last span.active").removeClass('active');
 		var scoreLevel = $(this).index();
 		for(var i=1;i<=scoreLevel;i++){
@@ -179,11 +179,13 @@ function bindEvent(){
     	return false
 
     })
+
+    window.hasStar = true
     //打分按钮
     $(".setScore").click(function(){
 		if(window.score == 0) return false;
-		if(window.hasStar) return
-    	if(window.isAjax) return
+		if(window.hasStar) return false;
+    	if(window.isAjax) return false;
     	var scoreLevel = $(this).index();
 
     	window.isAjax = true
