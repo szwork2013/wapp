@@ -815,10 +815,10 @@ $(function(){
 	
 	
 	
+	var appUserName = $('#appUserName').val().trim();
 	
-	
-//	<% if(!fromUserObj.wxAddress || !/^\d$/.test(fromUserObj.wxAddress[0])){ %>
-<% if(fromUserObj.appUserName=='未认证会员'){ %>
+
+<% if(appUserName == '未认证会员'){ %>
 		 if(isMyPage){  
 		$('#myModal').modal({
 			backdrop:'static'
