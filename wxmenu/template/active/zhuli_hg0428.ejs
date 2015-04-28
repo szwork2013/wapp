@@ -92,7 +92,7 @@ border: 0;
 height: 50px;
 color: #ffffff;
 text-align: center;
-background-color:#c30d23;
+background-color:#ffe400;
 
 }
 
@@ -133,8 +133,7 @@ display: inline-block;
 letter-spacing: 0;
 padding: 5px 0 0 55px;
 height: 35px;
-background: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fxs.png) no-repeat 2px -14px;
-background-size: 50px 50px;
+
 margin: 0;
 
 }
@@ -209,7 +208,9 @@ font-weight: bold;
 			
 		<a href="javascript:;" id="goSupport">	
 			
-			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""></a><br>
+			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""></a>
+			 
+			 <br>
 		
 		
 	
@@ -246,30 +247,22 @@ font-weight: bold;
            
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友为你助力</span>
+                <span class="share_timeline_button" >邀请好友为我助力</span>
             </button><br>
-			 <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw329" class="share_timeline1 btn-block">
-              <span class="button1" >我要报名阿玛尼苏州•牡丹首秀</span>
-            </a><br>
+			 
 			
         <% }else{ %>
 		
-	<!--	<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >动动手指帮TA拿苏州•牡丹香水</span>
-            </a>
-			<br>-->
+
 			
-		 <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw329" class="share_timeline1 btn-block">
-              <span class="button1" >我要报名阿玛尼苏州•牡丹首秀</span>
-            </a><br>
 		
 		
-           <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw329" class="share_timeline1 btn-block">
-              <span class="button1" >我也想要Armani 苏州•牡丹香水</span>
+           <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_hg0428" class="share_timeline1 btn-block">
+              <span class="button1" >我也“享”要养乐多</span>
             </a>
 			
         <%}%>
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw0329bg5.jpg" width='100%' alt=""><br>
+		
 <script>
 				$(function(){
 					var height=$(window).height();
@@ -349,10 +342,7 @@ font-weight: bold;
             </button>
 			
 			
-			 <br>
-		    <button id="startRank" class="share_timeline1 btn-block">
-                <span class="duijiang_button" >查看目前排名</span>
-            </button>
+		
         </div>
 
 
@@ -571,9 +561,9 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '【助力】阿玛尼『苏州·牡丹』苏州首秀炫耀登场！', // 分享标题
+	    title: '【助力】你享多了，华府喊你免费喝果汁', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04281.jpg', // 分享图标
 
 			
 				    trigger:function(){
@@ -595,9 +585,9 @@ $(function(){
 				wx.onMenuShareAppMessage({
 			
 	    title: '【助力】你享多了，华府喊你免费喝果汁', // 分享标题
-				    desc: '排名前3名可以获得苏州牡丹香水一瓶', // 分享描述
+				    desc: '你没有想多，是你享多了', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04281.jpg', // 分享图标
 					type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				    trigger:function(){
@@ -679,9 +669,9 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '【助力】阿玛尼『苏州·牡丹』苏州首秀炫耀登场！', // 分享标题
+	    title: '【助力】你享多了，华府喊你免费喝果汁', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04281.jpg', // 分享图标
 
     
 				
@@ -707,10 +697,10 @@ $(function(){
 				
 				
 			
-	    title: '【助力】阿玛尼『苏州·牡丹』苏州首秀炫耀登场！', // 分享标题
-				    desc: '排名前3名可以获得苏州牡丹香水一瓶', // 分享描述
+	    title: '【助力】你享多了，华府喊你免费喝果汁', // 分享标题
+				    desc: '你没有想多，是你享多了', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04281.jpg', // 分享图标
 				   
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -997,13 +987,13 @@ $(function(){
 
 
 </script>		
-
+<!--
 <p class="bottom_tip">
 <a href="#" target="_blank">
 	信玉堂技术支持
 </a>
 </p>
-
+-->
 
 
    
