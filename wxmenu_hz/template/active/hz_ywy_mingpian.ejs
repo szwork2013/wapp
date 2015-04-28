@@ -316,6 +316,12 @@ $(function(){
 				    	
 				    },
 				    complete:function(){
+				    	if(isMyPage){
+				    		_hmt.push(['_trackEvent', 'timeline_ywy', 'share']);
+				    	}
+				    	else{
+				    		_hmt.push(['_trackEvent', 'timeline_kh', 'share']);
+				    	}
 				    	
 				    },
 				    success: function () { 
@@ -338,7 +344,12 @@ $(function(){
 				    	
 				    },
 				    complete:function(){
-				    	
+				    	if(isMyPage){
+				    		_hmt.push(['_trackEvent', 'friend_ywy', 'share']);
+				    	}
+				    	else{
+				    		_hmt.push(['_trackEvent', 'friend_kh', 'share']);
+				    	}
 				    },
 				    success: function () { 
 				        
