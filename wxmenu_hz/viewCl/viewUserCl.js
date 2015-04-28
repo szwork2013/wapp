@@ -5,7 +5,9 @@ var hzUserCodeTool = require('../tools/hz_user_code.js')
 var apiSmsLog = require('../apiCl/apiSmsLog.js')
 var moment = require('moment')
 var ywyList = require('../tools/ywy.json')
+var ywyList2 = require('../tools/ywy2.json')
 var ywyListLen = ywyList.length
+var ywyList2Len = ywyList2.length
 var obj = {}
 
 
@@ -17,6 +19,14 @@ obj.checkIsYwy = function(gh, name){
 			return true
 		}
 	}
+
+
+	for(var i=0; i<ywyList2Len; i++){
+		if(ywyList2[i].gh == gh && ywyList2[i].name == name){
+			return true
+		}
+	}
+
 	return false
 }
 
