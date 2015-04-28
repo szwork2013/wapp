@@ -47,7 +47,7 @@ background-color: #ea5400;
     }
 <%}%>
     .container{
-        background:#000000;
+        background:#ea5400;
         padding-bottom: 20px;
     }
 	.container {
@@ -92,9 +92,7 @@ border: 0;
 height: 50px;
 color: #ffffff;
 text-align: center;
-/*background-color:#c30d23;*/
-background-image: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fbtnbg0329.jpg);
-background-size:320px 50px;
+background-color:#c30d23;
 
 }
 
@@ -178,10 +176,43 @@ font-weight: bold;
 		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04281.jpg" width='100%' alt=""><br>
 		   <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04282.jpg" width='100%' alt=""><br>
 		    <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04283.jpg" width='100%' alt=""><br>
-			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""><br>
+			
+			
+			
+			
+			
+		 <% if(supportScore>=0) { %>
+	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F0.png" width='100%'><br>
+		 
+		 
+		  <% }else if(supportScore>=8){ %>
+		 
+<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F5.png" width='100%'><br>
+		 
+	  <% }else if(supportScore>=12){ %>
+		 
+<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F10.png" width='100%'><br>
+
+  <% }else if(supportScore>=16){ %>
+		 
+<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F15.png" width='100%'><br>
+
+  <% }else if(supportScore>=20){ %>
+		 
+<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F20.png" width='100%'><br>
+		
+		 <% }else { %>
+	图片暂时无法显示
+		   <%}%>
+			
+			
+			
+		<a href="javascript:;" id="goSupport">	
+			
+			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""></a><br>
 		
 		
-		<br>
+	
  
             <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#fff"> “<%= toUserObj.wxName %>”已经获得了
         <b style="color:#c00; font-size:20px;">
@@ -212,8 +243,7 @@ font-weight: bold;
 		
 		
  <% if(isMyPage) { %>
-           <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
-			
+           
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
                 <span class="share_timeline_button" >邀请好友为你助力</span>
@@ -224,10 +254,10 @@ font-weight: bold;
 			
         <% }else{ %>
 		
-		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
+	<!--	<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
                 <span class="button1" >动动手指帮TA拿苏州•牡丹香水</span>
             </a>
-			<br>
+			<br>-->
 			
 		 <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw329" class="share_timeline1 btn-block">
               <span class="button1" >我要报名阿玛尼苏州•牡丹首秀</span>
