@@ -28,17 +28,26 @@
 
 <%- newrelic.getBrowserTimingHeader() %>
 <title>
-     【助力】5月2日18:30博纳影院明星观影见面会，抢票中
+     【助力】你享多了，华府喊你免费喝果汁
 </title>
 
 <style type="text/css">
+
+
+
+body {
+
+background-color: #ea5400;
+
+
+}
 <% if(timeError==1){%>
     .timeErrorHide{
         display:none !important;
     }
 <%}%>
     .container{
-        background:#FFFFFF;
+        background:#000000;
         padding-bottom: 20px;
     }
 	.container {
@@ -81,9 +90,12 @@ text-decoration: none;
 border-radius: 4px;
 border: 0;
 height: 50px;
-color: #333333;
+color: #ffffff;
 text-align: center;
-background-color:#a7b8e3;
+/*background-color:#c30d23;*/
+background-image: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fbtnbg0329.jpg);
+background-size:320px 50px;
+
 }
 
 
@@ -115,6 +127,42 @@ background-color:#a7b8e3;
 background-color:#fffe00;
 }
 	
+	
+	
+	
+	.share_timeline_button {
+display: inline-block;
+letter-spacing: 0;
+padding: 5px 0 0 55px;
+height: 35px;
+background: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fxs.png) no-repeat 2px -14px;
+background-size: 50px 50px;
+margin: 0;
+
+}
+	
+	.duijiang_button {
+display: inline-block;
+letter-spacing: 0;
+font-size: 20px;
+padding: 5px 0 0 55px;
+height: 35px;
+background: url(http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fxs.png) no-repeat 2px -14px;
+background-size: 50px 50px;
+margin: 0;
+font-weight: bold;
+}
+	
+	
+	.modal{
+	color:#000;}
+	
+	
+
+	
+	
+	
+	
 </style>
 
 
@@ -126,17 +174,20 @@ background-color:#fffe00;
 	
         <div class="container">
 		
-		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw0427.jpg" width='100%' alt=""><br>
-		  
+		
+		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04281.jpg" width='100%' alt=""><br>
+		   <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04282.jpg" width='100%' alt=""><br>
+		    <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04283.jpg" width='100%' alt=""><br>
+			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""><br>
 		
 		
 		<br>
  
-            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已经获得了
+            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#fff"> “<%= toUserObj.wxName %>”已经获得了
         <b style="color:#c00; font-size:20px;">
 		
 		
-		 <%= supportScore %></b>个助力,<br>不要忘记兑奖哦！
+		 <%= supportScore %></b>个助力,
 		
 		
 	</center></div>  
@@ -156,27 +207,39 @@ background-color:#fffe00;
 		
 		
 		
+		
+		
+		
+		
  <% if(isMyPage) { %>
-         
+           <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
+			
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
                 <span class="share_timeline_button" >邀请好友为你助力</span>
-            </button>
+            </button><br>
+			 <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw329" class="share_timeline1 btn-block">
+              <span class="button1" >我要报名阿玛尼苏州•牡丹首秀</span>
+            </a><br>
+			
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击帮TA给获得门票</span>
+                <span class="button1" >动动手指帮TA拿苏州•牡丹香水</span>
             </a>
 			<br>
+			
+		 <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw329" class="share_timeline1 btn-block">
+              <span class="button1" >我要报名阿玛尼苏州•牡丹首秀</span>
+            </a><br>
 		
 		
-		
-           <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw0427" class="share_timeline1 btn-block">
-              <span class="button1" >我也想要见小明哥</span>
+           <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_yhw329" class="share_timeline1 btn-block">
+              <span class="button1" >我也想要Armani 苏州•牡丹香水</span>
             </a>
 			
         <%}%>
-		
+		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw0329bg5.jpg" width='100%' alt=""><br>
 <script>
 				$(function(){
 					var height=$(window).height();
@@ -191,12 +254,11 @@ background-color:#fffe00;
 				})
 			</script>
 		
-			<br> 
 
-         <!--   <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
+        <!--    <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
                <span class="button1" >活动规则</span>
-            </a>
-<br> -->
+            </a>-->
+<br> 
        
 
             <div id="divVisitor" class="visitor">
@@ -205,14 +267,14 @@ background-color:#fffe00;
                 
 
 
-                <div class="v-share-surplus">活动剩余时间：
-                    <span class="visitor_over_time" id="last_day"></span>天 
-                    <span class="visitor_over_time" id="last_hour"></span>小时 
-                    <span class="visitor_over_time" id="last_minute"></span>分钟 
+                <div class="v-share-surplus"><b style="color:#000;">活动剩余时间：</b>
+                    <span class="visitor_over_time" id="last_day"></span><b style="color:#000;">天</b> 
+                    <span class="visitor_over_time" id="last_hour"></span><b style="color:#000;">小时</b>
+                    <span class="visitor_over_time" id="last_minute"></span><b style="color:#000;">分钟</b>
 
                 </div>
                 <div class="v-prize-get clearfix">
-                    <span class="v-prize-get-tip">奖品列表：
+                    <span class="v-prize-get-tip"><b style="color:#000;">奖品列表：</b>
 
                     </span>
                 </div>
@@ -255,9 +317,15 @@ background-color:#fffe00;
 		    <button id="startExchange" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
+			
+			
+			 <br>
+		    <button id="startRank" class="share_timeline1 btn-block">
+                <span class="duijiang_button" >查看目前排名</span>
+            </button>
         </div>
 
- <img src="http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw04272.jpg" width='100%' alt=""><br>
+
 
 
 
@@ -359,6 +427,66 @@ background-color:#fffe00;
 
 
 
+
+
+
+
+
+
+<!-- Modal Rank -->
+<div class="modal fade " id="rankModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+ 
+        <h4 class="modal-title" id="myModalLabel">助力排名</h4>
+      </div>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>姓名</th>
+          <th>集得助力</th>
+        </tr>
+      </thead>
+      <tbody>
+       <%  for(var i=0; i<120; i++){ 
+            var obj = rankList[i];
+            if(!obj) break;
+      %>
+             <tr>
+              <td><%= (i+1) %></td>
+              <td><%= obj.userName %></td>
+              <td><%= obj.supportCount %></td>
+            </tr>
+        <% } %> 
+       
+      
+      </tbody>
+    </table>
+   
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script src="/api/xinyutang/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
 
@@ -381,6 +509,8 @@ var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
 var endTime = moment(new Date(activeObj.endTime))
 var now = <%= now %>
 var timeError = '<%= timeError %>'
+var rank = <%- JSON.stringify(rankList) %>
+var nearRank = <%- JSON.stringify(nearRankList) %>
 
 window.isAjax = false
 
@@ -411,9 +541,9 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '【助力】5月2日18:30博纳影院明星观影见面会，抢票中', // 分享标题
+	    title: '【助力】阿玛尼『苏州·牡丹』苏州首秀炫耀登场！', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw0427logo.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
 
 			
 				    trigger:function(){
@@ -434,10 +564,10 @@ $(function(){
 
 				wx.onMenuShareAppMessage({
 			
-	    title: '【助力】5月2日18:30博纳影院明星观影见面会，抢票中', // 分享标题
-				    desc: '5月2日，黄晓明与你不见不散', // 分享描述
+	    title: '【助力】你享多了，华府喊你免费喝果汁', // 分享标题
+				    desc: '排名前3名可以获得苏州牡丹香水一瓶', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw0427logo.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
 					type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				    trigger:function(){
@@ -519,9 +649,9 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '【助力】5月2日18:30博纳影院明星观影见面会，抢票中', // 分享标题
+	    title: '【助力】阿玛尼『苏州·牡丹』苏州首秀炫耀登场！', // 分享标题
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw0427logo.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
 
     
 				
@@ -547,10 +677,10 @@ $(function(){
 				
 				
 			
-	    title: '【助力】5月2日18:30博纳影院明星观影见面会，抢票中', // 分享标题
-				    desc: '5月2日，黄晓明与你不见不散', // 分享描述
+	    title: '【助力】阿玛尼『苏州·牡丹』苏州首秀炫耀登场！', // 分享标题
+				    desc: '排名前3名可以获得苏州牡丹香水一瓶', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Fyhw0427logo.jpg', // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fyhw%2Flogo0329.jpg', // 分享图标
 				   
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -710,6 +840,29 @@ $(function(){
             backdrop:true
           })
     })
+	
+	
+	
+	
+	
+	 //绑定兑换奖品事件，弹出完善资料对话框
+    $('#startRank').click(function(){
+        $('#rankModal').modal({
+            backdrop:true
+          })
+    })
+    $('.close').click(function(){
+        $('#rankModal').modal('hide')
+    })
+
+	
+	
+	
+	
+	
+	
+	
+	
 
     //保存按钮
     $('#save_change').click(function(){
