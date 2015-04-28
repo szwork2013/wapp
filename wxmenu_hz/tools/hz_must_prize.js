@@ -28,10 +28,10 @@ obj.rulesList = [
 	{//开发测试用
 		'dateStart':moment("20150401", "YYYYMMDD"),
 		'dateEnd':moment("20150430", "YYYYMMDD"),
-		'phoneTime':[7,13,18,21],
-		'phoneAll':3,
+		'phoneTime':[14,15],
+		'phoneAll':1,
 		'phoneTen':1,
-		'magic':100,
+		'magic':2,
 	},
 	{
 		'dateStart':moment("20150501", "YYYYMMDD"),
@@ -144,10 +144,10 @@ obj.getCurDayPrizeCount = function(prizeList, cb){
 obj.checkIfgetPrize = function(){
 
 	var userRate = (Math.random()*100).toFixed(2) - 0; //用户抽出的随机数
-	if(userRate < 0.5){
+	if(userRate < 1){
 		return 'phone'
 	}
-	if(userRate < 5){
+	if(userRate < 20){
 		return 'magic'
 	}
 
@@ -400,7 +400,7 @@ obj.sendSmsPrize = function(userId, prizeId){
 				var ywy_mobile = ywyDoc.uobj.appUserMobile
 
 				lotteryBl.getPrizeById(prizeId, function(err, prizeObj){
-					if(prizeObj.ename == 'phone'){
+					if(prizeObj.desc == 'phone'){
 						var prizeStr = '手机一部'
 					}else{
 						var prizeStr = '魔豆一个'
@@ -477,7 +477,7 @@ obj.sendSms2 = function(mobile, content, cb){
 			return cb('error')
 		  }
 		  var matchList = body.match(/">(.*?)<\/string>/)
-		  if(matchList>0){
+		  if(matchList.length>0){
 		  		if(matchList[1] && matchList[1].length <= 6){
 		  			logger.info('hz_must_prize.js uobj.sendSms error, code: %s', body)
 		  			cb('error')
