@@ -178,19 +178,19 @@ font-weight: bold;
 			
 			
 			
-		 <% if(supportScore>=0) { %>
+		 <% if(supportScore>=0&&supportScore<8) { %>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F0.png" width='100%'><br>
 		 
 		 
-		  <% }else if(supportScore>=8){ %>
+		  <% }else if(supportScore>=8&&supportScore<12){ %>
 		 
 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F5.png" width='100%'><br>
 		 
-	  <% }else if(supportScore>=12){ %>
+	  <% }else if(supportScore>=12&&supportScore<16){ %>
 		 
 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F10.png" width='100%'><br>
 
-  <% }else if(supportScore>=16){ %>
+  <% }else if(supportScore>=16&&supportScore<20){ %>
 		 
 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F15.png" width='100%'><br>
 
