@@ -1,5 +1,6 @@
 var obj = {}
 var request = require('request');
+var config = require('../config/config.js');
 var util = require('util')
 var lotteryBl = require('../bl/wxLottery.js');
 var lotteryRecModel = require('../dl/lotteryRecordModel.js'); //加载抽奖记录模型
@@ -460,11 +461,11 @@ obj.sendSms2 = function(mobile, content, cb){
 	
 	//获取到用户的名字，手机，奖品名字，业务员手机
 	//然后就可以进行发送手机短信的流程了
-	var smsPwd = '365221'
-	var smsUser = 'JC2017'
+	var smsPwd = config.smsPwd
+	var smsUser = config.smsUser
 	
 	var smsContent = encodeURIComponent(content)
-	var smsReqUrl = util.format('http://61.145.229.29:9003/MWGate/wmgw.asmx/MongateSendSubmit?userId=%s'+
+	var smsReqUrl = util.format('http://61.145.229.29:9006/MWGate/wmgw.asmx/MongateSendSubmit?userId=%s'+
 		'&password=%s&pszMobis=%s&pszMsg=%s&iMobiCount=1&pszSubPort=*&MsgId=%s',
 		smsUser,smsPwd,mobile,smsContent,Date.now())
 
