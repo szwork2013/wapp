@@ -805,7 +805,7 @@ obj.scheduleJob = function(){
 		voteItem.createOneOrUpdate({
 			_id:itemid
 		},{
-			todayVoteNumber:0,
+			//todayVoteNumber:0,
 			lastdayVoteNumber:count,
 			lastdayVoteOrder:pos
 		},function(err, itemobj){
