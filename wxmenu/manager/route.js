@@ -111,6 +111,7 @@ var addroute = function(app){
 
 	//userbind
 	app.get('/manger/userapp/list', checkLogin, userappCl.list)
+	app.get('/manger/userapp/bindlist', checkLogin, userappCl.bindlist)
 	app.post('/manger/userapp/read', checkLogin, userappCl.read)
 	app.post('/manger/userapp/update', checkLogin, userappCl.update)
 	app.post('/manger/userapp/destroy', checkLogin, userappCl.destroy)
