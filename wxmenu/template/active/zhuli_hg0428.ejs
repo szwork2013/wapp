@@ -178,25 +178,23 @@ font-weight: bold;
 			
 			
 			
-		 <% if(supportScore>=0&&supportScore<5) { %>
+		 <% if(supportScore>=0&&supportScore<15) { %>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F0.png" width='100%'><br>
 		 
 		 
-		  <% }else if(supportScore>=5&&supportScore<10){ %>
+		
 		 
-<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F5.png" width='100%'><br>
-		 
-	  <% }else if(supportScore>=10&&supportScore<15){ %>
-		 
-<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F10.png" width='100%'><br>
-
-  <% }else if(supportScore>=15&&supportScore<25){ %>
+	  <% }else if(supportScore>=15&&supportScore<20){ %>
 		 
 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F15.png" width='100%'><br>
 
-  <% }else if(supportScore>=25){ %>
+  <% }else if(supportScore>=20&&supportScore<25){ %>
 		 
 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F20.png" width='100%'><br>
+
+  <% }else if(supportScore>=25){ %>
+		 
+<img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2F25.png" width='100%'><br>
 		
 		 <% }else { %>
 	图片暂时无法显示
