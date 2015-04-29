@@ -28,7 +28,7 @@ ul li{ list-style:none; float:left;}
 .wrapper{ width:100%; margin:0 auto; background:#fff;}
 .header{ background:url('http://bcs.duapp.com/xytimg/ggl%2Fqxh%2Fbg.jpg') no-repeat;background-size: width:400px;height:400px; position:relative;}
 .luck{
- width:267px; height:187px; line-height:163px; cursor:pointer; position:absolute; right:26px; top:53px; font-size:22px; letter-spacing:1px; text-align:center; color:#000;
+ width:267px; height:187px; line-height:163px; cursor:pointer; position:absolute; right:26px; top:53px; font-size:14px; letter-spacing:0px; text-align:center; color:#000;
 z-index: 3;
 background-color: #d3d3d3;
 overflow:hidden;
@@ -57,14 +57,21 @@ height: 40px;
   width: 300px;
   height: 71px;
 }
-.prize_list {
-width: 280px;
-height: 440px;
-display: block;
-position: absolute;
-top: 1991px;
-left: 20px;
+
+
+.lottery_again3{
+  top: 250px;
+    position: absolute;
+
+  left:35px;
+  display: block;
+  width: 250px;
+  background-color:#5bb33c;
+  height: 25px;
 }
+
+
+
 .get_prize_tip{
   width: 200px;
   height: 20px;
@@ -84,7 +91,7 @@ width: 280px;
 height: 100px;
 display: block;
 position: absolute;
-top: 260px;
+top: 280px;
 left: 20px;
 }
 .start{
@@ -109,7 +116,7 @@ height: 22px;
 display: block;
 z-index: 2;
 position: absolute;
-font-size: 16px;
+font-size: 12px;
 color: #FFF;
 line-height: 30px;
 top: 122px;
@@ -263,10 +270,9 @@ font-size: 18px;
   <input type="hidden" id='openid' value=""/>
   <div class="header">
     <div class="last_time" id="last_time"></div>
- <a href="javascript:;" title="再刮一次" id="lottery_again" class="lottery_again"></a>
-  <!--  <a href="javascript:;" title="抽奖规则" id="lottery_rule" class="lottery_again lottery_again2"></a>-->
- <!--   <p class="get_prize_tip">奖品仅限本人领取，不得代领</p>
-    <p class="get_prize_tip get_prize_tip2">2014年9月13日-9月23日</p>-->
+ <a href="javascript:;" title="刷新" id="lottery_again" class="lottery_again3">刷新</a>
+ 
+ 
 
 <a href="javascript:;" id="start" class="start" title="">点击开始刮奖</a> 
         <div class="luck" id="lottery_result" style="display:;"></div>
