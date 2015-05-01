@@ -7,7 +7,7 @@
     <meta content="no-cache" http-equiv="Cache-Control"></meta>
     <meta name="format-detection" content="telephone=no" />
     <meta content="0" http-equiv="Expires"></meta>
-    <title>抽奖活动</title>
+    <title>诚邀您参与2015年合众人寿客服节抽奖活动</title>
   <script src="http://7xit1c.com1.z0.glb.clouddn.com/lottery/jquery.1.11.1.min.js" type="text/javascript"></script>
   <script src="http://7xit1c.com1.z0.glb.clouddn.com/bootstrap/js/bootstrap.min.js"></script>
   <script src="http://7xit1c.com1.z0.glb.clouddn.com/lottery/moment.js" type="text/javascript"></script>
@@ -87,6 +87,12 @@ top: 37.3%;
   </head>
 <body>
 
+
+
+
+<% if(wxuobj.appUserType == 2){ %>
+<h1>业务员无法抽奖哦~</h1>
+<%} else { %>
   <div class="wrapper activityWrapper">
     <div class="box">
       <div class="boxWrapper"></div>
@@ -102,6 +108,8 @@ top: 37.3%;
     <div class="prizeTip tip"></div>
     <div class="noPrizeTip tip"></div>
   </div>
+
+<% } %>
 
   <div id="dialogModal" class="modal">
     <div class="dialog">
@@ -544,15 +552,12 @@ function bindLottery(){
 
 
 
-
+<!--
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script src="/api/hz/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
 <script type="text/javascript">
 
-
 $(function(){
-
-
 
     //部署上生产环境，把alert去掉
 
@@ -615,7 +620,7 @@ $(function(){
 
 </script> 
 
-
+-->
 
 
 <div style="display:none;">
