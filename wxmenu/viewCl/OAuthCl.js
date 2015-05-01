@@ -367,7 +367,7 @@ obj.oauthJumpBack = function(app,applist){
 							},{
 								 wxName:userinfo.nickname,                   //微信用户昵称
 								 wxAvatar:userinfo.headimgurl,                //微信用户头像
-								 wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
+								 //wxAddress:userinfo.country+','+userinfo.province+','+userinfo.city
 							},function(err,updatedoc){
 
 								//处理完异常

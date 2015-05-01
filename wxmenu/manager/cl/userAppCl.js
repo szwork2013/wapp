@@ -43,35 +43,52 @@ obj.read = function(req, res){
 			dl2.getUserByIds(ids,function(err,idsary){ //获得用户id和用户名对应关系
 				if(err) return res.json(err)
 				var dary=[]
-				resObj["Data"].forEach(function(v){
+				 resObj["Data"].forEach(function(v){
 
-					  var uname = v.userId
-					  var sex = 1
-					  var mobile = ''
-					  idsary.forEach(function(v2){
-					  	  if(v2.value == v.userId){
-					  	  	uname = v2.text;
-					  	  	sex = v2.sex
-					  	  	mobile = v2.mobile
-					  	  }
-					  }) 
-					  dary.push({
-					  		  _id:v._id.toString(),	 
-							  userId:uname, 				   //此用户在数据库中的_id
-							  userMobile:mobile,
-							  userSex:sex,
-						      openId:v.openId,
-						      appId:v.appId,
-						      appUserCity:v.appUserCity,
-						      appUserCommunity:v.appUserCommunity,
-						      appUserBuilding:v.appUserBuilding,
-						      appUserRoom:v.appUserRoom,
-						      appCardNumber:v.appCardNumber,
-						      appUserType:v.appUserType,
-						      isNewSubmit:v.isNewSubmit,
-							  writeTime: v.writeTime,
-					  })
-				})
+				// 	  var uname = v.userId
+				// 	  var sex = 1
+				// 	  var mobile = ''
+				// 	  idsary.forEach(function(v2){
+				// 	  	  if(v2.value == v.userId){
+				// 	  	  	uname = v2.text;
+				// 	  	  	sex = v2.sex
+				// 	  	  	mobile = v2.mobile
+				// 	  	  }
+				// 	  }) 
+				// 	  dary.push({
+				// 	  		  _id:v._id.toString(),	 
+				// 			  userId:uname, 				   //此用户在数据库中的_id
+				// 			  userMobile:mobile,
+				// 			  userSex:sex,
+				// 		      openId:v.openId,
+				// 		      appId:v.appId,
+				// 		      appUserCity:v.appUserCity,
+				// 		      appUserCommunity:v.appUserCommunity,
+				// 		      appUserBuilding:v.appUserBuilding,
+				// 		      appUserRoom:v.appUserRoom,
+				// 		      appCardNumber:v.appCardNumber,
+				// 		      appUserType:v.appUserType,
+				// 		      isNewSubmit:v.isNewSubmit,
+				// 			  writeTime: v.writeTime,
+				// 	  })
+				 				
+					dary.push({
+				  		  _id:v._id.toString(),	 
+						  userId:'', 				   //此用户在数据库中的_id
+						  userMobile:'',
+						  userSex:1,
+					      openId:v.openId,
+					      appId:v.appId,
+					      appUserCity:v.appUserCity,
+					      appUserCommunity:v.appUserCommunity,
+					      appUserBuilding:v.appUserBuilding,
+					      appUserRoom:v.appUserRoom,
+					      appCardNumber:v.appCardNumber,
+					      appUserType:v.appUserType,
+					      isNewSubmit:v.isNewSubmit,
+						  writeTime: v.writeTime,
+				  	})
+			  	})
 
 				resObj["Total"] = count
 				resObj["Data"] = dary
