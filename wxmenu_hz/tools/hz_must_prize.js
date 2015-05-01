@@ -144,10 +144,10 @@ obj.getCurDayPrizeCount = function(prizeList, cb){
 obj.checkIfgetPrize = function(){
 
 	var userRate = (Math.random()*100).toFixed(2) - 0; //用户抽出的随机数
-	if(userRate < 1){
+	if(userRate < 5){
 		return 'phone'
 	}
-	if(userRate < 20){
+	if(userRate < 40){
 		return 'magic'
 	}
 
