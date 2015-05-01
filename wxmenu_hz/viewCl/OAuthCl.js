@@ -287,7 +287,7 @@ obj.oauthJumpBack = function(app,applist){
 			if(state != oauth_state){
 				//记录日志
 				logger.error('state error, (state)%s != (oauth_state)%s, req url: %s', state, oauth_state, req.originalUrl);
-				return res.send(403,'state error')
+				//return res.send(403,'state error')
 			}
 			if(!code || code == 'authdeny'){
 				//微信验证无效
