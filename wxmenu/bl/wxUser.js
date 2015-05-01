@@ -86,7 +86,17 @@ obj.enter = function(openId,appId,cb){ //用户进入
 					openId:openId,
 					appId:appId,
 				},function(err,appUDoc){
-					if(err) return cb(err);
+					if(err){
+						//如果出错就把这条纪录删了
+						userAppModel.destroy({
+							openId:openId,
+						}, function(err, count){
+							logger.error('*******')
+							logger.error('delete openid: %s, count: %s, err: %s', openId, count, err);
+							logger.error('*******')
+						})
+						return cb(err);
+					}
 					cb(null, {
 						uobj:udoc2
 					});
