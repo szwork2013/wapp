@@ -433,6 +433,10 @@ obj.sendSmsPrize = function(userId, prizeId){
 
 obj.sendSms = function(mobile, content, cb){
 	
+	if(mobile == '95515'){
+		logger.error('95515 no send sms, content: %s', content);				
+		return cb()
+	} 
 	//获取到用户的名字，手机，奖品名字，业务员手机
 	//然后就可以进行发送手机短信的流程了
 	var smsPwd = '99541CABC900E8612C161D7399A85BF1'
