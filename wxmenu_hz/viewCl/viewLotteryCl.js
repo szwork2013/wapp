@@ -33,7 +33,10 @@ obj.lotteryPage = function(req,res){ //活动页面展示
 
 	var userid = req.session[appEname+'_userid'];
 	if(!userid){
-		return res.send('用户身份丢失，请重新进入')
+		//如果身份丢失，则需要重新获取,跳转到名片页，重新获取身份
+		res.redirect('/active/hz?ename=hz_ywy_mingpian&touserid='+ywyuserid)
+		return
+		//return res.send('用户身份丢失，请重新进入')
 	}
 
 	if(!appEname){
