@@ -263,7 +263,7 @@ obj.checkPrize = function(mobile, prizeList, logData, cb){
 	//匹配规则，奖品的ename、手机号、时间
 
 	var userType = obj.getMobileType(mobile)
-	console.log(userType)
+	//console.log(userType)
 
 	var nowRule = obj.getNowRule()
 	logData.userType = userType
