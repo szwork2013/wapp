@@ -62,7 +62,7 @@
 			</div>
 
 		</div>
-		<% if(!isMyPage) { %>
+		<% if(!isMyPage && fromUserObj.appUserType!=2) { %>
 			<a href="/lottery/<%= appEname%>?ename=hz_ywy_prize&wxuserid=<%= fromUserId %>&ywyuserid=<%= toUserId %>" id="gameStart" ></a>
 		<%} %>
 	</div>
