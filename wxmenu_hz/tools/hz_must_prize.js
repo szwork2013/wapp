@@ -165,11 +165,9 @@ obj.reCheck = function(prizeId, recordDoc, maxCount, cb){
 	}, function(err, count){
 		if(err) return cb(err)
 
-
 		logger.error('*******')
 		logger.error('reCheck prizeId: %s, maxCount: %s, count: %s', prizeId, maxCount, count);
 		logger.error('*******')
-
 
 		//如果检测出异常，则回滚之前的中奖纪录
 		if(count > maxCount){
