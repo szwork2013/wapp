@@ -39,6 +39,7 @@
 	</script>
 
 <% }else{ %>  
+
 	<div class="wrapper cardWrapper">
 		<div id="infoBox">
 			<div id="beforeScore">
@@ -79,6 +80,33 @@
 </div>
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:320px;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+
+        <h4 class="modal-title" id="myModalLabel">友情提醒</h4>
+      </div>
+      <div class="modal-body"> 
+        <p id="msg"></p>
+
+      </div>
+      <div class="modal-footer">
+      <a href="javascript:;" data-dismiss="modal" class="btn btn-default" >确定</a>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
 <script type="text/javascript">
 var logCount = <%= logCount %>
 var appId = '<%= appId %>'
@@ -102,7 +130,20 @@ $(function(){
 	initCardInfo();
 	initWrapperSize();
 	bindEvent();
+
+	<% if(toUserObj.appUserMobile = '95515') {%>
+		$('#msg').html('本页面仅限十年客户参与，如果您是十年客户，请点击确定')
+        $('#myModal').modal({
+                backdrop:true
+        })
+	<% } %>
+
 });
+
+
+
+
+
 
 function initCardInfo(){
 
