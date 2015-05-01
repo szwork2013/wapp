@@ -84,7 +84,7 @@ obj.getNowRule = function(){
 	var nowMoment = moment()
 	var ruleObj = false
 	for(var i=0;i<obj.rulesList.length;i++){
-		if(nowMoment>=obj.rulesList[i].dateStart && nowMoment>=obj.rulesList[i]<=obj.rulesList[i].dateEnd){
+		if(nowMoment>=obj.rulesList[i].dateStart && nowMoment<=obj.rulesList[i].dateEnd){
 			ruleObj = obj.rulesList[i]
 			break;
 		}
@@ -158,11 +158,18 @@ obj.checkIfgetPrize = function(){
 obj.reCheck = function(prizeId, recordDoc, maxCount, cb){
 	var todayZero = moment().hour(0).minute(0).second(0)
 
+
 	lotteryRecModel.countAll({
 		'prizeId':prizeId,
-		'writeTime':{'$lte':todayZero}
+		'writeTime':{'$gte':todayZero}
 	}, function(err, count){
 		if(err) return cb(err)
+
+
+		logger.error('*******')
+		logger.error('reCheck prizeId: %s, maxCount: %s, count: %s', prizeId, maxCount, count);
+		logger.error('*******')
+
 
 		//如果检测出异常，则回滚之前的中奖纪录
 		if(count > maxCount){
