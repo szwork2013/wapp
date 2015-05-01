@@ -171,7 +171,8 @@ obj.activePage = function(req,res){ //活动页面展示
 		if(toUserObj.appUserName == '未认证会员'){
 				toUserObj.appUserName = ''
 		}
-		if(toUserObj.appUserMobile.length != 11){
+		
+		if(toUserObj.appUserMobile.length != 11 && toUserObj.appUserMobile != '95511'){
 				toUserObj.appUserMobile = ''
 		}
 
