@@ -355,7 +355,9 @@ var addroute = function(app){
 		app.get('/clear', function(req,res){
 			req.session.destroy()
 			req.session = null
-			res.render('clear/clearCookie.ejs')
+			res.render('clear/clearCookie.ejs', {
+				header:JSON.stringify(req.headers)
+			})
 		})
 	})
 }
