@@ -120,17 +120,18 @@ function bindEvent(){
         $('#myModal').modal({
                 backdrop:true
         })
+        $(".formModal").hide();
         return
     }
 
     if(fromUserObj.appUserType == 2){
-        $('#msg').html('您已经登记成功，回复关键字“业务员名片”，查看个人名片')
+        $('#msg').html('您已经登记成功，请点击合众公众号菜单，查看个人名片')
         $('#myModal').modal({
                 backdrop:true
         })
         
         $(".formModal").hide();
-        $(".alertModal").show();
+        //$(".alertModal").show();
         return
     }
 
@@ -201,7 +202,14 @@ function bindEvent(){
             }
             else{
                 $(".formModal").hide();
-                $(".alertModal").show();
+                $('#msg').html('代理人登记成功')
+                $('#myModal').modal({
+                        backdrop:true
+                })
+                setTimeout(function(){
+                    location.href = location.href
+                },1000)
+                //$(".alertModal").show();
             }
         },'json')
 
@@ -216,8 +224,12 @@ function bindEvent(){
      fromUserObj.code1 &&
      fromUserObj.code2){
         //已经注册成为了业务员
+        $('#msg').html('您已经登记成功，请点击合众公众号菜单，查看个人名片')
+        $('#myModal').modal({
+                backdrop:true
+        })
+        
         $(".formModal").hide();
-        $(".alertModal").show();
     }
 
 
