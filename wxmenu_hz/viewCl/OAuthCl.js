@@ -12,7 +12,7 @@ var obj = {}
 var oauth_back_url = '/oauth/back';
 var oauth_oob = 'oob';
 var oauth_logout = '/oauth/logout';
-var oauth_state = 'wujb'
+var oauth_state = 'wu'
 
 
 
