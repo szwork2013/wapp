@@ -172,7 +172,7 @@ obj.activePage = function(req,res){ //活动页面展示
 				toUserObj.appUserName = ''
 		}
 		
-		if(toUserObj.appUserMobile.length != 11 && toUserObj.appUserMobile != '95511'){
+		if(toUserObj.appUserMobile.length != 11 && toUserObj.appUserMobile != '95515'){
 				toUserObj.appUserMobile = ''
 		}
 
