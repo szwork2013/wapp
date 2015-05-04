@@ -653,19 +653,19 @@ obj.mailTo = function(excelList){
 	mailOptions.attachments = []
 	if(excelList['ywy'].length > 0){
 		mailOptions.attachments.push({
-				filename: excelList['ywy']['filename'],
+				filename: excelList['ywy']['excelName'],
 				content: fs.createReadStream(excelList['ywy']['excelPath'])
 			})
 	}
 	if(excelList['prize'].length > 0){
 		mailOptions.attachments.push({
-				filename: excelList['prize']['filename'],
+				filename: excelList['prize']['excelName'],
 				content: fs.createReadStream(excelList['prize']['excelPath'])
 			})
 	}
 	if(excelList['user'].length > 0){
 		mailOptions.attachments.push({
-				filename: excelList['user']['filename'],
+				filename: excelList['user']['excelName'],
 				content: fs.createReadStream(excelList['user']['excelPath'])
 			})
 	}
