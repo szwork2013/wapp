@@ -339,6 +339,14 @@ obj.getTodayUserRegAndMail = function(dayMoment, endMoment, cb){
 			logger.error('obj.getTodayUserRegAndMail userModel.findAll got  error: %s', err);
 			return cb(err)
 		}
+
+		if(list.length == 0){
+			//obj.mailTo(0, false)
+			return cb({
+				'length':0
+			})
+		}
+
 		var ywyIds = []
 
 		list.forEach(function(item){
@@ -437,6 +445,14 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 			logger.error('obj.getTodayUserPrizeAndMail lotteryRecordModel.findAll got  error: %s', err);
 			return cb(err)
 		}
+		if(list.length == 0){
+			//obj.mailTo(0, false)
+			return cb({
+				'length':0
+			})
+		}
+
+
 		var userIds = []
 		var prizeIds = []
 		//获取用户和奖品id列表
@@ -589,7 +605,7 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment, cb){
 		//console.log(result)
 
 		if(result.length == 0){
-			obj.mailTo(0, false)
+			//obj.mailTo(0, false)
 			return cb({
 				'length':0
 			})
