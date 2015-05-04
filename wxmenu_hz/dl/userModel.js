@@ -95,6 +95,9 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 				wxAvatar:v.wxAvatar,
 				wxAddress:v.wxAddress,
 				appUserType:v.appUserType,
+				code1:v.code1,
+				code2:v.code2,
+				appUserCode:v.appUserCode,
 			})
 		});
 

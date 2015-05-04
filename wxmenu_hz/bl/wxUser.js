@@ -3,6 +3,8 @@ var userModel = require('../dl/userModel.js'); //加载用户模型
 var userAppModel = require('../dl/userAppModel.js'); //加载用户帮顶关系模型
 var guidModel = require('../dl/guidModel.js');
 var starLogModel = require('../dl/starLogModel.js'); //打分的流水
+var lotteryRecordModel = require('../dl/lotteryRecordModel.js'); //抽奖流水
+var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js'); //抽奖奖品
 
 var fs = require('fs');
 var path = require('path')
@@ -13,6 +15,7 @@ var utils = require('../lib/utils.js');
 var config = require('../config/config.js');
 var nodemailer = require("nodemailer");
 var node_schedule = require('node-schedule');
+var async = require('async');
 
 
 var obj = {}
@@ -317,8 +320,239 @@ obj.dealStar = function(userId, toUserId, score, ip, cb){
 }
 
 
+
+
+
+//获取当天新注册的用户excel表格
+obj.getTodayUserRegAndMail = function(dayMoment, endMoment, cb){
+
+	var result = []
+	//获取当天的业务员信息
+	userModel.findAll({
+		'appUserType':1,
+		'writeTime':{
+			'$gte':dayMoment.format('YYYY/MM/DD HH:mm:ss'),
+			'$lt':endMoment.format('YYYY/MM/DD HH:mm:ss')
+		}
+	},0,10000,function(err, list){
+		if(err){
+			logger.error('obj.getTodayUserRegAndMail userModel.findAll got  error: %s', err);
+			return cb(err)
+		}
+		var ywyIds = []
+
+		list.forEach(function(item){
+			if(ywyIds.indexOf(item.appUserCode) == -1){
+				ywyIds.push(item.appUserCode)
+			}
+		})
+		//console.log(ywyIds)
+
+		userModel.getUserByIds(ywyIds, function(err, ywyList){
+			if(err){
+				logger.error('obj.getTodayUserRegAndMail userModel.getUserByIds got error: %s', err);
+				return cb(err)
+			}
+			list.forEach(function(item){
+				for(var i=0; i<ywyList.length;i++){
+					//如果业务员id和用户id匹配
+					if(item.appUserCode == ywyList[i].value.toString()){
+						result.push({
+							'name':item.appUserName+'',
+							'mobile':item.appUserMobile+'',
+							'ywy_name':ywyList[i].name,
+							'ywy_gh':'gh '+ywyList[i].code1,
+							'ywy_mobile':ywyList[i].mobile,
+							'writeTime':moment(item.writeTime).format('YYYY/MM/DD HH:mm:ss').toString()
+						})
+						break;
+					}
+				}
+				
+			})
+			//完成循环保存csv
+			json2csv({data: result, fields: Object.keys(result[0] || {})}, function(err, csv) {
+					  if(err){
+							logger.error('obj.getTodayUserRegAndMail json2csv got error: %s', err);
+							return cb(err)
+						}
+					  var saveExcelPath = path.join(__dirname,'..','upload')
+					  var excelName = endMoment.format('YYYY-MM-DD') + '_userlist.csv'
+					  var excelPath =  path.join(saveExcelPath, excelName)
+					  try{
+					  	//var buf = iconv.convert()
+					  	var buf = iconv.encode(csv, 'gbk');
+					  }
+					  catch(e){
+					  	logger.error('obj.getTodayUserRegAndMail  iconv.convert got error: %s', e);
+					  	return cb(e)
+					  }
+					  
+					  fs.writeFile(excelPath, buf, function (err) {
+						  if(err){
+								logger.error('obj.getTodayUserRegAndMail fs.writeFile got error: %s', err);
+								return cb(err)
+							}
+							  //console.log('It\'s saved!');
+							  //obj.mailTo(result.length, excelPath, excelName)
+							  cb(null, {
+							  		'length':result.length,
+							  		'excelPath':excelPath,
+							  		'excelName':excelName
+							  })
+						}); //end fs.writeFile
+					  return
+				});//end json2csv
+
+
+		})//end userModel.getUserByIds
+	})//end userModel.findAll
+
+}
+
+
+
+
+
+
+
+
+
+
+//获取当天中奖的用户以及此用户的ywy的excel表格
+obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
+
+	var result = []
+
+
+	//获取当天的业务员信息
+	lotteryRecordModel.findAll({
+		'prizeId':{'$ne':0},
+		'writeTime':{
+			'$gte':dayMoment.format('YYYY/MM/DD HH:mm:ss'),
+			'$lt':endMoment.format('YYYY/MM/DD HH:mm:ss')
+		}
+	},0,10000,function(err, list){
+		if(err){
+			logger.error('obj.getTodayUserPrizeAndMail lotteryRecordModel.findAll got  error: %s', err);
+			return cb(err)
+		}
+		var userIds = []
+		var prizeIds = []
+		//获取用户和奖品id列表
+		list.forEach(function(item){
+			userIds.push(item.userId)
+			if(prizeIds.indexOf(item.prizeId) == -1){
+				prizeIds.push(item.prizeId)
+			}
+		})
+
+		//获取奖品列表
+		lotteryPrizeModel.getPrizeByIds(prizeIds, function(err, prizeList){
+				if(err){
+					logger.error('obj.getTodayUserPrizeAndMail lotteryPrizeModel.getPrizeByIds got  error: %s', err);
+					return cb(err)
+				}
+				userModel.getUserByIds(userIds, function(err, userList){
+				if(err){
+					logger.error('obj.getTodayUserPrizeAndMail userModel.getUserByIds got error: %s', err);
+					return cb(err)
+				}
+
+				var result = []
+				var ywyIds = []
+				list.forEach(function(item){
+			
+					//找到用户信息
+					userList.forEach(function(userItem){
+						if(userItem.value.toString() == item.userId){
+							var tempObj = {
+								'name':userItem.name+'',
+								'mobile':userItem.mobile+'',
+								'ywy_id':userItem.appUserCode,
+								'writeTime':moment(item.writeTime).format('YYYY/MM/DD HH:mm:ss').toString()
+							}
+							if(ywyIds.indexOf(userItem.appUserCode) == -1){
+								ywyIds.push(userItem.appUserCode)
+							}
+							
+							//找到奖品名字
+							prizeList.forEach(function(prizeItem){
+								if(item.prizeId == prizeItem._id.toString()){
+									tempObj.prize = prizeItem.name
+								}
+
+							})//end prizeList.forEach
+							result.push(tempObj)
+						}//end if
+					})//end userList.forEach
+				})//end list.forEach
+
+				//console.log(ywyIds)
+				//获取业务员信息
+				userModel.getUserByIds(ywyIds, function(err, ywyList){
+					if(err){
+						logger.error('obj.getTodayUserPrizeAndMail userModel.getUserByIds got error: %s', err);
+						return cb(err)
+					}
+
+					//填写业务员信息
+					result.forEach(function(resultItem){
+						ywyList.forEach(function(ywyItem){
+							if(resultItem.ywy_id == ywyItem.value.toString()){
+								resultItem.ywy_name = ywyItem.name
+								resultItem.ywy_gh = 'gh '+ywyItem.code1
+							}
+						})//end result.forEach
+					})//end result.forEach
+
+					json2csv({data: result, fields: Object.keys(result[0] || {})}, function(err, csv) {
+							  if(err){
+									logger.error('obj.getTodayUserPrizeAndMail json2csv got error: %s', err);
+									return cb(err)
+								}
+							  var saveExcelPath = path.join(__dirname,'..','upload')
+							  var excelName = endMoment.format('YYYY-MM-DD') + '_prizelist.csv'
+							  var excelPath =  path.join(saveExcelPath, excelName)
+							  try{
+							  	//var buf = iconv.convert()
+							  	var buf = iconv.encode(csv, 'gbk');
+							  }
+							  catch(e){
+							  	logger.error('obj.getTodayUserPrizeAndMail  iconv.convert got error: %s', e);
+							  	return cb(e)
+							  }
+							  
+							  fs.writeFile(excelPath, buf, function (err) {
+								  if(err){
+										logger.error('obj.getTodayUserPrizeAndMail fs.writeFile got error: %s', err);
+										return cb(err)
+									}
+									  //console.log('It\'s saved!');
+									  //obj.mailTo(result.length, excelPath, excelName)
+									  cb(null, {
+									  		'length':result.length,
+									  		'excelPath':excelPath,
+									  		'excelName':excelName
+									  })
+								}); //end fs.writeFile
+							  return
+						});//end json2csv
+
+				})//end userModel.getUserByIds ywy
+			})//end userModel.getUserByIds user
+		})//end lotteryPrizeModel.getPrizeByIds
+	})//end lotteryRecordModel.findAll
+
+
+}
+
+
+
+
+
 //获取当天的业务员注册excel表格
-obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
+obj.getTodayYwyRegAndMail = function(dayMoment, endMoment, cb){
 	if(!dayMoment){
 		var dayMoment = moment().hour(0).minute(0).second(0)
 	}
@@ -336,7 +570,7 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 	},0,10000,function(err, list){
 		if(err){
 			logger.error('obj.getTodayYwyRegAndMail userModel.findAll got  error: %s', err);
-			return
+			return cb(err)
 		}
 
 		//var iconv = new Iconv('UTF-8', 'GBK');
@@ -356,12 +590,15 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 
 		if(result.length == 0){
 			obj.mailTo(0, false)
-			return
+			return cb({
+				'length':0
+			})
 		}
+
 		json2csv({data: result, fields: Object.keys(result[0] || {})}, function(err, csv) {
 			  if(err){
 					logger.error('obj.getTodayYwyRegAndMail json2csv got error: %s', err);
-					return
+					return cb(err)
 				}
 			  var saveExcelPath = path.join(__dirname,'..','upload')
 			  var excelName = endMoment.format('YYYY-MM-DD') + '_list.csv'
@@ -372,16 +609,20 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 			  }
 			  catch(e){
 			  	logger.error('obj.getTodayYwyRegAndMail  iconv.convert got error: %s', e);
-			  	return
+			  	return cb(e)
 			  }
 			  
 			  fs.writeFile(excelPath, buf, function (err) {
 				  if(err){
 						logger.error('obj.getTodayYwyRegAndMail fs.writeFile got error: %s', err);
-						return
+						return cb(err)
 					}
 				  //console.log('It\'s saved!');
-				  obj.mailTo(result.length, excelPath, excelName)
+				  cb(null, {
+					  		'length':result.length,
+					  		'excelPath':excelPath,
+					  		'excelName':excelName
+					  })
 				});
 			  return
 		});
@@ -392,26 +633,41 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment){
 }
 
 
-obj.mailTo = function(resultLength, excelPath, filename){
+obj.mailTo = function(excelList){
 
 
 	// setup e-mail data with unicode symbols
 	var mailOptions = {
 	    from: "wuzh <"+config.MAIL_ACC+">", // sender address
-	    to: "29132101@qq.com, jambo.cn@163.com, 53822985@qq.com", // list of receivers
-	    subject: "合众业务员注册数", // Subject line
+	    //to: "29132101@qq.com, jambo.cn@163.com, 53822985@qq.com", // list of receivers
+	    to: "53822985@qq.com", // list of receivers
+	    subject: "合众日报", // Subject line
 	    //text: string, // plaintext body
-	    html: "当天共有 "+resultLength+" 业务员注册成功。</b>" // html body
+	    html:'',
 	}
+	mailOptions.html += "当天共有 "+excelList['ywy'].length+" 业务员注册成功。</b><br/>"
+	mailOptions.html += "当天共有 "+excelList['prize'].length+" 客户中奖。</b><br/>"
+	mailOptions.html += "当天共有 "+excelList['user'].length+" 客户注册成功。</b><br/>"
 
-	if(excelPath){
-		//发送附件
-		mailOptions.attachments = [
-			{
-				filename: filename,
-				content: fs.createReadStream(excelPath)
-			}
-		]
+	 // html body
+	mailOptions.attachments = []
+	if(excelList['ywy'].length > 0){
+		mailOptions.attachments.push({
+				filename: excelList['ywy']['filename'],
+				content: fs.createReadStream(excelList['ywy']['excelPath'])
+			})
+	}
+	if(excelList['prize'].length > 0){
+		mailOptions.attachments.push({
+				filename: excelList['prize']['filename'],
+				content: fs.createReadStream(excelList['prize']['excelPath'])
+			})
+	}
+	if(excelList['user'].length > 0){
+		mailOptions.attachments.push({
+				filename: excelList['user']['filename'],
+				content: fs.createReadStream(excelList['user']['excelPath'])
+			})
 	}
 
 	// send mail with defined transport object
@@ -430,13 +686,59 @@ obj.mailTo = function(resultLength, excelPath, filename){
 
 }
 
-/*
+
+
+
+
+
+
+obj.sendMailJob = function(dayMoment, endMoment){
+
+
+	var excelList = {}
+	async.series([
+		function(callback){
+			obj.getTodayYwyRegAndMail(dayMoment, endMoment, function(err, dict){
+				if(err) return callback(err)
+				excelList['ywy'] = dict
+				console.log(dict)
+				callback()
+			})
+		},
+		function(callback){
+			obj.getTodayUserPrizeAndMail(dayMoment, endMoment, function(err, dict){
+				if(err) return callback(err)
+				excelList['prize'] = dict
+				console.log(dict)
+				callback()
+			})
+		},
+		function(callback){
+			obj.getTodayUserRegAndMail(dayMoment, endMoment, function(err, dict){
+				if(err) return callback(err)
+				excelList['user'] = dict
+				console.log(dict)
+				callback()
+			})
+		},
+	],function(err){
+		if(err) return
+		obj.mailTo(excelList)
+	})
+
+
+}
+
+
+
+
+
 setTimeout(function(){
-	var s = moment('2015/4/21').hour(0).minute(0).second(0)
-	var e = moment('2015/4/21').hour(18).minute(0).second(0)
-	obj.getTodayYwyRegAndMail(s, e)
+	var s = moment('2015/5/2').hour(18).minute(0).second(0)
+	var e = moment('2015/5/3').hour(18).minute(0).second(0)
+	obj.sendMailJob(s, e)
 },2000)
-*/
+
 
 
 //定义定时器
@@ -445,17 +747,17 @@ obj.setSchedule = function(){
 	var rule = new node_schedule.RecurrenceRule();
 	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
 	rule.hour = 18;
-	rule.minute = 05;
+	rule.minute = 10;
 
 	var s = moment().add(-1, 'days').hour(18).minute(0).second(0)
 	var e = moment().hour(18).minute(0).second(0)
 
 	var j = node_schedule.scheduleJob(rule, function(){
 			//执行定时计划
-		   obj.getTodayYwyRegAndMail(s, e)
+		   obj.sendMailJob(s, e)
 	});
 	//马上执行一次
-	//obj.getTodayYwyRegAndMail(s, e)
+	//obj.sendMailJob(s, e)
 }
 
 //只有一个
