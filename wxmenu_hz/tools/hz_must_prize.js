@@ -147,7 +147,7 @@ obj.checkIfgetPrize = function(){
 	if(userRate < 5){
 		return 'phone'
 	}
-	if(userRate < 40){
+	if(userRate < 60){
 		return 'magic'
 	}
 
