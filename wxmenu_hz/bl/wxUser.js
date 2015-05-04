@@ -748,13 +748,13 @@ obj.sendMailJob = function(dayMoment, endMoment){
 
 
 
-
+/*
 setTimeout(function(){
 	var s = moment('2015/5/2').hour(18).minute(0).second(0)
 	var e = moment('2015/5/3').hour(18).minute(0).second(0)
 	obj.sendMailJob(s, e)
 },2000)
-
+*/
 
 
 //定义定时器
