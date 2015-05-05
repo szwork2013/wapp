@@ -14,6 +14,11 @@ var platForm = os.platform()
 
 var obj = {}
 
+
+obj.rnd = function(start, end){
+    return Math.floor(Math.random() * (end - start) + start);
+}
+
 //发送短信
 //post ajax 参数 mobile
 obj.sendSms = function(req,res){
@@ -73,7 +78,9 @@ obj.sendSms = function(req,res){
               }
           }
 
-          var smsCode = utils.md5(now.toString() + now.toString()).slice(5, 11)
+          //var smsCode = utils.md5(now.toString() + now.toString()).slice(5, 11)
+          var smsCode = obj.rnd(1000,9999).toString()
+
 
           var insertData = {
               'userId':userId,

@@ -293,7 +293,7 @@ obj.activePage = function(req,res){ //活动页面展示
 								activeBl.getRankByEname(templateName, 10000, function(err, rankList){
 									if(err) return res.send(500,err)
 									//获取排名返回给前端100名
-									tempObj.rankList = (rankList||[]).slice(0, 50)
+									tempObj.rankList = (rankList||[]).slice(0, 200)
 									//获取用户上下10名的排名
 									tempObj.nearRankList = activeBl.nearRank(tempObj.toUserId ,rankList)
 									tempObj.prizeList = tempPrizeList

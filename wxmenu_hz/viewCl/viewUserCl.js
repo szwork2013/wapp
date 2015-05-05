@@ -6,8 +6,10 @@ var apiSmsLog = require('../apiCl/apiSmsLog.js')
 var moment = require('moment')
 var ywyList = require('../tools/ywy.json')
 var ywyList2 = require('../tools/ywy2.json')
+var ywyList3 = require('../tools/ywy3.json')
 var ywyListLen = ywyList.length
 var ywyList2Len = ywyList2.length
+var ywyList3Len = ywyList3.length
 var obj = {}
 
 
@@ -23,6 +25,13 @@ obj.checkIsYwy = function(gh, name){
 
 	for(var i=0; i<ywyList2Len; i++){
 		if(ywyList2[i].gh == gh && ywyList2[i].name == name){
+			return true
+		}
+	}
+	
+	
+	for(var i=0; i<ywyList3Len; i++){
+		if(ywyList3[i].gh == gh && ywyList3[i].name == name){
 			return true
 		}
 	}
