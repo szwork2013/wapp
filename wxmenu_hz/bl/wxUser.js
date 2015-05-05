@@ -334,7 +334,7 @@ obj.getTodayUserRegAndMail = function(dayMoment, endMoment, cb){
 			'$gte':dayMoment.format('YYYY/MM/DD HH:mm:ss'),
 			'$lt':endMoment.format('YYYY/MM/DD HH:mm:ss')
 		}
-	},0,10000,function(err, list){
+	},0,1000000,function(err, list){
 		if(err){
 			logger.error('obj.getTodayUserRegAndMail userModel.findAll got  error: %s', err);
 			return cb(err)
@@ -440,7 +440,7 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 			'$gte':dayMoment.format('YYYY/MM/DD HH:mm:ss'),
 			'$lt':endMoment.format('YYYY/MM/DD HH:mm:ss')
 		}
-	},0,10000,function(err, list){
+	},0,1000000,function(err, list){
 		if(err){
 			logger.error('obj.getTodayUserPrizeAndMail lotteryRecordModel.findAll got  error: %s', err);
 			return cb(err)
@@ -583,7 +583,7 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment, cb){
 			'$gte':dayMoment.format('YYYY/MM/DD HH:mm:ss'),
 			'$lt':endMoment.format('YYYY/MM/DD HH:mm:ss')
 		}
-	},0,10000,function(err, list){
+	},0,1000000,function(err, list){
 		if(err){
 			logger.error('obj.getTodayYwyRegAndMail userModel.findAll got  error: %s', err);
 			return cb(err)
