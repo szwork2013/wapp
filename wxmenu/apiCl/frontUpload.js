@@ -185,7 +185,7 @@ obj.uploadToVoteItem = function(req, res){
 	if(!desc){
 		return res.send({error:1,data:'请输入标题'})
 	}
-	if(desc.length>10){
+	if(desc.length>100){
 		return res.send({error:1,data:'标题过长'})
 	}
 	if(desc2.length>50){
