@@ -420,7 +420,7 @@ obj.sendSmsPrize = function(userId, prizeId){
 							err, prizeId);
 						return
 					}
-					var smsContent = util.format('【合众人寿】您的客户（手机号为%s）已经参与抽奖，获得%s。请及时与ta联系，拜访的好机会来喽~',appUserMobile,prizeStr)
+					var smsContent = util.format('您的客户（手机号为%s）已经参与抽奖，获得%s。请及时与ta联系，拜访的好机会来喽~',appUserMobile,prizeStr)
 					
 					obj.sendSms2(ywy_mobile, smsContent, function(){})
 					return

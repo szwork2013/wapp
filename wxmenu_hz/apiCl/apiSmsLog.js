@@ -84,7 +84,7 @@ obj.sendSms = function(req,res){
               'writeTime':new Date()
           }
 
-          var content = '【合众人寿】感谢您参加“十年相伴，真情回馈”合众人寿十周年客服节活动，为我们可爱的伙伴们评分，您也可以抽取精美礼品。您的邀请码是：'+smsCode+'。'
+          var content = '感谢您参加“十年相伴，真情回馈”合众人寿十周年客服节活动，为我们可爱的伙伴们评分，您也可以抽取精美礼品。您的邀请码是：'+smsCode+'。'
           
           smsBl.sendSms2(mobile, content, function(err, ok){
               if(err) return res.send({error:1, data:'短信发送失败，请重试'})
