@@ -215,7 +215,7 @@ obj.deleteRepeatUser = function(activeId, userId){
 
 var overActiveList = ['wzzy_2014']
 //添加一条记录
-obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
+obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb, reqIp){
 	
 	if(!activeId || activeId.length != 24){
 		return cb('activeId 错误')
@@ -349,7 +349,8 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 									toUserId:toUserId,
 									activeId:activeId,
 									supportScore:supportScore,
-									writeTime:new Date()
+									code1:reqIp || '',
+									writeTime:new Date(),
 								},function(err,doc){
 									cb(err,{
 										supportScore:supportScore
@@ -372,6 +373,7 @@ obj.addSupport = function(activeId, fromOpenId, fromUserId, toUserId, cb){
 									toUserId:toUserId,
 									activeId:activeId,
 									supportScore:supportScore,
+									code1:reqIp || '',
 									writeTime:new Date()
 								},function(err,doc){
 									cb(err,{

@@ -36,6 +36,7 @@ obj.addSupport = function(req,res){
 
 	var fromUserId = req.body.fromUserId;
 	var toUserId = req.body.toUserId;
+  var reqIp = req.ips[0] || '127.0.0.1';
 
 
   userBl.getUser({'_id':fromUserId}, function(err, doc){
@@ -52,7 +53,7 @@ obj.addSupport = function(req,res){
       if(err) return res.json({error:1,data:err})
       
       res.json({error:0,data:doc})
-    })
+    },reqIp)
   })
 
 
