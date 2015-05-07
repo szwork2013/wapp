@@ -493,9 +493,10 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 				var result = []
 				var ywyIds = []
 				list.forEach(function(item){
-			
+					
 					//找到用户信息
-					userList.forEach(function(userItem){
+					for(var i=0; i<userList.length; i++){
+						var userItem = userList[i]
 						if(userItem.value.toString() == item.userId){
 							var tempObj = {
 								'name':userItem.name+'',
@@ -515,8 +516,9 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 
 							})//end prizeList.forEach
 							result.push(tempObj)
+							break;
 						}//end if
-					})//end userList.forEach
+					}//end for
 				})//end list.forEach
 
 				//console.log(ywyIds)
