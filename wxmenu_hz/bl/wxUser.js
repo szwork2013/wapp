@@ -441,6 +441,8 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 			'$lt':endMoment.format('YYYY/MM/DD HH:mm:ss')
 		}
 	},0,1000000,function(err, list){
+		
+
 		if(err){
 			logger.error('obj.getTodayUserPrizeAndMail lotteryRecordModel.findAll got  error: %s', err);
 			return cb(err)
@@ -451,6 +453,8 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 				'length':0
 			})
 		}
+		console.log('@@@@@@@@@@@@@@@@@@')
+		console.log('list length', list.length)
 
 
 		var userIds = []
@@ -465,17 +469,26 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 			}
 		})
 
+		console.log('userIds length', userIds.length)
+		console.log('prizeIds length', prizeIds.length)
+
 		//获取奖品列表
 		lotteryPrizeModel.getPrizeByIds(prizeIds, function(err, prizeList){
 				if(err){
 					logger.error('obj.getTodayUserPrizeAndMail lotteryPrizeModel.getPrizeByIds got  error: %s', err);
 					return cb(err)
 				}
+
+				console.log('prizeList length', prizeList.length)
+
 				userModel.getUserByIds(userIds, function(err, userList){
 				if(err){
 					logger.error('obj.getTodayUserPrizeAndMail userModel.getUserByIds got error: %s', err);
 					return cb(err)
 				}
+
+				
+				console.log('userList length', userList.length)
 
 				var result = []
 				var ywyIds = []
@@ -508,11 +521,19 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 
 				//console.log(ywyIds)
 				//获取业务员信息
+
+				console.log('ywyIds length', ywyIds.length)
+				console.log('result length', result.length)
+
 				userModel.getUserByIds(ywyIds, function(err, ywyList){
 					if(err){
 						logger.error('obj.getTodayUserPrizeAndMail userModel.getUserByIds got error: %s', err);
 						return cb(err)
 					}
+
+					console.log('ywyList length', ywyList.length)
+
+					console.log('@@@@@@@@@@@@@@@@@@')
 
 					//填写业务员信息
 					result.forEach(function(resultItem){
