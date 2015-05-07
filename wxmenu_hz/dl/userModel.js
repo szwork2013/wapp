@@ -87,7 +87,7 @@ objSchema.statics.getUserByIds = function (ids, cb) {
 		docs.forEach(function(v){
 			idsary.push({
 				text:v.appUserName,
-				value:v._id,
+				value:v._id.toString(),
 				name:v.appUserName,
 				sex:v.appUserSex,
 				mobile:v.appUserMobile,

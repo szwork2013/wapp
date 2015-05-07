@@ -513,7 +513,7 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 							'ywy_id':userItem.appUserCode,
 							'writeTime':moment(item.writeTime).format('YYYY/MM/DD HH:mm:ss').toString()
 						}
-						if(ywyIds.indexOf(userItem.appUserCode) == -1){
+						if(ywyIds.indexOf(userItem.appUserCode) == -1 && userItem.appUserCode.length == 24){
 							ywyIds.push(userItem.appUserCode)
 						}
 						
@@ -541,7 +541,7 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 
 				userModel.getUserByIds(ywyIds, function(err, ywyList){
 					if(err){
-						logger.error('obj.getTodayUserPrizeAndMail userModel.getUserByIds got error: %s', err);
+						logger.error('obj.getTodayUserPrizeAndMail ywy userModel.getUserByIds got error: %s', err);
 						return cb(err)
 					}
 
