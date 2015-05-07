@@ -517,7 +517,7 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 							})//end prizeList.forEach
 							result.push(tempObj)
 							break;
-						}//end if
+						} //end if
 					}//end for
 				})//end list.forEach
 
