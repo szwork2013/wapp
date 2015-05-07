@@ -457,7 +457,9 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 		var prizeIds = []
 		//获取用户和奖品id列表
 		list.forEach(function(item){
-			userIds.push(item.userId)
+			if(userIds.indexOf(item.userId) == -1){
+				userIds.push(item.userId)
+			}
 			if(prizeIds.indexOf(item.prizeId) == -1){
 				prizeIds.push(item.prizeId)
 			}
