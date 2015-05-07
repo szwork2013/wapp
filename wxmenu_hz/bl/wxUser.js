@@ -378,6 +378,7 @@ obj.getTodayUserRegAndMail = function(dayMoment, endMoment, cb){
 				}
 				
 			})
+			
 			//完成循环保存csv
 			json2csv({data: result, fields: Object.keys(result[0] || {})}, function(err, csv) {
 					  if(err){
@@ -492,33 +493,44 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 
 				var result = []
 				var ywyIds = []
-				list.forEach(function(item){
-					
-					//找到用户信息
-					for(var i=0; i<userList.length; i++){
-						var userItem = userList[i]
-						if(userItem.value.toString() == item.userId){
-							var tempObj = {
-								'name':userItem.name+'',
-								'mobile':userItem.mobile+'',
-								'ywy_id':userItem.appUserCode,
-								'writeTime':moment(item.writeTime).format('YYYY/MM/DD HH:mm:ss').toString()
-							}
-							if(ywyIds.indexOf(userItem.appUserCode) == -1){
-								ywyIds.push(userItem.appUserCode)
-							}
-							
-							//找到奖品名字
-							prizeList.forEach(function(prizeItem){
-								if(item.prizeId == prizeItem._id.toString()){
-									tempObj.prize = prizeItem.name
-								}
 
-							})//end prizeList.forEach
-							result.push(tempObj)
-							break;
-						} //end if
-					}//end for
+				var userDict = {}
+				userList.forEach(function(userItem){
+					userDict[userItem.value.toString()] = userItem
+				})
+
+
+				console.log('convert userList to Dict')
+
+
+				list.forEach(function(item){
+					var userItem = userDict[item.userId]
+
+					if(userItem){
+						var tempObj = {
+							'name':userItem.name+'',
+							'mobile':userItem.mobile+'',
+							'ywy_id':userItem.appUserCode,
+							'writeTime':moment(item.writeTime).format('YYYY/MM/DD HH:mm:ss').toString()
+						}
+						if(ywyIds.indexOf(userItem.appUserCode) == -1){
+							ywyIds.push(userItem.appUserCode)
+						}
+						
+						//找到奖品名字
+						prizeList.forEach(function(prizeItem){
+							if(item.prizeId == prizeItem._id.toString()){
+								tempObj.prize = prizeItem.name
+							}
+
+						})//end prizeList.forEach
+						result.push(tempObj)
+					}
+					else{
+						console.log('not found user', item.userId)
+					}
+					
+
 				})//end list.forEach
 
 				//console.log(ywyIds)
@@ -535,17 +547,29 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 
 					console.log('ywyList length', ywyList.length)
 
-					console.log('@@@@@@@@@@@@@@@@@@')
+					
+					var ywyDict = {}
+					ywyList.forEach(function(ywyItem){
+						ywyDict[ywyItem.value.toString()] = ywyItem
+					})
+
+					console.log('convert ywyList to Dict')
 
 					//填写业务员信息
 					result.forEach(function(resultItem){
-						ywyList.forEach(function(ywyItem){
-							if(resultItem.ywy_id == ywyItem.value.toString()){
-								resultItem.ywy_name = ywyItem.name
-								resultItem.ywy_gh = 'gh '+ywyItem.code1
-							}
-						})//end result.forEach
+
+						var ywyItem = ywyDict[resultItem.ywy_id]
+						if(ywyItem){
+							resultItem.ywy_name = ywyItem.name
+							resultItem.ywy_gh = 'gh '+ywyItem.code1
+						}
+						else{
+							console.log('not found ywy', resultItem.ywy_id)
+						}
+
 					})//end result.forEach
+
+					console.log('@@@@@@@@@@@@@@@@@@')
 
 					json2csv({data: result, fields: Object.keys(result[0] || {})}, function(err, csv) {
 							  if(err){
@@ -875,13 +899,13 @@ obj.sendMailJob = function(dayMoment, endMoment){
 
 
 
-/*
+
 setTimeout(function(){
 	var s = moment('2015/5/2').hour(18).minute(0).second(0)
 	var e = moment('2015/5/3').hour(18).minute(0).second(0)
 	obj.sendMailJob(s, e)
 },2000)
-*/
+
 
 
 //定义定时器
