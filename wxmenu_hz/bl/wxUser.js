@@ -563,6 +563,79 @@ obj.getTodayUserPrizeAndMail = function(dayMoment, endMoment, cb){
 
 }
 
+//获取目前为止所有95515下面的客户及联系方式
+obj.getAll95515Custom = function(cb){
+	var getMobileType = require('../tools/hz_must_prize.js').getMobileType
+
+	var result = []
+	userModel.findOneByObj({
+		'appUserMobile':'95515'
+	}, function(err, doc){
+		if(err) return cb(err)
+		var ywy95515Id = doc._id.toString()
+
+		userModel.findAll({
+			'appUserCode':ywy95515Id
+		},0,1000000, function(err, userList){
+			if(err) return cb(err)
+			//var iconv = new Iconv('UTF-8', 'GBK');
+			userList.forEach(function(item){
+				result.push({
+					//'name':iconv.convert(item.appUserName.toString()),
+					'name':item.appUserName+'',
+					'mobile':item.appUserMobile+'',
+					'ywy_id':item.appUserCode,
+					'type':getMobileType(item.appUserMobile),
+					'writeTime':moment(item.writeTime).format('YYYY/MM/DD HH:mm:ss')+''
+				})
+			})
+			if(result.length == 0){
+				//obj.mailTo(0, false)
+				return cb({
+					'length':0
+				})
+			}
+
+
+			json2csv({data: result, fields: Object.keys(result[0] || {})}, function(err, csv) {
+				  if(err){
+						logger.error('obj.getAll95515Custom json2csv got error: %s', err);
+						return cb(err)
+					}
+				  var saveExcelPath = path.join(__dirname,'..','upload')
+				  var excelName = 'all_95515_user_list.csv'
+				  var excelPath =  path.join(saveExcelPath, excelName)
+				  try{
+				  	//var buf = iconv.convert()
+				  	var buf = iconv.encode(csv, 'gbk');
+				  }
+				  catch(e){
+				  	logger.error('obj.getAll95515Custom  iconv.convert got error: %s', e);
+				  	return cb(e)
+				  }
+				  
+				  fs.writeFile(excelPath, buf, function (err) {
+					  if(err){
+							logger.error('obj.getAll95515Custom fs.writeFile got error: %s', err);
+							return cb(err)
+						}
+					  //console.log('It\'s saved!');
+					  cb(null, {
+						  		'length':result.length,
+						  		'excelPath':excelPath,
+						  		'excelName':excelName
+						  })
+					});
+				  return
+			});//json to csv
+
+		})//end userModel.findAll
+
+	})//end userModel.findOneByObj
+
+
+}
+
 
 
 
@@ -598,6 +671,7 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment, cb){
 				'mobile':item.appUserMobile+'',
 				'gh':'gh '+item.code1,
 				'wx':item.code2+'',
+				'score':item.appUserScore,
 				'writeTime':moment(item.writeTime).format('YYYY/MM/DD HH:mm:ss')+''
 			})
 		})
@@ -649,6 +723,21 @@ obj.getTodayYwyRegAndMail = function(dayMoment, endMoment, cb){
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 obj.mailTo = function(excelList){
 
 
@@ -664,6 +753,7 @@ obj.mailTo = function(excelList){
 	mailOptions.html += "当天共有 "+excelList['ywy'].length+" 业务员注册成功。</b><br/>"
 	mailOptions.html += "当天共有 "+excelList['prize'].length+" 客户中奖。</b><br/>"
 	mailOptions.html += "当天共有 "+excelList['user'].length+" 客户注册成功。</b><br/>"
+	mailOptions.html += "截止当前共有 "+excelList['95515_user'].length+" 客户从十年合众账号入口注册。</b><br/>"
 
 	 // html body
 	mailOptions.attachments = []
@@ -685,6 +775,13 @@ obj.mailTo = function(excelList){
 				content: fs.createReadStream(excelList['user']['excelPath'])
 			})
 	}
+	if(excelList['95515_user'].length > 0){
+		mailOptions.attachments.push({
+				filename: excelList['95515_user']['excelName'],
+				content: fs.createReadStream(excelList['95515_user']['excelPath'])
+			})
+	}
+
 
 	// send mail with defined transport object
 	smtpTransport.sendMail(mailOptions, function(error, info){
@@ -701,10 +798,6 @@ obj.mailTo = function(excelList){
 	});
 
 }
-
-
-
-
 
 
 
@@ -737,6 +830,15 @@ obj.sendMailJob = function(dayMoment, endMoment){
 				callback()
 			})
 		},
+		function(callback){
+			obj.getAll95515Custom(function(err, dict){
+				if(err) return callback(err)
+				excelList['95515_user'] = dict
+				console.log(dict)
+				callback()
+			})
+		},
+
 	],function(err){
 		if(err) return
 		obj.mailTo(excelList)
