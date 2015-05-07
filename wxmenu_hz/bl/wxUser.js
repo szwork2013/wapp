@@ -378,7 +378,7 @@ obj.getTodayUserRegAndMail = function(dayMoment, endMoment, cb){
 				}
 				
 			})
-			
+
 			//完成循环保存csv
 			json2csv({data: result, fields: Object.keys(result[0] || {})}, function(err, csv) {
 					  if(err){
@@ -899,13 +899,13 @@ obj.sendMailJob = function(dayMoment, endMoment){
 
 
 
-
+/*
 setTimeout(function(){
 	var s = moment('2015/5/2').hour(18).minute(0).second(0)
 	var e = moment('2015/5/3').hour(18).minute(0).second(0)
 	obj.sendMailJob(s, e)
 },2000)
-
+*/
 
 
 //定义定时器
