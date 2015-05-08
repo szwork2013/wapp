@@ -132,19 +132,16 @@ background-color:#fffe00;
 		
 		<br>
  
-            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已经获得了
+            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已经翻开了
         <b style="color:#c00; font-size:20px;">
 		
 		
-		 <%= supportScore %></b>个助力,<br>不要忘记兑奖哦！
+		 <%= supportScore %></b>张英雄卡,<br>全部翻开后，不要忘记兑奖哦！
 		
 		
 	</center></div>  
 
 
-		
-		
-		
 		
 		 <% if(supportScore==0) { %>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
@@ -155,38 +152,33 @@ background-color:#fffe00;
 		 
 		 
 		  <% }else if(supportScore==1){ %>
-		 
-<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F1.jpg" width='100%'>
+	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F1.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<br>
 		 
 		   <% }else if(supportScore==2){ %>
-		   
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F2.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<br>
 		    <% }else if(supportScore==3){ %>
-			
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F3.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<br>
 			 <% }else if(supportScore==4){ %>
-			 
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F4.jpg" width='100%'>
+	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F4.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<br>
 		
 		<% }else if(supportScore==5){ %>
-			 
-		<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F5.jpg" width='100%'>
+	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F5.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
 	<img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fssmm%2F0.jpg" width='100%'>
@@ -326,42 +318,18 @@ background-color:#fffe00;
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		 <% }else { %>
 	图片暂时无法显示
 		   <%}%>
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		<br>
 		
  <% if(isMyPage) { %>
            <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
 			
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友为你助力</span>
+                <span class="share_timeline_button" >邀请好友为你翻英雄卡</span>
             </button>
         <% }else{ %>
 		
