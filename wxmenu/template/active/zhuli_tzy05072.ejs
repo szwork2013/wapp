@@ -262,7 +262,7 @@ color：#000000;
             </div>
            
 		   
-		     <button id="startExchange1" class="share_timeline1 btn-block">
+		     <button id="startExchange" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
 			
@@ -859,6 +859,26 @@ $(function(){
           })
     })
 
+	
+	
+	
+	
+	 //绑定兑换奖品事件，弹出完善资料对话框
+    $('#startRank').click(function(){
+        $('#rankModal').modal({
+            backdrop:true
+          })
+    })
+    $('.close').click(function(){
+        $('#rankModal').modal('hide')
+    })
+	
+	
+	
+	
+	
+	
+	
     //保存按钮
     $('#save_change').click(function(){
         if(window.isAjax) return false
