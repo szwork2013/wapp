@@ -263,7 +263,7 @@ color：#000000;
             </div>
            
 		   
-		     <button id="startExchange" class="share_timeline1 btn-block">
+		     <button id="startExchange1" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
 			
@@ -362,12 +362,7 @@ color：#000000;
           <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
         </div>
         <br/>
-      <!--  <div class="input-group input-group-lg">
-          <span class="input-group-addon" style="padding:0 10px;">
-            <span class="glyphicon glyphicon-credit-card" ></span>
-          </span>
-          <input type="text" class="form-control" placeholder="请输入身份证号" id="wxAddress" value="" maxlength="18">
-        </div>-->
+    
       
       </div>
       <div class="modal-footer">
@@ -380,6 +375,67 @@ color：#000000;
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
+       <h4 class="modal-title" id="myModalLabel">请输入您的准确个人信息，输入错误不能领奖哦</h4>
+      </div>
+
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="" maxlength="20">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" style="padding:0 10px;">
+            <span class="glyphicon glyphicon-phone" ></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
+        </div>
+        <br/>
+    
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <a href="javascript:;" class="btn btn-primary" id="save_change1">保存</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -792,7 +848,7 @@ $(function(){
     })
 
     //绑定兑换奖品事件，弹出完善资料对话框
-    $('#startExchange').click(function(){
+    $('#startExchange1').click(function(){
         if(!window.selPrizeId){
             return false;
         }
@@ -800,7 +856,7 @@ $(function(){
             return false;
         }
         //弹出完善资料框
-         $('#myModal').modal({
+         $('#myModal1').modal({
              backdrop:'static'
            })
     })
@@ -880,6 +936,66 @@ $(function(){
 
     })
     //保存按钮
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 //保存按钮
+    $('#save_change1').click(function(){
+        if(window.isAjax) return false
+          
+        var appUserName = $('#appUserName').val().trim();
+        var appUserMobile = $('#appUserMobile').val().trim();
+        if(!appUserName || appUserName == '未认证会员'){
+          alert('请填写真实姓名')
+          return false;
+        }
+        if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+          alert('请输入正确的手机号码')
+          return false;
+        }
+
+        var q = {
+            toUserId:toUserId,
+            prizeId:window.selPrizeId,
+            truename:appUserName,
+            mobile:appUserMobile
+        }
+
+          window.isAjax = true
+        $.post('/active_data/'+appEname+'/exchangeprize', q, function(d){
+          window.isAjax = false
+            if(d.error == 1){
+                return alert(d.data)
+            }
+            alert('奖品兑换成功')
+            location.reload()
+
+        },'json')
+
+    })
+    //保存按钮
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
     $('#goSupport').click(function(){
