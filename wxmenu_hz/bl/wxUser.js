@@ -6,6 +6,7 @@ var starLogModel = require('../dl/starLogModel.js'); //打分的流水
 var lotteryRecordModel = require('../dl/lotteryRecordModel.js'); //抽奖流水
 var lotteryPrizeModel = require('../dl/lotteryPrizeModel.js'); //抽奖奖品
 
+
 var fs = require('fs');
 var path = require('path')
 var iconv = require('iconv-lite');
@@ -421,6 +422,92 @@ obj.getTodayUserRegAndMail = function(dayMoment, endMoment, cb){
 
 
 
+//获取业务员信息
+var userHzType = {
+	'tenyear':'十年用户',
+	'gold':'金牌用户',
+	'silver':'银牌用户',
+	'other':'其他用户',
+}
+
+obj.getYwyInfo = function(ywyid, cb){
+
+	var result = {}
+	var prizeCount = 0 
+	obj.getUserByUserId(ywyid, function(err, userObj){
+		if(err) return cb(err)
+		result.ywy = userObj.uobj
+		if(userObj.uobj.appUserType != 2){
+			return cb('非业务员无法查看信息')
+		}
+
+		//找到这个业务员名下的所有用户
+		userModel.findAll({
+			'appUserCode':ywyid,
+			'appUserType':1,
+		},0,100000, function(err, userList){
+			if(err) return cb(err)
+			result.users = []
+			var userIds = []
+			//获取所有用户的id列表
+			userList.forEach(function(item){
+				userIds.push(item._id.toString())
+			})
+
+			//查找所有这些用户的中奖记录
+			lotteryRecordModel.findAll({
+				'userId':{'$in':userIds},
+				'prizeId':{'$ne':0}
+			},0,100000,function(err, recordList){
+				if(err) return cb(err)
+
+				lotteryPrizeModel.findByObj({}, function(err, prizeList){
+					if(err) return cb(err)
+
+					userList.forEach(function(item){
+						var hasPrize = 0
+						var tempObj = {
+							'appUserName':item.appUserName,
+							'appUserMobile':item.appUserMobile,
+						}
+						for(var i=0; i<recordList.length; i++){
+							if(recordList[i].userId == item._id.toString()){
+								for(var j=0;j<prizeList.length;j++){
+									if(prizeList[j]._id.toString() == recordList[i].prizeId){
+											hasPrize = 1
+											prizeCount++
+											tempObj.prize = prizeList[j].name;
+											break;
+									}//end if
+								}//end for
+								tempObj['type'] = userHzType[recordList[i].code2]
+								break;
+							}//end if record
+						}//end for
+
+						if(hasPrize == 0){
+							tempObj.prize = '未中奖'
+						}
+						
+						tempObj['type'] = tempObj['type'] || '其他用户'
+
+						result.users.push(tempObj)
+					})//end for userList each
+
+					result.prizeCount = prizeCount
+					//响应出去
+					return cb(null, result)
+
+
+				})//end lotteryPrizeModel.findByObj
+
+			})//end lotteryRecordModel.findAll
+
+		})//end userModel.findAll
+
+	})//end obj.getUserByUserId
+
+}
 
 
 
@@ -684,6 +771,8 @@ obj.getAll95515Custom = function(cb){
 
 
 }
+
+
 
 
 

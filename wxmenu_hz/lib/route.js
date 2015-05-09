@@ -337,6 +337,8 @@ var addroute = function(app){
 		//发送短信验证码
 		app.post('/api/:appename/smscode', apiSmsLog.sendSms)
 
+		//获得某一个客户对业务员的打分情况
+		app.get('/api/hzywyinfo', hzYewuyuanCl.hzywyinfo)
 
 
 

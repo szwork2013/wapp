@@ -223,6 +223,23 @@ obj.hzstarstatus = function(req,res){
 }
 
 
+//业务员的信息
+obj.hzywyinfo = function(req, res){
+
+	var ywyId = req.query.ywyid;
+	if(ywyId.length != 24){
+		return res.send({error:1,data:'无效的业务员id'}) 
+	}
+
+	userBl.getYwyInfo(ywyId, function(err, list){
+		if(err){
+			return res.send({error:1,data:err}) 
+		}
+		return res.send({error:0,data:list})
+	})
+
+}
+
 
 
 module.exports = obj;

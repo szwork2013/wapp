@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0"/>
+    <meta content="no-cache" http-equiv="Pragma"></meta>
+    <meta content="no-cache" http-equiv="Cache-Control"></meta>
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="0" http-equiv="Expires"></meta>
+    <title>代理人状态</title>
+    <script src="http://7xit1c.com1.z0.glb.clouddn.com/lottery/jquery.1.11.1.min.js" type="text/javascript"></script>
+    <script src="http://7xit1c.com1.z0.glb.clouddn.com/bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://7xit1c.com1.z0.glb.clouddn.com/lottery/moment.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://7xit1c.com1.z0.glb.clouddn.com/bootstrap/css/bootstrap.min.css">
+    <style type="text/css">
+        *{
+            font-family: '微软雅黑' !important;
+        }
+        table th, table td{
+            text-align: center;
+        }
+        body{
+            padding: 10px;
+        }
+        p{
+            padding: 10px 0;
+        }
+    </style>
+
+</head>
+<body>
+<h4 id="ywy_name"></h4>
+<h4 id="ywy_mobile"></h4>
+<p>共有 <b id="ywy_number"></b> 名客户通过您参与活动。其中 <b id="ywy_count"></b> 名客户中奖</p>
+
+<table class="table">
+      <thead>
+        <tr>
+          <th>姓名</th>
+          <th>电话</th>
+          <th>类型</th>
+          <th>奖品</th>
+        </tr>
+      </thead>
+      <tbody id="userBody">
+       
+      </tbody>
+    </table>
+
+<script type="text/javascript">
+
+
+var logCount = <%= logCount %>
+var appId = '<%= appId %>'
+var appEname = '<%= appEname %>'
+var isMyPage = <%= isMyPage %>;
+var toUserId = '<%= toUserId %>'
+var fromUserId = '<%= fromUserId %>'
+var activeId = '<%= activeId %>'
+var fromUserObj = <%- JSON.stringify(fromUserObj) %>
+var toUserObj = <%- JSON.stringify(toUserObj) %>
+
+
+var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
+var endTime = moment(new Date(activeObj.endTime))
+
+
+window.isAjax = false
+
+//var fromUserId = '553f600a33b82c0904002b38' 
+
+$(function(){
+    $.get('/api/hzywyinfo', {'ywyid':fromUserId}, function(d){
+        if(d.error){
+            return alert(d.data)
+        }
+        var d = d.data
+        $('#ywy_name').html('业务员姓名: '+d.ywy.appUserName)
+        $('#ywy_mobile').html('业务员电话: '+d.ywy.appUserMobile)
+        $('#ywy_count').html(d.prizeCount)
+        $('#ywy_number').html(d.users.length)
+
+        var temps = ''
+        for(var i=0;i<d.users.length;i++){
+            temps += '<tr>'+
+                  '<td>'+d.users[i].appUserName+'</td>'+
+                  '<td>'+d.users[i].appUserMobile+'</td>'+
+                  '<td>'+d.users[i].type+'</td>'+
+                  '<td>'+d.users[i].prize+'</td>'+
+                  '</tr>'
+        }
+        $('#userBody').html(temps)
+
+    }, 'json')
+    
+
+});
+
+</script>
+
+
+<div style="display:none">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?748c25c2ece0745b163b7030b4721cc1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</div>  
+
+</body>
+</html>
+
+
+
+
+
