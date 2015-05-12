@@ -1002,6 +1002,7 @@ setTimeout(function(){
 //定义定时器
 obj.setSchedule = function(){
 	//定义规则
+	//日计划
 	var rule = new node_schedule.RecurrenceRule();
 	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
 	rule.hour = 2;
@@ -1020,8 +1021,25 @@ obj.setSchedule = function(){
 			}
 			//执行定时计划
 	});
-	//马上执行一次
-	//obj.sendMailJob(s, e)
+
+
+	//执行定时计划,周计划
+	var rule2 = new node_schedule.RecurrenceRule();
+	rule2.dayOfWeek = [new node_schedule.Range(0, 0)];
+	rule2.hour = 10;
+	var s2 = moment('2015/4/1')
+	var e2 = moment().hour(0).minute(0).second(0)
+	var j2 = node_schedule.scheduleJob(rule2, function(){
+			console.log('^^^^^^^^^^^^^')
+			console.log(s2.toString())
+			console.log(e2.toString())
+			console.log('^^^^^^^^^^^^^')
+			if(obj.doSend){
+				obj.sendMailJob(s2, e2)
+			}
+			
+	});
+
 }
 
 //只有一个
