@@ -223,8 +223,19 @@ obj.download = function(req,res){
 			})
 			
 
+
 			json2csv({data: outJson, fields: Object.keys(outJson[0] || {})}, function(err, csv) {
 				  if(err) return res.send(500,err);
+
+				  try{
+				  	//var buf = iconv.convert()
+				  	var csv = iconv.encode(csv, 'gbk');
+				  }
+				  catch(e){
+				  	logger.error('manager  iconv.convert got error: %s', e);
+				  	return cb(e)
+				  }
+				  
 				  res.attachment(lotteryEname+'.csv');
 				  res.send(csv)
 			});
