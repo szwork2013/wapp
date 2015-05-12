@@ -997,28 +997,37 @@ setTimeout(function(){
 */
 
 
+
+
 //定义定时器
 obj.setSchedule = function(){
 	//定义规则
 	var rule = new node_schedule.RecurrenceRule();
 	rule.dayOfWeek = [new node_schedule.Range(0, 6)];
-	rule.hour = 18;
+	rule.hour = 2;
 	rule.minute = 10;
 
-	var s = moment().add(-1, 'days').hour(18).minute(0).second(0)
-	var e = moment().hour(18).minute(0).second(0)
+	var s = moment().add(-1, 'days').hour(0).minute(0).second(0)
+	var e = moment().hour(0).minute(0).second(0)
 
 	var j = node_schedule.scheduleJob(rule, function(){
+			console.log('^^^^^^^^^^^^^')
+			console.log(s.toString())
+			console.log(e.toString())
+			console.log('^^^^^^^^^^^^^')
+			if(obj.doSend){
+				obj.sendMailJob(s, e)
+			}
 			//执行定时计划
-		   obj.sendMailJob(s, e)
 	});
 	//马上执行一次
 	//obj.sendMailJob(s, e)
 }
 
 //只有一个
-if(global.listenPort == 7900){
-	obj.setSchedule()
-}
+
+obj.setSchedule()
+obj.doSend = false
+//obj.doSend = true
 
 module.exports = obj;
