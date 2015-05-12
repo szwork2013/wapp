@@ -1035,7 +1035,7 @@ obj.setSchedule = function(){
 			console.log(e2.toString())
 			console.log('^^^^^^^^^^^^^')
 			if(obj.doSend){
-				obj.sendMailJob(s2, e2)
+				//obj.sendMailJob(s2, e2)
 			}
 			
 	});
