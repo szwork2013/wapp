@@ -42,8 +42,16 @@ obj.rulesList = [
 		'magic':5000,
 	},
 	{
+		'dateStart':moment("20150515", "YYYYMMDD"),
+		'dateEnd':moment("20150516", "YYYYMMDD"),
+		'phoneTime':[8,13,17,19,21],
+		'phoneAll':4,
+		'phoneTen':1,
+		'magic':5000,
+	},
+	{
 		'dateStart':moment("20150516", "YYYYMMDD"),
-		'dateEnd':moment("20150615", "YYYYMMDD"),
+		'dateEnd':moment("20150616", "YYYYMMDD"),
 		'phoneTime':[9,14,20],
 		'phoneAll':2,
 		'phoneTen':1,
