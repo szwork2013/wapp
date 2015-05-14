@@ -309,7 +309,8 @@ border: solid 1px #D9D8DC;
   transition: width 1.2s ease-in-out;
   position: absolute;
   margin: 0.5rem 0;
-  top:140%;
+  top:100%;
+  left:10%;
   border-radius: 4px;
 }
 @media(max-width: 350px) {
@@ -382,6 +383,7 @@ border: solid 1px #D9D8DC;
   right: 0;
   height: 40px;
   padding: 10px;
+  color:#fff;
   opacity: 0;
   transition: opacity 2s 0.6s;
 }
@@ -544,7 +546,7 @@ border: solid 1px #D9D8DC;
 		
 		
 		
-		 <div class='bar mint' data-percent='80' data-skill='解救进度'>解救</div>
+		 <div class='bar mint' data-percent='<%= supportScore*10 %>' data-skill=''></div>
 		
 		
 	
