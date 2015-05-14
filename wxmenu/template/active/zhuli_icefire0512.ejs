@@ -388,7 +388,7 @@ border: solid 1px #D9D8DC;
   		jQuery(".you").hide();
 		jQuery(".bing").hide();
   		});
-		jQuery("#cmenu").click(function(){
+		jQuery("#goSupport").click(function(){
   		jQuery(".jiu").hide();
 		jQuery(".shui").hide();
   		jQuery(".you").hide();
@@ -1008,11 +1008,11 @@ $(function(){
 
             $('#reduceNumber').html(d.data.supportScore)
 
-         setTimeout(   $('#myModal3').on('hidden.bs.modal', function (e) {
+          setTimeout(('#myModal3').on('hidden.bs.modal', function (e) {
                   location.reload()
                 }).modal({
                     backdrop:false
-              }))5000
+              }),5000);
 
             //alert('恭喜您，支持成功')
 
