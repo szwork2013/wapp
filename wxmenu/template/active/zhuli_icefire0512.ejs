@@ -521,7 +521,7 @@ border: solid 1px #D9D8DC;
 			
 			
 			
-			
+			<div class="anniu4"> <center><font color="#ffffff">“<%= toUserObj.wxName %>”到达100%，即可点击兑换奖品<br>解救进度</font></center></div>
 			
            
 		   
@@ -563,7 +563,9 @@ border: solid 1px #D9D8DC;
 		
 	
  
-         
+         <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
+               <span class="button1" >活动规则</span>
+            </a>
 
 
 		
@@ -642,7 +644,77 @@ border: solid 1px #D9D8DC;
         <h4 class="modal-title" id="myModalLabel">活动规则</h4>
       </div>
       <div class="modal-body"> 
-            <%- activeObj.activeObj.intro %>
+         
+		 
+		 
+		 
+		 
+		 
+		 
+		 <div id="divVisitor" class="visitor">
+
+
+                
+
+
+                <div class="v-share-surplus">活动剩余时间：
+                    <span class="visitor_over_time" id="last_day"></span>天 
+                    <span class="visitor_over_time" id="last_hour"></span>小时 
+                    <span class="visitor_over_time" id="last_minute"></span>分钟 
+
+                </div>
+                <div class="v-prize-get clearfix">
+                    <span class="v-prize-get-tip">奖品列表：
+
+                    </span>
+                </div>
+				
+
+                <% 
+                    prizeList.forEach(function(priceObj, i){ 
+                %>
+                    <% if(priceObj.hasSelect) {%>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix selected">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else if(!priceObj.canSelect || myPrizeList.length >= activeObj.activeObj.prizeAmount){ %>
+                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-disabled clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } else { %>
+                          <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix">
+                            <li class="v-prize-select-iconcontainer">
+                                <span class="v-prize-select-icon"></span>
+                            </li>
+                    <% } %>
+                    <li class="v-prize-item-name">
+                        <%= priceObj.name %>
+                        <% if(priceObj.hasSelect) {%>
+                            (已兑) 
+                            <!-- 兑奖码：<%= priceObj.giftId %> -->
+                        <% } %>
+                    </li>
+                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber*2 %>份</li>
+                </ul>
+                <%
+                    })
+                %>           
+            </div>
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
