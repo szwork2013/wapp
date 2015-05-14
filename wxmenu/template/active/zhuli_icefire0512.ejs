@@ -544,7 +544,14 @@ border: solid 1px #D9D8DC;
 			
 	
 		
-		
+		<script>
+		 <% if(supportScore>10) { %>
+		 supportScore=10
+		 
+		 <% }else { %>
+	
+		   <%}%>
+		</script>
 		
 		
 		 <div class='bar mint' data-percent='<%= supportScore*10 %>' data-skill=''></div>
