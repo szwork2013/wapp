@@ -208,16 +208,40 @@ z-index: 9999;
 		.anniu1 {
 position: absolute;
 width: 33%;
-height: auto;
+height: 15%;
 top: 45%;
 left: 0%;
-z-index: 9999;
+z-index: 9999999;
 background-color: #000;
 }
+		.anniu2 {
+position: absolute;
+width: 33%;
+height: 15%;
+top: 45%;
+left: 33%;
+z-index: 9999999;
+background-color: #333;
+}	
+			.anniu3 {
+position: absolute;
+width: 33%;
+height: 15%;
+top: 45%;
+left: 66%;
+z-index: 9999999;
+background-color: #666;
+}
 	
-	
-	
-	
+			.anniu3 {
+position: absolute;
+width: 100%;
+height: 5%;
+top: 62%;
+left: 0%;
+z-index: 9999999;
+/*background-color: #666;*/
+}	
 	
 	
 	
@@ -233,7 +257,7 @@ z-index: 99999;
 	
 	
 .visitor {
-margin-top: 150%;
+margin-top: 160%;
 border-radius: 4px;
 background-color: #F8F8F8;
 padding: 10px;
@@ -263,7 +287,11 @@ border: solid 1px #D9D8DC;
 		
         <% }else{ %>
 		<div class="anniu1">  </div>
-				<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fanniu.png" width='100%' alt=""></div><br>选择以上一种方法解救“<%= toUserObj.wxName %>”
+		<div class="anniu2">  </div>
+		<div class="anniu3">  </div>
+				<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fanniu.png" width='100%' alt=""></div>
+				
+				<div class="anniu4"> 选择以上一种方法解救“<%= toUserObj.wxName %>”</div>
         <%}%>	
 			
 			
