@@ -205,6 +205,16 @@ z-index: 9999;
 }
 	
 	
+		.anniu1 {
+position: absolute;
+width: 33%;
+height: auto;
+top: 45%;
+left: 0%;
+z-index: 9999;
+background-color: #000;
+}
+	
 	
 	
 	
@@ -249,11 +259,11 @@ border: solid 1px #D9D8DC;
 		
 			
 		<% if(isMyPage) { %>
-          	<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fhelp.png" width='100%' alt=""></div> 
+          	<div class="anniu" id="btnShare" onclick="mask()"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fhelp.png" width='100%' alt=""></div> 
 		
         <% }else{ %>
-		
-				<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fanniu.png" width='100%' alt=""></div>
+		<div class="anniu1">  </div>
+				<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fanniu.png" width='100%' alt=""></div><br>选择以上一种方法解救“<%= toUserObj.wxName %>”
         <%}%>	
 			
 			
