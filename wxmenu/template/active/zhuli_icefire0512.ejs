@@ -257,7 +257,7 @@ z-index: 99999;
 	
 	
 .visitor {
-margin-top: 170%;
+margin-top: 150%;
 border-radius: 4px;
 background-color: #F8F8F8;
 padding: 10px;
@@ -284,56 +284,11 @@ border: solid 1px #D9D8DC;
 			
 		<% if(isMyPage) { %>
           	<div class="anniu" id="btnShare" onclick="mask()"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fhelp.png" width='100%' alt=""></div> 
-		
-        <% }else{ %>
-		<div class="anniu1">  </div>
-		<div class="anniu2">  </div>
-		<div class="anniu3">  </div>
-				<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fanniu.png" width='100%' alt=""></div>
-				
-				<div class="anniu4"> <center><font color="#ffffff">选择以上一种方法解救“<%= toUserObj.wxName %>”</font></center></div>
-        <%}%>	
 			
 			
-	
-		<!--	
-		<a href="javascript:;" id="goSupport">	
 			
-			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""></a>
-			 
-			 <br>
-		
-		-->
-	
- 
-            </div>  
-
-
-		
-		
-		
-		
-		
-<script>
-				$(function(){
-					var height=$(window).height();
-					$('.main').css('height',height);
-					$('#share').click(function(event) {
-						$('.main').show();
-						setTimeout(function(){
-							$('.main').hide();
-						},5000)
-						
-					});
-				})
-			</script>
-		
-
- 
-<br> 
-       
-
-            <div id="divVisitor" class="visitor">
+			
+			<div id="divVisitor" class="visitor">
 
 
                 
@@ -390,7 +345,71 @@ border: solid 1px #D9D8DC;
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
 			
-		<br>
+			
+			
+		
+        <% }else{ %>
+		<div class="anniu1" id="amenu">  </div>
+		<div class="anniu2">  </div>
+		<div class="anniu3">  </div>
+				<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fanniu.png" width='100%' alt=""></div>
+				
+				<div class="anniu4"> <center><font color="#ffffff">选择以上一种方法解救“<%= toUserObj.wxName %>”</font></center></div>
+        <%}%>	
+			
+			
+	
+		<!--	
+		<a href="javascript:;" id="goSupport">	
+			
+			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""></a>
+			 
+			 <br>
+		
+		-->
+	
+ 
+            </div>  
+
+
+		
+		
+		
+		
+		
+<script>
+				$(function(){
+					var height=$(window).height();
+					$('.main').css('height',height);
+					$('#share').click(function(event) {
+						$('.main').show();
+						setTimeout(function(){
+							$('.main').hide();
+						},5000)
+						
+					});
+				})
+			</script>
+		
+
+ 
+<br> 
+       
+<script>
+	jQuery(function abc(){
+		jQuery("#amenu").click(function(){
+  		jQuery(".jiu").hide();
+  		//jQuery(".pp4").show();
+  		});
+  		jQuery("#bmenu").click(function(){
+  		jQuery(".pp4").hide();
+  		jQuery(".pp2").show();
+  		});
+	})
+</script>
+            
+			
+		
         </div>
 
 
