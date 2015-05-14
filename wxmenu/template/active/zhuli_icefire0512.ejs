@@ -191,7 +191,16 @@ z-index: 1000000;
 }
 	
 	
-	
+.you {
+position: absolute;
+width: 100%;
+height: auto;
+top: 0%;
+left: 0%;
+z-index: 1000000;
+display: none;
+}
+		
 	
 	
 
@@ -276,6 +285,10 @@ border: solid 1px #D9D8DC;
         <div class="container">
 	<!--	<a href="13.html" class="lm1"></a>-->
 		<div class="jiu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fjiu.png" width='100%' alt=""></div>
+		
+		
+		<div class="you"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fjiu.png" width='100%' alt=""></div>
+		
 		
 		<div class="lm1">  <img src="<%= toUserObj.wxAvatar %>" / width="80%" height="auto"></div>
 		<div class="lm2">  <%= toUserObj.wxName %></div>
@@ -399,7 +412,7 @@ border: solid 1px #D9D8DC;
 	jQuery(function abc(){
 		jQuery("#amenu").click(function(){
   		jQuery(".jiu").hide();
-  		jQuery(".pp4").show();
+  		jQuery(".you").show();
   		});
   		jQuery("#bmenu").click(function(){
   		jQuery(".pp4").hide();
