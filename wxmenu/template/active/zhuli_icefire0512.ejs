@@ -1008,11 +1008,11 @@ $(function(){
 
             $('#reduceNumber').html(d.data.supportScore)
 
-            $('#myModal3').on('hidden.bs.modal', function (e) {
+         setTimeout(   $('#myModal3').on('hidden.bs.modal', function (e) {
                   location.reload()
                 }).modal({
                     backdrop:false
-              })
+              }))5000
 
             //alert('恭喜您，支持成功')
 
