@@ -311,7 +311,7 @@ border: solid 1px #D9D8DC;
 		<div class="shui"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fshui.png" width='100%' alt=""></div>
 		
 		<div class="you"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fyou.png" width='100%' alt=""></div>
-		<div class="bing" id="goSupport"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fbing.png" width='100%' alt=""></div>
+		<div class="bing"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fbing.png" width='100%' alt=""></div>
 		
 		<div class="lm1">  <img src="<%= toUserObj.wxAvatar %>" / width="80%" height="auto"></div>
 		<div class="lm2">  <%= toUserObj.wxName %></div>
@@ -337,7 +337,7 @@ border: solid 1px #D9D8DC;
         <% }else{ %>
 		<div class="anniu1" id="amenu">  </div>
 		<div class="anniu2" id="bmenu">  </div>
-		<div class="anniu3" id="cmenu">  </div>
+		<div class="anniu3"  id="goSupport">  </div>
 				<div class="anniu"> <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fxc%2Fanniu.png" width='100%' alt=""></div>
 				
 				<div class="anniu4"> <center><font color="#ffffff">选择以上一种方法解救“<%= toUserObj.wxName %>”</font></center></div>
@@ -345,14 +345,7 @@ border: solid 1px #D9D8DC;
 			
 			
 	
-		<!--	
-		<a href="javascript:;" id="goSupport">	
-			
-			 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fhg%2Fhg04284.jpg" width='100%' alt=""></a>
-			 
-			 <br>
 		
-		-->
 	
  
             </div>  
@@ -400,6 +393,10 @@ border: solid 1px #D9D8DC;
 		jQuery(".shui").hide();
   		jQuery(".you").hide();
 		jQuery(".bing").show();
+		
+		
+		
+		
   		});
 	})
 </script>
