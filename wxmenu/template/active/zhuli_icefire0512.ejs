@@ -301,57 +301,7 @@ border: solid 1px #D9D8DC;
 			
 			
 			
-			<div id="divVisitor" class="visitor">
-
-
-                
-
-
-                <div class="v-share-surplus"><b style="color:#000;">活动剩余时间：</b>
-                    <span class="visitor_over_time" id="last_day"></span><b style="color:#000;">天</b> 
-                    <span class="visitor_over_time" id="last_hour"></span><b style="color:#000;">小时</b>
-                    <span class="visitor_over_time" id="last_minute"></span><b style="color:#000;">分钟</b>
-
-                </div>
-                <div class="v-prize-get clearfix">
-                    <span class="v-prize-get-tip"><b style="color:#000;">奖品列表：</b>
-
-                    </span>
-                </div>
-				
-
-                <% 
-                    prizeList.forEach(function(priceObj, i){ 
-                %>
-                    <% if(priceObj.hasSelect) {%>
-                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-unselect clearfix selected">
-                            <li class="v-prize-select-iconcontainer">
-                                <span class="v-prize-select-icon"></span>
-                            </li>
-                    <% } else if(!priceObj.canSelect || myPrizeList.length >= activeObj.activeObj.prizeAmount){ %>
-                        <ul prizeid ="<%= priceObj._id %>" class="noSelected prize-list-ul v-prize-item-disabled clearfix">
-                            <li class="v-prize-select-iconcontainer">
-                                <span class="v-prize-select-icon"></span>
-                            </li>
-                    <% } else { %>
-                          <ul prizeid ="<%= priceObj._id %>" class="canSelected prize-list-ul v-prize-item-unselect clearfix">
-                            <li class="v-prize-select-iconcontainer">
-                                <span class="v-prize-select-icon"></span>
-                            </li>
-                    <% } %>
-                    <li class="v-prize-item-name">
-                        <%= priceObj.name %>
-                        <% if(priceObj.hasSelect) {%>
-                            (已兑) 
-                            <!-- 兑奖码：<%= priceObj.giftId %> -->
-                        <% } %>
-                    </li>
-                    <li class="v-prize-item-surplus"> 剩余<%= priceObj.lastPrizeNumber %>份</li>
-                </ul>
-                <%
-                    })
-                %>           
-            </div>
+			
            
 		   
 		    <button id="startExchange" class="share_timeline1 btn-block">
