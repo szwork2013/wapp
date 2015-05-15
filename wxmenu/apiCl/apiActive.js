@@ -7,7 +7,7 @@ var wxCl = require('../weixCl/wCl.js')
 var url = require('url')
 var utils = require('../lib/utils.js');
 var moment = require('moment')
-
+var ccapCl = require('../viewCl/ccapCl.js')
 
 var obj = {}
 
@@ -167,7 +167,13 @@ obj.getMoney = function(req,res){
 
     var replayEname = req.body.replayEname
     var activeId = req.body.activeId
+    var capVal = req.body.capVal
 
+    var ccapCheck = ccapCl.ccapCheck(req,res,capVal)
+    if(!capVal || !ccapCheck){
+          res.send({error:1, data:'验证码错误'})
+          return
+    }
 
 
     userBl.getUser({'_id':userId}, function(err, doc){

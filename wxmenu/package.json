@@ -56,7 +56,8 @@
        "xmlreader":"0.2.3",
        "blueimp-md5":"1.1.0",
        "iconv":"2.1.6",
-       "qiniu":"6.1.6"
+       "qiniu":"6.1.6",
+       "ccap":"0.5.3"
    },
   "engines": {
     "node": ">=0.10.0"

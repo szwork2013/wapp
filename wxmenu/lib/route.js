@@ -27,6 +27,9 @@ var apiLottery = require('../apiCl/apiLottery.js');
 //vote
 var apiVote = require('../apiCl/apiVote.js');
 var apiVoteFront = require('../apiCl/frontUpload.js');
+//ccap
+var ccapCl = require('../viewCl/ccapCl.js');
+
 
 //console.log(global.config)
 function getAllApp(callback){
@@ -329,6 +332,9 @@ var addroute = function(app){
 		//game insurance
 		app.get('/insurance/unionlife', insuranceCl.page)
 		app.get('/insurance/unionlife/getbonus', insuranceCl.getBonus)
+
+		//验证码
+		app.get('/cap/', ccapCl.ccapCl)
 
 
 

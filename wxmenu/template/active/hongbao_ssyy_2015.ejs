@@ -6,10 +6,10 @@
 <meta content="no-cache" http-equiv="Pragma"></meta>
 <meta content="no-cache" http-equiv="Cache-Control"></meta>
 <meta content="0" http-equiv="Expires"></meta>
-<link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://wzhfile.qiniudn.com/bootstrap3.min.css">
 <script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
 <script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
-<script src="http://wzzy2014skin.qiniudn.com/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/bootstrap3.min.js"></script>
 <script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
 <link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
 <title>狮山御园领红包</title>
@@ -40,7 +40,11 @@
 		z-index: 9;
 		font-family: '微软雅黑';
 	}
-
+	#change_cap{
+		display: block;
+		padding-top: 10px;
+		text-align: right;
+	}
 </style>
 </head>
 <body bgcolor="#9a1a00">
@@ -57,6 +61,44 @@
 </div>
 
 
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
+       <h4 class="modal-title" id="myModalLabel">请输入图验证码，进行抢红包哦</h4>
+      </div>
+
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入验证码" id="ccap" value="" maxlength="6">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+        	<img src="/cap/" id="cap_img" />
+        	<a href="javascript:;" id="change_cap">看不清，换一张</a>
+        </div>
+        <br/>
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <a href="javascript:;" class="btn btn-primary" id="go_hongbao">马上抢红包</a>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
@@ -84,11 +126,17 @@ window.isAjax = false
 $(function(){
 
 	//一进来就刷新ajax
-	var getHongBao = function(){
+	var getHongBao = function(cap_val){
 		$.post('/api/'+appEname+'/getmoney',{
-            replayEname:'hongbao_jk_2015', 
+            replayEname:'hongbao_ssyy_2015',
+            capVal:cap_val,
             activeId:activeId,
         },function(d){
+        	if(d.data == '验证码错误'){
+        		return alert(d.data)
+        	}
+        	 $('#myModal').modal('hide')
+
         	if(d.error == 1){
         		$('#noHongBao').show()
         	}
@@ -114,7 +162,24 @@ $(function(){
 
 	})
 
-	getHongBao()
+	$('#change_cap').click(function(){
+		$('#cap_img').attr('src','/cap/?t='+Date.now())
+		return false;
+	})
+	
+	$('#go_hongbao').click(function(){
+		var cap_val = $('#ccap').val()
+		if(cap_val.length != 6){
+			return alert('请输入正确的验证码')
+		}
+		getHongBao(cap_val)
+		return false
+	})
+	
+
+	$('#myModal').modal({
+			backdrop:'static'
+		})
 
 
 	
