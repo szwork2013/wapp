@@ -126,12 +126,16 @@ window.isAjax = false
 $(function(){
 
 	//一进来就刷新ajax
+	window.isAjax = false
 	var getHongBao = function(cap_val){
+		if(window.isAjax) return
+		window.isAjax = true
 		$.post('/api/'+appEname+'/getmoney',{
             replayEname:'hongbao_ssyy_2015',
             capVal:cap_val,
             activeId:activeId,
         },function(d){
+        	window.isAjax = false
         	if(d.data == '验证码错误'){
         		return alert(d.data)
         	}
