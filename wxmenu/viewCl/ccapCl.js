@@ -14,7 +14,7 @@ obj.ccapCl = function(req, res){
 
 
 obj.ccapCheck = function(req, res, captureVal){
-	var captureVal = captureVal.toUpperCase()
+	var captureVal = (captureVal || '-1').toUpperCase()
 	//console.log(req.session.cap)
 	//console.log(captureVal)
 	//console.log(req.session.cap == captureVal)

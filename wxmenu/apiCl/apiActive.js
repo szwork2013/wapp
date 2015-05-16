@@ -181,7 +181,7 @@ obj.getMoney = function(req,res){
             return res.send({error:1, data:'内部错误，请重试'})
           }
           if(doc.bind.length == 0){
-            logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', fromUserId)
+            logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', doc)
             return res.send({error:1, data:'出错啦，请关闭重试'})
           }
           var openId = doc.bind[0].openId
