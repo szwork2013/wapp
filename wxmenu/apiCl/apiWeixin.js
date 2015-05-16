@@ -41,7 +41,13 @@ obj.checkOpenId = function(req,res){
 obj.jsStr = 'window.jsticket_error="%s";window.jsconfig=%s;'
 obj.createJsStr = function(dict){
     
-    return util.format(obj.jsStr, dict['jsticket_error'], dict['jsconfig'])
+    if(dict['jsticket_error'] == 1){
+        return util.format(obj.jsStr, dict['jsticket_error'], '"'+dict['jsconfig']+'"')
+    }
+    else{
+        return util.format(obj.jsStr, dict['jsticket_error'], dict['jsconfig'])
+    }
+    
 
 }
 
