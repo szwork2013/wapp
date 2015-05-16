@@ -222,7 +222,8 @@ function usePhoto(imgWebUrl){
 }
 
 function setInfo(obj){
-	console.log(obj);
+	clickShare(obj.result)
+	//console.log(obj);
 	$(".share .name p").html("你是" + obj.result.data_json.chenghao + obj.result.data_json.xingxiang);
 	$(".share .tip span").html(obj.result.data_json.chenghao_find + obj.result.data_json.xingxiang_find);
 	$(".share .photoBox").css({
@@ -235,6 +236,8 @@ function setInfo(obj){
 	$(".photo").removeClass("active");
 	$(".share").addClass("active");
 	$(".loadingModal").removeClass('show');
+
+
 }
 
 function clickShare(data){
