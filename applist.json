@@ -19,7 +19,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7900.js",
-        "max_memory_restart" : "300M",
+        "max_memory_restart" : "500M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -27,7 +27,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7901.js",
-        "max_memory_restart" : "300M",
+        "max_memory_restart" : "500M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -35,7 +35,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7902.js",
-        "max_memory_restart" : "300M",
+        "max_memory_restart" : "500M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -43,7 +43,7 @@
       {
         "name"      : "wxmenu",
         "script"    : "/var/nodejs/wapp/wxmenu/lib/app_7903.js",
-        "max_memory_restart" : "300M",
+        "max_memory_restart" : "500M",
         "env_production" : {
           "NODE_ENV": "production"
         }
@@ -51,7 +51,7 @@
       {
         "name"      : "wxmenuadmin",
         "script"    : "/var/nodejs/wapp/wxmenu/manager/app.js",
-        "max_memory_restart" : "300M",
+        "max_memory_restart" : "500M",
         "env_production" : {
           "NODE_ENV": "production"
         }
