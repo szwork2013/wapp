@@ -142,11 +142,29 @@ obj.ApiInit = function(){
                         'appId':appid,
                         'type':'access_token'
                       }, function(err, data){
-                            // console.log('^^^^^^^^^^^')
-                            // console.log(err, data)
-                            if(err) return callback(err);
-                            if(!data) return callback(null, '{}')
-                            callback(null, JSON.parse(data.token));
+                            if(err){
+                                logger.error('obj["wxApi"][%s] API -> accessTokenDl.findOneByObj, err is %s', ename, err)
+                                return callback(err);
+                             } 
+                             if(!data){
+                                logger.error('obj["wxApi"][%s] API -> accessTokenDl.findOneByObj, no data, appid: %s', ename, appid)
+                                return callback('not save data')
+                             }
+
+                            console.log('#################')
+                            console.log(typeof(data.token))
+                            console.log('#################')
+
+                            if(typeof(data.token) == 'string'){
+                                try{
+                                    var token = JSON.parse(data.token)
+                                }
+                                catch(e){
+                                    return callback('new API parse json error, appid: %s', appid)
+                                }
+                            }
+
+                            callback(null, token);
                       })
 
                 }, function (token, callback) {
@@ -162,7 +180,19 @@ obj.ApiInit = function(){
                         'appId':appid,
                         'type':'access_token',
                         'token':JSON.stringify(token)
-                      }, callback)
+                      }, function(err, data){
+
+                        if(err){
+                            logger.error('obj["wxApi"][%s].new API -> accessTokenDl.createOneOrUpdate, err is %s', ename, err)
+                            return callback(err);
+                         } 
+                         if(!data){
+                            logger.error('obj["wxApi"][%s].new API -> accessTokenDl.createOneOrUpdate, no data, appid: %s', ename, appid)
+                            return callback('not save data')
+                         }
+                         callback(null, token);
+
+                      })
                       //fs.writeFile('access_token.txt', JSON.stringify(token), callback);
                 });
                 
@@ -175,9 +205,29 @@ obj.ApiInit = function(){
                           }, function(err, data){
                             // console.log('&&&&&&&&&&&&&&&')
                             // console.log(err, data)
-                                if(err) return callback(err);
-                                if(!data) return callback(null, '')
-                                callback(null, data.ticket);
+                                if(err){
+                                    logger.error('obj["wxApi"][%s].registerTicketHandle -> accessTokenDl.findOneByObj, err is %s', ename, err)
+                                    return callback(err);
+                                } 
+                                if(!data){
+                                    logger.error('obj["wxApi"][%s].registerTicketHandle -> accessTokenDl.findOneByObj, no data, appid: %s', ename, appid)
+                                    return callback('not found data')
+                                }
+
+                                console.log('&&&&&&&&&&&&&&&')
+                                console.log(typeof(data.ticket))
+                                console.log('&&&&&&&&&&&&&&&')
+
+                                if(typeof(data.ticket) == 'string'){
+                                    try{
+                                        var ticket = JSON.parse(data.ticket)
+                                    }
+                                    catch(e){
+                                        return callback('registerTicketHandle parse json error, appid: %s', appid)
+                                    }
+                                }
+
+                                callback(null, ticket);
                           })
 
                         // settingModel.getItem(type, {key: 'weixin_ticketToken'}, function (err, setting) {
@@ -198,7 +248,18 @@ obj.ApiInit = function(){
                             'appId':appid,
                             'type':'js_ticket',
                             'ticket':JSON.stringify(ticketToken)
-                          }, callback)
+                          }, function(err, data){
+                             if(err){
+                                logger.error('obj["wxApi"][%s].registerTicketHandle -> accessTokenDl.createOneOrUpdate, err is %s', ename, err)
+                                return callback(err);
+                             } 
+                             if(!data){
+                                logger.error('obj["wxApi"][%s].registerTicketHandle -> accessTokenDl.createOneOrUpdate, no data, appid: %s', ename, appid)
+                                return callback('not save data')
+                             }
+                             callback(null, ticketToken);
+
+                          })
 
                         // settingModel.setItem(type, {key:'weixin_ticketToken', value: ticketToken}, function (err) {
                         //    if (err) return callback(err);
