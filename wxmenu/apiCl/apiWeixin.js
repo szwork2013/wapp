@@ -151,9 +151,9 @@ obj.ApiInit = function(){
                                 return callback('not save data')
                              }
 
-                            console.log('#################')
-                            console.log(typeof(data.token))
-                            console.log('#################')
+                            //console.log('#################')
+                            //console.log(typeof(data.token))
+                            //console.log('#################')
 
                             if(typeof(data.token) == 'string'){
                                 try{
@@ -214,9 +214,9 @@ obj.ApiInit = function(){
                                     return callback('not found data')
                                 }
 
-                                console.log('&&&&&&&&&&&&&&&')
-                                console.log(typeof(data.ticket))
-                                console.log('&&&&&&&&&&&&&&&')
+                                //console.log('&&&&&&&&&&&&&&&')
+                                //console.log(typeof(data.ticket))
+                                //console.log('&&&&&&&&&&&&&&&')
 
                                 if(typeof(data.ticket) == 'string'){
                                     try{
