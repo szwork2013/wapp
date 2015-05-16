@@ -206,15 +206,17 @@ function usePhoto(imgWebUrl){
 		},
 		'jsonp':'callback',
 		'success':function(result){
+
 			if(result.status === "ok"){
 	    		localStorage.myId=result.result.Id;
 	    		setInfo(result);	
 	    		clickShare(result.result);
+
 	    	} else {
-	    		$(".loadingModal").removeClass('show');
-	    		$(".uploadModal").removeClass('show');
 	    		$(".failedModal").addClass('show');
 	    	}
+    		$(".loadingModal").removeClass('show');
+    		$(".uploadModal").removeClass('show');
 		}
 	})
 }
