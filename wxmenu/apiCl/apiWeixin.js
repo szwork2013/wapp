@@ -154,7 +154,7 @@ obj.ApiInit = function(){
                              } 
                              if(!data){
                                 logger.error('obj["wxApi"][%s] API -> accessTokenDl.findOneByObj, no data, appid: %s', ename, appid)
-                                return callback('not save data')
+                                return callback(null, null)
                              }
 
                             //console.log('#################')
@@ -217,7 +217,7 @@ obj.ApiInit = function(){
                                 } 
                                 if(!data){
                                     logger.error('obj["wxApi"][%s].registerTicketHandle -> accessTokenDl.findOneByObj, no data, appid: %s', ename, appid)
-                                    return callback('not found data')
+                                    return callback(null, null)
                                 }
 
                                 //console.log('&&&&&&&&&&&&&&&')
