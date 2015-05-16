@@ -1,0 +1,22 @@
+*{margin: 0;padding: 0;outline: none;}
+html,body{font-size:12px;width:100%;height:100%;}
+@media screen and (min-width: 410px) { 
+  html,body{font-size: 14px;}
+}
+.share{display:-webkit-box;-webkit-box-orient: vertical;position:absolute;top:0;left:0; width:100%;height:100%;overflow:hidden;}
+.share .main{-webkit-box-flex:1;display:-webkit-box;-webkit-box-orient: vertical;background:url(../img/shareBg.png) no-repeat center bottom;background-size: cover;}
+.share .name{height:90px;display:-webkit-box;-webkit-box-orient: vertical;}
+.share .name p{-webkit-box-flex:1;color:#fff;text-align: center;line-height: 35px;font-size: 1.8rem;font-family: "黑体";}
+.share .name p:first-child{margin-top: 10px;}
+.share .name p:last-child{margin-bottom: 10px;}
+.share .photoBox{-webkit-box-flex:3;}
+.share .tip{height:70px;display:-webkit-box;-webkit-box-orient: vertical;margin-top: 20px;}
+.share .tip p{-webkit-box-flex:1;color:#fff;text-align: center;line-height: 20px;font-size: 1.2rem;font-family: "黑体";}
+.share .tip p:last-child{-webkit-box-flex:4;}
+.share .tip p span{color:#ded6b2;}
+.share .shareBtn{-webkit-box-flex:1;display:-webkit-box;-webkit-box-orient: vertical;}
+.share .shareBtn button{-webkit-box-flex:1;display:block;width:70%;margin:0 auto;border:0;background:url(../img/partakeBtn.png) no-repeat center center;background-size: contain;}
+.share .placeHolder{-webkit-box-flex:1;display:-webkit-box;-webkit-box-orient: vertical;}
+.share .footerHolder{height:40px;}
+.share footer{position:absolute;width:100%;left:0;bottom:0; height:12%;border-top-left-radius: 25px;background:url(../img/downloadAd.png) no-repeat center center;background-size: cover;}
+.downloadAppBtn{display:block;width:50%;height:80%;opacity:0;position:absolute;bottom:0;right:0;}

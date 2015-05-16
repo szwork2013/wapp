@@ -323,8 +323,37 @@ obj.myItem = function(req, res){
 	})
 }
 
+var uploadFolder = path.join(__dirname, '..', 'upload')
+var uploadCount = 1
 
+obj.uploadBase64 = function(req, res){
 
+	var imgBase64 = req.body.imgData
+	var fileType = req.body.fileType
+
+	if(!imgBase64){
+		return  res.send({error:1,data:'缺少参数'}) 
+	}
+
+	//console.log(fileType)
+
+	//将base64格式的字符存入本地图片
+	var imgBase64 = imgBase64.replace(/^data:image\/png;base64,/,"");
+	imgBase64 = imgBase64.replace(/^data:image\/jpg;base64,/,"");
+	imgBase64 = imgBase64.replace(/^data:image\/jpeg;base64,/,"");
+
+  	var binaryData = new Buffer(imgBase64, 'base64').toString('binary');
+  	uploadCount++
+  	var fileName = utils.md5(uploadCount.toString() + Date.now().toString() + process.pid.toString()) + '.' + fileType
+  	var saveFolder = path.join(uploadFolder, fileName)
+  	fs.writeFile(saveFolder, binaryData, "binary", function(err) {
+	  	  if(err){
+	  	  	  return res.send({error:1,data:'保存文件失败'}) 
+	  	  }
+	  	  return res.send({error:0,data:'/upload/'+fileName})
+	});
+
+}
 
 
 module.exports = obj;

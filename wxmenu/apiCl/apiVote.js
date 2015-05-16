@@ -1,6 +1,7 @@
 var voteBl = require('../bl/wxVote.js');
 var userBl = require('../bl/wxUser.js');
 var utils = require('../lib/utils.js');
+var fs = require("fs")
 var obj = {}
 
 //第一次加载，获取投票信息和用户投票记录
@@ -335,6 +336,8 @@ obj.getMyRecord = function(req, res){
 	})//end voteBl.getVoteByEname
 
 }
+
+
 
 
 module.exports = obj;

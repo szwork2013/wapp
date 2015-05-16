@@ -1,0 +1,53 @@
+*{margin: 0;padding: 0;outline: none;}
+html,body{font-size:12px;width:100%;height:100%;}
+@media screen and (min-width: 411px) { 
+  html,body{font-size: 14px;}
+}
+.wrapper{position:absolute;top:0;left:0; width:100%;height:100%;overflow:hidden;opacity:0;z-index: -1;}
+.wrapper.active{opacity:1;z-index: 9;}
+
+.index{box-sizing:border-box;border-bottom:1px solid rgb(206,206,206);background:rgb(12,12,14) url(../img/bg.png) no-repeat center top;background-size: cover;}
+.index header{position: absolute;top:0;left:10px;width:35%;height:40px;background:url(../img/logo.png) no-repeat left center;background-size: contain;}
+.index section{display:-webkit-box;-webkit-box-orient: vertical;width:100%;height:50%;-webkit-transform:translateY(60%);}
+.index section .people{-webkit-box-flex:1;background:url(../img/people.png) no-repeat center bottom;background-size: contain;}
+.index section .title{-webkit-box-flex:1;background:url(../img/title.png) no-repeat center top;background-size: contain;}
+.index section .start{height:14.1%;background:url(../img/button.png) no-repeat center bottom;background-size: contain;}
+.index section .start input{display:block;width:100%;height:100%;opacity:0;}
+.index footer{position: absolute;bottom:0;right:0;width:100%;height:40px;background:url(../img/tip.png) no-repeat right center;background-size: cover;}
+
+.photo{display:-webkit-box;-webkit-box-orient: vertical;background:rgb(139,147,160);}
+.photo .picWrapper{-webkit-box-flex:1;display:-webkit-box;}
+/*.photo .picWrapper img{-webkit-box-flex:1;max-width: 100%;max-height: 100%;display:block;margin:20px;}*/
+.photo .picWrapper div{-webkit-box-flex:1;margin:20px;}
+.photo footer{height:100px;width:100%;background:#42495d;overflow:hidden;}
+.photo footer a{display:block;position:absolute;color:#fff;text-decoration: none;width:30%;height:100%;text-align: center;font: 14px "黑体";line-height: 100px;}
+.photo footer button{display:block;margin:10px auto;width:80px;height:80px;border:0;border-radius: 50%;background:#fff;color: rgb(66,73,93);line-height: 80px;text-align: center;font: 24px "黑体";font-weight: bolder;}
+
+.share{display:-webkit-box;-webkit-box-orient: vertical;}
+.share .main{-webkit-box-flex:1;display:-webkit-box;-webkit-box-orient: vertical;background:url(../img/shareBg.png) no-repeat center bottom;background-size: cover;}
+.share .name{height:70px;display:-webkit-box;}
+.share .name p{-webkit-box-flex:1;color:#fff;text-align: center;line-height: 70px;font-size: 1.8rem;font-family: "黑体";}
+.share .photoBox{-webkit-box-flex:3;}
+.share .tip{height:70px;display:-webkit-box;-webkit-box-orient: vertical;margin-top: 20px;}
+.share .tip p{-webkit-box-flex:1;color:#fff;text-align: center;line-height: 20px;font-size: 1.2rem;font-family: "黑体";}
+.share .tip p:last-child{-webkit-box-flex:4;}
+.share .tip p span{color:#ded6b2;}
+.share .shareBtn{-webkit-box-flex:1;display:-webkit-box;-webkit-box-orient: vertical;}
+.share .shareBtn button{-webkit-box-flex:1;display:block;width:70%;margin:0 auto;border:0;background:url(../img/shareBtn.png) no-repeat center center;background-size: contain;}
+.share .tryAgain{-webkit-box-flex:1;display:-webkit-box;-webkit-box-orient: vertical;}
+.share .tryAgain button{-webkit-box-flex:1;display:block;width:20%;margin:0 auto;border:0;background:url(../img/tryAgain.png) no-repeat center 10px;background-size: contain;}
+.share .footerHolder{height:40px;}
+.share footer{position:absolute;width:100%;left:0;bottom:0; height:12%;border-top-left-radius: 25px;background:url(../img/downloadAd.png) no-repeat center center;background-size: cover;}
+
+.downloadAppBtn{display:block;width:50%;height:80%;opacity:0;position:absolute;bottom:0;right:0;}
+.index .downloadAppBtn{height:40px;}
+
+.modal{position:absolute;left:0;top:0;width:100%;height:100%;background:url(../img/modalBg.png);opacity: 0;display:none;-webkit-transition:opacity 0.5s;}
+.modal.show{display:block;opacity:1;z-index: 10;}
+.modal div{position:absolute;width:100%;height:50%;left:0;top:20%;}
+.modal.failedModal div{background:url(../img/failed.png) no-repeat center center;background-size: contain;}
+.modal.netFailedModal div{background:url(../img/netFailed.png) no-repeat center center;background-size: contain;}
+.modal.shareModal div:first-child{top:0;height:20%;background:url(../img/shareArr.png) no-repeat right top;background-size: contain;}
+.modal.shareModal div:last-child{top:15%;height:30%;background:url(../img/shareTxt.png) no-repeat center center;background-size: contain;}
+.modal.loadingModal div{background:url(../img/loading.gif) no-repeat center center;background-size: contain;}
+.modal.uploadModal div{background:url(../img/upload.gif) no-repeat center center;background-size: contain;}

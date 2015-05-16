@@ -321,6 +321,7 @@ var addroute = function(app){
 		app.post('/vote/:appename/removepic', function(req, res){
 			res.json({})
 		})//删除图片
+		app.post('/api/base64/upload', apiVoteFront.uploadBase64)
 		app.post('/vote/:appename/uploaditem', apiVoteFront.uploadToVoteItem)//上传投票项
 		app.get('/vote/:appename/myitem', apiVoteFront.myItem)
 
