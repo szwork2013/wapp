@@ -1,12 +1,33 @@
 $(function(){
-	$.getJSON("http://apps.me-link.com/open/avengers/get?id=" + getQueryString("id") + "&callback=?",
-    function(result) {    	
-    	if(result.status === "ok"){
-    		setInfo(result);	
-    	}
-    });  
+
+	var qid = getQueryString("id")
+
+	if(qid){
+		$.ajax({
+			'url':'http://apps.me-link.com/open/avengers/get',
+			'data':{
+				'id':qid
+			},
+			'dataType':'jsonp',
+			'error':function(){
+				
+			},
+			'jsonp':'callback',
+			'success':function(result){
+				if(result.status === "ok"){
+		    		setInfo(result);	
+		    	}
+			}
+		})
+	}
+
+	
+
 	$(".share .shareBtn button").on("click",takePartIn);
 	$(".downloadAppBtn").on("click",downloadApp);
+
+
+
 });
 
 function takePartIn(){
