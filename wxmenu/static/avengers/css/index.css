@@ -19,8 +19,9 @@ html,body{font-size:12px;width:100%;height:100%;}
 .photo .picWrapper{-webkit-box-flex:1;display:-webkit-box;}
 /*.photo .picWrapper img{-webkit-box-flex:1;max-width: 100%;max-height: 100%;display:block;margin:20px;}*/
 .photo .picWrapper div{-webkit-box-flex:1;margin:20px;}
-.photo footer{height:100px;width:100%;background:#42495d;overflow:hidden;}
+.photo footer{height:100px;width:100%;background:#42495d;overflow:hidden;position:relative;}
 .photo footer a{display:block;position:absolute;color:#fff;text-decoration: none;width:30%;height:100%;text-align: center;font: 14px "黑体";line-height: 100px;}
+#rotatePhoto{right:0;top:0;}
 .photo footer button{display:block;margin:10px auto;width:80px;height:80px;border:0;border-radius: 50%;background:#fff;color: rgb(66,73,93);line-height: 80px;text-align: center;font: 24px "黑体";font-weight: bolder;}
 
 .share{display:-webkit-box;-webkit-box-orient: vertical;}
