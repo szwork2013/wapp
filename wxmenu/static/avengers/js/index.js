@@ -256,9 +256,9 @@ function clickShare(data){
 	
 
 	wx.config(window.jsconfig);
-	alert(window.jsticket_error)
+	//alert(window.jsticket_error)
 	wx.ready(function(){
-			alert(JSON.stringify(data))
+			//alert(JSON.stringify(data))
 			var shareOption = {
 				title: '穿越！快来测试你是复仇者联盟2里面的谁谁谁?', // 分享标题
 			    link: 'http://melink.siyanhui.com/static/avengers/share.html?r='+Date.now()+'&id=' + data.Id, // 分享链接
