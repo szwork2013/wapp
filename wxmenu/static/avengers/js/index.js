@@ -34,7 +34,7 @@ $(function(){
 	$("#changePhoto").on("click",changePhoto);
 	//$(".photo footer button").on("click",usePhoto);
 	$(".modal").click(function(){
-		if($(this).hasClass('loadingModal')){
+		if($(this).hasClass('loadingModal') || $(this).hasClass('uploadModal')){
 			return;
 		} else if($(this).hasClass('shareModal')){
 			$(this).removeClass('show');
