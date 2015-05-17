@@ -2,13 +2,13 @@ var rot = 0;
 $(function(){
 	// localStorage.removeItem("myId");
 	//判断本地是否有存储id，有则直接展示，没有则开始新的页面
-	// if(localStorage.myId){
-	if($.cookie("myId")){
+	if(localStorage.myId){
+	// if($.cookie("myId")){
 		$(".loadingModal").addClass('show');
 
 		var infoAjax = $.ajax({
 			url:'http://apps.me-link.com/open/avengers/get',
-			data:{'id':$.cookie("myId")},			
+			data:{'id':localStorage.myId},			
 			dataType:'jsonp',
 			error:function(){},
 			jsonp:'callback',
@@ -159,9 +159,9 @@ function MathRand(length){
 function changePhoto(){
 	$(".wrapper.active").removeClass('active');
 	$(".index").addClass('active');
-	$.cookie("myId",null);
-  	// localStorage.removeItem("myId");
-  	$('#selectPhoto').val('')
+  	localStorage.removeItem("myId");
+  	$('#selectPhoto').val('');
+  	window.location.reload();
 }
 
 function rotatePhoto(){
@@ -204,11 +204,11 @@ function usePhoto(imgWebUrl){
 		success:function(result){
 
 			if(result.status === "ok"){
-	    		// localStorage.myId=result.result.Id;
-	    		$.removeCookie("myId", { path: '/' })
-	    		var date = new Date(); 
-				date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000)); 
-				$.cookie("myId", result.result.Id, { path: '/', expires: date }); 
+	    		localStorage.myId=result.result.Id;
+	   //  		$.removeCookie("myId", { path: '/' })
+	   //  		var date = new Date(); 
+				// date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000)); 
+				// $.cookie("myId", result.result.Id, { path: '/', expires: date }); 
 
 	    		setInfo(result);	
 	    		clickShare(result.result);
