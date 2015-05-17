@@ -166,7 +166,6 @@ function changePhoto(){
 
 function rotatePhoto(){
 	var file = document.getElementById("selectPhoto").files[0];
-	rot = rot + 90;
 	if(rot == 360){
 		rot = 0;
 	}
@@ -177,6 +176,7 @@ function rotatePhoto(){
         callback: function(data, width, height) {
         	window.imgDataBase64 = data;
             initCanvas();
+            rot = rot + 90;
         }
     });
 }
@@ -205,10 +205,11 @@ function usePhoto(imgWebUrl){
 
 			if(result.status === "ok"){
 	    		// localStorage.myId=result.result.Id;
+	    		$.removeCookie("myId", { path: '/' })
 	    		var date = new Date(); 
 				date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000)); 
 				$.cookie("myId", result.result.Id, { path: '/', expires: date }); 
-				
+
 	    		setInfo(result);	
 	    		clickShare(result.result);
 

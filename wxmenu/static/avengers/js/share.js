@@ -31,7 +31,7 @@ $(function(){
 });
 
 function takePartIn(){
-	window.location.href = "index.html";
+	window.location.href = "http://mp.weixin.qq.com/s?__biz=MjM5MzUyNTI2Nw==&mid=203686924&idx=1&sn=16f461592afdb9ab1df36de5eb54779d&scene=1&from=singlemessage&isappinstalled=0#rd";
 }
 
 function downloadApp(){
