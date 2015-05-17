@@ -44,10 +44,22 @@ $(function(){
 	//判断本地是否有存储id，有则直接展示，没有则开始新的页面
 	if(localStorage.myId){
 		$(".loadingModal").addClass('show');
-		$.getJSON("http://apps.me-link.com/open/avengers/get?id=" + localStorage.myId + "&callback=?",  
-	    function(result) {
-	    	setInfo(result);
-	    }); 
+
+		$.ajax({
+			'url':'http://apps.me-link.com/open/avengers/get',
+			'data':{
+				'id':localStorage.myId
+			},
+			'dataType':'jsonp',
+			'error':function(){
+				
+			},
+			'jsonp':'callback',
+			'success':function(result){
+				setInfo(result);
+			}
+		})
+
 	} else {
 		bindInput()
 	}
