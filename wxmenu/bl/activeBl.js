@@ -2,7 +2,7 @@ var request = require('request')
 var async = require('async')
 var fs = require('fs')
 var child_process = require('child_process')
-var Iconv  = require('iconv').Iconv;
+
 
 var userBl = require('./wxUser.js');
 var userModel = require('../dl/userModel.js'); //加载用户模型
@@ -878,6 +878,7 @@ obj._saveUserAvatar = function(userList, cb){
 
 				//将异步方法丢入数组，供async调用
 				dealFunc.push(function(callback){
+					var Iconv  = require('iconv').Iconv;
 					var iconv = new Iconv('UTF-8', 'GBK');
 					var wxNameBuf = iconv.convert(userObj.wxName);
 
