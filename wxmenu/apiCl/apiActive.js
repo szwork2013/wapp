@@ -43,6 +43,9 @@ obj.addSupport = function(req,res){
     if(err){
       return res.send({error:1, data:'内部错误，请重试'})
     }
+    if(!doc){
+      return res.send({error:1, data:'未找到用户，请重试'})
+    }
     if(doc.bind.length == 0){
       logger.error('apiActive.addSupport userBl.getUser: not found doc.bind,userid: %s', fromUserId)
       return res.send({error:1, data:'出错啦，请关闭重试'})
