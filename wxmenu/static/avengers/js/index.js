@@ -6,39 +6,39 @@ window.onerror = function (errorMsg, url, lineNumber) {
 
 $(function(){
 	//注册微信接口
-  url = location.href;
-  url = url.replace("&","55555");
-  $.ajax({
-    type : "get",
-    url : "http://middleware.siyanhui.com:3000/wechat/token?url="+url,
-    dataType : "jsonp",
-    jsonp: "callback",
-    jsonpCallback:"success_jsonpCallback",
-    success : function(data){ 
-        wx.config({
-          appId: 'wx05707a5b58cabc7f',
-          timestamp: data.timestamp,
-          nonceStr: data.nonceStr,
-          signature: data.signature,
-          jsApiList: [
-            "onMenuShareTimeline",
-            "onMenuShareAppMessage",
-            "onMenuShareQQ",
-            "onMenuShareWeibo"
-          ]
-        });
-        wx.error(function(res){
+  // url = location.href;
+  // url = url.replace("&","55555");
+  // $.ajax({
+  //   type : "get",
+  //   url : "http://middleware.siyanhui.com:3000/wechat/token?url="+url,
+  //   dataType : "jsonp",
+  //   jsonp: "callback",
+  //   jsonpCallback:"success_jsonpCallback",
+  //   success : function(data){ 
+  //       wx.config({
+  //         appId: 'wx05707a5b58cabc7f',
+  //         timestamp: data.timestamp,
+  //         nonceStr: data.nonceStr,
+  //         signature: data.signature,
+  //         jsApiList: [
+  //           "onMenuShareTimeline",
+  //           "onMenuShareAppMessage",
+  //           "onMenuShareQQ",
+  //           "onMenuShareWeibo"
+  //         ]
+  //       });
+  //       wx.error(function(res){
 
-		    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-			console.log(res);
-			// alert("wx:error");
-			// alert(res);
-		});
-    },
-    error:function(data){
-        alert("连接失败！");
-    }
-  });
+		//     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+		// 	console.log(res);
+		// 	// alert("wx:error");
+		// 	// alert(res);
+		// });
+  //   },
+  //   error:function(data){
+  //       alert("连接失败！");
+  //   }
+  // });
   
 //localStorage.removeItem("myId");
 	//判断本地是否有存储id，有则直接展示，没有则开始新的页面
