@@ -243,13 +243,12 @@ function setInfo(obj){
 function clickShare(data){
 	
 
-
 	wx.config(window.jsconfig);
 	wx.ready(function(){
 
 			var shareOption = {
 				title: '穿越！快来测试你是复仇者联盟2里面的谁谁谁?', // 分享标题
-			    link: 'http://menu.xy-tang.com/static/avengers/share.html?r='+Date.now()+'&id=' + data.Id, // 分享链接
+			    link: 'http://melink.siyanhui.com/static/avengers/share.html?r='+Date.now()+'&id=' + data.Id, // 分享链接
 			    imgUrl: data.user_avatar, // 分享图标
 			    desc: '我测了一下，居然是'+ data.data_json.chenghao + data.data_json.xingxiang +"!你会是我要找的" + data.data_json.chenghao_find  + data.data_json.xingxiang_find + "么?", // 分享描述
 			    success: function () { 
@@ -262,7 +261,7 @@ function clickShare(data){
 			//分享到朋友圈
 			wx.onMenuShareTimeline({
 			    title: '穿越！快来测试你是复仇者联盟2里面的谁谁谁?', // 分享标题
-			    link: 'http://menu.xy-tang.com/static/avengers/share.html?r='+Date.now()+'&id=' + data.Id, // 分享链接
+			    link: 'http://melink.siyanhui.com/static/avengers/share.html?r='+Date.now()+'&id=' + data.Id, // 分享链接
 			    imgUrl: data.user_avatar, // 分享图标
 			    success: function () { 
 			        // 用户确认分享后执行的回调函数
