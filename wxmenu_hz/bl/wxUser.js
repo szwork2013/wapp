@@ -1008,14 +1008,16 @@ obj.setSchedule = function(){
 	rule.hour = 2;
 	rule.minute = 10;
 
-	var s = moment().add(-1, 'days').hour(0).minute(0).second(0)
-	var e = moment().hour(0).minute(0).second(0)
-
 	var j = node_schedule.scheduleJob(rule, function(){
+
+			var s = moment().add(-1, 'days').hour(0).minute(0).second(0)
+			var e = moment().hour(0).minute(0).second(0)
+
 			console.log('^^^^^^^^^^^^^')
 			console.log(s.toString())
 			console.log(e.toString())
 			console.log('^^^^^^^^^^^^^')
+			
 			if(obj.doSend){
 				obj.sendMailJob(s, e)
 			}
