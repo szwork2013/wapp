@@ -1011,7 +1011,7 @@ obj.setSchedule = function(){
 	var j = node_schedule.scheduleJob(rule, function(){
 
 			var s = moment().add(-1, 'days').hour(0).minute(0).second(0)
-			var e = moment().hour(0).minute(0).second(0)
+			var e = moment().add(-1, 'days').hour(23).minute(59).second(59)
 
 			console.log('^^^^^^^^^^^^^')
 			console.log(s.toString())
