@@ -1,0 +1,415 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+<script id="popup_editor" type="text/x-kendo-template">
+          
+            <div class="k-edit-label w-800-l">
+                <label for="_id">积分id</label>
+            </div>
+            <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
+                <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="appId" >地产商</label>
+            </div>
+            <div data-container-for="appId" class="k-edit-field w-800-r">
+               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="userId" >用户Id</label>
+            </div>
+            <div data-container-for="userId" class="k-edit-field w-800-r">
+               <input type="text" id="user_name_inp" class="k-input k-textbox w-50-inp" name="userId" data-bind="value:userId" required="required">
+               <div id="user_name"></div>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="mobile" >手机号</label>
+            </div>
+            <div data-container-for="mobile" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="mobile" data-bind="value:mobile" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreGuid" >流水号</label>
+            </div>
+            <div data-container-for="scoreGuid" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="scoreGuid" id="guid_inp" data-bind="value:scoreGuid" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreType" >获取/消费</label>
+            </div>
+            <div data-container-for="scoreType" class="k-edit-field w-800-r">
+               <input type="number"  id="scoreType_inp"  class="k-input k-textbox w-50-inp" name="scoreType" data-bind="value:scoreType" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreDetail" >积分数量</label>
+            </div>
+            <div data-container-for="scoreDetail" class="k-edit-field w-800-r">
+               <input type="number" class="k-input k-textbox w-50-inp" name="scoreDetail" data-bind="value:scoreDetail" required="required">
+            </div>
+
+            
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreWay" >获取/消费方式</label>
+            </div>
+            <div data-container-for="scoreWay" class="k-edit-field w-800-r">
+               <input type="text" id="scoreWay_inp" class="k-input k-textbox w-50-inp" name="scoreWay" data-bind="value:scoreWay" required="required">
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode1" >备用1</label>
+            </div>
+            <div data-container-for="scoreCode1" class="k-edit-field w-800-r">
+               <input type="text" id="code1_inp" class="k-input k-textbox w-50-inp" name="scoreCode1" data-bind="value:scoreCode1" >
+               <div id="code1"></div>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode2" >备用2</label>
+            </div>
+            <div data-container-for="scoreCode2" class="k-edit-field w-800-r">
+               <input type="text" id="code2_inp" class="k-input k-textbox w-50-inp" name="scoreCode2" data-bind="value:scoreCode2">
+               <div id="code2"></div>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode3" >备用3</label>
+            </div>
+            <div data-container-for="scoreCode3" class="k-edit-field w-800-r">
+               <input type="text" id="code3_inp" class="k-input k-textbox w-50-inp" name="scoreCode3" data-bind="value:scoreCode3">
+                <div id="code3"></div>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode4" >备用4</label>
+            </div>
+            <div data-container-for="scoreCode4" class="k-edit-field w-800-r">
+               <input type="text" id="code4_inp" class="k-input k-textbox w-50-inp" name="scoreCode4" data-bind="value:scoreCode4" >
+               <div id="code4"></div>
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="scoreCode5" >备用5</label>
+            </div>
+            <div data-container-for="scoreCode5" class="k-edit-field w-800-r">
+               <input type="text" id="code5_inp" class="k-input k-textbox w-50-inp" name="scoreCode5" data-bind="value:scoreCode5" >
+               <div id="code5"></div>
+            </div>
+<div class="clear" style="clear:both">
+<pre>
+
+1、当type为 regist 时，表示用户注册获得积分
+pass
+
+2、当type为 daysign 时，签到获得积分
+scoreCode1 签到当天的0点时间戳
+
+3、当type为 active 时，表示金数据投票或者其他活动返回积分
+scoreCode1 活动的id
+scoreCode2 如果是金数据返回，这里记录金数据的id
+scoreCode3 如果是金数据返回，结果字符串
+
+4、当type为 forwarding 时，表示转发获得积分
+scoreCode1 为转发的条目id
+
+5、当type为 game 时，表示玩游戏成功获得积分
+scoreCode1 为游戏的id
+
+5.1、当type为 recommend 时，表示推荐注册用户成功获得积分
+scoreCode1 为推荐记录的id
+
+6、购房抵房款 buyhouse 消费
+scoreCode1 记录购买楼盘号
+scoreCode2 记录购买房号
+
+7、兑换下线商品 exchange 消费
+scoreCode1 记录购买商品名称或Id
+
+8、消费开发商的服务 service 消费
+scoreCode1 记录购买服务名称或Id
+
+9、拍卖竞拍品消费 sale
+scoreCode1 记录竞拍品的id
+
+10、type为 manual 表示手工
+scoreCode1 为手工添加记录备注
+</pre>
+</div>
+        </script>
+
+
+
+<script>
+ $(function () {
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        filter: [
+                            { field: "scoreType", operator: "eq", value: 2 },
+                        ],
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/score/read",
+                                type: "post"
+                            },
+                            update: {
+                                url: DataHost + "/manger/score/update",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/score/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/score/create",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                     _id: { editable: false },
+                                     userId:{ editable: true},//此用户在数据库中的_id
+                                     mobile:{ editable: true},//此用户手机号
+                                     appId:{ editable: true },
+                                     scoreGuid:{ editable: true},
+                                     scoreDetail:{ editable: true, type:"number" },
+                                     scoreType:{ editable: true ,type:"number"},
+                                     scoreWay:{ editable: true },
+                                     scoreCode1:{ editable: true },
+                                     scoreCode2:{ editable: true },
+                                     scoreCode3:{ editable: true },
+                                     scoreCode4:{ editable: true },
+                                     scoreCode5:{ editable: true },
+                                     writeTime: {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+                var toolbarAry = [];
+                var commandAry = [];
+ 
+                    var toolbarAry = [
+                                { name: "create", text: "添加" }
+                              ]
+
+        
+                    var commandAry = [
+                                { name: "edit", text: {edit: "详细", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+
+
+ $.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+                window.appd = d;
+
+
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'获取积分id',
+                            hidden:true
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商", 
+                            values:window.appd,
+                            hidden:true
+                        },
+                        { 
+                            field: "userId",
+                            title: "用户Id", 
+                        }, 
+                        { 
+                            field: "mobile",
+                            title: "手机号", 
+                        }, 
+                        { 
+                            field: "scoreGuid",
+                            title: "流水号", 
+                        },                                      
+                        { 
+                            field: "scoreDetail",
+                            title: "消费积分", 
+                        },
+                        { 
+                            field: "scoreType",
+                            title: "积分增加",
+                            values:window.scoreget_type,
+                            filterable:false,
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreWay",
+                            title: "获取方式",
+                            values:window.scoreWay_type2
+                        },
+                        { 
+                            field: "scoreCode1",
+                            title: "积分码1",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode2",
+                            title: "积分码2",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode3",
+                            title: "积分码3",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode4",
+                            title: "积分码4",
+                            hidden:true
+                        },
+                        { 
+                            field: "scoreCode5",
+                            title: "积分码5",
+                            hidden:true
+                        },
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        template: kendo.template($("#popup_editor").html()),
+                        window : {
+                                title: "添加/修改",
+                                width:800,
+                            }
+                        },
+                    edit:function(e){
+                        setTimeout(function(){
+                            $('.k-window-content').addClass('w-800-content');
+                            $('.k-edit-form-container').addClass('w-800-content');
+           
+                            $('#writeTime').kendoDateTimePicker();
+                            window.dropdown_init($('#appId_inp'),d) 
+                            window.dropdown_init($('#scoreType_inp'),window.scoreget_type,$.noop,2)
+                            window.dropdown_init($('#scoreWay_inp'),window.scoreWay_type2)
+
+                            var init = function(){
+                                $('#user_name').html('');
+
+                                $('#code1').html('');
+                                $('#code2').html('');
+                                $('#code3').html('');
+                                $('#code4').html('');
+                                $('#code5').html('');
+                            }()     
+
+                             var getname = function(){
+                                $.post('/manger/user/getOne',{
+                                    id:uid
+                                },function(d){
+                                    if(d.error == 1) d.data= '<b style="color:#c00">未找到用户</b>'
+                                    $('#user_name').html('用户名：'+d.data);
+                                },'json')
+                            }
+
+                            var uid = $('#user_name_inp').val()
+                            $('#user_name_inp').change(function(){
+                                uid = $('#user_name_inp').val()
+                                getname()
+                            })
+
+                            getname()
+                           
+
+
+                            var typestr = $('#scoreWay_inp').val();
+                            //alert(typestr)
+                            if(typestr=='buyhouse'){
+                                $('#code1').html('购买楼盘号');
+                                $('#code2').html('购买房号');
+                            }
+                            else if(typestr=='exchange'){
+                                $.post('/manger/prize/getOne',{
+                                    id:$('#code1_inp').val()
+                                },function(d){
+                                    $('#code1_inp').attr('readonly','readonly')
+                                    $('#code1').html('商品名：'+d.data);
+                                    window.dropdown_init($('#code2_inp'),window.exchange_status)
+                                },'json')
+                            }
+                            else if(typestr=='service'){
+
+                            }
+                            else if(typestr=='sale'){
+                                $.post('/manger/sale/getOne',{
+                                    id:$('#code1_inp').val()
+                                },function(d){
+                                    $('code1_inp').attr('readonly','readonly')
+                                    $('#code1').html('商品名：'+d.data);
+                                    window.dropdown_init($('#code2_inp'),window.exchange_status)
+                                },'json')
+                            }
+
+
+                        $.get('/manger/guid/getguid',{r:Date.now()},function(d){
+                            if(d.error) return alert('流水号获取失败，请刷新页面')
+                            $('#guid_inp').val(d.data).change();
+                        },'json')
+
+
+                      },100)
+                        
+                    },
+                    filterable:window.filter_obj         
+                });
+
+    })
+                                    
+});
+
+
+
+</script>
+<% include inc/foot %>

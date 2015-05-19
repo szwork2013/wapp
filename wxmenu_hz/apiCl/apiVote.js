@@ -207,6 +207,49 @@ obj.startVote = function(req,res){ //用户进入抽奖页面点击抽奖程序
 }
 
 
+
+
+
+
+//用户点击了投票按钮,一批 voteid 批量提交
+//此接口目前仅供拍照投票项目使用
+//参数形式：
+//
+obj.startVoteGroup = function(req,res){ //用户进入抽奖页面点击抽奖程序
+	var appobj = utils.getAppEname(req.originalUrl)
+	if(appobj.error){
+		return res.send(appobj)
+	}
+	var appEname = appobj.data;
+
+	//测试用，真实情况注释
+	//req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+
+	var userid = req.session[appEname+'_userid'];
+
+	if(!userid){
+		res.send({error:1,data:'用户身份丢失，请重新进入'})
+		return;
+	}
+
+	var itemids = req.body.itemids
+	var isforward = parseInt(req.body.isforward) || 0;
+	//var pos = req.ips.length - 1;
+	var recordIp = req.ips[0] || '127.0.0.1'
+
+	voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
+		if(err) return res.send({error:1,data:err}) 
+     	
+     	if(!result._id.toString()) return res.send({error:1,data:'投票失败'}) 
+
+     	return res.send({error:0,data:result});
+     	
+	})
+
+}
+
+
+
 //获取被投票项列表信息
 obj.getItemsInfo = function(req,res){
 

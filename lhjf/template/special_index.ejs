@@ -1,0 +1,36 @@
+<% include inc/head %>
+<%
+  var title = '上院生活'
+%>
+<% include inc/top %>
+<% include inc/special_top %>
+
+<article class="topNews">
+<section class="newsList">
+<ul page="0" class="newsPage" >
+
+<li class="newsHead newsHead2" >
+	<a href="/view/service/specialdetail?spid=<%= topdoc._id %>&wxuserid=<%= userObj._id %>" target="_blank">
+	<div class="specialtop"><img class="specialtop_img" src="<%= topdoc.picture[0] %>" />
+	<span class="specialtop_title"><%= topdoc.title %></span></div></a>
+</li>
+
+	<% 
+		list.forEach(function(obj,i){ 
+	%>
+
+	<li class="newsHead" >
+	    <a href="/view/service/specialdetail?spid=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank">
+	    <img class="listimg" src="<%= obj.picture[0] %>" width="70" height="52"/></a>
+	    <a href="/view/service/specialdetail?spid=<%= obj._id %>&wxuserid=<%= userObj._id %>" target="_blank">
+	    <div class="listdiv"><p class="newsTitle newsTitle2"><%= obj.title %></p>
+	    </div>
+	    </a>
+	</li>
+
+	<% })   %>
+
+</ul>
+</section>
+</article>
+<% include inc/foot %>

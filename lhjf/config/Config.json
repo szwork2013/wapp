@@ -1,0 +1,13 @@
+{
+	"currentSite":"http://lhjf.xy-tang.com",
+	"appEname":"lhjf",
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/lhjf",
+	"monoosePool":10,
+	"currentHost":"127.0.0.1",
+	"currentVersion":"v1",
+	"listenPort":7016,
+	"mangerListenPort":7017,
+	"wxAppId":"123",
+	"wxAppSecret":"123",
+	"wxAppToken":"weixin"
+}

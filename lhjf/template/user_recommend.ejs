@@ -1,0 +1,61 @@
+<% include inc/head %>
+<%
+  var title = '推荐赢积分'
+%>
+<% include inc/top %>
+<% include inc/score_top %>
+
+<article style="display: block;" class="articleList articleList2">
+    <h2 class="h2_title">请输入被推荐人手机号</h2>
+    <h3 id="errtip" class="errtip"></h3>
+    <dl class="input_common_dl clear">
+        <dt>
+            手机号：
+        </dt>
+        <dd>
+            <input type="text" value="" id="mobile" name="mobile" maxlength="11" />
+            <span id="mobile_tips"></span>
+        </dd>
+    </dl>
+
+    <dl class="input_common_dl clear">
+      <dt></dt>
+      <dd>
+          <a href="javascript:;" id="submitBtn" class="redBtn">提交</a>
+      </dd>
+    </dl>
+
+      <h2 class="h2_title" style="width:90%;margin:0 auto; padding:20px 0 0 0;clear: both;">请您先输入推荐好友信息，再让好友关注上院生活并认证会员，认证成功之后，该好友每次获取积分的10%将会加到您的积分余额中。</h2>
+     
+</article>
+
+<script type="text/javascript">
+  $(function(){
+
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+
+          var mobile = $('#mobile').val();
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+              $('#errtip').html('手机号输入有误')
+              return false;
+          }
+          window.isajax = true
+          $('#errtip').empty()
+          $.post('/api/user/recommend',{
+            'mobile':mobile,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(d.data)
+              alert('推荐成功,请等待审核');
+              location.href = location.href
+          },'json')
+
+      })
+
+  })
+</script>
+
+
+<% include inc/foot %>

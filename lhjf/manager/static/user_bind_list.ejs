@@ -1,0 +1,216 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+ <div id="grid"></div>
+
+<script>
+
+ $(function () {
+                window.uids
+                window.appd;
+     
+                var DataHost = window.DataHost,
+                    dataSource = new kendo.data.DataSource({
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        batch: true,
+                        pageSize: 15,
+                        serverFiltering:true,
+                        requestEnd: function(e) {
+                           
+                        },
+                        transport: {
+                            read:  {
+                                url: DataHost + "/manger/userapp/read",
+                                type: "post",
+                            },
+                            update: {
+                                url: DataHost + "/manger/userapp/update2",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            },
+                             destroy: {
+                                url: DataHost + "/manger/userapp/destroy",
+                                type: "post"
+                            },
+                            create: {
+                                url:DataHost + "/manger/userapp/create2",
+                                type: "post",
+                                complete: function(e) {
+                                            $("#grid").data("kendoGrid").dataSource.read(); 
+                                    }
+                            }
+                        },
+                        schema: {
+                            total: "Total",
+                            data: "Data",
+                            model: {
+                                id:"_id",
+                                fields: {
+                                    "_id": { editable: false },
+                                    "userId": { editable: false },
+                                    "openId": { editable: false },
+                                    "appId": { editable: false},
+                                    "appUserCity": { editable: true},
+                                    "appUserCommunity": { editable: true},
+                                    "appUserBuilding":{editable: true},
+                                    "appUserRoom":{editable: true},                        
+                                    "appCardNumber":{editable: false},
+                                    "appUserType":{editable: true, type:"number"},
+                                    "isNewSubmit":{editable: true, type:"number"},
+                                    "writeTime": {editable: true, type: "date" },
+                                }
+                            }
+                        }
+                    });
+
+
+                var toolbarAry = [];
+                var commandAry = [];
+         
+                var commandAry = [
+                                { name: "edit", text: {edit: "编辑", update: "确定",  cancel: "取消"} },
+                                { name: "destroy", text: "删除"},
+                              ]
+
+
+            $.post('/manger/app/getList',{},function(data_ary){
+                var d = []
+                data_ary.forEach(function(v){
+                    d.push({
+                        text: v.appName, 
+                        value:v._id
+                    })
+                })
+
+                window.appd = d;
+
+            $.post('/manger/co/getList',{},function(data_ary2){
+                var d2 = []
+                data_ary2.forEach(function(v){
+                    d2.push({
+                        text: v.coName, 
+                        value:v._id
+                    })
+                })
+
+
+                window.grid = $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    pageable: true,
+                    height: 700,
+                    toolbar: toolbarAry,
+
+                    columns: [
+                        {
+                            field:'_id',
+                            title:'绑定id',
+                            hidden:true
+                        },
+                        {
+                            field:'userId',
+                            title:'用户id',
+                            filterable:false
+                        },
+                        { 
+                            field: "appId",
+                            title: "开发商", 
+                            values:window.appd,
+                        },
+                         { 
+                            field: "openId",
+                            title: "微信id",
+                            //hidden:true
+                        },
+                         { 
+                            field: "appUserCity",
+                            title: "所在城市",
+                        },
+                         { 
+                            field: "appUserCommunity",
+                            title: "小区",
+                            values:d2
+                        },
+                        { 
+                            field: "appUserBuilding",
+                            title: "楼号",                            
+                        },
+                        { 
+                            field: "appUserRoom",
+                            title: "房号",                            
+                        },                      
+                        { 
+                            field: "appCardNumber",
+                            title: "会员卡号",
+                        },
+                        { 
+                            field: "appUserType",
+                            title: "会员类型",
+                            values:[
+                              { text: "未认证", value: 0 },
+                              { text: "认证", value: 1 },
+                              { text: "认证Vip", value: 2 }
+                            ]
+                        },
+                        {
+                            field: "isNewSubmit",
+                            title: "新的认证",
+                            values:[
+                              { text: "初始化", value: 0 },
+                              { text: "新认证", value: 1 },
+                              { text: "不通过", value: 2 }
+                            ]
+                        },           
+                        { 
+                            field: "writeTime",
+                            title: "创建日期",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { command: commandAry, title: "&nbsp;", width: "160px" }],
+                        filterable:window.filter_obj,
+                    editable: {
+                        confirmation:'确定删除吗？',
+                        mode:"popup",
+                        
+                        window : {
+                                title: "添加/修改",
+                            }
+                        },
+                    edit:function(e){
+                    
+
+                        window.dropdown_init()
+
+                        window.dropdown_init($("#appId_inp"), d)
+
+                        window.dropdown_init($("#sex_inp"), window.sex_ary)
+
+
+                         $('#writeTime_inp').kendoDateTimePicker();
+                         $('#appUserBirth_inp').kendoDatePicker();
+
+                    }
+                    
+                });
+
+            })
+        })   
+                                    
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+<% include inc/foot %>

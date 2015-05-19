@@ -153,6 +153,22 @@
         "env_production" : {
           "NODE_ENV": "production"
         }
-      }
+      },
+	  {
+        "name"      : "lhjf",
+        "script"    : "/var/nodejs/wapp/lhjf/app.js",
+        "max_memory_restart" : "300M",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "lhjfadmin",
+        "script"    : "/var/nodejs/wapp/lhjf/manager/app.js",
+        "max_memory_restart" : "300M",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
   ]
 }
