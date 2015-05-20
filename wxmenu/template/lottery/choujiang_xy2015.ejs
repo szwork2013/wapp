@@ -176,7 +176,14 @@ top: 40px;
 }
 
 
-
+#grxz1{
+	background: url("http://bcs.duapp.com/xytimg/choujiang%2Fprize05201.png") no-repeat center 0;
+	background-size: 320px 540px;
+	position:absolute;
+	z-index:99999;
+	top:0px;
+	left:0px;
+}
 
 
 
@@ -283,6 +290,18 @@ top: 40px;
   <input type="hidden" id='openid' value=""/>
 
   <div class="header">
+  
+  
+  
+  <div id="grxz1" class="question">
+
+
+	 
+	
+
+	
+</div>
+  
   
   
   
@@ -703,7 +722,7 @@ $(function(){
                 }
                 if(d2.data.prizeId == '0'){
                 //  $('#lottery_result').html('谢谢参与')
-				 alert('谢谢参与');
+				 alert('谢谢参与，您没有抽中');
                 }
                 if(d2.data.prizeId != '0' && d2.data.prizeObj){
                 //  $('#lottery_result').html(d2.data.prizeObj.name)
@@ -716,6 +735,7 @@ $(function(){
 				//		alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
+						$('#grxz1').hide();
 						$('#grxz').show();
 					},100)
 						
