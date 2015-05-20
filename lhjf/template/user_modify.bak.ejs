@@ -1,0 +1,123 @@
+<% include inc/head %>
+<%
+  var title = '会员空间'
+%>
+<% include inc/top %>
+<% include inc/my_top %>
+<script>
+  var my_pos = 0;
+</script>
+<div class="vip_bg"></div> 
+<article style="display: block;" class="articleList articleList2">
+
+
+<% if(binderObj.appUserType == 0){ %>
+     <div class="daySignBox clearfix">
+        
+          <p>您还未认证会员，请先认证</p>
+          <p>前往<a href="/view/user/regist?wxuserid=<%= userObj._id %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
+    </div>
+    
+   
+<%} else{ %>
+ <dl class="input_common_dl clear">
+        <dt>
+            我的积分：
+        </dt>
+        <dd>
+            <%= userObj.appUserScore %> 分          
+        </dd>
+    </dl>
+   <dl class="input_common_dl clear">
+        <dt>
+            手机号：
+        </dt>
+        <dd>
+            <%= userObj.appUserMobile %>
+        </dd>
+    </dl>
+    <dl class="input_common_dl clear">
+        <dt>
+            昵称：
+        </dt>
+        <dd>
+            <input type="text" value="<%= userObj.appUserName %>" id="appUserName" name="appUserName" maxlength="20" />
+        </dd>
+    </dl>
+    <dl class="input_common_dl clear">
+        <dt>
+            性别：
+        </dt>
+        <dd>
+            <select class="registSex" id="sex">
+              <% if(userObj.appUserSex == 1){ %>
+                <option value="1" selected="selected">男性</option>
+                <option value="0">女性</option>
+              <% }else{%>
+                <option value="1">男性</option>
+                <option value="0" selected="selected">女性</option>
+              <%}%>
+            </select>
+        </dd>
+    </dl>
+    <dl class="input_common_dl clear">
+      <dt></dt>
+      <dd>
+          <b id="errtip" class="errtip err_img_box"></b>
+      </dd>
+    </dl>
+
+
+
+    <dl class="input_common_dl clear">
+      <dt></dt>
+      <dd>
+          <a href="javascript:;" id="submitBtn" class="redBtn">提交</a>
+          
+      </dd>
+    <dl>
+    <p class="comment_tip comment_tip2 ft14">手机号如需修改请联系客服：<a class="reda" href="tel:0512-88998899">0512-88998899</a></p>
+<%}%>
+
+</article>
+
+
+<script type="text/javascript">
+  var mysex = ''
+
+  $(function(){
+      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+
+          var appUserName = $.trim($('#appUserName').val());
+          var sex = $('#sex').val();
+
+          if(!appUserName){
+              $('#errtip').html(errimg+'请输入昵称')
+              return false;
+          }
+
+
+          window.isajax = true
+          $('#errtip').empty()
+          $.post('/api/user/modify',{
+            'appUserName':appUserName,
+            'appUserSex':sex,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(errimg+d.data)
+              alert('修改成功');
+              setTimeout(function(){
+                location.href = location.href
+              },500)             
+          },'json')
+
+      })
+
+  })
+</script>
+
+
+<% include inc/foot %>

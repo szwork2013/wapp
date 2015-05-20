@@ -1,0 +1,287 @@
+.footnav{
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
+	line-height: 3em;
+	height: 3em;
+	background:#fff;
+	font-size: 1.1em;
+	/*display: none;*/
+}
+.card{
+	/*margin-top:5%;*/
+	width: 100%;
+	height: auto;
+	position: relative;
+}
+.footer{
+	width: 100%;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 60px;
+	font-size: 0.8em;
+	color: #000;
+}
+body{
+	background: url(../img/home_bg.jpg) no-repeat;
+	background-size: 100% 100%;
+}
+.card_main{
+	border-bottom: 1px solid #a5d7de; 
+	 padding: 20px;
+}
+.logo{
+	width:40%;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+.app_name{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-weight: bold;
+	color: #38761d;
+}
+.member_id{
+	position: absolute;
+	bottom: 15px;
+	right: 5px;
+	font-weight: bold;
+	font-size: 0.8em;
+
+	color: #38761d;
+}
+ul,li{
+	list-style: none;
+}
+.nav{
+	padding-right: 0px;
+	margin: 0px;
+}
+.nav>ul{
+	width: 100%;
+	  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+.nav>ul>li{
+	width: 100%;
+	position: relative;
+	border-bottom: 1px solid #ccc; 
+	background: #fff;
+	line-height: 3em;
+}
+.nav>ul>li>i{
+	margin-left: 10%;
+	margin-right:10%;
+}
+.show_con{
+	display: none;
+	width: 90% !important;
+	margin-left: 5%;
+	margin-top: 10px;
+	background: none !important;
+}
+.show_con>p{
+	line-height: 2em !important;
+}
+.sign_sub {
+				height: 2em;
+				background: #fff;
+				border-radius: 2em;
+				left: 3em;
+				line-height: 2em;
+				top: 1em;
+				box-shadow: 1px 1px 1px #000000;
+			}
+			.main {
+				width: 100%;
+				background:#fff;
+				background-size:100%; 
+				text-align: left;
+				text-align: center;
+				position: fixed;
+				top: 0px;
+				box-shadow: 2px 2px 2px #ccc;
+				z-index: 100000
+			}
+			.user_info {
+				line-height: 3em;
+				text-align: left;
+				text-align: center;
+				border-right:1px solid #ccc;
+			}
+			.integral_info {
+				font-size: 0.8em;
+				text-align: center;
+				width:90%;
+				margin-top: 23%;
+				margin-right: 0;
+				margin-left: 0;
+				/*border-bottom: 1px dashed #1A1A1A;*/
+			}
+			.modal-dialog{
+				margin-top: 23%;
+			}
+
+			.clear{
+				width: 100%;
+				height: 88%;
+			}
+			.body_info{
+				margin-top: 1em;
+				text-align: left;
+				text-indent: 1em;
+			}
+			.body_info .span{
+				/*border: 1px solid #1A1A1A;*/
+				margin-bottom: 0.5em;
+				width: 100%;
+				height: 4em;
+				line-height: 4em;
+				background: rgba(255,255,255,1);
+				color: #fff;
+				/*box-shadow: 1px 1px 3px #000000;*/
+				border-radius:5px;
+			}
+			.body_info span{
+				float: right;
+				padding-right: 1em;
+				font-size:1.5em;
+			}
+			.foot_info .span{
+				margin-top: 1em;
+				width: 90%;
+				margin-left: 5%;
+				text-indent: 1em;
+			}
+			.scoreinfo{
+				width: 100%;
+				margin-left: -1.5em;
+				margin-top: 1em;
+			}
+			.scoreinfo ul li{
+				list-style: none;
+				font-size: 0.9em;
+				/*border: 1px solid #006DCC;*/
+				box-shadow: 2px 2px 3px #ccc;
+				padding: 1em;
+				margin-bottom: 0.5em;
+				background: rgba(255,255,255,1);
+			}
+			.scoreinfo ul li p{
+				padding-left: 2em;
+				margin: 0px;
+				
+			}
+			.alert-warning{
+				background: rgba(255,255,200,1);
+			}
+			.modal-dialog{
+				color: #aaa;
+			}
+			.scoreinfo ul li span{
+				display: block;
+				height: 4em;
+				width: 2em;
+				margin-left: -1em;
+				background:rgba(90,197,212,1);
+				float: left;
+				text-align: center;
+				line-height: 4em;
+			}
+			#more{
+				width: 100%;
+				text-align: center;
+				margin-bottom: 1em;
+			}
+
+			.child-input{
+				margin-bottom: 20px;
+			}
+			.userinfo{
+				margin-top: 5%;
+				padding: 6%;
+				padding-top: 10%;
+				border-radius:10px; 
+				background: #fff;
+				/*border: 1px solid #fff;*/
+			}
+			.timer{
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    box-shadow: inset 0px 0px 0px 2px #fff;
+    border-radius: 50%;
+    position: relative;
+    margin: 150px auto;/* Not necessary- its only for layouting*/    
+ }
+.timer:after, .timer:before{
+    position: absolute;
+    content:"";
+    background-color: #fff;
+}
+.timer:after{
+    width: 10px;
+    height: 2px;
+    top: 11px;
+    left: 11px;
+    -webkit-transform-origin: 1px 1px;
+       -moz-transform-origin: 1px 1px;
+            transform-origin: 1px 1px;
+    -webkit-animation: minhand 2s linear infinite;
+       -moz-animation: minhand 2s linear infinite;
+            animation: minhand 2s linear infinite;
+}
+
+.timer:before{
+    width: 8px;
+    height: 2px;
+    top: 11px;
+    left: 11px;
+    -webkit-transform-origin: 1px 1px;
+       -moz-transform-origin: 1px 1px;
+            transform-origin: 1px 1px;
+    -webkit-animation: hrhand 8s linear infinite;
+       -moz-animation: hrhand 8s linear infinite;
+            animation: hrhand 8s linear infinite;
+}
+
+@-webkit-keyframes minhand{
+    0%{-webkit-transform:rotate(0deg)}
+    100%{-webkit-transform:rotate(360deg)}
+}
+@-moz-keyframes minhand{
+    0%{-moz-transform:rotate(0deg)}
+    100%{-moz-transform:rotate(360deg)}
+}
+@keyframes minhand{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+
+@-webkit-keyframes hrhand{
+    0%{-webkit-transform:rotate(0deg)}
+    100%{-webkit-transform:rotate(360deg)}
+}
+@-moz-keyframes hrhand{
+    0%{-moz-transform:rotate(0deg)}
+    100%{-moz-transform:rotate(360deg)}
+}
+@keyframes hrhand{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+.loading{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	background: rgba(0,0,0,0.6);
+	z-index: 10000000000000;
+	display: none;
+}

@@ -54,6 +54,16 @@ obj.getUser = function(qobj,cb){
 	})
 }
 
+obj.createCardNum = function(cardNumber){
+	var cardStr = cardNumber.toString()
+	var len = cardStr.length;
+	var needLen = 7 - len;
+	for(var i=0; i<needLen; i++){
+		cardStr = '0' + cardStr
+	}
+	return cardStr
+}
+
 obj.getUserType = function(udoc,appId){
 	if(!udoc.bind || udoc.bind.length == 0) return 0;
 
