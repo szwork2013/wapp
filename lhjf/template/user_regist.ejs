@@ -29,8 +29,13 @@
 
 
 </head>
-    <body style="background:#eee">
-        <div class="container container-fill">
+<body style="background:#eee">
+
+
+<% if(binderObj.appUserType == 0){ %>
+
+
+<div class="container container-fill">
 
 <div class="wrap-page ng-scope" ng-controller="loginPanel">
     <img class="a-fadeinT img-responsive" src="/static/lhjf/header-img.jpg">
@@ -64,10 +69,15 @@
   </div>
 
 
+<%} else{ %>
 
-
-
-
+  <div class="daySignBox clearfix">
+        
+        <p><%= userObj.appUserName %>，您已经是认证会员了</p>
+        <p>前往<a href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank" class="reda">个人中心</a>，立即查看我的积分和参与活动吧</p>
+  </div>
+  
+<%}%>
 
 <script>
 function _removeHTMLTag(str) {
@@ -155,12 +165,13 @@ $(function() {
           $('#errtip').empty()
           $.post('/api/user/binder',{
             'appUserName':appUserName,
-            'appUserSex':sex,
             'appUserMobile':mobile,
             'wxuserid':window.userid
           },function(d){
               window.isajax = false;
-              if(d.error) return $('#errtip').html(errimg+d.data)
+              if(d.error){
+                alert(d.data)
+              }
               alert('认证成功');
               setTimeout(function(){
                 location.href = location.href

@@ -91,6 +91,7 @@ obj.modify = function(req,res){ //用户认证绑定
 	var qobj = {
 		//必填项
 		appUserName:req.body.appUserName,
+		appUserName:req.body.appUserName,
 		appUserSex:req.body.appUserSex,
 		//appUserBirth:req.body.appUserBirth,
 		
