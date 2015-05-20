@@ -116,9 +116,7 @@
 				$('#score_info').click(function(){
 					window.location.href=url.f;
 				})
-				$('#mb_info').click(function(){
-					window.location.href=url.b;
-				})
+	
 				$('#usescore_info').click(function(){
 					window.location.href=url.x;
 				})

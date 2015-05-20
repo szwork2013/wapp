@@ -83,6 +83,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 			  appUserScore:uobj.uobj.appUserScore,
 			  isShow:uobj.uobj.isShow, //是否启用这个用户,1表示启用，0表示未启用
 			  writeTime: moment(uobj.uobj.writeTime).format('YYYY-MM-DD hh:mm:ss'),   //写入时间
+			  registTime:moment(uobj.uobj.writeTime).format('YYYY-MM-DD'), 
 		};
 		next();
 	}

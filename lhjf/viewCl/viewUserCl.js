@@ -28,7 +28,7 @@ obj.modify = function(req,res){
 	var appId = global.wxAppObj._id;
 	var openId = req.wxuobj.openId
 	var cardStr = userBl.createCardNum(req.wxBinder.appCardNumber)
-	var createTime = moment(userObj.writeTime).format('YYYY-MM-DD')
+	var createTime = req.wxuobj.registTime
 
 	res.render('user_modify.ejs',{
 		'userObj':req.wxuobj,

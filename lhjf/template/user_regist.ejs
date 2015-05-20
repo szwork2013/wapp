@@ -23,6 +23,19 @@
 <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="webuploader" src="/static/lhjf/webuploader.min.js"></script>
 <style>
   h5{color:#555;}
+  .daySignBox{
+    background-color: #fff;
+    width: 90%;
+    height: auto;
+    padding: 10px 20px;
+    margin: 30px auto;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .daySignBox a {
+    padding: 0 10px;
+    color: #c00;
+  }
 </style>
 </head>
 
@@ -44,12 +57,12 @@
             <div class="tab-pane animated active" id="basic">
                     <div class="form-group has-feedback" >
                         <label class="control-label sr-only"></label>
-                        <input id="mobile" type="text" class="form-control username ng-pristine ng-valid" placeholder="手机号">
+                        <input id="mobile" type="text" class="form-control username ng-pristine ng-valid" placeholder="手机号" maxlength="11">
                         <span class="glyphicon glyphicon-remove form-control-feedback ng-hide" ng-show="label.basic.error"></span>
                     </div>
                     <div class="form-group has-feedback" >
                         <label class="control-label sr-only"></label>
-                        <input id="appUserName" type="password" class="form-control password ng-pristine ng-valid" placeholder="昵称">
+                        <input id="appUserName" type="text" class="form-control password ng-pristine ng-valid" placeholder="昵称">
                         <span class="glyphicon glyphicon-remove form-control-feedback ng-hide" ng-show="label.basic.error"></span>
                     </div>
                 </div><table width="100%" cellpadding="0" cellspacing="0" id="basic">
@@ -166,7 +179,7 @@ $(function() {
           $.post('/api/user/binder',{
             'appUserName':appUserName,
             'appUserMobile':mobile,
-            'wxuserid':window.userid
+            'wxuserid':"<%= userObj._id.toString()%>"
           },function(d){
               window.isajax = false;
               if(d.error){

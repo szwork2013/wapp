@@ -21,7 +21,7 @@ obj.binder = function(req,res){ //用户认证绑定
 		openId:openId,
 
 		appUserName:req.body.appUserName,
-		appUserSex:req.body.appUserSex,
+		appUserSex:req.body.appUserSex || 1,
 		appUserBirth:req.body.appUserBirth || '1970-01-01',
 		appUserMobile:req.body.appUserMobile,
 		//选填项
@@ -90,7 +90,7 @@ obj.modify = function(req,res){ //用户认证绑定
 
 	var qobj = {
 		//必填项
-		appUserName:req.body.appUserName,
+		appUserMobile:req.body.appUserMobile,
 		appUserName:req.body.appUserName,
 		appUserSex:req.body.appUserSex,
 		//appUserBirth:req.body.appUserBirth,

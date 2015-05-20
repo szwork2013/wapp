@@ -342,9 +342,9 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	if(qobj.appUserBirth){
 		userMObj.appUserBirth = qobj.appUserBirth
 	}
-	/*if(qobj.appUserMobile){
+	if(qobj.appUserMobile){
 		userMObj.appUserMobile = qobj.appUserMobile
-	}*/
+	}
 	//console.log(appMObj)
 
 	/*

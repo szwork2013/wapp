@@ -10,16 +10,30 @@
     <script src="/static/lhjf2/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://wzhfile.qiniudn.com/bootstrap3.min.js"></script>
     <script src="/static/lhjf2/js/main.js" type="text/javascript" charset="utf-8"></script>
-    
+    <style type="text/css">
+        .daySignBox{
+        background-color: #fff;
+        width: 90%;
+        height: auto;
+        padding: 10px 20px;
+        margin: 30px auto;
+        font-size: 16px;
+        line-height: 24px;
+      }
+      .daySignBox a {
+        padding: 0 10px;
+        color: #c00;
+      }
+    </style>
     
   </head>
     <body>
 
 <% if(binderObj.appUserType == 0){ %>
-     <div>
+     <div class="daySignBox">
         
           <p>您还未认证会员，请先认证</p>
-          <p>前往<a href="/view/user/regist?wxuserid=<%= userObj._id %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
+          <p>前往<a href="/view/user/regist?wxuserid=<%= userObj._id.toString() %>" target="_blank" class="reda">认证会员</a>，获得积分和参与活动</p>
     </div>
     
    
@@ -35,10 +49,10 @@
 </div>
 <div class="container nav">
   <ul>
-    <li><i class="glyphicon glyphicon-text-background" aria-hidden="true"></i>会员号：SZLH<%= cardStr%></li>
-    <li><i class="glyphicon glyphicon-text-background" aria-hidden="true"></i>姓名：<%= userObj.appUserName %></li>
-      <li><i class="glyphicon glyphicon-text-background" aria-hidden="true"></i>手机：<%= userObj.appUserMobile %></li>
-    <li><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>领取日期：<%= userObj.createTime %></li>
+    <li><i class="glyphicon glyphicon-credit-card" aria-hidden="true"></i>会员号：SZLH<%= cardStr%></li>
+    <li><i class="glyphicon glyphicon-user" aria-hidden="true"></i>姓名：<%= userObj.appUserName %></li>
+      <li><i class="glyphicon glyphicon-phone" aria-hidden="true"></i>手机：<%= userObj.appUserMobile %></li>
+    <li><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>领取日期：<%= createTime %></li>
     <li id='score_info'><i class="glyphicon glyphicon-text-size" aria-hidden="true"></i>我的积分：<%= userObj.appUserScore %>分</li>
     
   </ul>
@@ -47,7 +61,7 @@
   <ul>
     <li id='showmore'><i class="glyphicon glyphicon-home" aria-hidden="true"></i>龙湖时代天街售楼处：<br><i class="glyphicon" aria-hidden="false">&nbsp;</i>苏州·狮山路（苏州乐园往南100米）</li>
     <li class='show_con'>
-      <img src="img/bg.jpg" width='100%' alt="">
+      <img src="/static/lhjf2/img/bg.jpg" width='100%' alt="">
             <p><b>&nbsp;</b></p>
             <p><b>项目简介 : </b><p>项目位于苏州高新区狮山路CBD核心板块，具体位置为狮山路与塔园路交汇处。紧邻1、3号线双地铁，周边交通便利。毗邻新区实验小学、新区实验中学、苏州外国语学校、新区实... </p></p>
         </li>
@@ -59,7 +73,7 @@
 <p class='footer'>苏州龙湖</p>
 <div class="container-fluid">
 <div class="row footnav">
-    <div id='mb_info' class="col-xs-6"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;修改资料</div>
+    <div id='mb_info' class="col-xs-6" style="width: 100%;"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;修改资料</div>
     <!-- <div id='usescore_info' class="col-xs-6" data-pro='use'><i class="glyphicon glyphicon-usd" aria-hidden="true"></i>&nbsp;&nbsp;返回</div> -->
   </div>
 </div>
@@ -84,14 +98,14 @@
           <span class="input-group-addon" style="padding:0 10px;">
             <span class="glyphicon glyphicon-phone" ></span>
           </span>
-          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
+          <input type="text" class="form-control"  placeholder="请输入手机号码" id="appUserMobile" value="<%= userObj.appUserMobile %>" maxlength="11">
         </div>
         <br/>   
         <div class="input-group input-group-lg">
           <span class="input-group-addon"  style="padding:0 10px;">
             <span class="glyphicon glyphicon-user"></span>
           </span>
-          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="" maxlength="20">
+          <input type="text" class="form-control" value="<%= userObj.appUserName %>" placeholder="请输入真实姓名" id="appUserName"  maxlength="20">
         </div>
 
       </div>
@@ -116,7 +130,7 @@
   $(function(){
       
       $('#mb_info').click(function(){
-        $('#myModal').modal()
+          $('#myModal').modal()
       })
 
       var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
@@ -128,7 +142,7 @@
           var appUserName = $.trim($('#appUserName').val());
           var appUserMobile = $('#appUserMobile').val();
 
-          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(appUserMobile)){
               //$('#errtip').html(errimg+'手机号输入有误')
               alert('手机号输入有误')
               return false;
@@ -146,7 +160,7 @@
           $.post('/api/user/modify',{
             'appUserMobile':appUserMobile,
             'appUserName':appUserName,
-            'wxuserid':window.userid
+            'wxuserid':"<%= userObj._id.toString()%>"
           },function(d){
               window.isajax = false;
               if(d.error){
