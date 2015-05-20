@@ -76,7 +76,7 @@ width: 280px;
 height: 80px;
 display: block;
 position: absolute;
-top: 320px;
+top: 280px;
 left: 20px;
 }
 .get_prize_tip{
@@ -699,6 +699,10 @@ $(function(){
 
               if(window.lotteryData.record.length>=1 && $.cookie('isforward') != '1'){
                   alert('您已经抽过奖了')
+				  if(d2.data.prizeObj.name=='泰国香米4斤装礼盒1份'){
+						$('#grxz1').hide();
+					
+					}
                   return false;
               }
 
