@@ -691,7 +691,38 @@ $(function(){
 
       window.onload =function(){
        //     $(window).load(function(){
-            
+           
+
+
+function(d2){
+                if(d2.error){
+                  return alert(d2.data)
+                }
+                
+				if(d2.data.prizeObj.name=='泰国香米4斤装礼盒1份'){
+				$('#grxz1').hide();
+				
+					}
+					}	
+					
+
+
+
+
+
+
+					
+					
+					
+					
+					
+					
+					
+
+
+
+
+		   
             if(window.lotteryData.record.length>=6){
                alert('您的6次刮奖机会已经用完，明天再来吧')
                return false;
@@ -699,10 +730,7 @@ $(function(){
 
               if(window.lotteryData.record.length>=1 && $.cookie('isforward') != '1'){
                   alert('您已经抽过奖了')
-				  if(window.prizeTitle=='泰国香米4斤装礼盒1份'){
-						$('#grxz1').hide();
-		
-					}
+				 
                   return false;
               }
 
