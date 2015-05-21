@@ -33,6 +33,7 @@ obj.votePage = function(req,res){ //活动页面展示
 		return res.send(404)
 	}
 
+
 	//先去查找抽奖活动记录
 	voteBl.getVoteByEname(ename,function(err,voteObj){
 		if(err){
@@ -95,17 +96,26 @@ obj.votePage = function(req,res){ //活动页面展示
 							timeError = 1
 						}
 						
-						res.render('vote/'+ename+'.ejs', {
-							voteObj:voteObj,
-							ename:ename,
-							appEname:appEname,
-							appId:appObj._id,
-							userid:userid,
-							groupList:tempGroupList,
-							wxuobj:wxuobj,
-							'jsurl':encodeURIComponent(requestedUrl),
-							timeError:timeError
-						});
+
+						voteBl.countUserVoteRecord(userid, voteid, function(err, recNum){
+							if(err){
+								return res.send(500, err)
+							}
+
+							res.render('vote/'+ename+'.ejs', {
+									voteObj:voteObj,
+									ename:ename,
+									appEname:appEname,
+									appId:appObj._id,
+									userid:userid,
+									groupList:tempGroupList,
+									recNum:recNum,
+									wxuobj:wxuobj,
+									'jsurl':encodeURIComponent(requestedUrl),
+									timeError:timeError
+								});
+
+						})//end voteBl.countUserVoteRecord
 
 				})//end voteBl.getGroupCountByVoteId
 

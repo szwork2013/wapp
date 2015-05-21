@@ -1,0 +1,176 @@
+.lb-nav a.lb-next, .lb-nav a.lb-prev{
+    opacity: 1 !important;
+}
+.actCont2{
+    padding: 20px 5px !important;
+}
+.ilike{
+    left:10px;
+    top:10px;
+    width: 75px;
+}
+.relBox .main{
+    width: 100%;
+}
+.no_upload{
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: none;
+    padding: 10px 20px;
+    width: 100%;
+    color: #fff;
+    font-size: 1.2em;
+    outline: medium;
+    background:rgba(255,255,255,0.4);
+    border: none;
+    display: block;
+    margin: 20px auto;
+    padding: 15px 0;
+    text-align: center;
+    color:#fff;
+
+}
+.relBox .main .shareBox{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+.relBox .main .shareBox ul li a{
+    width: 100%;
+}
+.mask_box {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+display: none;
+background-color: #000;
+filter: alpha(Opacity=90);
+-moz-opacity: 0.90;
+opacity: 0.90;
+z-index: 99999;
+}
+.mask_box img{
+    display: block;
+    position: absolute;
+    right: 0;
+    top:0;
+}
+
+.k-upload-files, .k-upload-status{
+    display: none;
+}
+.k-upload{
+    border: none;
+}
+.k-upload-button{
+    width: 200px;
+    height: 40px;
+    line-height: 35px;
+    border-radius: 10px;
+    font-family: "微软雅黑";
+}
+.k-upload-button:hover, .k-button:hover{
+    background: none !important;
+    background-color: #c00 !important;
+}
+.waterL, .waterR{
+    width: 48%;
+    display: block;
+    overflow: hidden;
+    height: auto;
+    min-height: 50px;
+
+}
+.waterL{
+    float: left;
+}
+.waterR{
+    float: right;
+}
+.relBox .main .labelBox{
+    margin: 0 auto;
+}
+#main{
+    width: 100%;
+}
+.img_block{
+    margin-bottom: 10px;
+}
+.img_block h3{
+ text-indent: 5px;
+ font-size: 12px;
+ margin: 0px;
+ background-color: #000;
+ padding: 5px 0;
+ color:#fff;
+ overflow: hidden;
+ height: 24px;
+}
+.img_block img{
+    border: none !important;
+}
+.img_block{
+   border: #fff 4px solid;
+   padding: 0 !important;
+}
+.change_btn{
+    border: 2px solid #b5b5b5;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: none;
+    padding: 10px 20px;
+    width: 80%;
+    color: #fff;
+    font-size: 1.2em;
+    outline: medium;
+    background: #f39800;
+    border: none;
+    display: block;
+    margin: 0 auto 15px;
+    text-align: center;
+
+}
+.clearpadding{
+    padding-top: 20px;
+}
+.lb-number{
+    display: none !important;
+}
+
+.my_p_tip{
+    width: 90%;
+    margin: 30px auto;
+    padding: 20px;
+    color: #fff;
+    border-radius: 15px;
+    background:rgba(255,255,255,0.4);
+    line-height: 24px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.relBox .main .shareBox ul li a{
+    width: 80%
+}
+
+.vote_submit{
+    height: 40px;
+    line-height: 40px;
+    background-color: #3366ff;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+}
+.shareBox ul{
+    margin-bottom: 50px;
+}

@@ -34,6 +34,20 @@ obj.getVoteById = function(voteId,cb){
 	})
 }
 
+
+//count计数用户在这个投票活动中所投的票数
+obj.countUserVoteRecord = function(userid, voteid, cb){
+	if(!voteid) return cb('no voteId');
+	if(!userid) return cb('no userid');
+	voteRecord.countAll({
+		'voteId':voteid,
+		'userId':userid,
+	}, function(err, countNum){
+		if(err) return cb(err)
+		return cb(null, countNum || 0)
+	})
+}
+
 //获取我的投票记录分组group
 obj.getUserRecordGroupByItemId = function(voteid, userid, cb){
 	if(!voteid) return cb('no voteId');
