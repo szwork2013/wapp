@@ -5,7 +5,8 @@
 <meta name="MobileOptimized" content="640" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>万科上传图片</title>
-
+<meta name="description" content="印象-东方之门" />
+<meta name="keywords" content="印象-东方之门" />
 <link rel="stylesheet" href="http://wzzy2014skin.qiniudn.com/bootstrap/css/bootstrap.min.css">
 <link href="http://piccvote.qiniudn.com/yy_vote/css/main.css" type="text/css" rel="stylesheet" />
 <link type="text/css" rel="stylesheet" href="http://menuadmin.xy-tang.com/m_skin/kendoui/styles/kendo.common.min.css" />
@@ -73,18 +74,18 @@ color:#fff !important;
 <!-- 封面 -->
 <div class="wrap regWrap" id="reg_cover" style="display:none">
 	<div class="relBox">
-   		<img class="relBoxImg" src="http://bcs.duapp.com/xytimg/sell%2Floading_bg.jpg" width="100%" />
-      
+   		<img class="relBoxImg" src="http://piccvote.qiniudn.com/yy_vote/images/rule_bg.jpg" width="100%" />
+        <!-- <h2 class="top">印象•东方之门，随手拍，拿奖金</h2> -->
         <!---主要内容开始-->
         <div class="main">
         	<div class="proBox">
-            	<div class="proBg">上传1张朋友圈截图，同时提交您的个人信息,以便我们将红包打至您的微信钱包,每个微信用户只能提交一次</div>
+            	<div class="proBg">上传1张照片，图片大小不能超过4M，同时提交您的参赛资料,每个微信用户在同一组别只能提交一次</div>
           
             </div>
             <div class="groupBox">
             	<ul class="clearfix">
-                	<li><a id="adult_btn" href="javascript:;"><img class="img_btn" src="http://bcs.duapp.com/xytimg/sell%2Fgroup_01.png" width="100%" /></a></li>
-                  <!--  <li><a id="child_btn" href="javascript:;"><img class="img_btn"  src="http://piccvote.qiniudn.com/yy_vote/images/group_02.png" width="100%" /></a></li>-->
+                	<li><a id="adult_btn" href="javascript:;"><img class="img_btn" src="http://piccvote.qiniudn.com/yy_vote/images/group_01.png" width="100%" /></a></li>
+                    <li><a id="child_btn" href="javascript:;"><img class="img_btn"  src="http://piccvote.qiniudn.com/yy_vote/images/group_02.png" width="100%" /></a></li>
                 </ul>
             </div>
         </div>
@@ -97,8 +98,8 @@ color:#fff !important;
 <!-- 成人组 -->
 <div class="wrap regWrap" id="reg_adult" style="display:none">
     <div class="relBox">
-        <img class="relBoxImg" src="http://bcs.duapp.com/xytimg/sell%2Floading_bg.jpg" width="100%" />
-       
+        <img class="relBoxImg" src="http://piccvote.qiniudn.com/yy_vote/images/rule_bg.jpg" width="100%" />
+        <!-- <h2 class="top">印象•东方之门，随手拍，拿奖金</h2> -->
         <!---主要内容开始-->
         <div class="main">
             <h2 class="regTitle">上传图片</h2>
@@ -135,7 +136,8 @@ color:#fff !important;
     
             </div>
         </div>
-         
+         <!---主要内容结束-->
+         <!-- <div class="bottom"><a href="/static/yy_vote/regist.html">返回</a></div> -->
     </div>
 </div>
 
@@ -205,7 +207,7 @@ var initAjax = function(){
 
         $('#adult_btn').click(function(){
             if(window.myItem){
-                alert('您已经上传过了')
+                alert('您已经上传过我是摄影师的照片了')
                 return false
             }
 
