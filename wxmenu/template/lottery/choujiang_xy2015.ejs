@@ -942,6 +942,12 @@ $(function(){
 
 			
 				    trigger:function(){
+					setTimeout(function(){
+          attention_wx();
+         },2000); 
+					
+					
+					
 				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
 				    },
 				    complete:function(){
