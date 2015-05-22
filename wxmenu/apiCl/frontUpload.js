@@ -314,7 +314,6 @@ obj.myItem = function(req, res){
 					'isShow':item.isShow,
 					'todayVoteNumber':item.todayVoteNumber,
 					'writeTime':item.writeTime,
-
 				})
 			})
 			return res.send({error:0, data:list})

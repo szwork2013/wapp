@@ -112,6 +112,7 @@ obj.getUserRecordGroupByItemId = function(voteid, userid, cb){
 							code3:listobj.code3,
 							code4:listobj.code4,
 							writeTime:listobj.writeTime,
+							voteType:robj.voteType,
 						})
 					}
 				})//end recordList.forEach

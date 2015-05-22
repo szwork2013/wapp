@@ -193,7 +193,7 @@ obj.startManyVote = function(req, res){
 		return;
 	}
 
-	var itemid = req.body.itemid
+	//var itemid = req.body.itemid
 	var isforward = 0;
 	//var pos = req.ips.length - 1;
 	var recordIp = req.ips[0] || '127.0.0.1'

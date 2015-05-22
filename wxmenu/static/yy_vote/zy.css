@@ -174,3 +174,34 @@ z-index: 99999;
 .shareBox ul{
     margin-bottom: 50px;
 }
+
+
+.zoom,.ilike{position:absolute;line-height:25px;padding:0 0 2px 18px;text-align:center;top:14px;display:block;text-decoration:none;
+    background:url(../images/sel_bg.png) no-repeat 0 -50px;}
+.ilike{right:14px;width:51px; height: 50px;}
+.ilike.sel_ok{
+    background:url(../images/sel_bg.png) no-repeat 0 0;
+}
+.chooseTip{
+    background-color: #f39800;
+    width: 80%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 15px;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.change_btn{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #fff;
+}

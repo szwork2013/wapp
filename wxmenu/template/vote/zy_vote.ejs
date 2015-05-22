@@ -59,7 +59,7 @@
     <div class="waterR" id="waterR"></div>
 
     <div class="clear clearpadding">
-        <a href="javascript:;" class="change_btn" id="join_btn2" style="display:none;">我要投票</a>
+        <a href="javascript:;" class="change_btn" id="join_btn2" style="display:none;">选择其他投票</a>
     </div>
     
 </div>
@@ -72,12 +72,20 @@
 <% if(recNum>0){ %>
      <!--选项卡三 内容开始-->
      <div class="actCont" style="display:none">
-	 
+	       <p class="chooseTip" id="chooseTip" style="display:none;"></p>
 	        <div id="mymain" class="myPiccs" style="display:none;">
-                <ul id="myItem" ></ul>
-	 
+                <p>特等奖</p>
+                <ul id="lv0Ul" ></ul>
+                <p>一等奖</p>
+                <ul id="lv1Ul" ></ul>
+                <p>二等奖</p>
+                <ul id="lv2Ul" ></ul>
+                <p>三等奖</p>
+                <ul id="lv3Ul" ></ul>
+                <p>建筑过程影响奖</p>
+                <ul id="lv4Ul" ></ul>
                 <div class="clear"></div>
-        </div>
+            </div>
          <div class="shareBox">
             <ul>
 
@@ -112,11 +120,26 @@
                 <li style="display:none;" id="active" >
                     <a href="javascript:;" id="join_btn">我要参加</a>
                 </li>
-                <li><a href="javascript:;">选择特等奖1名（已选0）</a></li>
-                <li><a href="javascript:;">选择一等奖2名（已选0）</a></li>
-                <li><a href="javascript:;">选择二等奖3名（已选0）</a></li>
-                <li><a href="javascript:;">选择三等奖6名（已选0）</a></li>
-                <li><a href="javascript:;">选择建筑过程影响奖3名（已选0）</a></li>
+                <li>
+<a name="toChoose" type="lv0" href="javascript:;">选择特等奖1名（已选
+<span id="lv0_choose_count">0</span>）</a>
+                </li>
+                <li>
+<a name="toChoose" type="lv1" href="javascript:;">选择一等奖2名（已选
+<span id="lv1_choose_count">0</span>）</a></li>
+                <li><a name="toChoose" type="lv2" href="javascript:;">选择二等奖3名（已选
+<span id="lv2_choose_count">0</span>）</a></li>
+                <li><a name="toChoose" type="lv3" href="javascript:;">选择三等奖6名（已选
+<span id="lv3_choose_count">0</span>）</a></li>
+                <li><a name="toChoose" type="lv4" href="javascript:;">选择建筑过程影响奖3名（已选
+<span id="lv4_choose_count">0</span>）</a></li>
+                <li>
+<input type="text" id="appUserName" class="chooseInput" value="" placeholder="请输入姓名" />
+                </li>
+                <li>
+<input type="text" id="appUserMobile" class="chooseInput" value="" placeholder="请输入电话" />
+                </li>
+
 
 
               <!-- <li><a href="javascript:;" onclick="mask();">分享至朋友圈  邀好友来参加</a></li>
@@ -220,6 +243,13 @@ window.isforward_today = new Date(window.isforward_today)
 window.itemList = []
 window.itemShakeList = []
 window.myItemList = []
+window.chooseItem = {
+    'lv0':[],
+    'lv1':[],
+    'lv2':[],
+    'lv3':[],
+    'lv4':[]
+}
 
 var Get_QueryString_Plus = function(url){
       var no_q = 1,
@@ -253,19 +283,22 @@ var mask = function () {
 }
 //遮照功能
 
-window.hasInitWater = false
+
 var init = function(){
     
     
-    var oLabelLi=$(".labelBox ul li");
+    window.oLabelLi=$(".labelBox ul li");
     $(".actCont:gt(0)").hide();
     oLabelLi.click(function(){
 	
-	       var n = $(this).index()
-        if(n == 1 && !window.hasInitWater){
-            window.hasInitWater = true
-            window.genWaterFull()
-            window.skip += 25
+	    var n = $(this).index()
+
+        //如果是第二个选项
+        if(n == 1){
+            window.isChoose = false
+            window.chooseType = false
+
+            window.genWaterFull(0, window.isChoose, window.chooseType)
         }
 	
         $(this).addClass("active").siblings().removeClass("active");
@@ -283,22 +316,97 @@ var init = function(){
 
         oLabelLi.eq(2).click()
     }
-
-
-    // var oTop=window.screen.height-60;
-    // var oBottom=$(".bottom");
-    // oBottom.css('top',oTop+'px')
 }
+
+
+
+var chooseItem = function(lvType, itemId, isAdd){
+    var itemList = window.chooseItem[lvType]
+    if(!Array.isArray(itemList)) return false
+
+    if(isAdd){
+        var limitLength = 0
+        if(lvType == 'lv0'){
+            limitLength = 1
+        }
+        else if(lvType == 'lv1'){
+            limitLength = 2
+        }
+        else if(lvType == 'lv2'){
+            limitLength = 3
+        }
+        else if(lvType == 'lv3'){
+            limitLength = 6
+        }
+        else if(lvType == 'lv4'){
+            limitLength = 3
+        }
+
+        if(itemList.length >= limitLength){
+            return false
+        }
+        itemList.push(itemId)
+        $('#choose_count').html(itemList.length)
+        return true
+    }else{
+
+        var newList = []
+        itemList.forEach(function(objId){
+            if(objId != itemId){
+                newList.push(objId)
+            }
+        })
+        itemList = newList
+        $('#choose_count').html(itemList.length)
+        return true
+
+    }
+
+}
+
 
 
 
 var initAjax = function(){
 
-    $('#join_btn, #join_btn2, #join_btn3').click(function(){
-        $('#myModal').modal({
-                backdrop:true
-        })
-    })
+
+    window.myItem = {}
+    window.myVoteItem = {
+        'lv0':[],
+        'lv1':[],
+        'lv2':[],
+        'lv3':[],
+        'lv4':[],
+    }
+    $.get('/vote/<%= appEname %>/myrecord', {
+        'userId':'<%=  userid %>',
+        'groupEname':'zy',
+    }, function(d){
+        if(d.error){
+            return alert(d.data)
+        }
+        if(d.data.length == 0) return
+
+        d.data.forEach(function(voteObj){
+            if(window.myVoteItem[voteObj.voteType]){
+                window.myVoteItem[voteObj.voteType].push(voteObj)
+            }
+        })//end d.data
+
+        Object.keys(window.myVoteItem).forEach(function(key){
+            var temps = ''
+            window.myVoteItem[key].forEach(function(itemObj){
+
+                temps += '<li>编号: '+itemObj.code2+'<div class="img_block">'+
+                             '<img src="'+itemObj.pictureThumb+'" width="100%" />'
+                             '<a href="javascript:;" class="ilike">'+itemObj.todayVoteNumber+'</a></div>'
+                             '<h3>'+itemObj.title+'</h3></li>'
+                $('#'+key+'0Ul').html(temps)
+                
+            })//end window.myVoteItem[key]
+        })//end Object.keys(window.myVoteItem)
+
+    }, 'json')//end $.post
 
 
 
@@ -307,43 +415,129 @@ var initAjax = function(){
     window.child_group_id = ''
     window.adult_group_id = ''
     groupList.forEach(function(item){
-        if(item.ename == 'adult'){
-            window.adult_group_id = item._id
-        }
-        if(item.ename == 'child'){
-            window.child_group_id = item._id
+        if(item.ename == 'zy'){
+            window.zy_group_id = item._id
         }
     })
 
 
     window.ajaxVote = false
+    window.isToVote = false
     var bindEvent = function(){
+
+
         $('#main').delegate('a[name="ilike"]', 'click', function(){
-                if(window.ajaxVote) return false;
+            if(!window.isToVote){
+                return false
+            }
+            else{
                 var that = $(this)
-                var total = that.attr('total') - 0 || 0
-                var q = {
-                    'itemid':that.attr('itemid')
+                //取消勾选
+                if(that.hasClass('sel_ok')){
+                    var r = chooseItem(window.lvType, that.attr('itemid'), false)
+                    that.removeClass('sel_ok')
                 }
-                window.ajaxVote = true
-                $.post('/vote/'+appEname+'/start', q, function(d){
-                        window.ajaxVote = false
+                else{
+                    //检查是否可以勾选
+                    var r = chooseItem(window.lvType, that.attr('itemid'), true)
+                    if(r){
+                        that.addClass('sel_ok')
+                    }
+                    else{
+                        return false
+                    }
+                }
+            }
+        })
+
+        //选择其他选项
+        $('#join_btn2').click(function(){
+            window.oLabelLi.eq(2).click()
+        })
+
+        $('a[name="toChoose"]').click(function(){
+            var that = $(this)
+            var type = that.attr('type')
+            window.isChoose = true
+            window.chooseType = type
+
+            window.oLabelLi.eq(1).click()
+
+        })
+
+
+        //投票按钮
+        window.isAjax = false
+        $('#vote_submit').click(function(){
+            if(window.isAjax) return false
+            var appUserName = $('#appUserName').val().trim();
+            var appUserMobile = $('#appUserMobile').val().trim();
+            if(!appUserName || appUserName == '未认证会员'){
+              alert('请填写真实姓名')
+              return false;
+            }
+            if(!appUserMobile || !/^[0-9]{11}$/.test(appUserMobile)){
+              alert('请输入正确的手机号码')
+              return false;
+            }
+
+            if(window.chooseItem.lv0.length != 1){
+                alert('请选择特等奖')
+                return false
+            }
+            if(window.chooseItem.lv1.length != 2){
+                alert('请选择一等奖')
+                return false
+            }
+            if(window.chooseItem.lv2.length != 3){
+                alert('请选择二等奖')
+                return false
+            }
+            if(window.chooseItem.lv3.length != 6){
+                alert('请选择三等奖')
+                return false
+            }
+            if(window.chooseItem.lv4.length != 3){
+                alert('请选择建筑过程影响奖')
+                return false
+            }
+
+
+
+            var q = {
+                    appUserName:appUserName,
+                    appUserMobile:appUserMobile
+                }
+            window.isAjax = true
+            $.post('/api/user/modify?wxuserid=<%=fromUserId%>', q, function(d){
+                    if(d.error == 1){
+                        window.isAjax = false
+                        return alert(d.data)
+                    }
+
+                    var data = {
+                        'lv0':window.chooseItem.lv0.join(','),
+                        'lv1':window.chooseItem.lv1.join(','),
+                        'lv2':window.chooseItem.lv2.join(','),
+                        'lv3':window.chooseItem.lv3.join(','),
+                        'lv4':window.chooseItem.lv4.join(','),
+                        'voteEname':voteEname
+                    }
+
+                    $.post('/vote/<%= appEname %>/startmany', data, function(d){
+
                         if(d.error == 1){
-                            //return alert(d.data);
+                            window.isAjax = false
+                            return alert(d.data)
                         }
-                        else{
-                            that.html(++total)
-                            //alert('投票成功')
-                        }
-                })
-        })
 
+                        alert('投票成功')
+                        $.cookie('showmy', '1', { path: '/' })
+                        location.href = location.href
 
-        window.skip = 0
-        $('#change_btn').click(function(){
-            genWaterFull(window.skip)
-            window.skip += 25
-        })
+                    }, 'json')//end start many
+                },'json')//end modify
+        })//end $('#vote_submit').click
 
 
     }();
@@ -353,7 +547,7 @@ var initAjax = function(){
     var $waterR = $('#waterR')
 
     //生成瀑布流
- window.genWaterFull = function(skip){
+ window.genWaterFull = function(skip, isChoose, lvType){
                 
                 if(!skip){
                     var skip = 0
@@ -361,53 +555,56 @@ var initAjax = function(){
                  //生成瀑布流
                 //分别获取成人和幼儿组的数据
                 $.get('/vote/<%= appEname %>/items',{
-                    'groupid':window.child_group_id,
+                    'groupid':window.zy_group_id,
                     'ename':voteEname,
                     'sorttype':2,
                     'skip':skip,
-                    'limit':25
+                    'limit':100
                 }, function(d){
                     if(d.error){
                         return alert(d.data)
                     }
                     window.itemList = d.data
 
-                     $.get('/vote/<%= appEname %>/items',{
-                        'groupid':window.adult_group_id,
-                        'ename':voteEname,
-                        'sorttype':2,
-                        'skip':skip,
-                        'limit':25
-                    }, function(d){
-                        if(d.error){
-                            return alert(d.data)
-                        }
-                        window.itemList = window.itemList.concat(d.data)
+                    var temps = ''
+                    $waterL.empty()
+                    $waterR.empty()
+                    $('#chooseTip').hide().empty()
+                    $('#join_btn2').hide()
 
-                        if(window.itemList.length == 0){
-                            alert('对不起，没有其他作品了')
+
+                    var wateList = []
+                    //过滤数据
+                    window.itemList.forEach(function(item){
+                        if(
+                            isChoose && 
+                            window.chooseItem.lv0.indexOf(item._id.toString()) == -1 &&
+                            window.chooseItem.lv1.indexOf(item._id.toString()) == -1 &&
+                            window.chooseItem.lv2.indexOf(item._id.toString()) == -1 &&
+                            window.chooseItem.lv3.indexOf(item._id.toString()) == -1 &&
+                            window.chooseItem.lv4.indexOf(item._id.toString()) == -1 
+
+                        ){
+                            wateList.push(item)
                             return
                         }
-                        
+                        if(!isChoose){
+                            wateList.push(item)
+                        }
 
-                        window.itemList.sort(function(a,b){
-                            var aTime = moment(a.writeTime)
-                            var bTime = moment(b.writeTime)
-                            if(aTime >= bTime){
-                                return -1
+                    })
+
+                    //循环遍历
+                    window.itemList.forEach(function(item){
+                            if(isChoose){
+                                var aStr = '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike">'+item.todayVoteNumber+'</a>'
+                            }else{
+                                var aStr = ''
                             }
-                            else return 1
-                        })
-
-                        var temps = ''
-                        $waterL.empty()
-                        $waterR.empty()
-                        
-                        window.itemList.forEach(function(item){
                             var temps = '<div class="img_block">'+
                                      '<a data-title="'+item.desc+'" data-lightbox="image-1"  href="'+item.picture+'">'+
                                      '<img data-title="'+item.desc+'" class="lazy" src="'+item.pictureThumb+'" width="250"  /></a>'+
-                                     '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike">'+item.todayVoteNumber+'</a>'+
+                                     aStr+
                                      '<h3>'+item.desc+'</h3></div>'
                             var lh = $waterL.height()
                             var rh = $waterR.height()
@@ -420,11 +617,35 @@ var initAjax = function(){
 
                         })
                         
-                        $('#change_btn').show()
-                        $('#join_btn2').show()
+                        if(isChoose){
 
-                                           
-                    }, 'json')
+                            if(lvType == 'lv0'){
+            $('#chooseTip').html('选择特等奖1名（已选<span id="choose_count">'+window.chooseItem.lv0.length+'</span>）')
+                            }
+                            else if(lvType == 'lv1'){
+            $('#chooseTip').html('选择一等奖2名（已选<span id="choose_count">'+window.chooseItem.lv1.length+'</span>）')
+                            }
+                            else if(lvType == 'lv2'){
+            $('#chooseTip').html('选择二等奖3名（已选<span id="choose_count">'+window.chooseItem.lv2.length+'</span>）')
+                            }else if(lvType == 'lv3'){
+            $('#chooseTip').html('选择三等奖6名（已选<span id="choose_count">'+window.chooseItem.lv3.length+'</span>）')
+                            }else if(lvType == 'lv4'){
+        $('#chooseTip').html('选择建筑过程影响奖3名（已选<span id="choose_count">'+window.chooseItem.lv4.length+'</span>）')
+                            }
+
+
+                            $('#chooseTip').show()
+                            $('#join_btn2').show()
+
+
+                        }
+                        else{
+
+
+                        }
+                                              
+                        // $('#change_btn').show()
+                        // $('#join_btn2').show()
 
                 }, 'json')
     }
