@@ -76,7 +76,7 @@ width: 280px;
 height: 80px;
 display: block;
 position: absolute;
-top: 420px;
+top: 280px;
 left: 20px;
 }
 .get_prize_tip{
@@ -643,6 +643,8 @@ $(function(){
       if(ro.prizeId != '0' && ro.prizeObj){
         
         tmp_s += '<li>奖品: '+ro.prizeObj.name+' (兑奖码:'+ro.giftId+')</li>'
+		
+		$('#grxz1').hide();
       }
      })
      $('#prize_list').html(tmp_s)
