@@ -31,6 +31,10 @@
     <button  id="down" class="k-primary fl_margin k-primary k-button">
     <span class="k-sprite k-icon k-i-refresh">Refresh</span>
     导出列表</button>
+
+    <button  id="down_deatil" class="k-primary fl_margin k-primary k-button">
+    <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+    导出详细用户列表</button>
  
 </div>
 
@@ -203,6 +207,22 @@ var hasInit = false;
             $('#kendo_mask').hide()
             location.href = url
         })
+
+
+        $('#down_deatil').click(function(){
+            $('#kendo_mask').show()
+            var group_q = ''
+            if($('#groupId_inp').val() && $('#groupId_inp').val() != ''){
+                var group_q ='&groupid='+$('#groupId_inp').val()
+            }
+             
+
+            var url = '/manger/voteRec/down_deatil?voteid='+$('#app_sel_inp').val()+'&stime='+
+                      $('#start').val()+'&etime='+$('#end').val()+group_q;
+            $('#kendo_mask').hide()
+            location.href = url
+        })
+        
     })
 })
 

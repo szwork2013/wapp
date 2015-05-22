@@ -11,7 +11,7 @@ var obj = { //定义结构
     giftId:{ type: Number, default:0, unique:true, index:true},        //用户领奖的6位id号码,0表示未中奖
     isForward:{ type: Number, default:0},                  //是否是转发额外的奖励，是否转发控制由前端处理
     code1:{type:String,default: ''}, //是否手工已经发奖，1表示发奖，0表示未发奖
-    code2:{type:String,default: ''}, //备用字段
+    code2:{type:String,default: ''}, //投票的是什么奖，lv0是特等奖，lv1是一等奖，lv2是二等奖，lv3是三等奖，lv4是建筑影响奖
     code3:{type:String,default: ''}, //备用字段
     code4:{type:String,default: ''}, //备用字段
     writeTime:{ type: Date, default: function(){return Date.now()}}, //用户抽奖的时间

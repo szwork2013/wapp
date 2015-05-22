@@ -1,6 +1,7 @@
 var voteBl = require('../bl/wxVote.js');
 var userBl = require('../bl/wxUser.js');
 var utils = require('../lib/utils.js');
+var async = require('async');
 var fs = require("fs")
 var obj = {}
 
@@ -171,6 +172,168 @@ obj.getVoteInfo2 = function(req,res){
 
 
 }
+
+
+//用户批量投票
+obj.startManyVote = function(req, res){
+
+	var appobj = utils.getAppEname(req.originalUrl)
+	if(appobj.error){
+		return res.send(appobj)
+	}
+	var appEname = appobj.data;
+
+	//测试用，真实情况注释
+	//req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
+
+	var userid = req.session[appEname+'_userid'];
+
+	if(!userid){
+		res.send({error:1,data:'用户身份丢失，请重新进入'})
+		return;
+	}
+
+	var itemid = req.body.itemid
+	var isforward = 0;
+	//var pos = req.ips.length - 1;
+	var recordIp = req.ips[0] || '127.0.0.1'
+
+	var voteEname = req.body.voteEname
+	var lv0Items = (req.body.lv0 || '').split(',')
+	var lv1Items = (req.body.lv1 || '').split(',')
+	var lv2Items = (req.body.lv2 || '').split(',')
+	var lv3Items = (req.body.lv3 || '').split(',')
+	var lv4Items = (req.body.lv4 || '').split(',')
+
+	if(!voteEname){
+		res.send({error:1,data:'投票ename无效'})
+		return;
+	}
+
+	//参数检查
+	if(lv0Items.length != 1){
+		res.send({error:1,data:'特等奖只能1名'})
+		return;
+	}
+	//参数检查
+	if(lv1Items.length != 2){
+		res.send({error:1,data:'一等奖只能2名'})
+		return;
+	}
+	//参数检查
+	if(lv2Items.length != 3){
+		res.send({error:1,data:'二等奖只能3名'})
+		return;
+	}
+	//参数检查
+	if(lv3Items.length != 6){
+		res.send({error:1,data:'三等奖只能6名'})
+		return;
+	}
+	//参数检查
+	if(lv4Items.length != 3){
+		res.send({error:1,data:'建筑过程影响奖只能3名'})
+		return;
+	}
+
+	var allItemIds = lv0Items.concat(lv1Items).concat(lv2Items).concat(lv3Items).concat(lv4Items)
+	var error = 0
+	allItemIds.forEach(function(itemid){
+		if(itemid.length != 24){
+			error++
+		}
+	})
+	if(error>0){
+		res.send({error:1,data:'投票id部分无效'})
+		return;
+	}
+	//检查itemid是否都在集合内
+	voteBl.countVoteNumInIds(allItemIds, function(err, itemsCount){
+		if(err) return res.send({error:1,data:err}) 
+		if(itemsCount != allItemIds.length){
+			res.send({error:1,data:'投票id部分未找到'})
+			return; 
+		}
+		//拿到投票id
+		voteBl.getVoteByEname(voteEname,function(err, voteObj){
+			if(err) return res.send({error:1,data:err}) 
+			if(!voteObj) return res.send({error:1,data:'未找到投票'})
+			var voteId = voteObj._id.toString()
+			//检查这个用户是否已经投过票了
+			voteBl.countUserVoteRecord(userid, voteId, function(err, countNum){
+				if(err) return res.send({error:1,data:err}) 
+				if(countNum>0) return res.send({error:1,data:'您已经参与过了'})
+
+				var dealFunc = []
+				lv0Items.push(function(itemid){
+					//将操作放入数组
+					dealFunc.push(function(callback){
+						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
+								if(err) return callback(err)
+						     	if(!result._id.toString()) return callback('投票失败') 
+						     	return callback(null) 	
+						},'lv0')
+					})
+				})
+				lv1Items.push(function(itemid){
+					//将操作放入数组
+					dealFunc.push(function(callback){
+						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
+								if(err) return callback(err)
+						     	if(!result._id.toString()) return callback('投票失败') 
+						     	return callback(null) 	
+						},'lv1')
+					})
+				})
+				lv2Items.push(function(itemid){
+					//将操作放入数组
+					dealFunc.push(function(callback){
+						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
+								if(err) return callback(err)
+						     	if(!result._id.toString()) return callback('投票失败') 
+						     	return callback(null) 	
+						},'lv2')
+					})
+				})
+				lv3Items.push(function(itemid){
+					//将操作放入数组
+					dealFunc.push(function(callback){
+						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
+								if(err) return callback(err)
+						     	if(!result._id.toString()) return callback('投票失败') 
+						     	return callback(null) 	
+						},'lv3')
+					})
+				})
+				lv4Items.push(function(itemid){
+					//将操作放入数组
+					dealFunc.push(function(callback){
+						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
+								if(err) return callback(err)
+						     	if(!result._id.toString()) return callback('投票失败') 
+						     	return callback(null) 	
+						},'lv4')
+					})
+				})
+
+
+				async.series(dealFunc, function(err){
+					if(err){
+						res.send({error:1,data:err})
+						return;
+					} 
+					res.send({error:0,data:'投票成功'})
+				})//end async.series
+
+			})//end voteBl.countUserVoteRecord
+
+		})//end voteBl.getVoteByEname
+
+	})//end voteBl.countVoteNumInIds
+
+}
+
+
 
 
 //用户点击了投票按钮

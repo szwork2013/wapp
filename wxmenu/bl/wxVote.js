@@ -13,6 +13,21 @@ var voteRecord = require('../dl/voteRecordModel.js'); //投票记录模型
 
 var obj = {}
 
+
+//根据itemid，计算数量
+obj.countVoteNumInIds = function(itemIds, cb){
+
+	voteItem.countAll({
+		'_id':{ '$in': itemIds},
+		'isFreez':0,
+	}, function(err, countNum){
+		if(err) return cb(err)
+		return cb(null, countNum||0)
+	})
+
+}
+
+
 //根据英文短名获取抽奖信息
 obj.getVoteByEname = function(voteEname,cb){
 	if(!voteEname) return cb('no voteEname');
@@ -569,7 +584,7 @@ obj.getGroupCountByVoteId = function(voteid, lastTimeStamp, cb){
 
 
 //用户ajax开始投票，要对其做各种约束
-obj.startVote = function(itemid, userid, ip, isforward, cb){
+obj.startVote = function(itemid, userid, ip, isforward, cb, code2){
 	//判断itemid和userid是否合法
 	if(!itemid || itemid.length != 24){
 		return cb('error itemid')
@@ -648,7 +663,7 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 					if(err) return cb(err)
 
 					//如果记录为0，则表示此用户从未投票过，则直接进入投票成功函数
-					if(recList.length == 0) return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb)
+					if(recList.length == 0) return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb, code2)
 
 					if(recList.length >= limit){
 
@@ -712,7 +727,7 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 					//end 2 判断
 
 					//所有判断都通过，开始进入成功后的流程
-					return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb)
+					return obj.voteSuccessProcess(appid, voteid, groupid, itemid, userid, ip, isforward, cb, code2)
 
 				})//end voteRecord.findAll
 			})//end voteGroup.findOneByObj
@@ -722,7 +737,7 @@ obj.startVote = function(itemid, userid, ip, isforward, cb){
 
 
 
-obj.voteSuccessProcess = function(appid, voteid, groupid, itemid, userid, ip, isforward, cb){
+obj.voteSuccessProcess = function(appid, voteid, groupid, itemid, userid, ip, isforward, cb, code2){
 
 	var insertObj = {
 		appId:appid,
@@ -731,7 +746,8 @@ obj.voteSuccessProcess = function(appid, voteid, groupid, itemid, userid, ip, is
 		userId:userid,
 		recordIp:ip,
 		isForward:isforward || 0,
-		writeTime:new Date()
+		writeTime:new Date(),
+		code2:code2||'',
 	}
 	//插入流水
 	voteRecord.insertOneByObj(insertObj, function(err, record){

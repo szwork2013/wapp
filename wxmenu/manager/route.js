@@ -243,7 +243,7 @@ var addroute = function(app){
 	app.post('/manger/voteRec/aggressive',checkLogin, voteRecordCl.aggressive) //统计ajax接口
 	app.post('/manger/voteRec/aggressiveCount',checkLogin, voteRecordCl.aggressiveCount) //统计vote参与人数和票数接口
 	app.get('/manger/voteRec/download', checkLogin, voteRecordCl.download) //下载列表，导出excel
-
+	app.get('/manger/voteRec/down_deatil', checkLogin, voteRecordCl.down_deatil) //下载用户头详细信息列表，导出excel
 
 	//拿红包流水
 	app.get('/manger/moneyLog/list', checkLogin, moneyCl.list)

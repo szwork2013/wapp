@@ -3,6 +3,7 @@ var dl2 = require('../../dl/userModel.js');
 var dl3= require('../../dl/voteItemModel.js');
 var dl4 = require('../../dl/voteModel.js');
 var utils = require('../../lib/utils.js');
+var iconv = require('iconv-lite');
 var obj = {}
 var salt = global.app.get('salt');
 var json2csv = require('json2csv');
@@ -17,6 +18,101 @@ obj.aggressiveList = function(req, res){
 	res.render('vote_aggressive_list', {session:req.session});
 }
 
+//分析用户投票细节
+obj.aggressive_userDeatil= function(req, res){
+
+	var voteId = req.param('voteid');
+	var groupId = req.param('groupid');
+	if(groupId == '0' || groupId == ''){
+		groupId = null;
+	}
+
+	var filter = {
+		'voteId':voteId,
+	}
+	if(groupId){
+		filter.groupId = groupId
+	}
+
+
+	dl3.findAll(filter, 0, 100000, function(err, itemList){
+		if(err) return req.downloadCallback(err)
+		if(itemList.length == 0) return req.downloadCallback(null, [])
+		var bigVoteItemDict = {}
+		itemList.forEach(function(voteItem){
+				bigVoteItemDict[voteItem._id.toString()] = voteItem
+		})
+
+
+		//查找所有记录
+		dl.findAll(filter, 0, 100000, function(err, list){
+			var bigUserDict = {}
+			var userIds = []
+
+			if(err) return req.downloadCallback(err)
+			if(list.length == 0) return req.downloadCallback(null, [])
+			list.forEach(function(item){
+				//如果没有字典创建一个字典
+				if(!bigUserDict[item.userId]){
+					bigUserDict[item.userId] = {
+						'lv0':'',
+						'lv1':'',
+						'lv2':'',
+						'lv3':'',
+						'lv4':'',
+						'usreid':item.userId,
+					}
+				}
+
+				//如果有key
+				if(bigUserDict[item.userId].hasOwnProperty(item.code2)){
+						var voteObj =  bigVoteItemDict[item.itemId]
+						bigUserDict[item.userId][item.code2] += voteObj.code2+','
+				}
+
+				//获取唯一的用户id
+				if(userIds.indexOf(item.userId) == -1){
+					userIds.push(item.userId)
+				}
+			})
+
+			//然后去查找用户表
+
+			dl2.getUserByIds(userIds, function(err, userList){
+				if(err) return req.downloadCallback(err)
+				if(list.length == 0) return req.downloadCallback(null, [])
+				var resultList = []
+				userList.forEach(function(userItem){
+					//如果有这个人的投票信息才返回
+					if(bigUserDict[userItem.value]){
+						var tempBigUserObj = bigUserDict[userItem.value]
+						resultList.push({
+							'name':userItem.appUserName,
+							'appUserMobile':userItem.mobile,
+							'wxName':userItem.wxName,
+							'lv0':tempBigUserObj.lv0,
+							'lv1':tempBigUserObj.lv1,
+							'lv2':tempBigUserObj.lv2,
+							'lv3':tempBigUserObj.lv3,
+							'lv4':tempBigUserObj.lv4,
+						})//end push
+					}//end if
+				})//end foreach
+
+				//完成拼接
+				return req.downloadCallback(null, resultList)
+
+			})//end userList
+
+
+		})//end dl.findAll
+
+
+	})//dl3.findAll
+}
+
+
+//分析投票
 obj.aggressive = function(req, res){
 	var s = req.param('stime');
 	var e = req.param('etime');
@@ -186,6 +282,42 @@ obj.download = function(req,res){
 	obj.aggressive(req,res)
 }
 
+
+obj.down_deatil = function(req, res){
+
+	req.downloadCallback = function(err, orderList){
+		if(err){
+			return res.send(500, err);
+		}
+		if(orderList.length == 0){
+			json2csv({data: [], fields:{}}, function(err, csv) {
+				  if(err) return res.send(500,err);
+
+				  res.attachment(req.voteTitle+'.csv');
+				  res.send(csv)
+			});
+			return;
+		}
+		json2csv({data: orderList, fields: Object.keys(orderList[0] || {})}, function(err, csv) {
+			    if(err) return res.send(500,err);
+			    try{
+			  	  var buf = iconv.encode(csv, 'gbk');
+			    }
+				catch(e){
+				  	res.send(e)
+				}
+
+
+			   res.attachment(req.voteTitle+'.csv');
+			   res.send(buf)
+
+		});
+	}
+
+	obj.aggressive_userDeatil(req,res)
+
+
+}
 
 obj.read = function(req, res){
 	var filter =  utils.kendoToMongoose(req.body.filter,req.session.clientId);

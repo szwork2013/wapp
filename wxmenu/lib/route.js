@@ -316,6 +316,8 @@ var addroute = function(app){
 		app.post('/vote/:appename/myrecord', apiVote.getMyRecord) //获取用户的记录
 		app.get('/vote/:appename/getvoteinfo2', apiVote.getVoteInfo2) //给web投票用的获取投票信息
 
+		app.post('/vote/:appename/startmany', apiVote.startManyVote)//批量投票，目前东方之门使用
+
 		//照片投票
 		app.post('/vote/:appename/uploadpic', apiVoteFront.frontUpload)//上传图片到七牛
 		app.post('/vote/:appename/removepic', function(req, res){
