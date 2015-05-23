@@ -48,7 +48,7 @@
 <% if(binderObj.appUserType == 0){ %>
 
 
-<div class="container container-fill">
+<!-- <div class="container container-fill">
 
 <div class="wrap-page ng-scope" ng-controller="loginPanel">
     <img class="a-fadeinT img-responsive" src="/static/lhjf/header-img.jpg">
@@ -79,73 +79,75 @@
     </div>
 
 </div>
-  </div>
+  </div> -->
 
 
 <%} else{ %>
-
+<!-- 
   <div class="daySignBox clearfix">
         
         <p><%= userObj.appUserName %>，您已经是认证会员了</p>
         <p>前往<a href="/view/user/modify?wxuserid=<%= userObj._id %>" target="_blank" class="reda">个人中心</a>，立即查看我的积分和参与活动吧</p>
-  </div>
+  </div> -->
   
 <%}%>
 
 <script>
-function _removeHTMLTag(str) {
-if (typeof str == 'string'){
-str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g, '');
-        str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g, '');
-        str = str.replace(/<\/?[^>]*>/g, '');
-        str = str.replace(/\s+/g, '');
-        str = str.replace(/&nbsp;/ig, '');
-}
-return str;
-}
+// function _removeHTMLTag(str) {
+// if (typeof str == 'string'){
+// str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g, '');
+//         str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g, '');
+//         str = str.replace(/<\/?[^>]*>/g, '');
+//         str = str.replace(/\s+/g, '');
+//         str = str.replace(/&nbsp;/ig, '');
+// }
+// return str;
+// }
+
+location.href = '/view/user/modify?wxuserid=<%= userObj._id %>'
 
 
-$(function() {
+// $(function() {
 
-        $('.btn-sender').on('click', function() {
+//         $('.btn-sender').on('click', function() {
 
-            var mode = 'basic';
-            if (mode == 'basic') {
-                return;
-            }
-            var scope = angular.element('.ng-container').scope();
-            if (!scope.ret.code.username) {
-                u.message('请输入邮箱或者手机号.');
-                return;
-            }
-            u.sendCode(this, scope.ret.code.username, function(ret, message) {
-                if (ret == 'failed') {
-                    u.message('发送验证码失败. 详情: ' + message);
-                }
-            });
-        });
-    });
+//             var mode = 'basic';
+//             if (mode == 'basic') {
+//                 return;
+//             }
+//             var scope = angular.element('.ng-container').scope();
+//             if (!scope.ret.code.username) {
+//                 u.message('请输入邮箱或者手机号.');
+//                 return;
+//             }
+//             u.sendCode(this, scope.ret.code.username, function(ret, message) {
+//                 if (ret == 'failed') {
+//                     u.message('发送验证码失败. 详情: ' + message);
+//                 }
+//             });
+//         });
+//     });
 </script>
 
   
   <script type="text/javascript">
   
 
-  function tomedia(src) {
-    if(typeof src != 'string')
-      return '';
-    if(src.indexOf('http://') == 0 || src.indexOf('https://') == 0) {
-      return src;
-    } else if(src.indexOf('../addons') == 0 || src.indexOf('../attachment') == 0) {
-      src=src.substr(3);
-      return window.sysinfo.siteroot + src;
-    } else if(src.indexOf('./resource') == 0) {
-      src=src.substr(2);
-      return window.sysinfo.siteroot + 'app/' + src;
-    } else if(src.indexOf('images/') == 0) {
-      return window.sysinfo.attachurl+ src;
-    }
-  }
+ //  function tomedia(src) {
+ //    if(typeof src != 'string')
+ //      return '';
+ //    if(src.indexOf('http://') == 0 || src.indexOf('https://') == 0) {
+ //      return src;
+ //    } else if(src.indexOf('../addons') == 0 || src.indexOf('../attachment') == 0) {
+ //      src=src.substr(3);
+ //      return window.sysinfo.siteroot + src;
+ //    } else if(src.indexOf('./resource') == 0) {
+ //      src=src.substr(2);
+ //      return window.sysinfo.siteroot + 'app/' + src;
+ //    } else if(src.indexOf('images/') == 0) {
+ //      return window.sysinfo.attachurl+ src;
+ //    }
+ //  }
   
 
   
@@ -153,47 +155,48 @@ $(function() {
 
 
     
- $(function(){
-      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
-      $('#submitBtn').click(function(){
-        if(window.isajax) return false;
+ // $(function(){
+ //      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
+      
+ //      $('#submitBtn').click(function(){
+ //        if(window.isajax) return false;
 
-          var mobile = $('#mobile').val();
-          var appUserName = $.trim($('#appUserName').val());
-          var sex = $('#sex').val();
+ //          var mobile = $('#mobile').val();
+ //          var appUserName = $.trim($('#appUserName').val());
+ //          var sex = $('#sex').val();
 
-          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
-              //$('#errtip').html(errimg+'手机号输入有误')
-              alert('手机号输入有误')
-              return false;
-          }
-          if(!appUserName){
-              //$('#errtip').html(errimg+'请输入昵称')
-              alert('请输入昵称')
-              return false;
-          }
+ //          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+ //              //$('#errtip').html(errimg+'手机号输入有误')
+ //              alert('手机号输入有误')
+ //              return false;
+ //          }
+ //          if(!appUserName){
+ //              //$('#errtip').html(errimg+'请输入昵称')
+ //              alert('请输入昵称')
+ //              return false;
+ //          }
 
 
-          window.isajax = true
-          $('#errtip').empty()
-          $.post('/api/user/binder',{
-            'appUserName':appUserName,
-            'appUserMobile':mobile,
-            'wxuserid':"<%= userObj._id.toString()%>"
-          },function(d){
-              window.isajax = false;
-              if(d.error){
-                alert(d.data)
-              }
-              alert('认证成功');
-              setTimeout(function(){
-                location.href = location.href
-              },500)             
-          },'json')
+ //          window.isajax = true
+ //          $('#errtip').empty()
+ //          $.post('/api/user/binder',{
+ //            'appUserName':appUserName,
+ //            'appUserMobile':mobile,
+ //            'wxuserid':"<%= userObj._id.toString()%>"
+ //          },function(d){
+ //              window.isajax = false;
+ //              if(d.error){
+ //                alert(d.data)
+ //              }
+ //              alert('认证成功');
+ //              setTimeout(function(){
+ //                location.href = location.href
+ //              },500)             
+ //          },'json')
 
-      })
+ //      })
 
-  })
+ //  })
 
 
   </script>
