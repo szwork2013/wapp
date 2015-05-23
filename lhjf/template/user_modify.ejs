@@ -29,7 +29,7 @@
   </head>
     <body>
 
-<% if(binderObj.appUserType == 0){ %>
+<% if(false && binderObj.appUserType == 0){ %>
      <div class="daySignBox">
         
           <p>您还未认证会员，请先认证</p>
@@ -50,8 +50,12 @@
 <div class="container nav">
   <ul>
     <li><i class="glyphicon glyphicon-credit-card" aria-hidden="true"></i>会员号：SZLH<%= cardStr%></li>
+
+<% if(binderObj.appUserType != 0){ %>
     <li><i class="glyphicon glyphicon-user" aria-hidden="true"></i>姓名：<%= userObj.appUserName %></li>
-      <li><i class="glyphicon glyphicon-phone" aria-hidden="true"></i>手机：<%= userObj.appUserMobile %></li>
+    <li><i class="glyphicon glyphicon-phone" aria-hidden="true"></i>手机：<%= userObj.appUserMobile %></li>
+<% } %>
+
     <li><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>领取日期：<%= createTime %></li>
     <li id='score_info'><i class="glyphicon glyphicon-text-size" aria-hidden="true"></i>我的积分：<%= userObj.appUserScore %>分</li>
     
@@ -73,8 +77,8 @@
 <p class='footer'>苏州龙湖</p>
 <div class="container-fluid">
 <div class="row footnav">
-    <div id='mb_info' class="col-xs-6" style="width: 100%;"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;修改资料</div>
-    <!-- <div id='usescore_info' class="col-xs-6" data-pro='use'><i class="glyphicon glyphicon-usd" aria-hidden="true"></i>&nbsp;&nbsp;返回</div> -->
+    <a id='mb_info' href="/view/user/modify2?wxuserid=<%= userObj._id.toString() %>" class="col-xs-6" ><i class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;会员</a>
+    <a id='usescore_info' href="/view/user/exchange?wxuserid=<%= userObj._id.toString() %>" class="col-xs-6" data-pro='use'><i class="glyphicon glyphicon-usd" aria-hidden="true"></i>&nbsp;&nbsp;兑换</a>
   </div>
 </div>
 
@@ -129,51 +133,14 @@
 
   $(function(){
       
-      $('#mb_info').click(function(){
-          $('#myModal').modal()
-      })
+      // $('#mb_info').click(function(){
+      //     $('#myModal').modal()
+      // })
 
       var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
       
 
-      $('#save_change').click(function(){
-        if(window.isajax) return false;
-
-          var appUserName = $.trim($('#appUserName').val());
-          var appUserMobile = $('#appUserMobile').val();
-
-          if(!/^1[0-9][0-9]\d{4,8}$/.test(appUserMobile)){
-              //$('#errtip').html(errimg+'手机号输入有误')
-              alert('手机号输入有误')
-              return false;
-          }
-          if(!appUserName){
-              //$('#errtip').html(errimg+'请输入昵称')
-              alert('请输入昵称')
-              return false;
-          }
-          
-
-
-          window.isajax = true
-          $('#errtip').empty()
-          $.post('/api/user/modify',{
-            'appUserMobile':appUserMobile,
-            'appUserName':appUserName,
-            'wxuserid':"<%= userObj._id.toString()%>"
-          },function(d){
-              window.isajax = false;
-              if(d.error){
-                alert(d.data)
-                return
-              } 
-              alert('修改成功');
-              setTimeout(function(){
-                location.href = location.href
-              },500)             
-          },'json')
-
-      })
+      
 
   })
 </script>

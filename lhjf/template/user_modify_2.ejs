@@ -1,0 +1,138 @@
+<% if(binderObj.appUserType == 0){ 
+
+  userObj.appUserName = '未认证会员'
+  userObj.appUserMobile = ''
+
+
+}%>
+
+
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>会员中心</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/main.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="http://xyt.xy-tang.com/system/longfor/Public/Member/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://xyt.xy-tang.com/system/longfor/Public/Member/css/main.css" />
+    <script>
+    var url={
+      'a':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/cashscore",
+      'b':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/userinfo",
+      'c_use':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getuseinfo",
+      'c_get':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getgetinfo",
+      'd':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/updateuser",
+      "e":"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/sigin",
+      "j":"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getscorejump"
+    };
+    </script>
+  </head>
+  <body>
+    <% include inc/score_nav.ejs %>
+
+<div class="container">
+    <div class="userinfo">
+      <!--<h3 class="text-center">基本信息</h3>-->
+        <p>姓名： <%= userObj.appUserName %></p>
+        <p>电话：</p> 
+<!--         <p>房号：</p> -->
+        <div class="panel-body">
+          <button type="button" style='float: right;' class="btn btn-primary" data-toggle="modal" data-target="#input-info">
+            修改信息
+          </button>
+        </div>
+        <div class="alert alert-warning alert-dismissible" role="alert">
+
+  <strong>温馨提示：</strong>只有完善资料的用户才能参与积分兑换奖品活动哦！ 
+</div>
+      <div class="modal fade" id="input-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title"id="myModalLabel">完善资料</h4>
+            </div>
+            <div class="modal-body" >
+              <div class="input-group input-group-lg child-input">
+                <span class="input-group-addon" id="sizing-addon1">☺</span>
+
+                <input type="text" name='name' class="form-control" placeholder="姓名" aria-describedby="sizing-addon1" id="appUserName" data-toggle="popover" data-placement="bottom" data-content="姓名不能为空！" value="<%= userObj.appUserName %>">
+              </div>
+              <div class="input-group input-group-lg child-input">
+                <span class="input-group-addon" id="sizing-addon1">☎</span>
+                <input type="text" name='tel' id="appUserMobile" class="form-control" placeholder="电话" aria-describedby="sizing-addon1" data-toggle="popover" data-placement="bottom" data-content="电话不能为空！" maxlength="11" value="<%= userObj.appUserMobile %>">
+              </div>
+
+              <div class="child-input">
+                <button type="button" id='save_change' class="btn btn-success btn-lg btn-block">提交</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="loading">
+      <div class="timer"></div>
+    </div>
+
+<script type="text/javascript">
+
+
+  $(function(){
+
+    $('#save_change').click(function(){
+        if(window.isajax) return false;
+
+          var appUserName = $.trim($('#appUserName').val());
+          var appUserMobile = $('#appUserMobile').val();
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(appUserMobile)){
+              //$('#errtip').html(errimg+'手机号输入有误')
+              alert('手机号输入有误')
+              return false;
+          }
+          if(!appUserName){
+              //$('#errtip').html(errimg+'请输入昵称')
+              alert('请输入昵称')
+              return false;
+          }
+          
+
+
+          window.isajax = true
+          $('#errtip').empty()
+          $.post('/api/user/modify',{
+            'appUserMobile':appUserMobile,
+            'appUserName':appUserName,
+            'wxuserid':"<%= userObj._id.toString()%>"
+          },function(d){
+              window.isajax = false;
+              if(d.error){
+                alert(d.data)
+                return
+              } 
+              alert('修改成功');
+              setTimeout(function(){
+                location.href = location.href
+              },500)             
+          },'json')
+
+      })
+
+
+  })
+
+</script>
+
+
+
+
+  </body>
+</html> 

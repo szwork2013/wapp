@@ -39,6 +39,60 @@ obj.modify = function(req,res){
 	
 }
 
+//修改资料2
+obj.modify2 = function(req,res){ 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId
+	var cardStr = userBl.createCardNum(req.wxBinder.appCardNumber)
+	var createTime = req.wxuobj.registTime
+
+	res.render('user_modify_2.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+		'cardStr':cardStr,
+		'createTime':createTime
+	})
+	
+}
+
+//exchange临时
+obj.exchange = function(req,res){ 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId
+	var cardStr = userBl.createCardNum(req.wxBinder.appCardNumber)
+	var createTime = req.wxuobj.registTime
+
+	res.render('user_exchange.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+		'cardStr':cardStr,
+		'createTime':createTime
+	})
+	
+}
+
+
+//exchange临时
+obj.score = function(req,res){ 
+	var userId = req.wxuobj._id;
+	var appId = global.wxAppObj._id;
+	var openId = req.wxuobj.openId
+	var cardStr = userBl.createCardNum(req.wxBinder.appCardNumber)
+	var createTime = req.wxuobj.registTime
+
+	res.render('user_score.ejs',{
+		'userObj':req.wxuobj,
+		'binderObj':req.wxBinder,
+		'cardStr':cardStr,
+		'createTime':createTime
+	})
+	
+}
+
+
+
 
 //我的评论页面
 obj.mycomment = function(req,res){

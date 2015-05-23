@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>会员中心</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+				<script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/main.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="http://xyt.xy-tang.com/system/longfor/Public/Member/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="http://xyt.xy-tang.com/system/longfor/Public/Member/css/main.css" />
+		<script>
+		var url={
+			'a':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/cashscore",
+			'b':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/userinfo",
+			'c_use':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getuseinfo",
+			'c_get':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getgetinfo",
+			'd':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/updateuser",
+			"e":"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/sigin",
+			"j":"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getscorejump"
+		};
+		</script>
+	</head>
+	<body>
+		<% include inc/score_nav.ejs %>
+
+		<div class="scoreinfo">
+			<ul>
+								<img src="http://xyt.xy-tang.com/system/longfor/Public/Member/img/qidai.jpg" width='100%' alt="">
+			</ul>
+		</div>
+		
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel"></h4>
+					</div>
+					<div class="modal-body">
+						<p id='pic' data-info=''>
+							<img id='picurl' src="" width="100%" alt="">
+						</p>
+						<p id='description'></p>
+						<p id='score'></p>
+						<p id='totalcount'></p>
+						<p id='count'></p>
+						<p id='startdate'></p>
+						<p id='lastdate'></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id='usescore' class="btn btn-primary">兑换</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">提示信息</h4>
+					</div>
+					<div class="modal-body" id='prompt'>
+						...
+					</div>
+					<div class="modal-footer" id='sub_all' display='none'>
+						 <button type="button" id='perfect' class="btn btn-primary">完善信息</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<div class="loading">
+			<div class="timer"></div>
+		</div>
+	</body>
+</html>

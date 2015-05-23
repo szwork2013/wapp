@@ -175,6 +175,7 @@ var addroute = function(app){
 	app.post('/api/user/binder',getUserMid, apiUser.binder);
 	//用户修改资料
 	app.post('/api/user/modify',getUserMid, apiUser.modify);
+	
 
 	//我的评论
 	app.post('/api/user/mycomment',getUserMid, apiUser.mycomment);
@@ -270,6 +271,12 @@ var addroute = function(app){
 	//---未完成
 	//修改资料
 	app.get('/view/user/modify',getUserMid, viewUser.modify);
+	//用户修改资料2
+	app.get('/view/user/modify2',getUserMid, viewUser.modify2);
+	//用户兑换临时
+	app.get('/view/user/exchange',getUserMid, viewUser.exchange);
+	//用户积分流水临时
+	app.get('/view/user/score',getUserMid, viewUser.score);
 	//用户注册
 	app.get('/view/user/regist',getUserMid, viewUser.regist);
 	
