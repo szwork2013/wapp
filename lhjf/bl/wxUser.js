@@ -55,7 +55,7 @@ obj.getUser = function(qobj,cb){
 }
 
 obj.createCardNum = function(cardNumber){
-	var cardStr = cardNumber.toString()
+	var cardStr = (cardNumber || '')cardNumber.toString()
 	var len = cardStr.length;
 	var needLen = 7 - len;
 	for(var i=0; i<needLen; i++){
