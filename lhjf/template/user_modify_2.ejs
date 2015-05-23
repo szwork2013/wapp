@@ -38,7 +38,7 @@
     <div class="userinfo">
       <!--<h3 class="text-center">基本信息</h3>-->
         <p>姓名： <%= userObj.appUserName %></p>
-        <p>电话：</p> 
+        <p>电话：<%= userObj.appUserMobile %></p> 
 <!--         <p>房号：</p> -->
         <div class="panel-body">
           <button type="button" style='float: right;' class="btn btn-primary" data-toggle="modal" data-target="#input-info">
@@ -88,14 +88,14 @@
   $(function(){
 
 
-<% if(binderObj.appUserType == 0){ 
+<% if(binderObj.appUserType == 0){  %>
 
     
 
     $('#save_change').click(function(){
         if(window.isajax) return false;
 
-          var mobile = $('#appUserName').val();
+          var mobile = $('#appUserMobile').val();
           var appUserName = $.trim($('#appUserName').val());
           var sex = $('#sex').val();
 
