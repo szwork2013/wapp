@@ -58,6 +58,7 @@
        "iconv":"2.1.6",
        "qiniu":"6.1.6",
        "ccap":"0.5.3",
+       "iconv-lite":"0.4.8"
    },
   "engines": {
     "node": ">=0.10.0"
