@@ -240,6 +240,7 @@ obj.startManyVote = function(req, res){
 	var error = 0
 	allItemIds.forEach(function(itemid){
 		if(itemid.length != 24){
+
 			error++
 		}
 	})
@@ -265,7 +266,7 @@ obj.startManyVote = function(req, res){
 				if(countNum>0) return res.send({error:1,data:'您已经参与过了'})
 
 				var dealFunc = []
-				lv0Items.push(function(itemid){
+				lv0Items.forEach(function(itemid){
 					//将操作放入数组
 					dealFunc.push(function(callback){
 						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
@@ -275,7 +276,7 @@ obj.startManyVote = function(req, res){
 						},'lv0')
 					})
 				})
-				lv1Items.push(function(itemid){
+				lv1Items.forEach(function(itemid){
 					//将操作放入数组
 					dealFunc.push(function(callback){
 						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
@@ -285,7 +286,7 @@ obj.startManyVote = function(req, res){
 						},'lv1')
 					})
 				})
-				lv2Items.push(function(itemid){
+				lv2Items.forEach(function(itemid){
 					//将操作放入数组
 					dealFunc.push(function(callback){
 						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
@@ -295,7 +296,7 @@ obj.startManyVote = function(req, res){
 						},'lv2')
 					})
 				})
-				lv3Items.push(function(itemid){
+				lv3Items.forEach(function(itemid){
 					//将操作放入数组
 					dealFunc.push(function(callback){
 						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){
@@ -305,7 +306,7 @@ obj.startManyVote = function(req, res){
 						},'lv3')
 					})
 				})
-				lv4Items.push(function(itemid){
+				lv4Items.forEach(function(itemid){
 					//将操作放入数组
 					dealFunc.push(function(callback){
 						voteBl.startVote(itemid, userid, recordIp, isforward, function(err,result){

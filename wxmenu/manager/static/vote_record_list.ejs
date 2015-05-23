@@ -8,8 +8,16 @@
 
 
 
+<script>
+window.voteChooseType = [
+              { text: "特等奖", value: 'lv0' },
+              { text: "一等奖", value: 'lv1' },
+              { text: "二等奖", value: 'lv2' },
+              { text: "三等奖", value: 'lv3' },
+              { text: "建筑影响", value: 'lv4' },
+            ]
 
-
+</script>
 
 
 
@@ -81,8 +89,13 @@
                <input type="text" id="isForward_inp" class="k-input k-textbox w-50-inp" name="isForward" data-bind="value:isForward" required="required" data-required-msg="" aria-invalid="true">
             </div>
 
-
-
+            <div class="k-edit-label  w-800-l">
+                <label for="code2" >备用2</label>
+            </div>
+            <div data-container-for="code2" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" id="code2">
+            </div>
+            
 <div style="display:none">
             
             <div class="k-edit-label  w-800-l">
@@ -92,12 +105,7 @@
                <input type="text" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="code2" >备用2</label>
-            </div>
-            <div data-container-for="code2" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
-            </div>
+            
             <div class="k-edit-label  w-800-l">
                 <label for="code3" >备用3</label>
             </div>
@@ -283,7 +291,8 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         { 
                             field: "isForward",
                             title: "是否转发", 
-                            values: window.is_forward
+                            values: window.is_forward,
+                            hidden:true
                         },
                      
                         { 
@@ -293,8 +302,8 @@ $.post('/manger/vote/getList',{},function(data_ary){
                          },
                          { 
                             field: "code2",
-                            title: "备用字段2", 
-                            hidden:true
+                            title: "奖项", 
+                            values:window.voteChooseType
                          },
                          { 
                             field: "code3",
@@ -331,6 +340,9 @@ $.post('/manger/vote/getList',{},function(data_ary){
                         window.dropdown_init($("#appId_inp"), d)
                         window.dropdown_init($("#voteId_inp"), d2)
                         window.dropdown_init($("#isForward_inp"), window.is_forward)
+                        window.dropdown_init($("#code2"), window.voteChooseType)
+
+
 
 
                          $('#writeTime_inp').kendoDateTimePicker();

@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-<%- newrelic.getBrowserTimingHeader() %>
+
 <title>印象·东方之门|专业组</title>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
@@ -49,11 +49,12 @@
                 <div class="actCont">
                 <img src="http://bcs.duapp.com/xytimg/dfzm%2Frule1.png" width=90% height=auto>
 				<img src="http://bcs.duapp.com/xytimg/dfzm%2Flogo.png" width=60% height=auto>
-				      <a href="javascript:;" class="change_btn" id="join_btn3">我要参加</a>
+				      <!-- <a href="javascript:;" class="change_btn" id="join_btn3">我要参加</a> -->
 
                 </div>
 <!--选项卡二 内容开始-->
 <div class="actCont actCont2" >
+<p class="chooseTip" id="chooseTip" style="display:none;"></p>
 <div id="main" class="clearfix">
     <div class="waterL" id="waterL"></div>
     <div class="waterR" id="waterR"></div>
@@ -72,18 +73,18 @@
 <% if(recNum>0){ %>
      <!--选项卡三 内容开始-->
      <div class="actCont" style="display:none">
-	       <p class="chooseTip" id="chooseTip" style="display:none;"></p>
+	       
 	        <div id="mymain" class="myPiccs" style="display:none;">
-                <p>特等奖</p>
-                <ul id="lv0Ul" ></ul>
-                <p>一等奖</p>
-                <ul id="lv1Ul" ></ul>
-                <p>二等奖</p>
-                <ul id="lv2Ul" ></ul>
-                <p>三等奖</p>
-                <ul id="lv3Ul" ></ul>
-                <p>建筑过程影响奖</p>
-                <ul id="lv4Ul" ></ul>
+                <p class="record_title">特等奖</p>
+                <ul id="lv0Ul" class="clearfix" ></ul>
+                <p class="record_title">一等奖</p>
+                <ul id="lv1Ul" class="clearfix"></ul>
+                <p class="record_title">二等奖</p>
+                <ul id="lv2Ul" class="clearfix"></ul>
+                <p class="record_title">三等奖</p>
+                <ul id="lv3Ul" class="clearfix"></ul>
+                <p class="record_title">建筑过程影响奖</p>
+                <ul id="lv4Ul" class="clearfix"></ul>
                 <div class="clear"></div>
             </div>
          <div class="shareBox">
@@ -137,7 +138,7 @@
 <input type="text" id="appUserName" class="chooseInput" value="" placeholder="请输入姓名" />
                 </li>
                 <li>
-<input type="text" id="appUserMobile" class="chooseInput" value="" placeholder="请输入电话" />
+<input type="text" id="appUserMobile" class="chooseInput" value="" placeholder="请输入电话" maxlength="11" />
                 </li>
 
 
@@ -286,7 +287,9 @@ var mask = function () {
 
 var init = function(){
     
-    
+    window.isChoose = false
+    window.chooseType = false
+
     window.oLabelLi=$(".labelBox ul li");
     $(".actCont:gt(0)").hide();
     oLabelLi.click(function(){
@@ -295,10 +298,9 @@ var init = function(){
 
         //如果是第二个选项
         if(n == 1){
-            window.isChoose = false
-            window.chooseType = false
+            
 
-            window.genWaterFull(0, window.isChoose, window.chooseType)
+            window.genWaterFull(0,false,false)
         }
 	
         $(this).addClass("active").siblings().removeClass("active");
@@ -320,7 +322,7 @@ var init = function(){
 
 
 
-var chooseItem = function(lvType, itemId, isAdd){
+var chooseItemFunc = function(lvType, itemId, isAdd){
     var itemList = window.chooseItem[lvType]
     if(!Array.isArray(itemList)) return false
 
@@ -346,7 +348,9 @@ var chooseItem = function(lvType, itemId, isAdd){
             return false
         }
         itemList.push(itemId)
+        window.chooseItem[lvType] = itemList
         $('#choose_count').html(itemList.length)
+        $('#'+lvType+'_choose_count').html(itemList.length)
         return true
     }else{
 
@@ -356,8 +360,9 @@ var chooseItem = function(lvType, itemId, isAdd){
                 newList.push(objId)
             }
         })
-        itemList = newList
-        $('#choose_count').html(itemList.length)
+        window.chooseItem[lvType] = newList
+        $('#choose_count').html(newList.length)
+        $('#'+lvType+'_choose_count').html(newList.length)
         return true
 
     }
@@ -378,9 +383,9 @@ var initAjax = function(){
         'lv3':[],
         'lv4':[],
     }
-    $.get('/vote/<%= appEname %>/myrecord', {
+    $.post('/vote/<%= appEname %>/myrecord', {
         'userId':'<%=  userid %>',
-        'groupEname':'zy',
+        'ename':'zy_vote',
     }, function(d){
         if(d.error){
             return alert(d.data)
@@ -401,11 +406,14 @@ var initAjax = function(){
                              '<img src="'+itemObj.pictureThumb+'" width="100%" />'
                              '<a href="javascript:;" class="ilike">'+itemObj.todayVoteNumber+'</a></div>'
                              '<h3>'+itemObj.title+'</h3></li>'
-                $('#'+key+'0Ul').html(temps)
                 
             })//end window.myVoteItem[key]
+
+             $('#'+key+'Ul').html(temps)
+
         })//end Object.keys(window.myVoteItem)
 
+        $('#mymain').show()
     }, 'json')//end $.post
 
 
@@ -422,24 +430,25 @@ var initAjax = function(){
 
 
     window.ajaxVote = false
-    window.isToVote = false
+
+
     var bindEvent = function(){
 
 
         $('#main').delegate('a[name="ilike"]', 'click', function(){
-            if(!window.isToVote){
+            if(!window.isChoose){
                 return false
             }
             else{
                 var that = $(this)
                 //取消勾选
                 if(that.hasClass('sel_ok')){
-                    var r = chooseItem(window.lvType, that.attr('itemid'), false)
+                    var r = chooseItemFunc(window.chooseType, that.attr('itemid'), false)
                     that.removeClass('sel_ok')
                 }
                 else{
                     //检查是否可以勾选
-                    var r = chooseItem(window.lvType, that.attr('itemid'), true)
+                    var r = chooseItemFunc(window.chooseType, that.attr('itemid'), true)
                     if(r){
                         that.addClass('sel_ok')
                     }
@@ -461,7 +470,14 @@ var initAjax = function(){
             window.isChoose = true
             window.chooseType = type
 
-            window.oLabelLi.eq(1).click()
+
+            window.genWaterFull(0,true,type)
+
+            oLabelLi.eq(1).addClass("active").siblings().removeClass("active");
+            $(".actCont").eq(1).show().siblings().hide();
+            setTimeout(function(){
+                        $(window).trigger('scroll')
+                },100)
 
         })
 
@@ -509,7 +525,7 @@ var initAjax = function(){
                     appUserMobile:appUserMobile
                 }
             window.isAjax = true
-            $.post('/api/user/modify?wxuserid=<%=fromUserId%>', q, function(d){
+            $.post('/api/user/modify?wxuserid=<%=userid%>', q, function(d){
                     if(d.error == 1){
                         window.isAjax = false
                         return alert(d.data)
@@ -547,8 +563,22 @@ var initAjax = function(){
     var $waterR = $('#waterR')
 
     //生成瀑布流
- window.genWaterFull = function(skip, isChoose, lvType){
+ window.isInit = false
+ window.lastIsChoose = false
+ window.genWaterFull = function genWaterFull(skip, isChoose, lvType){
                 
+                if(window.isInit && window.lastIsChoose == isChoose && isChoose == false){
+                    return false;
+                }
+                window.isInit = true
+                window.lastIsChoose = isChoose
+
+
+                $waterL.empty()
+                $waterR.empty()
+                $('#chooseTip').hide().empty()
+                $('#join_btn2').hide()
+
                 if(!skip){
                     var skip = 0
                 }
@@ -567,10 +597,7 @@ var initAjax = function(){
                     window.itemList = d.data
 
                     var temps = ''
-                    $waterL.empty()
-                    $waterR.empty()
-                    $('#chooseTip').hide().empty()
-                    $('#join_btn2').hide()
+                    
 
 
                     var wateList = []
@@ -578,12 +605,11 @@ var initAjax = function(){
                     window.itemList.forEach(function(item){
                         if(
                             isChoose && 
-                            window.chooseItem.lv0.indexOf(item._id.toString()) == -1 &&
-                            window.chooseItem.lv1.indexOf(item._id.toString()) == -1 &&
-                            window.chooseItem.lv2.indexOf(item._id.toString()) == -1 &&
-                            window.chooseItem.lv3.indexOf(item._id.toString()) == -1 &&
-                            window.chooseItem.lv4.indexOf(item._id.toString()) == -1 
-
+(window.chooseItem.lv0.indexOf(item._id.toString()) == -1 || lvType == 'lv0') &&
+(window.chooseItem.lv1.indexOf(item._id.toString()) == -1 || lvType == 'lv1') &&
+(window.chooseItem.lv2.indexOf(item._id.toString()) == -1 || lvType == 'lv2') &&
+(window.chooseItem.lv3.indexOf(item._id.toString()) == -1 || lvType == 'lv3') &&
+(window.chooseItem.lv4.indexOf(item._id.toString()) == -1 || lvType == 'lv4')
                         ){
                             wateList.push(item)
                             return
@@ -595,17 +621,24 @@ var initAjax = function(){
                     })
 
                     //循环遍历
-                    window.itemList.forEach(function(item){
+                    wateList.forEach(function(item){
+                            if(lvType && window.chooseItem[lvType].indexOf(item._id) != -1){
+                                var addSelClass = 'sel_ok'
+                            }
+                            else{
+                                var addSelClass = ''
+                            }
+
                             if(isChoose){
-                                var aStr = '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike">'+item.todayVoteNumber+'</a>'
+                                var aStr = '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike2 '+addSelClass+'"></a>'
                             }else{
-                                var aStr = ''
+                                var aStr = '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike '+addSelClass+'">'+item.todayVoteNumber+'</a>'
                             }
                             var temps = '<div class="img_block">'+
-                                     '<a data-title="'+item.desc+'" data-lightbox="image-1"  href="'+item.picture+'">'+
-                                     '<img data-title="'+item.desc+'" class="lazy" src="'+item.pictureThumb+'" width="250"  /></a>'+
+                                     '<a data-title="'+item.title+'" data-lightbox="image-1"  href="'+item.picture+'">'+
+                                     '<img data-title="'+item.title+'" class="lazy" src="'+item.pictureThumb+'" width="250"  /></a>'+
                                      aStr+
-                                     '<h3>'+item.desc+'</h3></div>'
+                                     '<h3>'+item.title+'</h3></div>'
                             var lh = $waterL.height()
                             var rh = $waterR.height()
                             if(lh > rh){
@@ -616,6 +649,14 @@ var initAjax = function(){
                             }
 
                         })
+                        
+                        var heightGap = $waterR.height() - $waterL.height()
+                        //alert(heightGap)
+                        if( heightGap >= 1000){
+                            window.isInit = false
+                            genWaterFull(0, isChoose, lvType)
+                        }
+
                         
                         if(isChoose){
 

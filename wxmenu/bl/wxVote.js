@@ -84,10 +84,15 @@ obj.getUserRecordGroupByItemId = function(voteid, userid, cb){
 		var tempList = []
 		voteItem.getByIds(ids,function(err,itemlist){
 			if(err) return cb(err);
+			var tempItemIds = []
 			recordList.forEach(function(robj){
 
 				itemlist.forEach(function(listobj){
 					if(robj._id.toString() == listobj._id.toString()){
+						//获取所有的投票项id
+						if(tempItemIds.indexOf(listobj._id.toString()) == -1){
+							tempItemIds.push(listobj._id.toString())
+						}
 						//放入临时数组
 						tempList.push({
 							_id:listobj._id.toString(),
@@ -112,14 +117,38 @@ obj.getUserRecordGroupByItemId = function(voteid, userid, cb){
 							code3:listobj.code3,
 							code4:listobj.code4,
 							writeTime:listobj.writeTime,
-							voteType:robj.voteType,
+							voteType:'',
 						})
 					}
 				})//end recordList.forEach
 				
 			})//end itemlist.forEach
 
-			cb(null, tempList)//返回生成数组
+
+			voteRecord.findAll({
+				'itemId':{'$in':tempItemIds},
+				'userId':userid,
+			},0,10000, function(err, recordList){
+				if(err) return cb(err);
+				var voteTypeDict = {}
+				recordList.forEach(function(recItem){
+					voteTypeDict[recItem.itemId] = recItem.code2
+				})
+				//获取到投票类型
+
+				tempList.forEach(function(item){
+					if(voteTypeDict[item._id]){
+						item.voteType = voteTypeDict[item._id]
+					}
+				})
+				
+				cb(null, tempList)//返回生成数组
+			})
+
+			
+
+
+			
 
 		})//end voteItem.getByIds
 

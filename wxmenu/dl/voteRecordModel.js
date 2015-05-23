@@ -11,7 +11,7 @@ var obj = { //定义结构
     recordIp:{type:String,default: '127.0.0.1'},           //用户抽奖时的ip地址 
     isForward:{ type: Number, default:0},                  //是否是转发后奖励的额外投票记录
     code1:{type:String,default: ''}, //是否手工已经发奖，1表示发奖，0表示未发奖
-    code2:{type:String,default: ''}, //备用字段.投票类型
+    code2:{type:String,default: ''}, //备用字段.投票类型,lv0-lv4特等奖，一等奖，东方之门用
     code3:{type:String,default: ''}, //备用字段
     code4:{type:String,default: ''}, //备用字段
     writeTime:{ type: Date, default: function(){return Date.now()}, index:true}, //用户抽奖的时间
@@ -61,7 +61,7 @@ objSchema.statics.createOneOrUpdate = function (query, update, cb) {
     return this.findOneAndUpdate(query, update, {"upsert":true}, cb); 
 }
 
-objSchema.statics.destroy = function (query, cb) { 
+objSchema.statics.destroy = function (query, cb){ 
     return this.remove(query, cb); 
 }
 
@@ -180,7 +180,6 @@ objSchema.statics.aggregateRecord = function(query, cb){
         )
       .group( {
             '_id' : "$itemId",
-            'voteType':'$code2',
             'supportCount' : { $sum : 1 },
         })
       .sort({

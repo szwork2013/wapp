@@ -87,7 +87,7 @@ obj.aggressive_userDeatil= function(req, res){
 					if(bigUserDict[userItem.value]){
 						var tempBigUserObj = bigUserDict[userItem.value]
 						resultList.push({
-							'name':userItem.appUserName,
+							'name':userItem.name,
 							'appUserMobile':userItem.mobile,
 							'wxName':userItem.wxName,
 							'lv0':tempBigUserObj.lv0,
@@ -290,13 +290,8 @@ obj.down_deatil = function(req, res){
 			return res.send(500, err);
 		}
 		if(orderList.length == 0){
-			json2csv({data: [], fields:{}}, function(err, csv) {
-				  if(err) return res.send(500,err);
-
-				  res.attachment(req.voteTitle+'.csv');
-				  res.send(csv)
-			});
-			return;
+			
+			return res.send('未找到相关记录')
 		}
 		json2csv({data: orderList, fields: Object.keys(orderList[0] || {})}, function(err, csv) {
 			    if(err) return res.send(500,err);

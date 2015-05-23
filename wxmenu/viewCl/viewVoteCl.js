@@ -17,11 +17,6 @@ obj.votePage = function(req,res){ //活动页面展示
 	}
 
 	var appEname = appobj.data;
-
-	//测试用，正式环境需注释
-	if(platForm == 'win32' || req.query.jkbuserid && req.query.jkbuserid.length == 24){
-		req.session[appEname+'_userid'] = '53ecb609e00fd324efd7302d'
-	}
 	
 
 	var userid = req.session[appEname+'_userid'];
