@@ -87,7 +87,53 @@
 
   $(function(){
 
+
+<% if(binderObj.appUserType == 0){ 
+
+    
+
     $('#save_change').click(function(){
+        if(window.isajax) return false;
+
+          var mobile = $('#appUserName').val();
+          var appUserName = $.trim($('#appUserName').val());
+          var sex = $('#sex').val();
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+              //$('#errtip').html(errimg+'手机号输入有误')
+              alert('手机号输入有误')
+              return false;
+          }
+          if(!appUserName){
+              //$('#errtip').html(errimg+'请输入昵称')
+              alert('请输入昵称')
+              return false;
+          }
+
+
+          window.isajax = true
+          $('#errtip').empty()
+          $.post('/api/user/binder',{
+            'appUserName':appUserName,
+            'appUserMobile':mobile,
+            'wxuserid':"<%= userObj._id.toString()%>"
+          },function(d){
+              window.isajax = false;
+              if(d.error){
+                alert(d.data)
+              }
+              alert('认证成功');
+              setTimeout(function(){
+                location.href = location.href
+              },500)             
+          },'json')
+
+      })
+
+<% } else { %>
+  
+
+  $('#save_change').click(function(){
         if(window.isajax) return false;
 
           var appUserName = $.trim($('#appUserName').val());
@@ -125,6 +171,10 @@
           },'json')
 
       })
+
+<% } %>
+
+
 
 
   })
