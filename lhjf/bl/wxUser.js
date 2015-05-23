@@ -55,7 +55,7 @@ obj.getUser = function(qobj,cb){
 }
 
 obj.createCardNum = function(cardNumber){
-	var cardStr = (cardNumber || '')cardNumber.toString()
+	var cardStr = (cardNumber || '').toString()
 	var len = cardStr.length;
 	var needLen = 7 - len;
 	for(var i=0; i<needLen; i++){
@@ -106,6 +106,8 @@ obj.binder = function(qobj,appId,cb){ //用户认证绑定
 				},function(err,udoc2){
 					if(err) return cb(err)
 					if(udoc2) return cb('手机号已经被使用')
+
+
 					guidModel.getGuid(function(err,guid){
 						if(err) return cb(err); //如果出错
 
@@ -252,7 +254,7 @@ obj.checkRecommend = function(appId, userid, mobile){
 
 }
 
-obj.enter = function(openId,appId,cb){ //用户进入
+obj.enter = function(openId,appId,cb,req){ //用户进入
 	var cb = cb || function(){}
 	if(!openId) return cb('no openId');
 	obj.getUserByOpenid(openId,function(err,udoc){
@@ -266,15 +268,20 @@ obj.enter = function(openId,appId,cb){ //用户进入
 				appUserMobile:'__'+guid
 			},function(err,udoc2){
 				if(err) return cb(err);
-
+				//console.log(guid)
 				userAppModel.insertOneByObj({
 					userId:udoc2._id,
 					openId:openId,
 					appId:appId,
+					appCardNumber:guid,
 				},function(err,appUDoc){
 					if(err) return cb(err);
+					if(req){
+						req.appCardNumber = guid
+					}
 					cb(null, {
-						uobj:udoc2
+						uobj:udoc2,
+						bind:[appUDoc]
 					});
 				})			
 			})

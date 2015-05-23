@@ -51,7 +51,7 @@
   <ul>
     <li><i class="glyphicon glyphicon-credit-card" aria-hidden="true"></i>会员号：SZLH<%= cardStr%></li>
 
-<% if(binderObj.appUserType != 0){ %>
+<% if(binderObj.appUserType != 0 && userObj.appUserName != '未认证会员'){ %>
     <li><i class="glyphicon glyphicon-user" aria-hidden="true"></i>姓名：<%= userObj.appUserName %></li>
     <li><i class="glyphicon glyphicon-phone" aria-hidden="true"></i>手机：<%= userObj.appUserMobile %></li>
 <% } %>

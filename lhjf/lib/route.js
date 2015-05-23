@@ -61,6 +61,10 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 		if(!uobj){
 				return res.send(404, { error: 1,data:'未找到用户' })
 		}
+		//console.log('********')
+		//console.log(uobj)
+
+
 		var bindObj = false;
 		if(uobj.bind && uobj.bind.length>0){
 			uobj.bind.forEach(function(bindApp){
@@ -71,6 +75,10 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 		}
 
 		delete uobj.bind
+
+		//console.log('********')
+		//console.log(bindObj)
+
 		req.wxBinder = bindObj;
 		req.wxuobj = {
 			  currentSite:config.currentSite,
@@ -99,7 +107,7 @@ var getUserMid = function(req, res, next){ //中间件，获取用户信息
 				userBl.enter(openid, appid, function(err,uobj2){
 					if(err) return res.send({error: 1,data:err});
 					return genReqUserObj(uobj2)
-				})
+				}, req)
 			}
 			else{
 				return genReqUserObj(uobj)
