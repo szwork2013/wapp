@@ -990,8 +990,8 @@ obj.sendMailJob = function(dayMoment, endMoment){
 
 /*
 setTimeout(function(){
-	var s = moment('2015/4/2').hour(18).minute(0).second(0)
-	var e = moment('2015/5/17').hour(23).minute(59).second(59)
+	var s = moment('2015/5/23').hour(0).minute(0).second(0)
+	var e = moment('2015/5/23').hour(23).minute(59).second(59)
 	obj.sendMailJob(s, e)
 },2000)
 */
