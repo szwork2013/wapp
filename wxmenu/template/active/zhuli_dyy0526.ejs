@@ -526,7 +526,7 @@ color：#000000;
         
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
  
-        <h4 class="modal-title" id="myModalLabel">助力排名</h4>
+        <h4 class="modal-title" id="myModalLabel">助力排名</h4><br>排名只显示前20名
       </div>
       <table class="table">
       <thead>
@@ -537,7 +537,7 @@ color：#000000;
         </tr>
       </thead>
       <tbody>
-       <%  for(var i=0; i<210; i++){ 
+       <%  for(var i=0; i<20; i++){ 
             var obj = rankList[i];
             if(!obj) break;
       %>
