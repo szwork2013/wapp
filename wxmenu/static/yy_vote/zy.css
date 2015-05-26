@@ -203,14 +203,15 @@ z-index: 99999;
 
 
 .chooseTip{
-    background-color: #f39800;
-    width: 80%;
+font-size: 1.1em;
+    background-color: #1db19e;
+    width: 90%;
     height: 40px;
     line-height: 40px;
-    font-size: 16px;
+
     color: #fff;
-    border-radius: 15px;
-    margin: 15px auto;
+    border-radius: 35px;
+    margin: 10px auto;
     text-align: center;
 }
 

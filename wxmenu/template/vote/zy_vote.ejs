@@ -47,7 +47,7 @@ background: none;
 padding: 5px 5px;
 width: 75%;
 color: #fff;
-font-size: 1em;
+font-size: 1.1em;
 outline: medium;
 background: #1db19e;
 border: none;
@@ -89,7 +89,7 @@ height: 50px;
                 <div class="actCont">
                 <img src="http://bcs.duapp.com/xytimg/dfzm%2F2%2Frule2.png" width=90% height=auto>
 				<img src="http://bcs.duapp.com/xytimg/dfzm%2Flogo.png" width=60% height=auto>
-				      <!-- <a href="javascript:;" class="change_btn" id="join_btn3">我要参加</a> -->
+				      <a href="javascript:;" class="change_btn" id="join_btn3">我要投票</a> 
 
                 </div>
 <!--选项卡二 内容开始-->
@@ -100,7 +100,7 @@ height: 50px;
     <div class="waterR" id="waterR"></div>
 
     <div class="clear clearpadding">
-        <a href="javascript:;" class="change_btn" id="join_btn2" style="display:none;">选择其他投票</a>
+        <a href="javascript:;" class="change_btn" id="join_btn2" style="display:none;">选择其他投票（返回列表）</a>
     </div>
     
 </div>
@@ -583,6 +583,18 @@ var initAjax = function(){
 
         })//end info
 
+		
+		//点击按钮投票
+		$('#join_btn3').click(function(){
+		
+		 $.cookie('showmy', '1', { path: '/' })
+                    location.href = location.href
+					
+					  });
+					  
+					  
+					  
+					  
 
         //投票按钮
         
