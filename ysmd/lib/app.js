@@ -2,7 +2,7 @@ var widget = {};
 var newrelic = require('newrelic');
 var logger = require('./log.js');
 var path = require('path');
-var ifile = require('ifile');
+
 var express = require('express');
 var app = express();
 var config = require('../config/config.js');
