@@ -9,7 +9,6 @@ var config = require('../config/config.js');
 var addRoute = require('./route.js');
 
 //使用客户端cookie
-var cs = require('client-session');
 var clientSession = cs('eastcitywujbnet');
 
 app.enable('trust proxy');
@@ -21,7 +20,7 @@ app.locals.newrelic = newrelic;
 
 app.use(express.cookieParser());
 app.use(express.session({secret: 'wxapp', cookie: {maxAge: 60000}}));
-app.use(clientSession.connect());
+
 
 /*
 app.use(ifile.connect(

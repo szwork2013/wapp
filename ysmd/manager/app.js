@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var ifile = require('ifile');
+
 var fs = require('fs');
 var path = require('path');
 var app = express();
@@ -11,12 +11,7 @@ app.set('salt', 'wxapp');
 app.set('views', __dirname + '/static');
 app.set('view engine', 'ejs');
 
-/*app.use(ifile.connect(
-	[
-		['/m_skin',path.join(__dirname,'static')],
-		['/upload',path.join(__dirname,'..')]
-	]
-));*/
+
 
 var getThumbMid = function(req,res,next){
 	var pathf = req.query.path;
