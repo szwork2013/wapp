@@ -178,27 +178,27 @@ z-index: 99999;
 
 .zoom,.ilike2{position:absolute;line-height:25px;padding:0 0 2px 18px;text-align:center;
     top:-10px;right:-10px;display:block;text-decoration:none;
-    background:url(images/sel_bg.png) no-repeat 0 -50px;}
+    background:url(images/sel_bg.png) no-repeat 0 -50px;background-size:50px 100px;}
 .ilike2{width:51px; height: 50px;}
 .ilike2.sel_ok{
-    background:url(images/sel_bg.png) no-repeat 0 0px;;
+    background:url(images/sel_bg.png) no-repeat 0 0px;background-size:50px 100px;
 }
-.ilike3{width:65px; height: 25px;}
+
 
 .ilike_lv0{
-     background:url(images/lv0.png) no-repeat 22 0px;background-size:30px 30px;  
+     background:url(images/lv0.png) no-repeat 22 0px;background-size:50px 50px;  
 }
 .ilike_lv1{
-     background:url(images/lv1.png) no-repeat 22 0px;background-size:30px 30px;
+     background:url(images/lv1.png) no-repeat 22 0px;background-size:50px 50px;
 }
 .ilike_lv2{
-     background:url(images/lv2.png) no-repeat 22 0px;background-size:30px 30px;
+     background:url(images/lv2.png) no-repeat 22 0px;background-size:50px 50px;
 }
 .ilike_lv3{
-     background:url(images/lv3.png) no-repeat 22 0px;background-size:30px 30px;
+     background:url(images/lv3.png) no-repeat 22 0px;background-size:50px 50px;
 }
 .ilike_lv4{
-     background:url(images/lv4.png) no-repeat 0 0px;background-size:40px 40px;
+     background:url(images/lv4.png) no-repeat 0 0px;background-size:50px 50px;
 }
 
 
