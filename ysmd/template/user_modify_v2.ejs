@@ -1,0 +1,100 @@
+<% include inc/headfile_v2 %>
+
+<section class="main animated fadeInDown">
+	<div class="main-box jjr-home">
+		<div class="sales-home-info">
+			<figure class="figure">
+				<img src="http://wkmixtown.qiniudn.com/broke%2Fheader.png" alt="">
+			</figure>
+			<h5 class="user_modify_h5"><%= userObj.appUserName %></h5>
+		</div>
+		<div class="jjr-info">
+			<div class="jjr-phone fn-clear">
+				<p class="info-title">姓名</p>
+				<p class="info-value">
+					<input type="text" class="input input2" placeholder="请输入真实姓名" id="appUserName" name="appUserName" maxlength="20" value="<%= userObj.appUserName %>" />
+				</p>
+			</div>
+			<div class="jjr-phone fn-clear">
+				<p class="info-title">注册电话</p>
+				<p class="info-value">
+					<input type="text" class="input input2" placeholder="请输入手机号" id="mobile" name="mobile" maxlength="11" value="<%= userObj.appUserMobile %>" />
+				</p>
+			</div>
+			<div class="jjr-type fn-clear">
+				<p class="info-title">注册身份</p>
+				<p class="info-value">
+					<select id="job" class="select input2">
+						<option value="">选择您的身份类型</option>
+						<option value="GSYG">公司员工</option>
+						<option value="WXFS">大众经纪人</option>
+						<option value="ZJGS">中介公司</option>
+						<option value="DLGS">代理公司</option>
+						<option value="HZHB">合作伙伴</option>		
+					</select>
+				</p>
+			</div>  
+			<a href="javascript:;" id="submitBtn" class="jjr-info-edit"><i class="icon-pencil"></i></a>
+		</div>
+	
+	</div>
+</section>
+
+<script type="text/javascript">
+var job_v = '<%= userObj.code1 %>'
+$('#job option').each(function(){
+	if($(this).val() == job_v){
+		$(this).attr('selected','selected');
+	}
+})
+
+
+$(function(){
+
+      
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+
+          var mobile = $('#mobile').val();
+          var appUserName = $.trim($('#appUserName').val());
+          var house = $.trim($('#house').val());
+          var job_val = $('#job').val();
+          var appUserBuilding = ''
+          var appUserRoom = ''
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(mobile)){
+              alert('手机号输入有误')
+              return false;
+          }
+          if(!appUserName){
+             alert('请输入真实姓名')
+              return false;
+          } 
+
+          if(!job_val){
+          	  alert('请选择身份')
+              return false;
+          }
+         
+
+          window.isajax = true
+
+          $.post('/api/user/modify',{
+            'appUserName':appUserName,
+            'appUserMobile':mobile,
+            'code1':job_val,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return alert(d.data);
+              alert('操作成功')                      
+          },'json')
+
+      })
+
+  })
+
+</script>
+
+
+<% include inc/foot_v2 %>

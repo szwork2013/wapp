@@ -1,0 +1,139 @@
+<% include inc/headfile_v2 %>
+		<section class="main animated fadeInDown">
+			<div class="main-box">
+
+				<h1 class="jjr-register"></h1>
+				<p class="rb-row" id="errtip"></p>
+				<p class="rb-row">
+					<input class="input" type="text" name="bname"  placeholder="请输入购房人姓名" id="recName"  maxlength="20">
+				</p>
+				<p class="rb-row">
+					<input type="text" name="btel"  placeholder="请输入购房人手机号码" class="input" id="recTel"  maxlength="11">
+				</p>
+        <p class="rb-row" style="">
+          <select id="recRoom" name="recRoom" class="select">
+              <option value="1" selected="selected">请选择指定接待</option>
+              <% jieDaiList.forEach(function(item){ %>
+                  <option value="<%= item._id%>"><%= item.appUserName%></option>
+              <%  }) %>
+          </select>
+        </p>
+
+        <p class="rb-row">
+          <div class="proxy_box proxy_box_white">
+          预计看房时间<br/>
+          <input type="date" name="proxy"  placeholder="预计看房时间" class="input" id="proxy" >
+        </div>
+        </p>
+
+
+				
+				<div class="recommend-tips">
+					<h6>提示</h6>
+					<p>请务必提交真实的客户信息，若多次提交错误信息，您的账号将被禁用。指定接待可填代理公司或置业顾问姓名</p>
+				</div>
+				<p class="rb-submit"><input type="button" value="推荐" class="btn" id="submitBtn"/></p>
+				
+			</div>
+
+
+
+
+
+		</section>
+	
+
+<div id="datePlugin"></div>
+
+<script type="text/javascript">
+  $(function(){
+      var nowMoment = moment()
+
+
+      //$('#proxy').val('').datetimepicker();
+      // {
+      //     monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      //     monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      //     weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+      //     weekdaysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+      //     today: '今天',
+      //     clear: '清除',
+      //     format: 'yyyy-mm-d',
+      //   }
+
+      $('body').addClass('index')
+
+      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+          $('#errtip').hide();
+
+
+          var recTel = $.trim($('#recTel').val());
+          var recName = $.trim($('#recName').val());
+          var recRoom = $.trim($('#recRoom').val()); //指定接待
+          var recArea = '0'
+          var recCode1 = $.trim($('#proxy').val()); //$input.get(); //预计看房日期
+          //alert(recCode1)
+
+          if($('#recRoom').val() == '1'){
+              $('#errtip').html(errimg+'请选择制定接待').show()
+              return false;
+          }
+
+          if(recCode1 == ''){
+              $('#errtip').html(errimg+'请输入预约时间').show()
+              return false;
+          }
+
+          try{
+              recCode1 = moment(recCode1).format('YYYY-MM-DD HH:mm:ss')
+              if(moment(recCode1) <= moment()){
+                    $('#errtip').html(errimg+'请输入大于当前时间').show()
+                    return false;
+              }
+              if(recCode1=='Invalid date'){
+                $('#errtip').html(errimg+'输入的时间无效').show()
+                return false;
+              }
+          }
+          catch(e){
+              $('#errtip').html(errimg+'输入时间无效').show()
+              return false;
+          }
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
+              $('#errtip').html(errimg+'手机号输入有误').show()
+              return false;
+          }
+
+
+          if(!recName){
+              $('#errtip').html(errimg+'请输入真实姓名').show()
+              return false;
+          } 
+          
+          window.isajax = true
+          $('#errtip').empty().hide();
+
+          $.post('/api/user/recommend',{
+            'recTel':recTel,
+            'recName':recName,
+            'recRoom':recRoom,
+            'recArea':recArea,
+            'recCode1':recCode1,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(errimg+d.data).show();
+              alert('推荐成功,请等待审核');
+              setTimeout(function(){
+                location.href = '/view/user/recrecord_v2?wxuserid='+window.userid
+              },500)             
+          },'json')
+
+      })
+
+  })
+</script>
+<% include inc/foot_v2 %>

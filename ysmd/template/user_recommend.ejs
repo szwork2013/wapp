@@ -1,0 +1,113 @@
+<% include inc/head %>
+<%
+  var title = '推荐客户'
+%>
+<% include inc/top %>
+
+
+
+
+
+<section class="main"  id="step_2" style="display:;">
+
+
+  <div class="so-p">
+    <p><%= userObj.appUserName %> 先生/女士  <br>推荐客户到常州万科城</p>
+  </div>
+
+  <div class="rem-box">
+    <div class="rem-p1 rem-p1-2" id="errtip" style="display:none;">
+    </div>
+    <div class="rem-p1">
+      <label>购房人姓名：</label>
+      <input type="text" name="bname"  placeholder="请输入购房人姓名" id="recName"  maxlength="20">
+    </div>
+    <div class="rem-p1">
+      <label>购房人电话：</label>
+      <input type="text" name="btel"  placeholder="请输入购房人手机号码" id="recTel"  maxlength="11">
+    </div>
+    <div class="rem-p1">
+      <label>指定接待：</label>
+      <input type="text" name="proxy"  placeholder="请输入代理公司，可不填" id="proxy"  maxlength="20">
+    </div>
+
+
+    <div class="rem-p1" style="display:none;">
+      <label>意向户型：</label>
+      <select name="bhtype" id="recRoom">
+        <option value="一房">一房</option>
+        <option value="两房">两房</option>
+        <option value="三房">三房</option>
+        <option value="四房">四房</option>
+      </select>
+    </div>
+    <div class="rem-p1" style="display:none;">
+      <label>推荐项目：</label>
+      <select name="bharea" id="recArea">
+        <option value="常州万科城">常州万科城</option>
+      </select>
+    </div>
+    <div class="rem-p2">
+      本活动最终解释权归常州万科有限公司所有
+    </div>
+  </div>
+  <div class="sus-btn-box">
+  <a class="rem-btn-back" id="submitBtn" href="javascript:;">提&nbsp;&nbsp;&nbsp;交</a>
+  </div>
+
+</section>
+
+
+<script type="text/javascript">
+  $(function(){
+
+      $('body').addClass('index')
+
+      var errimg = '<img class="err_img" src="/static/images/err.jpg" width="16" height="16" />'
+      $('#submitBtn').click(function(){
+        if(window.isajax) return false;
+          $('#errtip').hide();
+
+          var recTel = $.trim($('#recTel').val());
+          var recName = $.trim($('#recName').val());
+          var recRoom = $.trim($('#recRoom').val());
+          var recArea = $.trim($('#recArea').val());
+          var recCode1 = $.trim($('#proxy').val());
+
+          if(!/^1[0-9][0-9]\d{4,8}$/.test(recTel)){
+              $('#errtip').html(errimg+'手机号输入有误').show()
+              return false;
+          }
+
+
+          if(!recName){
+              $('#errtip').html(errimg+'请输入真实姓名').show()
+              return false;
+          } 
+          
+          window.isajax = true
+          $('#errtip').empty().hide();
+
+          $.post('/api/user/recommend',{
+            'recTel':recTel,
+            'recName':recName,
+            'recRoom':recRoom,
+            'recArea':recArea,
+            'recCode1':recCode1,
+            'wxuserid':window.userid
+          },function(d){
+              window.isajax = false;
+              if(d.error) return $('#errtip').html(errimg+d.data).show();
+              alert('推荐成功,请等待审核');
+              setTimeout(function(){
+                location.href = '/view/user/recrecord?wxuserid='+window.userid
+              },500)             
+          },'json')
+
+      })
+
+  })
+</script>
+
+
+<% include inc/foot %>
