@@ -183,7 +183,7 @@ z-index: 99999;
 .ilike2.sel_ok{
     background:url(images/sel_bg.png) no-repeat 0 0px;;
 }
-
+.ilike3{width:65px; height: 25px;}
 
 .ilike_lv0{
      background:url(images/lv0.png) no-repeat 22 0px;background-size:30px 30px;  
@@ -198,7 +198,7 @@ z-index: 99999;
      background:url(images/lv3.png) no-repeat 22 0px;background-size:30px 30px;
 }
 .ilike_lv4{
-     background:url(images/lv4.png) no-repeat 22 0px;background-size:65px 25px;
+     background:url(images/lv4.png) no-repeat -10 0px;background-size:65px 25px;
 }
 
 
