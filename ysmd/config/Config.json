@@ -1,0 +1,13 @@
+{
+	"currentSite":"http://127.0.0.1",
+	"appEname":"ysmd",
+	"mongodbConnStr":"mongodb://:@127.0.0.1:27017/ysmd",
+	"monoosePool":2,
+	"currentHost":"127.0.0.1",
+	"currentVersion":"v1",
+	"listenPort":7018,
+	"mangerListenPort":7019,
+	"wxAppId":"123",
+	"wxAppSecret":"123",
+	"wxAppToken":"weixin"
+}

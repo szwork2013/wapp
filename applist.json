@@ -154,7 +154,7 @@
           "NODE_ENV": "production"
         }
       },
-	  {
+	    {
         "name"      : "lhjf",
         "script"    : "/var/nodejs/wapp/lhjf/app.js",
         "max_memory_restart" : "300M",
@@ -165,6 +165,22 @@
       {
         "name"      : "lhjfadmin",
         "script"    : "/var/nodejs/wapp/lhjf/manager/app.js",
+        "max_memory_restart" : "300M",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "ysmd",
+        "script"    : "/var/nodejs/wapp/ysmd/app.js",
+        "max_memory_restart" : "300M",
+        "env_production" : {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name"      : "ysmdadmin",
+        "script"    : "/var/nodejs/wapp/ysmd/manager/app.js",
         "max_memory_restart" : "300M",
         "env_production" : {
           "NODE_ENV": "production"
