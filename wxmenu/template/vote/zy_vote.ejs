@@ -763,11 +763,12 @@ var initAjax = function(){
                     //循环遍历
                     wateList.forEach(function(item){
                             if(lvType && window.chooseItem[lvType].indexOf(item._id) != -1){
-                                var addSelClass = 'sel_ok'
+                                var addSelClass = ' sel_ok '
                             }
                             else{
                                 var addSelClass = ''
                             }
+
                             if(item.className){
                                 var addOtherTypeClass= ' '+item.className
                                 var addNoClickClass = ' noClick'
