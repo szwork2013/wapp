@@ -22,19 +22,13 @@
 
 
 
- <link href="http://114.215.183.41/2015/wdj/css/styles.css" rel="stylesheet" type="text/css" />
- <link href="http://114.215.183.41/2015/wdj/css/goal-thermometer.css" rel="stylesheet" type="text/css" />
- <!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
-<script type="text/javascript" src="http://114.215.183.41/2015/wdj/js/goal-thermometer.js"></script>
 
 
 
 
-
-
-
+<%- newrelic.getBrowserTimingHeader() %>
 <title>
-     东壹元千分夏日礼全城送
+     中航樾公馆邀你一起为生活加“油”
 </title>
 
 <style type="text/css">
@@ -44,7 +38,7 @@
     }
 <%}%>
     .container{
-        background:#ffffff;
+        background:#FFFFFF;
         padding-bottom: 20px;
     }
 	.container {
@@ -87,9 +81,9 @@ text-decoration: none;
 border-radius: 4px;
 border: 0;
 height: 50px;
-color: #ffffff;
+color: #000000;
 text-align: center;
-background-color:#74aced;
+background-color:#fffe00;
 }
 
 
@@ -121,30 +115,6 @@ background-color:#74aced;
 background-color:#fffe00;
 }
 	
-	
-	
-	body {
-
-background-color: #ffffff;
-}
-	
-	
-	.visitor {
-margin-top: 20px;
-margin-bottom: 20px;
-border-radius: 4px;
-background-color: #ffffff;
-padding: 10px;
-border: solid 1px #cccccc;
-color：#000000;
-}
-		
-	.modal{
-	color:#000;}
-	
-	
-
-	
 </style>
 
 
@@ -156,69 +126,52 @@ color：#000000;
 	
         <div class="container">
 		
-		  <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fdyy%2Fdyy0526.jpg" width='100%' alt=""><br>
+		 <img src="http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fzh%2Fzh0526.jpg" width='100%' alt=""><br>
 		  
-		<br>
 		
 		
- ·
-            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已经升温至
+		
+ 
+            <center>   <img src="<%= toUserObj.wxAvatar %>" / width="30px" height="auto"> <font style="color:#000"> “<%= toUserObj.wxName %>”已经有
         <b style="color:#c00; font-size:20px;">
 		
 		
-		 <% if(supportScore>3) { %>
-		 30
+		 <%= supportScore %></b>位好友帮你加了油,
+		
+		
+		<br>达相应数量就能兑换奖品哦</center></div> <br>
+
+
+		
+		
+		
+		
+		 <% if(supportScore==0) { %>
+		<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou0.jpg" width='100%'><br>
+		 
+		 
+		  <% }else if(supportScore==1){ %>
+		 
+	<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou200.jpg" width='100%'><br>
+		 
+		   <% }else if(supportScore==2){ %>
+		   
+	<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou400.jpg" width='100%'><br>
+		    <% }else if(supportScore==3){ %>
+			
+	<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou600.jpg" width='100%'><br>
+			 <% }else if(supportScore==4){ %>
+			 
+			 <img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou800.jpg" width='100%'><br>
+			  <% }else if(supportScore>=5){ %>
+			  
+			<img src="http://bcs.duapp.com/xytimg/jkgtx%2Fyou1000.jpg" width='100%'><br>
+			  
+			 
+		
 		 <% }else { %>
-		 <%= supportScore*10 %>
-		   <%}%></b>℃
-		
-		
-	</center></div>  
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-		
-		<br>
-		
-		
-		
-		
-	 <% if(supportScore==0) { %>
-            <script type="text/javascript">
-            var currentAmount = 0;
-        </script>
-        <% }else if(supportScore==1){ %>
-              <script type="text/javascript">
-            var currentAmount = 10;
-        </script>
-			  <% }else if(supportScore==2){ %>
-              <script type="text/javascript">
-            var currentAmount = 20;
-        </script>
-		
-		
-		
-		<% }else { %>
-              <script type="text/javascript">
-            var currentAmount = 30;
-        </script>
-		
-		
-		
-        <%}%>
-
-		
-
-    
-    		<div id="goal-thermometer"></div>	
+	图片暂时无法显示
+		   <%}%>
 		
 		
 		
@@ -227,35 +180,29 @@ color：#000000;
 		
 		
 		
-		
-		
-		
-		
-		
-
 		
 		
 		
 		
 		
  <% if(isMyPage) { %>
-           
+           <!-- <a class="share_timeline1 btn-block" id="share"> <span class="button1" >转发到朋友圈，让朋友来助力</span></a>-->
 			
 			
 			<button id="btnShare" class="share_timeline1 btn-block" onclick="mask()">
-                <span class="share_timeline_button" >邀请好友为你助力</span>
+                <span class="share_timeline_button" >邀请好友为你“加油”</span>
             </button>
         <% }else{ %>
 		
 		<a href="javascript:;"  class="share_timeline1 btn-block" id="goSupport">
-                <span class="button1" >点击为他/她升温</span>
+                <span class="button1" >动动手指为生活加油</span>
             </a>
 			<br>
 		
 		
 		
-           <a href="http://mp.weixin.qq.com/s?__biz=MjM5Mjc3MTU5OA==&mid=210397301&idx=1&sn=98b412fb23f3b64ba4cfa93f02ff5ee1#rd" class="share_timeline1 btn-block">
-              <span class="button1" >我也想抢降温神器</span>
+           <a href="http://menu.xy-tang.com/active/xinyutang?ename=zhuli_zh0526" class="share_timeline1 btn-block">
+              <span class="button1" >我也要领油</span>
             </a>
 			
         <%}%>
@@ -274,9 +221,13 @@ color：#000000;
 				})
 			</script>
 		
-	
+			<br> 
 
-       
+        <!--    <a href="javascript:;"   class="share_timeline1 btn-block" id="lottery_rule">
+               <span class="button1" >活动规则</span>
+            </a>
+<br> 
+        -->
 
             <div id="divVisitor" class="visitor">
 
@@ -290,9 +241,7 @@ color：#000000;
                     <span class="visitor_over_time" id="last_minute"></span>分钟 
 
                 </div>
-                 
-				
-<div class="v-prize-get clearfix">
+                <div class="v-prize-get clearfix">
                     <span class="v-prize-get-tip">奖品列表：
 
                     </span>
@@ -333,15 +282,9 @@ color：#000000;
             </div>
            
 		   
-		     <button id="startExchange" class="share_timeline1 btn-block">
+		    <button id="startExchange" class="share_timeline1 btn-block">
                 <span class="duijiang_button" >选择奖品，确定兑奖</span>
             </button>
-			
-		<br>
-		    <button id="startRank" class="share_timeline1 btn-block">
-                <span class="duijiang_button" >查看目前排名</span>
-            </button>
-			
         </div>
 
 
@@ -385,7 +328,7 @@ color：#000000;
         <h4 class="modal-title" id="myModalLabel">助力成功</h4>
       </div>
       <div class="modal-body"> 
-            <h4>成功帮TA增加1次助力
+            <h4>成功帮TA加了1次油
 			<!--<font id="reduceNumber" style="color:#c00; font-size:18px;"></font>-->
 			</h4>
       </div>
@@ -414,9 +357,9 @@ color：#000000;
         <!--
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       -->
-       <h4 class="modal-title" id="myModalLabel">请输入您的准确信息，输入错误不能领奖哦</h4>
+        <h4 class="modal-title" id="myModalLabel">请先完善您的资料，方便我们把奖品发放给您</h4>
       </div>
-
+    <form class="bs-example bs-example-form" role="form">
       <div class="modal-body">      
         <div class="input-group input-group-lg">
           <span class="input-group-addon"  style="padding:0 10px;">
@@ -431,148 +374,18 @@ color：#000000;
           </span>
           <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
         </div>
-        <br/>
-    
       
       </div>
       <div class="modal-footer">
         <!--
       <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
       -->
-      <a href="javascript:;" class="btn btn-primary" id="save_change">保存</a>
+      <button type="button" class="btn btn-primary" id="save_change">保存</button>
       </div>
-
+    </form>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade " id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!--
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      -->
-       <h4 class="modal-title" id="myModalLabel">请输入您的准确个人信息，输入错误不能领奖哦</h4>
-      </div>
-
-      <div class="modal-body">      
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"  style="padding:0 10px;">
-            <span class="glyphicon glyphicon-user"></span>
-          </span>
-          <input type="text" class="form-control" placeholder="请输入真实姓名" id="appUserName" value="" maxlength="20">
-        </div>
-        <br/>
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon" style="padding:0 10px;">
-            <span class="glyphicon glyphicon-phone" ></span>
-          </span>
-          <input type="text" class="form-control" placeholder="请输入手机号码" id="appUserMobile" value="" maxlength="11">
-        </div>
-        <br/>
-    
-      
-      </div>
-      <div class="modal-footer">
-        <!--
-      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-      -->
-      <a href="javascript:;" class="btn btn-primary" id="save_change1">保存</a>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modal Rank -->
-<div class="modal fade " id="rankModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
-    <div class="modal-content">
-      <div class="modal-header">
-        
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
- 
-        <h4 class="modal-title" id="myModalLabel">助力排名</h4>
-      </div>
-      <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>姓名</th>
-          <th>集得助力</th>
-        </tr>
-      </thead>
-      <tbody>
-       <%  for(var i=0; i<210; i++){ 
-            var obj = rankList[i];
-            if(!obj) break;
-      %>
-             <tr>
-              <td><%= (i+1) %></td>
-              <td><%= obj.userName %></td>
-              <td><%= obj.supportCount %></td>
-            </tr>
-        <% } %> 
-       
-      
-      </tbody>
-    </table>
-   
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -598,12 +411,8 @@ var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
 var endTime = moment(new Date(activeObj.endTime))
 var now = <%= now %>
 var timeError = '<%= timeError %>'
-var rank = <%- JSON.stringify(rankList) %>
-var nearRank = <%- JSON.stringify(nearRankList) %>
 
 window.isAjax = false
-
-
 
 
 
@@ -632,21 +441,11 @@ $(function(){
 
 			    wx.onMenuShareTimeline({
 				
-
-
-
-		title: '东壹元千分夏日礼全城送', // 分享标题
-	    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-	    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fdyy%2Fdyy05262.jpg', // 分享图标
-
-
-
-
-	    		
+	    title: '中航樾公馆邀你一起为生活加“油”', // 分享标题
+				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fzh%2Fzh05262.jpg', // 分享图标
 
 			
-
-
 				    trigger:function(){
 				    	$('#action').append('<p>成功点击分享到朋友圈</p>')
 				    },
@@ -664,16 +463,11 @@ $(function(){
 				});
 
 				wx.onMenuShareAppMessage({
-
-
-
-		
-	   				title: '东壹元千分夏日礼全城送', // 分享标题
-				    desc: '我在东壹元抢降温神器，你也赶紧来参加吧', // 分享描述
+			
+	    title: '中航樾公馆邀你一起为生活加“油”', // 分享标题
+				    desc: '赶紧动动手指，为我加油', // 分享描述
 				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fdyy%2Fdyy05262.jpg', 
-
-				    // 分享图标
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fzh%2Fzh05262.jpg', // 分享图标
 					type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				    trigger:function(){
@@ -705,7 +499,7 @@ $(function(){
 			});
 			wx.error(function(res){
 
-			    //config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+			    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
 			//    alert('wx.error config出错')
 			//    alert(JSON.stringify(res))
 			});
@@ -749,15 +543,15 @@ $(function(){
 			wx.config(window.jsconfig);
 		wx.ready(function(){
 
-			    //config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+			    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
 			//    alert('wx jsdk ready')
 
 
 			    wx.onMenuShareTimeline({
 				
-	    title: '东壹元千分夏日礼全城送', // 分享标题
-				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fdyy%2Fdyy05262.jpg', // 分享图标
+	    title: '中航樾公馆邀你一起为生活加“油”', // 分享标题
+				    link: 'http://mp.weixin.qq.com/s?__biz=MzAwNjA3Mjg4Ng==&mid=205244282&idx=1&sn=e69a14a8cf863cd8aa34dd417ff79950#rd', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fzh%2Fzh05262.jpg', // 分享图标
 
     
 				
@@ -783,10 +577,10 @@ $(function(){
 				
 				
 			
-	    title: '东壹元千分夏日礼全城送', // 分享标题
-				    desc: '我在东壹元抢降温神器，你也赶紧来参加吧', // 分享描述
-				    link: 'http://menu.xy-tang.com/active/<%= appEname%>?ename=<%= activeObj.activeObj.ename%>&touserid=<%= toUserId %>', // 分享链接
-				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fdyy%2Fdyy05262.jpg', // 分享图标
+	    title: '中航樾公馆邀你一起为生活加“油”', // 分享标题
+				    desc: '赶紧动动手指，为我加油', // 分享描述
+				    link: 'http://mp.weixin.qq.com/s?__biz=MzAwNjA3Mjg4Ng==&mid=205244282&idx=1&sn=e69a14a8cf863cd8aa34dd417ff79950#rd', // 分享链接
+				    imgUrl: 'http://bcs.duapp.com/xytimg/zhuli%2Fother%2Fzh%2Fzh05262.jpg', // 分享图标
 				   
 				    type: 'link', // 分享类型,music、video或link，不填默认为link
 				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -832,7 +626,23 @@ $(function(){
 
 
 
+
+
+
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -859,6 +669,7 @@ var mask = function () {
         }
 }
 //遮照功能
+
 
 
 $(function(){
@@ -930,26 +741,6 @@ $(function(){
           })
     })
 
-	
-	
-	
-	
-	 //绑定兑换奖品事件，弹出完善资料对话框
-    $('#startRank').click(function(){
-        $('#rankModal').modal({
-            backdrop:true
-          })
-    })
-    $('.close').click(function(){
-        $('#rankModal').modal('hide')
-    })
-	
-	
-	
-	
-	
-	
-	
     //保存按钮
     $('#save_change').click(function(){
         if(window.isAjax) return false
@@ -1059,6 +850,7 @@ $(function(){
 	信玉堂技术支持
 </a>
 </p>
+
 
 
    
