@@ -31,7 +31,10 @@
 
 
 
-
+.detail_info_p{
+    color: #fff !important;
+    font-size: 16px;
+}
 
 
 
@@ -146,28 +149,44 @@ text-align: center;
         </div>
          <div class="shareBox">
             <ul>
-                <li style="display:none;" id="active" >
-                    <a href="javascript:;" id="join_btn">我要参加</a>
-                </li>
-                <li>
-<a name="toChoose" type="lv0" href="javascript:;">特等奖1名（已选
-<span id="lv0_choose_count">0</span>）</a>  
-                </li>
-                <li>
-<a name="toChoose" type="lv1" href="javascript:;">一等奖2名（已选
-<span id="lv1_choose_count">0</span>）</a></li>
-                <li><a name="toChoose" type="lv2" href="javascript:;">二等奖3名（已选
-<span id="lv2_choose_count">0</span>）</a></li>
-                <li><a name="toChoose" type="lv3" href="javascript:;">三等奖6名（已选
-<span id="lv3_choose_count">0</span>）</a></li>
-                <li><a name="toChoose" type="lv4" href="javascript:;">建筑过程奖3名（已选
-<span id="lv4_choose_count">0</span>）</a></li>
-                <li>
-<input type="text" id="appUserName" class="chooseInput" value="" placeholder="请输入姓名" />
-                </li>
-                <li>
-<input type="text" id="appUserMobile" class="chooseInput" value="" placeholder="请输入电话" maxlength="11" />
-                </li>
+
+<% if(wxuobj.appUserName == '未认证会员' && wxuobj.appUserMobile.length != 11) {%>
+    
+     <li>
+        <p class="detail_info_p">请您先完善资料</p>
+    </li>
+     <li>
+    <input type="text" id="appUserName" class="chooseInput" value="" placeholder="请输入姓名" />
+                    </li>
+                    <li>
+    <input type="text" id="appUserMobile" class="chooseInput" value="" placeholder="请输入电话" maxlength="11" />
+                    </li>
+
+<% }else {%>
+
+         <li style="display:none;" id="active" >
+                        <a href="javascript:;" id="join_btn">我要参加</a>
+                    </li>
+                    <li>
+    <a name="toChoose" type="lv0" href="javascript:;">特等奖1名（已选
+    <span id="lv0_choose_count">0</span>）</a>  
+                    </li>
+                    <li>
+    <a name="toChoose" type="lv1" href="javascript:;">一等奖2名（已选
+    <span id="lv1_choose_count">0</span>）</a></li>
+                    <li><a name="toChoose" type="lv2" href="javascript:;">二等奖3名（已选
+    <span id="lv2_choose_count">0</span>）</a></li>
+                    <li><a name="toChoose" type="lv3" href="javascript:;">三等奖6名（已选
+    <span id="lv3_choose_count">0</span>）</a></li>
+                    <li><a name="toChoose" type="lv4" href="javascript:;">建筑过程奖3名（已选
+    <span id="lv4_choose_count">0</span>）</a></li>
+
+
+                   
+
+
+<%}%>
+               
 
 
 
@@ -176,7 +195,18 @@ text-align: center;
                 <li><img src="http://bcs.duapp.com/xytimg/dfzm%2Flogo.png" width=60% height=auto></li> -->
             </ul>
 
+
+<% if(wxuobj.appUserName == '未认证会员' && wxuobj.appUserMobile.length != 11) {%>
+
+            <a href="javascript:;" id="info_submit" class="vote_submit">确认提交</a>
+
+<% }else {%>
+
             <a href="javascript:;" id="vote_submit" class="vote_submit">确认提交</a>
+
+<%}%>
+
+
     </div>
     </div>
     <!--选项卡三 内容结束-->
@@ -469,6 +499,9 @@ var initAjax = function(){
             }
             else{
                 var that = $(this)
+                if(that.hasClass('noClick')){
+                    return false;
+                }
                 //取消勾选
                 if(that.hasClass('sel_ok')){
                     var r = chooseItemFunc(window.chooseType, that.attr('itemid'), false)
@@ -510,9 +543,9 @@ var initAjax = function(){
         })
 
 
-        //投票按钮
         window.isAjax = false
-        $('#vote_submit').click(function(){
+        $('#info_submit').click(function(){
+
             if(window.isAjax) return false
             var appUserName = $('#appUserName').val().trim();
             var appUserMobile = $('#appUserMobile').val().trim();
@@ -524,6 +557,30 @@ var initAjax = function(){
               alert('请输入正确的手机号码')
               return false;
             }
+
+            var q = {
+                    appUserName:appUserName,
+                    appUserMobile:appUserMobile
+                }
+            window.isAjax = true
+            $.post('/api/user/modify?wxuserid=<%=userid%>', q, function(d){
+                    if(d.error == 1){
+                        window.isAjax = false
+                        return alert(d.data)
+                    }
+                    alert('资料完善成功')
+                    $.cookie('showmy', '1', { path: '/' })
+                    location.href = location.href
+
+            },'json')//end modify
+
+        })//end info
+
+
+        //投票按钮
+        
+        $('#vote_submit').click(function(){
+            
 
             if(window.chooseItem.lv0.length != 1){
                 alert('请选择特等奖')
@@ -546,41 +603,28 @@ var initAjax = function(){
                 return false
             }
 
+            var data = {
+                'lv0':window.chooseItem.lv0.join(','),
+                'lv1':window.chooseItem.lv1.join(','),
+                'lv2':window.chooseItem.lv2.join(','),
+                'lv3':window.chooseItem.lv3.join(','),
+                'lv4':window.chooseItem.lv4.join(','),
+                'voteEname':voteEname
+            }
 
+            $.post('/vote/<%= appEname %>/startmany', data, function(d){
 
-            var q = {
-                    appUserName:appUserName,
-                    appUserMobile:appUserMobile
+                if(d.error == 1){
+                    window.isAjax = false
+                    return alert(d.data)
                 }
-            window.isAjax = true
-            $.post('/api/user/modify?wxuserid=<%=userid%>', q, function(d){
-                    if(d.error == 1){
-                        window.isAjax = false
-                        return alert(d.data)
-                    }
 
-                    var data = {
-                        'lv0':window.chooseItem.lv0.join(','),
-                        'lv1':window.chooseItem.lv1.join(','),
-                        'lv2':window.chooseItem.lv2.join(','),
-                        'lv3':window.chooseItem.lv3.join(','),
-                        'lv4':window.chooseItem.lv4.join(','),
-                        'voteEname':voteEname
-                    }
+                alert('投票成功')
+                $.cookie('showmy', '1', { path: '/' })
+                location.href = location.href
 
-                    $.post('/vote/<%= appEname %>/startmany', data, function(d){
-
-                        if(d.error == 1){
-                            window.isAjax = false
-                            return alert(d.data)
-                        }
-
-                        alert('投票成功')
-                        $.cookie('showmy', '1', { path: '/' })
-                        location.href = location.href
-
-                    }, 'json')//end start many
-                },'json')//end modify
+            }, 'json')//end start many
+                
         })//end $('#vote_submit').click
 
 
@@ -631,20 +675,88 @@ var initAjax = function(){
                     var wateList = []
                     //过滤数据
                     window.itemList.forEach(function(item){
-                        if(
-                            isChoose && 
-(window.chooseItem.lv0.indexOf(item._id.toString()) == -1 || lvType == 'lv0') &&
-(window.chooseItem.lv1.indexOf(item._id.toString()) == -1 || lvType == 'lv1') &&
-(window.chooseItem.lv2.indexOf(item._id.toString()) == -1 || lvType == 'lv2') &&
-(window.chooseItem.lv3.indexOf(item._id.toString()) == -1 || lvType == 'lv3') &&
-(window.chooseItem.lv4.indexOf(item._id.toString()) == -1 || lvType == 'lv4')
-                        ){
+
+                        if(isChoose){
+
+                            if(window.chooseItem.lv0.indexOf(item._id.toString()) != -1){
+                                if(lvType == 'lv0'){
+                                    wateList.push(item)
+                                    return
+                                }
+                                else{
+                                    item.className = 'ilike_lv0'
+                                    wateList.push(item)
+                                    return
+                                }                    
+                            }
+
+
+
+                            if(window.chooseItem.lv1.indexOf(item._id.toString()) != -1){
+                                if(lvType == 'lv1'){
+                                    wateList.push(item)
+                                    return
+                                }
+                                else{
+                                    item.className = 'ilike_lv1'
+                                    wateList.push(item)
+                                    return
+                                }   
+                            }
+
+
+
+                            if(window.chooseItem.lv2.indexOf(item._id.toString()) != -1){
+                                if(lvType == 'lv2'){
+                                    wateList.push(item)
+                                    return
+                                }
+                                else{
+                                    item.className = 'ilike_lv2'
+                                    wateList.push(item)
+                                    return
+                                }   
+                            }
+
+
+
+                            if(window.chooseItem.lv3.indexOf(item._id.toString()) != -1){
+                                if(lvType == 'lv3'){
+                                    wateList.push(item)
+                                    return
+                                }
+                                else{
+                                    item.className = 'ilike_lv3'
+                                    wateList.push(item)
+                                    return
+                                }   
+              
+                            }
+
+
+                            if(window.chooseItem.lv4.indexOf(item._id.toString()) != -1){
+                                if(lvType == 'lv4'){
+                                    wateList.push(item)
+                                    return
+                                }
+                                else{
+                                    item.className = 'ilike_lv4'
+                                    wateList.push(item)
+                                    return
+                                }   
+                            }
+
+                            
+                            wateList.push(item)
+                            return  
+
+                        }else{
                             wateList.push(item)
                             return
                         }
-                        if(!isChoose){
-                            wateList.push(item)
-                        }
+
+
+
 
                     })
 
@@ -656,9 +768,17 @@ var initAjax = function(){
                             else{
                                 var addSelClass = ''
                             }
+                            if(item.className){
+                                var addOtherTypeClass= ' '+item.className
+                                var addNoClickClass = ' noClick'
+                            }   
+                            else{
+                                var addOtherTypeClass= ''
+                                var addNoClickClass = ''
+                            }
 
                             if(isChoose){
-                                var aStr = '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike2 '+addSelClass+'"></a>'
+                                var aStr = '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike2 '+addSelClass+addNoClickClass+addOtherTypeClass+'"></a>'
                             }else{
                                 var aStr = '<a total="'+item.todayVoteNumber+'" groupid="'+item.groupId+'" itemid="'+item._id+'" href="javascript:;" name="ilike" class="ilike '+addSelClass+'">'+item.todayVoteNumber+'</a>'
                             }
