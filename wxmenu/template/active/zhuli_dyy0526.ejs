@@ -166,10 +166,40 @@ color：#000000;
         <b style="color:#c00; font-size:20px;">
 		
 		
-		 <% if(supportScore>3) { %>
-		 30
+		 <% if(supportScore==1) { %>
+		 10
+		  <% }else if(supportScore==2){ %>
+		 20
+		 
+		  <% }else if(supportScore==3){ %>
+		  30
+		  
+		  
+		   <% }else if(supportScore==4){ %>
+		   31
+		   
+		    <% }else if(supportScore==5){ %>
+			32
+			
+			 <% }else if(supportScore==6){ %>
+			 33
+			 
+			  <% }else if(supportScore==7){ %>
+			34
+			
+			 <% }else if(supportScore==8){ %>
+			 35
+			 
+			  <% }else if(supportScore==9){ %>
+			36
+			
+			 <% }else if(supportScore==10){ %>
+			 37
+			 
+			  <% }else if(supportScore==11){ %>
+38
 		 <% }else { %>
-		 <%= supportScore*10 %>
+		39
 		   <%}%></b>℃
 		
 		
