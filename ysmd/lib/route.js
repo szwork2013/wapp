@@ -241,11 +241,10 @@ var addroute = function(app){
 	//4、拍卖页面
 
 	app.get('/', function(req,res){
-		var count = req.csession['count'];
+		var count = req.session['count'];
 		if(!count) count = 1;
 		else count++;
-		req.csession['count'] = count;
-		req.csflush(); 
+		req.session['count'] = count;
 		res.send('welcome count: '+count.toString());
 	})
 
