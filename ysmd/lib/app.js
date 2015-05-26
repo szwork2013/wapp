@@ -9,7 +9,6 @@ var config = require('../config/config.js');
 var addRoute = require('./route.js');
 
 //使用客户端cookie
-var clientSession = cs('eastcitywujbnet');
 
 app.enable('trust proxy');
 app.set('x-powered-by', 'openresty');
