@@ -115,6 +115,10 @@ height: 50px;
      <div class="actCont" style="display:none">
 	       
 	        <div id="mymain" class="myPiccs" style="display:none;">
+			<img src="http://bcs.duapp.com/xytimg/dfzm%2Flogo.png" width=60% height=auto>
+			
+			<li><a>关注东方之门  静候比赛结果</a></li>
+			
                 <p class="record_title">特等奖</p>
                 <ul id="lv0Ul" class="clearfix" ></ul>
                 <p class="record_title">一等奖</p>
@@ -575,7 +579,7 @@ var initAjax = function(){
                         window.isAjax = false
                         return alert(d.data)
                     }
-                    alert('资料完善成功')
+                    alert('资料完善成功，您现在可以开始投票了')
                     $.cookie('showmy', '1', { path: '/' })
                     location.href = location.href
 
@@ -618,7 +622,7 @@ var initAjax = function(){
                 return false
             }
             if(window.chooseItem.lv4.length != 3){
-                alert('请选择建筑过程影响奖')
+                alert('请选择建筑过程影像奖')
                 return false
             }
 
