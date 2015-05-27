@@ -8,10 +8,12 @@ var ywyList = require('../tools/ywy.json')
 var ywyList2 = require('../tools/ywy2.json')
 var ywyList3 = require('../tools/ywy3.json')
 var ywyList4 = require('../tools/ywy4.json')
+var ywyList5 = require('../tools/ywy5.json')
 var ywyListLen = ywyList.length
 var ywyList2Len = ywyList2.length
 var ywyList3Len = ywyList3.length
 var ywyList4Len = ywyList4.length
+var ywyList5Len = ywyList5.length
 var obj = {}
 
 
@@ -40,6 +42,12 @@ obj.checkIsYwy = function(gh, name){
 
 	for(var i=0; i<ywyList4Len; i++){
 		if(ywyList4[i].gh == gh && ywyList4[i].name == name){
+			return true
+		}
+	}
+
+	for(var i=0; i<ywyList5Len; i++){
+		if(ywyList5[i].gh == gh && ywyList5[i].name == name){
 			return true
 		}
 	}
