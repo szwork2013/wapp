@@ -152,7 +152,10 @@ obj.read = function(req, res){
 				appUserMobile:'',
 				appUserBuildingRoom:''
 			})
-			userIdList.push(o.userId)
+			if(o.userId.length == 24){
+				userIdList.push(o.userId)
+			}
+			
 		})
 
 		resObj["Data"] = templist;
