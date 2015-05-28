@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"></meta>
+<meta content="no-cache" http-equiv="Pragma"></meta>
+<meta content="no-cache" http-equiv="Cache-Control"></meta>
+<meta content="0" http-equiv="Expires"></meta>
+<link rel="stylesheet" href="http://wzhfile.qiniudn.com/bootstrap3.min.css">
+<script src="http://piccvote.qiniudn.com/dist/js/vendor/jquery.min.js" type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/jquery.cookie.js"  type="text/javascript"></script>
+<script src="http://wzhfile.qiniudn.com/bootstrap3.min.js"></script>
+<script src="http://wzhfile.qiniudn.com/moment.js" type="text/javascript"></script>
+<link href="http://wzzy2014skin.qiniudn.com/szggl_2014/css/layout.css" rel="stylesheet" type="text/css" />
+<title>路劲地产发红包</title>
+<style type="text/css">
+	.box{
+		width: 100%;
+		position: relative;
+		top:0;
+		left:0;
+	}
+	body{background-color:#9a1a00}
+
+	.bgimg{
+		width: 100%;
+		position: relative;
+		height: 100%;
+		display: block;
+	}
+	.totalMoney{
+		width: 300px;
+		text-align: center;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -150px;
+		color: #f8ff00;
+		font-size: 22px;
+		z-index: 9;
+		font-family: '微软雅黑';
+	}
+	
+	
+	
+	
+	
+	#change_cap{
+		display: block;
+		padding-top: 10px;
+		text-align: right;
+	}
+</style>
+</head>
+<body bgcolor="#9a1a00">
+
+<div id="noHongBao" class="box" style="display:none">
+	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fsorry0528.jpg" class="bgimg" />
+</div>
+<div id="HongBao1" class="box" style="display:none">
+	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fgx0525.jpg" class="bgimg" />
+</div>
+<div id="HongBao2" class="box" style="display:none">
+	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fhb0525.jpg" class="bgimg" />
+	<p id="totalMoney" class="totalMoney"></p>
+	
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
+       <h4 class="modal-title" id="myModalLabel">请输入图验证码，进行抢红包哦</h4>
+      </div>
+
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入验证码" id="ccap" value="" maxlength="6">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+        	<img src="/cap/" id="cap_img" />
+        	<a href="javascript:;" id="change_cap">看不清，换一张</a>
+        </div>
+        <br/>
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <a href="javascript:;" class="btn btn-primary" id="go_hongbao">马上抢红包</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script src="/api/lh/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
+<script type="text/javascript">
+
+var logCount = <%= logCount %>
+var appId = '<%= appId %>'
+var appEname = '<%= appEname %>'
+var isMyPage = <%= isMyPage %>;
+var toUserId = '<%= toUserId %>'
+var fromUserId = '<%= fromUserId %>'
+var activeId = '<%= activeId %>'
+var supportCount = <%= supportCount %>
+var supportScore = <%= supportScore %>
+var hasAdd = <%= hasAdd %>
+var prizeList = <%- JSON.stringify(prizeList) %>
+var myPrizeList = <%- JSON.stringify(myPrizeList) %>
+var activeObj = <%- JSON.stringify(activeObj.activeObj) %>
+var endTime = moment(new Date(activeObj.endTime))
+
+window.isAjax = false
+
+
+$(function(){
+
+	//一进来就刷新ajax
+	window.isAjax = false
+	var getHongBao = function(cap_val){
+		if(window.isAjax) return
+		window.isAjax = true
+		$.post('/api/'+appEname+'/getmoney',{
+            replayEname:'hongbao_ljend_2015',
+            capVal:cap_val,
+            activeId:activeId,
+        },function(d){
+        	window.isAjax = false
+        	if(d.data == '验证码错误'){
+        		return alert(d.data)
+        	}
+        	 $('#myModal').modal('hide')
+
+        	if(d.error == 1){
+        		$('#noHongBao').show()
+        	}
+        	else{
+        		if(d.data.hasGet == true){
+        			$('#totalMoney').html('获得 '+d.data.val+' 元')
+        			$('#HongBao2').show()
+        		}
+        		else{
+        			$('#totalMoney').html('获得 '+d.data.val+' 元')
+        			$('#HongBao1').show()
+        		}
+        		
+        	}
+
+        })
+
+	}
+
+	$('#HongBao1').click(function(){
+		$('#noHongBao, #HongBao1').hide()
+		$('#HongBao2').show()
+
+	})
+
+	$('#change_cap').click(function(){
+		$('#cap_img').attr('src','/cap/?t='+Date.now())
+		return false;
+	})
+	
+	$('#go_hongbao').click(function(){
+		var cap_val = $('#ccap').val()
+		if(cap_val.length != 6){
+			return alert('请输入正确的验证码')
+		}
+		getHongBao(cap_val)
+		return false
+	})
+	
+
+	$('#myModal').modal({
+			backdrop:'static'
+		})
+
+
+	
+	//部署上生产环境，把alert去掉
+
+	if(window.jsticket_error=='1'){
+
+	}
+	if(window.jsticket_error=='0'){
+			
+			wx.config(window.jsconfig);
+			wx.ready(function(){
+
+				wx.hideOptionMenu();
+			});
+			wx.error(function(res){
+
+			});
+	}
+
+
+})
+
+
+
+
+</script> 
+
+
+
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd5dfbf4c48c3280b4cf4ca0f43407d09' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</div>  
+
+
+</body>
+</html>
+
+
+
+
+
