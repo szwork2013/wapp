@@ -218,19 +218,17 @@ font-size: 1.1em;
 
 
 .chooseTip{
-    position: fixed;
-    bottom: 50px;
-    width: 100%;
-    left:0;
-    display: block;
+     height: 40px;
+    line-height: 50px;
+    background-color: #3366ff;
     text-align: center;
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
+    font-size: 18px;
     color: #fff;
-    padding: 0;
-margin: 0;
-border-radius: 0
+    display: block;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
 }
 
 
