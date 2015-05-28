@@ -228,7 +228,8 @@ font-size: 1.1em;
     position: fixed;
     width: 100%;
     left: 0;
-    bottom: 0;
+    bottom: 50px;
+	z-index:99999;
 }
 
 
