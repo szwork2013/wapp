@@ -26,6 +26,7 @@ img{ border:none; vertical-align:middle;}
 ul{ overflow:hidden;}
 ul li{ list-style:none; float:left;}
 .wrapper{ width:320px; margin:0 auto; background:#fff;}
+.header{ background:url('http://bcs.duapp.com/xytimg/choujiang%2Fchoujiang0528.jpg') no-repeat;background-size: 320px 540px; width:320px;height:507px; position:relative;}
 .luck {
 width: 251px;
 height: 52px;
@@ -166,6 +167,8 @@ top: 40px;
 
 }
 #grxz{
+	background: url("http://bcs.duapp.com/xytimg/choujiang%2Fprize0528.png") no-repeat center 0;
+	background-size: 320px 507px;
 	position:absolute;
 	z-index:99999;
 	top:0px;
@@ -174,6 +177,8 @@ top: 40px;
 
 
 #grxz1{
+	background: url("http://bcs.duapp.com/xytimg/choujiang%2Fprize05281.png") no-repeat center 0;
+	background-size: 320px 507px;
 	position:absolute;
 	z-index:99999;
 	top:0px;
@@ -727,6 +732,7 @@ $(function(){
 				
 				setTimeout(function() {
 				
+				if(d2.data.prizeObj.name=='乐高玩具一套'){
 				//		alert(window.result)
 					setTimeout(function(){
 						//	boxObjs.hide();
