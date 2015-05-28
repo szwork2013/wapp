@@ -219,7 +219,7 @@ font-size: 1.1em;
 
 .chooseTip{
     height: 40px;
-    
+    margin: 10px auto;
     background-color: #f39800;
     text-align: center;
     font-size: 16px;
