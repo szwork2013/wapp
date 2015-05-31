@@ -12,8 +12,14 @@
   <script src="http://7xit1c.com1.z0.glb.clouddn.com/bootstrap/js/bootstrap.min.js"></script>
   <script src="http://7xit1c.com1.z0.glb.clouddn.com/lottery/moment.js" type="text/javascript"></script>
   <link rel="stylesheet" href="http://7xit1c.com1.z0.glb.clouddn.com/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://7xit1c.com1.z0.glb.clouddn.com/lottery/card.css?v=20150501">
+    <!-- 
+    <link rel="stylesheet" href="http://7xit1c.com1.z0.glb.clouddn.com/lottery/card.css?v=20150501"> 
+    -->
+
+    <link rel="stylesheet" href="http://7xit1c.com1.z0.glb.clouddn.com/lottery61/card.css">
+    
     <style type="text/css">
+
     .mask_box {
 position: fixed;
 top: 0;
@@ -83,6 +89,21 @@ top: 37.3%;
         font-family: "微软雅黑";
         color: #fff;
         }
+
+
+
+      /*61 css*/
+    body,html{
+      background-color: #84b935;
+    }
+    .activityWrapper{
+      background-position: center top !important;
+    }
+    .prizeNameBox{
+      bottom: 27% !important;
+    }
+
+
     </style>
   </head>
 <body>
@@ -266,7 +287,10 @@ function initActivityWrapperSize(){
     "height":dialogHeight*(321/1227),
     "background-size":dialogWidth*(376/1122) + "px," + dialogHeight*(321/1227) + "px"
   });
-  var prizeWidth = $(".wrapper").width()*(1122/1616);
+  // var prizeWidth = $(".wrapper").width()*(1122/1616);  61 节修改
+  var prizeWidth = $(".wrapper").width()*(1486/1616); //61节修改
+
+
   var prizeHeight = $(".wrapper").height()*(1533/2495);
   $(".prizeDialog").css({
     "width":prizeWidth,
