@@ -178,7 +178,7 @@ obj.modify = function(userId, openId, qobj,cb){//修改用户资料
 	}
 
 
-	if(qobj.appUserCode){
+	if(qobj.appUserCode || qobj.appUserCode == ''){
 		userMObj.appUserCode = qobj.appUserCode
 	}
 	if(qobj.appSmsCode){
@@ -882,7 +882,7 @@ obj.mailTo = function(excelList){
 	// setup e-mail data with unicode symbols
 	var mailOptions = {
 	    from: "wuzh <"+config.MAIL_ACC+">", // sender address
-	    to: "29132101@qq.com, jambo.cn@163.com, 53822985@qq.com, fancr@ulic.com.cn", // list of receivers
+	    to: "29132101@qq.com, jambo.cn@163.com, 53822985@qq.com, tianying@ulic.com.cn", // list of receivers
 	    //to: "53822985@qq.com", // list of receivers
 	    subject: "合众日报", // Subject line
 	    //text: string, // plaintext body

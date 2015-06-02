@@ -121,14 +121,14 @@ function bindEvent(){
         
     });
 
-    if(fromUserObj.appUserType == 1){
-        $('#msg').html('本注册页面仅针对业务员开放')
-        $('#myModal').modal({
-                backdrop:true
-        })
-        $(".formModal").hide();
-        return
-    }
+    // if(fromUserObj.appUserType == 1){
+    //     $('#msg').html('本注册页面仅针对业务员开放')
+    //     $('#myModal').modal({
+    //             backdrop:true
+    //     })
+    //     $(".formModal").hide();
+    //     return
+    // }
 
     if(fromUserObj.appUserType == 2){
         $('#msg').html('您已经登记成功，请点击合众公众号菜单，查看个人名片')
