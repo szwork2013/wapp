@@ -51,60 +51,6 @@
 		text-align: right;
 	}
 </style>
-</head>
-<body bgcolor="#9a1a00">
-
-<div id="noHongBao" class="box" style="display:none">
-	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fsorry0604.jpg" class="bgimg" />
-</div>
-<div id="HongBao1" class="box" style="display:none">
-	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fgx0604.jpg" class="bgimg" />
-</div>
-<div id="HongBao2" class="box" style="display:none">
-	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fhb0604.jpg" class="bgimg" />
-	<p id="totalMoney" class="totalMoney"></p>
-	
-</div>
-
-
-
-
-<!-- Modal -->
-<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!--
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      -->
-       <h4 class="modal-title" id="myModalLabel">请输入图验证码，进行抢红包哦</h4>
-      </div>
-
-      <div class="modal-body">      
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"  style="padding:0 10px;">
-            <span class="glyphicon glyphicon-user"></span>
-          </span>
-          <input type="text" class="form-control" placeholder="请输入验证码" id="ccap" value="" maxlength="6">
-        </div>
-        <br/>
-        <div class="input-group input-group-lg">
-        	<img src="/cap/" id="cap_img" />
-        	<a href="javascript:;" id="change_cap">看不清，换一张</a>
-        </div>
-        <br/>
-      
-      </div>
-      <div class="modal-footer">
-        <!--
-      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-      -->
-      <a href="javascript:;" class="btn btn-primary" id="go_hongbao">马上抢红包</a>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
@@ -183,6 +129,75 @@
 		});
 	
 	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body bgcolor="#9a1a00">
+
+<div id="noHongBao" class="box" style="display:none">
+	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fsorry0604.jpg" class="bgimg" />
+</div>
+<div id="HongBao1" class="box" style="display:none">
+	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fgx0604.jpg" class="bgimg" />
+</div>
+<div id="HongBao2" class="box" style="display:none">
+	<img src="http://bcs.duapp.com/xytimg/hongbao%2Fhb0604.jpg" class="bgimg" />
+	<p id="totalMoney" class="totalMoney"></p>
+	
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:300px;margin: 30px auto; overflow: hidden;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      -->
+       <h4 class="modal-title" id="myModalLabel">请输入图验证码，进行抢红包哦</h4>
+      </div>
+
+      <div class="modal-body">      
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"  style="padding:0 10px;">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" class="form-control" placeholder="请输入验证码" id="ccap" value="" maxlength="6">
+        </div>
+        <br/>
+        <div class="input-group input-group-lg">
+        	<img src="/cap/" id="cap_img" />
+        	<a href="javascript:;" id="change_cap">看不清，换一张</a>
+        </div>
+        <br/>
+      
+      </div>
+      <div class="modal-footer">
+        <!--
+      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      -->
+      <a href="javascript:;" class="btn btn-primary" id="go_hongbao">马上抢红包</a>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 
