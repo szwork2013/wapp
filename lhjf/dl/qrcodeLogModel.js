@@ -10,7 +10,9 @@ var obj = { //定义结构
       qrcodeGuid:{type:String,required:true,unique:true}, //二维码流水号
       qrcodeUrl:{type:String,required:true},    //二维码图片url地址
       createTimeStamp:{type:String,required:true}, //二维码生成时间，时间戳，主要用来判断用户的二维码是否过期 
-	writeTime:{ type: Date, default: function(){return Date.now()} },    //写入时间
+	    code1:{ type: String, default: ''},      //备用字段
+      code2:{ type: String, default: ''},      //备用字段
+      writeTime:{ type: Date, default: function(){return Date.now()} },    //写入时间
 }
 
 

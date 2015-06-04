@@ -149,6 +149,11 @@ window.filter_obj = {
                   }
 
 
+window.qrcode_type = [
+                  { text: "个人临时", value: 1 },
+                  { text: "现场永久", value: 2 }
+                ]
+
 window.is_show_array = [
                   { text: "启用", value: 1 },
                   { text: "不启用", value: 0 }

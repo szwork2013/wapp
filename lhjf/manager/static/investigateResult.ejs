@@ -1,0 +1,121 @@
+<% include inc/head2 %>
+<% include inc/top %>
+<% include inc/left %>
+
+
+<div class="app_sel_boc">
+<div class="clear">
+     <p class="">
+        <label for="app_sel_inp">选择问卷调查活动：</label><input type="text" id="app_sel_inp" class="k-input k-textbox w-50-inp" >
+    </p>
+
+   
+</div>
+
+    <button  id="down2" class="k-primary fl_margin k-primary k-button">
+        <span class="k-sprite k-icon k-i-refresh">Refresh</span>
+        查询</button>
+</div>
+
+
+<div id="grid"></div>
+
+<script type="text/javascript">
+
+$(function(){
+
+
+
+
+var hasInit = false;
+
+$.post('/manger/investigate/getList',{},function(data_ary){
+                    var d2 = []
+                    data_ary.forEach(function(v){
+                        d2.push({
+                            text: v.title, 
+                            value:v._id
+                        })
+                    })
+
+                    window.investigate = d2;
+                    
+                    window.dropdown_init($("#app_sel_inp"), d2, function(){})
+
+                    var investigateId = $.trim($("#app_sel_inp").val())
+
+
+
+
+        var getDataToQuery = function(){
+            return {
+                investigateId:$('#app_sel_inp').val(),
+               }
+        }
+
+        $('#down2').click(function(){
+            $('#kendo_mask').show()
+            $.post('/manger/investigateLog/info', getDataToQuery(), function(d){
+                $('#kendo_mask').hide()
+                if(d.error){
+                    return alert(d.data)
+                }
+                
+
+
+                $('#resultVoteCount').html(d.data.totalVoteNumber||0)
+                $('#resultVoteMemberCount').html(d.data.userJoinNumber||0)
+                $('#resultStatus').show();
+
+
+                $("#grid").kendoGrid({
+                        dataSource: {
+                            data: d.data.data,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        _id: { type: "string" },
+                                        title: { type: "string" },
+                                        supportCount: { type: "number" },
+                                        groupName:{ type: "string" },
+                                        groupId:{ type: "string" },
+                                        position: { type: "number" }
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        height: 550,
+                        scrollable: true,
+                        sortable: true,
+                        filterable: false,
+                        pageable: {
+                            input: true,
+                            numeric: false
+                        },
+                        columns: [
+                            { field: "position", title: "位置"},
+                            { field: "_id", title: "被投票id" ,hidden:true},
+                            { field: "title", title: "名称"},
+                            { field: "supportCount", title: "票数"},
+                            { field: "groupId", title: "分组Id", hidden:true},
+                            { field: "groupName", title: "分组名称"},
+                        ]
+                    });
+
+            },'json')
+
+            
+
+        })
+         
+    })//end ajax
+
+})//end $(function)
+
+</script>
+
+
+
+
+<% include inc/foot %>

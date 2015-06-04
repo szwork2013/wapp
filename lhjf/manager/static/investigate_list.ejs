@@ -7,7 +7,7 @@
 <script id="popup_editor" type="text/x-kendo-template">
           
             <div class="k-edit-label w-800-l">
-                <label for="_id">新闻id</label>
+                <label for="_id">调查id</label>
             </div>
             <div data-container-for="_id" class="k-edit-field w-800-r"  data-bind="value:_id">
                 <input type="text" class="k-input k-textbox w-50-inp" name="_id" data-bind="value:_id" readonly="readonly">
@@ -15,52 +15,76 @@
 
 
             <div class="k-edit-label  w-800-l">
-                <label for="appId" >地产商</label>
-            </div>
-            <div data-container-for="appId" class="k-edit-field w-800-r">
-               <input type="text" id="appId_inp" class="k-input k-textbox w-50-inp" name="appId" data-bind="value:appId">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
                 <label for="title" >标题</label>
             </div>
             <div data-container-for="title" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title" required="required">
+               <input type="text" id="" class="k-input k-textbox w-50-inp" name="title" data-bind="value:title">
+            </div>
+
+             <div class="k-edit-label  w-800-l">
+                <label for="desc" >内容</label>
+            </div>
+            <div data-container-for="desc" class="k-edit-field w-800-r">
+               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="desc" data-bind="value:desc"></textarea>
+            </div>
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="startTime" >开始时间</label>
+            </div>
+            <div data-container-for="startTime" class="k-edit-field w-800-r">
+               <input type="text" id="startTime" class="k-input k-textbox w-50-inp" name="startTime" data-bind="value:startTime" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="endTime" >结束时间</label>
+            </div>
+            <div data-container-for="endTime" class="k-edit-field w-800-r">
+               <input type="text" id="endTime" class="k-input k-textbox w-50-inp" name="endTime" data-bind="value:endTime" required="required">
             </div>
             
-            <div class="k-edit-label  w-800-l">
-                <label for="picture">图片</label>
-            </div>
-            <div data-container-for="picture" class="k-edit-field w-800-r">
-                <input type="file" name="upload_file" id="upload_file">
-                 <input type="text"  class="k-input k-textbox" style="display:none;" id="appPicture_inp" name="picture" data-bind="value:picture">
-            </div>
+
+
 
             <div class="k-edit-label  w-800-l">
-                <label for="url" >跳转地址</label>
+                <label for="totalNumber" >参与人数</label>
             </div>
-            <div data-container-for="url" class="k-edit-field w-800-r">
-               <input type="text" id="" class="k-input k-textbox w-50-inp" name="url" data-bind="value:url" >
+            <div data-container-for="totalNumber" class="k-edit-field w-800-r">
+               <input type="number" id="" class="k-input k-textbox w-50-inp" name="totalNumber" data-bind="value:totalNumber" required="required">
+            </div>
+
+
+
+            <div class="k-edit-label  w-800-l">
+                <label for="questionJson" >问题json数组</label>
+            </div>
+            <div data-container-for="questionJson" class="k-edit-field w-800-r">
+               <input type="number" id="" class="k-input k-textbox w-50-inp" name="questionJson" data-bind="value:questionJson" required="required">
                <br/>
-               如果是新闻，或者公告，此处留空
+               问题json数组示例：<br/>
+               [
+                {
+                    "type":1, （1表示单选，2表示多选）
+                    "title":"下面哪些是你喜欢的运动",
+                    "questions":["足球","篮球","乒乓球","保龄球"]
+                },
+                ...
+               ]
             </div>
 
-            <div class="k-edit-label  w-800-l">
-                <label for="type" >类型</label>
+           <div class="k-edit-label  w-800-l">
+                <label for="imgUrl" >图片地址</label>
             </div>
-            <div data-container-for="type" class="k-edit-field w-800-r">
-               <input type="number" id="newsType" class="k-input k-textbox w-50-inp" name="type" data-bind="value:type" required="required">
-            </div>
-
-            <div class="k-edit-label  w-800-l">
-                <label for="content" >内容</label>
-            </div>
-            <div data-container-for="content" class="k-edit-field w-800-r">
-               <textarea id="intro" type="text" class="k-input k-textbox w-90-inp" name="content" data-bind="value:content"></textarea>
+            <div data-container-for="imgUrl" class="k-edit-field w-800-r">
+               <input type="number" id="" class="k-input k-textbox w-50-inp" name="imgUrl" data-bind="value:imgUrl" required="required">
             </div>
 
+
+
+           
+<div style="display:none;">
             <div class="k-edit-label  w-800-l">
-                <label for="code1" >初始参与人数</label>
+                <label for="code1" >备用1</label>
             </div>
             <div data-container-for="code1" class="k-edit-field w-800-r">
                <input type="text" id="" class="k-input k-textbox w-50-inp" name="code1" data-bind="value:code1" >
@@ -69,14 +93,17 @@
             </div>
 
 
-            <div style="display:none;">
+            
                 <div class="k-edit-label  w-800-l">
                     <label for="code2" >备用2</label>
                 </div>
                 <div data-container-for="code2" class="k-edit-field w-800-r">
                    <input type="text" id="" class="k-input k-textbox w-50-inp" name="code2" data-bind="value:code2" >
                 </div>
-            </div>
+</div>
+
+
+
 
             <div class="k-edit-label  w-800-l">
                 <label for="isShow">是否启用</label>
@@ -122,22 +149,22 @@
                        
                         transport: {
                             read:  {
-                                url: DataHost + "/manger/news/read",
+                                url: DataHost + "/manger/investigate/read",
                                 type: "post"
                             },
                             update: {
-                                url: DataHost + "/manger/news/update",
+                                url: DataHost + "/manger/investigate/update",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
                                     }
                             },
                              destroy: {
-                                url: DataHost + "/manger/news/destroy",
+                                url: DataHost + "/manger/investigate/destroy",
                                 type: "post"
                             },
                             create: {
-                                url:DataHost + "/manger/news/create",
+                                url:DataHost + "/manger/investigate/create",
                                 type: "post",
                                 complete: function(e) {
                                             $("#grid").data("kendoGrid").dataSource.read(); 
@@ -151,12 +178,13 @@
                                 id:"_id",
                                 fields: {
                                     "_id": { editable: false },
-                                    "appId": { editable: true },
                                     "title": { editable: true },
-                                    "content": { editable: true},
-                                    "picture": { editable: true },
-                                    "url": { editable: true},
-                                    "type": { editable: true, type:'number'},                                   
+                                    "desc": { editable: true },
+                                    "startTime": { editable: true, type: "date"},
+                                    "endTime": { editable: true,type: "date" },
+                                    "totalNumber": { editable: true,  type:'number'},
+                                    "questionJson": { editable: true},
+                                    "imgUrl": { editable: true},      
                                     "code1": { editable: true},
                                     "code2": { editable: true},
                                     "isShow": { editable: true, type:'number' },
@@ -190,36 +218,39 @@ $.post('/manger/app/getList',{},function(data_ary){
                             hidden:true
                         },
                         { 
-                            field: "appId",
-                            title: "地产商", 
-                            values:d,
-                            hidden:true
-                        },
-                        { 
                             field: "title",
                             title: "标题",
                         },
                         { 
-                            field: "content",
-                            title: "内容",
+                            field: "desc",
+                            title: "描述",
                             hidden:true
                         },
                         { 
-                            field: "picture",
-                            title: "图片",
+                            field: "startTime",
+                            title: "开始时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { 
+                            field: "endTime",
+                            title: "结束时间",
+                            format: "{0: yyyy-MM-dd HH:mm:ss}"
+                        },
+                        { 
+                            field: "totalNumber",
+                            title: "参与人数",
+                        },
+                        { 
+                            field: "questionJson",
+                            title: "问题json列表",
                             hidden:true
                         },
                         { 
-                            field: "url",
-                            title: "跳转地址",
+                            field: "imgUrl",
+                            title: "图片地址",
                             hidden:true
                         },
                         { 
-                            field: "type",
-                            title: "类型",
-                            values:window.news_type2,
-                        },
-                         { 
                             field: "code1",
                             title: "备用1",                           
                              hidden:true
@@ -254,12 +285,14 @@ $.post('/manger/app/getList',{},function(data_ary){
                         $('.k-edit-form-container').addClass('w-800-content');
        
                         $('#writeTime').kendoDateTimePicker();
+                        $('#startTime').kendoDateTimePicker();
+                        $('#endTime').kendoDateTimePicker();
+
                         
-                        multiUpload($("#upload_file"), $('#appPicture_inp'), 5)
                          $("#intro").kendoEditor(window.kendo_edit_option);  
-                        window.dropdown_init($('#appId_inp'),d)
-                        window.dropdown_init()  
-                        window.dropdown_init($('#newsType'),window.news_type2)                       
+                        // window.dropdown_init($('#appId_inp'),d)
+                        // window.dropdown_init()  
+                        // window.dropdown_init($('#newsType'),window.news_type2)                       
 
                     },
                     filterable:window.filter_obj         

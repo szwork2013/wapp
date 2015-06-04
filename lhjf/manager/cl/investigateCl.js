@@ -72,7 +72,14 @@ obj.destroy = function(req, res){
 	})
 }
 
+obj.getList = function(req, res){
 
+	dl.findAll({}, 0, 10000, function(err,doc){
+		if(err) return res.send(500,err);
+		if(!doc) return res.json([])
+		res.json(doc);
+	})
+}
 
 
 

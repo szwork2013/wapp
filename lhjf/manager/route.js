@@ -214,13 +214,16 @@ var addroute = function(app){
 	app.post('/manger/investigate/update', checkLogin, investigateCl.update)
 	app.post('/manger/investigate/destroy', checkLogin, investigateCl.destroy)
 	app.post('/manger/investigate/create', checkLogin, investigateCl.create)
+	app.post('/manger/investigate/getList', checkLogin, investigateCl.getList)
 
 	//investigateLog
 	app.get('/manger/investigateLog/list', checkLogin, investigateLogCl.list)
+	app.get('/manger/investigateLog/result', checkLogin, investigateLogCl.result)
 	app.post('/manger/investigateLog/read', checkLogin, investigateLogCl.read)
 	app.post('/manger/investigateLog/update', checkLogin, investigateLogCl.update)
 	app.post('/manger/investigateLog/destroy', checkLogin, investigateLogCl.destroy)
 	app.post('/manger/investigateLog/create', checkLogin, investigateLogCl.create)
+	app.post('/manger/investigateLog/info', checkLogin, investigateLogCl.info)
 
 	//获得guid
 	app.get('/manger/guid/getguid', checkLogin, function(req,res){ 

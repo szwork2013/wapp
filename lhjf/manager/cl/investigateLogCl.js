@@ -10,6 +10,11 @@ obj.list = function(req, res){
 	res.render('investigate_log_list', {session:req.session});
 }
 
+obj.result = function(req, res){
+	res.render('investigateResult', {session:req.session});
+}
+
+
 
 obj.read = function(req, res){
 	var filter =  utils.kendoToMongoose(req.body.filter,req.session.clientId);
@@ -64,6 +69,8 @@ obj.update = obj.create = function(req, res){
 }
 
 
+
+
 obj.destroy = function(req, res){
 	var query = {"_id": req.models[0]["_id"]};
 	dl.destroy(query, function(err, doc){
@@ -71,6 +78,10 @@ obj.destroy = function(req, res){
 		if(!doc) return res.json([])
 		res.json(doc);
 	})
+}
+
+obj.info = function(req, res){
+	
 }
 
 
