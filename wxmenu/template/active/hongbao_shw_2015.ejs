@@ -109,6 +109,99 @@
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script src="/api/lh/jsconfig?url=<%= jsurl %>" type="text/javascript"></script>
+
+
+
+
+
+<script>
+		
+	  
+	    wx.ready(function(){
+	     
+		//-----------------------------------------------------------------------
+		
+		
+			//获取当前地理位置
+			wx.getLocation({
+			  success: function(res){
+				//alert(JSON.stringify(res));
+				var latitude  = res.latitude;  // 纬度，浮点数，范围为90 ~ -90
+				var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+				
+				//1纬度
+				var num1 = 31.179655;
+				var num2 = 31.538496;
+				//1经度
+				var num3 = 120.313546;
+				var num4 = 120.904061;
+	
+				//2纬度
+				var num5 = 30.894899;
+				var num6 = 31.189054;
+				//2经度
+				var num7 = 120.158364;
+				var num8 = 120.680214;
+	
+				if( num1<latitude && latitude<num2 && num3<longitude && longitude<num4 ){
+					//alert('1-苏州市区\n【 纬度：'+latitude+' 经度：'+longitude+' 】');
+					//window.location.href="http://menu.xy-tang.com/active/xinyutang?ename=hongbao_jhw_2015";
+				}else if( num5<latitude && latitude<num6 && num7<longitude && longitude<num8 ){
+				    //alert('2-苏州市区\n【 纬度：'+latitude+' 经度：'+longitude+' 】');
+					//window.location.href="http://menu.xy-tang.com/active/xinyutang?ename=hongbao_shw_2015";
+				}else{
+					alert('抱歉！本次发红包区域只限定在苏州市区范围内！');
+					wx.closeWindow();
+				}
+				 
+				 
+			  },
+			  cancel: function(res){
+				alert('您必须允许打开获取地理位置才可以参加抢红包活动！请稍后再试！');
+				//用户拒绝授权--- 直接关闭当前页面
+				wx.closeWindow();
+				
+			  },
+			  fail: function(res){
+			    alert("无法获取您的地理位置信息，请确认已经打开手机定位功能，稍后再试！");
+			    wx.closeWindow();
+			  }
+			   
+			   
+			});//end
+	
+	
+		
+		
+		//-----------------------------------------------------------------------
+			
+	    });//end
+	
+		//返回消息
+		wx.error(function(res){
+		  alert(res.errMsg);
+		});
+	
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 
 var logCount = <%= logCount %>
