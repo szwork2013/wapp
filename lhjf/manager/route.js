@@ -23,6 +23,11 @@ var prizeCl = require('./cl/prizeCl.js')
 var recommendCl = require('./cl/recommendCl.js')
 var saleCl = require('./cl/saleCl.js')
 
+var qrcodeCl = require('./cl/qrcodeCl.js')
+var investigateCl = require('./cl/investigateCl.js')
+var investigateLogCl = require('./cl/investigateLogCl.js')
+
+
 var activeLogCl = require('./cl/activeLogCl.js')
 
 var utils = require('../lib/utils.js')
@@ -196,6 +201,26 @@ var addroute = function(app){
 	app.post('/manger/sale/complete', checkLogin, saleCl.complete)
 	app.post('/manger/sale/getOne', checkLogin, saleCl.getOne)
 
+	//qrcode
+	app.get('/manger/qrcode/list', checkLogin, qrcodeCl.list)
+	app.post('/manger/qrcode/read', checkLogin, qrcodeCl.read)
+	app.post('/manger/qrcode/update', checkLogin, qrcodeCl.update)
+	app.post('/manger/qrcode/destroy', checkLogin, qrcodeCl.destroy)
+	app.post('/manger/qrcode/create', checkLogin, qrcodeCl.create)
+
+	//investigate
+	app.get('/manger/investigate/list', checkLogin, investigateCl.list)
+	app.post('/manger/investigate/read', checkLogin, investigateCl.read)
+	app.post('/manger/investigate/update', checkLogin, investigateCl.update)
+	app.post('/manger/investigate/destroy', checkLogin, investigateCl.destroy)
+	app.post('/manger/investigate/create', checkLogin, investigateCl.create)
+
+	//investigateLog
+	app.get('/manger/investigateLog/list', checkLogin, investigateLogCl.list)
+	app.post('/manger/investigateLog/read', checkLogin, investigateLogCl.read)
+	app.post('/manger/investigateLog/update', checkLogin, investigateLogCl.update)
+	app.post('/manger/investigateLog/destroy', checkLogin, investigateLogCl.destroy)
+	app.post('/manger/investigateLog/create', checkLogin, investigateLogCl.create)
 
 	//获得guid
 	app.get('/manger/guid/getguid', checkLogin, function(req,res){ 

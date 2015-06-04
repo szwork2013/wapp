@@ -236,6 +236,12 @@ window.scoreWay_type = [
               { text: "购房抵用", value: 'buyhouse' },
               { text: "实物兑换", value: 'exchange' },
               { text: "服务消费", value: 'service' },
+
+              { text: "二维码推荐", value: 'qrcode_tmp' },
+              { text: "二维码现场", value: 'qrcode_forever' },
+              { text: "调查问卷", value: 'investigate' },
+
+
               { text: "手工方式", value: 'manual' },
 ]
 
