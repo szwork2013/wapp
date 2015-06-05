@@ -188,6 +188,12 @@ obj.getMoney = function(req,res){
             return res.send({error:1, data:'出错啦，请关闭重试'})
           }
           var openId = doc.bind[0].openId
+          var wxAddress_new = doc.uobj.wxAddress_new
+
+          var userCity = ''
+          if(wxAddress_new){
+              userCity = (wxAddress_new.split(',')[2] || '').toLocaleLowerCase()
+          }
 
           appBl.getByEname(appEname, function(err, appObj){
 
@@ -210,6 +216,28 @@ obj.getMoney = function(req,res){
                             return res.send({error:1, data:'invalid replayEname'})
                        }
 
+
+                       //检查mustCity是否陪陪
+                       var mustCity = replyDoc.moneyMustCity.split(',')
+                       if(mustCity.length>0 && userCity==''){
+                          //城市不匹配
+                          return res.send({error:1, data:'对不起，红包已经领完了'})
+                       }
+                       //如果需要匹配城市
+                       if(mustCity.length>0){
+                          var hasFound = 0
+                          for(var x=0; x<mustCity.length; x++){
+                              if(mustCity[x] == userCity){
+                                  hasFound++
+                              }
+                          }
+                          //城市不匹配
+                          if(hasFound==0){
+                            return res.send({error:1, data:'对不起，红包已经发放完毕'})
+                          }
+                       }
+                       
+                       //验证通过发放红包
                        wxCl.moneySend(req, {}, openId, replyDoc, appId, function(err, moneyVal){
                             if(err) return res.send({error:1, data:err})
                             res.send({error:0, data:moneyVal})

@@ -147,6 +147,16 @@
                本次红包方法活动，总共发放的红包数量
             </div>
 
+            <div class="k-edit-label  w-800-l">
+                <label for="moneyMustCity" >红包城市</label>
+            </div>
+            <div data-container-for="moneyMustCity" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="moneyMustCity" data-bind="value:moneyMustCity">
+               <br/>
+               多个城市用逗号分隔，例如：
+               suzhou,nanjing
+            </div>
+
 
 
 
@@ -239,6 +249,7 @@
                                     "moneyActName":{ editable: true},
                                     "moneyRemark":{ editable: true},
                                     "moneyTotalNum":{ editable: true, type:"number"},
+                                    "moneyMustCity":{ editable: true},
 
                                     "isShow": { editable: true,type:"number" }, 
                                     "writeTime": {editable: true, type: "date" },

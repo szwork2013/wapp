@@ -5,7 +5,8 @@ var obj = { //定义结构
 	  appId:{type:String, required:true,index:true},                 //appId表示用户第一次绑定的app应用id 
 	  wxName:{type:String, default:''},                   //微信用户昵称
 	  wxAvatar:{type:String, default:''},                //微信用户头像
-	  wxAddress:{type:String, default:''},    			//用户地址
+	  wxAddress_new:{type:String, default:''},			//微信用户地址
+	  wxAddress:{type:String, default:''},    			//用户地址,后被身份证所用
 	  //wxLoc: { type: [Number], index: { type: '2dsphere', sparse: true }, default:[121.48, 31.22] },    //用户最近一次经纬度保存
 	  //wxGroup:{type:String, default:'cf'},                 //用户分组，默认是cf常发
 	  //appLoginName:{type:String,index:true,unique:true},   //登录名

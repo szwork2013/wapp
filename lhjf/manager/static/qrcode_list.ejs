@@ -36,10 +36,10 @@
             </div>
             
             <div class="k-edit-label  w-800-l">
-                <label for="qrcodeGuid" >流水号</label>
+                <label for="qrcodeGuid" readonly="readonly">流水号</label>
             </div>
             <div data-container-for="qrcodeGuid" class="k-edit-field w-800-r">
-               <input type="text" id="sid" class="k-input k-textbox w-50-inp" name="qrcodeGuid" data-bind="value:qrcodeGuid" required="required">
+               <input type="text" id="sid" class="k-input k-textbox w-50-inp" name="qrcodeGuid" data-bind="value:qrcodeGuid" >
             </div>
 
             <div class="k-edit-label  w-800-l">
@@ -55,8 +55,8 @@
             <div data-container-for="qrcodeUrl" class="k-edit-field w-800-r">
                <input type="text" id="qrcodeUrl" class="k-input k-textbox w-50-inp" name="qrcodeUrl" data-bind="value:qrcodeUrl" >
                <br/>
-               请先添加记录，再修改创建二维码<br/>
-               <button id="createQrCode">重新创建二维码</buttom>
+               请先添加记录，再修改创建二维码，一次性生成，重复生成请删除<br/>
+               <button id="createQrCode">创建二维码</buttom>
             </div>
 
 
@@ -64,7 +64,7 @@
                 <label for="createTimeStamp" >创建时间戳</label>
             </div>
             <div data-container-for="createTimeStamp" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="createTimeStamp" data-bind="value:createTimeStamp" required="required">
+               <input type="text" class="k-input k-textbox w-50-inp" name="createTimeStamp" data-bind="value:createTimeStamp" readonly="readonly">
             </div>
 
 
@@ -157,10 +157,10 @@
                                     "userId": { editable: true },
                                     "openId": { editable: true },
                                     "type": { editable: true, type:'number'},
-                                    "qrcodeGuid": { editable: true, type:'number'},
+                                    "qrcodeGuid": { editable: false},
                                     "qrcodeUrl": { editable: true},
                                     "addScore":{editable: true, type:'number'},
-                                    "createTimeStamp": { editable: true, type:'number'},
+                                    "createTimeStamp": { editable: false},
                                     "code1": { editable: true},
                                     "code2": { editable: true},
                                     "writeTime": {editable: true, type: "date" },

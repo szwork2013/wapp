@@ -39,6 +39,7 @@ obj.read = function(req, res){
 				moneyActName:docObj.moneyActName,
 				moneyRemark:docObj.moneyRemark,
 				moneyTotalNum:docObj.moneyTotalNum,
+				moneyMustCity:docObj.moneyMustCity,
 
 				isShow:docObj.isShow,
 				writeTime:docObj.writeTime

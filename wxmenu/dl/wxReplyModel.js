@@ -23,7 +23,8 @@ var obj = { //定义结构,奖品doc
   moneyActName:{type: String, default:''}, //红包活动名称
   moneyRemark:{type: String, default:''}, //红包备注信息
   moneyTotalNum:{type:Number,default:1}, //红包发放总数，不修改1次
-  
+  moneyMustCity:{type:String, default:''}, //必须的城市，以英文逗号分隔
+
   isShow:{type:Number,required:true,default:1},                        //1表示启用，0表示不启用
   writeTime:{ type: Date, default: function(){return Date.now()}}, //录入时间
 }

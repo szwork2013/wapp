@@ -53,6 +53,13 @@ obj.update = obj.create = function(req, res){
 	delete req.models[0]["_id"];
 	delete req.models[0]["__v"];
 
+	try{
+		var tempObj = JSON.parse(req.models[0].questionJson)
+	}
+	catch(e){
+		return res.send(500,e);
+	}
+
 	
 
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){

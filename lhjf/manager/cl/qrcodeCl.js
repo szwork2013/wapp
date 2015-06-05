@@ -1,4 +1,5 @@
 var dl = require('../../dl/qrcodeLogModel.js');
+var guidDl = require('../../dl/guidModel.js');
 var qrcodeBl = require('../../bl/qrcode.js');
 
 var utils = require('../../lib/utils.js');
@@ -55,6 +56,22 @@ obj.update = obj.create = function(req, res){
 	delete req.models[0]["__v"];
 
 	
+	if(!req.models[0].createTimeStamp){
+		req.models[0].createTimeStamp = Date.now()
+	}
+	if(!req.models[0].qrcodeGuid){
+
+		guidDl.getGuid4(function(err, guid4){
+				if(err) return res.send(500,err);
+				req.models[0].qrcodeGuid = guid4
+				dl.createOneOrUpdate(query, req.models[0], function(err, doc){
+						if(err) return res.send(500,err);
+						if(!doc) return res.json([])
+						res.json(doc);
+					})
+		})
+		return;
+	}
 
 	dl.createOneOrUpdate(query, req.models[0], function(err, doc){
 		if(err) return res.send(500,err);

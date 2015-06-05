@@ -10,6 +10,7 @@ var obj = { //定义结构
   	  parentId:{type:String,required:true, default:'0'},  //父菜单id，如果是一级菜单，则此处是0
       replyId:{type:String,required:true, default:'0'},   //关联的微信回复id
       menuOrder:{type:Number,required:true, default:1},   //越大排序越前
+      
   	  writeTime: { type: Date, default: function(){return Date.now()} },    //写入时间
 }
 

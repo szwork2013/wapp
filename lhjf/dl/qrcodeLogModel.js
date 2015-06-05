@@ -4,14 +4,14 @@ var Schema = mongoose.Schema;
 
 //二维码生成
 var obj = { //定义结构
-      userId:{type:String,required:true, index:true},//用户id，如果是后台生成的为0
+      userId:{type:String,required:true, index:true, unique:true},//用户id，如果是后台生成的为0
       openId:{type:String,required:true, index:true},//用户的openid，后台生成的为0            
       type:{type:String,default:1}, //二维码类型，1表示个人临时二维码，2表示系统生成永久二维码
       qrcodeGuid:{type:String,required:true,unique:true, index:true}, //二维码流水号
       qrcodeUrl:{type:String,required:true},    //二维码图片url地址
-      addScore:type:Number,required:true},      //扫描这个二维码增加的积分
+      addScore:{type:Number,required:true},      //扫描这个二维码增加的积分
       createTimeStamp:{type:Number,required:true}, //二维码生成时间，时间戳，主要用来判断用户的二维码是否过期 
-	code1:{ type: String, default: ''},      //备用字段
+	    code1:{ type: String, default: ''},      //备用字段
       code2:{ type: String, default: ''},      //备用字段
       writeTime:{ type: Date, default: function(){return Date.now()} },    //写入时间
 }

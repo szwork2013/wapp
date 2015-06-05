@@ -29,6 +29,7 @@ obj.read = function(req, res){
 				  wxName:v.wxName,
 				  wxAvatar:v.wxAvatar,
 				  wxAddress:v.wxAddress,
+				  wxAddress_new:v.wxAddress_new,
 
 				  appUserName:v.appUserName,
 				  appUserMobile:v.appUserMobile,

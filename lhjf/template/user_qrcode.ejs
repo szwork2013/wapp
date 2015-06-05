@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>会员中心</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+				<script src="http://xyt.xy-tang.com/system/longfor/Public/Member/js/main.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="http://xyt.xy-tang.com/system/longfor/Public/Member/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="http://xyt.xy-tang.com/system/longfor/Public/Member/css/main.css" />
+		<script>
+		var url={
+			'a':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/cashscore",
+			'b':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/userinfo",
+			'c_use':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getuseinfo",
+			'c_get':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getgetinfo",
+			'd':"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/updateuser",
+			"e":"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/sigin",
+			"j":"http://xyt.xy-tang.com/system/longfor/index.php/Member/Index/getscorejump"
+		};
+		</script>
+	</head>
+	<body>
+		
+
+		<% include inc/score_nav.ejs %>
+	
+		<div class="scoreinfo">
+		<ul>
+			<li><span>1</span>
+				<p>
+					时间：<%= createTime %><br/>事件：注册<br/>积分：+100分
+				</p>
+			</li>		</ul>
+		</div>
+		<div id="more">
+			只显示最近五十条记录！
+		</div> 
+<div class="loading">
+			<div class="timer"></div>
+		</div>
+	</body>
+</html>
