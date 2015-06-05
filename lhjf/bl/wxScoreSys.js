@@ -43,6 +43,35 @@ obj.commentRule = function(qobj,data,cb){ //评论规则，评论每人每篇文
 }
 
 
+
+//扫描活动临时二维码，获取积分
+obj.qrcodeTmpRule = function(qobj,data,cb){ 
+	qobj.scoreWay = 'qrcode_tmp'
+	qobj.scoreDetail = data.addScore;
+	qobj.mobile = '';
+	qobj.scoreCode1 = data.scoreCode1;
+	qobj.scoreCode2 = data.scoreCode2;
+
+	obj.addScoreHistory(qobj,cb)
+}
+
+
+
+//扫描永久二维码，获取积分
+obj.qrcodeForeverRule = function(qobj,data,cb){ 
+	qobj.scoreWay = 'qrcode_forever'
+	qobj.scoreDetail = data.addScore;
+	qobj.mobile = '';
+	qobj.scoreCode1 = data.scoreCode1;
+	qobj.scoreCode2 = data.scoreCode2;
+
+	obj.addScoreHistory(qobj,cb)
+}
+
+
+
+
+
 obj.forwardingRule = function(qobj,data,cb){ //转发
 	qobj.scoreWay = 'forwarding'
 	qobj.scoreDetail = 5;

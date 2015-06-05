@@ -207,6 +207,7 @@ var addroute = function(app){
 	app.post('/manger/qrcode/update', checkLogin, qrcodeCl.update)
 	app.post('/manger/qrcode/destroy', checkLogin, qrcodeCl.destroy)
 	app.post('/manger/qrcode/create', checkLogin, qrcodeCl.create)
+	app.post('/manger/qrcode/createQrcode', checkLogin, qrcodeCl.createQrcode)
 
 	//investigate
 	app.get('/manger/investigate/list', checkLogin, investigateCl.list)

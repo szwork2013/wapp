@@ -2,6 +2,9 @@ var wechat = require('wechat');
 var utils = require('../lib/utils.js')
 var wxReplyDl = require('../dl/wxReplyModel.js');
 var wxMenuDl = require('../dl/menuModel.js');
+var wxQRCodeDl = require('../dl/qrcodeLogModel.js');
+var userBl = require('../bl/wxUser.js')
+var scoreBl = require('../bl/wxScoreSys.js')
 
 var ERR_REPLY = '系统错误，请您重试';
 var UNKNOW_REPLY = '未知操作'
@@ -61,6 +64,76 @@ var wxGenReplyObj = function(replyObj,openId){ //生成 回复 对象
     //console.log(wxObj)
     return wxObj;
 }
+
+
+
+var addScoreFromSceneId = function(sceneId, fromOpenId, cb){
+
+
+   //根据场景id查找log
+   wxQRCodeDl.findOneByObj({'qrcodeGuid': scene_id},function(err, qrcodeDoc){
+        if(err || !qrcodeDoc) return
+        var addScore = qrcodeDoc.addScore
+        var qrcodeOwerUserId = qrcodeDoc.userId
+        var fromUserId = ''
+
+        var addScoreFunc = function(){
+              //判断二维码类型，如果是临时二维码，要给二维码所有者加分
+              if(qrcodeDoc.type == 1){
+                  userBl.getUserByUserId(qrcodeOwerUserId, function(err, usrObj){
+                      if(err || !usrObj) return cb(err, usrObj)
+                      if(usrObj.uobj){
+                          //找到用户给他加分
+                          scoreBl.qrcodeTmpRule({
+                              'scoreDetail':addScore,
+                              'appId':global.wxAppObj._id,
+                              'userId':qrcodeOwerUserId,
+                              'mobile':'',
+                              'scoreType':1,
+                              'scoreCode1':qrcodeDoc._id.toString(),
+                              'scoreCode2':fromUserId,
+                            },{}, function(err, score){
+                              if(err) return cb(err)
+                              return cb(null, score)
+                          })
+                      }
+                      else{
+                        return cb(null, null)
+                      }
+                  })//end userBl.getUserByUserId
+              }
+              else if(qrcodeDoc.type == 2){
+
+                  //直接增加事件的用户id的分数
+                  scoreBl.qrcodeForeverRule({
+                        'scoreDetail':addScore,
+                        'appId':global.wxAppObj._id,
+                        'userId':fromUserId,
+                        'mobile':'',
+                        'scoreType':1,
+                        'scoreCode1':qrcodeDoc._id.toString(),
+                        'scoreCode2':'',
+                      },{}, function(err, score){
+                        if(err) return cb(err)
+                        return cb(null, score)
+                    })
+              }
+
+        }//end addScoreFunc
+
+        //先根据fromOpenId帮他去注册用户
+        userBl.enter(qrcodeOwerUserId, global.wxAppObj._id, function(err, uobj){
+            if(err || !uobj) return cb(err, uobj)
+
+            fromUserId = uobj.uobj._id
+            return addScoreFunc()
+
+        })//end userBl.enter
+
+   })//end wxQRCodeDl.findOneByObj
+
+}
+
 
 
 var wxFunction = function(app){
@@ -189,6 +262,14 @@ var wxFunction = function(app){
 
             }
             if(message.Event =='subscribe'){ //用户第一次订阅
+                var scene_id = message.EventKey
+                var fromOpenId = message.FromUserName
+                //如果有场景id
+                if(scene_id){
+                  addScoreFromSceneId(scene_id, fromOpenId, function(err, score){
+
+                  })
+                }
 
                 wxReplyDl.findOneByObj({ //查找此 appid 下的关注回复
                         appId:appId,
@@ -209,9 +290,19 @@ var wxFunction = function(app){
                   })
                 
             }
+            //如果是扫描二维码事件
+            if(message.Event == 'SCAN'){
+                var scene_id = message.EventKey
+                var fromOpenId = message.FromUserName
+                addScoreFromSceneId(scene_id, fromOpenId, function(err, score){
+                      if(!err && score){
+                        res.reply('签到成功'); //创建回复对象
+                      }       
+                })
+                return
+            }
      
       })
-
       /*
       .image(function (message, req, res, next) {
         // message为图片内容

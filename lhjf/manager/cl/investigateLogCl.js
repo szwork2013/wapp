@@ -81,7 +81,69 @@ obj.destroy = function(req, res){
 }
 
 obj.info = function(req, res){
-	
+	var investigateId = req.body.investigateId
+
+	dl2.findOneByObj({'_id':investigateId}, function(err, invesDoc){
+		if(err){
+			return res.send({'error':1, data:err})
+		}
+		if(!invesDoc){
+			return res.send({'error':1, data:'未找到调查'})
+		}
+		try{
+			var questionDoc = JSON.parse(invesDoc.questionJson)
+		}
+		catch(e){
+			return res.send({'error':1, data:'调查题库错误'})
+		}
+		var questionReturnList = []
+		questionDoc.forEach(function(qitem){
+			var tempDict = {
+				'question':qitem
+				'answer':[]
+			}
+			item.forEach(function(iitem, i){
+				var tempDoc = {
+					'pos':i,
+					'title':iitem,
+					'count':0
+				}
+				tempDict['answer'].push(tempDoc)
+			})
+			questionReturnList.push(tempDict)
+		})
+
+
+		dl.findAll({
+			'investigateId':investigateId,
+		},0,1000000,function(err, recordList){
+			if(err) return res.send({'error':1, data:err})
+			if(list.length == 0) return res.send({'error':0, data:questionReturnList, total:0})
+
+			recordList.forEach(function(recordItem){
+
+				try{
+					var resultDoc = JSON.parse(recordItem.investigateResultJson) 
+					for(var i=0;i<recordItem.length;i++){
+						for(var j=0;j<recordItem[i].length;j++)
+							var questionPos = recordItem[i][j]
+							questionReturnList[i][questionPos]['count'] += 1
+						}
+					}
+
+				catch(e){
+					return res.send({'error':1, data:'解析数组出错'})
+				}
+
+				return res.send({'error':0, data:questionReturnList, total:recordList.length})
+
+			})//end recordList.forEach
+
+
+		})//end dl.findAll
+
+
+	})//end dl2.findOneByObj
 }
 
 

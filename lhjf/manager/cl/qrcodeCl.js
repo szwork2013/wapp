@@ -1,5 +1,5 @@
 var dl = require('../../dl/qrcodeLogModel.js');
-
+var qrcodeBl = require('../../bl/qrcode.js');
 
 var utils = require('../../lib/utils.js');
 var obj = {}
@@ -73,7 +73,33 @@ obj.destroy = function(req, res){
 	})
 }
 
+obj.createQrcode = function(req, res){
 
+	var s_id = req.body.s_id
+	var type = req.body.type
+	if(type == 1){
+		qrcodeBl.createTempQRCode(s_id, function(err, qrcodeUrl){
+				if(err){
+					return res.send({'error':1,'result':err})
+				}
+				else{
+					return res.send({'error':0,'result':qrcodeUrl})
+				}
+		})
+	}
+	else{
+		qrcodeBl.createForverQRCode(s_id, function(err, qrcodeUrl){
+				if(err){
+					return res.send({'error':1,'result':err})
+				}
+				else{
+					return res.send({'error':0,'result':qrcodeUrl})
+				}
+		})
+	}
+
+	
+}
 
 
 

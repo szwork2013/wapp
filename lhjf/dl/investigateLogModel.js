@@ -12,6 +12,13 @@ var obj = { //定义结构
 	writeTime:{ type: Date, default: function(){return Date.now()} },    //写入时间
 }
 
+/*
+investigateResultJson 示例
+[[0],[1],[2,3]]
+分别表示 0 第一个投票，1第二个投票，2,3表示复选2,3
+*/
+
+
 var objSchema = new Schema(obj);
 
 

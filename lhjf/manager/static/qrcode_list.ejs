@@ -39,15 +39,23 @@
                 <label for="qrcodeGuid" >流水号</label>
             </div>
             <div data-container-for="qrcodeGuid" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="qrcodeGuid" data-bind="value:qrcodeGuid" required="required">
+               <input type="text" id="sid" class="k-input k-textbox w-50-inp" name="qrcodeGuid" data-bind="value:qrcodeGuid" required="required">
+            </div>
+
+            <div class="k-edit-label  w-800-l">
+                <label for="addScore" >增加积分</label>
+            </div>
+            <div data-container-for="addScore" class="k-edit-field w-800-r">
+               <input type="text" class="k-input k-textbox w-50-inp" name="addScore" data-bind="value:addScore" required="required">
             </div>
 
             <div class="k-edit-label  w-800-l">
                 <label for="qrcodeUrl" >二维码图片地址</label>
             </div>
             <div data-container-for="qrcodeUrl" class="k-edit-field w-800-r">
-               <input type="text" class="k-input k-textbox w-50-inp" name="qrcodeUrl" data-bind="value:qrcodeUrl" >
+               <input type="text" id="qrcodeUrl" class="k-input k-textbox w-50-inp" name="qrcodeUrl" data-bind="value:qrcodeUrl" >
                <br/>
+               请先添加记录，再修改创建二维码<br/>
                <button id="createQrCode">重新创建二维码</buttom>
             </div>
 
@@ -151,6 +159,7 @@
                                     "type": { editable: true, type:'number'},
                                     "qrcodeGuid": { editable: true, type:'number'},
                                     "qrcodeUrl": { editable: true},
+                                    "addScore":{editable: true, type:'number'},
                                     "createTimeStamp": { editable: true, type:'number'},
                                     "code1": { editable: true},
                                     "code2": { editable: true},
@@ -206,9 +215,13 @@ $.post('/manger/app/getList',{},function(data_ary){
                             hidden:true
                         },
                         { 
+                            field: "addScore",
+                            title: "增加的积分",
+                        },
+                        { 
                             field: "createTimeStamp",
                             title: "生成时间",
-                        },
+                        },                        
                          { 
                             field: "code1",
                             title: "备用1",                           
@@ -247,7 +260,24 @@ $.post('/manger/app/getList',{},function(data_ary){
                         window.dropdown_init($('#qrcode_type_inp'),window.qrcode_type)        
 
                         $('#createQrCode').click(function(){
-                            alert(111)
+                                var sid = $('#sid').val()
+                                var type = $('#qrcode_type_inp').val()
+                                if(!sid || !type){
+                                    alert('流水号和类型必填')
+                                    return false
+                                }
+                                $.post('/manger/qrcode/createQrcode', {
+                                    's_id':sid,
+                                    'type':type,
+                                }, function(d){
+                                    if(d.error){
+                                        alert(d.result)
+                                        return
+                                    }
+                                    else{
+                                        $('#qrcodeUrl').val(d.result).change()
+                                    }
+                                },'json')
                         })               
 
                     },

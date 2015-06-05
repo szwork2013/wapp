@@ -15,6 +15,18 @@ var obj = { //定义结构,调查问卷的db
   writeTime:{ type: Date, default: function(){return Date.now()}}, //奖品录入时间
 }
 
+/*
+
+[
+    {
+        "type":1, （1表示单选，2表示多选）
+        "title":"下面哪些是你喜欢的运动",
+        "questions":["足球","篮球","乒乓球","保龄球"]
+    },
+    ...
+   ]
+*/
+
 var objSchema = new Schema(obj);
 
 objSchema.statics.findOneByObj = function(obj,cb){
